@@ -1,0 +1,5 @@
+ru:
+  layouts:
+    main:
+      pagetitle: "Хомячьи путешествия :: %{page}"
+      apptitle: Хомячьи путешествия

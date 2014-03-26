@@ -1,3 +1,4 @@
 // Flatly
 // Bootswatch
-//= require_tree .
+//= require flatly
+//= require_tree ./common

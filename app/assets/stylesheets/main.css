@@ -1,6 +1,6 @@
 /*
- *= require_self
- *= require_tree .
+ *= require 'flatly'
+ *= require 'scaffolds'
+ *= require 'overrides'
 */
 
-body { padding-top: 60px; }

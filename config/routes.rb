@@ -1,7 +1,10 @@
 Travel::Application.routes.draw do
 
-  devise_for :users
-  root to: "dashboard#index" 
-  resources :users
+  scope '(:locale)', locale: /ru|en/ do
+    devise_for :users
+  end
+
+  root to: 'dashboard#index'
+  get '/:locale' => 'dashboard#index'
 
 end

@@ -28,6 +28,11 @@ class User
 
   # Travel fields
   field :home_town
+  field :first_name
+  field :last_name
+
+  validates :last_name, presence: true
+  validates :first_name, presence: true
 
   ## Confirmable
   # field :confirmation_token,   type: String
