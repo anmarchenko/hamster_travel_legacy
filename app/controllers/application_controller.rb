@@ -13,5 +13,11 @@ class ApplicationController < ActionController::Base
     { :locale => I18n.locale }
   end
 
+  before_filter :configure_permitted_parameters, if: :devise_controller?
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_up) << :first_name
+    devise_parameter_sanitizer.for(:sign_up) << :last_name
+  end
+
   layout 'main'
 end

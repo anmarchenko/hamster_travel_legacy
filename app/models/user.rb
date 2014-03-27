@@ -34,8 +34,13 @@ class User
   field :home_town
   field :locale
 
-  validates :last_name, presence: true, on: :update
-  validates :first_name, presence: true, on: :update
+  validates :last_name, presence: true
+  validates :first_name, presence: true
+  validates :email, uniqueness: true
+
+  def full_name
+    '%s %s' % [first_name, last_name]
+  end
 
   # PERSPECTIVE
   ## Confirmable

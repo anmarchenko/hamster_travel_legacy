@@ -1,0 +1,9 @@
+ru:
+  mongoid:
+    attributes:
+      user:
+        email: Электронный адрес
+        first_name: Имя
+        last_name: Фамилия
+        password: Пароль
+        password_confirmation: Повтор пароля

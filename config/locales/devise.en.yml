@@ -40,6 +40,22 @@ en:
       signed_up_but_unconfirmed: "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
       update_needs_confirmation: "You updated your account successfully, but we need to verify your new email address. Please check your email and click on the confirm link to finalize confirming your new email address."
       updated: "You updated your account successfully."
+      new:
+        welcome: Create your account...
+        teaser: and explore!
+        email: Email Address
+        password: Password
+        password_confirmation: Confirm Password
+        first_name: First name
+        last_name: Last name
+        by_clicking: By clicking
+        register: Register
+        sign_in: Sign In
+        you_agree: you agree to the
+        terms: Terms and Conditions
+        ending: set out by this site
+        agree: I Agree
+        terms_head: Terms and Conditions
     sessions:
       signed_in: "Signed in successfully."
       signed_out: "Signed out successfully."
@@ -61,6 +77,4 @@ en:
       expired: "has expired, please request a new one"
       not_found: "not found"
       not_locked: "was not locked"
-      not_saved:
-        one: "1 error prohibited this %{resource} from being saved:"
-        other: "%{count} errors prohibited this %{resource} from being saved:"
+      not_saved: "Errors on save:"
