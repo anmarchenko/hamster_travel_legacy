@@ -1,17 +1,38 @@
-<h2>Sign in</h2>
+<div class="row" style="margin-top:20px">
+  <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), role: 'formr') do |f| %>
+      <fieldset>
+        <h2><%= t('.welcome') %></h2>
+        <hr class="colorgraph">
+        <div class="form-group">
+          <%= f.email_field :email, autofocus: true, class: 'form-control input-lg', placeholder: t('.email') %>
+        </div>
+        <div class="form-group">
+          <%= f.password_field :password, autocomplete: 'off', class: 'form-control input-lg', placeholder: t('.password') %>
+        </div>
+        <% if devise_mapping.rememberable? -%>
+            <span class="button-checkbox">
+                <button type="button" class="btn" data-color="info"><%= t('.remember') %></button>
+                <%= f.check_box :remember_me, class: 'hidden', checked: 'checked' %>
+                <%# <a href="" class="btn btn-link pull-right">Forgot Password?</a> %>
+            </span>
+        <% end -%>
+        <hr class="colorgraph">
+        <div class="row">
+          <div class="col-xs-6 col-sm-6 col-md-6">
+            <%= f.submit t('.sign_in'), class: 'btn btn-lg btn-success btn-block' %>
+          </div>
+          <div class="col-xs-6 col-sm-6 col-md-6">
+            <%= link_to t('.register'), new_user_registration_path, class: 'btn btn-lg btn-primary btn-block' %>
+          </div>
+        </div>
+      </fieldset>
+    <% end %>
+  </div>
+</div>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, autofocus: true %></div>
 
-  <div><%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %></div>
 
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
 
-  <div><%= f.submit "Sign in" %></div>
-<% end %>
 
-<%= render "devise/shared/links" %>
+

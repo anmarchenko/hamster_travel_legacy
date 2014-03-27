@@ -1,5 +1,9 @@
 en:
   layouts:
     main:
-      pagetitle: Hamster Travels
-      apptitle: Hamster Travels
+      pagetitle: Hamster Travel
+      apptitle: Hamster Travel
+      account: My Account
+      sign_in: Login
+      sign_up: Register
+      sign_out: Sign Out

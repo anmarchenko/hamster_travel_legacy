@@ -26,14 +26,18 @@ class User
   field :current_sign_in_ip, type: String
   field :last_sign_in_ip,    type: String
 
-  # Travel fields
-  field :home_town
+  # Additional core fields
   field :first_name
   field :last_name
 
-  validates :last_name, presence: true
-  validates :first_name, presence: true
+  # User settings
+  field :home_town
+  field :locale
 
+  validates :last_name, presence: true, on: :update
+  validates :first_name, presence: true, on: :update
+
+  # PERSPECTIVE
   ## Confirmable
   # field :confirmation_token,   type: String
   # field :confirmed_at,         type: Time

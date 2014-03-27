@@ -43,6 +43,13 @@ en:
     sessions:
       signed_in: "Signed in successfully."
       signed_out: "Signed out successfully."
+      new:
+        email: Email Address
+        password: Password
+        register: Register
+        welcome: Sign in to your account
+        sign_in: Login
+        remember: Remember Me
     unlocks:
       send_instructions: "You will receive an email with instructions about how to unlock your account in a few minutes."
       send_paranoid_instructions: "If your account exists, you will receive an email with instructions about how to unlock it in a few minutes."

@@ -13,7 +13,7 @@ gem 'kaminari'
 gem 'haml'
 gem 'haml-rails'
 
-# authorization
+# authentication
 gem 'devise'
 
 # CSS

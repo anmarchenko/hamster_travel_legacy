@@ -42,6 +42,19 @@
                     %img{src: 'https://dta3uun7xyqia.cloudfront.net/images/flags/GBR_flag.png', class: 'flag-small', style: 'margin-right: 10px;'}
                     English
 
+            - if user_signed_in?
+              %li{class: 'dropdown'}
+                %a{href: '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown'}
+                  = current_user.email
+                  %b{class: 'caret'}
+                %ul{class: 'dropdown-menu'}
+                  %li
+                    = link_to t('.sign_out'), destroy_user_session_path, method: :delete
+            - else
+              %li
+                = link_to t('.sign_in'), new_user_session_path
+              %li
+                = link_to t('.sign_up'), new_user_registration_path
 
     %div{class: 'container'}
       %div{id: 'flash_container'}
