@@ -2,8 +2,12 @@ en:
   layouts:
     main:
       pagetitle: Hamster Travel
-      apptitle: Hamster Travel
-      account: My Account
-      sign_in: Login
-      sign_up: Register
-      sign_out: Sign Out
+    partials:
+      navbar:
+        apptitle: Hamster Travel
+        account: My Account
+      user_navbar:
+        sign_in: Login
+        sign_up: Register
+        sign_out: Sign Out
+        profile: My profile

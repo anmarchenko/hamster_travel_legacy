@@ -2,9 +2,13 @@ ru:
   layouts:
     main:
       pagetitle: "Hamster Travel :: %{page}"
-      apptitle: Hamster Travel
-      account: Мой аккаунт
-      sign_in: Вход
-      sign_up: Регистрация
-      sign_out: Выход
+    partials:
+      navbar:
+        apptitle: Hamster Travel
+        account: Мой аккаунт
+      user_navbar:
+        sign_in: Вход
+        sign_up: Регистрация
+        sign_out: Выход
+        profile: Мой профиль
 
