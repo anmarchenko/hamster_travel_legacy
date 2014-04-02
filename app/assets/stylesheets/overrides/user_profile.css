@@ -1,0 +1,43 @@
+.login-profile-pic
+{
+    margin-top:50px;
+    width:120px;
+    margin-left:50px;
+    margin-bottom:-60px;
+}
+
+.login-profile-panel
+{
+    background-image:url("http://autoimagesize.com/wp-content/uploads/2014/01/rainbow-aurora-background-wallpaper-colour-images-rainbow-background.jpg");
+    margin-bottom: 120px;
+}
+
+.login-profile-name
+{
+    position:absolute;
+    padding-left:200px;
+    font-size:30px;
+    padding-top: 20px;
+}
+
+.login-profile-dropdown
+{
+    position:absolute;
+}
+
+.login-profile-change
+{
+    position:relative;
+    bottom:20px;
+    padding:1px;
+    color:white;
+    text-decoration:none;
+}
+
+
+.login-profile-change:hover
+{
+    text-decoration:none;
+    background-color:black;
+    color:white;
+}

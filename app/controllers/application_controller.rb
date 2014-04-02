@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
 
+  layout 'main'
+
   before_filter :set_locale
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale # || current_user.default_locale # before I18n
@@ -15,9 +17,12 @@ class ApplicationController < ActionController::Base
 
   before_filter :configure_permitted_parameters, if: :devise_controller?
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) << :first_name
-    devise_parameter_sanitizer.for(:sign_up) << :last_name
+    devise_parameter_sanitizer.for(:sign_up) << :first_name << :last_name
   end
 
-  layout 'main'
+  def no_access
+    flash[:error] = t('errors.unathorized')
+    redirect_to('/', locale: params[:locale])
+  end
+
 end

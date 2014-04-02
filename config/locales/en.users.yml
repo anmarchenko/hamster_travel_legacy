@@ -7,3 +7,7 @@ en:
         last_name: Last name
         password: Password
         password_confirmation: Password confirmation
+  users:
+    partials:
+      menu:
+        profile: Profile

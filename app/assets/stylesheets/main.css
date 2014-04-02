@@ -2,7 +2,8 @@
  *= require 'flatly'
  *= require 'scaffolds'
  *= require 'font-awesome'
- *= require 'login'
- *= require 'overrides'
+ *= require 'overrides/login'
+ *= require 'overrides/travel'
+ *= require 'overrides/user_profile'
 */
 

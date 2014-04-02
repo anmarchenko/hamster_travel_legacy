@@ -5,14 +5,20 @@
       %b{class: 'caret'}
     %ul{class: 'dropdown-menu'}
       %li
-        = link_to '#' do
-          = fa_icon 'user', text: t('.profile')
+        = link_to user_path(current_user) do
+          = fa_icon 'user', text: t('common.profile')
+      %li
+        = link_to edit_user_path(current_user) do
+          = fa_icon 'gear', text: t('common.settings')
+      %li
+        = link_to edit_user_registration_path do
+          = fa_icon 'edit', text: t('common.edit_user')
       %li{class: 'divider'}
       %li
         = link_to destroy_user_session_path, method: :delete do
-          = fa_icon 'sign-out', text: t('.sign_out')
+          = fa_icon 'sign-out', text: t('common.sign_out')
 - else
   %li
-    = link_to t('.sign_in'), new_user_session_path
+    = link_to t('common.sign_in'), new_user_session_path
   %li
-    = link_to t('.sign_up'), new_user_registration_path
+    = link_to t('common.sign_up'), new_user_registration_path

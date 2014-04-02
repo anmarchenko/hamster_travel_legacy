@@ -1,0 +1,13 @@
+%div{class: 'row well'}
+  %div{class: 'col-md-3'}
+    = render 'users/partials/menu', page: page
+
+  %div{class: 'col-md-9'}
+    %div{class: 'login-profile-panel panel'}
+      %img{class: 'login-profile-pic img-circle pic', src: 'http://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/twDq00QDud4/s120-c/photo.jpg'}
+      %div{class: 'login-profile-name name'}
+        %small
+          = @user.full_name
+        -#href="#" class="btn btn-xs btn-primary pull-right" style="margin:10px;"><span class="glyphicon glyphicon-picture"></span> Change cover</a>
+
+    = yield

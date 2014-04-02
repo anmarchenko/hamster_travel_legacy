@@ -6,9 +6,3 @@ ru:
       navbar:
         apptitle: Hamster Travel
         account: Мой аккаунт
-      user_navbar:
-        sign_in: Вход
-        sign_up: Регистрация
-        sign_out: Выход
-        profile: Мой профиль
-
