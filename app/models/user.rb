@@ -27,12 +27,12 @@ class User
   field :last_sign_in_ip,    type: String
 
   # Additional core fields
-  field :first_name
-  field :last_name
+  field :first_name, type: String
+  field :last_name, type: String
 
   # User settings
-  field :home_town
-  field :locale
+  field :home_town, type: String
+  field :locale, type: String
 
   validates :last_name, presence: true
   validates :first_name, presence: true

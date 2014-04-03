@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_locale
   def set_locale
-    I18n.locale = params[:locale] || I18n.default_locale # || current_user.default_locale # before I18n
+    I18n.locale = params[:locale] || current_user.try(:locale) || I18n.default_locale
   end
 
   # Prevent CSRF attacks by raising an exception.
@@ -18,6 +18,7 @@ class ApplicationController < ActionController::Base
   before_filter :configure_permitted_parameters, if: :devise_controller?
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << :first_name << :last_name
+    devise_parameter_sanitizer.for(:account_update) << :first_name << :last_name
   end
 
   def no_access

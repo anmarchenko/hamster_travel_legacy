@@ -1,0 +1,2 @@
+$ ->
+  $('.selectpicker').selectpicker();

@@ -6,3 +6,7 @@ ru:
     profile: Мой профиль
     edit_user: Редактировать
     settings: Настройки
+    save: Сохранить
+    user_profile_layout:
+      password_placeholder: оставьте пустым, если не хотите менять пароль
+      current_password_placeholder: для подтверждения изменений необходимо ввести текущий пароль

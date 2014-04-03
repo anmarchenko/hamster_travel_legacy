@@ -11,6 +11,12 @@ class UsersController < ApplicationController
   end
 
   def update
+    if @user.update_attributes user_params
+      flash[:notice] = t('users.update_successful', locale: @user.locale)
+      redirect_to edit_user_path @user, locale: @user.locale
+    else
+      render 'edit'
+    end
   end
 
   def find_user
@@ -20,6 +26,10 @@ class UsersController < ApplicationController
 
   def authorize
     no_access and return if @user.id != current_user.id
+  end
+
+  def user_params
+    params.require(:user).permit(:locale, :home_town)
   end
 
 end

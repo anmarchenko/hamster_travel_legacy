@@ -6,3 +6,14 @@ body {
     border: 1px solid;
     width: 25px;
 }
+
+.form-horizontal .has-error
+{
+    margin: 0;
+}
+
+.form-horizontal .has-error:before, .form-horizontal .has-error::after
+{
+    display: block;
+    clear: none;
+}

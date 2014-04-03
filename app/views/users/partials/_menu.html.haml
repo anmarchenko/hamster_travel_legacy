@@ -2,7 +2,7 @@
   %li{class: ('active' if page == :show)}
     = link_to user_path(@user) do
       = fa_icon 'user', text: t('common.profile')
-    - if @user == current_user
+    - if user_signed_in? && @user == current_user
       %li{class: ('active' if page == :edit)}
         = link_to edit_user_path(@user) do
           = fa_icon 'gear', text: t('common.settings')

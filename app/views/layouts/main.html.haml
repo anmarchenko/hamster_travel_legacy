@@ -10,6 +10,7 @@
     /[if lt IE 9]
       = javascript_include_tag 'http://html5shim.googlecode.com/svn/trunk/html5.js'
     = stylesheet_link_tag 'main', media: 'all'
+    = stylesheet_link_tag '//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.4.1/bootstrap-select.min.css', media: 'all'
     = yield(:page_stylesheet) if content_for?(:page_stylesheet)
 
   %body
@@ -25,4 +26,5 @@
       \==================================================
     / Placed at the end of the document so the pages load faster
     = javascript_include_tag 'main'
+    = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.4.1/bootstrap-select.min.js'
     = yield(:page_javascript) if content_for?(:page_javascript)

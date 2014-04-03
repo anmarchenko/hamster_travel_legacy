@@ -6,3 +6,7 @@ en:
     profile: My profile
     edit_user: Edit profile
     settings: Settings
+    save: Save
+    user_profile_layout:
+      password_placeholder: leave blank if you don't want to change it
+      current_password_placeholder: we need your current password to confirm your changes

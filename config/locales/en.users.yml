@@ -7,7 +7,11 @@ en:
         last_name: Last name
         password: Password
         password_confirmation: Password confirmation
+        home_town: Home town
+        locale: Language
+        current_password: Current password
   users:
+    update_successful: User settings successfully updated
     partials:
       menu:
         profile: Profile
