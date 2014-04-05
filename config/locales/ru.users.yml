@@ -11,6 +11,10 @@ ru:
         locale: Язык
         current_password: Текущий пароль
   users:
+    edit:
+      title: Мои настройки
+    show:
+      title: Пользователь
     update_successful: Настройки успешно сохранены
     partials:
       menu:

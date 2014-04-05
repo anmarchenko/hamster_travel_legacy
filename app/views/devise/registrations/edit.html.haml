@@ -1,3 +1,5 @@
+- content_for :title, t('.title')
+
 = render layout: 'common/user_profile_layout', locals: {page: :edit_devise} do
   = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'form-horizontal' }) do |f|
 

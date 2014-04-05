@@ -33,6 +33,7 @@ en:
       updated: "Your password was changed successfully. You are now signed in."
       updated_not_active: "Your password was changed successfully."
     registrations:
+      sorry: Registration is not open yet
       destroyed: "Bye! Your account was successfully cancelled. We hope to see you again soon."
       signed_up: "Welcome! You have signed up successfully."
       signed_up_but_inactive: "You have signed up successfully. However, we could not sign you in because your account is not yet activated."
@@ -56,6 +57,9 @@ en:
         ending: set out by this site
         agree: I Agree
         terms_head: Terms and Conditions
+        title: Registration
+      edit:
+        title: Edit my registration
     sessions:
       signed_in: "Signed in successfully."
       signed_out: "Signed out successfully."
@@ -66,6 +70,7 @@ en:
         welcome: Sign in to your account
         sign_in: Login
         remember: Remember Me
+        title: Sign In
     unlocks:
       send_instructions: "You will receive an email with instructions about how to unlock your account in a few minutes."
       send_paranoid_instructions: "If your account exists, you will receive an email with instructions about how to unlock it in a few minutes."

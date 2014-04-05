@@ -11,6 +11,10 @@ en:
         locale: Language
         current_password: Current password
   users:
+    edit:
+      title: My settings
+    show:
+      title: User profile
     update_successful: User settings successfully updated
     partials:
       menu:
