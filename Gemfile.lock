@@ -92,6 +92,8 @@ GEM
       nokogiri (>= 1.5.0)
       rails (>= 3.0.0)
     database_cleaner (1.2.0)
+    date_validator (0.7.0)
+      activemodel (>= 3)
     debug_inspector (0.0.2)
     devise (3.2.4)
       bcrypt (~> 3.0)
@@ -278,6 +280,7 @@ DEPENDENCIES
   cucumber
   cucumber-rails
   database_cleaner
+  date_validator
   devise
   factory_girl
   factory_girl_rails
