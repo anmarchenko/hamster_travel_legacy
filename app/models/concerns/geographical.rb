@@ -42,23 +42,27 @@ module Concerns
     end
 
     def country
-      ::Geo::Country.where(geonames_code: self.country_code).first
+      ::Geo::Country.where(country_code: self.country_code).first
     end
 
     def region
-      ::Geo::Region.where(geonames_code: self.region_code).first
+      ::Geo::Region.where(region_code: self.region_code).first
     end
 
     def district
-      ::Geo::District.where(geonames_code: self.district_code).first
+      ::Geo::District.where(district_code: self.district_code).first
+    end
+
+    def adm3
+      ::Geo::Adm3.where(adm3_code: self.adm3_code).first
     end
 
     def adm4
-      ::Geo::Adm4.where(geonames_code: self.adm4_code).first
+      ::Geo::Adm4.where(adm4_code: self.adm4_code).first
     end
 
     def adm5
-      ::Geo::Adm5.where(geonames_code: self.adm5_code).first
+      ::Geo::Adm5.where(adm5_code: self.adm5_code).first
     end
 
     module ClassMethods
