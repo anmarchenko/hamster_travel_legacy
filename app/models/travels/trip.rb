@@ -14,7 +14,9 @@ module Travels
 
     embeds_many :trip_days, class_name: 'Travels::TripDay'
 
-    validates :name, presence: true
+    belongs_to :user
+
+    validates_presence_of :name, :user
     validates :start_date, date: { before: :end_date }
 
   end

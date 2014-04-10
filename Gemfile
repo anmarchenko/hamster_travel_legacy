@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.0.rc2'
+gem 'rails', '4.1.0'
 gem 'russian'
 
 # DB
@@ -73,8 +73,9 @@ group :test do
   gem 'fuubar', :require => false
 
   # BDD integration testing
+  gem 'minitest'
   gem 'cucumber'
-  gem 'cucumber-rails'
+  gem 'cucumber-rails', require: false
   gem 'database_cleaner'
 
   # matchers for tests

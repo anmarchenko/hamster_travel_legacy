@@ -34,9 +34,12 @@ class User
   field :home_town, type: String
   field :locale, type: String
 
-  validates :last_name, presence: true
-  validates :first_name, presence: true
-  validates :email, uniqueness: true
+  # User data
+  has_many :trips, class_name: 'Travels::Trip'
+
+  validates_presence_of :last_name
+  validates_presence_of :first_name
+  validates_uniqueness_of :email
 
   def full_name
     '%s %s' % [first_name, last_name]
