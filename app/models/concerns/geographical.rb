@@ -16,25 +16,13 @@ module Concerns
       field :population, type: Integer
 
       field :country_code, type: String
-      field :country_text, type: String
-
       field :region_code, type: String
-      field :region_text, type: String
-
       field :district_code, type: String
-      field :district_text, type: String
-
       field :adm3_code, type: String
-      field :adm3_text, type: String
-
       field :adm4_code, type: String
-      field :adm4_text, type: String
-
       field :adm5_code, type: String
-      field :adm5_text, type: String
 
-      field :timezone_text, type: String
-      field :timezone_code, type: String
+      field :timezone, type: String
     end
 
     def translated_name(locale = I18n.locale)
@@ -46,26 +34,61 @@ module Concerns
     end
 
     def region
-      ::Geo::Region.where(region_code: self.region_code).first
+      ::Geo::Region.where(region_code: self.region_code, country_code: self.country_code).first
     end
 
     def district
-      ::Geo::District.where(district_code: self.district_code).first
+      ::Geo::District.where(district_code: self.district_code,
+                            region_code: self.region_code,
+                            country_code: self.country_code).first
     end
 
     def adm3
-      ::Geo::Adm3.where(adm3_code: self.adm3_code).first
+      ::Geo::Adm3.where(adm3_code: self.adm3_code,
+                        district_code: self.district_code,
+                        region_code: self.region_code,
+                        country_code: self.country_code).first
     end
 
     def adm4
-      ::Geo::Adm4.where(adm4_code: self.adm4_code).first
+      ::Geo::Adm4.where(adm4_code: self.adm4_code,
+                        adm3_code: self.adm3_code,
+                        district_code: self.district_code,
+                        region_code: self.region_code,
+                        country_code: self.country_code).first
     end
 
     def adm5
-      ::Geo::Adm5.where(adm5_code: self.adm5_code).first
+      ::Geo::Adm5.where(adm5_code: self.adm5_code,
+                        adm4_code: self.adm4_code,
+                        adm3_code: self.adm3_code,
+                        district_code: self.district_code,
+                        region_code: self.region_code,
+                        country_code: self.country_code).first
+    end
+
+    def update_from_geonames_string(str)
+      values = self.class.split_geonames_string(str)
+      update_attributes(
+          geonames_code: values[0].strip,
+          name: values[1].strip,
+          latitude: values[4].strip,
+          longitude: values[5].strip,
+          country_code: values[8].strip,
+          region_code: values[10].strip,
+          district_code: values[11].strip,
+          adm3_code: values[12].strip,
+          adm4_code: values[13].strip,
+          population: values[14].strip,
+          timezone: values[17].strip,
+          geonames_modification_date: values[18].strip
+      )
     end
 
     module ClassMethods
+      def split_geonames_string(str)
+        str.split(/\t/)
+      end
     end
 
   end

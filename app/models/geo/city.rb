@@ -39,5 +39,24 @@ module Geo
       status == Statuses::ADM5_CENTER
     end
 
+    def update_from_geonames_string(str)
+      super(str)
+      values = Geo::City.split_geonames_string(str)
+      feature_code = values[7].strip
+      case feature_code
+        when 'PPLC'
+          self.status = Statuses::CAPITAL
+        when 'PPLA'
+          self.status = Statuses::REGION_CENTER
+        when 'PPLA2'
+          self.status = Statuses::DISTRICT_CENTER
+        when 'PPLA3'
+          self.status = Statuses::ADM3_CENTER
+        when 'PPLA4'
+          self.status = Statuses::ADM4_CENTER
+      end
+      save
+    end
+
   end
 end

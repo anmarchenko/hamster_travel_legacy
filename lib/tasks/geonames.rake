@@ -3,8 +3,10 @@ namespace :geo do
 
   desc 'geonames'
 
-  PATH_TO_DATA = '/home/andrey/Data'
+  PATH_TO_DATA = '/var/data'
+
   DATA_FILES = %w(prepCountries prepRegions prepDistricts prepAdm3 prepAdm4 prepAdm5 prepCities)
+
   FEATURE_CODE_TO_FILE = {
       'ADM1' => 'prepRegions',
       'ADM2' => 'prepDistricts',
@@ -17,6 +19,17 @@ namespace :geo do
       'PCLI' => 'prepCountries',
       'PCLS' => 'prepCountries'
   }
+  def self.geo_models
+    {
+        #'prepCountries' => Geo::Country,
+        #'prepRegions' => Geo::Region,
+        #'prepDistricts' => Geo::District,
+        #'prepAdm3' => Geo::Adm3,
+        #'prepAdm4' => Geo::Adm4,
+        #'prepAdm5' => Geo::Adm5,
+        'prepCities' => Geo::City
+    }
+  end
 
   task :prepare, [] => :environment do
 
@@ -28,7 +41,7 @@ namespace :geo do
     # read all countries
     File.open("#{PATH_TO_DATA}/allCountries.txt") do |f|
       f.each_line do |line|
-        arr = line.split(/\t/)
+        arr = Geo::Country.split_geonames_string(line)
 
         feature_class = arr[6]
         feature_code = arr[7]
@@ -51,6 +64,17 @@ namespace :geo do
   end
 
   task :migrate, [] => :environment do
+    geo_models.each {|key, klass| klass.delete_all}
+
+    # migrate countries
+    geo_models.each do |file_name, klass|
+      File.open("#{PATH_TO_DATA}/#{file_name}") do |f|
+        f.each_line do |line|
+          object = klass.create
+          object.update_from_geonames_string(line)
+        end
+      end
+    end
   end
 
 end
