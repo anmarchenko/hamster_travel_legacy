@@ -1,3 +1,4 @@
+# not used for now: for future use (multi language project)
 module Geo
   class GeoName
     include Mongoid::Document

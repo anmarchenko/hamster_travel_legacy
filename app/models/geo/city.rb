@@ -15,6 +15,22 @@ module Geo
 
     field :status, type: String
 
+    field :country_text, type: String
+    field :country_text_ru, type: String
+    field :country_text_en, type: String
+
+    field :region_text, type: String
+    field :region_text_ru, type: String
+    field :region_text_en, type: String
+
+    def country_translated_name(locale = I18n.locale)
+      self.send("country_text_#{locale}") || country_text
+    end
+
+    def region_translated_name(locale = I18n.locale)
+      self.send("region_text_#{locale}") || region_text
+    end
+
     def is_capital?
       status == Statuses::CAPITAL
     end

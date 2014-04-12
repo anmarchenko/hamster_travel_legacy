@@ -27,7 +27,7 @@ namespace :geo do
         #'prepAdm3' => Geo::Adm3,
         #'prepAdm4' => Geo::Adm4,
         #'prepAdm5' => Geo::Adm5,
-        'prepCities' => Geo::City
+        #'prepCities' => Geo::City
     }
   end
 
@@ -69,12 +69,49 @@ namespace :geo do
     # migrate countries
     geo_models.each do |file_name, klass|
       File.open("#{PATH_TO_DATA}/#{file_name}") do |f|
+        puts "Processing file #{file_name}"
+        number = 0
         f.each_line do |line|
+          number += 1
+
           object = klass.create
           object.update_from_geonames_string(line)
+
+          puts "Line #{number}" if number % 100 == 0
         end
       end
     end
+
+    # migrate country info
+    File.open("#{PATH_TO_DATA}/countryInfo.txt") do |f|
+      f.each_line do |line|
+        next if line.start_with?('#')
+        values = Geo::Country.split_geonames_string line
+        object = Geo::Country.where(geonames_code: values[16].strip).first
+        if object.blank?
+          puts "ERROR!! Country #{values[0]} not found"
+          next
+        end
+        object.load_additional_info(line)
+      end
+    end
+
+    # alternate names
+    File.open("#{PATH_TO_DATA}/alternateNames.txt") do |f|
+      f.each_line do |line|
+        values = Geo::Country.split_geonames_string line
+        next unless %w(en ru).include? values[2]
+        object = Concerns::Geographical.find_by_geonames_code(values[1])
+        if object.blank?
+          puts "ERROR!! Object #{values[1]} not found"
+          next
+        end
+        object.send("name_#{values[2]}=", values[3])
+        object.save
+        puts "Processed #{values[3]} for #{object}"
+      end
+    end
+
   end
 
 end

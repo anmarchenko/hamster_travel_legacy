@@ -4,11 +4,23 @@ module Concerns
   module Geographical
     extend ActiveSupport::Concern
 
+    def self.find_by_geonames_code(code)
+      Geo::City.by_geonames_code(code) ||
+        Geo::Adm5.by_geonames_code(code) ||
+        Geo::Adm4.by_geonames_code(code) ||
+        Geo::Adm3.by_geonames_code(code) ||
+        Geo::District.by_geonames_code(code) ||
+        Geo::Region.by_geonames_code(code) ||
+        Geo::Country.by_geonames_code(code)
+    end
+
     included do
       field :geonames_code, type: String
       field :geonames_modification_date, type: Date
 
       field :name, type: String
+      field :name_ru, type: String
+      field :name_en, type: String
 
       field :latitude, type: Float
       field :longitude, type: Float
@@ -25,8 +37,12 @@ module Concerns
       field :timezone, type: String
     end
 
+    def method_missing
+      nil
+    end
+
     def translated_name(locale = I18n.locale)
-      ::Geo::GeoName.where(geonames_id: self.geonames_code, locale: locale).first.try(:name) || name
+      self.send("name_#{locale}") || name
     end
 
     def country
@@ -89,6 +105,11 @@ module Concerns
       def split_geonames_string(str)
         str.split(/\t/)
       end
+
+      def by_geonames_code(code)
+        where(geonames_code: code).first
+      end
+
     end
 
   end

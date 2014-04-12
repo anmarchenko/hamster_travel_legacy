@@ -31,7 +31,13 @@ class User
   field :last_name, type: String
 
   # User settings
-  field :home_town, type: String
+
+  # home town
+  # geonames_code
+  field :home_town_code, type: String
+  # localized text
+  field :home_town_text, type: String
+
   field :locale, type: String
 
   # User data
