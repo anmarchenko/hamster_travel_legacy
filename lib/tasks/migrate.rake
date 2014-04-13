@@ -8,7 +8,8 @@ namespace :db do
     # times - once or forever or never. never - default
 
     Db::Migration.registrate!({
-      'Db::Migrations::CreateUsers' => 'once'
+      'Db::Migrations::CreateUsers' => 'once',
+      'Db::Migrations::DefaultUsersHometown' => 'once'
     })
 
     Db::Migration.run_all!

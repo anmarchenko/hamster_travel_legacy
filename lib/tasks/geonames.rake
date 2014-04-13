@@ -21,13 +21,13 @@ namespace :geo do
   }
   def self.geo_models
     {
-        #'prepCountries' => Geo::Country,
-        #'prepRegions' => Geo::Region,
-        #'prepDistricts' => Geo::District,
-        #'prepAdm3' => Geo::Adm3,
-        #'prepAdm4' => Geo::Adm4,
-        #'prepAdm5' => Geo::Adm5,
-        #'prepCities' => Geo::City
+        'prepCountries' => Geo::Country,
+        'prepRegions' => Geo::Region,
+        'prepDistricts' => Geo::District,
+        'prepAdm3' => Geo::Adm3,
+        'prepAdm4' => Geo::Adm4,
+        'prepAdm5' => Geo::Adm5,
+        'prepCities' => Geo::City
     }
   end
 
@@ -66,7 +66,7 @@ namespace :geo do
   task :migrate, [] => :environment do
     geo_models.each {|key, klass| klass.delete_all}
 
-    # migrate countries
+    # migrate models
     geo_models.each do |file_name, klass|
       File.open("#{PATH_TO_DATA}/#{file_name}") do |f|
         puts "Processing file #{file_name}"
@@ -82,7 +82,7 @@ namespace :geo do
       end
     end
 
-    # migrate country info
+    migrate country info
     File.open("#{PATH_TO_DATA}/countryInfo.txt") do |f|
       f.each_line do |line|
         next if line.start_with?('#')

@@ -23,12 +23,29 @@ module Geo
     field :region_text_ru, type: String
     field :region_text_en, type: String
 
+    field :denormalized, type: Boolean, default: false
+
     def country_translated_name(locale = I18n.locale)
+      denormalize unless denormalized
       self.send("country_text_#{locale}") || country_text
     end
 
     def region_translated_name(locale = I18n.locale)
+      denormalize unless denormalized
       self.send("region_text_#{locale}") || region_text
+    end
+
+    def denormalize
+      self.country_text = self.country.try(:name)
+      self.country_text_ru = self.country.try(:name_ru)
+      self.country_text_en = self.country.try(:name_en)
+
+      self.region_text = self.region.try(:name)
+      self.region_text_ru = self.region.try(:name_ru)
+      self.region_text_en = self.region.try(:name_en)
+
+      self.denormalized = true
+      self.save
     end
 
     def is_capital?
