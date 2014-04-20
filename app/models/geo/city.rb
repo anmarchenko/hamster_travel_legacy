@@ -25,6 +25,19 @@ module Geo
 
     field :denormalized, type: Boolean, default: false
 
+    def translated_text(args = {with_region: true, with_country: true, locale: I18n.locale})
+      text = translated_name(args[:locale])
+      if args[:with_region]
+        reg = region_translated_name(args[:locale])
+        text += ", #{reg}" unless reg.blank? or reg == text
+      end
+      if args[:with_country]
+        c = country_translated_name(args[:locale])
+        text += ", #{c}" unless c.blank?
+      end
+      text
+    end
+
     def country_translated_name(locale = I18n.locale)
       denormalize unless denormalized
       self.send("country_text_#{locale}") || country_text

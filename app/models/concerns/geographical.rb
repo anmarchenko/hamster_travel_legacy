@@ -37,11 +37,10 @@ module Concerns
       field :timezone, type: String
 
       index({geonames_code: 1}, {unique: true})
-      index({name: 1, name_en: 1, name_ru: 1}, {name: 'find_by_term_index'})
       index({population: -1})
     end
 
-    def method_missing
+    def method_missing(*args)
       nil
     end
 
@@ -117,8 +116,6 @@ module Concerns
       def find_by_term(term)
         term = Regexp.escape(term)
         where('$or' => [{name: /#{term}/i}, {name_ru: /#{term}/i}, {name_en: /#{term}/i}]).order_by(population: -1)
-        #where(name_ru: /#{term}/i).order_by(population: -1)
-        #where('$or' => [{name: /#{term}/i}, {name_ru: /#{term}/i}, {name_en: /#{term}/i}])
       end
 
     end

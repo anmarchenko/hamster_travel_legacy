@@ -17,3 +17,8 @@ body {
     display: block;
     clear: none;
 }
+
+.dropdown-menu {
+    max-height: 300px;
+    overflow-y: auto;
+}

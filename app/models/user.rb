@@ -46,9 +46,14 @@ class User
   validates_presence_of :last_name
   validates_presence_of :first_name
   validates_uniqueness_of :email
+  validates :home_town_text, typeahead: true
 
   def full_name
     '%s %s' % [first_name, last_name]
+  end
+
+  def home_town
+    Geo::City.where(geonames_code: home_town_code).first
   end
 
   # PERSPECTIVE

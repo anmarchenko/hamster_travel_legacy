@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   end
 
   def update
+    p params
     if @user.update_attributes user_params
       flash[:notice] = t('users.update_successful', locale: @user.locale)
       redirect_to edit_user_path @user, locale: @user.locale
@@ -29,7 +30,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:locale, :home_town)
+    params.require(:user).permit(:locale, :home_town_text, :home_town_code)
   end
 
 end

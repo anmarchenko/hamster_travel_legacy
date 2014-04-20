@@ -7,7 +7,7 @@ ru:
         last_name: Фамилия
         password: Пароль
         password_confirmation: Повтор пароля
-        home_town: Мой город
+        home_town_text: Мой город
         locale: Язык
         current_password: Текущий пароль
   users:

@@ -82,7 +82,7 @@ namespace :geo do
       end
     end
 
-    migrate country info
+    # migrate country info
     File.open("#{PATH_TO_DATA}/countryInfo.txt") do |f|
       f.each_line do |line|
         next if line.start_with?('#')

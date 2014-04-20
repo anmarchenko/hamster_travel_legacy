@@ -1,3 +1,4 @@
 ru:
   errors:
     unathorized: Not enough rights
+    from_list: must be from list

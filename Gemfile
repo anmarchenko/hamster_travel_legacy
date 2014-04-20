@@ -41,6 +41,10 @@ gem 'therubyracer', platforms: :ruby
 gem 'uglifier', '>= 1.3.0'
 # chosen js library
 gem 'chosen-rails'
+# AngularJS magic framework
+gem 'angularjs-rails'
+gem 'angular-ui-bootstrap-rails'
+gem 'angularjs-rails-resource', '~> 1.0.0'
 
 # other
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
