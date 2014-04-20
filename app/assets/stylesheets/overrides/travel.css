@@ -19,6 +19,6 @@ body {
 }
 
 .dropdown-menu {
-    max-height: 300px;
+    max-height: 350px;
     overflow-y: auto;
 }

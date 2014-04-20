@@ -1,0 +1,21 @@
+- content_for :title, t('.title')
+
+- if user_signed_in?
+  = link_to new_trip_path, class: 'btn btn-success btn-sm pull-right' do
+    = fa_icon 'plus', text: t('.create')
+  %ul{class: 'nav nav-tabs'}
+    %li{class: ('active' unless params[:my])}
+      = link_to t('.all'), trips_path
+    %li{class: ('active' if params[:my])}
+      = link_to t('.my'), trips_path(my: true)
+
+%div{class: 'row', style: 'margin-top: 10px'}
+  %div{class: 'col-md-4 '}
+    %div{class: 'thumbnail well'}
+      TODO СПИСОК ПУТЕШЕСТВИЙ
+  %div{class: 'col-md-4 '}
+    %div{class: 'thumbnail well'}
+      TODO СПИСОК ПУТЕШЕСТВИЙ
+  %div{class: 'col-md-4 '}
+    %div{class: 'thumbnail well'}
+      TODO СПИСОК ПУТЕШЕСТВИЙ

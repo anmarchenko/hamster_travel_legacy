@@ -1,0 +1,11 @@
+- content_for :title, t('.title')
+
+%h3{class: 'text-center'}
+  = @trip.name
+
+%div{class: 'row'}
+
+  %p
+    = @trip.short_description
+
+  %hr

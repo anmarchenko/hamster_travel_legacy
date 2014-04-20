@@ -1,0 +1,43 @@
+- is_create = %w(new create).include?(params[:action])
+
+%div{class: 'row'}
+  %div{class: 'col-xs-12 col-sm-8 col-md-6 col-sm-offset-1 col-md-offset-2'}
+    = form_for @trip, url: is_create ? trips_path : trip_path(@trip) do |f|
+      %fieldset
+        %h2
+          = is_create ? t('.create_title') : t('.edit_title')
+        %hr
+
+        = error_messages! @trip
+
+        %div{class: 'form-group'}
+          = f.label :name, class: 'control-label'
+          = f.text_field :name, class: 'form-control', placeholder: t('.name_placeholder')
+
+        %div{class: 'form-group'}
+          = f.label :short_description, class: 'control-label'
+          = f.text_area :short_description, class: 'form-control', placeholder: t('.short_description_placeholder'), rows: 6
+
+        %div{class: 'row'}
+
+          %div{class: 'col-xs-12 col-sm-8 col-md-6'}
+            %div{class: 'form-group'}
+              = f.label :start_date, class: 'control-label'
+              %span{class: 'input-group'}
+                = f.text_field :start_date, datepicker_options('start_date', f.object).merge(class: 'form-control', placeholder: t('.start_date_placeholder'))
+                %div{class: 'input-group-addon'}
+                  = fa_icon 'calendar'
+
+          %div{class: 'col-xs-12 col-sm-8 col-md-6'}
+            %div{class: 'form-group'}
+              = f.label :end_date, class: 'control-label'
+              %span{class: 'input-group'}
+                = f.text_field :end_date, datepicker_options('end_date', f.object).merge(class: 'form-control', placeholder: t('.end_date_placeholder'))
+                %div{class: 'input-group-addon'}
+                  = fa_icon 'calendar'
+
+        %hr
+
+        %div{class: 'form-actions text-right'}
+          = link_to t('.return'), is_create ? trips_path : trip_path(@trip), class: 'btn btn-primary pull-left'
+          = submit_tag t('.save'), class: 'btn btn-success'

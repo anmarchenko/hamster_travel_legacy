@@ -7,6 +7,10 @@ ru:
     edit_user: Редактировать
     settings: Настройки
     save: Сохранить
+    today: Сегодня
+    toggle_weeks: №
+    clear: Очистить
+    datepicker_close: Ок
     user_profile_layout:
       password_placeholder: оставьте пустым, если не хотите менять пароль
       current_password_placeholder: для подтверждения изменений необходимо ввести текущий пароль

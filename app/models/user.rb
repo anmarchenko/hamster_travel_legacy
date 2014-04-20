@@ -41,7 +41,7 @@ class User
   field :locale, type: String
 
   # User data
-  has_many :trips, class_name: 'Travels::Trip'
+  has_and_belongs_to_many :trips, class_name: 'Travels::Trip'
 
   validates_presence_of :last_name
   validates_presence_of :first_name

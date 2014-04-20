@@ -2,3 +2,4 @@ ru:
   errors:
     unathorized: Not enough rights
     from_list: must be from list
+    date_before: must be valid date and before the end date

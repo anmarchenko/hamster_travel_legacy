@@ -12,8 +12,12 @@
 
     %nav{class: 'navbar-collapse collapse'}
 
-      %ul{class: 'nav navbar-nav navbar-right'}
 
+      %ul{class: 'nav navbar-nav'}
+        %li
+          = link_to t('.trips'), trips_path
+
+      %ul{class: 'nav navbar-nav navbar-right'}
         = render 'layouts/partials/user_navbar'
 
         = render 'layouts/partials/locale_bar'

@@ -7,6 +7,10 @@ en:
     edit_user: Edit profile
     settings: Settings
     save: Save
+    today: Today
+    toggle_weeks: Weeks
+    clear: Clear
+    datepicker_close: Close
     user_profile_layout:
       password_placeholder: leave blank if you don't want to change it
       current_password_placeholder: we need your current password to confirm your changes
