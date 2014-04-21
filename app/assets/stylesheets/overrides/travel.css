@@ -22,3 +22,7 @@ body {
     max-height: 350px;
     overflow-y: auto;
 }
+
+.trip-grid{
+    margin-top: 10px;
+}

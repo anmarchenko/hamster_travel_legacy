@@ -8,6 +8,8 @@ gem 'russian'
 gem 'mongoid', github: 'mongoid/mongoid'
 # pagination
 gem 'kaminari'
+gem 'kaminari-bootstrap', '~> 3.0.1'
+gem 'kaminari-i18n'
 # validate dates
 gem 'date_validator'
 

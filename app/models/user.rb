@@ -41,8 +41,6 @@ class User
   field :locale, type: String
 
   # User data
-  has_and_belongs_to_many :trips, class_name: 'Travels::Trip'
-
   validates_presence_of :last_name
   validates_presence_of :first_name
   validates_uniqueness_of :email
@@ -50,6 +48,10 @@ class User
 
   def full_name
     '%s %s' % [first_name, last_name]
+  end
+
+  def trips
+    Travels::Trip.where('user_ids' => id.to_s)
   end
 
   def home_town

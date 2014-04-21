@@ -5,6 +5,12 @@ class TripsController < ApplicationController
   before_filter :authorize, only: [:edit, :update, :destroy]
 
   def index
+    if params[:my] && !current_user.blank?
+      @trips = current_user.trips
+    else
+      @trips = Travels::Trip.all
+    end
+    @trips = @trips.page(params[:page] || 1)
   end
 
   def new
@@ -13,6 +19,7 @@ class TripsController < ApplicationController
 
   def create
     @trip = Travels::Trip.new(params_trip)
+    @trip.author_user_id = current_user.id
     @trip.users = [current_user]
     @trip.save
 

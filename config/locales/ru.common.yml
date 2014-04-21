@@ -14,3 +14,4 @@ ru:
     user_profile_layout:
       password_placeholder: оставьте пустым, если не хотите менять пароль
       current_password_placeholder: для подтверждения изменений необходимо ввести текущий пароль
+      trips: Путешествия

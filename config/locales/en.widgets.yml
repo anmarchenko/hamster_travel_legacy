@@ -1,0 +1,7 @@
+en:
+  widgets:
+    trips:
+      trip_box:
+        author: Author
+      grid:
+        no_trips: No trips was added! Login and add a new one.

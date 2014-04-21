@@ -1,8 +1,12 @@
-%div{class: 'row well'}
-  %div{class: 'col-md-3'}
-    = render 'users/partials/menu', page: page
+- profile_width = '12'
 
-  %div{class: 'col-md-9'}
+%div{class: 'row well'}
+  - if user_signed_in? && current_user == @user
+    - profile_width = '9'
+    %div{class: 'col-md-3'}
+      = render 'users/partials/menu', page: page
+
+  %div{class: "col-md-#{profile_width}"}
     %div{class: 'login-profile-panel panel'}
       %img{class: 'login-profile-pic img-circle pic', src: 'https://pbs.twimg.com/profile_images/444630537819287552/KH7jRcUe.jpeg'}
       %div{class: 'login-profile-name name'}

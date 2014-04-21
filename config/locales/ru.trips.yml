@@ -6,6 +6,7 @@ ru:
         short_description: Описание
         start_date: Первый день
         end_date: Последний день
+        author: Создатель
   trips:
     index:
       title: Путешествия

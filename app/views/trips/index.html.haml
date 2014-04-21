@@ -9,13 +9,4 @@
     %li{class: ('active' if params[:my])}
       = link_to t('.my'), trips_path(my: true)
 
-%div{class: 'row', style: 'margin-top: 10px'}
-  %div{class: 'col-md-4 '}
-    %div{class: 'thumbnail well'}
-      TODO СПИСОК ПУТЕШЕСТВИЙ
-  %div{class: 'col-md-4 '}
-    %div{class: 'thumbnail well'}
-      TODO СПИСОК ПУТЕШЕСТВИЙ
-  %div{class: 'col-md-4 '}
-    %div{class: 'thumbnail well'}
-      TODO СПИСОК ПУТЕШЕСТВИЙ
+= render 'widgets/trips/grid', trips: @trips

@@ -6,6 +6,7 @@ en:
         short_description: Description
         start_date: First day
         end_date: Last day
+        author: Author
   trips:
     index:
       title: Travels

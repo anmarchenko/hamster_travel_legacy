@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   before_filter :authorize, only: [:edit, :update]
 
   def show
+    @trips = @user.trips.page(params[:page] || 1)
   end
 
   def edit
