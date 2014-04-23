@@ -19,8 +19,11 @@ module Travels
     field :author_user_id
     has_and_belongs_to_many :users, inverse_of: nil
 
-    validates_presence_of :name, :start_date, :end_date, :author
+    validates_presence_of :name, :start_date, :end_date, :author_user_id
+
     validates :start_date, date: { before: :end_date, message: I18n.t('errors.date_before')  }
+    validates :end_date, date: {before: Proc.new {|record| record.start_date + 30.days}, message: I18n.t('errors.end_date_days', period: 30) }
+
     validates_length_of :users, minimum: 1
 
     default_scope ->{order_by(created_at: -1)}
