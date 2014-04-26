@@ -2,6 +2,6 @@ ru:
   widgets:
     trips:
       trip_box:
-        author: Создатель
+        author: Автор
       grid:
         no_trips: Ещё нет ни одного путешествия! Можно добавить новое.

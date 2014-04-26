@@ -1,11 +1,12 @@
 - trip ||= nil
 
 - unless trip.blank?
-  %div{class: 'media well'}
-    %a{class: 'pull-left', href: trip_path(trip), style: 'display: none'}
-      %img{class: 'media-object img-thumbnail', src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTPaRUd_FpidHCi4AlIo0BjrWIuG7AGFF6iVeZ_GfdKGu6OMas', width: '100'}
-    %div{class: 'media-body'}
-      %h4{class: 'media-heading'}
+  %div{class: 'thumbnail clearfix'}
+    %div{class: 'clearfix'}
+      %a{href: trip_path(trip)}
+        %img{class: 'img-responsive', src: 'http://lorempixel.com/300/300/city/', width: '100%'}
+    %div{class: 'caption'}
+      %h4
         = link_to trip.name, trip_path(trip)
       = "#{t('.author')}:"
       - unless trip.author.blank?
