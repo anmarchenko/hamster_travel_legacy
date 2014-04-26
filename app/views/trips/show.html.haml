@@ -1,11 +1,31 @@
 - content_for :title, t('.title')
 
-%h3{class: 'text-center'}
-  = @trip.name
+%div{class: 'row'}
+  %div{class: 'col-md-3 col-sm-3'}
+    %img{class: 'img-responsive', src: 'http://lorempixel.com/300/300/city/', width: '100%'}
+  %div{class: 'col-md-9 col-sm-9'}
+    - if user_signed_in? and @trip.include_user(current_user)
+      %div{class: 'btn-toolbar pull-right'}
+        = link_to edit_trip_path(@trip), class: 'btn btn-success' do
+          = fa_icon 'pencil'
+
+        - if @trip.author_user_id == current_user.id
+          = link_to trip_path(@trip), class: 'btn btn-danger form-inline', method: :delete, 'data-confirm'=> t('common.delete_confirm') do
+            = fa_icon 'times'
+
+    %h3
+      = @trip.name
+      %small
+        = l @trip.start_date, format: :month
+    %p
+      = @trip.short_description
+    %h4
+      = t('.travellers')
+    - @trip.users.each do |user|
+      %p
+        = link_to user.full_name, user_path(user)
+
+
+%hr
 
 %div{class: 'row'}
-
-  %p
-    = @trip.short_description
-
-  %hr

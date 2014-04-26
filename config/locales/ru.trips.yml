@@ -17,6 +17,9 @@ ru:
       title: Новое путешествие
     show:
       title: Путешествие
+      travellers: 'Участники:'
+    edit:
+      title: Редактирование путешествия
     form:
       create_title: Создать путешествие
       edit_title: Редактировать путешествие

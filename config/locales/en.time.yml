@@ -1,0 +1,4 @@
+en:
+  date:
+    formats:
+      month: '%B %Y'

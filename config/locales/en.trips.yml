@@ -17,6 +17,9 @@ en:
       title: New travel
     show:
       title: Travel
+      travellers: 'Participants:'
+    edit:
+      title: Edit travel
     form:
       create_title: Create travel
       edit_title: Edit travel

@@ -15,3 +15,7 @@ ru:
       password_placeholder: оставьте пустым, если не хотите менять пароль
       current_password_placeholder: для подтверждения изменений необходимо ввести текущий пароль
       trips: Путешествия
+    my_trips: Мои путешествия
+    update_successful: Изменения сохранены
+    delete_confirm: Вы уверены? Удаление необратимо.
+

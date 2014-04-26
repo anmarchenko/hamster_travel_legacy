@@ -1,6 +1,6 @@
 class TripsController < ApplicationController
 
-  before_filter :authenticate_user!, only: [:edit, :update, :new, :create]
+  before_filter :authenticate_user!, only: [:edit, :update, :new, :create, :destroy]
   before_filter :find_trip, only: [:show, :edit, :update, :destroy]
   before_filter :authorize, only: [:edit, :update, :destroy]
 
@@ -31,12 +31,20 @@ class TripsController < ApplicationController
   end
 
   def update
+    @trip.update_attributes(params_trip)
+    if @trip.errors.blank?
+      flash[:notice] = t('common.update_successful')
+      redirect_to trip_path(@trip) and return
+    end
+    render 'edit'
   end
 
   def show
   end
 
   def destroy
+    @trip.destroy
+    redirect_to trips_path(my: true)
   end
 
   private
