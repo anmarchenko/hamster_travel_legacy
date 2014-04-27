@@ -18,6 +18,13 @@ ru:
     show:
       title: Путешествие
       travellers: 'Участники:'
+      plan: План
+      day: День
+      place: Города
+      transfers: Переезды
+      hotel: Отель
+      activities: События
+      comments: Комментарий
     edit:
       title: Редактирование путешествия
     form:

@@ -29,17 +29,23 @@
 
 %div{class: 'row'}
   %h3
-    План
+    = t('.plan')
 
   %table{class: 'table table-striped'}
     %thead
       %tr
-        %th{class: 'col-md-1'} Day
-        %th{class: 'col-md-2'} Place
-        %th{class: 'col-md-3'} Transfers
-        %th{class: 'col-md-2'} Hotel
-        %th{class: 'col-md-2'} Activities
-        %th{class: 'col-md-2'} Comments
+        %th{class: 'col-md-1'}
+          = t('.day')
+        %th{class: 'col-md-2'}
+          = t('.place')
+        %th{class: 'col-md-3'}
+          = t('.transfers')
+        %th{class: 'col-md-2'}
+          = t('.hotel')
+        %th{class: 'col-md-2'}
+          = t('.activities')
+        %th{class: 'col-md-2'}
+          = t('.comments')
     %tbody
       - @trip.plan.try(:days).try(:each) do |day|
         %tr

@@ -18,6 +18,13 @@ en:
     show:
       title: Travel
       travellers: 'Participants:'
+      plan: Plan
+      day: Day
+      place: Cities
+      transfers: Transfers
+      hotel: Hotel
+      activities: Activities
+      comments: Comments
     edit:
       title: Edit travel
     form:

@@ -15,7 +15,15 @@ module Travels
         day.date_when = (trip.start_date + index.days)
         day.save
       end
-      (days_count - self.days.length).times { self.days.create(plan: self, date_when: (self.days.last.date_when + 1.day) ) }
+      (days_count - self.days.length).times do
+        date = self.days.last.try(:date_when)
+        if date.blank?
+          date = trip.start_date
+        else
+          date = date + 1.day
+        end
+        self.days.create(plan: self, date_when: date)
+      end
     end
 
   end
