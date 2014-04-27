@@ -32,7 +32,7 @@
             %div{class: 'form-group'}
               = f.label :end_date, class: 'control-label'
               %span{class: 'input-group'}
-                = f.text_field :end_date, datepicker_options('end_date', f.object).merge(class: 'form-control', placeholder: t('.end_date_placeholder'))
+                = f.text_field :end_date, datepicker_options('end_date', f.object).merge(class: 'form-control', placeholder: t('.end_date_placeholder'), min: 'start_date')
                 %div{class: 'input-group-addon'}
                   = fa_icon 'calendar'
 

@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/mongoid/mongoid.git
-  revision: 030442edebe25ec19c66f37f51b46db22ae25850
+  revision: 8b33b62a43fb989a6a6db9beb72d98d8c84874ea
   specs:
     mongoid (4.0.0.beta1)
       activemodel (>= 4.0.0)
@@ -49,7 +49,7 @@ GEM
       debug_inspector (>= 0.0.1)
     bson (2.2.2)
     builder (3.2.2)
-    capistrano (3.2.0)
+    capistrano (3.2.1)
       i18n
       rake (>= 10.0.0)
       sshkit (~> 1.3)
@@ -111,7 +111,7 @@ GEM
     factory_girl_rails (4.4.1)
       factory_girl (~> 4.4.0)
       railties (>= 3.0.0)
-    font-awesome-rails (4.0.3.1)
+    font-awesome-rails (4.0.3.2)
       railties (>= 3.2, < 5.0)
     fssm (0.2.10)
     fuubar (1.3.2)

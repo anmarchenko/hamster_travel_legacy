@@ -2,7 +2,8 @@ class TripsController < ApplicationController
 
   before_filter :authenticate_user!, only: [:edit, :update, :new, :create, :destroy]
   before_filter :find_trip, only: [:show, :edit, :update, :destroy]
-  before_filter :authorize, only: [:edit, :update, :destroy]
+  before_filter :authorize, only: [:edit, :update]
+  before_filter :authorize_destroy, only: [:destroy]
 
   def index
     if params[:my] && !current_user.blank?
@@ -32,10 +33,7 @@ class TripsController < ApplicationController
 
   def update
     @trip.update_attributes(params_trip)
-    if @trip.errors.blank?
-      flash[:notice] = t('common.update_successful')
-      redirect_to trip_path(@trip) and return
-    end
+    redirect_to trip_path(@trip), notice: t('common.update_successful') and return if @trip.errors.blank?
     render 'edit'
   end
 
@@ -60,6 +58,10 @@ class TripsController < ApplicationController
 
   def authorize
     no_access and return if !@trip.include_user(current_user)
+  end
+
+  def authorize_destroy
+    no_access and return if !@trip.author_user_id == current_user.id
   end
 
 end

@@ -23,8 +23,8 @@ module ApplicationHelper
         'current-text' => I18n.t('common.today'),
         'toggle-weeks-text' => I18n.t('common.toggle_weeks'),
         'clear-text' => I18n.t('common.clear'),
-        'close-text' => I18n.t('common.datepicker_close')}
-    res.merge!('ng-init' => "#{model_name}='#{record.send(model_name)}';") unless record.blank? or record.send(model_name).blank?
+        'close-text' => I18n.t('common.datepicker_close') }
+    res.merge!('ng-init' => "#{model_name}=#{record.send(model_name).strftime('%Q')}") unless record.blank? or record.send(model_name).blank?
     res
   end
 

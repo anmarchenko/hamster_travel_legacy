@@ -26,6 +26,14 @@ module Travels
 
     default_scope ->{order_by(created_at: -1)}
 
+    after_save :update_plan
+
+    def update_plan
+      self.plan ||= Travels::Plan.new(trip: self)
+      self.plan.save
+      self.plan.update_plan
+    end
+
     def include_user(user)
       users.include?(user)
     end

@@ -12,12 +12,8 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update_attributes user_params
-      flash[:notice] = t('users.update_successful', locale: @user.locale)
-      redirect_to edit_user_path @user, locale: @user.locale
-    else
-      render 'edit'
-    end
+    redirect_to edit_user_path(@user, {locale: @user.locale}), notice: t('users.update_successful', locale: @user.locale) and return if @user.update_attributes user_params
+    render 'edit'
   end
 
   def find_user
