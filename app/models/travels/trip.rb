@@ -14,10 +14,10 @@ module Travels
 
     field :published, type: Boolean, default: false
 
-    embeds_one :plan, class_name: 'Travels::Plan'
-
     field :author_user_id
     has_and_belongs_to_many :users, inverse_of: nil
+
+    embeds_many :days, class_name: 'Travels::Day'
 
     validates_presence_of :name, :start_date, :end_date, :author_user_id
 
@@ -29,9 +29,22 @@ module Travels
     after_save :update_plan
 
     def update_plan
-      self.plan ||= Travels::Plan.new(trip: self)
-      self.plan.save
-      self.plan.update_plan
+      self.days ||= []
+      days_count = (self.end_date - self.start_date).to_i + 1
+      (self.days[days_count..-1] || []).each { |day| day.destroy }
+      self.days.each_with_index do |day, index|
+        day.date_when = (self.start_date + index.days)
+        day.save
+      end
+      (days_count - self.days.length).times do
+        date = self.days.last.try(:date_when)
+        if date.blank?
+          date = self.start_date
+        else
+          date = date + 1.day
+        end
+        self.days.create(trip: self, date_when: date)
+      end
     end
 
     def include_user(user)
