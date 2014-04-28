@@ -25,6 +25,8 @@ ru:
       hotel: Отель
       activities: События
       comments: Комментарий
+      edit_plan: Редактировать план
+      show_plan: Просмотр плана
     edit:
       title: Редактирование путешествия
     form:

@@ -25,6 +25,8 @@ en:
       hotel: Hotel
       activities: Activities
       comments: Comments
+      edit_plan: Edit plan
+      show_plan: Show plan
     edit:
       title: Edit travel
     form:

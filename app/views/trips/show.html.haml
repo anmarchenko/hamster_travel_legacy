@@ -28,8 +28,14 @@
 %hr
 
 %div{class: 'row', 'ng-controller' => 'PlanController'}
-  %h3
-    = t('.plan')
+  %div
+    %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(true)', class: 'btn btn-primary pull-right btn-sm', 'ng-show' => '!edit'}
+      = fa_icon 'edit', text: t('.edit_plan')
+    %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(false)', class: 'btn btn-primary pull-right btn-sm', 'ng-show' => 'edit'}
+      = fa_icon 'eye', text: t('.show_plan')
+
+    %h3
+      = t('.plan')
 
   %table{class: 'table'}
     %thead
@@ -52,6 +58,10 @@
         %td
           {{day.date}}
         %td
+          %div{'ng-show' => '!edit', 'ng-repeat' => 'place in day.places'}
+            {{place.id}}
+          %div{'ng-show' => 'edit', 'ng-repeat' => 'place in day.places'}
+            {{place.id}}edit
         %td
         %td
         %td

@@ -9,7 +9,7 @@ module Api
     respond_to :json
 
     def index
-      respond_with @trip.days.collect{|day| {id: day.id.to_s, date: day.date_when.to_s} }
+      respond_with @trip.days
     end
 
     private
