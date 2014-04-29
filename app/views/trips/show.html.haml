@@ -59,9 +59,19 @@
           {{day.date}}
         %td
           %div{'ng-show' => '!edit', 'ng-repeat' => 'place in day.places'}
-            {{place.id}}
-          %div{'ng-show' => 'edit', 'ng-repeat' => 'place in day.places'}
-            {{place.id}}edit
+            %p
+              {{place.city_text}}
+
+          %div{class: 'row form-group', 'ng-show' => 'edit'}
+            %a{href: 'javascript:void(0);', class: 'btn btn-success btn-sm pull-right', 'ng-click' => 'addPlace(day)'}
+              = fa_icon 'plus'
+            %span{'ng-repeat' => 'place in day.places'}
+              %div{class: 'col-md-9 form-group'}
+                = render 'widgets/typeahead/cities', model_name: 'place.city', classes: 'input-sm form-control', placeholder: t('.city')
+              %div{class: 'btn-group pull-right'}
+                %a{href: 'javascript:void(0);', class: 'btn btn-danger btn-sm', 'ng-click' => 'removePlace(day, $index)', 'ng-show' => '$index > 0'}
+                  = fa_icon 'times'
+
         %td
         %td
         %td

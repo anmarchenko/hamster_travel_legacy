@@ -27,6 +27,7 @@ ru:
       comments: Комментарий
       edit_plan: Редактировать план
       show_plan: Просмотр плана
+      city: Город
     edit:
       title: Редактирование путешествия
     form:

@@ -11,11 +11,17 @@ angular.module('travel-components').controller 'PlanController'
       $scope.setEdit = (val) ->
         $scope.edit = val
 
-      loadDays = ->
+      $scope.loadDays = ->
         Trip.getDays($scope.trip_id).then (days) ->
           $scope.days = days
 
+      $scope.addPlace = (day) ->
+        day.places.push({})
+
+      $scope.removePlace = (day, index) ->
+        day.places.splice(index, 1)
+
       # init controller
-      loadDays()
+      $scope.loadDays()
 
   ]
