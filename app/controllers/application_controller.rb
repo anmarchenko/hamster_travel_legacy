@@ -10,6 +10,11 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+  after_filter :set_csrf_cookie_for_ng
+
+  def set_csrf_cookie_for_ng
+    cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
+  end
 
   def default_url_options(options={})
     { :locale => I18n.locale }
@@ -24,6 +29,10 @@ class ApplicationController < ActionController::Base
   def no_access
     flash[:error] = t('errors.unathorized')
     redirect_to('/', locale: params[:locale])
+  end
+
+  def verified_request?
+    super || form_authenticity_token == request.headers['X-XSRF-TOKEN']
   end
 
 end

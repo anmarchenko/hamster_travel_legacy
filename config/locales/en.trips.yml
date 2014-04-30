@@ -27,6 +27,7 @@ en:
       comments: Comments
       edit_plan: Edit plan
       show_plan: Show plan
+      save_plan: Save plan
       city: City
     edit:
       title: Edit travel

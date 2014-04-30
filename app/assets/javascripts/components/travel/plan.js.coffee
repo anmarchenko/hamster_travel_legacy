@@ -21,6 +21,21 @@ angular.module('travel-components').controller 'PlanController'
       $scope.removePlace = (day, index) ->
         day.places.splice(index, 1)
 
+      $scope.fillAsPreviousPlace = (place, place_index, day, day_index) ->
+        if day.places[place_index - 1]
+          prev_place = day.places[place_index - 1]
+        else
+          prev_day = $scope.days[day_index - 1]
+          prev_place = prev_day.places[prev_day.places.length - 1]
+        place.city_code = prev_place.city_code
+        place.city_text = prev_place.city_text
+
+      $scope.savePlan = ->
+        $scope.saving = true
+        Trip.createDays($scope.trip_id, $scope.days)
+        $scope.loadDays()
+        $scope.saving = false
+
       # init controller
       $scope.loadDays()
 

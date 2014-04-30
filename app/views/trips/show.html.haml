@@ -27,15 +27,19 @@
 
 %hr
 
-%div{class: 'row', 'ng-controller' => 'PlanController'}
-  %div
-    %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(true)', class: 'btn btn-primary pull-right btn-sm', 'ng-show' => '!edit'}
-      = fa_icon 'edit', text: t('.edit_plan')
-    %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(false)', class: 'btn btn-primary pull-right btn-sm', 'ng-show' => 'edit'}
-      = fa_icon 'eye', text: t('.show_plan')
-
-    %h3
-      = t('.plan')
+%div{'ng-controller' => 'PlanController'}
+  %div{class: 'row'}
+    %div{class: 'col-md-12'}
+      %h3{class: 'pull-left'}
+        = t('.plan')
+      %div{class: 'btn-toolbar'}
+        %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(true)', class: 'btn btn-primary pull-right btn-sm', 'ng-show' => '!edit'}
+          = fa_icon 'edit', text: t('.edit_plan')
+        %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(false)', class: 'btn btn-primary pull-right btn-sm', 'ng-show' => 'edit'}
+          = fa_icon 'eye', text: t('.show_plan')
+        %a{href: 'javascript:void(0);', 'ng-click' => 'savePlan()', class: 'btn btn-success pull-right btn-sm',
+          'ng-disabled' => 'saving'}
+          = fa_icon 'save', text: t('.save_plan')
 
   %table{class: 'table'}
     %thead
@@ -62,15 +66,24 @@
             %p
               {{place.city_text}}
 
-          %div{class: 'row form-group', 'ng-show' => 'edit'}
-            %a{href: 'javascript:void(0);', class: 'btn btn-success btn-sm pull-right', 'ng-click' => 'addPlace(day)'}
-              = fa_icon 'plus'
+          %div{class: 'form-group', 'ng-show' => 'edit'}
             %span{'ng-repeat' => 'place in day.places'}
-              %div{class: 'col-md-9 form-group'}
-                = render 'widgets/typeahead/cities', model_name: 'place.city', classes: 'input-sm form-control', placeholder: t('.city')
-              %div{class: 'btn-group pull-right'}
-                %a{href: 'javascript:void(0);', class: 'btn btn-danger btn-sm', 'ng-click' => 'removePlace(day, $index)', 'ng-show' => '$index > 0'}
-                  = fa_icon 'times'
+              %div{class: 'row'}
+                %div{class: 'pull-right', style: 'margin-left: 9px;'}
+                  %a{href: 'javascript:void(0);', class: 'btn btn-success btn-sm', 'ng-click' => 'addPlace(day)', 'ng-show' => '$index == 0'}
+                    = fa_icon 'plus'
+                %div{class: 'col-md-9 form-group'}
+                  = render 'widgets/typeahead/cities', model_name: 'place.city', classes: 'input-sm form-control', placeholder: t('.city')
+
+                %span{style: 'position:relative'}
+                  %a{href: 'javascript:void(0);', class: 'btn btn-primary btn-sm', style: 'position: absolute; left: -13px;',
+                    'ng-click' => 'fillAsPreviousPlace(place, $index, day, $parent.$index)',
+                    'ng-show' => '($index > 0 || $parent.$index >0) && !place.city_code'}
+                    = fa_icon 'arrow-up'
+
+                %div{class: 'btn-toolbar pull-right'}
+                  %a{href: 'javascript:void(0);', class: 'btn btn-danger btn-sm', 'ng-click' => 'removePlace(day, $index)', 'ng-show' => '$index > 0'}
+                    = fa_icon 'times'
 
         %td
         %td

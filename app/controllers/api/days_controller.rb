@@ -12,6 +12,11 @@ module Api
       respond_with @trip.days
     end
 
+    def create
+      Travels::Updaters::TripUpdater.new(@trip, params[:days]).process_days
+      head 200
+    end
+
     private
 
     def find_trip
