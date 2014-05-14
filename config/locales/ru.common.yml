@@ -18,4 +18,9 @@ ru:
     my_trips: Мои путешествия
     update_successful: Изменения сохранены
     delete_confirm: Вы уверены? Удаление необратимо.
+    flight: Самолёт
+    train: Поезд
+    bus: Автобус
+    car: Автомобиль/Такси
+    tram: Трамвай
 

@@ -29,6 +29,19 @@ en:
       show_plan: Show plan
       save_plan: Save plan
       city: City
+      budget: budget
+      transfer: Transfer
+      from: From
+      to: To
+      departure: Departure
+      arrival: Arrival
+      price: Price
+      more: More information...
+      less: Less information...
+      comment: Comment
+      carrier: Carrier
+      station_from: From station
+      station_to: To station
     edit:
       title: Edit travel
     form:

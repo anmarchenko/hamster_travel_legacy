@@ -26,3 +26,15 @@ body {
 .trip-grid{
     margin-top: 10px;
 }
+
+.relative-position{
+    position: relative;
+}
+.day-place-container .up-button{
+    position: absolute;
+    right: 25px; top: 8px
+}
+.day-place-container .delete-button{
+    position: absolute;
+    right: 5px; top: 8px
+}

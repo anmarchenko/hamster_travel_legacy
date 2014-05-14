@@ -30,6 +30,16 @@ angular.module('travel-components').controller 'PlanController'
         place.city_code = prev_place.city_code
         place.city_text = prev_place.city_text
 
+      $scope.budget = () ->
+        price = 0
+        return 0 if !$scope.days
+        for day in $scope.days
+          continue if !day.transfers
+          for transfer in day.transfers
+            price += parseInt(transfer.price || 0, 10)
+
+        price || 0
+
       $scope.savePlan = ->
         $scope.saving = true
         Trip.createDays($scope.trip_id, $scope.days)

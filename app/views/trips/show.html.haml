@@ -32,6 +32,9 @@
     %div{class: 'col-md-12'}
       %h3{class: 'pull-left'}
         = t('.plan')
+        %small
+          = t('.budget')
+          {{budget()}}
       %div{class: 'btn-toolbar'}
         %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(true)', class: 'btn btn-primary pull-right btn-sm', 'ng-show' => '!edit'}
           = fa_icon 'edit', text: t('.edit_plan')
@@ -70,14 +73,14 @@
 
           %div{'ng-show' => 'edit'}
 
-            %div{'ng-repeat' => 'place in day.places', style: 'position: relative'}
-              %a{href: 'javascript:void(0);',  style: 'position: absolute; right: 25px; top: 8px',
+            %div{'ng-repeat' => 'place in day.places', class: 'day-place-container relative-position'}
+              %a{href: 'javascript:void(0);',  class: 'up-button',
                 'ng-click' => 'fillAsPreviousPlace(place, $index, day, $parent.$index)',
                 'ng-show' => '($index > 0 || $parent.$index >0) && !place.city_code'}
                 = fa_icon 'arrow-up'
 
               %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.places, $index)', 'ng-show' => '$index > 0',
-                style: 'position: absolute; right: 5px; top: 8px'}
+                class: 'delete-button'}
                 = fa_icon 'times'
               %div{class: 'form-group'}
                 = render 'widgets/typeahead/cities', model_name: 'place.city', classes: 'input-sm form-control', placeholder: t('.city')
@@ -88,68 +91,11 @@
 
         %td
           %div{'ng-show' => '!edit', 'ng-repeat' => 'transfer in day.transfers'}
-            %p
-              TRANSFER PLACE
+            = render 'trips/partials/show_transfer'
 
           %div{'ng-show' => 'edit'}
-            %div{'ng-repeat' => 'transfer in day.transfers', style: 'position: relative', class: 'form-horizontal'}
-              %p
-                %u
-                  Трансфер
-                %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.transfers, $index)', class: 'pull-right'}
-                  = fa_icon 'times'
-
-              %div{class: 'form-group'}
-                %div{class: 'col-md-6'}
-                  = render 'widgets/typeahead/cities', model_name: 'transfer.city_from', classes: 'input-sm form-control', placeholder: 'Из'
-                %div{class: 'col-md-6'}
-                  = render 'widgets/typeahead/cities', model_name: 'transfer.city_to', classes: 'input-sm form-control', placeholder: 'В'
-
-              %div{class: 'form-group'}
-                %div{class: 'col-md-12'}
-                  = select_tag 'transfer_type', options_for_select(Travels::Transfer::Types::OPTIONS), {class: 'form-control input-sm selectpicker', 'ng-model' => 'transfer.type'}
-
-              %div{class: 'form-group'}
-                %div{class: 'col-md-6 dropdown'}
-                  %a{id: 'dropdown-time-start-{{$index}}', class: 'dropdown-toggle', role: 'button', 'data-toggle' => 'dropdown', 'data-target' => '#', href: 'javascript:void(0);'}
-                    {{transfer.start_time | date:'dd.MM.yyyy HH:mm' }}
-                    %span{'ng-show' => '!transfer.start_time'}
-                      Отправление
-                  %ul{class: 'dropdown-menu', role: 'menu', 'aria-labelledby' => 'dLabel'}
-                    %datetimepicker{'data-ng-model'=>'transfer.start_time',
-                      'data-datetimepicker-config' => "{ dropdownSelector: 'dropdown-time-start-{{$index}}', weekStart: 1 }",
-                      'data-on-set-time' => 'onTimeSet'}
-
-                %div{class: 'col-md-6 dropdown'}
-                  %a{id: 'dropdown-time-end-{{$index}}', class: 'dropdown-toggle', role: 'button', 'data-toggle' => 'dropdown', 'data-target' => '#', href: 'javascript:void(0);'}
-                    {{transfer.end_time | date:'dd.MM.yyyy HH:mm' }}
-                    %span{'ng-show' => '!transfer.end_time'}
-                      Прибытие
-                  %ul{class: 'dropdown-menu', role: 'menu', 'aria-labelledby' => 'dLabel'}
-                    %datetimepicker{'data-ng-model'=>'transfer.end_time',
-                      'data-datetimepicker-config' => "{ dropdownSelector: 'dropdown-time-end-{{$index}}', weekStart: 1 }",
-                      'data-on-set-time' => 'onTimeSet'}
-
-              %div{class: 'form-group'}
-                %div{class: 'col-md-12'}
-                  = text_area_tag 'transfer_comment', '', 'ng-model' => 'transfer.comment', class: 'form-control', placeholder: 'Комментарий', rows: 6
-
-
-              %div{class: 'form-group'}
-                %div{class: 'col-md-4'}
-                  = text_field_tag 'transfer_code', '', 'ng-model' => 'transfer.code', class: 'input-sm form-control', placeholder: '№'
-                %div{class: 'col-md-8'}
-                  = text_field_tag 'transfer_company', '', 'ng-model' => 'transfer.company', class: 'input-sm form-control', placeholder: 'Перевозчик'
-
-              %div{class: 'form-group'}
-                %div{class: 'col-md-6'}
-                  = text_field_tag 'transfer_station_from', '', 'ng-model' => 'transfer.station_from', class: 'input-sm form-control', placeholder: 'От станции'
-
-                %div{class: 'col-md-6'}
-                  = text_field_tag 'transfer_station_to', '', 'ng-model' => 'transfer.station_to', class: 'input-sm form-control', placeholder: 'До станции'
-
-              %hr
-
+            %div{'ng-repeat' => 'transfer in day.transfers', class: 'form-horizontal'}
+              = render 'trips/partials/edit_transfer'
             %div{class: 'form-group pull-right'}
               %a{href: 'javascript:void(0);', class: 'btn btn-success btn-sm', 'ng-click' => 'add(day.transfers)'}
                 = fa_icon 'plus'

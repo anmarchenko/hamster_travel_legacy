@@ -13,7 +13,7 @@ module Travels
       TRAM = 'tram'
 
       ALL = [FLIGHT, TRAIN, CAR, BUS, TRAM]
-      OPTIONS = ALL.map{|type| [type, type] }
+      OPTIONS = ALL.map{|type| [I18n.t("common.#{type}"), type] }
     end
 
     field :city_from_code
@@ -36,6 +36,8 @@ module Travels
     field :end_time, type: DateTime
 
     field :comment
+
+    field :price, type: Integer
 
     def city_from
       ::Geo::City.by_geonames_code(city_from_code)
@@ -60,7 +62,8 @@ module Travels
           station_to: station_to,
           start_time: start_time.try(:strftime, '%Q'),
           end_time: end_time.try(:strftime, '%Q'),
-          comment: comment
+          comment: comment,
+          price: price
       }
     end
 

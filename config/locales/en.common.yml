@@ -18,3 +18,9 @@ en:
     my_trips: My travels
     update_successful: Successfully updated
     delete_confirm: Are you sure you want to delete that?
+    flight: Flight
+    train: Train
+    bus: Bus
+    car: Car/Taxi
+    tram: Tram
+

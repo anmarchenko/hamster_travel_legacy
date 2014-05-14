@@ -29,6 +29,19 @@ ru:
       show_plan: Просмотр плана
       save_plan: Сохранить план
       city: Город
+      budget: бюджет
+      transfer: Трансфер
+      from: Из
+      to: В
+      departure: Отправление
+      arrival: Прибытие
+      price: Стоимость
+      more: Больше информации...
+      less: Меньше информации...
+      comment: Комментарий
+      carrier: Перевозчик
+      station_from: От станции
+      station_to: До станции
     edit:
       title: Редактирование путешествия
     form:

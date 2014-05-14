@@ -1,0 +1,6 @@
+%p
+  %span{'ng-show' => '!!transfer.city_from_text && !!transfer.city_to_text'}
+    {{transfer.city_from_text}}
+    = fa_icon 'arrow-right'
+    {{transfer.city_to_text}}
+  %hr
