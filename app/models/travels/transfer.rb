@@ -60,8 +60,8 @@ module Travels
           link: link,
           station_from: station_from,
           station_to: station_to,
-          start_time: start_time.try(:strftime, '%Q'),
-          end_time: end_time.try(:strftime, '%Q'),
+          start_time: start_time.try(:strftime, '%Y-%m-%dT%H:%MZ'),
+          end_time: end_time.try(:strftime, '%Y-%m-%dT%H:%MZ'),
           comment: comment,
           price: price
       }

@@ -13,28 +13,28 @@ module Travels
         params.each do |index, day_hash|
           day = trip.days.where(id: day_hash[:id]).first
           next if day.blank?
-          process_places(day, day_hash[:places])
+          process_nested(day.places, day_hash[:places] || [])
+          process_nested(day.transfers, day_hash[:transfers] || [])
         end
       end
 
       private
 
-      def process_places(day, places_params)
-        # destroy
+      def process_nested(collection, params)
         to_delete = []
-        day.places.each do |place|
-          to_delete << place.id if places_params.select{|v| v[:id] == place.id.to_s}.count == 0
+        collection.each do |item|
+          to_delete << item.id if params.select{|v| v[:id] == item.id.to_s}.count == 0
         end
-        day.places.where(:id.in => to_delete).destroy
-
-        places_params.each do |place_hash|
-          place = day.places.where(id: place_hash[:id]).first
-          if place.blank?
-            day.places.create(city_code: place_hash[:city_code], city_text: place_hash[:city_text])
+        collection.where(:id.in => to_delete).destroy
+        params.each do |item_hash|
+          item = collection.where(id: item_hash.delete(:id)).first
+          if item.blank?
+            collection.create(item_hash)
           else
-            place.update_attributes(city_code: place_hash[:city_code], city_text: place_hash[:city_text])
+            item.update_attributes(item_hash)
           end
         end
+
       end
 
     end
