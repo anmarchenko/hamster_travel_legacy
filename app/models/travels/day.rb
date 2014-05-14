@@ -9,6 +9,7 @@ module Travels
     field :comment, type: String
 
     embeds_many :places, class_name: 'Travels::Place'
+    embeds_many :transfers, class_name: 'Travels::Transfer'
 
     before_save :init_places
 
@@ -19,8 +20,9 @@ module Travels
     def as_json(*args)
       {
           id: id.to_s,
-          date: date_when.to_s,
-          places: places
+          date: (I18n.l(date_when, format: '%d.%m.%Y %A') unless date_when.blank?),
+          places: places,
+          transfers: transfers
       }
     end
 

@@ -8,7 +8,7 @@ module Travels
     field :city_text
 
     def city
-      Geo::City.by_geonames_code(city_code)
+      ::Geo::City.by_geonames_code(city_code)
     end
 
     def as_json(*args)

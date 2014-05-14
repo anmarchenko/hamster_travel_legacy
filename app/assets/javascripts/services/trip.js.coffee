@@ -1,6 +1,5 @@
 angular.module('travel-services').config(["railsSerializerProvider",
   (railsSerializerProvider) ->
-    console.log railsSerializerProvider
     railsSerializerProvider.underscore(angular.identity).camelize(angular.identity);
 ]
 ).service 'Trip', [ 'railsResourceFactory', (railsResourceFactory) ->

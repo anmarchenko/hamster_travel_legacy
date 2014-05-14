@@ -15,11 +15,11 @@ angular.module('travel-components').controller 'PlanController'
         Trip.getDays($scope.trip_id).then (days) ->
           $scope.days = days
 
-      $scope.addPlace = (day) ->
-        day.places.push({})
+      $scope.add = (field) ->
+        field.push({})
 
-      $scope.removePlace = (day, index) ->
-        day.places.splice(index, 1)
+      $scope.remove = (field, index) ->
+        field.splice(index, 1)
 
       $scope.fillAsPreviousPlace = (place, place_index, day, day_index) ->
         if day.places[place_index - 1]
