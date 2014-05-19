@@ -1,0 +1,7 @@
+- name ||= 'field'
+- ng_model ||= ''
+- placeholder ||= ''
+%div{class: 'input-group input-group-sm'}
+  %span{class: 'input-group-addon'}
+    = fa_icon 'money'
+  = text_field_tag name, '', 'ng-model' => ng_model, class: 'input-sm form-control', placeholder: placeholder, 'onlydigits' => 'true'

@@ -99,7 +99,15 @@
             %div{class: 'form-group pull-right'}
               %a{href: 'javascript:void(0);', class: 'btn btn-success btn-sm', 'ng-click' => 'add(day.transfers)'}
                 = fa_icon 'plus'
-
         %td
+          %div{'ng-show' => '!edit'}
+            {{day.hotel.name}}
+
+          %div{'ng-show' => 'edit'}
+            %div{class: 'form-group'}
+              = text_field_tag 'hotel_name', '', 'ng-model' => 'day.hotel.name', class: 'input-sm form-control', placeholder: 'Название'
+            %div{class: 'form-group'}
+              = render 'widgets/price', name: 'hotel_price', ng_model: 'day.hotel.price', placeholder: t('trips.show.price')
+
         %td
         %td

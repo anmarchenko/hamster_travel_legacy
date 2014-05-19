@@ -19,10 +19,7 @@
 
 %div{class: 'form-group'}
   %div{class: 'col-md-12'}
-    %div{class: 'input-group input-group-sm'}
-      %span{class: 'input-group-addon'}
-        = fa_icon 'money'
-      = text_field_tag 'transfer_price', '', 'ng-model' => 'transfer.price', class: 'input-sm form-control', placeholder: t('trips.show.price'), 'onlydigits' => 'true'
+    = render 'widgets/price', name: 'transfer_price', ng_model: 'transfer.price', placeholder: t('trips.show.price')
 
 %p{'ng-init' => 'isCollapsed = true'}
   %a{'ng-click' => 'isCollapsed = !isCollapsed', href: 'javascript:void(0);'}
