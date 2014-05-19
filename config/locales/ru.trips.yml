@@ -25,9 +25,9 @@ ru:
       hotel: Отель
       activities: События
       comments: Комментарий
-      edit_plan: Редактировать план
-      show_plan: Просмотр плана
-      save_plan: Сохранить план
+      edit_plan: Редактировать
+      show_plan: Просмотр
+      save_plan: Сохранить
       city: Город
       budget: бюджет
       transfer: Трансфер

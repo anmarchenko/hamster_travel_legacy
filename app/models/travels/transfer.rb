@@ -10,10 +10,17 @@ module Travels
       TRAIN = 'train'
       CAR = 'car'
       BUS = 'bus'
-      TRAM = 'tram'
+      BOAT = 'boat'
 
-      ALL = [FLIGHT, TRAIN, CAR, BUS, TRAM]
+      ALL = [FLIGHT, TRAIN, CAR, BUS, BOAT]
       OPTIONS = ALL.map{|type| [I18n.t("common.#{type}"), type] }
+      ICONS = {
+          FLIGHT => 'map-icon-airport',
+          TRAIN => 'map-icon-train-station',
+          CAR => 'map-icon-taxi-stand',
+          BUS => 'map-icon-bus-station',
+          BOAT => 'map-icon-boat-tour'
+      }
     end
 
     field :city_from_code
@@ -23,6 +30,10 @@ module Travels
     field :city_to_text
 
     field :type
+    field :type_icon
+    def type_icon
+      Types::ICONS[type] unless type.blank?
+    end
 
     field :code
     field :company
@@ -55,6 +66,7 @@ module Travels
           city_to_code: city_to_code,
           city_to_text: city_to_text,
           type: type,
+          type_icon: type_icon,
           code: code,
           company: company,
           link: link,

@@ -1,6 +1,33 @@
+%p{'ng-show' => '!!transfer.city_from_text && !!transfer.city_to_text'}
+  {{transfer.city_from_text}}
+  %span{'ng-show' => '!!transfer.station_from'}
+    ({{transfer.station_from}})
+  = fa_icon 'arrow-right'
+  {{transfer.city_to_text}}
+  %span{'ng-show' => '!!transfer.station_to'}
+    ({{transfer.station_to}})
 %p
-  %span{'ng-show' => '!!transfer.city_from_text && !!transfer.city_to_text'}
-    {{transfer.city_from_text}}
-    = fa_icon 'arrow-right'
-    {{transfer.city_to_text}}
-  %hr
+  %span{'ng-show' => '!!transfer.type_icon'}
+    %i{class: '{{transfer.type_icon}}'}
+  %span{'ng-show' => '!!transfer.code'}
+    {{transfer.code}}
+  %span{'ng-show' => '!!transfer.company'}
+    {{transfer.company}}
+
+%p{'ng-show' => '!!transfer.price'}
+  = t('trips.show.price')
+  {{transfer.price}}
+
+%p{'ng-show' => '!!transfer.start_time'}
+  = t('trips.show.departure')
+  {{transfer.start_time | date:'dd.MM.yyyy HH:mm'}}
+
+%p{'ng-show' => '!!transfer.end_time'}
+  = t('trips.show.arrival')
+  {{transfer.end_time | date:'dd.MM.yyyy HH:mm'}}
+
+%p{'ng-show' => '!!transfer.comment'}
+  %i
+    {{transfer.comment}}
+
+%hr

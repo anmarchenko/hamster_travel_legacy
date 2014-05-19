@@ -22,5 +22,5 @@ en:
     train: Train
     bus: Bus
     car: Car/Taxi
-    tram: Tram
+    boat: Boat
 
