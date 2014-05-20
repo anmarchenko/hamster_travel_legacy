@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/mongoid/mongoid.git
-  revision: 9be37a9266d8b703e8f549af7bb6977e7a3a8352
+  revision: bb8b503a9daa2129af4e64baca4aa6dcbfb96dac
   specs:
     mongoid (4.0.0.beta1)
       activemodel (>= 4.0.0)
@@ -37,7 +37,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
-    angular-ui-bootstrap-rails (0.11.0)
+    angular-ui-bootstrap-rails (0.10.0)
     angularjs-rails (1.2.16)
     angularjs-rails-resource (1.0.2)
     arel (5.0.1.20140414130214)
@@ -47,7 +47,7 @@ GEM
       erubis (>= 2.6.6)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    bson (2.2.3)
+    bson (2.2.4)
     builder (3.2.2)
     capistrano (3.2.1)
       i18n
@@ -155,12 +155,12 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.25.1)
     mini_portile (0.6.0)
-    minitest (5.3.3)
+    minitest (5.3.4)
     moped (2.0.0.rc1)
       bson (~> 2.2)
       connection_pool (~> 2.0)
       optionable (~> 0.2.0)
-    multi_json (1.10.0)
+    multi_json (1.10.1)
     multi_test (0.1.1)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -191,7 +191,7 @@ GEM
       activesupport (= 4.1.0)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    rake (10.3.1)
+    rake (10.3.2)
     rdoc (4.1.1)
       json (~> 1.4)
     ref (1.0.5)
@@ -277,7 +277,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  angular-ui-bootstrap-rails
+  angular-ui-bootstrap-rails (= 0.10.0)
   angularjs-rails
   angularjs-rails-resource (~> 1.0.0)
   better_errors
