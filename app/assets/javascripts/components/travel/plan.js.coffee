@@ -45,6 +45,9 @@ angular.module('travel-components').controller 'PlanController'
           if day.transfers
             for transfer in day.transfers
               price += parseInt(transfer.price || 0, 10)
+          if day.activities
+            for activity in day.activities
+              price += parseInt(activity.price || 0, 10)
 
         price || 0
 

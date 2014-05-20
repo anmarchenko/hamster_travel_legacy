@@ -23,6 +23,7 @@ module Travels
           day.update_attributes(comment: day_hash[:comment], add_price: day_hash[:add_price])
           process_nested(day.places, day_hash[:places] || [])
           process_nested(day.transfers, day_hash[:transfers] || [])
+          process_nested(day.activities, day_hash[:activities] || [])
           day.save
         end
       end
