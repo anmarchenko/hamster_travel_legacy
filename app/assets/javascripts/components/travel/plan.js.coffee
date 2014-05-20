@@ -39,6 +39,7 @@ angular.module('travel-components').controller 'PlanController'
         price = 0
         return 0 if !$scope.days
         for day in $scope.days
+          price += parseInt(day.add_price || 0, 10)
           if day.hotel
             price += parseInt(day.hotel.price || 0, 10)
           if day.transfers
