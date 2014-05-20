@@ -6,6 +6,9 @@
   {{transfer.city_to_text}}
   %span{'ng-show' => '!!transfer.station_to'}
     ({{transfer.station_to}})
+%p{'ng-show' => '!!transfer.price'}
+  = fa_icon 'money'
+  {{transfer.price}}
 %p
   %span{'ng-show' => '!!transfer.type_icon'}
     %i{class: '{{transfer.type_icon}}'}
@@ -13,10 +16,6 @@
     {{transfer.code}}
   %span{'ng-show' => '!!transfer.company'}
     {{transfer.company}}
-
-%p{'ng-show' => '!!transfer.price'}
-  = t('trips.show.price')
-  {{transfer.price}}
 
 %p{'ng-show' => '!!transfer.start_time'}
   = t('trips.show.departure')

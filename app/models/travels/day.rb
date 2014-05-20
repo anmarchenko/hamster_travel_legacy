@@ -28,7 +28,8 @@ module Travels
           places: places,
           transfers: transfers,
           comment: comment,
-          add_price: add_price
+          add_price: add_price,
+          hotel: hotel
       }
     end
 

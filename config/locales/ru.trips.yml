@@ -42,6 +42,7 @@ ru:
       carrier: Перевозчик
       station_from: От станции
       station_to: До станции
+      links: Ссылки...
     edit:
       title: Редактирование путешествия
     form:

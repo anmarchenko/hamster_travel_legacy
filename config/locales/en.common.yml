@@ -23,4 +23,4 @@ en:
     bus: Bus
     car: Car/Taxi
     boat: Boat
-
+    link_text: Text

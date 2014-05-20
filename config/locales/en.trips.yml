@@ -42,6 +42,7 @@ en:
       carrier: Carrier
       station_from: From station
       station_to: To station
+      links: Links...
     edit:
       title: Edit travel
     form:
