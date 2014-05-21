@@ -35,7 +35,7 @@ angular.module('travel-components').controller 'PlanController'
         prev_hotel = prev_day.hotel
         hotel.name = prev_hotel.name if prev_hotel
 
-      $scope.budget = () ->
+      $scope.budget = ->
         price = 0
         return 0 if !$scope.days
         for day in $scope.days

@@ -149,37 +149,41 @@
                   = fa_icon 'plus'
 
         %td
-          %div{'ng-show' => '!edit', 'ng-repeat' => 'activity in day.activities'}
-            {{$index+1}}. {{activity.name}}
-            %span{'ng-show' => '!!activity.price'}
-              = fa_icon 'money'
-              {{activity.price}}
-            %p{'ng-show' => '!!activity.comment'}
-              %i
-                {{activity.comment}}
-            %p
-              %a{href: '{{activity.link_url}}'}
-                {{activity.link_description}}
+          %div{'ng-show' => '!edit', 'ui-sortable' => '', 'ng-model' => 'day.activities'}
+            %div{'ng-repeat' => 'activity in day.activities'}
+              {{$index+1}}. {{activity.name}}
+              %span{'ng-show' => '!!activity.price'}
+                = fa_icon 'money'
+                {{activity.price}}
+              %p{'ng-show' => '!!activity.comment'}
+                %i
+                  {{activity.comment}}
+              %p
+                %a{href: '{{activity.link_url}}'}
+                  {{activity.link_description}}
 
           %div{'ng-show' => 'edit'}
-            %div{'ng-repeat' => 'activity in day.activities', class: 'form-horizontal'}
-              %p
-                %u
-                  {{$index+1}}
-                %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.activities, $index)', class: 'pull-right'}
-                  = fa_icon 'times'
-              %div{class: 'form-group'}
-                %div{class: 'col-md-12'}
-                  = text_field_tag 'activity_name', '', 'ng-model' => 'activity.name', class: 'input-sm form-control', placeholder: 'name'
-              %div{class: 'form-group'}
-                %div{class: 'col-md-12'}
-                  = render 'widgets/price', name: 'activity_price', ng_model: 'activity.price', placeholder: t('trips.show.price')
-              %div{class: 'form-group'}
-                %div{class: 'col-md-12'}
-                  = text_area_tag 'activity_comment', '', 'ng-model' => 'activity.comment', class: 'form-control', placeholder: t('trips.show.comment'), rows: 3
-              %div{class: 'form-group'}
-                %div{class: 'col-md-12'}
-                  = render 'widgets/link', ng_model_descr: 'activity.link_description', ng_model_url: 'activity.link_url'
+            %div{'ui-sortable' => '', 'ng-model' => 'day.activities'}
+              %div{'ng-repeat' => 'activity in day.activities', class: 'form-horizontal'}
+                %p
+                  %u
+                    {{$index+1}}
+                  %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.activities, $index)', class: 'pull-right'}
+                    = fa_icon 'times'
+                %div{class: 'form-group'}
+                  %div{class: 'col-md-12'}
+                    = text_field_tag 'activity_name', '', 'ng-model' => 'activity.name', class: 'input-sm form-control', placeholder: 'name'
+                %div{class: 'form-group'}
+                  %div{class: 'col-md-12'}
+                    = render 'widgets/price', name: 'activity_price', ng_model: 'activity.price', placeholder: t('trips.show.price')
+                %div{class: 'form-group'}
+                  %div{class: 'col-md-12'}
+                    = text_area_tag 'activity_comment', '', 'ng-model' => 'activity.comment', class: 'form-control', placeholder: t('trips.show.comment'), rows: 3
+                %div{class: 'form-group'}
+                  %div{class: 'col-md-12'}
+                    = render 'widgets/link', ng_model_descr: 'activity.link_description', ng_model_url: 'activity.link_url'
+
+                %hr
 
             %div{class: 'form-group pull-right'}
               %a{href: 'javascript:void(0);', class: 'btn btn-success btn-sm', 'ng-click' => 'add(day.activities)'}

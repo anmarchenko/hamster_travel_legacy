@@ -37,6 +37,8 @@ gem 'compass-rails'
 gem 'coffee-rails', '~> 4.0.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+# jquery UI
+gem 'jquery-ui-rails'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 # Use Uglifier as compressor for JavaScript assets
