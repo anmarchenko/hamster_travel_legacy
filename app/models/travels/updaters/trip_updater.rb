@@ -10,7 +10,7 @@ module Travels
       end
 
       def process_days
-        params.each do |index, day_hash|
+        params.each do |_, day_hash|
           day = trip.days.where(id: day_hash[:id]).first
           next if day.blank?
           unless day_hash[:hotel].blank?
@@ -23,6 +23,7 @@ module Travels
           day.update_attributes(comment: day_hash[:comment], add_price: day_hash[:add_price])
           process_nested(day.places, day_hash[:places] || [])
           process_nested(day.transfers, day_hash[:transfers] || [])
+          process_ordered(day_hash[:activities] || [])
           process_nested(day.activities, day_hash[:activities] || [])
           day.save
         end
@@ -30,6 +31,7 @@ module Travels
 
       private
 
+      # TODO permit only some params
       def process_nested(collection, params)
         to_delete = []
         collection.each do |item|
@@ -44,7 +46,12 @@ module Travels
             item.update_attributes(item_hash)
           end
         end
+      end
 
+      def process_ordered(params)
+        params.each_with_index do |item_hash, index|
+          item_hash['order_index'] = index
+        end
       end
 
     end

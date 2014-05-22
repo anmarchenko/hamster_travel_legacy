@@ -22,7 +22,7 @@ module Travels
       self.hotel = Travels::Hotel.new if self.hotel.blank?
     end
 
-    def as_json(*args)
+    def as_json(**args)
       {
           id: id.to_s,
           date: (I18n.l(date_when, format: '%d.%m.%Y %A') unless date_when.blank?),
