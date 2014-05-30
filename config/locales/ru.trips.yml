@@ -28,6 +28,7 @@ ru:
       edit_plan: Редактировать
       show_plan: Просмотр
       save_plan: Сохранить
+      saving_plan: Сохраняем...
       city: Город
       budget: бюджет
       transfer: Трансфер
@@ -42,7 +43,9 @@ ru:
       carrier: Перевозчик
       station_from: От станции
       station_to: До станции
-      links: Ссылки...
+      links: Закладки...
+      activity:
+        name: Куда пойдём?
     edit:
       title: Редактирование путешествия
     form:

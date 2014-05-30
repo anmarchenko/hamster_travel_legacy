@@ -40,6 +40,8 @@ module Travels
         collection.where(:id.in => to_delete).destroy
         params.each do |item_hash|
           item = collection.where(id: item_hash.delete(:id)).first
+          # TODO remove - only for client side
+          item_hash.delete(:isCollapsed)
           if item.blank?
             collection.create(item_hash)
           else

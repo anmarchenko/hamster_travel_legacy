@@ -28,6 +28,7 @@ en:
       edit_plan: Edit
       show_plan: Show
       save_plan: Save
+      saving_plan: Saving...
       city: City
       budget: budget
       transfer: Transfer
@@ -42,7 +43,9 @@ en:
       carrier: Carrier
       station_from: From station
       station_to: To station
-      links: Links...
+      links: Bookmarks...
+      activity:
+        name: Where to go?
     edit:
       title: Edit travel
     form:

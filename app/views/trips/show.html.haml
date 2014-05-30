@@ -41,9 +41,11 @@
           = fa_icon 'edit', text: t('.edit_plan')
         %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(false)', class: 'btn btn-primary pull-right btn-sm', 'ng-show' => 'edit'}
           = fa_icon 'eye', text: t('.show_plan')
-        %a{href: 'javascript:void(0);', 'ng-click' => 'savePlan()', class: 'btn btn-success pull-right btn-sm',
-          'ng-disabled' => 'saving'}
+        %a{href: 'javascript:void(0);', 'ng-click' => 'savePlan()', class: 'btn btn-success pull-right btn-sm', 'ng-show' => '!saving'}
           = fa_icon 'save', text: t('.save_plan')
+        %div{class: 'btn btn-success pull-right btn-sm', 'ng-show' => 'saving'}
+          %i{class: 'fa fa-spinner fa-spin'}
+          = t('.saving_plan')
 
   %table{class: 'table table-bordered'}
     %thead
@@ -58,6 +60,11 @@
           = t('.hotel')
         %th{class: 'col-md-2'}
           = t('.activities')
+          %a{class: 'pull-right', href: 'javascript:void(0);', 'ng-click' => 'toggleActivities()'}
+            %span{'ng-show' => '!activitiesCollapsed'}
+              = fa_icon 'arrow-down'
+            %span{'ng-show' => 'activitiesCollapsed'}
+              = fa_icon 'arrow-right'
         %th{class: 'col-md-2'}
           = t('.comments')
 
@@ -149,44 +156,52 @@
                   = fa_icon 'plus'
 
         %td
-          %div{'ng-show' => '!edit', 'ui-sortable' => '', 'ng-model' => 'day.activities'}
-            %div{'ng-repeat' => 'activity in day.activities'}
-              {{$index+1}}. {{activity.name}}
-              %span{'ng-show' => '!!activity.price'}
-                = fa_icon 'money'
-                {{activity.price}}
-              %p{'ng-show' => '!!activity.comment'}
-                %i
-                  {{activity.comment}}
-              %p
-                %a{href: '{{activity.link_url}}'}
-                  {{activity.link_description}}
+          %div{'ng-show' => '!edit', 'ng-model' => 'day.activities', 'ui-sortable' => ''}
+            %div{'ng-repeat' => 'activity in day.activities', class: 'region-grey'}
+              %span{'ng-click' => 'activity.isCollapsed = !activity.isCollapsed'}
+                %u{class: 'collapse-header'}
+                  {{$index+1}}. {{activity.name}}
+                %span{'ng-show' => '!!activity.price'}
+                  = fa_icon 'money'
+                  {{activity.price}}
+              %div{collapse: 'activity.isCollapsed'}
+                %p{'ng-show' => '!!activity.comment'}
+                  %i
+                    {{activity.comment}}
+                %p
+                  %a{href: '{{activity.link_url}}'}
+                    {{activity.link_description}}
 
           %div{'ng-show' => 'edit'}
-            %div{'ui-sortable' => '', 'ng-model' => 'day.activities'}
-              %div{'ng-repeat' => 'activity in day.activities', class: 'form-horizontal'}
-                %p
-                  %u
-                    {{$index+1}}
-                  %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.activities, $index)', class: 'pull-right'}
-                    = fa_icon 'times'
-                %div{class: 'form-group'}
-                  %div{class: 'col-md-12'}
-                    = text_field_tag 'activity_name', '', 'ng-model' => 'activity.name', class: 'input-sm form-control', placeholder: 'name'
-                %div{class: 'form-group'}
-                  %div{class: 'col-md-12'}
-                    = render 'widgets/price', name: 'activity_price', ng_model: 'activity.price', placeholder: t('trips.show.price')
-                %div{class: 'form-group'}
-                  %div{class: 'col-md-12'}
-                    = text_area_tag 'activity_comment', '', 'ng-model' => 'activity.comment', class: 'form-control', placeholder: t('trips.show.comment'), rows: 3
-                %div{class: 'form-group'}
-                  %div{class: 'col-md-12'}
-                    = render 'widgets/link', ng_model_descr: 'activity.link_description', ng_model_url: 'activity.link_url'
-
-                %hr
+            %div{'ng-model' => 'day.activities', 'ui-sortable' => ''}
+              %div{'ng-repeat' => 'activity in day.activities', class: 'form-horizontal region-grey'}
+                %div{class: 'form-group relative-position'}
+                  %div{class: 'col-md-1 activity-index'}
+                    %big
+                      {{$index+1}}
+                  %div{class: 'col-md-10'}
+                    = text_field_tag 'activity_name', '', 'ng-model' => 'activity.name', class: 'input-sm form-control',
+                      placeholder: t('trips.show.activity.name')
+                    %a{href: 'javascript:void(0);', 'ng-click' => 'activity.isCollapsed = !activity.isCollapsed', class: 'expand-button'}
+                      %span{'ng-show' => 'activity.isCollapsed'}
+                        = fa_icon 'arrow-right'
+                      %span{'ng-show' => '!activity.isCollapsed'}
+                        = fa_icon 'arrow-down'
+                    %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.activities, $index)', class: 'delete-button'}
+                      = fa_icon 'times'
+                %div{collapse: 'activity.isCollapsed'}
+                  %div{class: 'form-group', collapse: 'isCollapsed'}
+                    %div{class: 'col-md-12'}
+                      = render 'widgets/price', name: 'activity_price', ng_model: 'activity.price', placeholder: t('trips.show.price')
+                  %div{class: 'form-group'}
+                    %div{class: 'col-md-12'}
+                      = text_area_tag 'activity_comment', '', 'ng-model' => 'activity.comment', class: 'form-control', placeholder: t('trips.show.comment'), rows: 3
+                  %div{class: 'form-group'}
+                    %div{class: 'col-md-12'}
+                      = render 'widgets/link', ng_model_descr: 'activity.link_description', ng_model_url: 'activity.link_url'
 
             %div{class: 'form-group pull-right'}
-              %a{href: 'javascript:void(0);', class: 'btn btn-success btn-sm', 'ng-click' => 'add(day.activities)'}
+              %a{href: 'javascript:void(0);', class: 'btn btn-success btn-sm', 'ng-click' => 'add(day.activities, {"isCollapsed" : true})'}
                 = fa_icon 'plus'
 
         %td

@@ -6,6 +6,7 @@ angular.module('travel-components').controller 'PlanController'
       # define controller
       $scope.trip_id = (/trips\/(.+)/.exec($location.absUrl())[1]);
 
+      $scope.activitiesCollapsed = true
       $scope.edit = false
 
       $scope.setEdit = (val) ->
@@ -14,9 +15,11 @@ angular.module('travel-components').controller 'PlanController'
       $scope.loadDays = ->
         Trip.getDays($scope.trip_id).then (days) ->
           $scope.days = days
+          $scope.toggleActivities(false)
+          $scope.saving = false
 
-      $scope.add = (field) ->
-        field.push({})
+      $scope.add = (field, obj = {}) ->
+        field.push(obj)
 
       $scope.remove = (field, index) ->
         field.splice(index, 1)
@@ -52,10 +55,17 @@ angular.module('travel-components').controller 'PlanController'
         price || 0
 
       $scope.savePlan = ->
+        return if $scope.saving
         $scope.saving = true
         Trip.createDays($scope.trip_id, $scope.days)
         $scope.loadDays()
-        $scope.saving = false
+
+      $scope.toggleActivities = (is_change = true)->
+        $scope.activitiesCollapsed = !$scope.activitiesCollapsed if is_change
+        for day in $scope.days
+          if day.activities
+            for activity in day.activities
+              activity.isCollapsed = $scope.activitiesCollapsed
 
       # init controller
       $scope.loadDays()

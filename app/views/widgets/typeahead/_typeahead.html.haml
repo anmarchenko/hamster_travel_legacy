@@ -4,6 +4,8 @@
 - code_field_name = "#{model_name}_code"
 - placeholder ||= ''
 
+-#   'typeahead-append-to-body' => true, ATTENTION: CAUSING MEMORY LEAK
+
 - options_text = { 'ng-model' => text_field_name,
   'ng-change' => "#{code_field_name}='';",
   typeahead: "item.name as item.text for item in #{function}($viewValue)",
@@ -12,7 +14,6 @@
   'typeahead-loading' => 'typeahead_loading',
   'typeahead-min-length' => 3,
   'typeahead-wait-ms' => 500,
-  'typeahead-append-to-body' => true,
   placeholder: placeholder,
   class: "#{classes}" }
 
