@@ -83,25 +83,11 @@ footer {
   padding-top: 51px;
 }
 
-/* custom styles */
-.region-grey{
-  background-color: #ecf0f1;
-  padding: 5px;
-  margin-bottom: 10px;
-  -webkit-border-radius: 12px;
-  -moz-border-radius: 12px;
-  border-radius: 12px;
-}
-
-.collapse-header{
-  cursor: pointer;
-  cursor: hand;
-  margin-right: 5px;
-}
-
-.activity-index{
-  margin-top: 8px
-}
-.activity-index big{
-  padding-left: 10px
+/* full width */
+.container-full {
+  margin: 0 auto;
+  width: 100%;
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-bottom: 20px;
 }

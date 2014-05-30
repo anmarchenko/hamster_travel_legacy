@@ -23,6 +23,8 @@
       = render 'layouts/partials/flash_messages'
       = yield
 
+    = yield(:additional_content) if content_for?(:additional_content)
+
     %footer
       %div{class: 'container'}
         %div{class: 'site-footer'}
