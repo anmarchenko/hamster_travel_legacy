@@ -39,6 +39,9 @@ namespace :deploy do
       execute "cp /var/applications/config/secrets.yml /var/applications/travel_planner/current/config/secrets.yml"
       execute "cd /var/applications/travel_planner/current;RAILS_ENV=production #{rvm} bundle exec rake assets:precompile"
       execute "cd /var/applications/travel_planner/current;RAILS_ENV=production #{rvm} bundle exec rake db:migrate"
+      [3000, 3001].each do |port|
+        execute "cd /var/applications/travel_planner/current; #{rvm} bundle exec puma -p #{port} -e production -d"
+      end
     end
   end
 

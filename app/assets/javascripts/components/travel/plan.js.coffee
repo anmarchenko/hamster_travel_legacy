@@ -57,8 +57,8 @@ angular.module('travel-components').controller 'PlanController'
       $scope.savePlan = ->
         return if $scope.saving
         $scope.saving = true
-        Trip.createDays($scope.trip_id, $scope.days)
-        $scope.loadDays()
+        Trip.createDays($scope.trip_id, $scope.days).then ->
+          $scope.loadDays()
 
       $scope.toggleActivities = (is_change = true)->
         $scope.activitiesCollapsed = !$scope.activitiesCollapsed if is_change
