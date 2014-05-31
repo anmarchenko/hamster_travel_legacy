@@ -11,6 +11,7 @@
   %p{class: 'lead'}
 
 %div{class: 'row'}
-  %p{class: 'lead'}
-    = t('.placeholder')
+  %h3
+    = t('.last_travels')
 
+= render 'widgets/trips/grid', trips: @trips

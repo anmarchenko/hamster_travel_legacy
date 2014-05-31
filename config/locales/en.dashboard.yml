@@ -3,3 +3,4 @@ en:
     index:
       placeholder: Welcome to Hamster Travel! Soon there will be many interesting things. Stay tuned.
       title: Dashboard
+      last_travels: Last added travels
