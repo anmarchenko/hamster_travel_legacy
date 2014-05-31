@@ -1,4 +1,5 @@
 - trips ||= []
+- without_pagination ||= false
 
 %div{class: 'trip-grid'}
   - if trips.blank?
@@ -9,4 +10,5 @@
         - slice.each do |trip|
           %div{class: 'col-xs-4 col-md-4'}
             = render 'widgets/trips/trip_box', trip: trip
-    = paginate trips
+    - unless without_pagination
+      = paginate trips
