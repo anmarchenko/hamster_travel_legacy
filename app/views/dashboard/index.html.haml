@@ -1,7 +1,11 @@
 - content_for :title, t('.title')
 
+- content_for :page_javascript do
+  = render 'common/javascripts/jvectormap'
+
 %div{class: 'row text-center'}
-  %img{src: '/hamster4.jpg', class: 'img-thumbnail', style: 'height: 400px'}
+  %div{class: 'col-md-offset-2 col-md-8'}
+    %div{id: 'worldmap'}
 
 %div{class: 'row'}
   %p{class: 'lead'}
@@ -9,3 +13,4 @@
 %div{class: 'row'}
   %p{class: 'lead'}
     = t('.placeholder')
+

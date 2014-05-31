@@ -68,3 +68,7 @@ body {
 .activity-index big{
     padding-left: 10px
 }
+
+#worldmap{
+    height: 400px
+}

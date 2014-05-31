@@ -1,3 +1,4 @@
+%hr{'ng-show' => '$index > 0'}
 %p{'ng-show' => '!!transfer.city_from_text && !!transfer.city_to_text'}
   {{transfer.city_from_text}}
   %span{'ng-show' => '!!transfer.station_from'}
@@ -28,5 +29,3 @@
 %p{'ng-show' => '!!transfer.comment'}
   %i
     {{transfer.comment}}
-
-%hr
