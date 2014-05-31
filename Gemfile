@@ -64,6 +64,9 @@ end
 group :development do
   # Use Capistrano for deployment
   gem 'capistrano'
+  gem 'capistrano-ext'
+  gem 'capistrano-rvm'
+  gem 'capistrano-bundler'
 
   # app server
   gem 'puma'

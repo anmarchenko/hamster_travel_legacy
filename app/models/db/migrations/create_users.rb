@@ -9,7 +9,6 @@ module Db
           password_confirmation: Rails.application.secrets.andrey_password,
           first_name: 'Andrey',
           last_name: 'Marchenko',
-          home_town: 'Москва',
           locale: 'ru'
         },
         {
@@ -18,7 +17,6 @@ module Db
           password_confirmation: Rails.application.secrets.yuliya_password,
           first_name: 'Yuliya',
           last_name: 'Marchenko',
-          home_town: 'Москва',
           locale: 'ru'
         }
       ]
