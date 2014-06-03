@@ -72,3 +72,7 @@ body {
 #worldmap{
     height: 400px
 }
+
+.table-black-bordered, .table-black-bordered > thead > tr > th, .table-black-bordered > tbody > tr > th, .table-black-bordered > tfoot > tr > th, .table-black-bordered > thead > tr > td, .table-black-bordered > tbody > tr > td, .table-black-bordered > tfoot > tr > td {
+    border-color:  #000000;
+}
