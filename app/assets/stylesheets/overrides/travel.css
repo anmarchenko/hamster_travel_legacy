@@ -38,7 +38,7 @@ body {
     position: absolute;
     right: 5px; top: 8px
 }
-.relative-position .delete-button{
+.day-activity-container .delete-button{
     position: absolute;
     right: 20px; top: 8px
 }

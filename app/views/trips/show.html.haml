@@ -178,7 +178,7 @@
               %div{'ng-show' => 'edit'}
                 %div{'ng-model' => 'day.activities', 'ui-sortable' => ''}
                   %div{'ng-repeat' => 'activity in day.activities', class: 'form-horizontal region-grey'}
-                    %div{class: 'form-group relative-position'}
+                    %div{class: 'form-group relative-position day-activity-container'}
                       %div{class: 'col-md-1 activity-index'}
                         %big
                           {{$index+1}}
