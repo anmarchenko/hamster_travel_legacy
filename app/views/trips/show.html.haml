@@ -38,7 +38,7 @@
             %small
               = t('.budget')
               {{budget()}}
-              = fa_icon 'money'
+              = fa_icon 'ruble'
           %div{class: 'btn-toolbar'}
             %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(true)', class: 'btn btn-primary pull-right btn-sm', 'ng-show' => '!edit'}
               = fa_icon 'edit', text: t('.edit_plan')
@@ -116,8 +116,8 @@
                   {{day.hotel.name}}
                   %br
                   %span{'ng-show' => '!!day.hotel.price'}
-                    = fa_icon 'money'
                     {{day.hotel.price}}
+                    = fa_icon 'ruble'
                 %p
                   %i
                     {{day.hotel.comment}}
@@ -165,8 +165,8 @@
                     %u{class: 'collapse-header'}
                       {{$index+1}}. {{activity.name}}
                     %span{'ng-show' => '!!activity.price'}
-                      = fa_icon 'money'
                       {{activity.price}}
+                      = fa_icon 'ruble'
                   %div{collapse: 'activity.isCollapsed'}
                     %p{'ng-show' => '!!activity.comment'}
                       %i
@@ -212,8 +212,8 @@
                 %p
                   {{day.comment}}
                 %p{'ng-show' => '!!day.add_price'}
-                  = fa_icon 'money'
                   {{day.add_price}}
+                  = fa_icon 'ruble'
 
               %div{'ng-show' => 'edit', class: 'form-horizontal'}
                 %div{class: 'form-group'}

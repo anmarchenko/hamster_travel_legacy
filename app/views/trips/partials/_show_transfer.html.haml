@@ -8,8 +8,8 @@
   %span{'ng-show' => '!!transfer.station_to'}
     ({{transfer.station_to}})
 %p{'ng-show' => '!!transfer.price'}
-  = fa_icon 'money'
   {{transfer.price}}
+  = fa_icon 'ruble'
 %p
   %span{'ng-show' => '!!transfer.type_icon'}
     %i{class: '{{transfer.type_icon}}'}
