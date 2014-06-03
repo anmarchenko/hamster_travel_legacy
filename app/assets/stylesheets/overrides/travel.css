@@ -73,6 +73,22 @@ body {
     height: 400px
 }
 
-.table-black-bordered, .table-black-bordered > thead > tr > th, .table-black-bordered > tbody > tr > th, .table-black-bordered > tfoot > tr > th, .table-black-bordered > thead > tr > td, .table-black-bordered > tbody > tr > td, .table-black-bordered > tfoot > tr > td {
-    border-color:  #000000;
+.table-black-bordered > thead > tr > th, .table-black-bordered > tbody > tr > th, .table-black-bordered > tfoot > tr > th, .table-black-bordered > thead > tr > td, .table-black-bordered > tbody > tr > td, .table-black-bordered > tfoot > tr > td {
+    border: 1px solid #000000;
+}
+
+.fixed-head > thead > tr > th{
+    background-color: #ecf0f1;
+}
+.plan-header,.plan-header th {
+    border-top-color: #ffffff !important;
+    border-left: #ffffff !important;
+    border-right: #ffffff !important;
+    background-color: #ffffff !important;
+}
+.input-group .form-control{
+    z-index: auto;
+}
+.plan-header a{
+    text-decoration: none;
 }

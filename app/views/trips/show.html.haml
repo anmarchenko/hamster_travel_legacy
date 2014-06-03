@@ -27,31 +27,32 @@
 
 %hr
 
-
 - content_for :additional_content do
   %div{'ng-controller' => 'PlanController'}
-    %div{class: 'container'}
-      %div{class: 'row'}
-        %div{class: 'col-md-12'}
-          %h3{class: 'pull-left'}
-            = t('.plan')
-            %small
-              = t('.budget')
-              {{budget()}}
-              = fa_icon 'ruble'
-          %div{class: 'btn-toolbar'}
-            %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(true)', class: 'btn btn-primary pull-right btn-sm', 'ng-show' => '!edit'}
-              = fa_icon 'edit', text: t('.edit_plan')
-            %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(false)', class: 'btn btn-primary pull-right btn-sm', 'ng-show' => 'edit'}
-              = fa_icon 'eye', text: t('.show_plan')
-            %a{href: 'javascript:void(0);', 'ng-click' => 'savePlan()', class: 'btn btn-success pull-right btn-sm', 'ng-show' => '!saving'}
-              = fa_icon 'save', text: t('.save_plan')
-            %div{class: 'btn btn-success pull-right btn-sm', 'ng-show' => 'saving'}
-              %i{class: 'fa fa-spinner fa-spin'}
-              = t('.saving_plan')
     %div{class: 'container-full'}
-      %table{class: 'table table-bordered table-black-bordered'}
+      %table{class: 'table table-black-bordered fixed-head'}
         %thead
+          %tr{class: 'plan-header'}
+            %th{colspan: '6'}
+              %div{class: 'container'}
+                %div{class: 'row'}
+                  %div{class: 'col-md-12'}
+                    %h3{class: 'pull-left'}
+                      = t('.plan')
+                      %small
+                        = t('.budget')
+                        {{budget()}}
+                        = fa_icon 'ruble'
+                    %div{class: 'btn-toolbar'}
+                      %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(true)', class: 'btn btn-primary pull-right btn-sm', 'ng-show' => '!edit'}
+                        = fa_icon 'edit', text: t('.edit_plan')
+                      %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(false)', class: 'btn btn-primary pull-right btn-sm', 'ng-show' => 'edit'}
+                        = fa_icon 'eye', text: t('.show_plan')
+                      %a{href: 'javascript:void(0);', 'ng-click' => 'savePlan()', class: 'btn btn-success pull-right btn-sm', 'ng-show' => '!saving'}
+                        = fa_icon 'save', text: t('.save_plan')
+                      %div{class: 'btn btn-success pull-right btn-sm', 'ng-show' => 'saving'}
+                        %i{class: 'fa fa-spinner fa-spin'}
+                        = t('.saving_plan')
           %tr
             %th{class: 'col-md-1'}
               = t('.day')
