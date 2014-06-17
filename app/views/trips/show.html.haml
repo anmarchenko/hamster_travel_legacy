@@ -60,6 +60,11 @@
               = t('.place')
             %th{class: 'col-md-3'}
               = t('.transfers')
+              %a{class: 'pull-right', href: 'javascript:void(0);', 'ng-click' => 'toggleTransfers()'}
+                %span{'ng-show' => '!transfersCollapsed'}
+                  = fa_icon 'arrow-down'
+                %span{'ng-show' => 'transfersCollapsed'}
+                  = fa_icon 'arrow-right'
             %th{class: 'col-md-2'}
               = t('.hotel')
             %th{class: 'col-md-2'}
@@ -109,7 +114,7 @@
                 %div{'ng-repeat' => 'transfer in day.transfers', class: 'form-horizontal'}
                   = render 'trips/partials/edit_transfer'
                 %div{class: 'form-group pull-right'}
-                  %a{href: 'javascript:void(0);', class: 'btn btn-success btn-sm', 'ng-click' => 'add(day.transfers)'}
+                  %a{href: 'javascript:void(0);', class: 'btn btn-success btn-sm', 'ng-click' => 'add(day.transfers, {"isCollapsed" : true})'}
                     = fa_icon 'plus'
             %td
               %div{'ng-show' => '!edit'}

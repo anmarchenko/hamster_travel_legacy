@@ -92,3 +92,7 @@ body {
 .plan-header a{
     text-decoration: none;
 }
+
+.margin-right-10{
+    margin-right: 10px;
+}

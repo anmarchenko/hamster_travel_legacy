@@ -7,15 +7,19 @@ angular.module('travel-components').controller 'PlanController'
       $scope.trip_id = (/trips\/(.+)/.exec($location.absUrl())[1]);
 
       $scope.activitiesCollapsed = true
+      $scope.transfersCollapsed = true
       $scope.edit = false
 
       $scope.setEdit = (val) ->
         $scope.edit = val
+        $scope.toggleActivities(false)
+        $scope.toggleTransfers(false)
 
       $scope.loadDays = ->
         Trip.getDays($scope.trip_id).then (days) ->
           $scope.days = days
           $scope.toggleActivities(false)
+          $scope.toggleTransfers(false)
 
       $scope.add = (field, obj = {}) ->
         field.push(obj)
@@ -65,6 +69,13 @@ angular.module('travel-components').controller 'PlanController'
           if day.activities
             for activity in day.activities
               activity.isCollapsed = $scope.activitiesCollapsed
+
+      $scope.toggleTransfers = (is_change = true)->
+        $scope.transfersCollapsed = !$scope.transfersCollapsed if is_change
+        for day in $scope.days
+          if day.transfers
+            for transfer in day.transfers
+              transfer.isCollapsed = $scope.transfersCollapsed
 
       # init controller
       $scope.loadDays()

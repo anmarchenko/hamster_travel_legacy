@@ -1,9 +1,14 @@
 %p
-  %u
+  %u{'ng-click' => 'transfer.isCollapsed = !transfer.isCollapsed', class: 'collapse-header'}
     = t('trips.show.transfer')
     {{$index+1}}
   %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.transfers, $index)', class: 'pull-right'}
     = fa_icon 'times'
+  %a{href: 'javascript:void(0);', 'ng-click' => 'transfer.isCollapsed = !transfer.isCollapsed', class: 'pull-right margin-right-10'}
+    %span{'ng-show' => 'transfer.isCollapsed'}
+      = fa_icon 'arrow-right'
+    %span{'ng-show' => '!transfer.isCollapsed'}
+      = fa_icon 'arrow-down'
 
 %div{class: 'form-group'}
   %div{class: 'col-md-6'}
@@ -11,24 +16,17 @@
   %div{class: 'col-md-6'}
     = render 'widgets/typeahead/cities', model_name: 'transfer.city_to', classes: 'input-sm form-control', placeholder: t('trips.show.to')
 
-%div{class: 'form-group'}
-  %div{class: 'col-md-6 dropdown'}
-    = render 'widgets/datetimepicker', id: 'dropdown-time-start-{{$index}}', link_default_text: t('trips.show.departure'), model: 'transfer.start_time'
-  %div{class: 'col-md-6 dropdown'}
-    = render 'widgets/datetimepicker', id: 'dropdown-time-end-{{$index}}', link_default_text: t('trips.show.arrival'), model: 'transfer.end_time'
+%div{collapse: 'transfer.isCollapsed'}
+  %div{class: 'form-group'}
+    %div{class: 'col-md-6 dropdown'}
+      = render 'widgets/datetimepicker', id: 'dropdown-time-start-{{$index}}', link_default_text: t('trips.show.departure'), model: 'transfer.start_time'
+    %div{class: 'col-md-6 dropdown'}
+      = render 'widgets/datetimepicker', id: 'dropdown-time-end-{{$index}}', link_default_text: t('trips.show.arrival'), model: 'transfer.end_time'
 
-%div{class: 'form-group'}
-  %div{class: 'col-md-12'}
-    = render 'widgets/price', name: 'transfer_price', ng_model: 'transfer.price', placeholder: t('trips.show.price')
+  %div{class: 'form-group'}
+    %div{class: 'col-md-12'}
+      = render 'widgets/price', name: 'transfer_price', ng_model: 'transfer.price', placeholder: t('trips.show.price')
 
-%p{'ng-init' => 'isCollapsed = true'}
-  %a{'ng-click' => 'isCollapsed = !isCollapsed', href: 'javascript:void(0);'}
-    %span{'ng-show' => 'isCollapsed'}
-      = t('trips.show.more')
-    %span{'ng-show' => '!isCollapsed'}
-      = t('trips.show.less')
-
-%div{collapse: 'isCollapsed'}
   %div{class: 'form-group'}
     %div{class: 'col-md-12'}
       = select_tag 'transfer_type', options_for_select(Travels::Transfer::Types::OPTIONS),
