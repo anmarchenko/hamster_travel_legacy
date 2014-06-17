@@ -1,7 +1,7 @@
 class DashboardController < ApplicationController
 
   def index
-    @trips = Travels::Trip.limit(3).page(1)
+    @trips = Travels::Trip.page(1).per(3)
   end
 
 end
