@@ -12,6 +12,8 @@ angular.module('travel-components').controller 'PlanController'
 
       $scope.setEdit = (val) ->
         $scope.edit = val
+        $scope.activitiesCollapsed = true
+        $scope.transfersCollapsed = true
         $scope.toggleActivities(false)
         $scope.toggleTransfers(false)
 
@@ -63,19 +65,18 @@ angular.module('travel-components').controller 'PlanController'
         Trip.createDays($scope.trip_id, $scope.days).then ->
           $scope.saving = false
 
-      $scope.toggleActivities = (is_change = true)->
-        $scope.activitiesCollapsed = !$scope.activitiesCollapsed if is_change
+      $scope.toggleCollapse = (is_change = true, collection_name) ->
+        $scope["#{collection_name}Collapsed"] = !$scope["#{collection_name}Collapsed"] if is_change
         for day in $scope.days
-          if day.activities
-            for activity in day.activities
-              activity.isCollapsed = $scope.activitiesCollapsed
+          if day[collection_name]
+            for object in day[collection_name]
+              object.isCollapsed = $scope["#{collection_name}Collapsed"]
+
+      $scope.toggleActivities = (is_change = true) ->
+        $scope.toggleCollapse(is_change, 'activities')
 
       $scope.toggleTransfers = (is_change = true)->
-        $scope.transfersCollapsed = !$scope.transfersCollapsed if is_change
-        for day in $scope.days
-          if day.transfers
-            for transfer in day.transfers
-              transfer.isCollapsed = $scope.transfersCollapsed
+        $scope.toggleCollapse(is_change, 'transfers')
 
       # init controller
       $scope.loadDays()

@@ -114,7 +114,7 @@
                 %div{'ng-repeat' => 'transfer in day.transfers', class: 'form-horizontal'}
                   = render 'trips/partials/edit_transfer'
                 %div{class: 'form-group pull-right'}
-                  %a{href: 'javascript:void(0);', class: 'btn btn-success btn-sm', 'ng-click' => 'add(day.transfers, {"isCollapsed" : true})'}
+                  %a{href: 'javascript:void(0);', class: 'btn btn-success btn-sm', 'ng-click' => 'add(day.transfers, {"isCollapsed" : transfersCollapsed})'}
                     = fa_icon 'plus'
             %td
               %div{'ng-show' => '!edit'}
@@ -210,7 +210,7 @@
                           = render 'widgets/link', ng_model_descr: 'activity.link_description', ng_model_url: 'activity.link_url'
 
                 %div{class: 'form-group pull-right'}
-                  %a{href: 'javascript:void(0);', class: 'btn btn-success btn-sm', 'ng-click' => 'add(day.activities, {"isCollapsed" : true})'}
+                  %a{href: 'javascript:void(0);', class: 'btn btn-success btn-sm', 'ng-click' => 'add(day.activities, {"isCollapsed" : activitiesCollapsed})'}
                     = fa_icon 'plus'
 
             %td
