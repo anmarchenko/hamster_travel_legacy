@@ -22,7 +22,8 @@ module Travels
     validates_presence_of :name, :start_date, :end_date, :author_user_id
 
     validates :start_date, date: { before: :end_date, message: I18n.t('errors.date_before')  }
-    validates :end_date, date: {before: Proc.new {|record| record.start_date + 30.days}, message: I18n.t('errors.end_date_days', period: 30) }
+    validates :end_date, date: {before: Proc.new {|record| record.start_date + 30.days},
+                                message: I18n.t('errors.end_date_days', period: 30) }
 
     default_scope ->{order_by(created_at: -1)}
 
@@ -53,6 +54,12 @@ module Travels
 
     def author
       @author ||= User.where(id: author_user_id).first
+    end
+
+    def last_non_empty_day_index
+      result = -1
+      (days || []).each_with_index { |day, index| result = index unless day.is_empty? }
+      return result
     end
 
   end

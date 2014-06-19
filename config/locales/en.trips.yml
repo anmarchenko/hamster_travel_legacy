@@ -57,3 +57,4 @@ en:
       end_date_placeholder: When will you return?
       save: Save
       return: Return
+      confirm: 'Days number will become less! Last days data will be lost. Continue?'

@@ -23,6 +23,10 @@ body {
     overflow-y: auto;
 }
 
+table .dropdown-menu a{
+    text-decoration: none;
+}
+
 .trip-grid{
     margin-top: 10px;
 }

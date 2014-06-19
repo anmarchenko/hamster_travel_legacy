@@ -20,5 +20,12 @@ module Travels
       }
     end
 
+    def is_empty?
+      [:name, :price, :comment, :links].each do |field|
+        return false unless self.send(field).blank?
+      end
+      return true
+    end
+
   end
 end

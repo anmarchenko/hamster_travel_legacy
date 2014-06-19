@@ -22,6 +22,16 @@ module Travels
       self.hotel = Travels::Hotel.new if self.hotel.blank?
     end
 
+    def is_empty?
+      [:transfers, :activities, :comment, :add_price].each do |field|
+        return false unless self.send(field).blank?
+      end
+      (self.places || []).each do |place|
+        return false unless place.is_empty?
+      end
+      return hotel.blank? || hotel.is_empty?
+    end
+
     def as_json(**args)
       {
           id: id.to_s,
