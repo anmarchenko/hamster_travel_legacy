@@ -96,10 +96,13 @@ group :test do
   # test data fixtures
   gem 'factory_girl'
   gem 'factory_girl_rails'
-  # integration test
+  # integration test (selenium)
   gem 'capybara'
 
-  # fork for tests
-  gem 'spork', '~> 1.0rc'
-  gem 'spork-rails'
+  # test email
+  gem 'email_spec'
+  # test time events
+  gem 'timecop'
+  # launching cross-platform applications in a fire and forget manner
+  gem 'launchy'
 end
