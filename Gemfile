@@ -101,8 +101,6 @@ group :test do
 
   # test email
   gem 'email_spec'
-  # test time events
-  gem 'timecop'
   # launching cross-platform applications in a fire and forget manner
   gem 'launchy'
 end
