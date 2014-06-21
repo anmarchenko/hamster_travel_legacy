@@ -81,7 +81,7 @@ group :test do
   # BDD unit testing
   gem 'rspec'
   gem 'rspec-rails'
-  gem 'fuubar', :require => false
+  gem 'fuubar', '~> 2.0.0.rc1', require: false
 
   # BDD integration testing
   gem 'minitest'
