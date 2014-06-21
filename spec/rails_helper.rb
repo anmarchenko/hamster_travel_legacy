@@ -12,11 +12,13 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :truncation
-    FactoryGirl.lint
-  end
-
-  config.before(:each) do
-    DatabaseCleaner.clean
+    begin
+      DatabaseCleaner.start
+      FactoryGirl.lint
+    ensure
+      DatabaseCleaner.clean
+      FactoryGirl.create_list(:country, 5)
+    end
   end
 
   config.expect_with :rspec do |c|

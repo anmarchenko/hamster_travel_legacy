@@ -43,7 +43,7 @@ class User
   # User data
   validates_presence_of :last_name
   validates_presence_of :first_name
-  validates_uniqueness_of :email
+  validates_uniqueness_of :email, :case_sensitive => false
   validates :home_town_text, typeahead: true
 
   def full_name

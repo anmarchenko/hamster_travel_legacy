@@ -6,11 +6,9 @@ class ExternalLink
   field :url
 
   def as_json(*args)
-    {
-        id: id.to_s,
-        description: description,
-        url: url
-    }
+    json = super(except: [:_id])
+    json['id'] = id.to_s
+    json
   end
 
 end
