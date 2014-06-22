@@ -19,7 +19,7 @@ describe User do
   end
 
   context 'user with home town' do
-    let(:user) {FactoryGirl.create(:user_with_home_town)}
+    let(:user) {FactoryGirl.create(:user, :with_home_town)}
 
     it 'has home town from geo database' do
       town = user.home_town
@@ -27,6 +27,15 @@ describe User do
       expect(town.geonames_code).to eq(user.home_town_code)
       expect(town.name).to eq(user.home_town_text)
       expect(town.name_en).to eq(user.home_town_text)
+    end
+  end
+
+  context 'user with trips' do
+    let(:user) {FactoryGirl.create(:user, :with_trips)}
+
+    it 'can return list of trips in which participated' do
+      expect(user.trips).not_to be_blank
+      expect(user.trips.count).to eq(5)
     end
   end
 

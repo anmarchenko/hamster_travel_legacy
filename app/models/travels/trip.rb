@@ -14,7 +14,7 @@ module Travels
 
     field :published, type: Boolean, default: false
 
-    field :author_user_id
+    field :author_user_id, type: BSON::ObjectId
     has_and_belongs_to_many :users, inverse_of: nil
 
     embeds_many :days, class_name: 'Travels::Day'
