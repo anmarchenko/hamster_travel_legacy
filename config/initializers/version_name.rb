@@ -1,0 +1,1 @@
+puts '* Starting Hamster Travel (v0.1). Codename: Ambidextrous Hamster'
