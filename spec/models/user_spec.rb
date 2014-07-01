@@ -6,36 +6,44 @@ describe User do
   it_should_behave_like 'a model with unique field', :user, :email, false
   it_should_behave_like 'a model with typeahead field', :user, :home_town_text
 
-  context 'valid simple user' do
+  describe '#full_name' do
     let(:user) {FactoryGirl.create(:user)}
 
     it 'has full name' do
       expect(user.full_name).to eq('%s %s' % [user.first_name, user.last_name])
     end
+  end
 
-    it 'does not have home town' do
-      expect(user.home_town).to be_blank
+  describe '#home_town' do
+    context 'valid simple user' do
+      let(:user) {FactoryGirl.create(:user)}
+
+      it 'does not have home town' do
+        expect(user.home_town).to be_blank
+      end
+    end
+
+    context 'user with home town' do
+      let(:user) {FactoryGirl.create(:user, :with_home_town)}
+
+      it 'has home town from geo database' do
+        town = user.home_town
+        expect(town).not_to be_blank
+        expect(town.geonames_code).to eq(user.home_town_code)
+        expect(town.name).to eq(user.home_town_text)
+        expect(town.name_en).to eq(user.home_town_text)
+      end
     end
   end
 
-  context 'user with home town' do
-    let(:user) {FactoryGirl.create(:user, :with_home_town)}
+  describe '#trips' do
+    context 'user with trips' do
+      let(:user) {FactoryGirl.create(:user, :with_trips)}
 
-    it 'has home town from geo database' do
-      town = user.home_town
-      expect(town).not_to be_blank
-      expect(town.geonames_code).to eq(user.home_town_code)
-      expect(town.name).to eq(user.home_town_text)
-      expect(town.name_en).to eq(user.home_town_text)
-    end
-  end
-
-  context 'user with trips' do
-    let(:user) {FactoryGirl.create(:user, :with_trips)}
-
-    it 'can return list of trips in which participated' do
-      expect(user.trips).not_to be_blank
-      expect(user.trips.count).to eq(5)
+      it 'can return list of trips in which participated' do
+        expect(user.trips).not_to be_blank
+        expect(user.trips.count).to eq(5)
+      end
     end
   end
 
