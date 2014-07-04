@@ -30,7 +30,7 @@ describe Travels::Trip do
         end
       end
 
-      it 'paginates by 9 items by default' do
+      it 'paginates per 9 items by default' do
         trips = Travels::Trip.all.page(1).to_a
         expect(trips.count).to eq(9)
       end
@@ -40,8 +40,14 @@ describe Travels::Trip do
   describe '#update_plan' do
     let(:trip){FactoryGirl.create(:trip)}
 
-    it 'create trip days on save' do
-      raise 'Test not implemented!!!'
+    it 'creates trip days on save' do
+      expect(trip.days.count).to eq(8)
+      expect(trip.days.first.date_when).to eq(trip.start_date)
+      expect(trip.days.last.date_when).to eq(trip.end_date)
+    end
+
+    it 'recounts dates on update' do
+      raise 'not implemented!!!!'
     end
   end
 

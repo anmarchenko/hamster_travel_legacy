@@ -44,7 +44,7 @@ module Travels
         else
           date = date + 1.day
         end
-        self.days.create(trip: self, date_when: date)
+        self.days.create(date_when: date)
       end
     end
 
