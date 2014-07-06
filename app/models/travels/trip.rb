@@ -14,7 +14,7 @@ module Travels
 
     field :published, type: Boolean, default: false
 
-    field :author_user_id, type: BSON::ObjectId
+    belongs_to :author_user, class_name: 'User', inverse_of: :authored_trips
     has_and_belongs_to_many :users, inverse_of: nil
 
     embeds_many :days, class_name: 'Travels::Day'
@@ -53,7 +53,7 @@ module Travels
     end
 
     def author
-      @author ||= User.where(id: author_user_id).first
+      author_user
     end
 
     def last_non_empty_day_index

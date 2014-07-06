@@ -40,6 +40,8 @@ class User
 
   field :locale, type: String
 
+  has_many :authored_trips, class_name: 'Travels::Trip', inverse_of: :author_user
+
   # User data
   validates_presence_of :last_name
   validates_presence_of :first_name

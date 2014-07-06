@@ -5,7 +5,21 @@ FactoryGirl.define do
     start_date { 7.days.ago }
     end_date {Date.today}
 
-    author_user_id 'non_existing_user'
+    association :author_user, factory: :user
+
+    trait :with_commented_days do
+      after :create do |trip|
+        trip.days.each_with_index { |day, index| day.set(comment: "Day #{index}") }
+      end
+    end
+
+    trait :with_users do
+      after :create do |trip|
+        trip.users = create_list(:user, 2)
+        trip.users << trip.author
+        trip.save validate: false
+      end
+    end
   end
 
 end
