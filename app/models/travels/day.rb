@@ -33,7 +33,7 @@ module Travels
     end
 
     def as_json(**args)
-      json = super(args)
+      json = super(except: [:_id])
       json['id'] = id.to_s
       json['date'] = (I18n.l(date_when, format: '%d.%m.%Y %A') unless date_when.blank?)
       json['transfers'] = transfers.as_json(args)

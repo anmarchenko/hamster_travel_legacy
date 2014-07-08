@@ -13,7 +13,7 @@ FactoryGirl.define do
           day.set(comment: "Day #{index}")
           day.set(add_price: rand(10000))
           2.times {day.transfers.create(build(:transfer, :with_destinations).attributes)}
-          5.times {day.activities.create(build(:activity, :with_data).attributes)}
+          5.times { |index| day.activities.create(build(:activity, :with_data, order_index: index).attributes)}
           day.places.create(build(:place, :with_data).attributes)
           day.hotel = build(:hotel, :with_data).attributes
           day.save validate: false
