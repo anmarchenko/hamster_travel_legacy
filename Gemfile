@@ -4,7 +4,7 @@ gem 'rails', '4.1.0'
 gem 'russian'
 
 # DB
-gem 'mongoid', github: 'mongoid/mongoid'
+gem 'mongoid', '~> 4.0.0'
 # pagination
 gem 'kaminari'
 gem 'kaminari-bootstrap', '~> 3.0.1'
@@ -37,7 +37,7 @@ gem 'coffee-rails', '~> 4.0.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # jquery UI
-gem 'jquery-ui-rails'
+gem 'jquery-ui-rails', '~> 4.2.1'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 # Use Uglifier as compressor for JavaScript assets

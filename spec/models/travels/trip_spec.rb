@@ -38,7 +38,7 @@ describe Travels::Trip do
   end
 
   describe '#update_plan' do
-    let(:trip){FactoryGirl.create(:trip, :with_commented_days)}
+    let(:trip){FactoryGirl.create(:trip, :with_filled_days)}
 
     it 'creates trip days on save' do
       expect(trip.days.count).to eq(8)
@@ -92,7 +92,7 @@ describe Travels::Trip do
 
   describe '#last_non_empty_day_index' do
     let(:trip_empty){FactoryGirl.create(:trip)}
-    let(:trip_full){FactoryGirl.create(:trip, :with_commented_days)}
+    let(:trip_full){FactoryGirl.create(:trip, :with_filled_days)}
 
     it 'returns -1 if all days are empty' do
       expect(trip_empty.last_non_empty_day_index).to eq(-1)
@@ -107,7 +107,29 @@ describe Travels::Trip do
       trip_empty.days[3].set(comment: 'comment')
       expect(trip_empty.last_non_empty_day_index).to eq(3)
     end
+  end
 
+  describe '#budget_sum' do
+    context 'when empty trip' do
+      let(:trip) {FactoryGirl.create(:trip)}
+
+      it 'returns zero' do
+        expect(trip.budget_sum).to eq(0)
+      end
+    end
+
+    context 'when filled trip' do
+      let(:trip) {FactoryGirl.create(:trip, :with_filled_days)}
+
+      it 'returns right budget' do
+        hotel_price = trip.days.inject(0) { |sum, day| sum += day.hotel.price }
+        days_add_price = trip.days.inject(0) { |sum, day| sum += day.add_price }
+        transfers_price = trip.days.inject(0) { |s, day| s += day.transfers.inject(0) { |i_s, tr| i_s += tr.price} }
+        activities_price = trip.days.inject(0) { |s, day| s += day.activities.inject(0) { |i_s, ac| i_s += ac.price} }
+
+        expect(trip.budget_sum).to eq([hotel_price, days_add_price, transfers_price, activities_price].reduce(&:+))
+      end
+    end
   end
 
 end
