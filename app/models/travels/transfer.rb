@@ -59,24 +59,12 @@ module Travels
     end
 
     def as_json(*args)
-      {
-          id: id.to_s,
-          city_from_code: city_from_code,
-          city_from_text: city_from_text,
-          city_to_code: city_to_code,
-          city_to_text: city_to_text,
-          type: type,
-          type_icon: type_icon,
-          code: code,
-          company: company,
-          link: link,
-          station_from: station_from,
-          station_to: station_to,
-          start_time: start_time.try(:strftime, '%Y-%m-%dT%H:%MZ'),
-          end_time: end_time.try(:strftime, '%Y-%m-%dT%H:%MZ'),
-          comment: comment,
-          price: price
-      }
+      json = super(except: [:_id])
+      json['id'] = id.to_s
+      json['start_time'] = start_time.try(:strftime, '%Y-%m-%dT%H:%MZ')
+      json['end_time'] = end_time.try(:strftime, '%Y-%m-%dT%H:%MZ')
+      json['type_icon'] = type_icon
+      json
     end
 
   end

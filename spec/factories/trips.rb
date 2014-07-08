@@ -21,6 +21,16 @@ FactoryGirl.define do
       end
     end
 
+    trait :with_transfers do
+      after :create do |trip|
+        trip.days.each do |day|
+          day.transfers.create(build(:transfer).attributes)
+          day.transfers.create(build(:transfer, :with_destinations).attributes)
+          day.transfers.create(build(:transfer, :flight).attributes)
+        end
+      end
+    end
+
     trait :with_users do
       after :create do |trip|
         trip.users = create_list(:user, 2)
@@ -39,6 +49,29 @@ FactoryGirl.define do
       city_to_text {Geo::City.all.last.name}
 
       price {rand(10000)}
+    end
+
+    trait :flight do
+      city_from_code {Geo::City.all.first.geonames_code}
+      city_from_text {Geo::City.all.first.name}
+
+      city_to_code {Geo::City.all.last.geonames_code}
+      city_to_text {Geo::City.all.last.name}
+
+      price {rand(10000)}
+
+      type {Travels::Transfer::Types::FLIGHT}
+
+      code {'HH404'}
+      company {'Hamster Airlines'}
+
+      station_from {'HAM'}
+      station_to {'FOO'}
+
+      start_time (Date.today.beginning_of_day)
+      end_time (Date.today.end_of_day)
+
+      comment {'very long comment'}
     end
   end
 
