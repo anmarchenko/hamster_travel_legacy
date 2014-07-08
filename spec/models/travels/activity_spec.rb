@@ -26,4 +26,27 @@ describe Travels::Activity do
       end
     end
   end
+
+  describe '#as_json' do
+
+    let(:activity) {FactoryGirl.create(:trip, :with_filled_days).days.first.activities.first}
+    let(:activity_json) {activity.as_json}
+
+    it 'has string id field' do
+      expect(activity_json['id']).not_to be_blank
+      expect(activity_json['id']).to be_a String
+      expect(activity_json['id']).to eq(activity.id.to_s)
+    end
+
+    it 'has all attributes' do
+      expect(activity_json['name']).to eq(activity.name)
+      expect(activity_json['price']).to eq(activity.price)
+      expect(activity_json['comment']).to eq(activity.comment)
+      expect(activity_json['link_description']).to eq(activity.link_description)
+      expect(activity_json['link_url']).to eq(activity.link_url)
+      expect(activity_json['order_index']).to eq(activity.order_index)
+    end
+
+  end
+
 end

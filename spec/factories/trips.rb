@@ -64,6 +64,9 @@ FactoryGirl.define do
       name {'Hotel'}
       price {rand(10000)}
       comment {'Comment'}
+      after :build do |hotel|
+        hotel.links = [FactoryGirl.create(:external_link)]
+      end
     end
   end
 

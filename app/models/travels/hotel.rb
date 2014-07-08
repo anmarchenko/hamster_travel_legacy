@@ -11,13 +11,10 @@ module Travels
     has_and_belongs_to_many :links, class_name: 'ExternalLink', inverse_of: nil
 
     def as_json(*args)
-      {
-          id: id.to_s,
-          name: name,
-          price: price,
-          comment: comment,
-          links: links
-      }
+      json = super(except: [:_id])
+      json['id'] = id.to_s
+      json['links'] = links.as_json(args)
+      json
     end
 
     def is_empty?

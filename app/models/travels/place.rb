@@ -19,11 +19,9 @@ module Travels
     end
 
     def as_json(*args)
-      {
-          id: id.to_s,
-          city_code: city_code,
-          city_text: city_text
-      }
+      json = super(except: [:_id])
+      json['id'] = id.to_s
+      json
     end
 
   end
