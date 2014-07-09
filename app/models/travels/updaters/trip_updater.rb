@@ -17,7 +17,6 @@ module Travels
             hotel_hash = day_hash[:hotel]
             day.hotel.update_attributes(name: hotel_hash[:name], price: hotel_hash[:price],
               comment: hotel_hash[:comment])
-            # links
             process_nested(day.hotel.links, day_hash[:hotel][:links] || [])
           end
           day.update_attributes(comment: day_hash[:comment], add_price: day_hash[:add_price])
@@ -31,7 +30,7 @@ module Travels
 
       private
 
-      # TODO permit only some params
+      # TODO permit only some params - possible security problem
       def process_nested(collection, params)
         to_delete = []
         collection.each do |item|
