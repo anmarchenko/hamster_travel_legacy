@@ -10,6 +10,9 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.raise_errors_for_deprecations!
 
+  config.include Devise::TestHelpers, :type => :controller
+  config.extend ControllerMacros, :type => :controller
+
   config.before(:suite) do
     DatabaseCleaner.strategy = :truncation
     begin
