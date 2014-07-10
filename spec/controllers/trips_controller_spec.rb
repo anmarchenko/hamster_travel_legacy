@@ -2,12 +2,13 @@ describe TripsController do
 
   describe '#index' do
 
+    after {expect(response).to render_template 'trips/index'}
+
     context 'when user is logged in' do
       login_user
 
       before {FactoryGirl.create_list(:trip, 6, user_ids: [subject.current_user.id])}
       before {FactoryGirl.create_list(:trip, 12)}
-      after {expect(response).to render_template 'trips/index'}
 
       it 'shows trips index page' do
         get 'index'
@@ -15,7 +16,7 @@ describe TripsController do
         expect(trips.to_a.count).to eq 9
       end
 
-      it 'shows user\'s trip when parameter \'my\' is present' do
+      it 'shows user\'s trips when parameter \'my\' is present' do
         get 'index', my: true
         trips = assigns(:trips)
         expect(trips.to_a.count).to eq 6
@@ -27,6 +28,16 @@ describe TripsController do
     end
 
     context 'when no logged user' do
+      before {FactoryGirl.create_list(:trip, 12)}
+      after {expect(assigns(:trips).to_a.count).to eq 9 }
+
+      it 'shows trips index page' do
+        get 'index'
+      end
+
+      it 'shows same trips when parameter \'my\' is present' do
+        get 'index', my: true
+      end
 
     end
   end

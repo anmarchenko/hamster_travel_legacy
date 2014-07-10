@@ -2,7 +2,7 @@ FactoryGirl.define do
 
   factory :trip, class: 'Travels::Trip' do
     sequence(:name){ |n| "Trip number #{n}" }
-    start_date { 7.days.ago }
+    start_date { Date.today - 7 }
     end_date {Date.today}
 
     association :author_user, factory: :user
