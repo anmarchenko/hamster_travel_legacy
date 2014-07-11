@@ -143,6 +143,12 @@ describe TripsController do
         end
       end
 
+      context 'and when trip does not exist' do
+        it 'heads code 404' do
+          get 'edit', id: 'not-existing-id'
+          expect(response).to have_http_status 404
+        end
+      end
     end
 
     context 'when no logged user' do
@@ -204,5 +210,79 @@ describe TripsController do
     end
   end
 
+  describe '#show' do
+    context 'when user is logged in' do
+      login_user
+
+      context 'and when trip exists' do
+        let(:trip) {FactoryGirl.create(:trip)}
+        it 'renders show template' do
+          get 'show', id: trip.id
+          expect(response).to render_template 'trips/show'
+          expect(assigns(:trip).id).to eq trip.id
+        end
+      end
+
+      context 'and when trip does not exist' do
+        it 'renders show template' do
+          get 'show', id: 'non-existing-id'
+          expect(response).to have_http_status 404
+        end
+      end
+
+    end
+
+    context 'when no logged user' do
+      let(:trip) {FactoryGirl.create(:trip)}
+
+      it 'renders show template' do
+        get 'show', id: trip.id
+        expect(response).to have_http_status 200
+        expect(response).to render_template 'trips/show'
+      end
+    end
+  end
+
+  describe '#destroy' do
+    context 'when user is logged in' do
+      login_user
+
+      context 'and when user is author' do
+        let(:trip) {FactoryGirl.create(:trip, author_user: subject.current_user)}
+
+        it 'destroys the trip completely' do
+          delete 'destroy', id: trip.id
+          expect(Travels::Trip.where(id: trip.id).first).to be_nil
+          expect(response).to redirect_to trips_path(my: true)
+        end
+      end
+
+      context 'and when user is just a participant' do
+        let(:trip) {FactoryGirl.create(:trip, users: [subject.current_user])}
+
+        it 'redirects to dashboard with flash' do
+          delete 'destroy', id: trip.id
+          expect(response).to redirect_to '/'
+          expect(flash[:error]).to eq I18n.t('errors.unathorized')
+        end
+      end
+
+      context 'and when trip does not exist' do
+        it 'heads 404' do
+          delete 'destroy', id: 'non existing'
+          expect(response).to have_http_status 404
+        end
+      end
+    end
+
+    context 'when no logged user' do
+      let(:trip) {FactoryGirl.create(:trip)}
+
+      it 'redirects to sign in' do
+        delete 'destroy', id: trip.id
+        expect(response).to redirect_to '/users/sign_in'
+      end
+    end
+  end
 
 end

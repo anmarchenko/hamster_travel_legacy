@@ -61,7 +61,7 @@ class TripsController < ApplicationController
   end
 
   def authorize_destroy
-    no_access and return if !@trip.author_user_id == current_user.id
+    no_access and return if !(@trip.author_user_id == current_user.id)
   end
 
 end
