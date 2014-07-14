@@ -1,6 +1,14 @@
 describe Api::CitiesController do
 
   describe '#index' do
+    def check_cities body, term
+      cities = Geo::City.find_by_term(term).page(1).to_a
+      json = JSON.parse(body)
+      expect(json.first).to eq({"name" => cities.first.translated_name, "text" => cities.first.translated_text,
+                                "code" => cities.first.geonames_code})
+      expect(json.count).to eq cities.count
+    end
+
     context 'when user is logged in' do
       login_user
 
@@ -17,19 +25,17 @@ describe Api::CitiesController do
       end
 
       it 'responds with cities when something found by english name' do
-        get 'index', term: 'city 1', format: :json
+        term = 'city'
+        get 'index', term: term, format: :json
         expect(response).to have_http_status 200
-        json = JSON.parse(response.body)
-        expect(json.first).to eq({"name" => "Город 11", "text"=>"Город 11, Регион 6, Страна 5", "code"=>"11"})
-        expect(json.count).to eq 6
+        check_cities response.body, term
       end
 
       it 'responds with cities when something found by russian name' do
-        get 'index', term: 'город 1', format: :json
+        term = 'город'
+        get 'index', term: term, format: :json
         expect(response).to have_http_status 200
-        json = JSON.parse(response.body)
-        expect(json.first).to eq({"name" => "Город 11", "text"=>"Город 11, Регион 6, Страна 5", "code"=>"11"})
-        expect(json.count).to eq 6
+        check_cities response.body, term
       end
 
       it 'responds with empty array if nothing found' do
@@ -41,11 +47,10 @@ describe Api::CitiesController do
 
     context 'when no logged user' do
       it 'behaves the same as for logged user' do
-        get 'index', term: 'city 1', format: :json
+        term = 'city'
+        get 'index', term: term, format: :json
         expect(response).to have_http_status 200
-        json = JSON.parse(response.body)
-        expect(json.first).to eq({"name" => "Город 11", "text"=>"Город 11, Регион 6, Страна 5", "code"=>"11"})
-        expect(json.count).to eq 6
+        check_cities response.body, term
       end
     end
   end
