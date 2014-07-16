@@ -38,11 +38,13 @@
             = render 'widgets/price', name: 'activity_price', ng_model: 'activity.price', placeholder: t('trips.show.price')
         %div{class: 'form-group'}
           %div{class: 'col-md-12'}
-            = text_area_tag 'activity_comment', '', 'ng-model' => 'activity.comment', class: 'form-control', placeholder: t('trips.show.comment'), rows: 3
+            = text_area_tag 'activity_comment', '', 'ng-model' => 'activity.comment', class: 'form-control',
+              placeholder: t('trips.show.comment'), rows: 6
         %div{class: 'form-group'}
           %div{class: 'col-md-12'}
             = render 'widgets/link', ng_model_descr: 'activity.link_description', ng_model_url: 'activity.link_url'
 
   %div{class: 'form-group pull-right'}
-    %a{href: 'javascript:void(0);', class: 'btn btn-success btn-sm', 'ng-click' => 'add(day.activities, {"isCollapsed" : activitiesCollapsed})'}
+    %a{href: 'javascript:void(0);', class: 'btn btn-success btn-sm',
+      'ng-click' => 'add(day.activities, {"isCollapsed" : activitiesCollapsed})'}
       = fa_icon 'plus'
