@@ -62,10 +62,12 @@ end
 
 group :development do
   # Use Capistrano for deployment
-  gem 'capistrano'
-  gem 'capistrano-ext'
-  gem 'capistrano-rvm'
-  gem 'capistrano-bundler'
+  gem 'capistrano', '~> 3.1.0'
+  # cap tasks to manage puma application server
+  gem 'capistrano-puma', require: false
+  gem 'capistrano-rails',   '~> 1.1', require: false
+  gem 'capistrano-bundler', '~> 1.1', require: false
+  gem 'capistrano-rvm',   '~> 0.1', require: false
 
   # app server
   gem 'puma'
