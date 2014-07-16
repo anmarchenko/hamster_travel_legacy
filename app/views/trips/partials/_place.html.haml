@@ -1,0 +1,21 @@
+%div{'ng-show' => '!edit', 'ng-repeat' => 'place in day.places'}
+  %p
+    {{place.city_text}}
+
+%div{'ng-show' => 'edit'}
+
+  %div{'ng-repeat' => 'place in day.places', class: 'day-place-container relative-position'}
+    %a{href: 'javascript:void(0);',  class: 'up-button',
+       'ng-click' => 'fillAsPreviousPlace(place, $index, day, $parent.$index)',
+       'ng-show' => '($index > 0 || $parent.$index >0) && !place.city_code'}
+      = fa_icon 'arrow-up'
+
+    %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.places, $index)', 'ng-show' => '$index > 0', class: 'delete-button'}
+      = fa_icon 'times'
+    %div{class: 'form-group'}
+      = render 'widgets/typeahead/cities', model_name: 'place.city', classes: 'input-sm form-control',
+        placeholder: t('trips.show.city')
+
+  %div{class: 'form-group'}
+    %a{href: 'javascript:void(0);', class: 'btn btn-success btn-sm pull-right', 'ng-click' => 'add(day.places)'}
+      = fa_icon 'plus'

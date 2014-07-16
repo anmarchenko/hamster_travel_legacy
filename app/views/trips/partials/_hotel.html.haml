@@ -1,0 +1,48 @@
+%div{'ng-show' => '!edit'}
+  %p
+    {{day.hotel.name}}
+    %br
+    %span{'ng-show' => '!!day.hotel.price'}
+      {{day.hotel.price}}
+      = fa_icon 'ruble'
+  %p
+    %i
+      {{day.hotel.comment}}
+  %span{'ng-show' => '!!day.hotel.links'}
+    %p{'ng-repeat' => 'link in day.hotel.links'}
+      %a{href: '{{link.url}}'}
+        {{link.description}}
+
+
+%div{'ng-show' => 'edit', class: 'form-horizontal'}
+  %div{class: 'form-group day-place-container relative-position'}
+    %div{class: 'col-md-12'}
+      = text_field_tag 'hotel_name', '', 'ng-model' => 'day.hotel.name', class: 'input-sm form-control',
+        placeholder: 'Название'
+
+    %a{href: 'javascript:void(0);',  class: 'up-button',
+      'ng-click' => 'fillAsPreviousHotel(day.hotel, $index)',
+      'ng-show' => '$index >0 && !day.hotel.name'}
+      = fa_icon 'arrow-up'
+
+  %div{class: 'form-group'}
+    %div{class: 'col-md-12'}
+      = render 'widgets/price', name: 'hotel_price', ng_model: 'day.hotel.price', placeholder: t('trips.show.price')
+  %div{class: 'form-group'}
+    %div{class: 'col-md-12'}
+      = text_area_tag 'hotel_comment', '', 'ng-model' => 'day.hotel.comment', class: 'form-control',
+        placeholder: t('trips.show.comment'), rows: 3
+
+  %p
+    %u
+      = t('trips.show.links')
+
+  %div{class: 'day-place-container relative-position', 'ng-repeat' => 'link in day.hotel.links'}
+    = render 'widgets/link', ng_model_descr: 'link.description', ng_model_url: 'link.url'
+    %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.hotel.links, $index)', 'ng-show' => '$index > 0',
+      class: 'delete-button'}
+      = fa_icon 'times'
+  %div{class: 'form-group'}
+    %div{class: 'col-md-12'}
+      %a{href: 'javascript:void(0);', class: 'btn btn-success btn-sm pull-right', 'ng-click' => 'add(day.hotel.links)'}
+        = fa_icon 'plus'

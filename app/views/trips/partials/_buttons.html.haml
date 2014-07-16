@@ -1,0 +1,14 @@
+- if user_signed_in? and @trip.include_user(current_user)
+  %div{class: 'btn-toolbar'}
+    %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(true)',
+        class: 'btn btn-primary pull-right btn-sm', 'ng-show' => '!edit'}
+      = fa_icon 'edit', text: t('trips.show.edit_plan')
+    %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(false)',
+        class: 'btn btn-primary pull-right btn-sm', 'ng-show' => 'edit'}
+      = fa_icon 'eye', text: t('trips.show.show_plan')
+    %a{href: 'javascript:void(0);', 'ng-click' => 'savePlan()',
+        class: 'btn btn-success pull-right btn-sm', 'ng-show' => '!saving'}
+      = fa_icon 'save', text: t('trips.show.save_plan')
+    %div{class: 'btn btn-success pull-right btn-sm', 'ng-show' => 'saving'}
+      %i{class: 'fa fa-spinner fa-spin'}
+      = t('.saving_plan')
