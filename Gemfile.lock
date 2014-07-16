@@ -29,7 +29,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.6)
     angular-ui-bootstrap-rails (0.10.0)
-    angularjs-rails (1.2.19)
+    angularjs-rails (1.2.20)
     angularjs-rails-resource (1.0.2)
     arel (5.0.1.20140414130214)
     bcrypt (3.1.7)
