@@ -16,14 +16,15 @@
 
 %div{'ng-show' => 'edit'}
   %div{'ng-model' => 'day.activities', 'ui-sortable' => ''}
-    %div{'ng-repeat' => 'activity in day.activities', class: 'form-horizontal region-grey'}
-      %div{class: 'form-group relative-position day-activity-container'}
+    %div{'ng-repeat' => 'activity in day.activities', class: 'form-horizontal region-grey day-activity-container'}
+      %div{class: 'form-group'}
         %div{class: 'col-md-1 activity-index'}
           %big
             {{$index+1}}
-        %div{class: 'col-md-10'}
+        %div{class: 'col-md-9'}
           = text_field_tag 'activity_name', '', 'ng-model' => 'activity.name', class: 'input-sm form-control',
             placeholder: t('trips.show.activity.name')
+        %div{class: 'col-md-2'}
           %a{href: 'javascript:void(0);', 'ng-click' => 'activity.isCollapsed = !activity.isCollapsed', class: 'expand-button'}
             %span{'ng-show' => 'activity.isCollapsed'}
               = fa_icon 'arrow-right'

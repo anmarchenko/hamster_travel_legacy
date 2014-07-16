@@ -42,11 +42,19 @@ table .dropdown-menu a{
     position: absolute;
     right: 5px; top: 8px
 }
+.relative-position .expand-button{
+    position: absolute;
+    right: 40px; top: 8px
+}
+
+.day-activity-container{
+    position: relative;
+}
 .day-activity-container .delete-button{
     position: absolute;
     right: 20px; top: 8px
 }
-.relative-position .expand-button{
+.day-activity-container .expand-button{
     position: absolute;
     right: 40px; top: 8px
 }
