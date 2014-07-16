@@ -13,7 +13,7 @@ set :log_level, :debug
 set :pty, true
 
 set :linked_files, %w{config/mongoid.yml config/secrets.yml}
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_dirs, %w{bin log tmp/cache tmp/puma vendor/bundle public/system}
 
 set :keep_releases, 5
 
