@@ -18,8 +18,9 @@ describe Travels::Trip do
   end
 
   describe '.where' do
+    before(:context) {FactoryGirl.create_list(:trip, 12, author_user_id: 'user_test_travels_trip')}
+
     context 'when there are several trips' do
-      before {FactoryGirl.create_list(:trip, 12, author_user_id: 'user_test_travels_trip')}
 
       it 'has default context with ordering by created_at' do
         trips = Travels::Trip.where(author_user_id: 'user_test_travels_trip').to_a
@@ -33,6 +34,16 @@ describe Travels::Trip do
       it 'paginates per 9 items by default' do
         trips = Travels::Trip.all.page(1).to_a
         expect(trips.count).to eq(9)
+      end
+
+      context 'and when one deleted trip' do
+        let!(:deleted_trip) { FactoryGirl.create :trip, author_user_id: 'user_test_travels_trip', archived: true }
+
+        it 'returns only not deleted trips by default' do
+          expect(Travels::Trip.where(id: deleted_trip.id, archived: true).first).not_to be_blank
+          trips = Travels::Trip.where(author_user_id: 'user_test_travels_trip').to_a
+          expect(trips.count).to eq(12)
+        end
       end
     end
   end

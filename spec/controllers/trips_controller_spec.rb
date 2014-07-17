@@ -253,6 +253,7 @@ describe TripsController do
         it 'destroys the trip completely' do
           delete 'destroy', id: trip.id
           expect(Travels::Trip.where(id: trip.id).first).to be_nil
+          expect(Travels::Trip.where(id: trip.id, archived: true).first).not_to be_blank
           expect(response).to redirect_to trips_path(my: true)
         end
       end

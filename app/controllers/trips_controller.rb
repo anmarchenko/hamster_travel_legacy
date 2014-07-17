@@ -41,7 +41,7 @@ class TripsController < ApplicationController
   end
 
   def destroy
-    @trip.destroy
+    @trip.set(archived: true)
     redirect_to trips_path(my: true)
   end
 

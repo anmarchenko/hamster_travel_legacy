@@ -13,6 +13,7 @@ module Travels
     field :end_date, type: Date
 
     field :published, type: Boolean, default: false
+    field :archived, type: Boolean, default: false
 
     belongs_to :author_user, class_name: 'User', inverse_of: :authored_trips
     has_and_belongs_to_many :users, inverse_of: nil
@@ -25,7 +26,7 @@ module Travels
     validates :end_date, date: {before: Proc.new {|record| record.start_date + 30.days},
                                 message: I18n.t('errors.end_date_days', period: 30) }
 
-    default_scope ->{order_by(created_at: -1)}
+    default_scope ->{where(:archived.ne => true).order_by(created_at: -1)}
 
     after_save :update_plan
 

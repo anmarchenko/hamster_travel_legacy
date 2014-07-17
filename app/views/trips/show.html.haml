@@ -10,7 +10,8 @@
           = fa_icon 'pencil'
 
         - if @trip.author_user_id == current_user.id
-          = link_to trip_path(@trip), class: 'btn btn-danger', method: :delete, 'data-confirm'=> t('common.delete_confirm') do
+          = link_to trip_path(@trip), class: 'btn btn-danger', method: :delete,
+            'data-confirm'=> t('common.delete_confirm') do
             = fa_icon 'times'
 
     %h3
