@@ -250,7 +250,7 @@ describe TripsController do
       context 'and when user is author' do
         let(:trip) {FactoryGirl.create(:trip, author_user: subject.current_user)}
 
-        it 'destroys the trip completely' do
+        it 'marks trip as completed' do
           delete 'destroy', id: trip.id
           expect(Travels::Trip.where(id: trip.id).first).to be_nil
           expect(Travels::Trip.where(id: trip.id, archived: true).first).not_to be_blank
