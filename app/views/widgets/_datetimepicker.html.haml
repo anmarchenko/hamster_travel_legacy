@@ -8,5 +8,5 @@
     = link_default_text
 %ul{class: 'dropdown-menu', role: 'menu', 'aria-labelledby' => 'dLabel'}
   %datetimepicker{'data-ng-model'=> model,
-    'data-datetimepicker-config' => "{ dropdownSelector: '#{id}', weekStart: 1 }",
+    'data-datetimepicker-config' => "{ dropdownSelector: '##{id}', weekStart: 1 }",
     'data-on-set-time' => 'onTimeSet'}

@@ -1,4 +1,5 @@
 /*
+ *= require_tree './lib'
  *= require 'flatly'
  *= require 'scaffolds'
  *= require 'font-awesome'
