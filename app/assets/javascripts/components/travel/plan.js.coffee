@@ -41,7 +41,10 @@ angular.module('travel-components').controller 'PlanController'
       $scope.fillAsPreviousHotel = (hotel, day_index) ->
         prev_day = $scope.days[day_index - 1]
         prev_hotel = prev_day.hotel
-        hotel.name = prev_hotel.name if prev_hotel
+        if prev_hotel
+          hotel.name = prev_hotel.name
+          hotel.price = prev_hotel.price
+          hotel.links = prev_hotel.links
 
       $scope.budget = ->
         price = 0
