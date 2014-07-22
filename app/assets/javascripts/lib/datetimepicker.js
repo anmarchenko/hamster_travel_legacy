@@ -106,7 +106,9 @@ angular.module('ui.bootstrap.datetimepicker', [])
         "       </tr>" +
         "       <tr>" +
         "           <td colspan='7' >" +
-        "              <a    class='btn btn-primary btn-sm' " +
+        "              <a class='btn btn-default btn-sm pull-left' " +
+        "                       data-ng-click=\"closeView()\">Закрыть</a> " +
+        "              <a data-ng-class='{ hide: data.currentView == \"day\" }' class='btn btn-primary btn-sm pull-right' " +
         "                       data-ng-click=\"changeView('setTime', data.currentDate, $event)\">Выбрать</a> " +
         "           </td>" +
         "       </tr>" +
@@ -308,9 +310,7 @@ angular.module('ui.bootstrap.datetimepicker', [])
           setTime: function (unixDate) {
             var tempDate = new Date(unixDate);
             var newDate = new Date(tempDate.getTime() + (tempDate.getTimezoneOffset() * 60000));
-            if (configuration.dropdownSelector) {
-              jQuery(configuration.dropdownSelector).dropdown('toggle');
-            }
+            scope.closeView()
             if (angular.isFunction(scope.onSetTime)) {
               scope.onSetTime(newDate, scope.ngModel);
             }
@@ -334,6 +334,12 @@ angular.module('ui.bootstrap.datetimepicker', [])
             scope.data = dataFactory[viewName](unixDate);
           }
         };
+
+        scope.closeView = function () {
+          if (configuration.dropdownSelector) {
+            jQuery(configuration.dropdownSelector).dropdown('toggle');
+          }
+        }
 
         scope.changeView(configuration.startView, getUTCTime());
 

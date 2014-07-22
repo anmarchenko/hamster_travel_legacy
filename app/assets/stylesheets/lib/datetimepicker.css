@@ -29,6 +29,11 @@
   top: 0;
   left: 0;
 }
+
+.datetimepicker table{
+  min-width: 240px;
+}
+
 [class*=" datetimepicker-dropdown"]:before {
   content: '';
   display: inline-block;
@@ -254,7 +259,7 @@
 }
 .datetimepicker table tr td span {
   display: block;
-  width: 30%;
+  width: 23%;
   height: 54px;
   line-height: 54px;
   float: left;
