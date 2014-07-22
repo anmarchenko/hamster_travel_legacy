@@ -10,7 +10,7 @@
       {{day.hotel.comment}}
   %span{'ng-show' => '!!day.hotel.links'}
     %p{'ng-repeat' => 'link in day.hotel.links'}
-      %a{href: '{{link.url}}'}
+      %a{href: '{{link.url}}', target: '_blank'}
         {{link.description}}
 
 
