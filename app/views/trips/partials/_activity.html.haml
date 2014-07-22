@@ -45,6 +45,6 @@
             = render 'widgets/link', ng_model_descr: 'activity.link_description', ng_model_url: 'activity.link_url'
 
   %div{class: 'form-group pull-right'}
-    %a{href: 'javascript:void(0);', class: 'btn btn-success btn-sm',
+    %a{href: 'javascript:void(0);', class: '',
       'ng-click' => 'add(day.activities, {"isCollapsed" : activitiesCollapsed})'}
       = fa_icon 'plus'
