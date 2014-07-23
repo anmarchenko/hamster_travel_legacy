@@ -10,8 +10,8 @@
       {{day.hotel.comment}}
   %span{'ng-show' => '!!day.hotel.links'}
     %p{'ng-repeat' => 'link in day.hotel.links'}
-      %a{href: '{{link.url}}', target: '_blank'}
-        {{link.description}}
+      = render 'widgets/link_show', ng_model_url: 'link.url',
+                                              ng_model_description: 'link.description'
 
 
 %div{'ng-show' => 'edit', class: 'form-horizontal'}
@@ -27,7 +27,7 @@
 
   %div{class: 'form-group'}
     %div{class: 'col-md-12'}
-      = render 'widgets/price', name: 'hotel_price', ng_model: 'day.hotel.price', placeholder: t('trips.show.price')
+      = render 'widgets/price', name: 'hotel_price', ng_model: 'day.hotel.price', placeholder: t('trips.show.price_hotel')
   %div{class: 'form-group'}
     %div{class: 'col-md-12'}
       = text_area_tag 'hotel_comment', '', 'ng-model' => 'day.hotel.comment', class: 'form-control',

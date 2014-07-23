@@ -12,6 +12,11 @@ module Travels
     field :comment
 
     field :link_description
+    def link_description
+      return '' if self.link_url.blank?
+      self.link_url = "http://#{self.link_url}" unless self.link_url.start_with? 'http://'
+      ExternalLink.new(url: link_url).description
+    end
     field :link_url
 
     PERMITTED = %w(name price comment link_description link_url order_index id)

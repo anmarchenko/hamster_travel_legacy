@@ -39,7 +39,7 @@ describe Travels::Updaters::TripUpdater do
         expect(hotel.price).to eq 123
         expect(hotel.links.count).to eq 1
         expect(hotel.links.first.url).to eq 'http://new.url'
-        expect(hotel.links.first.description).to eq 'new_description'
+        expect(hotel.links.first.description).to eq 'New.url'
       end
 
       it 'updates hotel link data' do
@@ -56,7 +56,7 @@ describe Travels::Updaters::TripUpdater do
         expect(updated_hotel.links.count).to eq 1
         expect(updated_hotel.links.first.id).to eq hotel.links.first.id
         expect(updated_hotel.links.first.url).to eq 'http://updated.url'
-        expect(updated_hotel.links.first.description).to eq 'new_description'
+        expect(updated_hotel.links.first.description).to eq 'Updated.url'
       end
 
       it 'removes hotel link' do

@@ -11,8 +11,8 @@
         %i
           {{activity.comment}}
       %p
-        %a{href: '{{activity.link_url}}', target: '_blank'}
-          {{activity.link_description}}
+        = render 'widgets/link_show', ng_model_url: 'activity.link_url',
+          ng_model_description: 'activity.link_description'
 
 %div{'ng-show' => 'edit'}
   %div{'ng-model' => 'day.activities', 'ui-sortable' => ''}
@@ -42,7 +42,7 @@
               placeholder: t('trips.show.comment'), rows: 6
         %div{class: 'form-group'}
           %div{class: 'col-md-12'}
-            = render 'widgets/link', ng_model_descr: 'activity.link_description', ng_model_url: 'activity.link_url'
+            = render 'widgets/link', ng_model_url: 'activity.link_url'
 
   %div{class: 'form-group pull-right'}
     %a{href: 'javascript:void(0);', class: '',

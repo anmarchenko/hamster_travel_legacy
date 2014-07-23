@@ -27,6 +27,14 @@ describe Travels::Activity do
     end
   end
 
+  describe '#link_description' do
+    let(:activity) {FactoryGirl.create(:trip, :with_filled_days).days.first.activities.first}
+
+    it 'returns host' do
+      expect(activity.link_description).to eq 'Cool.site'
+    end
+  end
+
   describe '#as_json' do
 
     let(:activity) {FactoryGirl.create(:trip, :with_filled_days).days.first.activities.first}

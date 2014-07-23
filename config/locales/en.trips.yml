@@ -36,7 +36,8 @@ en:
       to: To
       departure: Departure
       arrival: Arrival
-      price: Price for night
+      price: Price
+      price_hotel: Price for a night
       more: More information...
       less: Less information...
       comment: Comment
