@@ -32,6 +32,4 @@
     = t('trips.show.arrival')
     {{transfer.end_time | date:'dd.MM.yyyy HH:mm'}}
 
-  %p{'ng-show' => '!!transfer.comment'}
-    %i
-      {{transfer.comment}}
+  %p{'ng-show' => '!!transfer.comment', class: 'travel-text text-italic' } {{transfer.comment}}

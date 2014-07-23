@@ -1,6 +1,5 @@
 %div{'ng-show' => '!edit'}
-  %p
-    {{day.comment}}
+  %p{class: 'travel-text'} {{day.comment}}
   %p{'ng-show' => '!!day.add_price'}
     {{day.add_price}}
     = fa_icon 'ruble'

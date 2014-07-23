@@ -108,3 +108,9 @@ table .dropdown-menu a{
 .margin-right-10{
     margin-right: 10px;
 }
+.travel-text {
+    white-space: pre-line
+}
+.text-italic{
+    font-style: italic;
+}
