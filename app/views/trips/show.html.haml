@@ -1,6 +1,6 @@
 - content_for :title, t('.title')
 
-%div{class: 'row'}
+%div{class: 'row trip-header'}
   %div{class: 'col-md-3 col-sm-3'}
     %img{class: 'img-thumbnail', src: 'http://lorempixel.com/300/300/city/', width: '100%'}
   %div{class: 'col-md-9 col-sm-9'}
@@ -31,56 +31,86 @@
 - content_for :additional_content do
   %div{'ng-controller' => 'PlanController'}
     %div{class: 'container-full'}
-      %table{class: 'table table-black-bordered fixed-head'}
-        %thead
-          %tr{class: 'plan-header'}
-            %th{colspan: '6'}
-              %div{class: 'container'}
-                %div{class: 'row'}
-                  %div{class: 'col-md-12'}
-                    %h3{class: 'pull-left'}
-                      = t('.plan')
-                      %small
-                        = t('.budget')
-                        {{budget()}}
-                        = fa_icon 'ruble'
-                    = render 'trips/partials/buttons'
+      %div{class: 'row'}
+        %div{class: 'col-md-1'}
+          %div{class: 'row'}
+            %div{class: 'col-md-4'}
+            %div{class: 'col-md-8'}
+              %div{class: 'show-column-checkboxes' }
+                %ul{class: "list-group checked-list-box"}
+                  %li{class: "list-group-item", 'data-style' => "button", 'data-color' => "grey",
+                         'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('.place')}
+                    %input{type: 'checkbox', class: 'hidden', 'ng-model' => 'show_place'}
+                    = fa_icon 'map-marker'
+                  %li{class: "list-group-item", 'data-style' => "button", 'data-color' => "grey",
+                         'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('.transfers')}
+                    %input{type: 'checkbox', class: 'hidden', 'ng-model' => 'show_transfers'}
+                    = fa_icon 'car'
+                  %li{class: "list-group-item", 'data-style' => "button", 'data-color' => "grey",
+                         'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('.hotel')}
+                    %input{type: 'checkbox', class: 'hidden', 'ng-model' => 'show_hotel'}
+                    = fa_icon 'home'
+                  %li{class: "list-group-item", 'data-style' => "button", 'data-color' => "grey",
+                         'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('.activities')}
+                    %input{type: 'checkbox', class: 'hidden', 'ng-model' => 'show_activities'}
+                    = fa_icon 'university'
+                  %li{class: "list-group-item", 'data-style' => "button", 'data-color' => "grey",
+                         'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('.comments')}
+                    %input{type: 'checkbox', class: 'hidden', 'ng-model' => 'show_comments'}
+                    = fa_icon 'pencil'
 
-          %tr
-            %th{class: 'col-md-1'}
-              = t('.day')
-            %th{class: 'col-md-1'}
-              = t('.place')
-            %th{class: 'col-md-2'}
-              = t('.transfers')
-              %a{class: 'pull-right', href: 'javascript:void(0);', 'ng-click' => 'toggleTransfers()'}
-                %span{'ng-show' => '!transfersCollapsed'}
-                  = fa_icon 'arrow-down'
-                %span{'ng-show' => 'transfersCollapsed'}
-                  = fa_icon 'arrow-right'
-            %th{class: 'col-md-2'}
-              = t('.hotel')
-            %th{class: 'col-md-4'}
-              = t('.activities')
-              %a{class: 'pull-right', href: 'javascript:void(0);', 'ng-click' => 'toggleActivities()'}
-                %span{'ng-show' => '!activitiesCollapsed'}
-                  = fa_icon 'arrow-down'
-                %span{'ng-show' => 'activitiesCollapsed'}
-                  = fa_icon 'arrow-right'
-            %th{class: 'col-md-2'}
-              = t('.comments')
+        %div{class: 'col-md-10'}
+          %table{class: 'table table-black-bordered fixed-head'}
+            %thead
+              %tr{class: 'plan-header'}
+                %th{colspan: '6'}
+                  %div{class: 'container'}
+                    %div{class: 'row'}
+                      %div{class: 'col-md-12'}
+                        %h3{class: 'pull-left'}
+                          = t('.plan')
+                          %small
+                            = t('.budget')
+                            {{budget()}}
+                            = fa_icon 'ruble'
+                        = render 'trips/partials/buttons'
 
-        %tbody
-          %tr{'ng-repeat' => 'day in days'}
-            %td
-              {{day.date}}
-            %td
-              = render 'trips/partials/place'
-            %td
-              = render 'trips/partials/transfer'
-            %td
-              = render 'trips/partials/hotel'
-            %td
-              = render 'trips/partials/activity'
-            %td
-              = render 'trips/partials/comment'
+              %tr
+                %th{class: 'col-md-1'}
+                  = t('.day')
+                %th{class: 'col-md-1', 'ng-show' => 'show_place'}
+                  = t('.place')
+                %th{class: 'col-md-2', 'ng-show' => 'show_transfers'}
+                  = t('.transfers')
+                  %a{class: 'pull-right', href: 'javascript:void(0);', 'ng-click' => 'toggleTransfers()'}
+                    %span{'ng-show' => '!transfersCollapsed'}
+                      = fa_icon 'arrow-down'
+                    %span{'ng-show' => 'transfersCollapsed'}
+                      = fa_icon 'arrow-right'
+                %th{class: 'col-md-2', 'ng-show' => 'show_hotel'}
+                  = t('.hotel')
+                %th{class: 'col-md-4', 'ng-show' => 'show_activities'}
+                  = t('.activities')
+                  %a{class: 'pull-right', href: 'javascript:void(0);', 'ng-click' => 'toggleActivities()'}
+                    %span{'ng-show' => '!activitiesCollapsed'}
+                      = fa_icon 'arrow-down'
+                    %span{'ng-show' => 'activitiesCollapsed'}
+                      = fa_icon 'arrow-right'
+                %th{class: 'col-md-2', 'ng-show' => 'show_comments'}
+                  = t('.comments')
+
+            %tbody
+              %tr{'ng-repeat' => 'day in days'}
+                %td
+                  {{day.date}}
+                %td{'ng-show' => 'show_place'}
+                  = render 'trips/partials/place'
+                %td{'ng-show' => 'show_transfers'}
+                  = render 'trips/partials/transfer'
+                %td{'ng-show' => 'show_hotel'}
+                  = render 'trips/partials/hotel'
+                %td{'ng-show' => 'show_activities'}
+                  = render 'trips/partials/activity'
+                %td{'ng-show' => 'show_comments'}
+                  = render 'trips/partials/comment'
+      %div{class: 'col-md-1'}

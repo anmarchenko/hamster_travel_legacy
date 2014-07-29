@@ -114,3 +114,23 @@ table .dropdown-menu a{
 .text-italic{
     font-style: italic;
 }
+
+.show-column-checkboxes{
+    margin-right: 10px;
+    margin-left: 20px;
+    width: 70px;
+}
+
+.show-column-checkboxes.affix-top {
+    padding-top: 70px;
+}
+
+.show-column-checkboxes.affix {
+    top: 130px;
+    right: inherit;
+}
+
+.btn-grey{
+    background-color: #ecf0f1;
+}
+

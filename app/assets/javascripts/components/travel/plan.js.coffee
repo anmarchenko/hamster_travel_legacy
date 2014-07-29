@@ -10,6 +10,13 @@ angular.module('travel-components').controller 'PlanController'
       $scope.transfersCollapsed = true
       $scope.edit = false
 
+      # show transfers checkboxes
+      $scope.show_place = true
+      $scope.show_transfers = true
+      $scope.show_hotel = true
+      $scope.show_activities = true
+      $scope.show_comments = true
+
       $scope.setEdit = (val) ->
         $scope.edit = val
         $scope.activitiesCollapsed = true
