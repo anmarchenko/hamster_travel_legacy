@@ -2,6 +2,7 @@ module Travels
 
   class Transfer
     include Mongoid::Document
+    include Concerns::Ordered
 
     embedded_in :day, class_name: 'Travels::Day'
 

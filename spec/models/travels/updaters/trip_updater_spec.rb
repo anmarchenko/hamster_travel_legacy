@@ -162,6 +162,21 @@ describe Travels::Updaters::TripUpdater do
                                         city_from_code: 'city_from_code_1',
                                         city_to_code: 'city_to_code_1',
                                         isCollapsed: true
+                                    },
+                                    {
+                                        city_from_code: 'city_from_code_2',
+                                        city_to_code: 'city_to_code_2',
+                                        isCollapsed: false
+                                    },
+                                    {
+                                        city_from_code: 'city_from_code_3',
+                                        city_to_code: 'city_to_code_3',
+                                        isCollapsed: false
+                                    },
+                                    {
+                                        city_from_code: 'city_from_code_4',
+                                        city_to_code: 'city_to_code_4',
+                                        isCollapsed: false
                                     }
                                 ]
 
@@ -172,10 +187,32 @@ describe Travels::Updaters::TripUpdater do
       it 'creates new transfers' do
         updated_day = first_day_of trip
 
-        expect(updated_day.transfers.count).to eq 1
+        expect(updated_day.transfers.count).to eq 4
 
         expect(updated_day.transfers.first.city_from_code).to eq 'city_from_code_1'
         expect(updated_day.transfers.first.city_to_code).to eq 'city_to_code_1'
+      end
+
+      it 'reorders transfers' do
+        original_day = first_day_of trip
+
+        old_transfers = params['1'][:transfers]
+        old_transfers.each_with_index do |tr, index|
+          tr[:id] = original_day.transfers[index].id.to_s
+        end
+        permutation = {0 => 3, 1 => 1, 2 => 0, 3 => 2}
+        params['1'][:transfers] = [old_transfers[3], old_transfers[1], old_transfers[0], old_transfers[2]]
+        update_trip trip, params
+
+        updated_day = first_day_of trip
+        expect(updated_day.transfers.count).to eq 4
+        updated_day.transfers.each_with_index do |tr, index|
+          expect(tr.city_from_code).to eq "city_from_code_#{permutation[index] + 1}"
+          expect(tr.city_to_code).to eq "city_to_code_#{permutation[index] + 1}"
+          expect(tr.order_index).to eq index
+          expect(tr.id).to eq original_day.transfers[permutation[index]].id
+        end
+
       end
     end
 

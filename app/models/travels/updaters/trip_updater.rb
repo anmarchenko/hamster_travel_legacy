@@ -13,17 +13,24 @@ module Travels
         params.each do |_, day_hash|
           day = trip.days.where(id: day_hash[:id]).first
           next if day.blank?
+
           unless day_hash[:hotel].blank?
             hotel_hash = day_hash[:hotel]
             day.hotel.update_attributes(name: hotel_hash[:name], price: hotel_hash[:price],
               comment: hotel_hash[:comment])
             process_nested(day.hotel.links, day_hash[:hotel][:links] || [])
           end
+
           day.update_attributes(comment: day_hash[:comment], add_price: day_hash[:add_price])
+
           process_nested(day.places, day_hash[:places] || [])
+
+          process_ordered(day_hash[:transfers] || [])
           process_nested(day.transfers, day_hash[:transfers] || [])
+
           process_ordered(day_hash[:activities] || [])
           process_nested(day.activities, day_hash[:activities] || [])
+
           day.save
         end
       end
