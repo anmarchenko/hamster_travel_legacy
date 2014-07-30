@@ -3,7 +3,9 @@
   %div.region-grey{'ng-repeat' => 'activity in day.activities'}
     %span{'ng-click' => 'activity.isCollapsed = !activity.isCollapsed'}
       %u{class: 'collapse-header'}
-        {{$index+1}}. {{activity.name}}
+        %span{'ng-show' => 'day.activities.length > 1'}
+          {{$index+1}}.
+        {{activity.name}}
       %span{'ng-show' => '!!activity.price'}
         {{activity.price}}
         = fa_icon 'ruble'
