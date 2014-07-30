@@ -1,5 +1,6 @@
-%div{'ng-show' => '!edit', 'ng-model' => 'day.activities', 'ui-sortable' => ''}
-  %div{'ng-repeat' => 'activity in day.activities', class: 'region-grey'}
+%div.activity-place{'ng-show' => '!edit', 'ng-model' => 'day.activities',
+                      'ui-sortable' => '{connectWith: \'.activity-place\', placeholder: \'well\', forcePlaceholderSize: true}'}
+  %div.region-grey{'ng-repeat' => 'activity in day.activities'}
     %span{'ng-click' => 'activity.isCollapsed = !activity.isCollapsed'}
       %u{class: 'collapse-header'}
         {{$index+1}}. {{activity.name}}
@@ -13,16 +14,17 @@
           ng_model_description: 'activity.link_description'
 
 %div{'ng-show' => 'edit'}
-  %div{'ng-model' => 'day.activities', 'ui-sortable' => ''}
-    %div{'ng-repeat' => 'activity in day.activities', class: 'form-horizontal region-grey day-activity-container'}
-      %div{class: 'form-group'}
-        %div{class: 'col-md-1 activity-index'}
+  %div.activity-place-edit{'ng-model' => 'day.activities',
+                            'ui-sortable' => '{connectWith: \'.activity-place-edit\', placeholder: \'well\'}'}
+    %div.form-horizontal.region-grey.day-activity-container{'ng-repeat' => 'activity in day.activities'}
+      .form-group
+        .col-md-1.activity-index
           %big
             {{$index+1}}
-        %div{class: 'col-md-9'}
+        .col-md-9
           = text_field_tag 'activity_name', '', 'ng-model' => 'activity.name', class: 'input-sm form-control',
             placeholder: t('trips.show.activity.name')
-        %div{class: 'col-md-2'}
+        .col-md-2
           %a{href: 'javascript:void(0);', 'ng-click' => 'activity.isCollapsed = !activity.isCollapsed', class: 'expand-button'}
             %span{'ng-show' => 'activity.isCollapsed'}
               = fa_icon 'arrow-right'
@@ -31,18 +33,18 @@
           %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.activities, $index)', class: 'delete-button'}
             = fa_icon 'times'
       %div{collapse: 'activity.isCollapsed'}
-        %div{class: 'form-group', collapse: 'isCollapsed'}
-          %div{class: 'col-md-12'}
+        .form-group{collapse: 'isCollapsed'}
+          .col-md-12
             = render 'widgets/price', name: 'activity_price', ng_model: 'activity.price', placeholder: t('trips.show.price')
-        %div{class: 'form-group'}
-          %div{class: 'col-md-12'}
+        .form-group
+          .col-md-12
             = text_area_tag 'activity_comment', '', 'ng-model' => 'activity.comment', class: 'form-control',
               placeholder: t('trips.show.comment'), rows: 6
-        %div{class: 'form-group'}
-          %div{class: 'col-md-12'}
+        .form-group
+          .col-md-12
             = render 'widgets/link', ng_model_url: 'activity.link_url'
 
-  %div{class: 'form-group pull-right'}
+  .form-group.pull-right
     %a{href: 'javascript:void(0);', class: '',
       'ng-click' => 'add(day.activities, {"isCollapsed" : activitiesCollapsed})'}
       = fa_icon 'plus'

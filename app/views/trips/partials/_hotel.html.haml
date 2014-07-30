@@ -12,9 +12,9 @@
                                               ng_model_description: 'link.description'
 
 
-%div{'ng-show' => 'edit', class: 'form-horizontal'}
-  %div{class: 'form-group day-place-container relative-position'}
-    %div{class: 'col-md-12'}
+%div.form-horizontal{'ng-show' => 'edit'}
+  .form-group.day-place-container.relative-position
+    .col-md-12
       = text_field_tag 'hotel_name', '', 'ng-model' => 'day.hotel.name', class: 'input-sm form-control',
         placeholder: 'Название'
 
@@ -23,11 +23,11 @@
       'ng-show' => '$index > 0'}
       = fa_icon 'arrow-up'
 
-  %div{class: 'form-group'}
-    %div{class: 'col-md-12'}
+  .form-group
+    .col-md-12
       = render 'widgets/price', name: 'hotel_price', ng_model: 'day.hotel.price', placeholder: t('trips.show.price_hotel')
-  %div{class: 'form-group'}
-    %div{class: 'col-md-12'}
+  .form-group
+    .col-md-12
       = text_area_tag 'hotel_comment', '', 'ng-model' => 'day.hotel.comment', class: 'form-control',
         placeholder: t('trips.show.comment'), rows: 3
 
@@ -35,12 +35,12 @@
     %u
       = t('trips.show.links')
 
-  %div{class: 'day-place-container relative-position', 'ng-repeat' => 'link in day.hotel.links'}
+  .day-place-container.relative-position{'ng-repeat' => 'link in day.hotel.links'}
     = render 'widgets/link', ng_model_descr: 'link.description', ng_model_url: 'link.url'
     %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.hotel.links, $index)', 'ng-show' => '$index > 0',
       class: 'delete-button'}
       = fa_icon 'times'
-  %div{class: 'form-group'}
-    %div{class: 'col-md-12'}
+  .form-group
+    .col-md-12
       %a{href: 'javascript:void(0);', class: 'pull-right', 'ng-click' => 'add(day.hotel.links)'}
         = fa_icon 'plus'

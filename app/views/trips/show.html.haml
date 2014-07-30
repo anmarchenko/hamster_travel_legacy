@@ -1,11 +1,11 @@
 - content_for :title, t('.title')
 
-%div{class: 'row trip-header'}
-  %div{class: 'col-md-3 col-sm-3'}
+.row.trip-header
+  .col-md-3.col-sm-3
     %img{class: 'img-thumbnail', src: 'http://lorempixel.com/300/300/city/', width: '100%'}
-  %div{class: 'col-md-9 col-sm-9'}
+  .col-md-9.col-sm-9
     - if user_signed_in? and @trip.include_user(current_user)
-      %div{class: 'btn-toolbar pull-right'}
+      .btn-toolbar.pull-right
         = link_to edit_trip_path(@trip), class: 'btn btn-success' do
           = fa_icon 'pencil'
 
@@ -30,13 +30,13 @@
 
 - content_for :additional_content do
   %div{'ng-controller' => 'PlanController'}
-    %div{class: 'container-full'}
-      %div{class: 'row'}
-        %div{class: 'col-md-1'}
-          %div{class: 'row'}
-            %div{class: 'col-md-4'}
-            %div{class: 'col-md-8'}
-              %div{class: 'show-column-checkboxes' }
+    .container-full
+      .row
+        .col-md-1
+          .row
+            .col-md-4
+            .col-md-8
+              .show-column-checkboxes
                 %ul{class: "list-group checked-list-box"}
                   %li{class: "list-group-item", 'data-style' => "button", 'data-color' => "grey",
                          'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('.place')}
@@ -59,7 +59,7 @@
                     %input{type: 'checkbox', class: 'hidden', 'ng-model' => 'show_comments'}
                     = fa_icon 'pencil'
 
-        %div{class: 'col-md-10'}
+        .col-md-10
           %table{class: 'table table-black-bordered fixed-head'}
             %thead
               %tr{class: 'plan-header'}
@@ -113,4 +113,4 @@
                   = render 'trips/partials/activity'
                 %td{'ng-show' => 'show_comments'}
                   = render 'trips/partials/comment'
-      %div{class: 'col-md-1'}
+      .col-md-1

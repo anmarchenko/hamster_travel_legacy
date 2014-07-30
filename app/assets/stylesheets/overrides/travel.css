@@ -134,3 +134,7 @@ table .dropdown-menu a{
     background-color: #ecf0f1;
 }
 
+.activity-place{
+    min-width: 100px;
+    min-height: 100px;
+}
