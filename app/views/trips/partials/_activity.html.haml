@@ -10,6 +10,8 @@
         {{activity.price}}
         = fa_icon 'ruble'
     %div{collapse: 'activity.isCollapsed'}
+      %p.text-italic{'ng-show' => '!activity.comment && !activity.link_url'}
+        = t('common.no_comments')
       %p{'ng-show' => '!!activity.comment', class: 'travel-text text-italic'} {{activity.comment}}
       %p
         = render 'widgets/link_show', ng_model_url: 'activity.link_url',
