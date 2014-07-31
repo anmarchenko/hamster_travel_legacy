@@ -57,6 +57,10 @@ module Travels
       author_user
     end
 
+    def name_for_file
+      name[0, 50].gsub(/[^0-9A-zА-Яа-яёЁ.\-]/, '_')
+    end
+
     def last_non_empty_day_index
       result = -1
       (days || []).each_with_index { |day, index| result = index unless day.is_empty? }

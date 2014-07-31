@@ -143,4 +143,36 @@ describe Travels::Trip do
     end
   end
 
+  describe '#name_for_file' do
+    context 'for normal trip' do
+      let(:trip) {FactoryGirl.create(:trip, name: 'simple')}
+
+      it 'returns name' do
+        expect(trip.name_for_file).to eq trip.name
+      end
+    end
+    context 'for trip name with slash and spaces' do
+      let(:trip) {FactoryGirl.create(:trip, name: 'trip with spaces/slash_underscore')}
+
+      it 'returns safe name' do
+        expect(trip.name_for_file).to eq 'trip_with_spaces_slash_underscore'
+      end
+    end
+    context 'for russian trip name' do
+      let(:trip) {FactoryGirl.create(:trip, name: 'Дубай на майские')}
+
+      it 'returns safe name' do
+        expect(trip.name_for_file).to eq 'Дубай_на_майские'
+      end
+    end
+    context 'for long trip name' do
+      let(:trip) {FactoryGirl.create(:trip,
+        name: 'very very very very very very very very very very very very very very very very very very very very long name')}
+
+      it 'returns safe name' do
+        expect(trip.name_for_file).to eq 'very_very_very_very_very_very_very_very_very_very_'
+      end
+    end
+  end
+
 end

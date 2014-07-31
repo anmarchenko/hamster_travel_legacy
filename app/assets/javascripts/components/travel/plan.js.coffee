@@ -1,7 +1,7 @@
 angular.module('travel-components').controller 'PlanController'
 , [
-    '$scope', 'Trip', '$location'
-  , ($scope, Trip, $location) ->
+    '$scope', 'Trip', '$location', '$window'
+  , ($scope, Trip, $location, $window) ->
 
       # define controller
       $scope.trip_id = (/trips\/(.+)/.exec($location.absUrl())[1]);
@@ -85,8 +85,12 @@ angular.module('travel-components').controller 'PlanController'
       $scope.toggleActivities = (is_change = true) ->
         $scope.toggleCollapse(is_change, 'activities')
 
-      $scope.toggleTransfers = (is_change = true)->
+      $scope.toggleTransfers = (is_change = true) ->
         $scope.toggleCollapse(is_change, 'transfers')
+
+      $scope.downloadWord = ->
+        $window.open $location.absUrl() + ".docx?show_place=#{$scope.show_place}", '_blank'
+        return true
 
       # init controller
       $scope.loadDays()

@@ -136,17 +136,17 @@ table .dropdown-menu a{
 
 .activity-place{
     min-width: 100px;
-    min-height: 100px;
+    min-height: 20px;
 }
 .activity-place-edit{
     min-width: 100px;
-    min-height: 100px;
+    min-height: 20px;
 }
 .transfer-place{
     min-width: 100px;
-    min-height: 100px;
+    min-height: 20px;
 }
 .transfer-place-edit{
     min-width: 100px;
-    min-height: 100px;
+    min-height: 20px;
 }

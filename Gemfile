@@ -58,6 +58,11 @@ gem 'jbuilder', '~> 1.2'
 # app server
 gem 'puma'
 
+# docx
+gem 'rubyzip'
+gem 'docx_rails', github: 'altmer/docx-rails'
+gem 'zip-zip' # will load compatibility for old rubyzip API.
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

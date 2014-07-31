@@ -38,6 +38,10 @@ class TripsController < ApplicationController
   end
 
   def show
+    respond_to do |format|
+      format.html
+      format.docx{ headers["Content-Disposition"] = "attachment; filename=\"#{@trip.name_for_file}.docx\"" }
+    end
   end
 
   def destroy

@@ -1,0 +1,92 @@
+<%= docx_document do %>
+  <% body_props = {pageHeight: 11906, pageSize: 16834, pageOrient: :landscape,
+                     marginLeft: 500, marginRight: 500, marginTop: 700, marginBottom: 700} %>
+  <% fontSize = 9 %>
+
+  <%= docx_body(body_props) do %>
+
+    <%= docx_table(gridSize: 15834, grid: [0.1, 0.1, 0.15, 0.15, 0.35, 0.15],
+                    borders: [:left, :right, :top, :bottom, :top, :insideH, :insideV]) do %>
+      <%= docx_table_row do %>
+
+        <%= docx_table_cell do %>
+          <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
+            <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.day') %><% end %>
+          <% end %>
+        <% end %>
+
+        <%= docx_table_cell do %>
+          <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
+            <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.place') %><% end %>
+          <% end %>
+        <% end %>
+
+        <%= docx_table_cell do %>
+          <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
+             <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.transfers') %><% end %>
+          <% end %>
+        <% end %>
+
+        <%= docx_table_cell do %>
+          <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
+            <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.hotel') %><% end %>
+          <% end %>
+        <% end %>
+
+        <%= docx_table_cell do %>
+          <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
+            <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.activities') %><% end %>
+          <% end %>
+        <% end %>
+
+        <%= docx_table_cell do %>
+          <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
+            <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.comments') %><% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <% @trip.days.each do |day| %>
+          <%= docx_table_row do %>
+
+            <%= docx_table_cell do %>
+                <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
+                    <%= docx_text(fontSize: fontSize) do %><%= day.date_when_s %><% end %>
+                <% end %>
+            <% end %>
+
+            <%= docx_table_cell do %>
+                <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
+                    <%= docx_text(fontSize: fontSize) do %><% end %>
+                <% end %>
+            <% end %>
+
+            <%= docx_table_cell do %>
+                <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
+                    <%= docx_text(fontSize: fontSize) do %><% end %>
+                <% end %>
+            <% end %>
+
+            <%= docx_table_cell do %>
+                <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
+                    <%= docx_text(fontSize: fontSize) do %><% end %>
+                <% end %>
+            <% end %>
+
+            <%= docx_table_cell do %>
+                <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
+                    <%= docx_text(fontSize: fontSize) do %><% end %>
+                <% end %>
+            <% end %>
+
+            <%= docx_table_cell do %>
+                <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
+                    <%= docx_text(fontSize: fontSize) do %><% end %>
+                <% end %>
+            <% end %>
+          <% end %>
+      <% end %>
+    <% end %>
+
+  <% end %>
+<% end %>

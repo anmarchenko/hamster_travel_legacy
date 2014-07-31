@@ -47,6 +47,7 @@ en:
       links: Bookmarks...
       activity:
         name: Where to go?
+      download_word: Download as Word
     edit:
       title: Edit travel
     form:

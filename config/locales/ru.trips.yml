@@ -47,6 +47,7 @@ ru:
       links: Закладки...
       activity:
         name: Куда пойдём?
+      download_word: Выгрузить в Word
     edit:
       title: Редактирование путешествия
     form:
