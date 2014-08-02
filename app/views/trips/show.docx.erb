@@ -67,8 +67,12 @@
 
                     <% if params[:cols].include?('show_place') %>
                         <%= docx_table_cell do %>
-                            <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
-                                <%= docx_text(fontSize: fontSize) do %><% end %>
+                            <% unless day.places.blank? %>
+                                <% day.places.each do |place| %>
+                                    <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 100) do %>
+                                        <%= docx_text(fontSize: fontSize) do %><%= place.city_text %><% end %>
+                                    <% end %>
+                                <% end %>
                             <% end %>
                         <% end %>
                     <% end %>
