@@ -40,7 +40,25 @@ class TripsController < ApplicationController
   def show
     respond_to do |format|
       format.html
-      format.docx{ headers["Content-Disposition"] = "attachment; filename=\"#{@trip.name_for_file}.docx\"" }
+      format.docx do
+        weights = {'day' => 0.1, 'show_place' => 0.1, 'show_transfers' => 0.15, 'show_hotel' => 0.15,
+                    'show_activities' => 0.35, 'show_comments' => 0.15}
+
+        params[:cols] ||= []
+        count = params[:cols].select{|col| col != 'show_place'}.count
+        cols = ['day'] + params[:cols]
+        @grid = []
+        cols.each {|col| @grid << weights[col]}
+
+        weights.keys.each do |key|
+          unless cols.include?(key)
+            add = weights[key] / count
+            @grid.each_index {|index| @grid[index] += add unless @grid[index] == 0.1 }
+          end
+        end
+
+        headers["Content-Disposition"] = "attachment; filename=\"#{@trip.name_for_file}.docx\""
+      end
     end
   end
 

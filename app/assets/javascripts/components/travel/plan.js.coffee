@@ -89,7 +89,10 @@ angular.module('travel-components').controller 'PlanController'
         $scope.toggleCollapse(is_change, 'transfers')
 
       $scope.downloadWord = ->
-        $window.open $location.absUrl() + ".docx?show_place=#{$scope.show_place}", '_blank'
+        url = $location.absUrl() + '.docx?'
+        for field in ['show_place', 'show_transfers', 'show_hotel', 'show_activities', 'show_comments']
+          url += "&cols[]=#{field}" if $scope[field]
+        $window.open url, '_blank'
         return true
 
       # init controller
