@@ -105,7 +105,7 @@
                                         <% end %>
                                         <% unless transfer.price.blank? %>
                                             <%= docx_text(fontSize: fontSize, prespace: true) do %>
-                                                <%= transfer.price %> ₽
+                                                <%= transfer.price %> р
                                             <% end %>
                                         <% end %>
                                     <% end %>
@@ -167,7 +167,7 @@
                             <% unless day.hotel.price.blank? %>
                                 <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
                                     <%= docx_text(fontSize: fontSize, italic: true) do %>
-                                        <%= day.hotel.price %> ₽
+                                        <%= day.hotel.price %> р
                                     <% end %>
                                 <% end %>
                             <% end %>
@@ -196,7 +196,7 @@
                                     <% end %>
                                     <% unless activity.price.blank? %>
                                         <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
-                                            <%= docx_text(fontSize: fontSize) do %><%= activity.price %> ₽<% end %>
+                                            <%= docx_text(fontSize: fontSize) do %><%= activity.price %> р<% end %>
                                         <% end %>
                                     <% end %>
                                     <% unless activity.comment.blank? %>
@@ -223,7 +223,7 @@
                                 <% end %>
                                 <% unless day.add_price.blank? %>
                                     <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
-                                        <%= docx_text(fontSize: fontSize) do %><%= day.add_price %> ₽<% end %>
+                                        <%= docx_text(fontSize: fontSize) do %><%= day.add_price %> р<% end %>
                                     <% end %>
                                 <% end %>
                             <% else %>
