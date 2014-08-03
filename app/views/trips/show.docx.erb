@@ -73,14 +73,86 @@
                                         <%= docx_text(fontSize: fontSize) do %><%= place.city_text %><% end %>
                                     <% end %>
                                 <% end %>
+                            <% else %>
+                                <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 100) do %>
+                                    <%= docx_text(fontSize: fontSize) do %><% end %>
+                                <% end %>
                             <% end %>
                         <% end %>
                     <% end %>
 
                     <% if params[:cols].include?('show_transfers') %>
                         <%= docx_table_cell do %>
-                            <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
-                                <%= docx_text(fontSize: fontSize) do %><% end %>
+                            <% unless day.transfers.blank? %>
+                                <% day.transfers.each do |transfer| %>
+                                    <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
+                                        <%= docx_text(fontSize: fontSize, underscored: true) do %>
+                                            <%= transfer.city_from_text %>
+                                        <% end %>
+                                        <% unless transfer.station_from.blank? %>
+                                            <%= docx_text(fontSize: fontSize, prespace: true) do %>
+                                                (<%= transfer.station_from %>)
+                                            <% end %>
+                                        <% end %>
+                                        <%= docx_text(fontSize: fontSize, prespace: true) do %>-<% end %>
+                                        <%= docx_text(fontSize: fontSize, prespace: true, underscored: true) do %>
+                                            <%= transfer.city_to_text %>
+                                        <% end %>
+                                        <% unless transfer.station_to.blank? %>
+                                            <%= docx_text(fontSize: fontSize, prespace: true) do %>
+                                                (<%= transfer.station_to %>)
+                                            <% end %>
+                                        <% end %>
+                                        <% unless transfer.price.blank? %>
+                                            <%= docx_text(fontSize: fontSize, prespace: true) do %>
+                                                <%= transfer.price %> ₽
+                                            <% end %>
+                                        <% end %>
+                                    <% end %>
+                                    <% if !transfer.code.blank? || !transfer.company.blank? %>
+                                        <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
+                                            <% unless transfer.code.blank? %>
+                                                <%= docx_text(fontSize: fontSize, prespace: true) do %>
+                                                    <%= transfer.code %>
+                                                <% end %>
+                                            <% end %>
+                                            <% unless transfer.company.blank? %>
+                                                <%= docx_text(fontSize: fontSize, prespace: true) do %>
+                                                    <%= transfer.company %>
+                                                <% end %>
+                                            <% end %>
+                                        <% end %>
+                                    <% end %>
+                                    <% unless transfer.start_time.blank? %>
+                                        <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
+                                            <%= docx_text(fontSize: fontSize, prespace: true) do %>
+                                                <%= t('.departure')%> <%= transfer.start_time.strftime('%H:%M %d.%m.%Y') %>
+                                            <% end %>
+                                        <% end %>
+                                    <% end %>
+                                    <% unless transfer.end_time.blank? %>
+                                        <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
+                                            <%= docx_text(fontSize: fontSize, prespace: true) do %>
+                                                <%= t('.arrival')%> <%= transfer.end_time.strftime('%H:%M %d.%m.%Y') %>
+                                            <% end %>
+                                        <% end %>
+                                    <% end %>
+                                    <% unless transfer.comment.blank? %>
+                                        <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
+                                            <%= docx_text(fontSize: fontSize, italic: true) do %>
+                                                <%= transfer.comment %>
+                                            <% end %>
+                                        <% end %>
+                                    <% end %>
+                                    <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
+                                        <%= docx_text(fontSize: fontSize, prespace: true) do %>
+                                        <% end %>
+                                    <% end %>
+                                <% end %>
+                            <% else %>
+                                <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 100) do %>
+                                    <%= docx_text(fontSize: fontSize) do %><% end %>
+                                <% end %>
                             <% end %>
                         <% end %>
                     <% end %>
