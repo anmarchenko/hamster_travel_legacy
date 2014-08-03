@@ -215,8 +215,21 @@
 
                     <% if params[:cols].include?('show_comments') %>
                         <%= docx_table_cell do %>
-                            <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
-                                <%= docx_text(fontSize: fontSize) do %><% end %>
+                            <% if !day.add_price.blank? || !day.comment.blank? %>
+                                <% unless day.comment.blank? %>
+                                    <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
+                                        <%= docx_text(fontSize: fontSize, italic: true) do %><%= day.comment %><% end %>
+                                    <% end %>
+                                <% end %>
+                                <% unless day.add_price.blank? %>
+                                    <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
+                                        <%= docx_text(fontSize: fontSize) do %><%= day.add_price %> ₽<% end %>
+                                    <% end %>
+                                <% end %>
+                            <% else %>
+                                <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
+                                    <%= docx_text(fontSize: fontSize, italic: true) do %><% end %>
+                                <% end %>
                             <% end %>
                         <% end %>
                     <% end %>
