@@ -14,7 +14,9 @@ module Travels
     field :link_description
     def link_description
       return '' if self.link_url.blank?
-      self.link_url = "http://#{self.link_url}" unless self.link_url.start_with? 'http://'
+      if !self.link_url.start_with?('http://') && !self.link_url.start_with?('https://')
+        self.link_url = "http://#{self.link_url}"
+      end
       ExternalLink.new(url: link_url).description
     end
     field :link_url

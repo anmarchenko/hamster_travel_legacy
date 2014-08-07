@@ -7,7 +7,9 @@ class ExternalLink
   field :description
   def description
     return '' if self.url.blank?
-    self.url = "http://#{self.url}" unless self.url.start_with? 'http://'
+    if !self.url.start_with?('http://') && !self.url.start_with?('https://')
+      self.url = "http://#{self.url}"
+    end
     parsed_uri = URI.parse( self.url ) rescue nil
     (parsed_uri.try(:host) || '').gsub('www.', '').capitalize
   end
