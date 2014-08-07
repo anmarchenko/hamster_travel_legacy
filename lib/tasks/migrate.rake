@@ -9,7 +9,8 @@ namespace :db do
 
     Db::Migration.registrate!({
       'Db::Migrations::CreateUsers' => 'once',
-      'Db::Migrations::DefaultUsersHometown' => 'once'
+      'Db::Migrations::DefaultUsersHometown' => 'once',
+      'Db::Migrations::GeoFixes' => 'once'
     })
 
     Db::Migration.run_all!
