@@ -13,6 +13,7 @@ module Api
     end
 
     def update
+      Travels::Updaters::TripUpdater.new(@trip, params[:trip]).process_trip
       respond_with @trip
     end
 

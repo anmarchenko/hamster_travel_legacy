@@ -4,17 +4,21 @@ describe Travels::Updaters::TripUpdater do
     tr.reload.days.first
   end
 
-  def update_trip tr, prms
+  def update_trip_days tr, prms
     Travels::Updaters::TripUpdater.new(tr, prms).process_days
+  end
+
+  def update_trip tr, prms
+    Travels::Updaters::TripUpdater.new(tr, prms).process_trip
   end
 
   let(:trip){FactoryGirl.create(:trip)}
   let(:day){first_day_of trip}
 
-
-  before(:example) {update_trip trip, params}
-
   describe '#process_days' do
+
+    before(:example) {update_trip_days trip, params}
+
     context 'when params have non existing days' do
       let(:params) {{ '1' => {id: 'non_existing'} }}
       it 'does nothing' do
@@ -23,6 +27,7 @@ describe Travels::Updaters::TripUpdater do
     end
 
     context 'when params have new hotel data' do
+
       let(:params) { {'1' => {id: day.id.to_s,
                               hotel: {
                                   name: 'new_name',
@@ -50,7 +55,7 @@ describe Travels::Updaters::TripUpdater do
                 url: 'http://updated.url'
             }
         ]
-        update_trip trip, params
+        update_trip_days trip, params
 
         updated_hotel = first_day_of(trip).hotel
         expect(updated_hotel.links.count).to eq 1
@@ -61,7 +66,7 @@ describe Travels::Updaters::TripUpdater do
 
       it 'removes hotel link' do
         params['1'][:hotel].delete(:links)
-        update_trip trip, params
+        update_trip_days trip, params
         updated_hotel = first_day_of(trip).hotel
         expect(updated_hotel.links.count).to eq 0
       end
@@ -85,7 +90,7 @@ describe Travels::Updaters::TripUpdater do
 
       it 'updates day data even if day attributes are empty' do
         params['1'].delete :add_price
-        update_trip trip, params
+        update_trip_days trip, params
         updated_day = first_day_of trip
         expect(updated_day.id).to eq day.id
         expect(updated_day.comment).to eq 'new_day_comment'
@@ -131,7 +136,7 @@ describe Travels::Updaters::TripUpdater do
         params['1'][:places].first[:id] = original_day.places.first.id.to_s
         params['1'][:places].last[:id] = original_day.places.last.id.to_s
         params['1'][:places].last[:city_code] = 'new_city_code_3'
-        update_trip trip, params
+        update_trip_days trip, params
 
         updated_day = first_day_of trip
         expect(updated_day.places.count).to eq 2
@@ -147,7 +152,7 @@ describe Travels::Updaters::TripUpdater do
 
       it 'deletes places' do
         params['1'][:places].pop
-        update_trip trip, params
+        update_trip_days trip, params
         updated_day = first_day_of(trip)
         expect(updated_day.places.count).to eq 1
         expect(updated_day.places.first.id).to eq day.places.first.id
@@ -202,7 +207,7 @@ describe Travels::Updaters::TripUpdater do
         end
         permutation = {0 => 3, 1 => 1, 2 => 0, 3 => 2}
         params['1'][:transfers] = [old_transfers[3], old_transfers[1], old_transfers[0], old_transfers[2]]
-        update_trip trip, params
+        update_trip_days trip, params
 
         updated_day = first_day_of trip
         expect(updated_day.transfers.count).to eq 4
@@ -258,7 +263,7 @@ describe Travels::Updaters::TripUpdater do
           act[:id] = original_day.activities[index].id.to_s
         end
         params['1'][:activities] = [old_activities[2], old_activities[0], old_activities[1]]
-        update_trip trip, params
+        update_trip_days trip, params
 
         updated_day = first_day_of trip
         expect(updated_day.activities.count).to eq 3
@@ -272,4 +277,16 @@ describe Travels::Updaters::TripUpdater do
     end
 
   end
+
+  describe '#process_trip' do
+    let(:params){ {comment: 'New comment!!!', short_description: 'super short short desc'} }
+    before(:example) {update_trip trip, params}
+
+    it 'updates comment field' do
+      updated_trip = trip.reload
+      expect(updated_trip.comment).to eq('New comment!!!')
+      expect(updated_trip.short_description).to eq('short_description')
+    end
+  end
+
 end
