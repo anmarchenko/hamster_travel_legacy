@@ -19,9 +19,9 @@
 %div{collapse: 'transfer.isCollapsed'}
   %div{class: 'form-group'}
     %div{class: 'col-md-6 dropdown'}
-      = render 'widgets/datetimepicker', id: 'dropdown-time-start-{{$index}}', link_default_text: t('trips.show.departure'), model: 'transfer.start_time'
+      = render 'widgets/datetimepicker', id: 'dropdown-time-start-{{day.id}}-{{$index}}', link_default_text: t('trips.show.departure'), model: 'transfer.start_time'
     %div{class: 'col-md-6 dropdown'}
-      = render 'widgets/datetimepicker', id: 'dropdown-time-end-{{$index}}', link_default_text: t('trips.show.arrival'), model: 'transfer.end_time'
+      = render 'widgets/datetimepicker', id: 'dropdown-time-end-{{day.id}}-{{$index}}', link_default_text: t('trips.show.arrival'), model: 'transfer.end_time'
 
   %div{class: 'form-group'}
     %div{class: 'col-md-12'}
