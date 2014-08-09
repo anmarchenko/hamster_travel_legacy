@@ -12,6 +12,13 @@ angular.module('travel-services').config(["railsSerializerProvider",
       )
       Days.query()
 
+    getDay: (trip_id, day_id) ->
+      Day = railsResourceFactory(
+        url: "/api/trips/#{trip_id}/days/#{day_id}.json",
+        name: 'day'
+      )
+      Day.query()
+
     createDays: (trip_id, days) ->
       Days = railsResourceFactory(
         url: "/api/trips/#{trip_id}/days.json",

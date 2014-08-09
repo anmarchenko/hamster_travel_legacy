@@ -100,19 +100,20 @@
                   = t('.comments')
 
             %tbody
-              %tr{'ng-repeat' => 'day in days'}
-                %td
-                  {{day.date}}
-                %td{'ng-show' => 'show_place'}
-                  = render 'trips/partials/place'
-                %td{'ng-show' => 'show_transfers'}
-                  = render 'trips/partials/transfer'
-                %td{'ng-show' => 'show_hotel'}
-                  = render 'trips/partials/hotel'
-                %td{'ng-show' => 'show_activities'}
-                  = render 'trips/partials/activity'
-                %td{'ng-show' => 'show_comments'}
-                  = render 'trips/partials/comment'
+              - @trip.days.each do |day|
+                %tr{'ng-controller' => 'DaysController', 'ng-init' => "getDay('#{day.id}')"}
+                  %td
+                    = day.date_when_s
+                  %td{'ng-show' => 'show_place'}
+                    = render 'trips/partials/place'
+                  %td{'ng-show' => 'show_transfers'}
+                    = render 'trips/partials/transfer'
+                  %td{'ng-show' => 'show_hotel'}
+                    = render 'trips/partials/hotel'
+                  %td{'ng-show' => 'show_activities'}
+                    = render 'trips/partials/activity'
+                  %td{'ng-show' => 'show_comments'}
+                    = render 'trips/partials/comment'
         .col-md-1
 
       .row

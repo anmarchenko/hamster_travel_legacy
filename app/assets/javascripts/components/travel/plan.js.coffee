@@ -5,6 +5,7 @@ angular.module('travel-components').controller 'PlanController'
 
       # define controller
       $scope.trip_id = (/trips\/(.+)/.exec($location.absUrl())[1]);
+      $scope.days = []
 
       # tumblers
       $scope.activitiesCollapsed = true
@@ -26,10 +27,6 @@ angular.module('travel-components').controller 'PlanController'
         $scope.toggleTransfers(false)
 
       $scope.load = ->
-        Trip.getDays($scope.trip_id).then (days) ->
-          $scope.days = days
-          $scope.toggleActivities(false)
-          $scope.toggleTransfers(false)
         Trip.getTrip($scope.trip_id).then (trip) ->
           $scope.trip = trip
 
