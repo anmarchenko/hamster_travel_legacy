@@ -8,7 +8,7 @@ Travel::Application.routes.draw do
 
     namespace :api do
       resources :cities, only: [:index]
-      resources :trips do
+      resources :trips, only: [:show, :update] do
         resources :days, only: [:index, :create]
       end
     end

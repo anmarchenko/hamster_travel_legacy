@@ -15,6 +15,8 @@ module Travels
     field :published, type: Boolean, default: false
     field :archived, type: Boolean, default: false
 
+    field :comment
+
     belongs_to :author_user, class_name: 'User', inverse_of: :authored_trips
     has_and_belongs_to_many :users, inverse_of: nil
 
@@ -76,6 +78,15 @@ module Travels
         (day.activities || []).each {|activity| result += (activity.price || 0)}
       end
       result
+    end
+
+    def as_json(**args)
+      attrs = {}
+      ['id', 'comment', 'start_date', 'end_date', 'name', 'short_description', 'published', 'archived'].each do |field|
+        attrs[field] = self.send(field)
+      end
+      attrs['id'] = attrs['id'].to_s
+      attrs
     end
 
   end

@@ -38,8 +38,8 @@ describe ExternalLink do
       let(:link){FactoryGirl.create :external_link, url: 'https://host.com/?'}
 
       it 'returns capitalized host name' do
-        expect(link.url).to eq 'https://host.com/?'
         expect(link.description).to eq 'Host.com'
+        expect(link.url).to eq 'https://host.com/?'
       end
     end
     context 'when url is not valid' do

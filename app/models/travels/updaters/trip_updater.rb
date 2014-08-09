@@ -35,6 +35,11 @@ module Travels
         end
       end
 
+      def process_trip
+        trip.update_attributes(comment: params[:comment])
+        trip
+      end
+
       private
 
       # TODO permit only some params - possible security problem

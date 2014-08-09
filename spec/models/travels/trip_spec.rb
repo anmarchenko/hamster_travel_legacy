@@ -175,4 +175,26 @@ describe Travels::Trip do
     end
   end
 
+  describe '#as_json' do
+    let(:trip) {FactoryGirl.create(:trip, :with_filled_days)}
+    let(:trip_json) {trip.as_json}
+
+    it 'has string id field' do
+      expect(trip_json['id']).not_to be_blank
+      expect(trip_json['id']).to be_a String
+      expect(trip_json['id']).to eq(trip.id.to_s)
+    end
+
+    it 'has all attributes' do
+      expect(trip_json['name']).to eq(trip.name)
+      expect(trip_json['comment']).to eq(trip.comment)
+      expect(trip_json['short_description']).to eq(trip.short_description)
+      expect(trip_json['start_date']).to eq(trip.start_date)
+      expect(trip_json['end_date']).to eq(trip.end_date)
+      expect(trip_json['published']).to eq(trip.published)
+      expect(trip_json['archived']).to eq(trip.archived)
+    end
+
+  end
+
 end
