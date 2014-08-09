@@ -7,7 +7,8 @@
 %div{'ng-show' => 'edit', class: 'form-horizontal'}
   %div{class: 'form-group'}
     %div{class: 'col-md-12'}
-      = text_area_tag 'day_comment', '', 'ng-model' => 'day.comment', class: 'form-control', placeholder: t('trips.show.comment'), rows: 6
+      = text_area_tag 'day_comment', '', 'ng-model' => 'day.comment', class: 'form-control',
+        placeholder: t('trips.show.comment'), rows: 6
   %div{class: 'form-group'}
     %div{class: 'col-md-12'}
       = render 'widgets/price', name: 'day_add_price', ng_model: 'day.add_price', placeholder: t('trips.show.price')

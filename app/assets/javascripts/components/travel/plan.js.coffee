@@ -6,6 +6,7 @@ angular.module('travel-components').controller 'PlanController'
       # define controller
       $scope.trip_id = (/trips\/(.+)/.exec($location.absUrl())[1]);
 
+      # tumblers
       $scope.activitiesCollapsed = true
       $scope.transfersCollapsed = true
       $scope.edit = false
@@ -24,11 +25,13 @@ angular.module('travel-components').controller 'PlanController'
         $scope.toggleActivities(false)
         $scope.toggleTransfers(false)
 
-      $scope.loadDays = ->
+      $scope.load = ->
         Trip.getDays($scope.trip_id).then (days) ->
           $scope.days = days
           $scope.toggleActivities(false)
           $scope.toggleTransfers(false)
+        Trip.getTrip($scope.trip_id).then (trip) ->
+          $scope.trip = trip
 
       $scope.add = (field, obj = {}) ->
         field.push(obj)
@@ -72,8 +75,11 @@ angular.module('travel-components').controller 'PlanController'
       $scope.savePlan = ->
         return if $scope.saving
         $scope.saving = true
+        Trip.updateTrip($scope.trip_id, $scope.trip).then ->
+          # nothing
         Trip.createDays($scope.trip_id, $scope.days).then ->
           $scope.saving = false
+
 
       $scope.toggleCollapse = (is_change = true, collection_name) ->
         $scope["#{collection_name}Collapsed"] = !$scope["#{collection_name}Collapsed"] if is_change
@@ -96,6 +102,6 @@ angular.module('travel-components').controller 'PlanController'
         return true
 
       # init controller
-      $scope.loadDays()
+      $scope.load()
 
   ]
