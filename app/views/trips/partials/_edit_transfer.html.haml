@@ -4,7 +4,8 @@
     {{$index+1}}
   %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.transfers, $index)', class: 'pull-right'}
     = fa_icon 'times'
-  %a{href: 'javascript:void(0);', 'ng-click' => 'transfer.isCollapsed = !transfer.isCollapsed', class: 'pull-right margin-right-10'}
+  %a{href: 'javascript:void(0);', 'ng-click' => 'transfer.isCollapsed = !transfer.isCollapsed',
+      class: 'pull-right margin-right-10'}
     %span{'ng-show' => 'transfer.isCollapsed'}
       = fa_icon 'arrow-right'
     %span{'ng-show' => '!transfer.isCollapsed'}
@@ -12,16 +13,20 @@
 
 %div{class: 'form-group'}
   %div{class: 'col-md-6'}
-    = render 'widgets/typeahead/cities', model_name: 'transfer.city_from', classes: 'input-sm form-control', placeholder: t('trips.show.from')
+    = render 'widgets/typeahead/cities', model_name: 'transfer.city_from', classes: 'input-sm form-control',
+        placeholder: t('trips.show.from')
   %div{class: 'col-md-6'}
-    = render 'widgets/typeahead/cities', model_name: 'transfer.city_to', classes: 'input-sm form-control', placeholder: t('trips.show.to')
+    = render 'widgets/typeahead/cities', model_name: 'transfer.city_to', classes: 'input-sm form-control',
+        placeholder: t('trips.show.to')
 
 %div{collapse: 'transfer.isCollapsed'}
   %div{class: 'form-group'}
     %div{class: 'col-md-6 dropdown'}
-      = render 'widgets/datetimepicker', id: 'dropdown-time-start-{{day.id}}-{{$index}}', link_default_text: t('trips.show.departure'), model: 'transfer.start_time'
+      = render 'widgets/datetimepicker', id: 'dropdown-time-start-{{day.id}}-{{$index}}',
+          link_default_text: t('trips.show.departure'), model: 'transfer.start_time'
     %div{class: 'col-md-6 dropdown'}
-      = render 'widgets/datetimepicker', id: 'dropdown-time-end-{{day.id}}-{{$index}}', link_default_text: t('trips.show.arrival'), model: 'transfer.end_time'
+      = render 'widgets/datetimepicker', id: 'dropdown-time-end-{{day.id}}-{{$index}}',
+          link_default_text: t('trips.show.arrival'), model: 'transfer.end_time'
 
   %div{class: 'form-group'}
     %div{class: 'col-md-12'}
@@ -34,19 +39,24 @@
 
   %div{class: 'form-group'}
     %div{class: 'col-md-12'}
-      = text_area_tag 'transfer_comment', '', 'ng-model' => 'transfer.comment', class: 'form-control', placeholder: t('trips.show.comment'), rows: 6
+      = text_area_tag 'transfer_comment', '', 'ng-model' => 'transfer.comment', class: 'form-control',
+          placeholder: t('trips.show.comment'), rows: 6
 
   %div{class: 'form-group'}
     %div{class: 'col-md-4'}
-      = text_field_tag 'transfer_code', '', 'ng-model' => 'transfer.code', class: 'input-sm form-control', placeholder: '№'
+      = text_field_tag 'transfer_code', '', 'ng-model' => 'transfer.code', class: 'input-sm form-control',
+          placeholder: '№'
     %div{class: 'col-md-8'}
-      = text_field_tag 'transfer_company', '', 'ng-model' => 'transfer.company', class: 'input-sm form-control', placeholder: t('trips.show.carrier')
+      = text_field_tag 'transfer_company', '', 'ng-model' => 'transfer.company', class: 'input-sm form-control',
+          placeholder: t('trips.show.carrier')
 
   %div{class: 'form-group'}
     %div{class: 'col-md-6'}
-      = text_field_tag 'transfer_station_from', '', 'ng-model' => 'transfer.station_from', class: 'input-sm form-control', placeholder: t('trips.show.station_from')
+      = text_field_tag 'transfer_station_from', '', 'ng-model' => 'transfer.station_from', class: 'input-sm form-control',
+          placeholder: t('trips.show.station_from')
 
     %div{class: 'col-md-6'}
-      = text_field_tag 'transfer_station_to', '', 'ng-model' => 'transfer.station_to', class: 'input-sm form-control', placeholder: t('trips.show.station_to')
+      = text_field_tag 'transfer_station_to', '', 'ng-model' => 'transfer.station_to', class: 'input-sm form-control',
+          placeholder: t('trips.show.station_to')
 
 %hr

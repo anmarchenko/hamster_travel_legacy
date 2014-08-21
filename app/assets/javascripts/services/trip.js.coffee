@@ -5,40 +5,39 @@ angular.module('travel-services').config(["railsSerializerProvider",
 ).service 'Trip', [ 'railsResourceFactory', (railsResourceFactory) ->
 
   {
-    getDays: (trip_id) ->
-      Days = railsResourceFactory(
-        url: "/api/trips/#{trip_id}/days.json",
-        name: 'days'
-      )
-      Days.query()
+    init: (trip_id) ->
 
-    getDay: (trip_id, day_id) ->
-      Day = railsResourceFactory(
-        url: "/api/trips/#{trip_id}/days/#{day_id}.json",
-        name: 'day'
-      )
-      Day.query()
+      {
+        trip_id: trip_id
 
-    createDays: (trip_id, days) ->
-      Days = railsResourceFactory(
-        url: "/api/trips/#{trip_id}/days.json",
-        name: 'days'
-      )
-      new Days(days).create()
+        Days: railsResourceFactory(
+          url: "/api/trips/#{trip_id}/days",
+          name: 'days'
+        )
 
-    getTrip: (trip_id) ->
-      Trip = railsResourceFactory(
-        url: "/api/trips/#{trip_id}.json",
-        name: 'trip'
-      )
-      Trip.query()
+        Trips: railsResourceFactory(
+          url: "/api/trips",
+          name: 'trip'
+        )
 
-    updateTrip: (trip_id, trip) ->
-      Trip = railsResourceFactory(
-        url: "/api/trips",
-        name: 'trip'
-      )
-      new Trip(trip).update()
+        getDays:  ->
+          this.Days.query()
+
+        getDay: (day_id) ->
+          this.Days.get(day_id)
+
+        createDays: (days) ->
+          new this.Days(days).create()
+
+        updateDay: (day) ->
+          day.update()
+
+        getTrip: ->
+          this.Trips.get(this.trip_id)
+
+        updateTrip: (trip) ->
+          new this.Trips(trip).update()
+      }
 
   }
 ]

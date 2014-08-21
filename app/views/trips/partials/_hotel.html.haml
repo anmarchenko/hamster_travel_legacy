@@ -1,4 +1,4 @@
-%div{'ng-show' => '!edit'}
+%div{'ng-show' => '!edit && !hotel_edit'}
   %p
     {{day.hotel.name}}
     %br
@@ -7,12 +7,15 @@
       = fa_icon 'ruble'
   %p{class: 'travel-text text-italic'} {{day.hotel.comment}}
   %span{'ng-show' => '!!day.hotel.links'}
-    %p{'ng-repeat' => 'link in day.hotel.links'}
+    %p{'ng-repeat' => 'link in day.hotel.links track by link.id'}
       = render 'widgets/link_show', ng_model_url: 'link.url',
                                               ng_model_description: 'link.description'
+  - if @user_can_edit
+    %a.edit-hover-button{'ng-show' => 'mouse_over_hotel', 'ng-click' => "setEdit(true, 'hotel')"}
+      = fa_icon 'pencil'
 
 
-%div.form-horizontal{'ng-show' => 'edit'}
+%div.form-horizontal{'ng-show' => 'edit || hotel_edit'}
   .form-group.day-place-container.relative-position
     .col-md-12
       = text_field_tag 'hotel_name', '', 'ng-model' => 'day.hotel.name', class: 'input-sm form-control',
@@ -35,12 +38,18 @@
     %u
       = t('trips.show.links')
 
-  .day-place-container.relative-position{'ng-repeat' => 'link in day.hotel.links'}
+  .day-place-container.relative-position{'ng-repeat' => 'link in day.hotel.links track by link.id'}
     = render 'widgets/link', ng_model_descr: 'link.description', ng_model_url: 'link.url'
     %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.hotel.links, $index)', 'ng-show' => '$index > 0',
       class: 'delete-button'}
       = fa_icon 'times'
   .form-group
     .col-md-12
+      %a.pull-left.margin-right-10{href: 'javascript:void(0);', 'ng-click' => 'save()',
+            'ng-show' => 'hotel_edit'}
+        = fa_icon 'check'
+      %a.pull-left{href: 'javascript:void(0);', 'ng-click' => 'reload()', 'ng-show' => 'hotel_edit'}
+        = fa_icon 'undo'
+
       %a{href: 'javascript:void(0);', class: 'pull-right', 'ng-click' => 'add(day.hotel.links)'}
         = fa_icon 'plus'

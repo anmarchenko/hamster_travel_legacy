@@ -150,3 +150,11 @@ table .dropdown-menu a{
     min-width: 100px;
     min-height: 20px;
 }
+
+.plan-row td{
+    position: relative;
+}
+.edit-hover-button{
+    position: absolute;
+    right: 8px; top: 8px
+}

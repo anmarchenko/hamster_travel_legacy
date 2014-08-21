@@ -2,7 +2,7 @@
   %a.btn.btn-info.pull-right.btn-sm{href: 'javascript:void(0);', 'ng-click' => 'downloadWord()'}
     = fa_icon 'file-word-o', text: t('trips.show.download_word')
 
-  - if user_signed_in? and @trip.include_user(current_user)
+  - if @user_can_edit
     %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(true)',
         class: 'btn btn-primary pull-right btn-sm', 'ng-show' => '!edit'}
       = fa_icon 'edit', text: t('trips.show.edit_plan')

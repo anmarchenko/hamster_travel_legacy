@@ -4,8 +4,8 @@ module Api
 
     before_filter :find_trip
     before_filter :find_day, only: [:show]
-    before_filter :authenticate_user!, only: [:create]
-    before_filter :authorize, only: [:create]
+    before_filter :authenticate_user!, only: [:create, :update]
+    before_filter :authorize, only: [:create, :update]
 
     respond_to :json
 
@@ -22,6 +22,11 @@ module Api
       respond_with @day
     end
 
+    def update
+      Travels::Updaters::TripUpdater.new(@trip, { '0' => day_params }).process_days
+      head 200
+    end
+
     private
 
     def find_trip
@@ -36,6 +41,10 @@ module Api
 
     def authorize
       head 403 and return if !@trip.include_user(current_user)
+    end
+
+    def day_params
+      params.require(:days).permit!
     end
 
   end

@@ -5,6 +5,7 @@ angular.module('travel-components').controller 'PlanController'
 
       # define controller
       $scope.trip_id = (/trips\/(.+)/.exec($location.absUrl())[1]);
+      $scope.tripService = Trip.init($scope.trip_id)
       $scope.days = []
 
       # tumblers
@@ -27,7 +28,7 @@ angular.module('travel-components').controller 'PlanController'
         $scope.toggleTransfers(false)
 
       $scope.load = ->
-        Trip.getTrip($scope.trip_id).then (trip) ->
+        $scope.tripService.getTrip().then (trip) ->
           $scope.trip = trip
 
       $scope.add = (field, obj = {}) ->
@@ -72,18 +73,20 @@ angular.module('travel-components').controller 'PlanController'
       $scope.savePlan = ->
         return if $scope.saving
         $scope.saving = true
-        Trip.updateTrip($scope.trip_id, $scope.trip).then ->
+        $scope.tripService.updateTrip($scope.trip).then ->
           # nothing
-        Trip.createDays($scope.trip_id, $scope.days).then ->
+        $scope.tripService.createDays($scope.days).then ->
           $scope.saving = false
 
+      $scope.setDayCollapse = (day, collection_name) ->
+        if day[collection_name]
+          for object in day[collection_name]
+            object.isCollapsed = $scope["#{collection_name}Collapsed"]
 
       $scope.toggleCollapse = (is_change = true, collection_name) ->
         $scope["#{collection_name}Collapsed"] = !$scope["#{collection_name}Collapsed"] if is_change
         for day in $scope.days
-          if day[collection_name]
-            for object in day[collection_name]
-              object.isCollapsed = $scope["#{collection_name}Collapsed"]
+          $scope.setDayCollapse(day, collection_name)
 
       $scope.toggleActivities = (is_change = true) ->
         $scope.toggleCollapse(is_change, 'activities')

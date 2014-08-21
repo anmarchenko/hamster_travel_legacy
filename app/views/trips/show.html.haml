@@ -101,18 +101,23 @@
 
             %tbody
               - @trip.days.each do |day|
-                %tr{'ng-controller' => 'DaysController', 'ng-init' => "getDay('#{day.id}')"}
+                %tr{'ng-controller' => 'DaysController', 'ng-init' => "getDay('#{day.id}')", class: 'plan-row'}
                   %td
                     = day.date_when_s
-                  %td{'ng-show' => 'show_place'}
+                  %td{'ng-show' => 'show_place', 'ng-mouseleave' => 'mouse_over_place = false',
+                                                 'ng-mouseenter' => 'mouse_over_place = true'}
                     = render 'trips/partials/place'
-                  %td{'ng-show' => 'show_transfers'}
+                  %td{'ng-show' => 'show_transfers', 'ng-mouseleave' => 'mouse_over_transfers = false',
+                                                     'ng-mouseenter' => 'mouse_over_transfers = true'}
                     = render 'trips/partials/transfer'
-                  %td{'ng-show' => 'show_hotel'}
+                  %td{'ng-show' => 'show_hotel', 'ng-mouseleave' => 'mouse_over_hotel = false',
+                                                 'ng-mouseenter' => 'mouse_over_hotel = true'}
                     = render 'trips/partials/hotel'
-                  %td{'ng-show' => 'show_activities'}
+                  %td{'ng-show' => 'show_activities', 'ng-mouseleave' => 'mouse_over_activities = false',
+                                                      'ng-mouseenter' => 'mouse_over_activities = true'}
                     = render 'trips/partials/activity'
-                  %td{'ng-show' => 'show_comments'}
+                  %td{'ng-show' => 'show_comments', 'ng-mouseleave' => 'mouse_over_comments = false',
+                                                    'ng-mouseenter' => 'mouse_over_comments = true'}
                     = render 'trips/partials/comment'
         .col-md-1
 
