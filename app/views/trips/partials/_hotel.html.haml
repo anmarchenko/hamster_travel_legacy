@@ -22,8 +22,8 @@
         placeholder: 'Название'
 
     %a{href: 'javascript:void(0);',  class: 'up-button',
-      'ng-click' => 'fillAsPreviousHotel(day.hotel, $index)',
-      'ng-show' => '$index > 0'}
+      'ng-click' => 'fillAsPreviousHotel(day.hotel, day_index)',
+      'ng-show' => 'day_index > 0'}
       = fa_icon 'arrow-up'
 
   .form-group

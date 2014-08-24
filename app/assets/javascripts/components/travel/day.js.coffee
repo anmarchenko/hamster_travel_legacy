@@ -17,11 +17,12 @@ angular.module('travel-components').controller 'DaysController'
         for v in EDIT_VARIABLES
           $scope.setEdit(val, v)
 
-      $scope.getDay = (day_id) ->
+      $scope.getDay = (day_id, day_index) ->
+        $scope.day_index = day_index
         $scope.tripService.getDay(day_id).then (day) ->
           $scope.day = day
 
-          $scope.$parent.days.push $scope.day
+          $scope.$parent.days[day_index] = $scope.day
 
           $scope.$parent.toggleActivities(false)
           $scope.$parent.toggleTransfers(false)

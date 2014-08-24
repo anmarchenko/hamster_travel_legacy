@@ -10,11 +10,11 @@
 
   %div{'ng-repeat' => 'place in day.places track by place.id', class: 'day-place-container relative-position'}
     %a{href: 'javascript:void(0);',  class: 'up-button',
-       'ng-click' => 'fillAsPreviousPlace(place, $index, day, $parent.$index)',
-       'ng-show' => '($index > 0 || $parent.$index >0) && !place.city_code'}
+       'ng-click' => 'fillAsPreviousPlace(place, $index, day, day_index)',
+       'ng-show' => '($index > 0 || day_index > 0) && !place.city_code'}
       = fa_icon 'arrow-up'
 
-    %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.places, $index)', 'ng-show' => '$index > 0', class: 'delete-button'}
+    %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.places, $index)', 'ng-show' => 'day.places.length > 1', class: 'delete-button'}
       = fa_icon 'times'
     .form-group
       = render 'widgets/typeahead/cities', model_name: 'place.city', classes: 'input-sm form-control',

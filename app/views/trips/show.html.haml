@@ -29,7 +29,7 @@
 %hr
 
 - content_for :additional_content do
-  %div{'ng-controller' => 'PlanController'}
+  %div{'ng-controller' => 'PlanController', 'ng-init' => "createDays(#{@trip.days.count})"}
     .container-full
       .row
         .col-md-1
@@ -100,8 +100,8 @@
                   = t('.comments')
 
             %tbody
-              - @trip.days.each do |day|
-                %tr{'ng-controller' => 'DaysController', 'ng-init' => "getDay('#{day.id}')", class: 'plan-row'}
+              - @trip.days.each_with_index do |day, day_index|
+                %tr{'ng-controller' => 'DaysController', 'ng-init' => "getDay('#{day.id}', #{day_index})", class: 'plan-row'}
                   %td
                     = day.date_when_s
                   %td{'ng-show' => 'show_place', 'ng-mouseleave' => 'mouse_over_place = false',

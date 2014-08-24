@@ -6,7 +6,6 @@ angular.module('travel-components').controller 'PlanController'
       # define controller
       $scope.trip_id = (/trips\/(.+)/.exec($location.absUrl())[1]);
       $scope.tripService = Trip.init($scope.trip_id)
-      $scope.days = []
 
       # tumblers
       $scope.activitiesCollapsed = true
@@ -27,11 +26,15 @@ angular.module('travel-components').controller 'PlanController'
         $scope.toggleActivities(false)
         $scope.toggleTransfers(false)
 
+      $scope.createDays = (count) ->
+        $scope.days = new Array(count)
+
       $scope.load = ->
         $scope.tripService.getTrip().then (trip) ->
           $scope.trip = trip
 
       $scope.add = (field, obj = {}) ->
+        obj['id'] = new Date().getTime()
         field.push(obj)
 
       $scope.remove = (field, index) ->
@@ -52,12 +55,15 @@ angular.module('travel-components').controller 'PlanController'
         if prev_hotel
           hotel.name = prev_hotel.name
           hotel.price = prev_hotel.price
-          hotel.links = prev_hotel.links
+          hotel.links = []
+          for link in prev_hotel.links
+            hotel.links.push JSON.parse(JSON.stringify(link))
 
       $scope.budget = ->
         price = 0
         return 0 if !$scope.days
         for day in $scope.days
+          continue if !day
           price += parseInt(day.add_price || 0, 10)
           if day.hotel
             price += parseInt(day.hotel.price || 0, 10)
@@ -79,6 +85,7 @@ angular.module('travel-components').controller 'PlanController'
           $scope.saving = false
 
       $scope.setDayCollapse = (day, collection_name) ->
+        return if !day
         if day[collection_name]
           for object in day[collection_name]
             object.isCollapsed = $scope["#{collection_name}Collapsed"]
