@@ -84,6 +84,15 @@ angular.module('travel-components').controller 'PlanController'
         $scope.tripService.createDays($scope.days).then ->
           $scope.saving = false
 
+      $scope.cancelEdits = ->
+        $scope.setEdit(false)
+        for day in $scope.days
+          $scope.tripService.reloadDay day, (new_day) ->
+            $scope.setDayCollapse(new_day, 'transfers')
+            $scope.setDayCollapse(new_day, 'activities')
+
+        $scope.load()
+
       $scope.setDayCollapse = (day, collection_name) ->
         return if !day
         if day[collection_name]

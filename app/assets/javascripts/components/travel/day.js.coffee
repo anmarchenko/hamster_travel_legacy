@@ -8,7 +8,7 @@ angular.module('travel-components').controller 'DaysController'
 
       $scope.setEdit = (val, object) ->
         if val
-          $scope.reload ->
+          $scope.reload (day) ->
             $scope["#{object}_edit"] = val
         else
           $scope["#{object}_edit"] = val
@@ -28,16 +28,14 @@ angular.module('travel-components').controller 'DaysController'
           $scope.$parent.toggleTransfers(false)
 
       $scope.reload = (callback = null) ->
-        $scope.tripService.getDay($scope.day.id).then (new_day) ->
-          for prop in ['places', 'transfers', 'hotel', 'comment', 'activities', 'add_price']
-            $scope.day[prop] = new_day[prop]
-
+        $scope.tripService.reloadDay $scope.day, ->
           $scope.setEditAll(false)
 
           $scope.$parent.setDayCollapse($scope.day, 'transfers')
           $scope.$parent.setDayCollapse($scope.day, 'activities')
 
-          callback() if callback
+          callback($scope.day) if callback
+
 
       $scope.save = ->
         $scope.tripService.updateDay($scope.day).then ->

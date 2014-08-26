@@ -32,6 +32,13 @@ angular.module('travel-services').config(["railsSerializerProvider",
         updateDay: (day) ->
           day.update()
 
+        reloadDay: (day, callback = null) ->
+          this.getDay(day.id).then (new_day) ->
+            for prop in ['places', 'transfers', 'hotel', 'comment', 'activities', 'add_price']
+              day[prop] = new_day[prop]
+
+            callback(day) if callback
+
         getTrip: ->
           this.Trips.get(this.trip_id)
 
