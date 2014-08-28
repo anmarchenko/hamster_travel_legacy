@@ -19,6 +19,12 @@ angular.module('travel-components').controller 'PlanController'
       $scope.show_activities = true
       $scope.show_comments = true
 
+      $scope.dispatcher = new WebSocketRails('localhost:9999/websocket');
+      $scope.dispatcher.trigger('edits.hello', {param: 'pam'});
+
+      $scope.dispatcher.bind 'response', (message) ->
+        console.log 'hello answered ' + message
+
       $scope.setEdit = (val) ->
         $scope.edit = val
         $scope.activitiesCollapsed = true
@@ -77,6 +83,7 @@ angular.module('travel-components').controller 'PlanController'
         price || 0
 
       $scope.savePlan = ->
+        $scope.dispatcher.trigger('edits.hello', {param: 'pam'});
         return if $scope.saving
         $scope.saving = true
         $scope.tripService.updateTrip($scope.trip).then ->

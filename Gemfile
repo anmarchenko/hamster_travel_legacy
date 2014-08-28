@@ -63,6 +63,12 @@ gem 'rubyzip'
 gem 'docx_rails', github: 'altmer/docx-rails'
 gem 'zip-zip' # will load compatibility for old rubyzip API.
 
+# redis for in-memory store
+gem 'redis'
+
+# websockets
+gem 'websocket-rails'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
@@ -74,7 +80,6 @@ group :development do
   gem 'capistrano-rails',   '~> 1.1', require: false
   gem 'capistrano-bundler', '~> 1.1', require: false
   gem 'capistrano-rvm',   '~> 0.1', require: false
-
 
   # show errors
   gem 'better_errors'

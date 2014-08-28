@@ -15,6 +15,5 @@ Travel::Application.routes.draw do
   end
 
   root to: 'dashboard#index'
-  get '/:locale' => 'dashboard#index'
 
 end

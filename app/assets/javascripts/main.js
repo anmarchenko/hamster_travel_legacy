@@ -1,5 +1,6 @@
 // Flatly
 // Bootswatch
+//= require websocket_rails/main
 //= require flatly
 //= require angular
 //= require angularjs/rails/resource
