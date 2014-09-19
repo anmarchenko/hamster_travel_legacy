@@ -14,7 +14,6 @@
     %a.edit-hover-button{'ng-show' => 'mouse_over_hotel', 'ng-click' => "setEdit(true, 'hotel')"}
       = fa_icon 'pencil'
 
-
 %div.form-horizontal{'ng-show' => 'edit || hotel_edit'}
   .form-group.day-place-container.relative-position
     .col-md-12
@@ -34,13 +33,9 @@
       = text_area_tag 'hotel_comment', '', 'ng-model' => 'day.hotel.comment', class: 'form-control',
         placeholder: t('trips.show.comment'), rows: 3
 
-  %p
-    %u
-      = t('trips.show.links')
-
   .day-place-container.relative-position{'ng-repeat' => 'link in day.hotel.links track by link.id'}
     = render 'widgets/link', ng_model_descr: 'link.description', ng_model_url: 'link.url'
-    %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.hotel.links, $index)', 'ng-show' => '$index > 0',
+    %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.hotel.links, $index)', 'ng-show' => 'day.hotel.links.length > 1',
       class: 'delete-button'}
       = fa_icon 'times'
   .form-group

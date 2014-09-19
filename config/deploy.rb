@@ -7,7 +7,6 @@ set :repo_url, 'git@github.com:altmer/travel-planner.git'
 set :branch, 'master'
 
 set :deploy_to, '/var/applications/travel_planner'
-
 set :log_level, :debug
 
 set :pty, true
