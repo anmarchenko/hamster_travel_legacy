@@ -28,7 +28,7 @@ module Travels
     validates :end_date, date: {before: Proc.new {|record| record.start_date + 30.days},
                                 message: I18n.t('errors.end_date_days', period: 30) }
 
-    default_scope ->{where(:archived.ne => true).order_by(created_at: -1)}
+    default_scope ->{where(:archived.ne => true).order_by(start_date: -1)}
 
     after_save :update_plan
 
