@@ -6,7 +6,11 @@ describe DashboardController do
       get 'index'
       expect(response).to be_success
       expect(response).to render_template('dashboard/index')
-      expect(assigns(:trips).to_a.count).to eq 3
+      trips = assigns(:trips).to_a
+      expect(trips.count).to eq 3
+      [0, 1].each do |i|
+        expect(trips[i].created_at).to be >= (trips[i+1].created_at)
+      end
     end
   end
 

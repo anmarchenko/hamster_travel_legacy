@@ -4,8 +4,8 @@ FactoryGirl.define do
     sequence(:name){ |n| "Trip number #{n}" }
     short_description {'short_description'}
     comment { 'some long report about the trip' }
-    start_date { Date.today - 7 }
-    end_date {Date.today}
+    sequence(:start_date) { |n| Date.today - 7 - n  }
+    sequence(:end_date) { |n| Date.today - n}
 
     association :author_user, factory: :user
 

@@ -22,15 +22,6 @@ describe Travels::Trip do
 
     context 'when there are several trips' do
 
-      it 'has default context with ordering by created_at' do
-        trips = Travels::Trip.where(author_user_id: 'user_test_travels_trip').to_a
-        expect(trips.count).to eq(12)
-        trips.each_index do |i|
-          next if trips[i+1].blank?
-          expect(trips[i].created_at).to be > trips[i+1].created_at
-        end
-      end
-
       it 'paginates per 9 items by default' do
         trips = Travels::Trip.all.page(1).to_a
         expect(trips.count).to eq(9)

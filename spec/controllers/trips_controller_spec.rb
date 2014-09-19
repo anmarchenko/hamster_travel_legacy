@@ -16,6 +16,10 @@ describe TripsController do
         get 'index'
         trips = assigns(:trips)
         expect(trips.to_a.count).to eq 9
+        trips.each_index do |i|
+          next if trips[i+1].blank?
+          expect(trips[i].start_date).to be >= trips[i+1].start_date
+        end
       end
 
       it 'shows user\'s trips when parameter \'my\' is present' do

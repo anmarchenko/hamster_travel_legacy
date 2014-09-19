@@ -9,7 +9,7 @@ class TripsController < ApplicationController
     if params[:my] && !current_user.blank?
       @trips = current_user.trips
     else
-      @trips = Travels::Trip.all
+      @trips = Travels::Trip.all.order_by(start_date: -1)
     end
     @trips = @trips.page(params[:page] || 1)
   end
