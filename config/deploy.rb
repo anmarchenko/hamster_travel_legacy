@@ -26,7 +26,6 @@ namespace :deploy do
       cd = 'cd /var/applications/travel_planner/current;'
       execute "#{cd}RAILS_ENV=production #{rvm} bundle exec rake db:migrate"
 
-      execute "#{cd}RAILS_ENV=production #{rvm} bundle exec rake websocket_rails:stop_server"
       execute "if [ \"$( ps -A | grep ruby )\" ]; then killall -9 ruby; fi", pty: true
 
       execute "#{cd}RAILS_ENV=production #{rvm} bundle exec rake websocket_rails:start_server"
