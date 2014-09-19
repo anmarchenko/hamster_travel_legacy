@@ -1,5 +1,4 @@
-.transfer-place{'ng-show' => '!edit && !transfer_edit', 'ng-model' => 'day.transfers',
-        'ui-sortable' => '{connectWith: \'.transfer-place\', placeholder: \'well\', forcePlaceholderSize: true}'}
+.transfer-place{'ng-show' => '!edit && !transfer_edit', 'ng-model' => 'day.transfers'}
 
   %div{'ng-repeat' => 'transfer in day.transfers track by transfer.id'}
     = render 'trips/partials/show_transfer'
