@@ -38,7 +38,7 @@ class TripsController < ApplicationController
   end
 
   def show
-    @user_can_edit = user_signed_in? and @trip.include_user(current_user)
+    @user_can_edit = (user_signed_in? and @trip.include_user(current_user))
 
     respond_to do |format|
       format.html
