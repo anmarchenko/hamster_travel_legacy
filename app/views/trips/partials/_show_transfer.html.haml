@@ -2,6 +2,8 @@
 
 %span{'ng-click' => 'transfer.isCollapsed = !transfer.isCollapsed'}
   %p{class: 'collapse-header'}
+    %span{'ng-show' => '!!transfer.type_icon'}
+      %i{class: '{{transfer.type_icon}}'}
     %u
       {{transfer.city_from_text}}
       %span{'ng-show' => '!!transfer.station_from'}
@@ -17,8 +19,6 @@
 
 %div{collapse: 'transfer.isCollapsed'}
   %p
-    %span{'ng-show' => '!!transfer.type_icon'}
-      %i{class: '{{transfer.type_icon}}'}
     %span{'ng-show' => '!!transfer.code'}
       {{transfer.code}}
     %span{'ng-show' => '!!transfer.company'}
