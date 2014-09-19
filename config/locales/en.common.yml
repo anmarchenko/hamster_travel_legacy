@@ -21,7 +21,8 @@ en:
     flight: Flight
     train: Train
     bus: Bus
-    car: Car/Taxi
+    car: Taxi
+    personal_car: Car
     boat: Boat
     link_text: Text
     authors: 'Authors:'

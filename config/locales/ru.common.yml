@@ -21,7 +21,8 @@ ru:
     flight: Самолёт
     train: Поезд
     bus: Автобус
-    car: Автомобиль/Такси
+    car: Такси
+    personal_car: Автомобиль
     boat: Корабль
     link_text: Текст
     authors: 'Авторы:'
