@@ -1,12 +1,10 @@
 class Websockets::UserEditsController < WebsocketRails::BaseController
-  @@c = 0
+
   def client_connected
-    @@c += 1
-    send_message :response, 'connected' + @@c.to_s
+    send_message :response, 'connected'
   end
 
   def hello
-    p message
     send_message :response, 'hello'
   end
 
