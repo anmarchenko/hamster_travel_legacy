@@ -8,7 +8,7 @@
 
 .login-profile-panel
 {
-    background-image:url('/assets/wallpaper.jpg');
+    background-image:url('https://s3.amazonaws.com/altmer-cdn/images/wallpaper.jpg');
     margin-bottom: 80px;
 }
 
