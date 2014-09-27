@@ -1,0 +1,13 @@
+.modal.fade#photo-preview-modal{style: "z-index:1500;"}
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        %button.close{'data-dismiss' => "modal", type: "button"} ×
+        %h4
+          Выберите область фото для загрузки
+      .modal-body
+      .modal-footer
+        %span.btn.btn-default.pull-left{'data-dismiss' => "modal"}
+          Отмена
+        %span.btn.btn-primary.pull-right#upload_photo_button
+          Загрузить

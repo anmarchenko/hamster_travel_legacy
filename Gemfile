@@ -50,6 +50,8 @@ gem 'angular-ui-bootstrap-rails', '0.10.0'
 gem 'angularjs-rails-resource', '~> 1.0.0'
 # File upload
 gem 'jquery-fileupload-rails', github: 'Springest/jquery-fileupload-rails'
+# Jcrop library for cropping images before upload
+gem 'jcrop-rails-v2'
 
 # other
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder

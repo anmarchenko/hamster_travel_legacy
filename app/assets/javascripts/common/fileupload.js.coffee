@@ -3,6 +3,8 @@ $ ->
     dataType: 'script'
 
     add: (e, data) ->
+      return unless data.files[0]
+
       types = /(\.|\/)(gif|jpe?g|png|bmp)$/i
       file = data.files[0]
 
@@ -14,7 +16,39 @@ $ ->
         alert(file.name + " size should be no more than 10 MB")
         return
 
-      data.submit()
+      reader = new FileReader();
+      jcrop_api = null
+      reader.onload = (e) ->
+        $('#photo-preview-modal .modal-body').html(
+          "<img src='#{e.target.result}' id='image-preview-place' style='display: none;' />"
+        )
+
+        $('#photo-preview-modal').modal()
+
+      reader.readAsDataURL(data.files[0]);
+
+      $('#upload_photo_button').off('click').on 'click', ->
+        data.formData = jcrop_api.tellSelect()
+        data.submit()
+
+        $('#photo-preview-modal').modal('hide')
+
+      $('#photo-preview-modal').on 'hidden.bs.modal', ->
+        jcrop_api.destroy() if jcrop_api
+
+      $('#photo-preview-modal').on 'shown.bs.modal', ->
+        res = parseInt ($('#photo-preview-modal .modal-body').width())
+
+        imageWidth = $('#image-preview-place').innerWidth()
+        imageHeight = $('#image-preview-place').innerHeight()
+        $('#image-preview-place').Jcrop(
+          {
+            boxWidth: res, aspectRatio: 1, keySupport: false, minSize: [100, 100],
+            setSelect: [0, 0, Math.min(imageWidth, imageHeight), Math.min(imageWidth, imageHeight)]
+          }
+        );
+
+        jcrop_api = $('#image-preview-place').data('Jcrop');
 
   wrapper = $('.progress-wrapper')
   progress_bar = $('.progress-bar')
@@ -28,7 +62,7 @@ $ ->
 
   $('.fileupload').on 'fileuploadprogressall', (e, data) ->
     progress = parseInt(data.loaded / data.total * 100, 10);
-    progress_bar.css('width', progress + '%').text(progress + '%');
+    progress_bar.css('width', progress + '%')
 
   $('.fileupload-form a.upload-link').click ->
     $(this).closest('.fileupload-form').find('input').click()

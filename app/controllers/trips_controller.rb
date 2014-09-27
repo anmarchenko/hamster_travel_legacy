@@ -30,7 +30,18 @@ class TripsController < ApplicationController
   end
 
   def upload_photo
-    @trip.update_attributes(image: params_trip[:image])
+    @trip.image = params_trip[:image]
+    if @trip.image && @trip.valid?
+      # crop before save
+      job = @trip.image.convert("-crop #{params[:w]}x#{params[:h]}+#{params[:x]}+#{params[:y]}") rescue nil
+      if job
+        job.apply
+        @trip.update_attributes(image: job.content)
+      end
+    else
+      @trip.save
+    end
+
     respond_to do |format|
       format.js
     end

@@ -187,5 +187,10 @@ table .dropdown-menu a{
 
 .progress-wrapper{
     margin-top: 10px;
+    margin-bottom: 10px;
     display: none;
+}
+
+.image-preview{
+    max-width: 100% ;
 }

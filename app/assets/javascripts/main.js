@@ -3,6 +3,7 @@
 //= require websocket_rails/main
 //= require flatly
 //= require jquery-fileupload/basic
+//= require jquery.Jcrop
 //= require angular
 //= require angularjs/rails/resource
 //= require angular-ui-bootstrap-tpls
