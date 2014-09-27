@@ -158,3 +158,33 @@ table .dropdown-menu a{
     position: absolute;
     right: 8px; top: 8px
 }
+
+.fileupload-form{
+    position: relative;
+}
+
+.upload-trip-image-button{
+    position: absolute;
+    right: 15px;
+    bottom: 10px;
+    color: white;
+    padding: 3px;
+    background-color: rgba(0, 0, 0, 0.498039);
+    z-index: 10;
+    border-radius: 3px;
+}
+
+.delete-trip-image-button{
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    color: white;
+    padding: 3px;
+    background-color: rgba(0, 0, 0, 0.498039);
+    z-index: 10;
+    border-radius: 3px;
+}
+
+.progress-wrapper{
+    display: none;
+}

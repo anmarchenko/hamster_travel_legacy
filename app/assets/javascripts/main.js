@@ -2,6 +2,7 @@
 // Bootswatch
 //= require websocket_rails/main
 //= require flatly
+//= require jquery-fileupload/basic
 //= require angular
 //= require angularjs/rails/resource
 //= require angular-ui-bootstrap-tpls

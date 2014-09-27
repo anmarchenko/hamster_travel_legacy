@@ -4,6 +4,9 @@ module Travels
     include Mongoid::Document
     include Mongoid::Timestamps
 
+    extend Dragonfly::Model
+    extend Dragonfly::Model::Validations
+
     paginates_per 9
 
     field :name, type: String
@@ -22,11 +25,23 @@ module Travels
 
     embeds_many :days, class_name: 'Travels::Day'
 
+    dragonfly_accessor :image
+    def image_url_or_default
+      self.image.try(:url) || 'https://s3.amazonaws.com/altmer-cdn/images/no-image.png'
+    end
+
+    field :image_uid
+
     validates_presence_of :name, :start_date, :end_date, :author_user_id
 
     validates :start_date, date: { before: :end_date, message: I18n.t('errors.date_before')  }
     validates :end_date, date: {before: Proc.new {|record| record.start_date + 30.days},
-                                message: I18n.t('errors.end_date_days', period: 30) }
+                                message: I18n.t('errors.end_date_days', period: 30)}
+
+    validates_size_of :image, maximum: 10.megabytes, message: "should be no more than 10 MB", if: :image_changed?
+
+    validates_property :format, of: :image, in: [:jpeg, :jpg, :png, :bmp], case_sensitive: false,
+                          message: "should be either .jpeg, .jpg, .png, .bmp", if: :image_changed?
 
     default_scope ->{where(:archived.ne => true)}
 

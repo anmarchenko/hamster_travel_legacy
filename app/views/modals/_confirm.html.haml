@@ -1,0 +1,13 @@
+.modal.fade#confirm-modal{style: "z-index:1500;"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{'data-dismiss' => "modal", type: "button"} ×
+        %h4
+          = t('.title')
+      .modal-body
+      .modal-footer
+        %span.btn.btn-default.pull-left{'data-dismiss' => "modal"}
+          = t('common.noooo')
+        %span.btn.btn-primary.pull-right.confirm{'data-dismiss' => "modal"}
+          = t('common.yesss')

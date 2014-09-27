@@ -4,7 +4,9 @@
   %div{class: 'thumbnail clearfix'}
     %div{class: 'clearfix'}
       %a{href: trip_path(trip)}
-        %img{class: 'img-responsive', src: 'https://s3.amazonaws.com/altmer-cdn/images/no-image.png', width: '100%'}
+        %img{class: 'img-responsive',
+          src: trip.image_url_or_default,
+          width: '100%'}
     %div{class: 'caption'}
       %h4
         = link_to trip.name, trip_path(trip)

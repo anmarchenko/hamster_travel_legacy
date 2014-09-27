@@ -1,8 +1,8 @@
 class TripsController < ApplicationController
 
-  before_filter :authenticate_user!, only: [:edit, :update, :new, :create, :destroy]
-  before_filter :find_trip, only: [:show, :edit, :update, :destroy]
-  before_filter :authorize, only: [:edit, :update]
+  before_filter :authenticate_user!, only: [:edit, :update, :new, :create, :destroy, :upload_photo]
+  before_filter :find_trip, only: [:show, :edit, :update, :destroy, :upload_photo]
+  before_filter :authorize, only: [:edit, :update, :upload_photo]
   before_filter :authorize_destroy, only: [:destroy]
 
   def index
@@ -27,6 +27,13 @@ class TripsController < ApplicationController
 
     redirect_to trip_path(@trip) and return if @trip.errors.blank?
     render 'new'
+  end
+
+  def upload_photo
+    @trip.update_attributes(image: params_trip[:image])
+    respond_to do |format|
+      format.js
+    end
   end
 
   def edit
@@ -73,7 +80,7 @@ class TripsController < ApplicationController
   private
 
   def params_trip
-    params.require(:travels_trip).permit(:name, :short_description, :start_date, :end_date)
+    params.require(:travels_trip).permit(:name, :short_description, :start_date, :end_date, :image)
   end
 
   def find_trip

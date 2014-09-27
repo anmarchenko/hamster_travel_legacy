@@ -49,6 +49,7 @@ en:
       activity:
         name: Where to go?
       download_word: Download as Word
+      delete_photo_cofirm: Are you sure that you want to delete photo?
     edit:
       title: Edit travel
     form:

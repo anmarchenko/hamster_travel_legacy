@@ -48,6 +48,8 @@ gem 'chosen-rails'
 gem 'angularjs-rails'
 gem 'angular-ui-bootstrap-rails', '0.10.0'
 gem 'angularjs-rails-resource', '~> 1.0.0'
+# File upload
+gem 'jquery-fileupload-rails', github: 'Springest/jquery-fileupload-rails'
 
 # other
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -66,6 +68,15 @@ gem 'redis'
 
 # websockets
 gem 'websocket-rails'
+
+# image uploading
+gem 'dragonfly'
+gem 'dragonfly-s3_data_store'
+
+# production caching
+group :production do
+  gem 'rack-cache', :require => 'rack/cache'
+end
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

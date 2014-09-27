@@ -2,9 +2,31 @@
 
 .row.trip-header
   .col-md-3.col-sm-3
-    %img{class: 'img-thumbnail', src: 'https://s3.amazonaws.com/altmer-cdn/images/no-image.png', width: '100%'}
+    .fileupload-form{'ng-mouseleave' => 'mouse_over_image = false',
+         'ng-mouseenter' => 'mouse_over_image = true'}
+      - if @user_can_edit
+        = form_for @trip, url: upload_photo_trip_path(@trip), method: :post, multipart: true, remote: true do |f|
+          = f.hidden_field :remove_image, value: 'true'
+          = link_to '', class: 'delete-trip-image-button delete-image', 'ng-show' => 'mouse_over_image',
+              'data-confirm' => t('.delete_photo_cofirm') do
+            = fa_icon 'times'
+
+        = form_for @trip, url: upload_photo_trip_path(@trip), method: :post, multipart: true do |f|
+          = f.file_field :image, class: 'fileupload'
+          = link_to 'javascript:void(0)', class: 'upload-trip-image-button upload-link',
+            'ng-show' => 'mouse_over_image' do
+            = fa_icon 'upload'
+
+      %img{class: 'img-thumbnail', id: 'trip_image',
+        src: @trip.image_url_or_default,
+        width: '100%'}
+
+    .progress-wrapper
+      .progress
+        .progress-bar{role: "progressbar"}
+
   .col-md-9.col-sm-9
-    - if user_signed_in? and @trip.include_user(current_user)
+    - if @user_can_edit
       .btn-toolbar.pull-right
         = link_to edit_trip_path(@trip), class: 'btn btn-success' do
           = fa_icon 'pencil'

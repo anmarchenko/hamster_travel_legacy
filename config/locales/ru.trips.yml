@@ -49,6 +49,7 @@ ru:
       activity:
         name: Куда пойдём?
       download_word: Выгрузить в Word
+      delete_photo_cofirm: Вы уверены, что хотите удалить фото?
     edit:
       title: Редактирование путешествия
     form:

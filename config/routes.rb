@@ -4,7 +4,11 @@ Travel::Application.routes.draw do
     devise_for :users, controllers: { registrations: 'registrations' }
 
     resources :users, only: [:show, :edit, :update]
-    resources :trips
+    resources :trips do
+      member do
+        post :upload_photo
+      end
+    end
 
     namespace :api do
       resources :cities, only: [:index]
