@@ -16,6 +16,20 @@ $ ->
 
       data.submit()
 
+  wrapper = $('.progress-wrapper')
+  progress_bar = $('.progress-bar')
+
+  $('.fileupload').on 'fileuploadstart', ->
+    wrapper.show()
+
+  $('.fileupload').on 'fileuploaddone', ->
+    wrapper.hide()
+    progress_bar.width(0)
+
+  $('.fileupload').on 'fileuploadprogressall', (e, data) ->
+    progress = parseInt(data.loaded / data.total * 100, 10);
+    progress_bar.css('width', progress + '%').text(progress + '%');
+
   $('.fileupload-form a.upload-link').click ->
     $(this).closest('.fileupload-form').find('input').click()
     return false

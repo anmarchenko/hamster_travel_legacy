@@ -186,5 +186,6 @@ table .dropdown-menu a{
 }
 
 .progress-wrapper{
+    margin-top: 10px;
     display: none;
 }
