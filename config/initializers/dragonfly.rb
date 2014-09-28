@@ -8,9 +8,17 @@ Dragonfly.app.configure do
 
   url_format "/media/:job/:name"
 
-  datastore :file,
-    root_path: Rails.root.join('public/system/dragonfly', Rails.env),
-    server_root: Rails.root.join('public')
+  if Rails.env.development? || Rails.env.test?
+    datastore :file,
+      root_path: Rails.root.join('public/system/dragonfly', Rails.env),
+      server_root: Rails.root.join('public')
+  else
+    datastore :s3,
+      bucket_name: 'hamster-travel-uploads',
+      access_key_id: Rails.application.secrets.s3_key,
+      secret_access_key: Rails.application.secrets.s3_secret,
+      url_scheme: 'https'
+  end
 end
 
 # Logger

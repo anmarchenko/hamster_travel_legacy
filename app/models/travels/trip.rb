@@ -27,7 +27,7 @@ module Travels
 
     dragonfly_accessor :image
     def image_url_or_default
-      self.image.try(:url) || 'https://s3.amazonaws.com/altmer-cdn/images/no-image.png'
+      self.image.try(:remote_url) || 'https://s3.amazonaws.com/altmer-cdn/images/no-image.png'
     end
 
     field :image_uid
