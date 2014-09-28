@@ -26,3 +26,11 @@ Dragonfly.logger = Rails.logger
 
 # Mount as middleware
 Rails.application.middleware.use Dragonfly::Middleware
+
+module Dragonfly
+  class S3DataStore
+    def meta_to_headers(meta)
+      {'x-amz-meta-json' => JSON.generate(meta, ascii_only: true)}
+    end
+  end
+end
