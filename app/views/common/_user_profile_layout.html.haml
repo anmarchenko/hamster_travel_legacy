@@ -20,13 +20,13 @@
             = f.file_field :image, class: 'fileupload'
             = link_to 'javascript:void(0)', class: 'upload-user-image-button upload-link' do
               = fa_icon 'upload'
-        %img{class: 'login-profile-pic img-circle pic', src: @user.image_url_or_default}
+        %img.login-profile-pic.img-circle.pic{id: 'profile_image', src: @user.image_url_or_default}
 
-        .progress-wrapper
-          .progress
-            .progress-bar{role: "progressbar"}
       %div{class: 'login-profile-name name'}
         %small
           = @user.full_name
+    .progress-wrapper
+      .progress
+        .progress-bar{role: "progressbar"}
 
     = yield
