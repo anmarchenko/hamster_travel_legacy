@@ -2,3 +2,7 @@ ru:
   modals:
     confirm:
       title: Внимание
+    photo_preview:
+      title: Выберите область фото для загрузки
+      cancel: Отмена
+      upload: Загрузить

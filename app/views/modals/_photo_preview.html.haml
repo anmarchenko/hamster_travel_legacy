@@ -4,10 +4,10 @@
       .modal-header
         %button.close{'data-dismiss' => "modal", type: "button"} ×
         %h4
-          Выберите область фото для загрузки
+          = t('.title')
       .modal-body
       .modal-footer
         %span.btn.btn-default.pull-left{'data-dismiss' => "modal"}
-          Отмена
+          = t('.cancel')
         %span.btn.btn-primary.pull-right#upload_photo_button
-          Загрузить
+          = t('.upload')

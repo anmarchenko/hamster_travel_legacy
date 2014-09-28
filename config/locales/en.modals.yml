@@ -2,3 +2,7 @@ en:
   modals:
     confirm:
       title: Attention
+    photo_preview:
+      title: Select image region for upload
+      cancel: Cancel
+      upload: Upload

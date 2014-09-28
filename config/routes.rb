@@ -3,7 +3,11 @@ Travel::Application.routes.draw do
   scope '(:locale)', locale: /ru|en/ do
     devise_for :users, controllers: { registrations: 'registrations' }
 
-    resources :users, only: [:show, :edit, :update]
+    resources :users, only: [:show, :edit, :update] do
+      member do
+        post :upload_photo
+      end
+    end
     resources :trips do
       member do
         post :upload_photo

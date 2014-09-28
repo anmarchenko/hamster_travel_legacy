@@ -15,6 +15,7 @@ en:
       password_placeholder: leave blank if you don't want to change it
       current_password_placeholder: we need your current password to confirm your changes
       trips: Travels
+      delete_photo_cofirm: Are you sure that you want to delete your profile photo?
     my_trips: My travels
     update_successful: Successfully updated
     delete_confirm: Are you sure you want to delete that?

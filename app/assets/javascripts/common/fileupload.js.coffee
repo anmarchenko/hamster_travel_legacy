@@ -12,8 +12,9 @@ $ ->
         alert(file.name + " must be GIF, JPEG, BMP or PNG file")
         return
 
-      if file.size > 10485760
-        alert(file.name + " size should be no more than 10 MB")
+      max_size = parseInt($('.fileupload-form').data('maxuploadsize') || '10485760')
+      if file.size > max_size
+        alert(file.name + " size should be no more than #{max_size / 1000000} MB")
         return
 
       reader = new FileReader();

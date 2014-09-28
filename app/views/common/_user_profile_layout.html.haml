@@ -8,10 +8,25 @@
 
   %div{class: "col-md-#{profile_width}"}
     %div{class: 'login-profile-panel panel'}
-      %img{class: 'login-profile-pic img-circle pic', src: 'https://s3.amazonaws.com/altmer-cdn/images/profile.jpeg'}
+      .fileupload-form{'data-maxuploadsize' => '2500000'}
+        - if user_signed_in? && current_user == @user
+          = form_for @user, url: upload_photo_user_path(@user), method: :post, multipart: true, remote: true do |f|
+            = f.hidden_field :remove_image, value: 'true'
+            = link_to '', class: 'delete-user-image-button delete-image',
+                'data-confirm' => t('.delete_photo_cofirm') do
+              = fa_icon 'times', text: ''
+
+          = form_for @user, url: upload_photo_user_path(@user), method: :post, multipart: true do |f|
+            = f.file_field :image, class: 'fileupload'
+            = link_to 'javascript:void(0)', class: 'upload-user-image-button upload-link' do
+              = fa_icon 'upload'
+        %img{class: 'login-profile-pic img-circle pic', src: @user.image_url_or_default}
+
+        .progress-wrapper
+          .progress
+            .progress-bar{role: "progressbar"}
       %div{class: 'login-profile-name name'}
         %small
           = @user.full_name
-        -#href="#" class="btn btn-xs btn-primary pull-right" style="margin:10px;"><span class="glyphicon glyphicon-picture"></span> Change cover</a>
 
     = yield
