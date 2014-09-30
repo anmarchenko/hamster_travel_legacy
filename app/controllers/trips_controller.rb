@@ -36,11 +36,12 @@ class TripsController < ApplicationController
       job = @trip.image.convert("-crop #{params[:w]}x#{params[:h]}+#{params[:x]}+#{params[:y]}") rescue nil
       if job
         job.apply
-        @trip.update_attributes(image: job.content)
+        @trip.image = job.content
+        @trip.image = @trip.image.thumb('300x300')
       end
-    else
-      @trip.save
     end
+
+    @trip.save
 
     respond_to do |format|
       format.js

@@ -52,10 +52,12 @@ $ ->
         jcrop_api = $('#image-preview-place').data('Jcrop');
 
   wrapper = $('.progress-wrapper')
+  photo_processing = $('.photo-processing')
   progress_bar = $('.progress-bar')
 
   $('.fileupload').on 'fileuploadstart', ->
     wrapper.show()
+    photo_processing.show()
 
   $('.fileupload').on 'fileuploaddone', ->
     wrapper.hide()

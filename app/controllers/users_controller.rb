@@ -23,11 +23,12 @@ class UsersController < ApplicationController
       job = @user.image.convert("-crop #{params[:w]}x#{params[:h]}+#{params[:x]}+#{params[:y]}") rescue nil
       if job
         job.apply
-        @user.update_attributes(image: job.content)
+        @user.image = job.content
+        @user.image = @user.image.thumb('100x100')
       end
-    else
-      @user.save
     end
+
+    @user.save
 
     respond_to do |format|
       format.js

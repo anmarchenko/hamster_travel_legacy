@@ -25,6 +25,10 @@
       .progress
         .progress-bar{role: "progressbar"}
 
+    .photo-processing
+      %i.fa.fa-spinner.fa-spin
+      = t('common.photo_processing')
+
   .col-md-9.col-sm-9
     - if @user_can_edit
       .btn-toolbar.pull-right
@@ -41,12 +45,14 @@
       %small
         = l @trip.start_date, format: :month
 
-    .well.well-sm.trip-status{class: trip_status_class(@trip.status_code)}
-      %big
-        = @trip.status_text
-
     %p
       = @trip.short_description
+
+    .well.well-sm.trip-status{class: trip_status_class(@trip.status_code)}
+      %big
+        = t('.status_code')
+        = @trip.status_text
+
     %h4
       = t('.travellers')
     - @trip.users.each do |user|

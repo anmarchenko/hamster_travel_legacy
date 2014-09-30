@@ -11,7 +11,8 @@ namespace :db do
       'Db::Migrations::CreateUsers' => 'once',
       'Db::Migrations::DefaultUsersHometown' => 'once',
       'Db::Migrations::GeoFixes' => 'once',
-      'Db::Migrations::GeoFixes2' => 'once'
+      'Db::Migrations::GeoFixes2' => 'once',
+      'Db::Migrations::ZipImages' => 'once'
     })
 
     Db::Migration.run_all!
