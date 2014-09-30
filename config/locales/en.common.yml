@@ -32,3 +32,6 @@ en:
     no_comments: No comments
     yesss: Yes
     noooo: No
+    0_draft: Draft
+    1_planned: Planned
+    2_finished: Finished

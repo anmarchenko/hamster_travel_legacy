@@ -27,6 +27,7 @@ Dragonfly.logger = Rails.logger
 # Mount as middleware
 Rails.application.middleware.use Dragonfly::Middleware
 
+# patch S3 utf-8 characters problem
 module Dragonfly
   class S3DataStore
     def meta_to_headers(meta)

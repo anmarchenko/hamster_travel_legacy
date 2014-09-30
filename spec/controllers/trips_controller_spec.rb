@@ -9,16 +9,25 @@ describe TripsController do
     context 'when user is logged in' do
       login_user
 
-      before {FactoryGirl.create_list(:trip, 6, user_ids: [subject.current_user.id])}
+      before {FactoryGirl.create_list(:trip, 5, user_ids: [subject.current_user.id])}
+      before {FactoryGirl.create_list(:trip, 1, user_ids: [subject.current_user.id],
+                                      status_code: Travels::Trip::StatusCodes::FINISHED)}
       before {FactoryGirl.create_list(:trip, 12)}
 
       it 'shows trips index page' do
         get 'index'
         trips = assigns(:trips)
         expect(trips.to_a.count).to eq 9
+        # check sort
         trips.each_index do |i|
           next if trips[i+1].blank?
-          expect(trips[i].start_date).to be >= trips[i+1].start_date
+          expect(
+            trips[i].status_code > trips[i+1].status_code ||
+                (
+                  trips[i].status_code == trips[i+1].status_code &&
+                  trips[i].start_date >= trips[i+1].start_date
+                )
+          ).to be true
         end
       end
 
@@ -166,7 +175,8 @@ describe TripsController do
   end
 
   describe '#update' do
-    let(:update_attrs) {{travels_trip: attrs.merge('name' => 'New Updated Name'), id: trip.id}}
+    let(:update_attrs) {{travels_trip: attrs.merge('name' => 'New Updated Name',
+                                                   status_code: Travels::Trip::StatusCodes::PLANNED), id: trip.id}}
     context 'when user is logged in' do
       login_user
 
@@ -177,6 +187,7 @@ describe TripsController do
           it 'updates trip and redirects to show with notice' do
             put 'update', update_attrs
             expect(assigns(:trip).name).to eq 'New Updated Name'
+            expect(assigns(:trip).status_code).to eq Travels::Trip::StatusCodes::PLANNED
             expect(response).to redirect_to trip_path(trip)
             expect(flash[:notice]).to eq I18n.t('common.update_successful')
           end
@@ -223,7 +234,9 @@ describe TripsController do
         it 'renders show template' do
           get 'show', id: trip.id
           expect(response).to render_template 'trips/show'
-          expect(assigns(:trip).id).to eq trip.id
+          trip = assigns(:trip)
+          expect(trip.id).to eq trip.id
+          expect(trip.status_code).to eq Travels::Trip::StatusCodes::DRAFT
         end
 
         it 'renders docx' do

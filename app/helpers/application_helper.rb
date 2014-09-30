@@ -28,4 +28,12 @@ module ApplicationHelper
     res
   end
 
+  def trip_status_class status_code
+    {
+        Travels::Trip::StatusCodes::DRAFT => 'bg-draft',
+        Travels::Trip::StatusCodes::PLANNED => 'bg-planned',
+        Travels::Trip::StatusCodes::FINISHED => 'bg-finished'
+    }[status_code]
+  end
+
 end

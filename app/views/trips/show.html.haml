@@ -40,6 +40,11 @@
       = @trip.name
       %small
         = l @trip.start_date, format: :month
+
+    .well.well-sm.trip-status{class: trip_status_class(@trip.status_code)}
+      %big
+        = @trip.status_text
+
     %p
       = @trip.short_description
     %h4

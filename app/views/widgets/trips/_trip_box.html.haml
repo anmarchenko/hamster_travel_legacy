@@ -1,7 +1,7 @@
 - trip ||= nil
 
 - unless trip.blank?
-  %div{class: 'thumbnail clearfix'}
+  .thumbnail.clearfix{class: trip_status_class(trip.status_code)}
     %div{class: 'clearfix'}
       %a{href: trip_path(trip)}
         %img{class: 'img-responsive',

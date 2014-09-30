@@ -7,6 +7,20 @@ module Travels
     extend Dragonfly::Model
     extend Dragonfly::Model::Validations
 
+    module StatusCodes
+      DRAFT = '0_draft'
+      PLANNED = '1_planned'
+      FINISHED = '2_finished'
+
+      ALL = [DRAFT, PLANNED, FINISHED]
+      OPTIONS = ALL.map{|type| [I18n.t("common.#{type}"), type] }
+      TYPE_TO_TEXT = {
+          DRAFT => I18n.t("common.#{DRAFT}"),
+          PLANNED => I18n.t("common.#{PLANNED}"),
+          FINISHED => I18n.t("common.#{FINISHED}")
+      }
+    end
+
     paginates_per 9
 
     field :name, type: String
@@ -31,6 +45,11 @@ module Travels
     end
 
     field :image_uid
+
+    field :status_code, default: StatusCodes::DRAFT
+    def status_text
+      StatusCodes::TYPE_TO_TEXT[status_code]
+    end
 
     validates_presence_of :name, :start_date, :end_date, :author_user_id
 

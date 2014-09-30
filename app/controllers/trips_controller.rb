@@ -11,7 +11,7 @@ class TripsController < ApplicationController
     else
       @trips = Travels::Trip.all
     end
-    @trips = @trips.order_by(start_date: -1)
+    @trips = @trips.order_by(status_code: -1, start_date: -1)
     @trips = @trips.page(params[:page] || 1)
   end
 
@@ -91,7 +91,7 @@ class TripsController < ApplicationController
   private
 
   def params_trip
-    params.require(:travels_trip).permit(:name, :short_description, :start_date, :end_date, :image)
+    params.require(:travels_trip).permit(:name, :short_description, :start_date, :end_date, :image, :status_code)
   end
 
   def find_trip

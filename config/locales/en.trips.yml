@@ -7,6 +7,7 @@ en:
         start_date: First day
         end_date: Last day
         author: Author
+        status_code: Trip status
   trips:
     index:
       title: Travels
@@ -52,6 +53,9 @@ en:
       delete_photo_cofirm: Are you sure that you want to delete photo?
     edit:
       title: Edit travel
+      0_draft_help: '- just a simple draft of future plan'
+      1_planned_help: '- trip that will take place in the near future'
+      2_finished_help: '- past trip with report'
     form:
       create_title: Create travel
       edit_title: Edit travel

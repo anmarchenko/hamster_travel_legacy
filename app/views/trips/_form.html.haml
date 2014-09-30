@@ -41,6 +41,16 @@
                 %div{class: 'input-group-addon'}
                   = fa_icon 'calendar'
 
+        %div{class: 'form-group'}
+          = f.label :status_code, class: 'control-label'
+          = f.select :status_code, Travels::Trip::StatusCodes::OPTIONS, {}, {class: 'form-control selectpicker'}
+          %span.help-block
+            - Travels::Trip::StatusCodes::ALL.each do |type|
+              %b
+                = Travels::Trip::StatusCodes::TYPE_TO_TEXT[type]
+              = t(".#{type}_help")
+              %br
+
         %hr
 
         %div{class: 'form-actions text-right'}
