@@ -11,6 +11,7 @@ module Db
         User.all.each do |user|
           next if user.image.blank?
           user.image = user.image.thumb('100x100')
+          user.save
         end
       end
     end

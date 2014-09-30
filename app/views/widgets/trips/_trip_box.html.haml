@@ -10,6 +10,8 @@
     %div{class: 'caption'}
       %h4
         = link_to trip.name, trip_path(trip)
+        %small
+          = l trip.start_date, format: :month
       = "#{t('.author')}:"
       - unless trip.author.blank?
         = link_to trip.author.full_name, user_path(trip.author)
