@@ -16,3 +16,11 @@
       - unless trip.author.blank?
         = link_to trip.author.full_name, user_path(trip.author)
       %br
+
+      = t('common.budget').mb_chars.capitalize
+      = trip.budget_sum
+      = fa_icon 'ruble'
+      \/
+      = trip.days_count
+      = t('common.days', count: trip.days_count)
+

@@ -36,3 +36,10 @@ ru:
     1_planned: Планируемое
     2_finished: Состоявшееся
     photo_processing: Фото обрабатывается...
+    budget: бюджет
+    days:
+      zero: дней
+      one: день
+      few: дня
+      many: дней
+      other: дней

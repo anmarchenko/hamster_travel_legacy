@@ -93,6 +93,10 @@ module Travels
       author_user
     end
 
+    def days_count
+      (end_date - start_date + 1).to_i
+    end
+
     def name_for_file
       name[0, 50].gsub(/[^0-9A-zА-Яа-яёЁ.\-]/, '_')
     end

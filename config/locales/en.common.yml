@@ -36,3 +36,9 @@ en:
     1_planned: Planned
     2_finished: Finished
     photo_processing: Photo is being processed...
+    budget: budget
+    days:
+      one: day
+      two: days
+      other: days
+
