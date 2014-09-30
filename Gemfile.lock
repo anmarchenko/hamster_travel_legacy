@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git://github.com/altmer/docx-rails.git
-  revision: 1ab9e630d31d7f05dae93d03460c9e17a5f66162
+  revision: cbcaca1e40c39818c7bbeb08a43d3683f14d96c6
   specs:
     docx_rails (0.0.1)
 
