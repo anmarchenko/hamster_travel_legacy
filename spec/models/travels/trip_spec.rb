@@ -188,4 +188,22 @@ describe Travels::Trip do
 
   end
 
+  describe '#days_count' do
+    context 'when a week trip' do
+      let(:trip) {FactoryGirl.create(:trip, :with_filled_days)}
+
+      it 'returns 8 days' do
+        expect(trip.days_count).to eq 8
+      end
+    end
+
+    context 'when a minimal trip' do
+      let(:trip) {FactoryGirl.create(:trip, start_date: Date.today, end_date: Date.today + 1)}
+
+      it 'returns 2 days' do
+        expect(trip.days_count).to eq 2
+      end
+    end
+  end
+
 end
