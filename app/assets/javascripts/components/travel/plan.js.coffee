@@ -26,6 +26,12 @@ angular.module('travel-components').controller 'PlanController'
         console.log 'hello answered ' + message
 
       $scope.setEdit = (val) ->
+        if val
+          $scope.activitiesCollapsed = false
+          $scope.toggleActivities(false)
+        else
+          $scope.activitiesCollapsed = true
+          $scope.toggleActivities(false)
         $scope.edit = val
 
       $scope.createDays = (count) ->
