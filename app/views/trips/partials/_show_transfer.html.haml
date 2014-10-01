@@ -17,7 +17,7 @@
       {{transfer.price}}
       = fa_icon 'ruble'
 
-%div{collapse: 'transfer.isCollapsed'}
+%div{'ng-show' => '!transfer.isCollapsed'}
   %p
     %span{'ng-show' => '!!transfer.code'}
       {{transfer.code}}

@@ -19,7 +19,7 @@
     = render 'widgets/typeahead/cities', model_name: 'transfer.city_to', classes: 'input-sm form-control',
         placeholder: t('trips.show.to')
 
-%div{collapse: 'transfer.isCollapsed'}
+%div{'ng-show' => '!transfer.isCollapsed'}
   %div{class: 'form-group'}
     %div{class: 'col-md-6 dropdown'}
       = render 'widgets/datetimepicker', id: 'dropdown-time-start-{{day.id}}-{{$index}}',

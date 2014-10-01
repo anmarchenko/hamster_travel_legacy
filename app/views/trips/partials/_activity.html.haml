@@ -8,7 +8,7 @@
       %span{'ng-show' => '!!activity.price'}
         {{activity.price}}
         = fa_icon 'ruble'
-    %div{collapse: 'activity.isCollapsed'}
+    %div{'ng-show' => '!activity.isCollapsed'}
       %p.text-italic{'ng-show' => '!activity.comment && !activity.link_url'}
         = t('common.no_comments')
       %p{'ng-show' => '!!activity.comment', class: 'travel-text text-italic'} {{activity.comment}}
@@ -38,7 +38,7 @@
               = fa_icon 'arrow-down'
           %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.activities, $index)', class: 'delete-button'}
             = fa_icon 'times'
-      %div{collapse: 'activity.isCollapsed'}
+      %div{'ng-show' => '!activity.isCollapsed'}
         .form-group{collapse: 'isCollapsed'}
           .col-md-12
             = render 'widgets/price', name: 'activity_price', ng_model: 'activity.price',
