@@ -13,6 +13,9 @@ module Travels
     embeds_many :activities, class_name: 'Travels::Activity'
 
     field :comment, type: String
+    embeds_many :expenses, class_name: 'Travels::Expense', as: :expendable
+
+    # old field
     field :add_price, type: Integer
 
     before_save :init
@@ -20,6 +23,7 @@ module Travels
     def init
       self.places = [Travels::Place.new] if self.places.blank?
       self.hotel = Travels::Hotel.new if self.hotel.blank?
+      self.expenses = [Travels::Expense.new] if self.expenses.blank?
     end
 
     def date_when_s
@@ -27,11 +31,14 @@ module Travels
     end
 
     def is_empty?
-      [:transfers, :activities, :comment, :add_price].each do |field|
+      [:transfers, :activities, :comment].each do |field|
         return false unless self.send(field).blank?
       end
       (self.places || []).each do |place|
         return false unless place.is_empty?
+      end
+      (self.expenses || []).each do |expense|
+        return false unless expense.is_empty?
       end
       return hotel.blank? || hotel.is_empty?
     end
@@ -44,6 +51,7 @@ module Travels
       json['activities'] = activities.as_json(args)
       json['places'] = places.as_json(args)
       json['hotel'] = hotel.as_json(args)
+      json['expenses'] = expenses.as_json(args)
       json
     end
 

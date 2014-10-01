@@ -276,6 +276,52 @@ describe Travels::Updaters::TripUpdater do
 
     end
 
+    context 'when params have day expenses data' do
+
+      let(:params) { {'1' => {id: day.id.to_s,
+                              expenses: [ {
+                                    name: 'new_expense_name',
+                                    price: 45678,
+                                },
+                                {
+                                    name: 'new_expense_name_2',
+                                    price: 98765,
+                                }
+                              ]
+      } } }
+
+      it 'updates expenses attributes' do
+        expenses = first_day_of(trip).expenses
+        expect(expenses.count).to eq 2
+        expect(expenses.first.name).to eq 'new_expense_name'
+        expect(expenses.first.price).to eq 45678
+        expect(expenses.last.name).to eq 'new_expense_name_2'
+        expect(expenses.last.price).to eq 98765
+      end
+
+      it 'updates expense' do
+        expenses = first_day_of(trip).expenses
+        params['1'][:expenses] = [
+            {
+                id: expenses.first.id.to_s,
+                name: 'updated_name'
+            }
+        ]
+        update_trip_days trip, params
+
+        updated_expenses = first_day_of(trip).expenses
+        expect(updated_expenses.count).to eq 1
+        expect(updated_expenses.first.name).to eq 'updated_name'
+      end
+
+      it 'removes expenses' do
+        params['1'].delete(:expenses)
+        update_trip_days trip, params
+        updated_day = first_day_of(trip)
+        expect(updated_day.expenses.count).to eq 1
+      end
+    end
+
   end
 
   describe '#process_trip' do

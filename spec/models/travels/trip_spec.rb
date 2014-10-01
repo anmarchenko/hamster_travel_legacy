@@ -125,7 +125,7 @@ describe Travels::Trip do
 
       it 'returns right budget' do
         hotel_price = trip.days.inject(0) { |sum, day| sum += day.hotel.price }
-        days_add_price = trip.days.inject(0) { |sum, day| sum += day.add_price }
+        days_add_price = trip.days.inject(0) { |sum, day| sum += day.expenses.inject(0) {|i_s, ex| i_s += (ex.price || 0) } }
         transfers_price = trip.days.inject(0) { |s, day| s += day.transfers.inject(0) { |i_s, tr| i_s += tr.price} }
         activities_price = trip.days.inject(0) { |s, day| s += day.activities.inject(0) { |i_s, ac| i_s += ac.price} }
 

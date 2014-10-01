@@ -34,7 +34,23 @@ describe Travels::Day do
 
     context 'when day has a price' do
       before {day.set(add_price: rand(1000000))}
-      it 'is false' do
+      it 'is true beacause add_price is no longer used' do
+        expect(day).to be_is_empty
+      end
+    end
+
+    context 'when day has empty expenses' do
+      before {day.expenses.create(FactoryGirl.build(:expense).attributes)}
+
+      it 'is true' do
+        expect(day).to be_is_empty
+      end
+    end
+
+    context 'when day has non empty expenses' do
+      before {day.expenses.create(FactoryGirl.build(:expense, :with_data).attributes)}
+
+      it 'is true' do
         expect(day).not_to be_is_empty
       end
     end
@@ -94,6 +110,9 @@ describe Travels::Day do
       let(:day) { FactoryGirl.create(:trip, :with_filled_days).days.first }
       let(:day_json) { day.as_json() }
 
+      let(:day_empty) { FactoryGirl.create(:trip).days.first }
+      let(:day_empty_json) { day_empty.as_json() }
+
       it 'has string id field' do
         expect(day_json['id']).not_to be_blank
         expect(day_json['id']).to be_a(String)
@@ -128,6 +147,15 @@ describe Travels::Day do
 
       it 'has hotel' do
         expect(day_json['hotel']).to eq(day.hotel.as_json())
+      end
+
+      it 'when empty has at least one expense' do
+        expect(day_empty_json['expenses'].count).to eq(1)
+      end
+
+      it 'has expenses' do
+        expect(day_json['expenses'].count).to eq(4)
+        expect(day_json['expenses'].last).to eq(day.expenses.last.as_json())
       end
     end
   end

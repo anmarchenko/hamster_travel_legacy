@@ -110,10 +110,10 @@ module Travels
     def budget_sum
       result = 0
       (days || []).each do |day|
-        result += (day.add_price || 0)
         result += (day.hotel.price || 0)
         (day.transfers || []).each {|transfer| result += (transfer.price || 0)}
         (day.activities || []).each {|activity| result += (activity.price || 0)}
+        (day.expenses || []).each {|expense| result += (expense.price || 0)}
       end
       result
     end

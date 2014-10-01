@@ -31,6 +31,8 @@ module Travels
           process_ordered(day_hash[:activities] || [])
           process_nested(day.activities, day_hash[:activities] || [])
 
+          process_nested(day.expenses, day_hash[:expenses] || [])
+
           day.save
         end
       end

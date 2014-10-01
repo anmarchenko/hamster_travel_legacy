@@ -18,6 +18,7 @@ FactoryGirl.define do
           5.times { |index| day.activities.create(build(:activity, :with_data, order_index: index).attributes)}
           day.places.create(build(:place, :with_data).attributes)
           day.hotel = build(:hotel, :with_data).attributes
+          3.times {day.expenses.create(build(:expense, :with_data).attributes)}
           day.save validate: false
         end
       end
@@ -102,6 +103,13 @@ FactoryGirl.define do
       after :build do |hotel|
         hotel.links = [FactoryGirl.create(:external_link)]
       end
+    end
+  end
+
+  factory :expense, class: 'Travels::Expense' do
+    trait :with_data do
+      sequence(:name) {|n| "Day expense #{n}"}
+      price {rand(10000)}
     end
   end
 
