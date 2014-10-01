@@ -51,6 +51,8 @@ ru:
       download_word: Выгрузить в Word
       delete_photo_cofirm: Вы уверены, что хотите удалить фото?
       status_code: 'Статус путешествия:'
+      name: Название
+      expense: Расход
     edit:
       title: Редактирование путешествия
     form:

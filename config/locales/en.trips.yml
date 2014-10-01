@@ -51,6 +51,8 @@ en:
       download_word: Download as Word
       delete_photo_cofirm: Are you sure that you want to delete photo?
       status_code: 'Trip status:'
+      name: Name
+      expense: Expense
     edit:
       title: Edit travel
       0_draft_help: '- just a simple draft of future plan'
