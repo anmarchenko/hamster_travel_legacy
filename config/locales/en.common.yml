@@ -39,6 +39,6 @@ en:
     budget: budget
     days:
       one: day
-      two: days
       other: days
+      many: days
 
