@@ -40,4 +40,6 @@ en:
     days:
       zero: days
       one: day
+      few: days
+      many: days
       other: days
