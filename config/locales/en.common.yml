@@ -38,5 +38,6 @@ en:
     photo_processing: Photo is being processed...
     budget: budget
     days:
+      zero: days
       one: day
       other: days
