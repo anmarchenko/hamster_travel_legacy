@@ -1,8 +1,8 @@
 - is_create = %w(new create).include?(params[:action])
 - is_edit = %w(edit update).include?(params[:action])
 
-%div{class: 'row'}
-  %div{class: 'col-xs-12 col-sm-8 col-md-6 col-sm-offset-1 col-md-offset-2'}
+.row
+  .col-xs-12.col-sm-8.col-md-6.col-sm-offset-1.col-md-offset-2
     = form_for @trip, url: is_create ? trips_path : trip_path(@trip),
       html: ({'ng-controller' => 'TripEditController', 'ng-submit' => 'submit($event)',
           'ng-init' => "initScope({\"last_day_index\" : #{@trip.last_non_empty_day_index}, \"message\" : \"#{t('.confirm')}\" })"} if is_edit) do |f|
@@ -13,35 +13,35 @@
 
         = error_messages! @trip
 
-        %div{class: 'form-group'}
+        .form-group
           = f.label :name, class: 'control-label'
           = f.text_field :name, class: 'form-control', placeholder: t('.name_placeholder')
 
-        %div{class: 'form-group'}
+        .form-group
           = f.label :short_description, class: 'control-label'
           = f.text_area :short_description, class: 'form-control', placeholder: t('.short_description_placeholder'), rows: 6
 
-        %div{class: 'row'}
+        .row
 
-          %div{class: 'col-xs-12 col-sm-8 col-md-6'}
-            %div{class: 'form-group'}
+          .col-xs-12.col-sm-8.col-md-6
+            .form-group
               = f.label :start_date, class: 'control-label'
               %span{class: 'input-group'}
                 = f.text_field :start_date, datepicker_options('start_date', f.object).merge(class: 'form-control',
                   placeholder: t('.start_date_placeholder'))
-                %div{class: 'input-group-addon'}
+                .input-group-addon
                   = fa_icon 'calendar'
 
-          %div{class: 'col-xs-12 col-sm-8 col-md-6'}
-            %div{class: 'form-group'}
+          .col-xs-12.col-sm-8.col-md-6
+            .form-group
               = f.label :end_date, class: 'control-label'
               %span{class: 'input-group'}
                 = f.text_field :end_date, datepicker_options('end_date', f.object).merge(class: 'form-control',
                   placeholder: t('.end_date_placeholder'), min: 'start_date')
-                %div{class: 'input-group-addon'}
+                .input-group-addon
                   = fa_icon 'calendar'
 
-        %div{class: 'form-group'}
+        .form-group
           = f.label :status_code, class: 'control-label'
           = f.select :status_code, Travels::Trip::StatusCodes::OPTIONS, {}, {class: 'form-control selectpicker'}
           %span.help-block
@@ -51,8 +51,12 @@
               = t(".#{type}_help")
               %br
 
+        .checkbox
+          = f.check_box :private
+          = f.label :private, class: 'control-label', 'data-tooltip' => t('.private_help')
+
         %hr
 
-        %div{class: 'form-actions text-right'}
+        .form-actions.text-right
           = link_to t('.return'), is_create ? trips_path : trip_path(@trip), class: 'btn btn-primary pull-left'
           = submit_tag t('.save'), class: 'btn btn-success'

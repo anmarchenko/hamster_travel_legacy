@@ -14,6 +14,9 @@ describe TripsController do
                                       status_code: Travels::Trip::StatusCodes::FINISHED)}
       before {FactoryGirl.create_list(:trip, 12)}
 
+      before {FactoryGirl.create_list(:trip, 1, user_ids: [subject.current_user.id],
+                                      private: true)}
+
       it 'shows trips index page' do
         get 'index'
         trips = assigns(:trips)
@@ -28,13 +31,14 @@ describe TripsController do
                   trips[i].start_date >= trips[i+1].start_date
                 )
           ).to be true
+          expect(trips[i].private).to be false
         end
       end
 
       it 'shows user\'s trips when parameter \'my\' is present' do
         get 'index', my: true
         trips = assigns(:trips)
-        expect(trips.to_a.count).to eq 6
+        expect(trips.to_a.count).to eq 7
         trips.each do |trip|
           expect(trip.include_user(subject.current_user)).to be true
         end
@@ -98,14 +102,14 @@ describe TripsController do
       end
 
       context 'and when trip is valid with forbidden attribute' do
-        let(:params) { {travels_trip: attrs.merge(published: true)} }
+        let(:params) { {travels_trip: attrs.merge(archived: true)} }
 
         it 'creates new trip and redirects to show' do
           post 'create', params
           trip = assigns(:trip)
           expect(trip).to be_persisted
           expect(trip.name).to eq params[:travels_trip]['name']
-          expect(trip.published).to be false
+          expect(trip.archived).to be false
         end
       end
 
@@ -176,7 +180,8 @@ describe TripsController do
 
   describe '#update' do
     let(:update_attrs) {{travels_trip: attrs.merge('name' => 'New Updated Name',
-                                                   status_code: Travels::Trip::StatusCodes::PLANNED), id: trip.id}}
+                                                   status_code: Travels::Trip::StatusCodes::PLANNED,
+                                                    private: true), id: trip.id}}
     context 'when user is logged in' do
       login_user
 
@@ -188,6 +193,7 @@ describe TripsController do
             put 'update', update_attrs
             expect(assigns(:trip).name).to eq 'New Updated Name'
             expect(assigns(:trip).status_code).to eq Travels::Trip::StatusCodes::PLANNED
+            expect(assigns(:trip).private).to eq true
             expect(response).to redirect_to trip_path(trip)
             expect(flash[:notice]).to eq I18n.t('common.update_successful')
           end
@@ -230,34 +236,59 @@ describe TripsController do
       login_user
 
       context 'and when trip exists' do
-        let(:trip) {FactoryGirl.create(:trip)}
-        it 'renders show template' do
-          get 'show', id: trip.id
-          expect(response).to render_template 'trips/show'
-          trip = assigns(:trip)
-          expect(trip.id).to eq trip.id
-          expect(trip.status_code).to eq Travels::Trip::StatusCodes::DRAFT
+
+        context 'and when trip is not private' do
+          let(:trip) {FactoryGirl.create(:trip)}
+
+          it 'renders show template' do
+            get 'show', id: trip.id
+            expect(response).to render_template 'trips/show'
+            trip = assigns(:trip)
+            expect(trip.id).to eq trip.id
+            expect(trip.status_code).to eq Travels::Trip::StatusCodes::DRAFT
+          end
+
+          it 'renders docx' do
+            get 'show', id: trip.id, format: :docx
+            expect(assigns(:grid)).to eq [0.1]
+          end
+
+          it 'renders docx with transfers and hotel' do
+            get 'show', id: trip.id, cols: ['show_place', 'show_transfers', 'show_hotel'], format: :docx
+            expect(assigns(:grid)).to eq [0.1, 0.1, 0.39999999999999997, 0.39999999999999997]
+          end
+
+          it 'renders docx with activities and comments' do
+            get 'show', id: trip.id, cols: ['show_place', 'show_activities', 'show_comments'], format: :docx
+            expect(assigns(:grid)).to eq [0.1, 0.1, 0.5, 0.3]
+          end
+
+          it 'renders docx with only places' do
+            get 'show', id: trip.id, cols: ['show_place'], format: :docx
+            expect(assigns(:grid)).to eq [0.1, 0.1]
+          end
         end
 
-        it 'renders docx' do
-          get 'show', id: trip.id, format: :docx
-          expect(assigns(:grid)).to eq [0.1]
+        context 'and when trip is private' do
+          let(:trip) {FactoryGirl.create(:trip, private: true)}
+
+          it 'redirects to dashboard with flash' do
+            get 'show', id: trip.id
+            expect(response).to redirect_to '/'
+            expect(flash[:error]).to eq I18n.t('errors.unathorized')
+          end
         end
 
-        it 'renders docx with transfers and hotel' do
-          get 'show', id: trip.id, cols: ['show_place', 'show_transfers', 'show_hotel'], format: :docx
-          expect(assigns(:grid)).to eq [0.1, 0.1, 0.39999999999999997, 0.39999999999999997]
+        context 'and when trip is private but current user is a participant' do
+          let(:trip) {FactoryGirl.create(:trip, private: true, users: [subject.current_user])}
+
+          it 'renders show template' do
+            get 'show', id: trip.id
+            expect(response).to have_http_status 200
+            expect(response).to render_template 'trips/show'
+          end
         end
 
-        it 'renders docx with activities and comments' do
-          get 'show', id: trip.id, cols: ['show_place', 'show_activities', 'show_comments'], format: :docx
-          expect(assigns(:grid)).to eq [0.1, 0.1, 0.5, 0.3]
-        end
-
-        it 'renders docx with only places' do
-          get 'show', id: trip.id, cols: ['show_place'], format: :docx
-          expect(assigns(:grid)).to eq [0.1, 0.1]
-        end
       end
 
       context 'and when trip does not exist' do
@@ -270,12 +301,24 @@ describe TripsController do
     end
 
     context 'when no logged user' do
-      let(:trip) {FactoryGirl.create(:trip)}
+      context 'and when trip is not private' do
+        let(:trip) {FactoryGirl.create(:trip)}
 
-      it 'renders show template' do
-        get 'show', id: trip.id
-        expect(response).to have_http_status 200
-        expect(response).to render_template 'trips/show'
+        it 'renders show template' do
+          get 'show', id: trip.id
+          expect(response).to have_http_status 200
+          expect(response).to render_template 'trips/show'
+        end
+      end
+
+      context 'and when trip is private' do
+        let(:trip) {FactoryGirl.create(:trip, private: true)}
+
+        it 'redirects to dashboard with flash' do
+          get 'show', id: trip.id
+          expect(response).to redirect_to '/'
+          expect(flash[:error]).to eq I18n.t('errors.unathorized')
+        end
       end
     end
   end

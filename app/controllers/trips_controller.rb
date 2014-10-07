@@ -4,12 +4,13 @@ class TripsController < ApplicationController
   before_filter :find_trip, only: [:show, :edit, :update, :destroy, :upload_photo]
   before_filter :authorize, only: [:edit, :update, :upload_photo]
   before_filter :authorize_destroy, only: [:destroy]
+  before_filter :authorize_show, only: [:show]
 
   def index
     if params[:my] && !current_user.blank?
       @trips = current_user.trips
     else
-      @trips = Travels::Trip.all
+      @trips = Travels::Trip.where(private: false)
     end
     @trips = @trips.order_by(status_code: -1, start_date: -1)
     @trips = @trips.page(params[:page] || 1)
@@ -92,7 +93,8 @@ class TripsController < ApplicationController
   private
 
   def params_trip
-    params.require(:travels_trip).permit(:name, :short_description, :start_date, :end_date, :image, :status_code)
+    params.require(:travels_trip).permit(:name, :short_description, :start_date, :end_date, :image, :status_code,
+      :private)
   end
 
   def find_trip
@@ -101,11 +103,17 @@ class TripsController < ApplicationController
   end
 
   def authorize
-    no_access and return if !@trip.include_user(current_user)
+    no_access and return unless @trip.include_user(current_user)
   end
 
   def authorize_destroy
-    no_access and return if !(@trip.author_user_id == current_user.id)
+    no_access and return unless (@trip.author_user_id == current_user.id)
+  end
+
+  def authorize_show
+    return unless @trip.private
+    no_access and return unless user_signed_in?
+    no_access and return unless @trip.can_be_seen_by?(current_user)
   end
 
 end

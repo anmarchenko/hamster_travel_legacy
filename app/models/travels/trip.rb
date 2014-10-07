@@ -29,10 +29,11 @@ module Travels
     field :start_date, type: Date
     field :end_date, type: Date
 
-    field :published, type: Boolean, default: false
     field :archived, type: Boolean, default: false
 
     field :comment
+
+    field :private, type: Boolean, default: false
 
     belongs_to :author_user, class_name: 'User', inverse_of: :authored_trips
     has_and_belongs_to_many :users, inverse_of: nil
@@ -86,7 +87,12 @@ module Travels
     end
 
     def include_user(user)
-      users.include?(user)
+      user_ids.include?(user.id)
+    end
+
+    # private tasks can't be seen or cloned by user not participating in trip
+    def can_be_seen_by? user
+      !self.private || self.include_user(user)
     end
 
     def author
@@ -120,7 +126,7 @@ module Travels
 
     def as_json(**args)
       attrs = {}
-      ['id', 'comment', 'start_date', 'end_date', 'name', 'short_description', 'published', 'archived'].each do |field|
+      ['id', 'comment', 'start_date', 'end_date', 'name', 'short_description', 'archived', 'private'].each do |field|
         attrs[field] = self.send(field)
       end
       attrs['id'] = attrs['id'].to_s
