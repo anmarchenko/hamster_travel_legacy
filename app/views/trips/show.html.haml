@@ -1,4 +1,4 @@
-- content_for :title, t('.title')
+- content_for :title, @trip.name
 
 .row.trip-header
   .col-md-3.col-sm-3
@@ -52,6 +52,8 @@
       %big
         = t('.status_code')
         = @trip.status_text
+        - if @trip.private
+          (#{t('mongoid.attributes.travels/trip.private')})
 
     %h4
       = t('.travellers')
