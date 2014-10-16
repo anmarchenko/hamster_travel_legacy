@@ -17,7 +17,7 @@ class TripsController < ApplicationController
   end
 
   def new
-    @trip = Travels::Trip.new
+    @trip = Travels::Updaters::TripUpdater.new(nil, params).new_trip
   end
 
   def create

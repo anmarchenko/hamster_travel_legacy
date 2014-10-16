@@ -37,6 +37,7 @@ en:
     2_finished: Finished
     photo_processing: Photo is being processed...
     budget: budget
+    copy: Copy
     days:
       zero: days
       one: day

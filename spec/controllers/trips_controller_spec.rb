@@ -70,6 +70,60 @@ describe TripsController do
         expect(assigns(:trip)).to be_a_new Travels::Trip
         expect(response).to render_template 'trips/new'
       end
+
+      context 'when parameter copy from present' do
+        let(:trip) {FactoryGirl.create(:trip, :with_filled_days)}
+        context 'and when it is valid existing trip id' do
+          it 'renders template with new trip copied from old trip' do
+            get 'new', copy_from: trip.id
+            new_trip = assigns(:trip)
+            expect(new_trip.name).to eq trip.name + ' (Копия)'
+            expect(new_trip.start_date).to eq trip.start_date
+            expect(new_trip.end_date).to eq trip.end_date
+            expect(new_trip.short_description).to be_nil
+
+            expect(new_trip.comment).to be_nil
+            expect(new_trip.archived).to be false
+            expect(new_trip.private).to be false
+            expect(new_trip.image_uid).to be_nil
+            expect(new_trip.status_code).to eq Travels::Trip::StatusCodes::DRAFT
+          end
+        end
+
+        context 'and when it is not valid' do
+          it 'renders template with new trip' do
+            get 'new', copy_from: 'blahblah'
+            new_trip = assigns(:trip)
+            expect(new_trip.name).to be_nil
+            expect(new_trip.start_date).to be_nil
+            expect(new_trip.end_date).to be_nil
+            expect(new_trip.short_description).to be_nil
+
+            expect(new_trip.comment).to be_nil
+            expect(new_trip.archived).to be false
+            expect(new_trip.private).to be false
+            expect(new_trip.image_uid).to be_nil
+            expect(new_trip.status_code).to eq Travels::Trip::StatusCodes::DRAFT
+          end
+        end
+
+        context 'and when it is empty' do
+          it 'renders template with new trip' do
+            get 'new', copy_from: ''
+            new_trip = assigns(:trip)
+            expect(new_trip.name).to be_nil
+            expect(new_trip.start_date).to be_nil
+            expect(new_trip.end_date).to be_nil
+            expect(new_trip.short_description).to be_nil
+
+            expect(new_trip.comment).to be_nil
+            expect(new_trip.archived).to be false
+            expect(new_trip.private).to be false
+            expect(new_trip.image_uid).to be_nil
+            expect(new_trip.status_code).to eq Travels::Trip::StatusCodes::DRAFT
+          end
+        end
+      end
     end
 
     context 'when no logged user' do

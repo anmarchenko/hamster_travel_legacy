@@ -4,6 +4,8 @@ module Travels
     include Mongoid::Document
     include Mongoid::Timestamps
 
+    include Concerns::Copyable
+
     extend Dragonfly::Model
     extend Dragonfly::Model::Validations
 
@@ -122,6 +124,16 @@ module Travels
         (day.expenses || []).each {|expense| result += (expense.price || 0)}
       end
       result
+    end
+
+    def copy trip
+      super
+      self.name += " (#{I18n.t('common.copy')})" unless self.name.blank?
+      self
+    end
+
+    def copied_fields
+      [:name, :start_date, :end_date]
     end
 
     def as_json(**args)

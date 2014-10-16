@@ -30,15 +30,21 @@
       = t('common.photo_processing')
 
   .col-md-9.col-sm-9
-    - if @user_can_edit
+    - if user_signed_in?
       .btn-toolbar.pull-right
-        = link_to edit_trip_path(@trip), class: 'btn btn-success' do
-          = fa_icon 'pencil'
+        = link_to "#{new_trip_path}?copy_from=#{@trip.id}", target: '_blank', class: 'btn btn-info',
+          'data-tooltip' => t('trips.show.clone') do
+          = fa_icon 'copy'
 
-        - if @trip.author_user_id == current_user.id
-          = link_to trip_path(@trip), class: 'btn btn-danger', method: :delete,
-            'data-confirm'=> t('common.delete_confirm') do
-            = fa_icon 'times'
+        - if @user_can_edit
+          = link_to edit_trip_path(@trip), class: 'btn btn-success',
+            'data-tooltip' => t('trips.show.edit_trip') do
+            = fa_icon 'pencil'
+
+          - if @trip.author_user_id == current_user.id
+            = link_to trip_path(@trip), class: 'btn btn-danger', method: :delete,
+              'data-confirm'=> t('common.delete_confirm'), 'data-tooltip' => t('trips.show.delete_trip') do
+              = fa_icon 'times'
 
     %h3
       = @trip.name

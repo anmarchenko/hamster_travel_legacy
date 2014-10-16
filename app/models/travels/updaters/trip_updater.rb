@@ -4,9 +4,16 @@ module Travels
     class TripUpdater
       attr_accessor :trip, :params
 
+
       def initialize(trip, params)
         self.trip = trip
         self.params = params
+      end
+
+      def new_trip
+        self.trip = Travels::Trip.new
+        copy_attributes unless params[:copy_from].blank?
+        trip
       end
 
       def process_days
@@ -67,6 +74,11 @@ module Travels
         params.each_with_index do |item_hash, index|
           item_hash['order_index'] = index
         end
+      end
+
+      def copy_attributes
+        original_trip = Travels::Trip.where(id: params[:copy_from]).first
+        trip.copy(original_trip) unless original_trip.blank?
       end
 
     end

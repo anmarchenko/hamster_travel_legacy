@@ -28,6 +28,8 @@ en:
       activities: Activities
       comments: Comments
       edit_plan: Edit
+      edit_trip: Edit trip
+      delete_trip: Delete
       cancel: Cancel
       show_plan: Show
       save_plan: Save
@@ -54,6 +56,7 @@ en:
       status_code: 'Trip status:'
       name: Name
       expense: Expense
+      clone: Copy trip
     edit:
       title: Edit travel
     form:
