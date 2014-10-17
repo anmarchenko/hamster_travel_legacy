@@ -2,7 +2,7 @@
   %p
     {{day.hotel.name}}
     %br
-    %span{'ng-show' => '!!day.hotel.price'}
+    %span{'ng-show' => 'day.hotel.price != undefined'}
       {{day.hotel.price}}
       = fa_icon 'ruble'
   %p{class: 'travel-text text-italic'} {{day.hotel.comment}}

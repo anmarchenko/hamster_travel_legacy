@@ -5,7 +5,7 @@
         %span{'ng-show' => 'day.activities.length > 1'}
           {{$index+1}}.
         {{activity.name}}
-      %span{'ng-show' => '!!activity.price'}
+      %span{'ng-show' => 'activity.price != undefined'}
         {{activity.price}}
         = fa_icon 'ruble'
     %div{'ng-show' => '!activity.isCollapsed'}
