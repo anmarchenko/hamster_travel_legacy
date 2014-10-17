@@ -16,9 +16,6 @@ set :linked_dirs, %w{bin log tmp/cache vendor/bundle public/system}
 
 set :keep_releases, 5
 
-before 'deploy:setup', 'rvm:install_rvm'
-before 'deploy:setup', 'rvm:install_ruby'
-
 namespace :deploy do
 
   desc 'Restart application'
