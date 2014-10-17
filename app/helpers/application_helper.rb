@@ -24,7 +24,8 @@ module ApplicationHelper
         'toggle-weeks-text' => I18n.t('common.toggle_weeks'),
         'clear-text' => I18n.t('common.clear'),
         'close-text' => I18n.t('common.datepicker_close') }
-    res.merge!('ng-init' => "#{model_name}=#{record.send(model_name).strftime('%Q')}") unless record.blank? or record.send(model_name).blank?
+    res.merge!('ng-init' => "#{model_name}=#{record.send(model_name).strftime('%Q')}") unless record.blank? or
+          record.send(model_name).blank?
     res
   end
 
@@ -34,6 +35,10 @@ module ApplicationHelper
         Travels::Trip::StatusCodes::PLANNED => 'bg-planned',
         Travels::Trip::StatusCodes::FINISHED => 'bg-finished'
     }[status_code]
+  end
+
+  def trip_period trip, original_trip
+    original_trip.blank? ? trip.last_non_empty_day_index : original_trip.period
   end
 
 end

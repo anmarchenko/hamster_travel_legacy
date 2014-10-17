@@ -115,6 +115,10 @@ module Travels
       return result
     end
 
+    def period
+      ((end_date - start_date) unless start_date.blank? or end_date.blank?) || 1
+    end
+
     def budget_sum
       result = 0
       (days || []).each do |day|

@@ -5,7 +5,9 @@
   .col-xs-12.col-sm-8.col-md-6.col-sm-offset-1.col-md-offset-2
     = form_for @trip, url: is_create ? trips_path : trip_path(@trip),
       html: ({'ng-controller' => 'TripEditController', 'ng-submit' => 'submit($event)',
-          'ng-init' => "initScope({\"last_day_index\" : #{@trip.last_non_empty_day_index}, \"message\" : \"#{t('.confirm')}\" })"} if is_edit) do |f|
+      'ng-init' => "initScope({\"last_day_index\" : #{trip_period(@trip, @original_trip)}, \"message\" : \"#{t('.confirm')}\" })"} ) do |f|
+
+      = hidden_field_tag :copy_from, params[:copy_from]
       %fieldset
         %h2
           = is_create ? t('.create_title') : t('.edit_title')

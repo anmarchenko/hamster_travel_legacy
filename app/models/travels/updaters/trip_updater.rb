@@ -2,18 +2,34 @@ module Travels
   module Updaters
 
     class TripUpdater
-      attr_accessor :trip, :params
+      attr_accessor :trip, :params, :user
 
-
-      def initialize(trip, params)
+      def initialize(trip, params, user = nil)
         self.trip = trip
         self.params = params
+        self.user = user
       end
 
       def new_trip
-        self.trip = Travels::Trip.new
-        copy_attributes unless params[:copy_from].blank?
-        trip
+        new_trip = Travels::Trip.new
+        copy_attributes(new_trip) unless trip.blank?
+        new_trip
+      end
+
+      def create_trip
+        new_trip = Travels::Trip.new(params)
+        new_trip.author_user_id = user.id
+        new_trip.users = [user]
+        new_trip.save
+        unless trip.blank?
+          new_trip.days.each_with_index do |day, index|
+            original_day = (trip.days || [])[index]
+            next if original_day.blank?
+            day.attributes = original_day.attributes_for_clone.merge(date_when: day.date_when)
+          end
+          new_trip.save # duplicate save - try to avoid
+        end
+        new_trip
       end
 
       def process_days
@@ -76,9 +92,8 @@ module Travels
         end
       end
 
-      def copy_attributes
-        original_trip = Travels::Trip.where(id: params[:copy_from]).first
-        trip.copy(original_trip) unless original_trip.blank?
+      def copy_attributes new_trip
+        new_trip.copy(trip) unless trip.blank?
       end
 
     end

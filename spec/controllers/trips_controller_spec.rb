@@ -73,6 +73,7 @@ describe TripsController do
 
       context 'when parameter copy from present' do
         let(:trip) {FactoryGirl.create(:trip, :with_filled_days)}
+        let(:trip_private) { FactoryGirl.create(:trip, :with_filled_days, private: true) }
         context 'and when it is valid existing trip id' do
           it 'renders template with new trip copied from old trip' do
             get 'new', copy_from: trip.id
@@ -87,6 +88,25 @@ describe TripsController do
             expect(new_trip.private).to be false
             expect(new_trip.image_uid).to be_nil
             expect(new_trip.status_code).to eq Travels::Trip::StatusCodes::DRAFT
+          end
+        end
+
+        context 'and when trying to copy private trip' do
+          it 'just creates new trip' do
+            get 'new', copy_from: trip_private.id
+            new_trip = assigns(:trip)
+            expect(new_trip.name).to be_nil
+            expect(new_trip.start_date).to be_nil
+            expect(new_trip.end_date).to be_nil
+            expect(new_trip.short_description).to be_nil
+
+            expect(new_trip.comment).to be_nil
+            expect(new_trip.archived).to be false
+            expect(new_trip.private).to be false
+            expect(new_trip.image_uid).to be_nil
+            expect(new_trip.status_code).to eq Travels::Trip::StatusCodes::DRAFT
+
+            expect(assigns(:original_trip)).to be_nil
           end
         end
 
@@ -152,6 +172,97 @@ describe TripsController do
           expect(trip.short_description).to eq params[:travels_trip]['short_description']
           expect(trip.start_date).to eq params[:travels_trip]['start_date']
           expect(trip.end_date).to eq params[:travels_trip]['end_date']
+        end
+
+        context 'and when trip is copied from original' do
+
+          let(:original) {FactoryGirl.create(:trip, :with_filled_days)}
+          let(:original_private) { FactoryGirl.create(:trip, :with_filled_days, private: true) }
+
+          context 'and when it is valid existing trip id' do
+            it 'renders template with new trip copied from old trip' do
+              post 'create', params.merge(copy_from: original.id)
+              trip = assigns(:trip)
+              expect(trip.days.first.comment).to eq original.days.first.comment
+              expect(trip.days.first.add_price).to eq original.days.first.add_price
+              expect(trip.days.first.date_when).to eq params[:travels_trip]['start_date']
+              expect(trip.days.first.transfers.count).to eq original.days.first.transfers.count
+              expect(trip.days.first.transfers.first.price).to eq original.days.first.transfers.first.price
+
+              expect(trip.days.last.comment).to eq original.days.last.comment
+              expect(trip.days.last.add_price).to eq original.days.last.add_price
+              expect(trip.days.last.date_when).to eq params[:travels_trip]['end_date']
+            end
+          end
+
+          context 'and when trying to copy private trip' do
+            it 'just creates new trip' do
+              post 'create', params.merge(copy_from: original_private.id)
+              trip = assigns(:trip)
+              expect(trip.days.first.comment).to be_nil
+              expect(trip.days.first.add_price).to be_nil
+              expect(trip.days.first.date_when).to eq params[:travels_trip]['start_date']
+              expect(trip.days.first.transfers.count).to eq 0
+
+              expect(trip.days.last.comment).to be_nil
+              expect(trip.days.last.add_price).to be_nil
+              expect(trip.days.last.date_when).to eq params[:travels_trip]['end_date']
+            end
+          end
+
+          context 'and when it is not valid' do
+            it 'renders template with new trip' do
+              post 'create', params.merge(copy_from: 'fdsfdsfdfds')
+              trip = assigns(:trip)
+              expect(trip.days.first.comment).to be_nil
+              expect(trip.days.first.add_price).to be_nil
+              expect(trip.days.first.date_when).to eq params[:travels_trip]['start_date']
+              expect(trip.days.first.transfers.count).to eq 0
+
+              expect(trip.days.last.comment).to be_nil
+              expect(trip.days.last.add_price).to be_nil
+              expect(trip.days.last.date_when).to eq params[:travels_trip]['end_date']
+            end
+          end
+
+          context 'and when it has more days than original trip' do
+            it 'renders template with new trip' do
+              ps = params.merge(copy_from: original.id)
+              ps[:travels_trip]['end_date'] += 1.day
+
+              post 'create', ps
+              trip = assigns(:trip)
+              expect(trip.days.first.comment).to eq original.days.first.comment
+              expect(trip.days.first.add_price).to eq original.days.first.add_price
+              expect(trip.days.first.date_when).to eq params[:travels_trip]['start_date']
+              expect(trip.days.first.transfers.count).to eq original.days.first.transfers.count
+              expect(trip.days.first.transfers.first.price).to eq original.days.first.transfers.first.price
+
+              expect(trip.days.last.comment).to be_nil
+              expect(trip.days.last.add_price).to be_nil
+              expect(trip.days.last.date_when).to eq params[:travels_trip]['end_date']
+            end
+          end
+
+          context 'and when it has less days than original trip' do
+            it 'renders template with new trip' do
+              ps = params.merge(copy_from: original.id)
+              ps[:travels_trip]['end_date'] -= 1.day
+
+              post 'create', ps
+              trip = assigns(:trip)
+              expect(trip.days.first.comment).to eq original.days.first.comment
+              expect(trip.days.first.add_price).to eq original.days.first.add_price
+              expect(trip.days.first.date_when).to eq params[:travels_trip]['start_date']
+              expect(trip.days.first.transfers.count).to eq original.days.first.transfers.count
+              expect(trip.days.first.transfers.first.price).to eq original.days.first.transfers.first.price
+
+              expect(trip.days.last.comment).to eq original.days[-2].comment
+              expect(trip.days.last.add_price).to eq original.days[-2].add_price
+              expect(trip.days.last.date_when).to eq params[:travels_trip]['end_date']
+            end
+          end
+
         end
       end
 

@@ -2,6 +2,7 @@ class TripsController < ApplicationController
 
   before_filter :authenticate_user!, only: [:edit, :update, :new, :create, :destroy, :upload_photo]
   before_filter :find_trip, only: [:show, :edit, :update, :destroy, :upload_photo]
+  before_filter :find_original_trip, only: [:new, :create]
   before_filter :authorize, only: [:edit, :update, :upload_photo]
   before_filter :authorize_destroy, only: [:destroy]
   before_filter :authorize_show, only: [:show]
@@ -17,15 +18,11 @@ class TripsController < ApplicationController
   end
 
   def new
-    @trip = Travels::Updaters::TripUpdater.new(nil, params).new_trip
+    @trip = Travels::Updaters::TripUpdater.new(@original_trip, params).new_trip
   end
 
   def create
-    @trip = Travels::Trip.new(params_trip)
-    @trip.author_user_id = current_user.id
-    @trip.users = [current_user]
-    @trip.save
-
+    @trip = Travels::Updaters::TripUpdater.new(@original_trip, params_trip, current_user).create_trip
     redirect_to trip_path(@trip) and return if @trip.errors.blank?
     render 'new'
   end
@@ -100,6 +97,13 @@ class TripsController < ApplicationController
   def find_trip
     @trip = Travels::Trip.where(id: params[:id]).first
     head 404 and return if @trip.blank?
+  end
+
+  def find_original_trip
+    unless params[:copy_from].blank?
+      @original_trip = Travels::Trip.where(id: params[:copy_from]).first
+      @original_trip = nil if !@original_trip.blank? && !@original_trip.can_be_seen_by?(current_user)
+    end
   end
 
   def authorize

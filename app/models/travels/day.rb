@@ -15,7 +15,7 @@ module Travels
     field :comment, type: String
     embeds_many :expenses, class_name: 'Travels::Expense', as: :expendable
 
-    # old field
+    # old field, only for backward compatibility
     field :add_price, type: Integer
 
     before_save :init
@@ -53,6 +53,17 @@ module Travels
       json['hotel'] = hotel.as_json(args)
       json['expenses'] = expenses.as_json(args)
       json
+    end
+
+    def attributes_for_clone
+      res = attributes
+      # clean attributes
+      (res['places'] || []).each{ |h| h.reject!{|k, _| !Travels::Place.fields.keys.include?(k)} }
+      (res['transfers'] || []).each{ |h| h.reject!{|k, _| !Travels::Transfer.fields.keys.include?(k)} }
+      (res['activities'] || []).each{ |h| h.reject!{|k, _| !Travels::Activity.fields.keys.include?(k)} }
+      (res['expenses'] || []).each{ |h| h.reject!{|k, _| !Travels::Expense.fields.keys.include?(k)} }
+      (res['hotel'] || {}).reject! {|k, _| !(Travels::Hotel.fields.keys + ['links']).include?(k)}
+      res
     end
 
   end
