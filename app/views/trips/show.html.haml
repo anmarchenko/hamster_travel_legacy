@@ -51,8 +51,7 @@
       %small
         = l @trip.start_date, format: :month
 
-    %p
-      = @trip.short_description
+    %p.travel-text{} #{@trip.short_description}
 
     .well.well-sm.trip-status{class: trip_status_class(@trip.status_code)}
       %big

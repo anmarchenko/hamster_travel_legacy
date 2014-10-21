@@ -58,6 +58,7 @@ class TripsController < ApplicationController
   def show
     @user_can_edit = (user_signed_in? and @trip.include_user(current_user))
 
+    # TODO move to separate class
     respond_to do |format|
       format.html
       format.docx do

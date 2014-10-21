@@ -1,5 +1,5 @@
 %div{'ng-show' => '!edit && !comment_edit'}
-  %p{class: 'travel-text'} {{day.comment}}
+  %p.travel-text{} {{day.comment}}
   %p{'ng-repeat' => 'expense in day.expenses track by expense.id'}
     %span{'ng-show' => '!!expense.price'}
       {{expense.name}}
@@ -10,21 +10,21 @@
     %a.edit-hover-button{'ng-show' => 'mouse_over_comments', 'ng-click' => "setEdit(true, 'comment')"}
       = fa_icon 'pencil'
 
-%div{'ng-show' => 'edit || comment_edit', class: 'form-horizontal'}
-  %div{class: 'form-group'}
-    %div{class: 'col-md-12'}
+.form-horizontal{'ng-show' => 'edit || comment_edit'}
+  .form-group
+    .col-md-12
       = text_area_tag 'day_comment', '', 'ng-model' => 'day.comment', class: 'form-control',
         placeholder: t('trips.show.comment'), rows: 6
 
-  %div{class: 'form-group', 'ng-repeat' => 'expense in day.expenses track by expense.id'}
-    %div{class: 'col-md-6'}
+  .form-group{'ng-repeat' => 'expense in day.expenses track by expense.id'}
+    .col-md-6
       = text_field_tag 'expense_name', '', 'ng-model' => 'expense.name', class: 'form-control input-sm',
           placeholder: t('trips.show.expense')
-    %div{class: 'col-md-6 relative-position day-expense-container'}
+    .col-md-6.relative-position.day-expense-container
       = render 'widgets/price', name: 'expense_price', ng_model: 'expense.price', placeholder: t('trips.show.price')
 
-      %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.expenses, $index)', 'ng-show' => 'day.expenses.length > 1',
-          class: 'delete-button'}
+      %a.delete-button{href: 'javascript:void(0);', 'ng-click' => 'remove(day.expenses, $index)',
+          'ng-show' => 'day.expenses.length > 1'}
         = fa_icon 'times'
 
   .form-group
