@@ -240,3 +240,6 @@ table .dropdown-menu a{
 .photo-processing{
     display: none;
 }
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide {
+    display: none !important;
+}
