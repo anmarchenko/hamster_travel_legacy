@@ -62,9 +62,7 @@
 
     %h4
       = t('.travellers')
-    - @trip.users.each do |user|
-      %p
-        = link_to user.full_name, user_path(user)
+    = render'trips/partials/participants', participants: @trip.users
 
 %hr
 

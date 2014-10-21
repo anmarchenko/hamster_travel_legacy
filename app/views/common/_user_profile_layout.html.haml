@@ -20,7 +20,7 @@
             = f.file_field :image, class: 'fileupload'
             = link_to 'javascript:void(0)', class: 'upload-user-image-button upload-link' do
               = fa_icon 'upload'
-        %img.login-profile-pic.img-circle.pic{id: 'profile_image', src: @user.image_url_or_default}
+        %img.login-profile-pic.profile-pic.img-circle.pic{id: 'profile_image', src: @user.image_url_or_default}
 
       %div{class: 'login-profile-name name'}
         %small

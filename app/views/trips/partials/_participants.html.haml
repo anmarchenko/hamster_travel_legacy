@@ -1,0 +1,5 @@
+- participants.each_slice(3) do |slice|
+  .row
+    - slice.each do |participant|
+      .col-md-4
+        = render 'widgets/user_card', user: participant

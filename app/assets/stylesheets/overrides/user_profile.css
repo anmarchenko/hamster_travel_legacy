@@ -1,7 +1,12 @@
+.profile-pic{
+    width:120px;
+}
+.small-profile-pic{
+    width: 60px;
+}
 .login-profile-pic
 {
     margin-top:50px;
-    width:120px;
     margin-left:50px;
     margin-bottom:-60px;
 }
