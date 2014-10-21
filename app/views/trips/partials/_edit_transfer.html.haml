@@ -2,14 +2,14 @@
   %u{'ng-click' => 'transfer.isCollapsed = !transfer.isCollapsed', class: 'collapse-header'}
     = t('trips.show.transfer')
     {{$index+1}}
-  %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.transfers, $index)', class: 'pull-right'}
-    = fa_icon 'times'
   %a{href: 'javascript:void(0);', 'ng-click' => 'transfer.isCollapsed = !transfer.isCollapsed',
-      class: 'pull-right margin-right-10'}
+      class: 'pull-right'}
     %span{'ng-show' => 'transfer.isCollapsed'}
       = fa_icon 'arrow-right'
     %span{'ng-show' => '!transfer.isCollapsed'}
       = fa_icon 'arrow-down'
+  %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.transfers, $index)', class: 'pull-right margin-right-10'}
+    = fa_icon 'times'
 
 %div{class: 'form-group'}
   %div{class: 'col-md-6'}
