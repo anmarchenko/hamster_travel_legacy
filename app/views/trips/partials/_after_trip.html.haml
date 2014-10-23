@@ -1,4 +1,6 @@
-%div{'ng-show' => '!edit'}
+%article.trip-report{'ng-show' => '!edit'}
+  %h3
+    = t('trips.show.report')
   %p{class: 'travel-text'} {{trip.comment}}
 
 %div{'ng-show' => 'edit', class: 'form-horizontal'}

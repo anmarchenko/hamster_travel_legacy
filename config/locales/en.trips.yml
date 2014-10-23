@@ -57,6 +57,7 @@ en:
       name: Name
       expense: Expense
       clone: Copy trip
+      report: Trip report
     edit:
       title: Edit travel
     form:
