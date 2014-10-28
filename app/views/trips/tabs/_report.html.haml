@@ -1,0 +1,17 @@
+.span{'ng-controller' => 'PlanController'}
+  .row{'ng-cloak' => ''}
+    .col-md-12
+      = render 'trips/partials/buttons'
+      = render 'trips/partials/tabs'
+  .row{'ng-cloak' => ''}
+    .col-md-12
+      %article.trip-report{'ng-show' => '!edit'}
+        %h3
+          = t('trips.show.report')
+        %p{class: 'travel-text'}
+          {{trip.comment || '#{t('trips.show.no_report')}'}}
+
+      %div{'ng-show' => 'edit', class: 'form-horizontal'}
+        %div{class: 'form-group'}
+          = text_area_tag 'day_comment', '', 'ng-model' => 'trip.comment', class: 'form-control',
+            placeholder: t('trips.show.comment'), rows: 40

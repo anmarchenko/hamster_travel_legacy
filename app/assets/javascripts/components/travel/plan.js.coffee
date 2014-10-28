@@ -4,7 +4,7 @@ angular.module('travel-components').controller 'PlanController'
   , ($scope, Trip, $location, $window) ->
 
       # define controller
-      $scope.trip_id = (/trips\/(.+)/.exec($location.absUrl())[1]);
+      $scope.trip_id = (/trips\/([a-zA-Z0-9]+)/.exec($location.absUrl())[1]);
       $scope.tripService = Trip.init($scope.trip_id)
 
       # tumblers
@@ -91,16 +91,18 @@ angular.module('travel-components').controller 'PlanController'
         return if $scope.saving
         $scope.saving = true
         $scope.tripService.updateTrip($scope.trip).then ->
-          # nothing
-        $scope.tripService.createDays($scope.days).then ->
-          $scope.saving = false
+          $scope.saving = false unless $scope.days
+        if $scope.days
+          $scope.tripService.createDays($scope.days).then ->
+            $scope.saving = false
 
       $scope.cancelEdits = ->
         $scope.setEdit(false)
-        for day in $scope.days
-          $scope.tripService.reloadDay day, (new_day) ->
-            $scope.setDayCollapse(new_day, 'transfers')
-            $scope.setDayCollapse(new_day, 'activities')
+        if $scope.days
+          for day in $scope.days
+            $scope.tripService.reloadDay day, (new_day) ->
+              $scope.setDayCollapse(new_day, 'transfers')
+              $scope.setDayCollapse(new_day, 'activities')
 
         $scope.load()
 
@@ -112,6 +114,7 @@ angular.module('travel-components').controller 'PlanController'
 
       $scope.toggleCollapse = (is_change = true, collection_name) ->
         $scope["#{collection_name}Collapsed"] = !$scope["#{collection_name}Collapsed"] if is_change
+        return unless $scope.days
         for day in $scope.days
           $scope.setDayCollapse(day, collection_name)
 
@@ -122,7 +125,7 @@ angular.module('travel-components').controller 'PlanController'
         $scope.toggleCollapse(is_change, 'transfers')
 
       $scope.downloadWord = ->
-        url = $location.absUrl() + '.docx?'
+        url = "/trips/#{$scope.trip_id}.docx?"
         for field in ['show_place', 'show_transfers', 'show_hotel', 'show_activities', 'show_comments']
           url += "&cols[]=#{field}" if $scope[field]
         $window.open url, '_blank'

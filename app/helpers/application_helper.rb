@@ -1,4 +1,6 @@
 module ApplicationHelper
+  TAB_PLAN = 'plan'
+  TAB_REPORT = 'report'
 
   def error_messages! (object)
     return '' if object.errors.empty?

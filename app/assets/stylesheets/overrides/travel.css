@@ -101,6 +101,7 @@ table .dropdown-menu a{
     border-left: #ffffff !important;
     border-right: #ffffff !important;
     background-color: #ffffff !important;
+    font-weight: normal !important;
 }
 .input-group .form-control{
     z-index: auto;
@@ -242,4 +243,8 @@ table .dropdown-menu a{
 }
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide {
     display: none !important;
+}
+.report-link{
+    margin-left: 2em;
+    text-decoration: dashed;
 }

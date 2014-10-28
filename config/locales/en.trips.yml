@@ -58,6 +58,7 @@ en:
       expense: Expense
       clone: Copy trip
       report: Trip report
+      no_report: No report has been added yet.
     edit:
       title: Edit travel
     form:

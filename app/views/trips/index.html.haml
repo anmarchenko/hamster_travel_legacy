@@ -3,7 +3,7 @@
 - if user_signed_in?
   = link_to new_trip_path, class: 'btn btn-success btn-sm pull-right' do
     = fa_icon 'plus', text: t('.create')
-  %ul{class: 'nav nav-tabs'}
+  %ul.nav.nav-tabs
     %li{class: ('active' unless params[:my])}
       = link_to t('.all'), trips_path
     %li{class: ('active' if params[:my])}
