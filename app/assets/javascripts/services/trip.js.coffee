@@ -30,7 +30,7 @@ angular.module('travel-services').config(["railsSerializerProvider",
           new this.Days(days).create()
 
         updateDay: (day) ->
-          day.update()
+          new this.Days(day).update()
 
         reloadDay: (day, callback = null) ->
           this.getDay(day.id).then (new_day) ->

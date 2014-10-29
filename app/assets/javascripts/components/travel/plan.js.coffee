@@ -34,8 +34,9 @@ angular.module('travel-components').controller 'PlanController'
           $scope.toggleActivities(false)
         $scope.edit = val
 
-      $scope.createDays = (count) ->
-        $scope.days = new Array(count)
+      $scope.createDays = (count, trip) ->
+        $scope.days = new Array(count) unless count == 0
+        $scope.trip = trip
 
       $scope.load = ->
         $scope.tripService.getTrip().then (trip) ->
@@ -130,8 +131,5 @@ angular.module('travel-components').controller 'PlanController'
           url += "&cols[]=#{field}" if $scope[field]
         $window.open url, '_blank'
         return true
-
-      # init controller
-      $scope.load()
 
   ]

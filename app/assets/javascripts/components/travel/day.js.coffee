@@ -17,15 +17,14 @@ angular.module('travel-components').controller 'DaysController'
         for v in EDIT_VARIABLES
           $scope.setEdit(val, v)
 
-      $scope.getDay = (day_id, day_index) ->
+      $scope.setDay = (day_index, day) ->
         $scope.day_index = day_index
-        $scope.tripService.getDay(day_id).then (day) ->
-          $scope.day = day
+        $scope.day = day
 
-          $scope.$parent.days[day_index] = $scope.day
+        $scope.$parent.days[day_index] = $scope.day
 
-          $scope.$parent.toggleActivities(false)
-          $scope.$parent.toggleTransfers(false)
+        $scope.$parent.toggleActivities(false)
+        $scope.$parent.toggleTransfers(false)
 
       $scope.reload = (callback = null) ->
         $scope.tripService.reloadDay $scope.day, ->
@@ -35,7 +34,6 @@ angular.module('travel-components').controller 'DaysController'
           $scope.$parent.setDayCollapse($scope.day, 'activities')
 
           callback($scope.day) if callback
-
 
       $scope.save = ->
         $scope.tripService.updateDay($scope.day).then ->

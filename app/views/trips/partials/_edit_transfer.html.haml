@@ -35,7 +35,7 @@
   %div{class: 'form-group'}
     %div{class: 'col-md-12'}
       = select_tag 'transfer_type', options_for_select(Travels::Transfer::Types::OPTIONS),
-        {class: 'form-control input-sm selectpicker', 'ng-model' => 'transfer.type'}
+        {class: 'form-control input-sm', 'ng-model' => 'transfer.type'}
 
   %div{class: 'form-group'}
     %div{class: 'col-md-12'}
