@@ -237,6 +237,11 @@ describe Travels::Updaters::TripUpdater do
                                   {
                                       name: 'name 3',
                                       isCollapsed: true
+                                  },
+                                  {
+                                      name: '',
+                                      isCollapsed: true,
+                                      comment: 'some comment'
                                   }
                               ]
 
@@ -244,7 +249,7 @@ describe Travels::Updaters::TripUpdater do
                     }
       }
 
-      it 'creates new activities' do
+      it 'creates new activities skipping activity without name' do
         updated_day = first_day_of trip
 
         expect(updated_day.activities.count).to eq 3

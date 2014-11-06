@@ -51,8 +51,9 @@ module Travels
           process_ordered(day_hash[:transfers] || [])
           process_nested(day.transfers, day_hash[:transfers] || [])
 
-          process_ordered(day_hash[:activities] || [])
-          process_nested(day.activities, day_hash[:activities] || [])
+          activities_params = prepare_activities_params(day_hash[:activities] || [])
+          process_ordered(activities_params)
+          process_nested(day.activities, activities_params)
 
           process_nested(day.expenses, day_hash[:expenses] || [])
 
@@ -66,6 +67,10 @@ module Travels
       end
 
       private
+
+      def prepare_activities_params act_params
+        act_params.delete_if{|hash| hash[:name].blank?} || []
+      end
 
       # TODO permit only some params - possible security problem
       def process_nested(collection, params)
