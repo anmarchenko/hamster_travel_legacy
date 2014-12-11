@@ -34,6 +34,7 @@ module Travels
     field :archived, type: Boolean, default: false
 
     field :comment
+    field :budget_for, type: Integer, default: 1
 
     field :private, type: Boolean, default: false
 
@@ -142,7 +143,8 @@ module Travels
 
     def as_json(**args)
       attrs = {}
-      ['id', 'comment', 'start_date', 'end_date', 'name', 'short_description', 'archived', 'private'].each do |field|
+      ['id', 'comment', 'start_date', 'end_date', 'name', 'short_description',
+        'archived', 'private', 'budget_for'].each do |field|
         attrs[field] = self.send(field)
       end
       attrs['id'] = attrs['id'].to_s

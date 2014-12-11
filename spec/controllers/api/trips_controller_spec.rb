@@ -36,8 +36,7 @@ describe Api::TripsController do
   describe '#update' do
     let(:trip_without_user) {FactoryGirl.create :trip}
     let(:trip) {FactoryGirl.create :trip, users: [subject.current_user]}
-    let(:trip_params) { { trip: {comment: 'new_comment', archived: true} } }
-
+    let(:trip_params) { { trip: {comment: 'new_comment', archived: true, budget_for: 2} } }
 
     context 'when user is logged in' do
       login_user
@@ -49,6 +48,7 @@ describe Api::TripsController do
             expect(response).to have_http_status 204
             updated_trip = trip.reload
             expect(updated_trip.comment).to eq 'new_comment'
+            expect(updated_trip.budget_for).to eq 2
             expect(updated_trip.archived).to eq false
           end
         end

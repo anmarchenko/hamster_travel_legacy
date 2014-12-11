@@ -59,6 +59,8 @@ en:
       clone: Copy trip
       report: Trip report
       no_report: No report has been added yet.
+      budget_for: for
+      persons: pers.
     edit:
       title: Edit travel
     form:

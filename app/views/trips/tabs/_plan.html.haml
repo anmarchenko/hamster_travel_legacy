@@ -29,22 +29,31 @@
                   = fa_icon 'pencil'
 
       .col-md-10
-        %table{class: 'table table-black-bordered fixed-head'}
+        %table.table.table-black-bordered.fixed-head
           %thead
-            %tr{class: 'plan-header'}
+            %tr.plan-header
               %th{colspan: '6'}
-                %div{class: 'container'}
-                  %div{class: 'row'}
-                    %div{class: 'col-md-12'}
+                .container
+                  .row
+                    .col-md-12
                       = render 'trips/partials/buttons'
                       = render 'trips/partials/tabs'
-                  %div.row
-                    %div.col-md-12
-                      %h4{'ng-cloak' => ''}
+                  .row
+                    .col-md-12{'ng-cloak' => ''}
+                      %p
+                      %big
                         = t('common.budget')
                         {{budget()}}
                         = fa_icon 'ruble'
-
+                        %span{'ng-show' => '!edit'}
+                          = t('trips.show.budget_for')
+                          {{trip.budget_for}}
+                          = t('trips.show.persons')
+                        %span{'ng-show' => 'edit'}
+                          = t('trips.show.budget_for')
+                          = select_tag 'trip_budget_for', options_for_select((1..10).step(1)),
+                            {class: 'input-sm', 'ng-model' => 'trip.budget_for'}
+                          = t('trips.show.persons')
 
             %tr
               %th{class: 'col-md-1'}
