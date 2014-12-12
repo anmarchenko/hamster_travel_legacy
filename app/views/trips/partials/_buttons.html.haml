@@ -1,22 +1,27 @@
 .btn-toolbar.pull-right{'ng-cloak' => ''}
-  %a.btn.btn-info.pull-right.btn-sm{href: 'javascript:void(0);', 'ng-click' => 'downloadWord()'}
-    = fa_icon 'file-word-o', text: t('trips.show.download_word')
+  %a.btn.btn-info.pull-right.btn-sm{href: 'javascript:void(0);', 'ng-click' => 'downloadWord()',
+        'data-toggle' => 'tooltip', title: t('trips.show.download_word')}
+    = fa_icon 'file-word-o'
 
   - if @user_can_edit
     %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(true)',
-        class: 'btn btn-primary pull-right btn-sm', 'ng-show' => '!edit'}
-      = fa_icon 'edit', text: t('trips.show.edit_plan')
+        class: 'btn btn-primary pull-right btn-sm', 'ng-show' => '!edit',
+        'data-toggle' => 'tooltip', title: t('trips.show.edit_plan')}
+      = fa_icon 'edit'
     %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(false)',
-        class: 'btn btn-primary pull-right btn-sm', 'ng-show' => 'edit'}
-      = fa_icon 'eye', text: t('trips.show.show_plan')
+        class: 'btn btn-primary pull-right btn-sm', 'ng-show' => 'edit',
+        'data-toggle' => 'tooltip', title: t('trips.show.show_plan')}
+      = fa_icon 'eye'
 
     %a{href: 'javascript:void(0);', 'ng-click' => 'cancelEdits()',
-        class: 'btn btn-primary pull-right btn-sm', 'ng-show' => 'edit'}
-      = fa_icon 'undo', text: t('trips.show.cancel')
+        class: 'btn btn-primary pull-right btn-sm', 'ng-show' => 'edit',
+        'data-toggle' => 'tooltip', title: t('trips.show.cancel')}
+      = fa_icon 'undo'
 
     %a{href: 'javascript:void(0);', 'ng-click' => 'savePlan()',
-        class: 'btn btn-success pull-right btn-sm', 'ng-show' => '!saving && edit'}
-      = fa_icon 'save', text: t('trips.show.save_plan')
+        class: 'btn btn-success pull-right btn-sm', 'ng-show' => '!saving && edit',
+        'data-toggle' => 'tooltip', title: t('trips.show.save_plan')}
+      = fa_icon 'save'
     .btn.btn-success.pull-right.btn-sm{'ng-show' => 'saving'}
       %i.fa.fa-spinner.fa-spin
       = t('trips.show.saving_plan')

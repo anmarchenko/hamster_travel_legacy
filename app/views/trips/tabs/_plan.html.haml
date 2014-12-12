@@ -33,27 +33,26 @@
           %thead
             %tr.plan-header
               %th{colspan: '6'}
-                .container
-                  .row
-                    .col-md-12
-                      = render 'trips/partials/buttons'
-                      = render 'trips/partials/tabs'
-                  .row
-                    .col-md-12{'ng-cloak' => ''}
-                      %p
-                      %big
-                        = t('common.budget')
-                        {{budget()}}
-                        = fa_icon 'ruble'
-                        %span{'ng-show' => '!edit'}
-                          = t('trips.show.budget_for')
-                          {{trip.budget_for}}
-                          = t('trips.show.persons')
-                        %span{'ng-show' => 'edit'}
-                          = t('trips.show.budget_for')
-                          = select_tag 'trip_budget_for', options_for_select((1..10).step(1)),
-                            {class: 'input-sm', 'ng-model' => 'trip.budget_for'}
-                          = t('trips.show.persons')
+                .row
+                  .col-md-8.col-md-offset-2
+                    = render 'trips/partials/buttons'
+                    = render 'trips/partials/tabs'
+                .row
+                  .col-md-8.col-md-offset-2{'ng-cloak' => ''}
+                    %p
+                    %big
+                      = t('common.budget')
+                      {{budget()}}
+                      = fa_icon 'ruble'
+                      %span{'ng-show' => '!edit'}
+                        = t('trips.show.budget_for')
+                        {{trip.budget_for}}
+                        = t('trips.show.persons')
+                      %span{'ng-show' => 'edit'}
+                        = t('trips.show.budget_for')
+                        = select_tag 'trip_budget_for', options_for_select((1..10).step(1)),
+                          {class: 'input-sm', 'ng-model' => 'trip.budget_for'}
+                        = t('trips.show.persons')
 
             %tr
               %th{class: 'col-md-1'}
