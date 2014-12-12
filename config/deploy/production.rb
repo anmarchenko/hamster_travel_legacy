@@ -6,7 +6,8 @@
 
 #role :app, %w{deploy@example.com}
 role :web, %w{igendou@hamster-travel-app-1}
-#role :db,  %w{deploy@example.com}
+role :backend, %w{igendou@hamster-travel-backend-1}
+#role :db,  %w{igendou@hamster-travel-db}
 
 
 # Extended Server Syntax
