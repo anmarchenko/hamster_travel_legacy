@@ -27,7 +27,7 @@ namespace :deploy do
 
       execute "if [ \"$( ps -A | grep ruby )\" ]; then killall -9 ruby; fi", pty: true
 
-      [3000, 3001].each do |port|
+      [3000, 3001, 3002, 3003].each do |port|
         execute "cd /var/applications/travel_planner/current; #{rvm} bundle exec puma -p #{port} -e production -d"
       end
     end
