@@ -73,6 +73,9 @@ gem 'redis', :require => ["redis",   "redis/connection/hiredis"]
 gem 'dragonfly'
 gem 'dragonfly-s3_data_store'
 
+# caching
+gem 'dalli'
+
 # production caching
 group :production do
   gem 'rack-cache', :require => 'rack/cache'
