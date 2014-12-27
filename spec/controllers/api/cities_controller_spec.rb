@@ -11,7 +11,7 @@ describe Api::CitiesController do
 
     context 'when user is logged in' do
       login_user
-      before(:each){Rails.cache.clear}
+      after(:each){Rails.cache.clear}
 
       it 'responds with empty array if term is shorter than 3 letters' do
         get 'index', term: 'ci', format: :json
