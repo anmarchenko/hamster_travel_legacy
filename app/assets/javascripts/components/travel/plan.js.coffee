@@ -1,7 +1,12 @@
 angular.module('travel-components').controller 'PlanController'
 , [
-    '$scope', 'Trip', '$location', '$window'
-  , ($scope, Trip, $location, $window) ->
+    '$scope', 'Trip', '$location', '$window', '$interval'
+  , ($scope, Trip, $location, $window, $interval) ->
+
+      $scope.uuid = ->
+        s4 = ->
+          return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 
       # define controller
       $scope.trip_id = (/trips\/([a-zA-Z0-9]+)/.exec($location.absUrl())[1]);
@@ -19,11 +24,18 @@ angular.module('travel-components').controller 'PlanController'
       $scope.show_activities = true
       $scope.show_comments = true
 
-      $scope.dispatcher = new WebSocketRails('localhost:9999/websocket');
-      $scope.dispatcher.trigger('edits.hello', {param: 'pam'});
-
-      $scope.dispatcher.bind 'response', (message) ->
-        console.log 'hello answered ' + message
+      $interval(
+        () ->
+          $.ajax({
+            url: "/api/user_shows/#{$scope.trip_id}",
+            type: 'GET',
+            success: (data) ->
+              console.log data
+              $scope.users = data
+          })
+        ,
+        2000
+      )
 
       $scope.setEdit = (val) ->
         if val
@@ -88,7 +100,6 @@ angular.module('travel-components').controller 'PlanController'
         price || 0
 
       $scope.savePlan = ->
-        $scope.dispatcher.trigger('edits.hello', {param: 'pam'});
         return if $scope.saving
         $scope.saving = true
         $scope.tripService.updateTrip($scope.trip).then ->
@@ -132,4 +143,4 @@ angular.module('travel-components').controller 'PlanController'
         $window.open url, '_blank'
         return true
 
-  ]
+]

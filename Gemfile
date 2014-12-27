@@ -66,10 +66,8 @@ gem 'docx_rails', github: 'altmer/docx-rails'
 gem 'zip-zip' # will load compatibility for old rubyzip API.
 
 # redis for in-memory store
-gem 'redis'
-
-# websockets
-gem 'websocket-rails'
+gem 'hiredis'
+gem 'redis', :require => ["redis",   "redis/connection/hiredis"]
 
 # image uploading
 gem 'dragonfly'

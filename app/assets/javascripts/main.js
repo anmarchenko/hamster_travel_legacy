@@ -1,6 +1,5 @@
 // Flatly
 // Bootswatch
-//= require websocket_rails/main
 //= require flatly
 //= require jquery-fileupload/basic
 //= require jquery.Jcrop

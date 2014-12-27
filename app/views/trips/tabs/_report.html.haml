@@ -3,6 +3,11 @@
     .col-md-12
       = render 'trips/partials/buttons'
       = render 'trips/partials/tabs'
+  .row
+    .col-md-12{'ng-cloak' => ''}
+      %p
+      %big
+        = render 'trips/partials/watching_users'
   .row{'ng-cloak' => ''}
     .col-md-12
       %article.trip-report{'ng-show' => '!edit'}

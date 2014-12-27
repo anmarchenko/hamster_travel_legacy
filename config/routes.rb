@@ -19,6 +19,7 @@ Travel::Application.routes.draw do
       resources :trips, only: [:show, :update] do
         resources :days, only: [:index, :create, :show, :update]
       end
+      resources :user_shows, only: [:show]
     end
   end
 

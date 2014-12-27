@@ -53,7 +53,7 @@
                         = select_tag 'trip_budget_for', options_for_select((1..10).step(1)),
                           {class: 'input-sm', 'ng-model' => 'trip.budget_for'}
                         = t('trips.show.persons')
-
+                      = render 'trips/partials/watching_users'
             %tr
               %th{class: 'col-md-1'}
                 = t('trips.show.day')

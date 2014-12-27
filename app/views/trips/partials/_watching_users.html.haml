@@ -1,0 +1,6 @@
+%span.pull-right{'ng-show' => 'users.length > 0'}
+  = t('trips.show.watching_now')
+  %i{'ng-repeat' => 'user in users'}
+    {{user}}
+    %span{'ng-hide' => '$index == users.length - 1'}
+      ,
