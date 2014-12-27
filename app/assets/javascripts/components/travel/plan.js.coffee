@@ -30,7 +30,6 @@ angular.module('travel-components').controller 'PlanController'
             url: "/api/user_shows/#{$scope.trip_id}",
             type: 'GET',
             success: (data) ->
-              console.log data
               $scope.users = data
           })
         ,
