@@ -39,7 +39,6 @@ namespace :deploy do
       # execute "if [ \"$( ps -A | grep ruby )\" ]; then killall -9 ruby; fi", pty: true
       # execute "#{cd}RAILS_ENV=production #{rvm} bundle exec rake websocket_rails:start_server"
 
-      execute "sudo service memcached restart", pty: true
     end
   end
 
