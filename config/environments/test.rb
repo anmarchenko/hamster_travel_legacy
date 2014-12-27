@@ -33,4 +33,7 @@ Travel::Application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
+
+  # Comment this if you do not have memcached installed
+  config.cache_store = :dalli_store
 end
