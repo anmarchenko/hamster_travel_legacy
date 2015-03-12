@@ -126,14 +126,14 @@
                                     <% unless transfer.start_time.blank? %>
                                         <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
                                         <%= docx_text(fontSize: fontSize, prespace: true) do %>
-                                        <%= t('.departure')%> <%= transfer.start_time.in_time_zone('Moscow').strftime('%H:%M %d.%m.%Y') %>
+                                        <%= t('.departure')%> <%= transfer.start_time.strftime('%H:%M %d.%m.%Y') %>
                                         <% end %>
                                         <% end %>
                                     <% end %>
                                     <% unless transfer.end_time.blank? %>
                                         <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
                                         <%= docx_text(fontSize: fontSize, prespace: true) do %>
-                                        <%= t('.arrival')%> <%= transfer.end_time.in_time_zone('Moscow').strftime('%H:%M %d.%m.%Y') %>
+                                        <%= t('.arrival')%> <%= transfer.end_time.strftime('%H:%M %d.%m.%Y') %>
                                         <% end %>
                                         <% end %>
                                     <% end %>
