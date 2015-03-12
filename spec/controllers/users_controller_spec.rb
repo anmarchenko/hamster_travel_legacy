@@ -144,5 +144,17 @@ describe UsersController do
     end
   end
 
+  describe '#upload_photo' do
+    login_user
+
+    let(:file) {fixture_file_upload("#{::Rails.root}/spec/fixtures/files/cat.jpg", 'image/jpeg')}
+
+    it 'uploads trip photo' do
+      post 'upload_photo', id: subject.current_user.id, user: {image: file}, format: :js
+      expect(response).to be_success
+      expect(assigns(:user).image).not_to be_blank
+    end
+  end
+
 
 end
