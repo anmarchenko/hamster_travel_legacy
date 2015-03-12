@@ -26,10 +26,10 @@
 
   %p{'ng-show' => '!!transfer.start_time'}
     = t('trips.show.departure')
-    {{transfer.start_time | date:'dd.MM.yyyy HH:mm'}}
+    {{transfer.start_time | date:'dd.MM.yyyy HH:mm':'UTC'}}
 
   %p{'ng-show' => '!!transfer.end_time'}
     = t('trips.show.arrival')
-    {{transfer.end_time | date:'dd.MM.yyyy HH:mm'}}
+    {{transfer.end_time | date:'dd.MM.yyyy HH:mm':'UTC'}}
 
   %p{'ng-show' => '!!transfer.comment', class: 'travel-text text-italic' } {{transfer.comment}}

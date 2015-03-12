@@ -307,7 +307,7 @@ angular.module('ui.bootstrap.datetimepicker', [])
 
           setTime: function (unixDate) {
             var tempDate = new Date(unixDate);
-            var newDate = new Date(tempDate.getTime() + (tempDate.getTimezoneOffset() * 60000));
+            var newDate = new Date(tempDate.getTime());
             if (configuration.dropdownSelector) {
               jQuery(configuration.dropdownSelector).dropdown('toggle');
             }
@@ -319,9 +319,9 @@ angular.module('ui.bootstrap.datetimepicker', [])
           }
         };
 
-        var getUTCTime = function () {
+        var getTime = function () {
           var tempDate = (scope.ngModel ? moment(scope.ngModel).toDate() : new Date());
-          return tempDate.getTime() - (tempDate.getTimezoneOffset() * 60000);
+          return tempDate.getTime();
         };
 
         scope.changeView = function (viewName, unixDate, event) {
@@ -335,10 +335,10 @@ angular.module('ui.bootstrap.datetimepicker', [])
           }
         };
 
-        scope.changeView(configuration.startView, getUTCTime());
+        scope.changeView(configuration.startView, getTime());
 
         scope.$watch('ngModel', function () {
-          scope.changeView(scope.data.currentView, getUTCTime());
+          scope.changeView(scope.data.currentView, getTime());
         });
       }
     };

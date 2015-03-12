@@ -64,8 +64,8 @@ module Travels
     def as_json(*args)
       json = super(except: [:_id])
       json['id'] = id.to_s
-      json['start_time'] = start_time.try(:strftime, '%Y-%m-%dT%H:%MZ')
-      json['end_time'] = end_time.try(:strftime, '%Y-%m-%dT%H:%MZ')
+      json['start_time'] = start_time.try(:strftime, '%Y-%m-%dT%H:%M%Z')
+      json['end_time'] = end_time.try(:strftime, '%Y-%m-%dT%H:%M%Z')
       json['type_icon'] = type_icon
       json
     end
