@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  include Concerns::ImageUploading
 
   before_filter :authenticate_user!, only: [:edit, :update, :upload_photo]
   before_filter :find_user
@@ -17,18 +18,7 @@ class UsersController < ApplicationController
   end
 
   def upload_photo
-    @user.image = user_params[:image]
-    if @user.image && @user.valid?
-      # crop before save
-      job = @user.image.convert("-crop #{params[:w]}x#{params[:h]}+#{params[:x]}+#{params[:y]}") rescue nil
-      if job
-        job.apply
-        @user.image = job.content
-        @user.image = @user.image.thumb('100x100')
-      end
-    end
-
-    @user.save
+    save_image @user, user_params[:image], '100x100'
 
     respond_to do |format|
       format.js

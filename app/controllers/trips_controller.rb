@@ -1,5 +1,7 @@
 class TripsController < ApplicationController
 
+  include Concerns::ImageUploading
+
   before_filter :authenticate_user!, only: [:edit, :update, :new, :create, :destroy, :upload_photo]
   before_filter :find_trip, only: [:show, :edit, :update, :destroy, :upload_photo]
   before_filter :find_original_trip, only: [:new, :create]
@@ -28,19 +30,7 @@ class TripsController < ApplicationController
   end
 
   def upload_photo
-    @trip.image = params_trip[:image]
-    if @trip.image && @trip.valid?
-      # crop before save
-      job = @trip.image.convert("-crop #{params[:w]}x#{params[:h]}+#{params[:x]}+#{params[:y]}") rescue nil
-      if job
-        job.apply
-        @trip.image = job.content
-        @trip.image = @trip.image.thumb('300x300')
-      end
-    end
-
-    @trip.save
-
+    save_image @trip, params_trip[:image], '300x300'
     respond_to do |format|
       format.js
     end
