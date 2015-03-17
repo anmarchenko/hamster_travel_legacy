@@ -538,7 +538,7 @@ describe TripsController do
     let(:file) {fixture_file_upload("#{::Rails.root}/spec/fixtures/files/cat.jpg", 'image/jpeg')}
 
     it 'uploads trip photo' do
-      post 'upload_photo', id: trip.id, travels_trip: {image: file}, format: :js
+      post 'upload_photo', id: trip.id, travels_trip: {image: file}, w: 10, h: 10, x: 10, y: 10, format: :js
       expect(response).to be_success
       expect(assigns(:trip).image).not_to be_blank
     end
