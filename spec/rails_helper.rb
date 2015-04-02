@@ -16,11 +16,14 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     DatabaseCleaner[:mongoid].strategy = :truncation
+    DatabaseCleaner[:active_record].strategy = :transaction
     begin
       DatabaseCleaner[:mongoid].start
+      DatabaseCleaner[:active_record].start
       FactoryGirl.lint
     ensure
       DatabaseCleaner[:mongoid].clean
+      DatabaseCleaner[:active_record].clean
       FactoryGirl.create_list(:country, 5)
     end
   end

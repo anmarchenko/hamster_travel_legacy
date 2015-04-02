@@ -30,11 +30,16 @@ class CreateUsers < ActiveRecord::Migration
       t.string :home_town_code
       # localized text
       t.string :home_town_text
+
+      # locale
       t.string :locale
+      # photo
       t.string :image_uid
 
+      # old mongo id
       t.string :mongo_id
 
+      # timestamps
       t.timestamp :created_at
       t.timestamp :updated_at
     end
