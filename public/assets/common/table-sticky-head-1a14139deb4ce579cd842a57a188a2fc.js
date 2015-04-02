@@ -1,0 +1,1 @@
+(function(){$(function(){return $(".fixed-head").stickyTableHeaders({fixedOffset:$(".navbar")})})}).call(this);

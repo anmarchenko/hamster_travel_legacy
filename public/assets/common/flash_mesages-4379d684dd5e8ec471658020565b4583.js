@@ -1,0 +1,1 @@
+(function(){$(function(){return $.fn.Delay(function(){return $("#flash-alert-notice").fadeOut()},3e3)})}).call(this);

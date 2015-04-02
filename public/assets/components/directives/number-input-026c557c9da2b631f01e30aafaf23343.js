@@ -1,0 +1,1 @@
+(function(){angular.module("travel-components").directive("onlydigits",function(){return{require:"ngModel",link:function(e,n,r,t){var i;return i=function(e){var n;return n=e.replace(/[^0-9]/g,""),n!==e&&(t.$setViewValue(n),t.$render()),n},t.$parsers.push(i)}}})}).call(this);

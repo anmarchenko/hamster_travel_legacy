@@ -1,0 +1,1 @@
+(function(){$(function(){return $(".show-column-checkboxes").affix({offset:{top:function(){return $("header").outerHeight(!0)+$(".trip-header").outerHeight(!0)},bottom:function(){return $("footer").outerHeight(!0)}}})})}).call(this);
