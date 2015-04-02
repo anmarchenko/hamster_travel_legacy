@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-namespace :db do
+namespace :mongodb do
   desc 'migrations'
   task :migrate, [] => :environment do
 

@@ -233,6 +233,7 @@ GEM
     optionable (0.2.0)
     origin (2.1.1)
     orm_adapter (0.5.0)
+    pg (0.18.1)
     polyglot (0.3.5)
     puma (2.9.0)
       rack (>= 1.1, < 2.0)
@@ -382,6 +383,7 @@ DEPENDENCIES
   launchy
   minitest
   mongoid (~> 4.0.0)
+  pg
   puma
   rack-cache
   rails (= 4.1.0)
