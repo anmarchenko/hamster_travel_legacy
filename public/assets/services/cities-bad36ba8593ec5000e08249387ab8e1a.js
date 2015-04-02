@@ -1,1 +1,0 @@
-(function(){angular.module("travel-services").factory("City",["railsResourceFactory",function(i){return i({url:"/api/cities",name:"city"})}])}).call(this);

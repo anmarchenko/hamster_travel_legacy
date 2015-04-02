@@ -1,1 +1,0 @@
-!function(n){angular.module("rails").factory("RailsResourceInjector",["$injector",function(e){function t(t){return t?angular.isString(t)?e.get(t):t:n}function r(r){return r?e.instantiate(t(r)):n}function i(e){return angular.isObject(e)?e:e?r(e):n}return{createService:r,getService:i,getDependency:t}}])}();

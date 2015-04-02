@@ -1,1 +1,0 @@
-!function(){angular.module("rails").factory("railsUrlBuilder",["$interpolate",function(n){return function(r){var t;return angular.isFunction(r)||angular.isUndefined(r)?r:(-1===r.indexOf(n.startSymbol())&&(r=r+"/"+n.startSymbol()+"id"+n.endSymbol()),t=n(r),function(n){return r=t(n),"/"===r.charAt(r.length-1)&&(r=r.substr(0,r.length-1)),r})}}])}();

@@ -1,1 +1,0 @@
-(function(){$(function(){return $(".selectpicker").selectpicker()})}).call(this);

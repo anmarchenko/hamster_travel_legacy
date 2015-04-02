@@ -1,1 +1,0 @@
-(function(){$(function(){return $("#worldmap").vectorMap({map:"world_mill_en"})})}).call(this);
