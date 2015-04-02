@@ -9,17 +9,18 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.raise_errors_for_deprecations!
+  I18n.locale = :en
 
   config.include Devise::TestHelpers, :type => :controller
   config.extend ControllerMacros, :type => :controller
 
   config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner[:mongoid].strategy = :truncation
     begin
-      DatabaseCleaner.start
+      DatabaseCleaner[:mongoid].start
       FactoryGirl.lint
     ensure
-      DatabaseCleaner.clean
+      DatabaseCleaner[:mongoid].clean
       FactoryGirl.create_list(:country, 5)
     end
   end

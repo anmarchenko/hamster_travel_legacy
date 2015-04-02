@@ -1,5 +1,5 @@
 ru:
-  mongoid:
+  activerecord:
     attributes:
       user:
         email: Электронный адрес

@@ -38,8 +38,17 @@ module Travels
 
     field :private, type: Boolean, default: false
 
-    belongs_to :author_user, class_name: 'User', inverse_of: :authored_trips
-    has_and_belongs_to_many :users, inverse_of: nil
+    # TODO FIX ME
+    #belongs_to :author_user, class_name: 'User', inverse_of: :authored_trips
+    #has_and_belongs_to_many :users, inverse_of: nil
+
+    def author_user
+      User.where(mongo_id: self.attributes[:author_user_id].to_s).first
+    end
+
+    def users
+      [] #User.where(mongo_id: self.)
+    end
 
     embeds_many :days, class_name: 'Travels::Day'
 
@@ -89,8 +98,9 @@ module Travels
       end
     end
 
+    # TODO FIX ME
     def include_user(user)
-      user_ids.include?(user.id)
+      self.attributes[:user_ids].include?(user.id)
     end
 
     # private tasks can't be seen or cloned by user not participating in trip
