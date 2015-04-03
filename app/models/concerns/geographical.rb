@@ -21,7 +21,6 @@ module Concerns
       field :name, type: String
       field :name_ru, type: String
       field :name_en, type: String
-      field :name_search, type: Array
 
       field :latitude, type: Float
       field :longitude, type: Float
@@ -39,8 +38,6 @@ module Concerns
 
       index({geonames_code: 1}, {unique: true})
       index({population: -1})
-
-      before_save :populate_search_fields
     end
 
     def method_missing(*args)
@@ -87,10 +84,6 @@ module Concerns
                         district_code: self.district_code,
                         region_code: self.region_code,
                         country_code: self.country_code).first
-    end
-
-    def populate_search_fields
-      self.name_search = [self.name, self.name_en, self.name_ru]
     end
 
     def update_from_geonames_string(str)

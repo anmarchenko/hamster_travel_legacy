@@ -19,6 +19,7 @@ class TripsController < ApplicationController
       @trips = Travels::Trip.where(private: false)
     end
     @trips = @trips.order(status_code: :desc, start_date: :desc)
+    @trips = @trips.includes(:author_user)
     @trips = @trips.page(params[:page] || 1)
   end
 
@@ -74,7 +75,7 @@ class TripsController < ApplicationController
   end
 
   def find_trip
-    @trip = Travels::Trip.where(id: params[:id]).first
+    @trip = Travels::Trip.includes(:users, :author_user, {days: [{hotel: :links}, :activities, :transfers, :places, :expenses]}).where(id: params[:id]).first
     head 404 and return if @trip.blank?
   end
 
