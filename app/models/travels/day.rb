@@ -6,12 +6,8 @@ module Travels
     has_many :places, class_name: 'Travels::Place'
     has_many :transfers, class_name: 'Travels::Transfer'
     has_one :hotel, class_name: 'Travels::Hotel'
-    # embeds_many :activities, class_name: 'Travels::Activity'
+    has_many :activities, class_name: 'Travels::Activity'
     has_many :expenses, class_name: 'Travels::Expense', as: :expendable
-
-    def activities
-      []
-    end
 
     default_scope ->{order(date_when: :asc)}
 

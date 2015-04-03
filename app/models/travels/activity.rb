@@ -1,17 +1,11 @@
 module Travels
 
-  class Activity
+  class Activity < ActiveRecord::Base
 
-    include Mongoid::Document
     include Concerns::Ordered
 
-    embedded_in :day, class_name: 'Travels::Day'
+    belongs_to :day, class_name: 'Travels::Day'
 
-    field :name
-    field :price, type: Integer
-    field :comment
-
-    field :link_description
     def link_description
       return '' if self.link_url.blank?
       if !self.link_url.start_with?('http://') && !self.link_url.start_with?('https://')
@@ -19,7 +13,6 @@ module Travels
       end
       ExternalLink.new(url: link_url).description
     end
-    field :link_url
 
     PERMITTED = %w(name price comment link_description link_url order_index id)
 

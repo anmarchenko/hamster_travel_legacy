@@ -11,10 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150403104221) do
+ActiveRecord::Schema.define(version: 20150403110209) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activities", force: true do |t|
+    t.integer "order_index"
+    t.string  "name"
+    t.integer "price"
+    t.text    "comment"
+    t.string  "link_description"
+    t.text    "link_url"
+    t.string  "mongo_id"
+    t.integer "day_id"
+  end
+
+  add_index "activities", ["day_id"], name: "index_activities_on_day_id", using: :btree
 
   create_table "days", force: true do |t|
     t.string  "mongo_id"
