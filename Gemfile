@@ -4,7 +4,6 @@ gem 'rails', '4.1.0'
 gem 'russian'
 
 # DB
-gem 'mongoid', '~> 4.0.0'
 gem 'pg'
 
 # pagination
@@ -69,7 +68,7 @@ gem 'zip-zip' # will load compatibility for old rubyzip API.
 
 # redis for in-memory store
 gem 'hiredis'
-gem 'redis', :require => ["redis",   "redis/connection/hiredis"]
+gem 'redis', :require => ["redis", "redis/connection/hiredis"]
 
 # image uploading
 gem 'dragonfly'

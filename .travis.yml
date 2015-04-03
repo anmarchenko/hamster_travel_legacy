@@ -2,6 +2,9 @@ language: ruby
 rvm:
   - 2.1.2
 services:
-  - mongodb
   - redis-server
   - memcached
+script:
+  - RAILS_ENV=test bundle exec rake --trace db:migrate
+before_script:
+  - psql -c 'create database travel_planner_test;' -U igendou
