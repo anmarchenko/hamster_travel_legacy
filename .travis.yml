@@ -6,5 +6,6 @@ services:
   - memcached
 script:
   - RAILS_ENV=test bundle exec rake --trace db:migrate
+  - bundle exec rspec
 before_script:
   - psql -c 'create database travel_planner_test;' -U postgres
