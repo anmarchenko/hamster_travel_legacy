@@ -7,4 +7,4 @@ services:
 script:
   - RAILS_ENV=test bundle exec rake --trace db:migrate
 before_script:
-  - psql -c 'create database travel_planner_test;' -U igendou
+  - psql -c 'create database travel_planner_test;' -U postgres

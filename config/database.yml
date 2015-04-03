@@ -11,7 +11,7 @@ test:
   encoding: unicode
   database: travel_planner_test
   pool: 5
-  username: igendou
+  username: postgres
   password:
 
 production:
