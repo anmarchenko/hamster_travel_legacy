@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150403093232) do
+ActiveRecord::Schema.define(version: 20150403095259) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,15 @@ ActiveRecord::Schema.define(version: 20150403093232) do
   end
 
   add_index "expenses", ["expendable_id", "expendable_type"], name: "index_expenses_on_expendable_id_and_expendable_type", using: :btree
+
+  create_table "places", force: true do |t|
+    t.string  "city_code"
+    t.string  "city_text"
+    t.string  "mongo_id"
+    t.integer "day_id"
+  end
+
+  add_index "places", ["day_id"], name: "index_places_on_day_id", using: :btree
 
   create_table "trips", force: true do |t|
     t.string   "name"

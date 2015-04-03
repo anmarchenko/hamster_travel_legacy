@@ -1,11 +1,7 @@
 module Travels
-  class Place
-    include Mongoid::Document
+  class Place < ActiveRecord::Base
 
-    embedded_in :day, class_name: 'Travels::Day'
-
-    field :city_code
-    field :city_text
+    belongs_to :day, class_name: 'Travels::Day'
 
     def city
       ::Geo::City.by_geonames_code(city_code)
