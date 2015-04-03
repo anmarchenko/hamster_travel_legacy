@@ -1,13 +1,8 @@
 module Travels
 
-  class Expense
+  class Expense < ActiveRecord::Base
 
-    include Mongoid::Document
-
-    embedded_in :expendable, polymorphic: true
-
-    field :price, type: Integer
-    field :name
+    belongs_to :expendable, polymorphic: true
 
     def is_empty?
       return price.blank? && name.blank?

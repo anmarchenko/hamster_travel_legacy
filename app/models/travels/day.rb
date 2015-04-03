@@ -7,7 +7,7 @@ module Travels
     # embeds_many :transfers, class_name: 'Travels::Transfer'
     # embeds_one :hotel, class_name: 'Travels::Hotel'
     # embeds_many :activities, class_name: 'Travels::Activity'
-    # embeds_many :expenses, class_name: 'Travels::Expense', as: :expendable
+    has_many :expenses, class_name: 'Travels::Expense', as: :expendable
 
     def places
       []
@@ -21,9 +21,8 @@ module Travels
     def activities
       []
     end
-    def expenses
-      []
-    end
+
+    default_scope ->{order(date_when: :asc)}
 
     before_save :init
 
