@@ -35,11 +35,13 @@ describe Api::TripsController do
 
   describe '#update' do
     let(:trip_without_user) {FactoryGirl.create :trip}
-    let(:trip) {FactoryGirl.create :trip, users: [subject.current_user]}
-    let(:trip_params) { { trip: {comment: 'new_comment', archived: true, budget_for: 2} } }
 
     context 'when user is logged in' do
       login_user
+
+      let(:trip) {FactoryGirl.create :trip, users: [subject.current_user]}
+      let(:trip_params) { { trip: {comment: 'new_comment', archived: true, budget_for: 2} } }
+
       context 'and when there is trip' do
 
         context 'and when input params are valid' do
@@ -71,6 +73,9 @@ describe Api::TripsController do
     end
 
     context 'when no logged user' do
+      let(:trip) {FactoryGirl.create :trip}
+      let(:trip_params) { { trip: {comment: 'new_comment', archived: true, budget_for: 2} } }
+      
       it 'return unauthorized' do
         put 'update', trip_params.merge(id: trip.id, format: :json)
         expect(response).to have_http_status 401

@@ -1,6 +1,8 @@
 module Travels
   class Place < ActiveRecord::Base
 
+    include Concerns::Copyable
+
     belongs_to :day, class_name: 'Travels::Day'
 
     def city

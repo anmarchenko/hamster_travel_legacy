@@ -15,12 +15,12 @@ RSpec.configure do |config|
   config.extend ControllerMacros, :type => :controller
 
   config.before(:suite) do
-    DatabaseCleaner[:active_record].strategy = :transaction
+    DatabaseCleaner.strategy = :truncation
     begin
-      DatabaseCleaner[:active_record].start
+      DatabaseCleaner.start
       FactoryGirl.lint
     ensure
-      DatabaseCleaner[:active_record].clean
+      DatabaseCleaner.clean
       FactoryGirl.create_list(:country, 5)
     end
   end

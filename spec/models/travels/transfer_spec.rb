@@ -45,8 +45,8 @@ describe Travels::Transfer do
       expect(transfer_json['id']).to be_a String
       expect(transfer_json['id']).to eq(transfer_flight.id.to_s)
       expect(transfer_json['type_icon']).to eq(transfer_flight.type_icon)
-      expect(transfer_json['start_time']).to eq(transfer_flight.start_time.try(:strftime, '%Y-%m-%dT%H:%M%Z'))
-      expect(transfer_json['end_time']).to eq(transfer_flight.end_time.try(:strftime, '%Y-%m-%dT%H:%M%Z'))
+      expect(transfer_json['start_time']).to eq(transfer_flight.start_time.try(:strftime, '%Y-%m-%dT%H:%M+00:00'))
+      expect(transfer_json['end_time']).to eq(transfer_flight.end_time.try(:strftime, '%Y-%m-%dT%H:%M+00:00'))
       expect(transfer_json['company']).to eq(transfer_flight.company)
     end
   end

@@ -1,5 +1,6 @@
 module Travels
   class Hotel < ActiveRecord::Base
+    include Concerns::Copyable
 
     belongs_to :day, class_name: 'Travels::Day'
     has_many :links, class_name: 'ExternalLink', as: :linkable
@@ -23,6 +24,10 @@ module Travels
         return false unless link.url.blank?
       end
       return true
+    end
+
+    def copied_relations
+      [:links]
     end
 
   end

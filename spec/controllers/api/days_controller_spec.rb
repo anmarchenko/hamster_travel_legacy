@@ -38,12 +38,13 @@ describe Api::DaysController do
 
   describe '#create' do
     let(:trip_without_user) {FactoryGirl.create :trip}
-    let(:trip) {FactoryGirl.create :trip, users: [subject.current_user]}
-    let(:day) {trip.days.first}
-    let(:days_params) { { days: {'1' => {id: day.id.to_s, comment: 'new_day_comment', add_price: 12345} } } }
 
     context 'when user is logged in' do
       login_user
+
+      let(:trip) {FactoryGirl.create :trip, users: [subject.current_user]}
+      let(:day) {trip.days.first}
+      let(:days_params) { { days: {'1' => {id: day.id.to_s, comment: 'new_day_comment'} } } }
 
       context 'and when there is trip' do
 
@@ -53,7 +54,6 @@ describe Api::DaysController do
             expect(response).to have_http_status 200
             updated_day = trip.reload.days.first
             expect(updated_day.comment).to eq 'new_day_comment'
-            expect(updated_day.add_price).to eq 12345
           end
         end
 
@@ -76,6 +76,9 @@ describe Api::DaysController do
     end
 
     context 'when no logged user' do
+      let(:trip) {FactoryGirl.create :trip}
+      let(:day) {trip.days.first}
+      let(:days_params) { { days: {'1' => {id: day.id.to_s, comment: 'new_day_comment'} } } }
       it 'redirects to sign in' do
         post 'create', days_params.merge(trip_id: trip.id), format: :json
         expect(response).to redirect_to '/users/sign_in'
@@ -95,7 +98,6 @@ describe Api::DaysController do
           get 'show', trip_id: trip.id.to_s, id: day.id, format: :json
           expect(response).to have_http_status 200
           json = JSON.parse(response.body)
-          expect(json['add_price']).to eq(day.add_price)
           expect(json['comment']).to eq(day.comment)
           expect(json['transfers'].count).to eq(day.transfers.count)
         end
@@ -114,7 +116,6 @@ describe Api::DaysController do
         get 'show', trip_id: trip.id.to_s, id: day.id, format: :json
         expect(response).to have_http_status 200
         json = JSON.parse(response.body)
-        expect(json['add_price']).to eq(day.add_price)
         expect(json['comment']).to eq(day.comment)
         expect(json['transfers'].count).to eq(day.transfers.count)
       end
@@ -123,12 +124,13 @@ describe Api::DaysController do
 
   describe '#update' do
     let(:trip_without_user) {FactoryGirl.create :trip}
-    let(:trip) {FactoryGirl.create :trip, users: [subject.current_user]}
-    let(:day) {trip.days.first}
-    let(:days_params) { { days: {id: day.id.to_s, comment: 'new_day_comment', add_price: 12345} } }
 
     context 'when user is logged in' do
       login_user
+
+      let(:trip) {FactoryGirl.create :trip, users: [subject.current_user]}
+      let(:day) {trip.days.first}
+      let(:days_params) { { days: {id: day.id.to_s, comment: 'new_day_comment'} } }
 
       context 'and when there is trip' do
 
@@ -138,7 +140,6 @@ describe Api::DaysController do
             expect(response).to have_http_status 200
             updated_day = trip.reload.days.first
             expect(updated_day.comment).to eq 'new_day_comment'
-            expect(updated_day.add_price).to eq 12345
           end
         end
 
@@ -161,6 +162,9 @@ describe Api::DaysController do
     end
 
     context 'when no logged user' do
+      let(:trip) {FactoryGirl.create :trip}
+      let(:day) {trip.days.first}
+      let(:days_params) { { days: {id: day.id.to_s, comment: 'new_day_comment'} } }
       it 'redirects to sign in' do
         put 'update', days_params.merge(trip_id: trip.id, id: day.id), format: :json
         expect(response).to redirect_to '/users/sign_in'

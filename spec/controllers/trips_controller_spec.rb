@@ -184,13 +184,11 @@ describe TripsController do
               post 'create', params.merge(copy_from: original.id)
               trip = assigns(:trip)
               expect(trip.days.first.comment).to eq original.days.first.comment
-              expect(trip.days.first.add_price).to eq original.days.first.add_price
               expect(trip.days.first.date_when).to eq params[:travels_trip]['start_date']
               expect(trip.days.first.transfers.count).to eq original.days.first.transfers.count
               expect(trip.days.first.transfers.first.price).to eq original.days.first.transfers.first.price
 
               expect(trip.days.last.comment).to eq original.days.last.comment
-              expect(trip.days.last.add_price).to eq original.days.last.add_price
               expect(trip.days.last.date_when).to eq params[:travels_trip]['end_date']
             end
           end
@@ -200,12 +198,10 @@ describe TripsController do
               post 'create', params.merge(copy_from: original_private.id)
               trip = assigns(:trip)
               expect(trip.days.first.comment).to be_nil
-              expect(trip.days.first.add_price).to be_nil
               expect(trip.days.first.date_when).to eq params[:travels_trip]['start_date']
               expect(trip.days.first.transfers.count).to eq 0
 
               expect(trip.days.last.comment).to be_nil
-              expect(trip.days.last.add_price).to be_nil
               expect(trip.days.last.date_when).to eq params[:travels_trip]['end_date']
             end
           end
@@ -215,12 +211,10 @@ describe TripsController do
               post 'create', params.merge(copy_from: 'fdsfdsfdfds')
               trip = assigns(:trip)
               expect(trip.days.first.comment).to be_nil
-              expect(trip.days.first.add_price).to be_nil
               expect(trip.days.first.date_when).to eq params[:travels_trip]['start_date']
               expect(trip.days.first.transfers.count).to eq 0
 
               expect(trip.days.last.comment).to be_nil
-              expect(trip.days.last.add_price).to be_nil
               expect(trip.days.last.date_when).to eq params[:travels_trip]['end_date']
             end
           end
@@ -233,13 +227,11 @@ describe TripsController do
               post 'create', ps
               trip = assigns(:trip)
               expect(trip.days.first.comment).to eq original.days.first.comment
-              expect(trip.days.first.add_price).to eq original.days.first.add_price
               expect(trip.days.first.date_when).to eq params[:travels_trip]['start_date']
               expect(trip.days.first.transfers.count).to eq original.days.first.transfers.count
               expect(trip.days.first.transfers.first.price).to eq original.days.first.transfers.first.price
 
               expect(trip.days.last.comment).to be_nil
-              expect(trip.days.last.add_price).to be_nil
               expect(trip.days.last.date_when).to eq params[:travels_trip]['end_date']
             end
           end
@@ -252,13 +244,11 @@ describe TripsController do
               post 'create', ps
               trip = assigns(:trip)
               expect(trip.days.first.comment).to eq original.days.first.comment
-              expect(trip.days.first.add_price).to eq original.days.first.add_price
               expect(trip.days.first.date_when).to eq params[:travels_trip]['start_date']
               expect(trip.days.first.transfers.count).to eq original.days.first.transfers.count
               expect(trip.days.first.transfers.first.price).to eq original.days.first.transfers.first.price
 
               expect(trip.days.last.comment).to eq original.days[-2].comment
-              expect(trip.days.last.add_price).to eq original.days[-2].add_price
               expect(trip.days.last.date_when).to eq params[:travels_trip]['end_date']
             end
           end
@@ -498,7 +488,7 @@ describe TripsController do
         it 'marks trip as archived' do
           delete 'destroy', id: trip.id
           expect(Travels::Trip.where(id: trip.id).first).to be_nil
-          expect(Travels::Trip.where(id: trip.id, archived: true).first).not_to be_blank
+          expect(Travels::Trip.unscoped.where(id: trip.id, archived: true).first).not_to be_blank
           expect(response).to redirect_to trips_path(my: true)
         end
       end

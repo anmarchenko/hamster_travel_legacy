@@ -12,12 +12,12 @@ FactoryGirl.define do
     trait :with_filled_days do
       after :create do |trip|
         trip.days.each_with_index do |day, index|
-          day.set(comment: "Day #{index}")
-          day.set(add_price: rand(10000))
-          2.times {day.transfers.create(build(:transfer, :with_destinations).attributes)}
+          day.comment = "Day #{index}"
+          2.times { |index| day.transfers.create(build(:transfer, :with_destinations, order_index: index).attributes)}
           5.times { |index| day.activities.create(build(:activity, :with_data, order_index: index).attributes)}
           day.places.create(build(:place, :with_data).attributes)
-          day.hotel = build(:hotel, :with_data).attributes
+          day.hotel = Travels::Hotel.new(build(:hotel, :with_data).attributes)
+          day.hotel.links = [FactoryGirl.build(:external_link)]
           3.times {day.expenses.create(build(:expense, :with_data).attributes)}
           day.save validate: false
         end
@@ -27,9 +27,9 @@ FactoryGirl.define do
     trait :with_transfers do
       after :create do |trip|
         trip.days.each do |day|
-          day.transfers.create(build(:transfer).attributes)
-          day.transfers.create(build(:transfer, :with_destinations).attributes)
-          day.transfers.create(build(:transfer, :flight).attributes)
+          day.transfers.create(build(:transfer, order_index: 0).attributes)
+          day.transfers.create(build(:transfer, :with_destinations, order_index: 1).attributes)
+          day.transfers.create(build(:transfer, :flight, order_index: 2).attributes)
         end
       end
     end
@@ -100,9 +100,6 @@ FactoryGirl.define do
       name {'Hotel'}
       price {rand(10000)}
       comment {'Comment'}
-      after :build do |hotel|
-        hotel.links = [FactoryGirl.create(:external_link)]
-      end
     end
   end
 

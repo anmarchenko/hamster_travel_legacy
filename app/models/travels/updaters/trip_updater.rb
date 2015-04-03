@@ -25,7 +25,8 @@ module Travels
           new_trip.days.each_with_index do |day, index|
             original_day = (trip.days || [])[index]
             next if original_day.blank?
-            day.attributes = original_day.attributes_for_clone.merge(date_when: day.date_when)
+            original_day.date_when = day.date_when
+            day.copy(original_day, true)
           end
           new_trip.save # duplicate save - try to avoid
         end
@@ -44,7 +45,7 @@ module Travels
             process_nested(day.hotel.links, day_hash[:hotel][:links] || [])
           end
 
-          day.update_attributes(comment: day_hash[:comment], add_price: day_hash[:add_price])
+          day.update_attributes(comment: day_hash[:comment])
 
           process_nested(day.places, day_hash[:places] || [])
 
@@ -78,7 +79,7 @@ module Travels
         collection.each do |item|
           to_delete << item.id if params.select{|v| v[:id] == item.id.to_s}.count == 0
         end
-        collection.where(:id.in => to_delete).destroy
+        collection.where(:id => to_delete).destroy_all
         params.each do |item_hash|
           item = collection.where(id: item_hash.delete(:id)).first
           # TODO remove - only for client side

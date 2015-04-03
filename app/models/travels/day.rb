@@ -1,6 +1,8 @@
 module Travels
   class Day < ActiveRecord::Base
 
+    include Concerns::Copyable
+
     belongs_to :trip, class_name: 'Travels::Trip'
 
     has_many :places, class_name: 'Travels::Place'
@@ -48,15 +50,8 @@ module Travels
       json
     end
 
-    def attributes_for_clone
-      res = attributes
-      # clean attributes
-      (res['places'] || []).each{ |h| h.reject!{|k, _| !Travels::Place.fields.keys.include?(k)} }
-      (res['transfers'] || []).each{ |h| h.reject!{|k, _| !Travels::Transfer.fields.keys.include?(k)} }
-      (res['activities'] || []).each{ |h| h.reject!{|k, _| !Travels::Activity.fields.keys.include?(k)} }
-      (res['expenses'] || []).each{ |h| h.reject!{|k, _| !Travels::Expense.fields.keys.include?(k)} }
-      (res['hotel'] || {}).reject! {|k, _| !(Travels::Hotel.fields.keys + ['links']).include?(k)}
-      res
+    def copied_relations
+      [:places, :transfers, :hotel, :activities, :expenses]
     end
 
   end

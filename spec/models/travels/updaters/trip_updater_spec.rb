@@ -75,8 +75,7 @@ describe Travels::Updaters::TripUpdater do
     context 'when params have day attributes' do
       let(:params) { {'1' => {
                                 id: day.id.to_s,
-                                comment: 'new_day_comment',
-                                add_price: 12345
+                                comment: 'new_day_comment'
                               }
                     }
       }
@@ -85,16 +84,14 @@ describe Travels::Updaters::TripUpdater do
         updated_day = first_day_of(trip)
         expect(updated_day.id).to eq day.id
         expect(updated_day.comment).to eq 'new_day_comment'
-        expect(updated_day.add_price).to eq 12345
       end
 
       it 'updates day data even if day attributes are empty' do
-        params['1'].delete :add_price
+        params['1'].delete :comment
         update_trip_days trip, params
         updated_day = first_day_of trip
         expect(updated_day.id).to eq day.id
-        expect(updated_day.comment).to eq 'new_day_comment'
-        expect(updated_day.add_price).to be_nil
+        expect(updated_day.comment).to eq nil
       end
     end
 

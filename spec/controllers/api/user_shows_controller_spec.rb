@@ -1,10 +1,11 @@
 describe Api::UserShowsController do
   describe '#show' do
     let(:trip_without_user) {FactoryGirl.create :trip}
-    let(:trip) {FactoryGirl.create :trip, users: [subject.current_user]}
 
     context 'when user is logged in' do
       login_user
+
+      let(:trip) {FactoryGirl.create :trip, users: [subject.current_user]}
       let(:old_user_id){subject.current_user.id.to_s}
 
       context 'and when there is trip' do
@@ -64,6 +65,7 @@ describe Api::UserShowsController do
     end
 
     context 'when no logged user' do
+      let(:trip) {FactoryGirl.create :trip}
       it 'redirects to sign in' do
         get 'show', id: trip.id.to_s, format: :json
         expect(response).to have_http_status 401

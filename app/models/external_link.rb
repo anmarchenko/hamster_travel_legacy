@@ -2,6 +2,8 @@ require 'uri'
 
 class ExternalLink < ActiveRecord::Base
 
+  include Concerns::Copyable
+
   belongs_to :linkable, polymorphic: true
 
   def description
@@ -14,7 +16,7 @@ class ExternalLink < ActiveRecord::Base
   end
 
   def as_json(*args)
-    json = super(except: [:_id])
+    json = super(except: [:linkable_id, :linkable_type, :mongo_id])
     json['id'] = id.to_s
     json
   end

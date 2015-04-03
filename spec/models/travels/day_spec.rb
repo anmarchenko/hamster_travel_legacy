@@ -26,16 +26,9 @@ describe Travels::Day do
     end
 
     context 'when commented day' do
-      before {day.set(comment: 'some comment')}
+      before {day.comment = 'some comment'}
       it 'is false' do
         expect(day).not_to be_is_empty
-      end
-    end
-
-    context 'when day has a price' do
-      before {day.set(add_price: rand(1000000))}
-      it 'is true beacause add_price is no longer used' do
-        expect(day).to be_is_empty
       end
     end
 
@@ -98,7 +91,7 @@ describe Travels::Day do
     end
 
     context 'when day has non empty hotel' do
-      before {day.hotel = FactoryGirl.build(:hotel, :with_data).attributes}
+      before {day.hotel = Travels::Hotel.new(FactoryGirl.build(:hotel, :with_data).attributes)}
       it 'is false' do
         expect(day).not_to be_is_empty
       end
@@ -139,10 +132,6 @@ describe Travels::Day do
 
       it 'has comment' do
         expect(day_json['comment']).to eq(day.comment)
-      end
-
-      it 'has price' do
-        expect(day_json['add_price']).to eq(day.add_price)
       end
 
       it 'has hotel' do
