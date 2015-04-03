@@ -1,5 +1,5 @@
 ru:
-  mongoid:
+  activerecord:
     attributes:
       travels/trip:
         name: Название

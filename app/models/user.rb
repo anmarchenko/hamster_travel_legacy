@@ -7,10 +7,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # TODO fix it
-  def authored_trips
-    #, class_name: 'Travels::Trip', inverse_of: :author_user
-    Travels::Trip.where(author_user_id: self.mongo_id)
-  end
+  has_many :authored_trips, class_name: 'Travels::Trip', inverse_of: :author_user
+  has_and_belongs_to_many :trips, class_name: 'Travels::Trip', inverse_of: :users, join_table: 'users_trips'
 
   # photo
   dragonfly_accessor :image
@@ -33,10 +31,6 @@ class User < ActiveRecord::Base
     '%s %s' % [first_name, last_name]
   end
 
-  # TODO fix it
-  def trips
-    Travels::Trip.where('user_ids' => mongo_id.to_s)
-  end
 
   def home_town
     Geo::City.where(geonames_code: home_town_code).first

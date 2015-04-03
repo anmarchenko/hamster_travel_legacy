@@ -18,7 +18,7 @@ class TripsController < ApplicationController
     else
       @trips = Travels::Trip.where(private: false)
     end
-    @trips = @trips.order_by(status_code: -1, start_date: -1)
+    @trips = @trips.order(status_code: :desc, start_date: :desc)
     @trips = @trips.page(params[:page] || 1)
   end
 

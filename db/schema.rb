@@ -11,10 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150402133911) do
+ActiveRecord::Schema.define(version: 20150403080919) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "trips", force: true do |t|
+    t.string   "name"
+    t.text     "short_description"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.boolean  "archived",          default: false
+    t.text     "comment"
+    t.integer  "budget_for",        default: 1
+    t.boolean  "private",           default: false
+    t.string   "image_uid"
+    t.string   "status_code",       default: "0_draft"
+    t.integer  "author_user_id"
+    t.string   "mongo_id"
+    t.datetime "updated_at"
+    t.datetime "created_at"
+  end
+
+  add_index "trips", ["author_user_id"], name: "index_trips_on_author_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email"
@@ -37,5 +56,13 @@ ActiveRecord::Schema.define(version: 20150402133911) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "users_trips", id: false, force: true do |t|
+    t.integer "trip_id"
+    t.integer "user_id"
+  end
+
+  add_index "users_trips", ["trip_id"], name: "index_users_trips_on_trip_id", using: :btree
+  add_index "users_trips", ["user_id"], name: "index_users_trips_on_user_id", using: :btree
 
 end

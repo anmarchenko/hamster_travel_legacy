@@ -1,8 +1,5 @@
 module Travels
-  class Trip
-
-    include Mongoid::Document
-    include Mongoid::Timestamps
+  class Trip < ActiveRecord::Base
 
     include Concerns::Copyable
 
@@ -25,41 +22,21 @@ module Travels
 
     paginates_per 9
 
-    field :name, type: String
-    field :short_description, type: String
-
-    field :start_date, type: Date
-    field :end_date, type: Date
-
-    field :archived, type: Boolean, default: false
-
-    field :comment
-    field :budget_for, type: Integer, default: 1
-
-    field :private, type: Boolean, default: false
+    # TODO FIX ME
+    has_and_belongs_to_many :users, class_name: 'User', inverse_of: :trips, join_table: 'users_trips'
+    belongs_to :author_user, class_name: 'User', inverse_of: :authored_trips
 
     # TODO FIX ME
-    #belongs_to :author_user, class_name: 'User', inverse_of: :authored_trips
-    #has_and_belongs_to_many :users, inverse_of: nil
-
-    def author_user
-      User.where(mongo_id: self.attributes[:author_user_id].to_s).first
+    #embeds_many :days, class_name: 'Travels::Day'
+    def days
+      []
     end
-
-    def users
-      [] #User.where(mongo_id: self.)
-    end
-
-    embeds_many :days, class_name: 'Travels::Day'
 
     dragonfly_accessor :image
     def image_url_or_default
       self.image.try(:remote_url) || 'https://s3.amazonaws.com/altmer-cdn/images/no-image.png'
     end
 
-    field :image_uid
-
-    field :status_code, default: StatusCodes::DRAFT
     def status_text
       StatusCodes::TYPE_TO_TEXT[status_code]
     end
@@ -75,7 +52,7 @@ module Travels
     validates_property :format, of: :image, in: [:jpeg, :jpg, :png, :bmp], case_sensitive: false,
                           message: "should be either .jpeg, .jpg, .png, .bmp", if: :image_changed?
 
-    default_scope ->{where(:archived.ne => true)}
+    default_scope ->{where(:archived => false)}
 
     after_save :update_plan
 
@@ -100,7 +77,7 @@ module Travels
 
     # TODO FIX ME
     def include_user(user)
-      self.attributes[:user_ids].include?(user.id)
+      self.users.include?(user)
     end
 
     # private tasks can't be seen or cloned by user not participating in trip
