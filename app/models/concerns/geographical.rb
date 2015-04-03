@@ -14,36 +14,6 @@ module Concerns
         Geo::Country.by_geonames_code(code)
     end
 
-    included do
-      field :geonames_code, type: String
-      field :geonames_modification_date, type: Date
-
-      field :name, type: String
-      field :name_ru, type: String
-      field :name_en, type: String
-
-      field :latitude, type: Float
-      field :longitude, type: Float
-
-      field :population, type: Integer
-
-      field :country_code, type: String
-      field :region_code, type: String
-      field :district_code, type: String
-      field :adm3_code, type: String
-      field :adm4_code, type: String
-      field :adm5_code, type: String
-
-      field :timezone, type: String
-
-      index({geonames_code: 1}, {unique: true})
-      index({population: -1})
-    end
-
-    def method_missing(*args)
-      nil
-    end
-
     def translated_name(locale = I18n.locale)
       self.send("name_#{locale}") || name
     end
@@ -115,7 +85,7 @@ module Concerns
 
       def find_by_term(term)
         term = Regexp.escape(term)
-        where('$or' => [ { name: /^#{term}/i }, { name_ru: /^#{term}/i }, { name_en: /^#{term}/i }]).order_by(population: -1)
+        where("name ILIKE ? OR name_ru ILIKE ? OR name_en ILIKE ?", "#{term}%", "#{term}%", "#{term}%").order(population: :desc)
       end
 
     end

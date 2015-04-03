@@ -1,7 +1,6 @@
 module Geo
-  class City
+  class City < ActiveRecord::Base
 
-    include Mongoid::Document
     include Concerns::Geographical
 
     module Statuses
@@ -12,18 +11,6 @@ module Geo
       ADM4_CENTER = 'adm4_center'
       ADM5_CENTER = 'adm5_center'
     end
-
-    field :status, type: String
-
-    field :country_text, type: String
-    field :country_text_ru, type: String
-    field :country_text_en, type: String
-
-    field :region_text, type: String
-    field :region_text_ru, type: String
-    field :region_text_en, type: String
-
-    field :denormalized, type: Boolean, default: false
 
     def translated_text(args = {with_region: true, with_country: true, locale: I18n.locale})
       text = translated_name(args[:locale])

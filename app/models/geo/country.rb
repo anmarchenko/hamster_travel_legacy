@@ -1,21 +1,7 @@
 module Geo
-  class Country
+  class Country < ActiveRecord::Base
 
-    include Mongoid::Document
     include Concerns::Geographical
-
-    field :iso_code, type: String
-    field :iso3_code, type: String
-    field :iso_numeric_code, type: String
-
-    field :area, type: Integer
-
-    field :currency_code, type: String
-    field :currency_text, type: String
-
-    field :languages, type: Array
-
-    field :continent, type: String
 
     def load_additional_info(str)
       values = Geo::Country.split_geonames_string(str)

@@ -1,7 +1,6 @@
 module Geo
-  class Region
+  class Region < ActiveRecord::Base
 
-    include Mongoid::Document
     include Concerns::Geographical
 
   end

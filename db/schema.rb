@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150403110209) do
+ActiveRecord::Schema.define(version: 20150403115024) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,117 @@ ActiveRecord::Schema.define(version: 20150403110209) do
 
   add_index "activities", ["day_id"], name: "index_activities_on_day_id", using: :btree
 
+  create_table "adm3s", force: true do |t|
+    t.string  "geonames_code"
+    t.date    "geonames_modification_date"
+    t.string  "name"
+    t.string  "name_ru"
+    t.string  "name_en"
+    t.float   "latitude"
+    t.float   "longitude"
+    t.integer "population"
+    t.string  "country_code"
+    t.string  "region_code"
+    t.string  "district_code"
+    t.string  "adm3_code"
+    t.string  "adm4_code"
+    t.string  "adm5_code"
+    t.string  "timezone"
+    t.string  "mongo_id"
+  end
+
+  create_table "adm4s", force: true do |t|
+    t.string  "geonames_code"
+    t.date    "geonames_modification_date"
+    t.string  "name"
+    t.string  "name_ru"
+    t.string  "name_en"
+    t.float   "latitude"
+    t.float   "longitude"
+    t.integer "population"
+    t.string  "country_code"
+    t.string  "region_code"
+    t.string  "district_code"
+    t.string  "adm3_code"
+    t.string  "adm4_code"
+    t.string  "adm5_code"
+    t.string  "timezone"
+    t.string  "mongo_id"
+  end
+
+  create_table "adm5s", force: true do |t|
+    t.string  "geonames_code"
+    t.date    "geonames_modification_date"
+    t.string  "name"
+    t.string  "name_ru"
+    t.string  "name_en"
+    t.float   "latitude"
+    t.float   "longitude"
+    t.integer "population"
+    t.string  "country_code"
+    t.string  "region_code"
+    t.string  "district_code"
+    t.string  "adm3_code"
+    t.string  "adm4_code"
+    t.string  "adm5_code"
+    t.string  "timezone"
+    t.string  "mongo_id"
+  end
+
+  create_table "cities", force: true do |t|
+    t.string  "geonames_code"
+    t.date    "geonames_modification_date"
+    t.string  "name"
+    t.string  "name_ru"
+    t.string  "name_en"
+    t.float   "latitude"
+    t.float   "longitude"
+    t.integer "population"
+    t.string  "country_code"
+    t.string  "region_code"
+    t.string  "district_code"
+    t.string  "adm3_code"
+    t.string  "adm4_code"
+    t.string  "adm5_code"
+    t.string  "timezone"
+    t.string  "status"
+    t.string  "country_text"
+    t.string  "country_text_ru"
+    t.string  "country_text_en"
+    t.string  "region_text"
+    t.string  "region_text_ru"
+    t.string  "region_text_en"
+    t.boolean "denormalized",               default: false
+    t.string  "mongo_id"
+  end
+
+  create_table "countries", force: true do |t|
+    t.string  "geonames_code"
+    t.date    "geonames_modification_date"
+    t.string  "name"
+    t.string  "name_ru"
+    t.string  "name_en"
+    t.float   "latitude"
+    t.float   "longitude"
+    t.integer "population"
+    t.string  "country_code"
+    t.string  "region_code"
+    t.string  "district_code"
+    t.string  "adm3_code"
+    t.string  "adm4_code"
+    t.string  "adm5_code"
+    t.string  "timezone"
+    t.string  "iso_code"
+    t.string  "iso3_code"
+    t.string  "iso_numeric_code"
+    t.integer "area"
+    t.string  "currency_code"
+    t.string  "currency_text"
+    t.text    "languages",                  default: [], array: true
+    t.string  "continent"
+    t.string  "mongo_id"
+  end
+
   create_table "days", force: true do |t|
     t.string  "mongo_id"
     t.date    "date_when"
@@ -37,6 +148,25 @@ ActiveRecord::Schema.define(version: 20150403110209) do
   end
 
   add_index "days", ["trip_id"], name: "index_days_on_trip_id", using: :btree
+
+  create_table "districts", force: true do |t|
+    t.string  "geonames_code"
+    t.date    "geonames_modification_date"
+    t.string  "name"
+    t.string  "name_ru"
+    t.string  "name_en"
+    t.float   "latitude"
+    t.float   "longitude"
+    t.integer "population"
+    t.string  "country_code"
+    t.string  "region_code"
+    t.string  "district_code"
+    t.string  "adm3_code"
+    t.string  "adm4_code"
+    t.string  "adm5_code"
+    t.string  "timezone"
+    t.string  "mongo_id"
+  end
 
   create_table "expenses", force: true do |t|
     t.string  "name"
@@ -76,6 +206,25 @@ ActiveRecord::Schema.define(version: 20150403110209) do
   end
 
   add_index "places", ["day_id"], name: "index_places_on_day_id", using: :btree
+
+  create_table "regions", force: true do |t|
+    t.string  "geonames_code"
+    t.date    "geonames_modification_date"
+    t.string  "name"
+    t.string  "name_ru"
+    t.string  "name_en"
+    t.float   "latitude"
+    t.float   "longitude"
+    t.integer "population"
+    t.string  "country_code"
+    t.string  "region_code"
+    t.string  "district_code"
+    t.string  "adm3_code"
+    t.string  "adm4_code"
+    t.string  "adm5_code"
+    t.string  "timezone"
+    t.string  "mongo_id"
+  end
 
   create_table "transfers", force: true do |t|
     t.integer  "order_index"

@@ -1,7 +1,6 @@
 module Geo
-  class Adm3
+  class Adm3 < ActiveRecord::Base
 
-    include Mongoid::Document
     include Concerns::Geographical
 
   end

@@ -1,7 +1,6 @@
 module Geo
-  class Adm5
+  class Adm5 < ActiveRecord::Base
 
-    include Mongoid::Document
     include Concerns::Geographical
 
   end
