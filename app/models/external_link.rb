@@ -1,10 +1,9 @@
 require 'uri'
 
-class ExternalLink
+class ExternalLink < ActiveRecord::Base
 
-  include Mongoid::Document
+  belongs_to :linkable, polymorphic: true
 
-  field :description
   def description
     return '' if self.url.blank?
     if !self.url.start_with?('http://') && !self.url.start_with?('https://')
@@ -13,8 +12,6 @@ class ExternalLink
     parsed_uri = URI.parse( self.url ) rescue nil
     (parsed_uri.try(:host) || '').gsub('www.', '').capitalize
   end
-
-  field :url
 
   def as_json(*args)
     json = super(except: [:_id])

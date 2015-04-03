@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150403100126) do
+ActiveRecord::Schema.define(version: 20150403104221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,26 @@ ActiveRecord::Schema.define(version: 20150403100126) do
   end
 
   add_index "expenses", ["expendable_id", "expendable_type"], name: "index_expenses_on_expendable_id_and_expendable_type", using: :btree
+
+  create_table "external_links", force: true do |t|
+    t.string  "description"
+    t.text    "url"
+    t.string  "mongo_id"
+    t.integer "linkable_id"
+    t.string  "linkable_type"
+  end
+
+  add_index "external_links", ["linkable_id", "linkable_type"], name: "index_external_links_on_linkable_id_and_linkable_type", using: :btree
+
+  create_table "hotels", force: true do |t|
+    t.string  "name"
+    t.integer "price"
+    t.text    "comment"
+    t.string  "mongo_id"
+    t.integer "day_id"
+  end
+
+  add_index "hotels", ["day_id"], name: "index_hotels_on_day_id", using: :btree
 
   create_table "places", force: true do |t|
     t.string  "city_code"

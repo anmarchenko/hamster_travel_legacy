@@ -1,14 +1,8 @@
 module Travels
-  class Hotel
-    include Mongoid::Document
+  class Hotel < ActiveRecord::Base
 
-    embedded_in :day, class_name: 'Travels::Day'
-
-    field :name
-    field :price, type: Integer
-    field :comment
-
-    has_and_belongs_to_many :links, class_name: 'ExternalLink', inverse_of: nil
+    belongs_to :day, class_name: 'Travels::Day'
+    has_many :links, class_name: 'ExternalLink', as: :linkable
 
     def as_json(*args)
       json = super(except: [:_id])
