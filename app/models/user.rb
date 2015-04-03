@@ -31,7 +31,6 @@ class User < ActiveRecord::Base
     '%s %s' % [first_name, last_name]
   end
 
-
   def home_town
     Geo::City.where(geonames_code: home_town_code).first
   end

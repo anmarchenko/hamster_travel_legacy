@@ -1,22 +1,29 @@
 module Travels
-  class Day
+  class Day < ActiveRecord::Base
 
-    include Mongoid::Document
+    belongs_to :trip, class_name: 'Travels::Trip'
 
-    embedded_in :trip, class_name: 'Travels::Trip'
+    # embeds_many :places, class_name: 'Travels::Place'
+    # embeds_many :transfers, class_name: 'Travels::Transfer'
+    # embeds_one :hotel, class_name: 'Travels::Hotel'
+    # embeds_many :activities, class_name: 'Travels::Activity'
+    # embeds_many :expenses, class_name: 'Travels::Expense', as: :expendable
 
-    field :date_when, type: Date
-
-    embeds_many :places, class_name: 'Travels::Place'
-    embeds_many :transfers, class_name: 'Travels::Transfer'
-    embeds_one :hotel, class_name: 'Travels::Hotel'
-    embeds_many :activities, class_name: 'Travels::Activity'
-
-    field :comment, type: String
-    embeds_many :expenses, class_name: 'Travels::Expense', as: :expendable
-
-    # old field, only for backward compatibility
-    field :add_price, type: Integer
+    def places
+      []
+    end
+    def transfers
+      []
+    end
+    def hotel
+      Travels::Hotel.new
+    end
+    def activities
+      []
+    end
+    def expenses
+      []
+    end
 
     before_save :init
 

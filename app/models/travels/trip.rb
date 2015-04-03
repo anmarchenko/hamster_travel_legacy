@@ -22,15 +22,10 @@ module Travels
 
     paginates_per 9
 
-    # TODO FIX ME
     has_and_belongs_to_many :users, class_name: 'User', inverse_of: :trips, join_table: 'users_trips'
     belongs_to :author_user, class_name: 'User', inverse_of: :authored_trips
 
-    # TODO FIX ME
-    #embeds_many :days, class_name: 'Travels::Day'
-    def days
-      []
-    end
+    has_many :days, class_name: 'Travels::Day'
 
     dragonfly_accessor :image
     def image_url_or_default
@@ -75,7 +70,6 @@ module Travels
       end
     end
 
-    # TODO FIX ME
     def include_user(user)
       self.users.include?(user)
     end
