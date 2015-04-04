@@ -12,7 +12,7 @@ module Travels
 
       def new_trip
         new_trip = Travels::Trip.new
-        copy_attributes(new_trip) unless trip.blank?
+        new_trip.copy(trip) unless trip.blank?
         new_trip
       end
 
@@ -25,10 +25,11 @@ module Travels
           new_trip.days.each_with_index do |day, index|
             original_day = (trip.days || [])[index]
             next if original_day.blank?
-            original_day.date_when = day.date_when
+            date_when = original_day.date_when
             day.copy(original_day, true)
+            day.date_when = date_when
           end
-          new_trip.save # duplicate save - try to avoid
+          new_trip.save
         end
         new_trip
       end
@@ -96,10 +97,6 @@ module Travels
         params.each_with_index do |item_hash, index|
           item_hash['order_index'] = index
         end
-      end
-
-      def copy_attributes new_trip
-        new_trip.copy(trip) unless trip.blank?
       end
 
     end

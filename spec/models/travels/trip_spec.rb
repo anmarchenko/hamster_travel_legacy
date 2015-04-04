@@ -50,32 +50,35 @@ describe Travels::Trip do
 
     it 'recounts dates on update preserving other data' do
       trip.update_attributes(start_date: 14.days.ago, end_date: 7.days.ago)
+      updated_trip = trip.reload
 
-      expect(trip.days.count).to eq(8)
-      expect(trip.days.first.date_when).to eq(14.days.ago.to_date)
-      expect(trip.days.last.date_when).to eq(7.days.ago.to_date)
+      expect(updated_trip.days.count).to eq(8)
+      expect(updated_trip.days.first.date_when).to eq(14.days.ago.to_date)
+      expect(updated_trip.days.last.date_when).to eq(7.days.ago.to_date)
 
-      trip.days.each_with_index do |day, index|
+      updated_trip.days.each_with_index do |day, index|
         expect(day.comment).to eq("Day #{index}")
       end
     end
 
     it 'creates new days when necessary' do
       trip.update_attributes(start_date: 16.days.ago, end_date: 7.days.ago)
+      updated_trip = trip.reload
 
-      expect(trip.days.count).to eq(10)
-      expect(trip.days.first.date_when).to eq(16.days.ago.to_date)
-      expect(trip.days.last.date_when).to eq(7.days.ago.to_date)
-      expect(trip.days.last.comment).to be_nil
+      expect(updated_trip.days.count).to eq(10)
+      expect(updated_trip.days.first.date_when).to eq(16.days.ago.to_date)
+      expect(updated_trip.days.last.date_when).to eq(7.days.ago.to_date)
+      expect(updated_trip.days.last.comment).to be_nil
     end
 
     it 'deletes days when necessary' do
       trip.update_attributes(start_date: 12.days.ago, end_date: 7.days.ago)
+      updated_trip = trip.reload
 
-      expect(trip.days.count).to eq(6)
-      expect(trip.days.first.date_when).to eq(12.days.ago.to_date)
-      expect(trip.days.last.date_when).to eq(7.days.ago.to_date)
-      expect(trip.days.last.comment).to eq("Day 5")
+      expect(updated_trip.days.count).to eq(6)
+      expect(updated_trip.days.first.date_when).to eq(12.days.ago.to_date)
+      expect(updated_trip.days.last.date_when).to eq(7.days.ago.to_date)
+      expect(updated_trip.days.last.comment).to eq("Day 5")
     end
   end
 
@@ -105,8 +108,10 @@ describe Travels::Trip do
     end
 
     it 'returns last non-empty day index' do
-      trip_empty.days[0].set(comment: 'comment')
-      trip_empty.days[3].set(comment: 'comment')
+      trip_empty.days[0].comment = 'comment'
+      trip_empty.days[0].save
+      trip_empty.days[3].comment = 'comment'
+      trip_empty.days[3].save
       expect(trip_empty.last_non_empty_day_index).to eq(3)
     end
   end

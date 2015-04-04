@@ -16,9 +16,9 @@ module Travels
     before_save :init
 
     def init
-      self.places = [Travels::Place.new] if self.places.blank?
+      self.places = [Travels::Place.new] if self.places.count == 0
       self.hotel = Travels::Hotel.new if self.hotel.blank?
-      self.expenses = [Travels::Expense.new] if self.expenses.blank?
+      self.expenses = [Travels::Expense.new] if self.expenses.count == 0
     end
 
     def date_when_s

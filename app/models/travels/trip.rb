@@ -54,7 +54,6 @@ module Travels
     def update_plan
       self.days ||= []
       days_count = (self.end_date - self.start_date).to_i + 1
-      (self.days[days_count..-1] || []).each { |day| day.destroy }
       self.days.each_with_index do |day, index|
         day.date_when = (self.start_date + index.days)
         day.save
@@ -68,6 +67,8 @@ module Travels
         end
         self.days.create(date_when: date)
       end
+
+      (self.days[days_count..-1] || []).each { |day| day.destroy }
     end
 
     def include_user(user)
