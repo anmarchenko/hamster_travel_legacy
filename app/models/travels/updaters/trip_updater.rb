@@ -82,7 +82,8 @@ module Travels
         end
         collection.where(:id => to_delete).destroy_all
         params.each do |item_hash|
-          item = collection.where(id: item_hash.delete(:id)).first
+          item_id = item_hash.delete(:id).to_i % 2147483647 rescue nil
+          item = collection.where(id: item_id).first unless item_id.nil?
           # TODO remove - only for client side
           item_hash.delete(:isCollapsed)
           if item.blank?

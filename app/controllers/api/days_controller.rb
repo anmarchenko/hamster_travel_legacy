@@ -14,6 +14,7 @@ module Api
     end
 
     def create
+      params.permit!
       Travels::Updaters::TripUpdater.new(@trip, params[:days]).process_days
       head 200
     end
@@ -23,6 +24,7 @@ module Api
     end
 
     def update
+      params.permit!
       Travels::Updaters::TripUpdater.new(@trip, { '0' => day_params }).process_days
       head 200
     end

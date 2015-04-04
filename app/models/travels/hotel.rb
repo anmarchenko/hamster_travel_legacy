@@ -27,7 +27,7 @@ module Travels
     end
 
     def copied_relations
-      [:links]
+      ['links']
     end
 
   end

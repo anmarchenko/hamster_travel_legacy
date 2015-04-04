@@ -12,7 +12,7 @@ module Concerns
       return if from.nil?
       copied_fields.each { |field| self.copy_field(field, from) }
       if deep
-        self.reflections.keys.each do |relation|
+        self.class.reflections.keys.each do |relation|
           next if !copied_relations.include?(relation)
           next if from.send(relation).nil?
 

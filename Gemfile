@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.1.0'
+gem 'rails', '4.2.1'
 gem 'russian'
 
 # DB
@@ -18,7 +18,7 @@ gem 'haml'
 gem 'haml-rails'
 
 # authentication
-gem 'devise'
+gem 'devise', '~> 3.4.0'
 
 # CSS
 # Use SCSS for stylesheets
@@ -102,8 +102,8 @@ end
 # tests
 group :test do
   # BDD unit testing
-  gem 'rspec'
-  gem 'rspec-rails'
+  gem 'rspec', '~> 3.1'
+  gem 'rspec-rails', '~> 3.1'
   gem 'fuubar', '~> 2.0.0.rc1', require: false
 
   # BDD integration testing

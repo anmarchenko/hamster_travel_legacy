@@ -51,7 +51,7 @@ module Travels
     end
 
     def copied_relations
-      [:places, :transfers, :hotel, :activities, :expenses]
+      ['places', 'transfers', 'hotel', 'activities', 'expenses']
     end
 
   end
