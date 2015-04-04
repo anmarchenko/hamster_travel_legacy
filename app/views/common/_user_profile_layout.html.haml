@@ -3,7 +3,7 @@
 %div{class: 'row well'}
   %div{class: "col-md-#{profile_width}"}
     %div{class: 'login-profile-panel panel'}
-      .fileupload-form{'data-maxuploadsize' => '2500000'}
+      .fileupload-form{'data-maxuploadsize' => '5000000'}
         - if user_signed_in? && current_user == @user
           = form_for @user, url: upload_photo_user_path(@user), method: :post, multipart: true, remote: true do |f|
             = f.hidden_field :remove_image, value: 'true'
