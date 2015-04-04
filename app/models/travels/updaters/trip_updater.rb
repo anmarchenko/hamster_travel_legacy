@@ -25,11 +25,11 @@ module Travels
           new_trip.days.each_with_index do |day, index|
             original_day = (trip.days || [])[index]
             next if original_day.blank?
-            date_when = original_day.date_when
+            date_when = day.date_when
             day.copy(original_day, true)
             day.date_when = date_when
+            day.save
           end
-          new_trip.save
         end
         new_trip
       end

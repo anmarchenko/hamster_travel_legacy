@@ -183,10 +183,13 @@ describe TripsController do
             it 'renders template with new trip copied from old trip' do
               post 'create', params.merge(copy_from: original.id)
               trip = assigns(:trip)
+              trip = trip.reload
               expect(trip.days.first.comment).to eq original.days.first.comment
               expect(trip.days.first.date_when).to eq params[:travels_trip]['start_date']
               expect(trip.days.first.transfers.count).to eq original.days.first.transfers.count
               expect(trip.days.first.transfers.first.price).to eq original.days.first.transfers.first.price
+
+              expect(trip.days.first.places.count).to eq original.days.first.places.count
 
               expect(trip.days.last.comment).to eq original.days.last.comment
               expect(trip.days.last.date_when).to eq params[:travels_trip]['end_date']
@@ -197,6 +200,7 @@ describe TripsController do
             it 'just creates new trip' do
               post 'create', params.merge(copy_from: original_private.id)
               trip = assigns(:trip)
+              trip = trip.reload
               expect(trip.days.first.comment).to be_nil
               expect(trip.days.first.date_when).to eq params[:travels_trip]['start_date']
               expect(trip.days.first.transfers.count).to eq 0
@@ -210,6 +214,7 @@ describe TripsController do
             it 'renders template with new trip' do
               post 'create', params.merge(copy_from: 'fdsfdsfdfds')
               trip = assigns(:trip)
+              trip = trip.reload
               expect(trip.days.first.comment).to be_nil
               expect(trip.days.first.date_when).to eq params[:travels_trip]['start_date']
               expect(trip.days.first.transfers.count).to eq 0
@@ -226,6 +231,8 @@ describe TripsController do
 
               post 'create', ps
               trip = assigns(:trip)
+              trip = trip.reload
+
               expect(trip.days.first.comment).to eq original.days.first.comment
               expect(trip.days.first.date_when).to eq params[:travels_trip]['start_date']
               expect(trip.days.first.transfers.count).to eq original.days.first.transfers.count
@@ -243,6 +250,8 @@ describe TripsController do
 
               post 'create', ps
               trip = assigns(:trip)
+              trip = trip.reload
+
               expect(trip.days.first.comment).to eq original.days.first.comment
               expect(trip.days.first.date_when).to eq params[:travels_trip]['start_date']
               expect(trip.days.first.transfers.count).to eq original.days.first.transfers.count

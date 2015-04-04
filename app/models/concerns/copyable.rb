@@ -17,13 +17,14 @@ module Concerns
           next if from.send(relation).nil?
 
           if from.send(relation).is_a?(ActiveRecord::Associations::CollectionProxy)
-            from.send(relation).each_with_index do |obj, index|
-              self.send(relation) << obj.class.new
-              (self.send(relation) || [])[index].copy(obj)
+            self.send(relation).destroy_all
+            from.send(relation).each do |obj|
+              self.send(relation).create(obj.attributes.reject{|k,_| !obj.copied_fields.include?(k)})
             end
           else
             self.send("#{relation}=", from.send(relation).class.new)
             self.send(relation).copy(from.send(relation), true) if !self.send(relation).nil?
+            self.send(relation).save
           end
         end
       end
