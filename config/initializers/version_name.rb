@@ -1,1 +1,1 @@
-puts '* Starting Hamster Travel (v0.2). Codename: Bilingual Hamster'
+puts '* Starting Hamster Travel (v0.3). Codename: Cautious Hamster'
