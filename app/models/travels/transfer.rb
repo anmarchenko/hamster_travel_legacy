@@ -19,12 +19,12 @@ module Travels
       ALL = [FLIGHT, TRAIN, TAXI, BUS, BOAT, PERSONAL_CAR]
       OPTIONS = ALL.map{|type| [I18n.t("common.#{type}"), type] }
       ICONS = {
-          FLIGHT => 'map-icon-airport',
-          TRAIN => 'map-icon-train-station',
-          TAXI => 'map-icon-taxi-stand',
-          BUS => 'map-icon-bus-station',
-          BOAT => 'map-icon-boat-tour',
-          PERSONAL_CAR => 'map-icon-car-rental'
+          FLIGHT => 'fa fa-plane',
+          TRAIN => 'fa fa-train',
+          TAXI => 'fa fa-taxi',
+          BUS => 'fa fa-bus',
+          BOAT => 'fa fa-ship',
+          PERSONAL_CAR => 'fa fa-car'
       }
     end
 
