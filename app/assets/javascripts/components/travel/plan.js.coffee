@@ -24,13 +24,15 @@ angular.module('travel-components').controller 'PlanController'
       $scope.show_activities = true
       $scope.show_comments = true
 
-      $interval(
+      promise = $interval(
         () ->
           $.ajax({
             url: "/api/user_shows/#{$scope.trip_id}",
             type: 'GET',
             success: (data) ->
               $scope.users = data
+            error: ->
+              $interval.cancel(promise)
           })
         ,
         2000
