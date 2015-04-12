@@ -23,6 +23,8 @@ gem 'devise', '~> 3.4.0'
 # CSS
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
+# font awesome icons
+gem 'font-awesome-rails'
 
 gem 'compass-rails'
 
