@@ -30,28 +30,27 @@
       = t('common.photo_processing')
 
   .col-md-9.col-sm-9
-    - if user_signed_in?
-      .btn-toolbar.pull-right
-        = link_to "#{new_trip_path}?copy_from=#{@trip.id}", target: '_blank', class: 'btn btn-info',
-          'data-tooltip' => t('trips.show.clone') do
-          = fa_icon 'copy'
-
-        - if @user_can_edit
-          = link_to edit_trip_path(@trip), class: 'btn btn-success',
-            'data-tooltip' => t('trips.show.edit_trip') do
-            = fa_icon 'pencil'
-
-          - if @trip.author_user_id == current_user.id
-            = link_to trip_path(@trip), class: 'btn btn-danger', method: :delete,
-              'data-confirm'=> t('common.delete_confirm'), 'data-tooltip' => t('trips.show.delete_trip') do
-              = fa_icon 'times'
-
     %h3
       = @trip.name
       %small
         = l @trip.start_date, format: :month
 
-    %p.travel-text{} #{@trip.short_description}
+    - if user_signed_in?
+      .btn-toolbar
+        = link_to "#{new_trip_path}?copy_from=#{@trip.id}", target: '_blank', class: 'btn btn-default' do
+          = fa_icon 'copy', text: t('trips.show.clone')
+
+        - if @user_can_edit
+          = link_to edit_trip_path(@trip), class: 'btn btn-default' do
+            = fa_icon 'pencil', text: t('trips.show.edit_trip')
+
+          - if @trip.author_user_id == current_user.id
+            = link_to trip_path(@trip), class: 'btn btn-default', method: :delete,
+              'data-confirm'=> t('common.delete_confirm')  do
+              = fa_icon 'times', text: t('trips.show.delete_trip')
+
+    %p.travel-text{}
+      %big #{@trip.short_description}
 
     .well.well-sm.trip-status{class: trip_status_class(@trip.status_code)}
       %big
@@ -63,8 +62,6 @@
     %h4
       = t('.travellers')
     = render'trips/partials/participants', participants: @trip.users
-
-%hr
 
 - if params[:tab] == ApplicationHelper::TAB_REPORT
   = render 'trips/tabs/report'

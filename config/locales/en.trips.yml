@@ -28,7 +28,7 @@ en:
       activities: Activities
       comments: Comments
       edit_plan: Edit
-      edit_trip: Edit trip
+      edit_trip: Edit
       delete_trip: Delete
       cancel: Cancel
       show_plan: Show
@@ -56,7 +56,7 @@ en:
       status_code: 'Trip status:'
       name: Name
       expense: Expense
-      clone: Copy trip
+      clone: Copy
       report: Trip report
       no_report: No report has been added yet.
       budget_for: for

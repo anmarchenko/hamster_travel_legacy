@@ -8,75 +8,75 @@
           %thead.plan-affix
             %tr.plan-header
               %th{colspan: '6'}
-                .row
-                  .col-md-12
-                    = render 'trips/partials/buttons'
-                    = render 'trips/partials/tabs'
-                .row
-                  .col-md-12
-                    = render 'trips/partials/watching_users'
-                .row.plan-header-second-row
-                  .col-md-12
-                    %p
-                    %big
-                      = t('common.budget')
-                      {{budget()}}
-                      = fa_icon 'ruble'
-                      %span{'ng-show' => '!edit'}
-                        = t('trips.show.budget_for')
-                        {{trip.budget_for}}
-                        = t('trips.show.persons')
-                      %span{'ng-show' => 'edit'}
-                        = t('trips.show.budget_for')
-                        = select_tag 'trip_budget_for', options_for_select((1..10).step(1)),
-                          {class: 'input-sm', 'ng-model' => 'trip.budget_for'}
-                        = t('trips.show.persons')
-                    %div{class: "list-group list-group-horizontal pull-right"}
-                      %a{class: "list-group-item",
-                             'ng-click' => 'changeVisibility("show_place")',
-                             'ng-class' => '{active: show_place}',
-                             'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.place')}
-                        %span{'ng-show' => 'show_place'}
-                          = fa_icon 'check-square-o'
-                        %span{'ng-show' => '!show_place'}
-                          = fa_icon 'square-o'
-                        = fa_icon 'map-marker'
-                      %a{class: "list-group-item",
-                             'ng-click' => 'changeVisibility("show_transfers")',
-                             'ng-class' => '{active: show_transfers}',
-                             'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.transfers')}
-                        %span{'ng-show' => 'show_transfers'}
-                          = fa_icon 'check-square-o'
-                        %span{'ng-show' => '!show_transfers'}
-                          = fa_icon 'square-o'
-                        = fa_icon 'car'
-                      %a{class: "list-group-item",
-                             'ng-click' => 'changeVisibility("show_hotel")',
-                             'ng-class' => '{active: show_hotel}',
-                             'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.hotel')}
-                        %span{'ng-show' => 'show_hotel'}
-                          = fa_icon 'check-square-o'
-                        %span{'ng-show' => '!show_hotel'}
-                          = fa_icon 'square-o'
-                        = fa_icon 'home'
-                      %a{class: "list-group-item",
-                             'ng-click' => 'changeVisibility("show_activities")',
-                             'ng-class' => '{active: show_activities}',
-                             'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.activities')}
-                        %span{'ng-show' => 'show_activities'}
-                          = fa_icon 'check-square-o'
-                        %span{'ng-show' => '!show_activities'}
-                          = fa_icon 'square-o'
-                        = fa_icon 'university'
-                      %a{class: "list-group-item",
-                             'ng-click' => 'changeVisibility("show_comments")',
-                             'ng-class' => '{active: show_comments}',
-                             'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.comments')}
-                        %span{'ng-show' => 'show_comments'}
-                          = fa_icon 'check-square-o'
-                        %span{'ng-show' => '!show_comments'}
-                          = fa_icon 'square-o'
-                        = fa_icon 'pencil'
+                .container
+                  .row
+                    .col-md-12
+                      = render 'trips/partials/buttons'
+                      = render 'trips/partials/tabs'
+                  .row
+                    .col-md-12
+                      = render 'trips/partials/watching_users'
+                  .row.plan-header-second-row
+                    .col-md-12
+                      %big
+                        = t('common.budget')
+                        {{budget()}}
+                        = fa_icon 'ruble'
+                        %span{'ng-show' => '!edit'}
+                          = t('trips.show.budget_for')
+                          {{trip.budget_for}}
+                          = t('trips.show.persons')
+                        %span{'ng-show' => 'edit'}
+                          = t('trips.show.budget_for')
+                          = select_tag 'trip_budget_for', options_for_select((1..10).step(1)),
+                            {class: 'input-sm', 'ng-model' => 'trip.budget_for'}
+                          = t('trips.show.persons')
+                      %div{class: "list-group list-group-horizontal pull-right"}
+                        %a{class: "list-group-item",
+                               'ng-click' => 'changeVisibility("show_place")',
+                               'ng-class' => '{active: show_place}',
+                               'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.place')}
+                          %span{'ng-show' => 'show_place'}
+                            = fa_icon 'check-square-o'
+                          %span{'ng-show' => '!show_place'}
+                            = fa_icon 'square-o'
+                          = fa_icon 'map-marker'
+                        %a{class: "list-group-item",
+                               'ng-click' => 'changeVisibility("show_transfers")',
+                               'ng-class' => '{active: show_transfers}',
+                               'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.transfers')}
+                          %span{'ng-show' => 'show_transfers'}
+                            = fa_icon 'check-square-o'
+                          %span{'ng-show' => '!show_transfers'}
+                            = fa_icon 'square-o'
+                          = fa_icon 'car'
+                        %a{class: "list-group-item",
+                               'ng-click' => 'changeVisibility("show_hotel")',
+                               'ng-class' => '{active: show_hotel}',
+                               'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.hotel')}
+                          %span{'ng-show' => 'show_hotel'}
+                            = fa_icon 'check-square-o'
+                          %span{'ng-show' => '!show_hotel'}
+                            = fa_icon 'square-o'
+                          = fa_icon 'home'
+                        %a{class: "list-group-item",
+                               'ng-click' => 'changeVisibility("show_activities")',
+                               'ng-class' => '{active: show_activities}',
+                               'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.activities')}
+                          %span{'ng-show' => 'show_activities'}
+                            = fa_icon 'check-square-o'
+                          %span{'ng-show' => '!show_activities'}
+                            = fa_icon 'square-o'
+                          = fa_icon 'university'
+                        %a{class: "list-group-item",
+                               'ng-click' => 'changeVisibility("show_comments")',
+                               'ng-class' => '{active: show_comments}',
+                               'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.comments')}
+                          %span{'ng-show' => 'show_comments'}
+                            = fa_icon 'check-square-o'
+                          %span{'ng-show' => '!show_comments'}
+                            = fa_icon 'square-o'
+                          = fa_icon 'pencil'
             %tr
               %th{class: 'col-md-1'}
                 = t('trips.show.day')

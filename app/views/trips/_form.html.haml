@@ -2,7 +2,7 @@
 - is_edit = %w(edit update).include?(params[:action])
 
 .row
-  .col-xs-12.col-sm-8.col-md-6.col-sm-offset-1.col-md-offset-2
+  .col-xs-12.col-sm-12.col-md-8.col-md-offset-2
     = form_for @trip, url: is_create ? trips_path : trip_path(@trip),
       html: ({'ng-controller' => 'TripEditController', 'ng-submit' => 'submit($event)',
       'ng-init' => "initScope({\"last_day_index\" : #{trip_period(@trip, @original_trip)}, \"message\" : \"#{t('.confirm')}\" })"} ) do |f|
@@ -53,7 +53,7 @@
               = t(".#{type}_help")
               %br
 
-        .checkbox
+        .form-group
           = f.check_box :private
           = f.label :private, class: 'control-label', 'data-tooltip' => t('.private_help')
 

@@ -28,7 +28,7 @@ ru:
       activities: Впечатления
       comments: Комментарий
       edit_plan: Редактировать
-      edit_trip: Редактировать путешествие
+      edit_trip: Редактировать
       delete_trip: Удалить
       show_plan: Просмотр
       save_plan: Сохранить
@@ -56,7 +56,7 @@ ru:
       status_code: 'Статус путешествия:'
       name: Название
       expense: Расход
-      clone: Скопировать план
+      clone: Копия
       report: Отчет о путешествии
       no_report: У этого путешествия ещё нет отчёта.
       budget_for: на

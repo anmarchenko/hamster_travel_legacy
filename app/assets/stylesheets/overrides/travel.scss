@@ -100,12 +100,24 @@ table .dropdown-menu a{
 .fixed-head > thead > tr > th{
     background-color: #ecf0f1;
 }
-.plan-header,.plan-header th {
-  border-top-color: #ffffff !important;
-  border-left-color: #ffffff !important;
-  border-right-color: #ffffff !important;
-  background-color: #ffffff !important;
-  font-weight: normal !important;
+.plan-header,.plan-header {
+  th {
+    border-top-color: #ffffff !important;
+    border-left-color: #ffffff !important;
+    border-right-color: #ffffff !important;
+    background-color: #ffffff !important;
+    font-weight: normal !important;
+  }
+  .container{
+    padding: 0px !important;
+  }
+}
+.actions-butons{
+  a{
+    font-size: 18px;
+    padding: 5px 10px;
+    color: grey;
+  }
 }
 .input-group .form-control{
     z-index: auto;
@@ -266,6 +278,7 @@ table .dropdown-menu a{
 .plan-header-second-row{
   height: 60px;
   vertical-align: middle;
+  padding-top: 20px;
 }
 .list-group-horizontal {
   .list-group-item {

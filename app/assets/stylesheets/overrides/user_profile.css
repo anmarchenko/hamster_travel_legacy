@@ -3,6 +3,7 @@
 }
 .small-profile-pic{
     width: 60px;
+    border: 1px solid grey;
 }
 .login-profile-pic
 {

@@ -1,27 +1,27 @@
-.btn-toolbar.pull-right{'ng-cloak' => ''}
-  %a.btn.btn-info.pull-right.btn-sm{href: 'javascript:void(0);', 'ng-click' => 'downloadWord()',
+.btn-toolbar.actions-butons.pull-right{'ng-cloak' => ''}
+  %a.pull-right{href: 'javascript:void(0);', 'ng-click' => 'downloadWord()', 'data-placement' => "bottom",
         'data-toggle' => 'tooltip', title: t('trips.show.download_word')}
     = fa_icon 'file-word-o'
 
   - if @user_can_edit
     %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(true)',
-        class: 'btn btn-primary pull-right btn-sm', 'ng-show' => '!edit',
+        class: 'pull-right', 'ng-show' => '!edit', 'data-placement' => "bottom",
         'data-toggle' => 'tooltip', title: t('trips.show.edit_plan')}
       = fa_icon 'edit'
     %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(false)',
-        class: 'btn btn-primary pull-right btn-sm', 'ng-show' => 'edit',
+        class: 'pull-right', 'ng-show' => 'edit', 'data-placement' => "bottom",
         'data-toggle' => 'tooltip', title: t('trips.show.show_plan')}
       = fa_icon 'eye'
 
     %a{href: 'javascript:void(0);', 'ng-click' => 'cancelEdits()',
-        class: 'btn btn-primary pull-right btn-sm', 'ng-show' => 'edit',
+        class: 'pull-right', 'ng-show' => 'edit', 'data-placement' => "bottom",
         'data-toggle' => 'tooltip', title: t('trips.show.cancel')}
       = fa_icon 'undo'
 
     %a{href: 'javascript:void(0);', 'ng-click' => 'savePlan()',
-        class: 'btn btn-success pull-right btn-sm', 'ng-show' => '!saving && edit',
+        class: 'pull-right', 'ng-show' => '!saving && edit', 'data-placement' => "bottom",
         'data-toggle' => 'tooltip', title: t('trips.show.save_plan')}
       = fa_icon 'save'
-    .btn.btn-success.pull-right.btn-sm{'ng-show' => 'saving'}
+    %a.pull-right{'ng-show' => 'saving'}
       %i.fa.fa-spinner.fa-spin
       = t('trips.show.saving_plan')
