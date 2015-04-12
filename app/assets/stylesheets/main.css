@@ -1,9 +1,7 @@
 /*
  *= require_tree './lib'
- *= require 'paper'
  *= require jquery.Jcrop
  *= require 'scaffolds'
- *= require 'font-awesome'
  *= require_tree './overrides'
 */
 

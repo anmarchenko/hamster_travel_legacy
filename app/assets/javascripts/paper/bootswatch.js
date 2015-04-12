@@ -1,3 +1,0 @@
-// Paper
-// Bootswatch
-// bootswatch.js

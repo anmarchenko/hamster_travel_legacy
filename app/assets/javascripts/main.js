@@ -6,7 +6,6 @@
 //= require jquery.ui.widget
 //= require jquery.ui.mouse
 //= require jquery.ui.sortable
-//= require paper
 //= require jquery-fileupload/basic
 //= require jquery.Jcrop
 //= require angular
