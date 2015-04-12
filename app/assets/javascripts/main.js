@@ -1,6 +1,6 @@
 // Flatly
 // Bootswatch
-//= require flatly
+//= require paper
 //= require jquery-fileupload/basic
 //= require jquery.Jcrop
 //= require angular
