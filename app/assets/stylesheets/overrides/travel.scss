@@ -97,11 +97,11 @@ table .dropdown-menu a{
     background-color: #ecf0f1;
 }
 .plan-header,.plan-header th {
-    border-top-color: #ffffff !important;
-    border-left: #ffffff !important;
-    border-right: #ffffff !important;
-    background-color: #ffffff !important;
-    font-weight: normal !important;
+  border-top-color: #ffffff !important;
+  border-left: #ffffff !important;
+  border-right: #ffffff !important;
+  background-color: #ffffff !important;
+  font-weight: normal !important;
 }
 .input-group .form-control{
     z-index: auto;
@@ -122,15 +122,6 @@ table .dropdown-menu a{
 
 .show-column-checkboxes{
     width: 70px;
-}
-
-.show-column-checkboxes.affix-top {
-    padding-top: 70px;
-}
-
-.show-column-checkboxes.affix {
-    top: 130px;
-    right: inherit;
 }
 
 .btn-grey{
@@ -293,4 +284,10 @@ table .dropdown-menu a{
     background-color: grey;
     border-color: lightgrey;
   }
+}
+.watching-users{
+  margin: 10px 0px;
+  background-color: lightyellow;
+  color: black;
+  font-size: 16px;
 }

@@ -8,7 +8,7 @@
           src: trip.image_url_or_default,
           width: '100%'}
     %div{class: 'caption'}
-      %h4
+      %h5
         = link_to trip.name, trip_path(trip)
         %small
           = l trip.start_date, format: :month

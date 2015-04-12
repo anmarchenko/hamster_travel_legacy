@@ -142,4 +142,7 @@ angular.module('travel-components').controller 'PlanController'
         $window.open url, '_blank'
         return true
 
+      $scope.changeVisibility = (column) ->
+        $scope[column] = !$scope[column]
+        $window.scrollTo(0, 0);
 ]
