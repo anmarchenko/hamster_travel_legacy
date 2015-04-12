@@ -4,12 +4,12 @@
   %p{class: 'collapse-header'}
     %span{'ng-show' => '!!transfer.type_icon'}
       %i{class: '{{transfer.type_icon}}'}
-    %u
+    %span
       {{transfer.city_from_text}}
       %span{'ng-show' => '!!transfer.station_from'}
         ({{transfer.station_from}})
     = fa_icon 'arrow-right'
-    %u
+    %span
       {{transfer.city_to_text}}
       %span{'ng-show' => '!!transfer.station_to'}
         ({{transfer.station_to}})

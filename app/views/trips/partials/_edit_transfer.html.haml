@@ -1,5 +1,5 @@
 %p
-  %u{'ng-click' => 'transfer.isCollapsed = !transfer.isCollapsed', class: 'collapse-header'}
+  %span{'ng-click' => 'transfer.isCollapsed = !transfer.isCollapsed', class: 'collapse-header'}
     = t('trips.show.transfer')
     {{$index+1}}
   %a{href: 'javascript:void(0);', 'ng-click' => 'transfer.isCollapsed = !transfer.isCollapsed',
@@ -59,4 +59,3 @@
       = text_field_tag 'transfer_station_to', '', 'ng-model' => 'transfer.station_to', class: 'input-sm form-control',
           placeholder: t('trips.show.station_to')
 
-%hr

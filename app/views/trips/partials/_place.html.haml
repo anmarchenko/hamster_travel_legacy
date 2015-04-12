@@ -19,7 +19,7 @@
       = fa_icon 'times'
     .form-group
       = render 'widgets/typeahead/cities', model_name: 'place.city', classes: 'input-sm form-control',
-        placeholder: t('trips.show.city')
+        placeholder: t('trips.show.city'), show_loading: false
 
   .form-group
     %a.pull-left.margin-right-10{href: 'javascript:void(0);', 'ng-click' => 'save()', 'ng-show' => 'place_edit'}

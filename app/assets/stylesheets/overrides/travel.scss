@@ -36,31 +36,35 @@ table .dropdown-menu a{
 }
 .day-place-container .up-button{
     position: absolute;
-    right: 25px; top: 8px
+    right: 25px; top: 5px
 }
 .day-place-container .delete-button{
     position: absolute;
-    right: 5px; top: 8px
+    right: 5px; top: 5px
 }
 .day-expense-container .delete-button{
     position: absolute;
-    right: 20px; top: 8px
+    right: 20px; top: 5px
 }
 .relative-position .expand-button{
     position: absolute;
-    right: 40px; top: 8px
+    right: 40px; top: 5px
 }
-
+.day-place-container{
+  input{
+    padding-right: 37px !important;
+  }
+}
 .day-activity-container{
     position: relative;
 }
 .day-activity-container .delete-button{
     position: absolute;
-    right: 20px; top: 8px
+    right: 20px; top: 5px
 }
 .day-activity-container .expand-button{
     position: absolute;
-    right: 40px; top: 8px
+    right: 40px; top: 5px
 }
 
 .region-grey{
