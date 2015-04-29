@@ -7,7 +7,6 @@
     %title= t('.pagetitle', page: (yield(:title) if content_for?(:title))  )
     = csrf_meta_tags
 
-    =# stylesheet_link_tag 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css', media: 'all'
     = stylesheet_link_tag '//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/paper/bootstrap.min.css', media: 'all'
     = stylesheet_link_tag '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css', media: 'all'
     = stylesheet_link_tag 'main', media: 'all'

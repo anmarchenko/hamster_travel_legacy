@@ -49,8 +49,7 @@
               'data-confirm'=> t('common.delete_confirm')  do
               = fa_icon 'times', text: t('trips.show.delete_trip')
 
-    %p.travel-text{}
-      %big #{@trip.short_description}
+    %p.travel-text{} #{@trip.short_description}
 
     .well.well-sm.trip-status{class: trip_status_class(@trip.status_code)}
       %big
