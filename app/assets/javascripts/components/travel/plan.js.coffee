@@ -17,7 +17,7 @@ angular.module('travel-components').controller 'PlanController'
       $scope.transfersCollapsed = true
       $scope.edit = false
 
-      # show transfers checkboxes
+      # show checkboxes
       $scope.show_place = true
       $scope.show_transfers = true
       $scope.show_hotel = true
@@ -146,5 +146,5 @@ angular.module('travel-components').controller 'PlanController'
 
       $scope.changeVisibility = (column) ->
         $scope[column] = !$scope[column]
-        $window.scrollTo(0, 0);
+        
 ]

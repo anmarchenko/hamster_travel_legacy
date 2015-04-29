@@ -90,7 +90,7 @@ table .dropdown-menu a{
 }
 
 .table-black-bordered > thead > tr > th, .table-black-bordered > tbody > tr > th, .table-black-bordered > tfoot > tr > th, .table-black-bordered > thead > tr > td, .table-black-bordered > tbody > tr > td, .table-black-bordered > tfoot > tr > td {
-    border: 1px solid #000000;
+    border: 1px solid #000000 !important;
 }
 
 .fixed-head > thead > tr > th{
