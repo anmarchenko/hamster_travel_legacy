@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20150403115024) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "activities", force: true do |t|
+  create_table "activities", force: :cascade do |t|
     t.integer "order_index"
     t.string  "name"
     t.integer "price"
@@ -28,8 +28,9 @@ ActiveRecord::Schema.define(version: 20150403115024) do
   end
 
   add_index "activities", ["day_id"], name: "index_activities_on_day_id", using: :btree
+  add_index "activities", ["order_index"], name: "index_activities_on_order_index", using: :btree
 
-  create_table "adm3s", force: true do |t|
+  create_table "adm3s", force: :cascade do |t|
     t.string  "geonames_code"
     t.date    "geonames_modification_date"
     t.string  "name"
@@ -48,7 +49,10 @@ ActiveRecord::Schema.define(version: 20150403115024) do
     t.string  "mongo_id"
   end
 
-  create_table "adm4s", force: true do |t|
+  add_index "adm3s", ["geonames_code"], name: "index_adm3s_on_geonames_code", using: :btree
+  add_index "adm3s", ["population"], name: "index_adm3s_on_population", using: :btree
+
+  create_table "adm4s", force: :cascade do |t|
     t.string  "geonames_code"
     t.date    "geonames_modification_date"
     t.string  "name"
@@ -67,7 +71,10 @@ ActiveRecord::Schema.define(version: 20150403115024) do
     t.string  "mongo_id"
   end
 
-  create_table "adm5s", force: true do |t|
+  add_index "adm4s", ["geonames_code"], name: "index_adm4s_on_geonames_code", using: :btree
+  add_index "adm4s", ["population"], name: "index_adm4s_on_population", using: :btree
+
+  create_table "adm5s", force: :cascade do |t|
     t.string  "geonames_code"
     t.date    "geonames_modification_date"
     t.string  "name"
@@ -86,7 +93,10 @@ ActiveRecord::Schema.define(version: 20150403115024) do
     t.string  "mongo_id"
   end
 
-  create_table "cities", force: true do |t|
+  add_index "adm5s", ["geonames_code"], name: "index_adm5s_on_geonames_code", using: :btree
+  add_index "adm5s", ["population"], name: "index_adm5s_on_population", using: :btree
+
+  create_table "cities", force: :cascade do |t|
     t.string  "geonames_code"
     t.date    "geonames_modification_date"
     t.string  "name"
@@ -113,7 +123,10 @@ ActiveRecord::Schema.define(version: 20150403115024) do
     t.string  "mongo_id"
   end
 
-  create_table "countries", force: true do |t|
+  add_index "cities", ["geonames_code"], name: "index_cities_on_geonames_code", using: :btree
+  add_index "cities", ["population"], name: "index_cities_on_population", using: :btree
+
+  create_table "countries", force: :cascade do |t|
     t.string  "geonames_code"
     t.date    "geonames_modification_date"
     t.string  "name"
@@ -140,7 +153,10 @@ ActiveRecord::Schema.define(version: 20150403115024) do
     t.string  "mongo_id"
   end
 
-  create_table "days", force: true do |t|
+  add_index "countries", ["geonames_code"], name: "index_countries_on_geonames_code", using: :btree
+  add_index "countries", ["population"], name: "index_countries_on_population", using: :btree
+
+  create_table "days", force: :cascade do |t|
     t.string  "mongo_id"
     t.date    "date_when"
     t.text    "comment"
@@ -149,7 +165,7 @@ ActiveRecord::Schema.define(version: 20150403115024) do
 
   add_index "days", ["trip_id"], name: "index_days_on_trip_id", using: :btree
 
-  create_table "districts", force: true do |t|
+  create_table "districts", force: :cascade do |t|
     t.string  "geonames_code"
     t.date    "geonames_modification_date"
     t.string  "name"
@@ -168,7 +184,10 @@ ActiveRecord::Schema.define(version: 20150403115024) do
     t.string  "mongo_id"
   end
 
-  create_table "expenses", force: true do |t|
+  add_index "districts", ["geonames_code"], name: "index_districts_on_geonames_code", using: :btree
+  add_index "districts", ["population"], name: "index_districts_on_population", using: :btree
+
+  create_table "expenses", force: :cascade do |t|
     t.string  "name"
     t.integer "price"
     t.string  "mongo_id"
@@ -176,9 +195,9 @@ ActiveRecord::Schema.define(version: 20150403115024) do
     t.string  "expendable_type"
   end
 
-  add_index "expenses", ["expendable_id", "expendable_type"], name: "index_expenses_on_expendable_id_and_expendable_type", using: :btree
+  add_index "expenses", ["expendable_type", "expendable_id"], name: "index_expenses_on_expendable_type_and_expendable_id", using: :btree
 
-  create_table "external_links", force: true do |t|
+  create_table "external_links", force: :cascade do |t|
     t.string  "description"
     t.text    "url"
     t.string  "mongo_id"
@@ -186,9 +205,9 @@ ActiveRecord::Schema.define(version: 20150403115024) do
     t.string  "linkable_type"
   end
 
-  add_index "external_links", ["linkable_id", "linkable_type"], name: "index_external_links_on_linkable_id_and_linkable_type", using: :btree
+  add_index "external_links", ["linkable_type", "linkable_id"], name: "index_external_links_on_linkable_type_and_linkable_id", using: :btree
 
-  create_table "hotels", force: true do |t|
+  create_table "hotels", force: :cascade do |t|
     t.string  "name"
     t.integer "price"
     t.text    "comment"
@@ -198,7 +217,7 @@ ActiveRecord::Schema.define(version: 20150403115024) do
 
   add_index "hotels", ["day_id"], name: "index_hotels_on_day_id", using: :btree
 
-  create_table "places", force: true do |t|
+  create_table "places", force: :cascade do |t|
     t.string  "city_code"
     t.string  "city_text"
     t.string  "mongo_id"
@@ -207,7 +226,7 @@ ActiveRecord::Schema.define(version: 20150403115024) do
 
   add_index "places", ["day_id"], name: "index_places_on_day_id", using: :btree
 
-  create_table "regions", force: true do |t|
+  create_table "regions", force: :cascade do |t|
     t.string  "geonames_code"
     t.date    "geonames_modification_date"
     t.string  "name"
@@ -226,7 +245,10 @@ ActiveRecord::Schema.define(version: 20150403115024) do
     t.string  "mongo_id"
   end
 
-  create_table "transfers", force: true do |t|
+  add_index "regions", ["geonames_code"], name: "index_regions_on_geonames_code", using: :btree
+  add_index "regions", ["population"], name: "index_regions_on_population", using: :btree
+
+  create_table "transfers", force: :cascade do |t|
     t.integer  "order_index"
     t.string   "city_from_code"
     t.string   "city_from_text"
@@ -248,8 +270,9 @@ ActiveRecord::Schema.define(version: 20150403115024) do
   end
 
   add_index "transfers", ["day_id"], name: "index_transfers_on_day_id", using: :btree
+  add_index "transfers", ["order_index"], name: "index_transfers_on_order_index", using: :btree
 
-  create_table "trips", force: true do |t|
+  create_table "trips", force: :cascade do |t|
     t.string   "name"
     t.text     "short_description"
     t.date     "start_date"
@@ -268,7 +291,7 @@ ActiveRecord::Schema.define(version: 20150403115024) do
 
   add_index "trips", ["author_user_id"], name: "index_trips_on_author_user_id", using: :btree
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email"
     t.string   "encrypted_password"
     t.string   "reset_password_token"
@@ -290,7 +313,7 @@ ActiveRecord::Schema.define(version: 20150403115024) do
     t.datetime "updated_at"
   end
 
-  create_table "users_trips", id: false, force: true do |t|
+  create_table "users_trips", id: false, force: :cascade do |t|
     t.integer "trip_id"
     t.integer "user_id"
   end

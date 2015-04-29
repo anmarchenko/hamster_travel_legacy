@@ -14,7 +14,7 @@ describe Travels::Transfer do
     end
     context 'when transfer has type' do
       it 'is from constant' do
-        expect(transfer_flight.type_icon).to eq('map-icon-airport')
+        expect(transfer_flight.type_icon).to eq('fa fa-plane')
       end
     end
   end
