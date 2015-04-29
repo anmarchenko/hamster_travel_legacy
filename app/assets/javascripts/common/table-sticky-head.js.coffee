@@ -1,2 +1,2 @@
 $ ->
-  $('.fixed-head').stickyTableHeaders(fixedOffset: $('.navbar'));
+  $('.fixed-head').stickyTableHeaders(fixedOffset: 0);
