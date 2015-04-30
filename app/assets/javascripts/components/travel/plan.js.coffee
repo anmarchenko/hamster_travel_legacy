@@ -146,5 +146,4 @@ angular.module('travel-components').controller 'PlanController'
 
       $scope.changeVisibility = (column) ->
         $scope[column] = !$scope[column]
-        
 ]

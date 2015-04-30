@@ -5,6 +5,8 @@ development:
   pool: 5
   username: igendou
   password:
+  host: 127.0.0.1
+  port: 5432
 
 test:
   adapter: postgresql
@@ -13,6 +15,8 @@ test:
   pool: 5
   username: postgres
   password:
+  host: 127.0.0.1
+  port: 5432
 
 production:
   adapter: postgresql
