@@ -2,6 +2,10 @@ module ApplicationHelper
   TAB_PLAN = 'plan'
   TAB_REPORT = 'report'
 
+  def exchange_money from, to, amount
+    Money.new(amount * 100, from).exchange_to(to)
+  end
+
   def error_messages! (object)
     return '' if object.errors.empty?
 
