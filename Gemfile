@@ -73,6 +73,11 @@ gem 'dragonfly-s3_data_store'
 # caching
 gem 'dalli'
 
+# money
+gem 'money'
+gem 'money-rails'
+gem 'eu_central_bank'
+
 # production caching
 group :production do
   gem 'rack-cache', :require => 'rack/cache'
