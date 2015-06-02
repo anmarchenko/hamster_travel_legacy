@@ -26,6 +26,7 @@ angular.module('travel-components').controller 'DaysController'
         $scope.$parent.toggleActivities(false)
         $scope.$parent.toggleTransfers(false)
 
+      # REST: methods using API
       $scope.reload = (callback = null) ->
         $scope.tripService.reloadDay $scope.day, ->
           $scope.setEditAll(false)

@@ -51,10 +51,6 @@ angular.module('travel-components').controller 'PlanController'
         $scope.days = new Array(count) unless count == 0
         $scope.trip = trip
 
-      $scope.load = ->
-        $scope.tripService.getTrip().then (trip) ->
-          $scope.trip = trip
-
       $scope.add = (field, obj = {}) ->
         obj['id'] = new Date().getTime()
         field.push(obj)
@@ -100,6 +96,11 @@ angular.module('travel-components').controller 'PlanController'
 
         price || 0
 
+      # REST: methods using API
+      $scope.load = ->
+        $scope.tripService.getTrip().then (trip) ->
+          $scope.trip = trip
+
       $scope.savePlan = ->
         return if $scope.saving
         $scope.saving = true
@@ -118,6 +119,7 @@ angular.module('travel-components').controller 'PlanController'
               $scope.setDayCollapse(new_day, 'activities')
 
         $scope.load()
+      # END OF API
 
       $scope.setDayCollapse = (day, collection_name) ->
         return if !day
