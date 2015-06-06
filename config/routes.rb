@@ -20,6 +20,7 @@ Travel::Application.routes.draw do
         resources :days, only: [:index, :create, :show, :update]
       end
       resources :user_shows, only: [:show]
+      resources :budgets, only: [:show]
     end
   end
 
