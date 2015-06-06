@@ -20,6 +20,11 @@ angular.module('travel-services').config(["railsSerializerProvider",
           name: 'trip'
         )
 
+        Budgets: railsResourceFactory(
+          url: '/api/budgets',
+          name: 'budget'
+        )
+
         getDays:  ->
           this.Days.query()
 
@@ -44,6 +49,9 @@ angular.module('travel-services').config(["railsSerializerProvider",
 
         updateTrip: (trip) ->
           new this.Trips(trip).update()
+
+        getBudget: (trip_id) ->
+          this.Budgets.get(trip_id)
       }
 
   }

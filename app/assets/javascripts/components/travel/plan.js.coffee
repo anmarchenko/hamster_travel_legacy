@@ -24,6 +24,9 @@ angular.module('travel-components').controller 'PlanController'
       $scope.show_activities = true
       $scope.show_comments = true
 
+      # budget
+      $scope.budget = 0
+
       promise = $interval(
         () ->
           $.ajax({
@@ -35,7 +38,7 @@ angular.module('travel-components').controller 'PlanController'
               $interval.cancel(promise)
           })
         ,
-        2000
+        5000
       )
 
       $scope.setEdit = (val) ->
@@ -47,9 +50,10 @@ angular.module('travel-components').controller 'PlanController'
           $scope.toggleActivities(false)
         $scope.edit = val
 
-      $scope.createDays = (count, trip) ->
+      $scope.createDays = (count, trip, budget) ->
         $scope.days = new Array(count) unless count == 0
         $scope.trip = trip
+        $scope.budget = budget
 
       $scope.add = (field, obj = {}) ->
         obj['id'] = new Date().getTime()
@@ -77,29 +81,15 @@ angular.module('travel-components').controller 'PlanController'
           for link in prev_hotel.links
             hotel.links.push JSON.parse(JSON.stringify(link))
 
-      $scope.budget = ->
-        price = 0
-        return 0 if !$scope.days
-        for day in $scope.days
-          continue if !day
-          if day.hotel
-            price += parseInt(day.hotel.price || 0, 10)
-          if day.transfers
-            for transfer in day.transfers
-              price += parseInt(transfer.price || 0, 10)
-          if day.activities
-            for activity in day.activities
-              price += parseInt(activity.price || 0, 10)
-          if day.expenses
-            for expense in day.expenses
-              price += parseInt(expense.price || 0, 10)
-
-        price || 0
-
       # REST: methods using API
+      $scope.loadBudget = ->
+        $scope.tripService.getBudget($scope.trip_id).then (budget) ->
+          $scope.budget = budget
+
       $scope.load = ->
         $scope.tripService.getTrip().then (trip) ->
           $scope.trip = trip
+        $scope.loadBudget()
 
       $scope.savePlan = ->
         return if $scope.saving
@@ -109,6 +99,7 @@ angular.module('travel-components').controller 'PlanController'
         if $scope.days
           $scope.tripService.createDays($scope.days).then ->
             $scope.saving = false
+            $scope.loadBudget()
 
       $scope.cancelEdits = ->
         $scope.setEdit(false)
@@ -117,7 +108,6 @@ angular.module('travel-components').controller 'PlanController'
             $scope.tripService.reloadDay day, (new_day) ->
               $scope.setDayCollapse(new_day, 'transfers')
               $scope.setDayCollapse(new_day, 'activities')
-
         $scope.load()
       # END OF API
 
