@@ -34,6 +34,8 @@ angular.module('travel-components').controller 'DaysController'
           $scope.$parent.setDayCollapse($scope.day, 'transfers')
           $scope.$parent.setDayCollapse($scope.day, 'activities')
 
+          $scope.$parent.loadBudget()
+
           callback($scope.day) if callback
 
       $scope.save = ->
