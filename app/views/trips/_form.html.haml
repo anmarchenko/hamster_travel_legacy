@@ -45,7 +45,7 @@
 
         .form-group
           = f.label :status_code, class: 'control-label'
-          = f.select :status_code, Travels::Trip::StatusCodes::OPTIONS, {}, {class: 'form-control selectpicker'}
+          = f.select :status_code, Travels::Trip::StatusCodes::OPTIONS, {}, {class: 'form-control'}
           %span.help-block
             - Travels::Trip::StatusCodes::ALL.each do |type|
               %b
