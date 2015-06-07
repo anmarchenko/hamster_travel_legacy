@@ -128,13 +128,14 @@ describe Travels::Trip do
     context 'when filled trip' do
       let(:trip) {FactoryGirl.create(:trip, :with_filled_days)}
 
-      it 'returns right budget' do
+      it 'returns right budget in right currency' do
         hotel_price = trip.days.inject(0) { |sum, day| sum += day.hotel.price }
         days_add_price = trip.days.inject(0) { |sum, day| sum += day.expenses.inject(0) {|i_s, ex| i_s += (ex.price || 0) } }
         transfers_price = trip.days.inject(0) { |s, day| s += day.transfers.inject(0) { |i_s, tr| i_s += tr.price} }
         activities_price = trip.days.inject(0) { |s, day| s += day.activities.inject(0) { |i_s, ac| i_s += ac.price} }
 
         expect(trip.budget_sum).to eq([hotel_price, days_add_price, transfers_price, activities_price].reduce(&:+))
+        expect(trip.budget_sum('EUR')).to eq(Money.new([hotel_price, days_add_price, transfers_price, activities_price].reduce(&:+)*100, CurrencyHelper::DEFAULT_CURRENCY).exchange_to('EUR').to_f)
       end
     end
   end
