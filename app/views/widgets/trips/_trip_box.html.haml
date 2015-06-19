@@ -14,8 +14,8 @@
           = l trip.start_date, format: :month
 
       = t('common.budget').mb_chars.capitalize
-      = trip.budget_sum
-      = fa_icon 'ruble'
+      = trip.budget_sum(current_user.try(:currency))
+      = currency_symbol.html_safe
       \/
       = trip.days_count
       = t('common.days', count: trip.days_count)

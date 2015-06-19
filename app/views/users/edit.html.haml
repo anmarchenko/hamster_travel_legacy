@@ -16,7 +16,13 @@
         = f.label :locale, class: 'control-label col-md-3'
         %div{class: 'col-md-9'}
           = f.select :locale, options_for_select([%w(English en), %w(Русский ru)], @user.locale || params[:locale].to_s),
-          {}, {class: 'form-control selectpicker'}
+          {}, {class: 'form-control'}
+
+      %div{class: 'form-group'}
+        = f.label :currency, class: 'control-label col-md-3'
+        %div{class: 'col-md-9'}
+          = f.select :currency, options_for_select(CurrencyHelper.currencies_select, @user.currency || CurrencyHelper::DEFAULT_CURRENCY),
+          {}, {class: 'form-control'}
 
       %div{class: 'form-group pull-right'}
         %div{class: 'col-md-12'}

@@ -102,7 +102,8 @@ module Travels
       ((end_date - start_date) unless start_date.blank? or end_date.blank?) || 1
     end
 
-    def budget_sum
+    def budget_sum currency = CurrencyHelper::DEFAULT_CURRENCY
+      currency ||= CurrencyHelper::DEFAULT_CURRENCY
       result = 0
       (days || []).each do |day|
         result += (day.hotel.price || 0)
@@ -110,6 +111,8 @@ module Travels
         (day.activities || []).each {|activity| result += (activity.price || 0)}
         (day.expenses || []).each {|expense| result += (expense.price || 0)}
       end
+
+      result = Money.new(result * 100, CurrencyHelper::DEFAULT_CURRENCY).exchange_to(currency).to_f
       result
     end
 

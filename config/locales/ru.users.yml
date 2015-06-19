@@ -10,6 +10,7 @@ ru:
         home_town_text: Мой город
         locale: Язык
         current_password: Текущий пароль
+        currency: Валюта
   users:
     edit:
       title: Мои настройки

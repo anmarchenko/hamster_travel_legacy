@@ -6,11 +6,12 @@ describe Api::BudgetsController do
       login_user
 
       context 'and when there is trip' do
-        it 'returns budget in JSON' do
+        it 'returns budget in JSON in user currency' do
+          subject.current_user.update_attributes(currency: 'EUR')
           get 'show', id: trip.id.to_s, format: :json
           expect(response).to have_http_status 200
           json = JSON.parse(response.body)
-          expect(json['budget']).to eq(trip.budget_sum)
+          expect(json['budget']).to eq(trip.budget_sum('EUR'))
         end
       end
 
@@ -23,7 +24,7 @@ describe Api::BudgetsController do
     end
 
     context 'when no logged user' do
-      it 'returns budget in JSON' do
+      it 'returns budget in JSON in default currency' do
         get 'show', id: trip.id.to_s, format: :json
         expect(response).to have_http_status 200
         json = JSON.parse(response.body)

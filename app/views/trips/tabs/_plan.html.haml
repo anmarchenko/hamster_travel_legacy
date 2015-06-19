@@ -1,4 +1,4 @@
-%div{'ng-controller' => 'PlanController', 'ng-init' => "createDays(#{@trip.days.count}, #{@trip.to_json}, #{@trip.budget_sum})"}
+%div{'ng-controller' => 'PlanController', 'ng-init' => "createDays(#{@trip.days.count}, #{@trip.to_json}, #{@trip.budget_sum(current_user.try(:currency))})"}
   .container-full{'ng-cloak' => ''}
     .row
       .col-md-1
@@ -16,7 +16,7 @@
             %big
               = t('common.budget')
               {{budget}}
-              = fa_icon 'ruble'
+              = currency_symbol.html_safe
               %span{'ng-show' => '!edit'}
                 = t('trips.show.budget_for')
                 {{trip.budget_for}}
