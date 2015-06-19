@@ -1,0 +1,51 @@
+!!! 5
+%html(lang="en" ng-app='travel')
+  %head
+    %meta(charset="utf-8")
+    %meta(http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1")
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    %title= t('layouts.main.pagetitle', page: (yield(:title) if content_for?(:title))  )
+    = csrf_meta_tags
+
+    = stylesheet_link_tag '//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/paper/bootstrap.min.css', media: 'all'
+    = stylesheet_link_tag '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css', media: 'all'
+    = stylesheet_link_tag 'main', media: 'all'
+    = stylesheet_link_tag '//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.4.1/bootstrap-select.min.css', media: 'all'
+    = stylesheet_link_tag 'https://s3.amazonaws.com/altmer-cdn/jvectormap/jquery-jvectormap-1.2.2.css', media: 'all'
+
+    = favicon_link_tag '/favicon.ico'
+    = yield(:page_stylesheet) if content_for?(:page_stylesheet)
+
+  %body
+
+    = render 'layouts/partials/navbar', transparent: true
+
+    = yield
+
+    %footer
+      .container
+        .site-footer
+          .row
+            .col-md-2
+              © 2014, Hamster Travel
+            .col-md-10
+              %p
+                = t('common.authors')
+              %p
+                %a{href: 'http://vk.com/id88528'}
+                  = t('common.hamster')
+              %p
+                %a{href: 'https://github.com/altmer'}
+                  = t('common.andrey')
+
+    /
+      Javascripts
+      \==================================================
+    / Placed at the end of the document so the pages load faster
+    = javascript_include_tag 'main'
+    = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.4.1/bootstrap-select.min.js'
+    = javascript_include_tag 'https://code.angularjs.org/1.2.16/i18n/angular-locale_ru.js'
+    = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment-with-langs.min.js'
+    = javascript_include_tag 'https://s3.amazonaws.com/altmer-cdn/ui-sortable/sortable.js'
+    = javascript_include_tag 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'
+    = yield(:page_javascript) if content_for?(:page_javascript)

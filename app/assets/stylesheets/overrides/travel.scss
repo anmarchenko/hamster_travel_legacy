@@ -314,3 +314,28 @@ table .dropdown-menu a{
 .btn-add-trip{
   margin-top: 10px;
 }
+
+.dashboard-content{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+
+  background: url(https://s3.eu-central-1.amazonaws.com/hamster-travel-images/backgrounds/berlin-germany.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+header{
+  z-index: 10;
+}
+
+.navbar-transparent{
+  background-color:rgba(255,255,255,0.5);
+  a{
+    color: #444444 !important;
+  }
+}

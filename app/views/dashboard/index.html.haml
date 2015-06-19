@@ -1,17 +1,5 @@
 - content_for :title, t('.title')
 
-- content_for :page_javascript do
-  = render 'common/javascripts/jvectormap'
-
-%div{class: 'row text-center'}
-  %div{class: 'col-md-offset-2 col-md-8'}
-    %div{id: 'worldmap'}
-
-%div{class: 'row'}
-  %p{class: 'lead'}
-
-%div{class: 'row'}
-  %h3
-    = t('.last_travels')
-
-= render 'widgets/trips/grid', trips: @trips, without_pagination: true
+.dashboard-content
+  -#%h3
+  -#  Welcome to Hamster Travel
