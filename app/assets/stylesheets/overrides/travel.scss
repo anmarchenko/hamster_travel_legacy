@@ -339,3 +339,35 @@ header{
     color: #444444 !important;
   }
 }
+
+.welcome-area{
+  margin-top: 14%;
+  text-align: center;
+  .btn-browse{
+    margin-right: 15px;
+  }
+  .btns{
+    margin-top: 50px
+  }
+  h2{
+    color: white;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+  }
+  h3{
+    color: white;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+  }
+}
+
+@media (max-width: 992px) {
+  .welcome-area{
+    margin-top: 150px;
+    h2{
+      font-size: 18px;
+    }
+    h3{
+      color: white;
+      font-size: 16px;
+    }
+  }
+}

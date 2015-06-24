@@ -1,6 +1,8 @@
 en:
   dashboard:
     index:
-      placeholder: Welcome to Hamster Travel! Soon there will be many interesting things. Stay tuned.
-      title: Dashboard
-      last_travels: Last added travels
+      title: Travel planning
+      welcome: "Hamster Travel: your ultimate travel notebook"
+      welcome_second: We are in closed beta now. Stay tuned.
+      browse: Browse
+      add: Add new plan
