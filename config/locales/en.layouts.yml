@@ -1,7 +1,7 @@
 en:
   layouts:
     main:
-      pagetitle: Hamster Travel
+      pagetitle: "Hamster Travel | %{page}"
     partials:
       navbar:
         apptitle: Hamster Travel
