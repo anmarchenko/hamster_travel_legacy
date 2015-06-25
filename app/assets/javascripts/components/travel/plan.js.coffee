@@ -2,7 +2,6 @@ angular.module('travel-components').controller 'PlanController'
 , [
     '$scope', 'Trip', '$location', '$window', '$interval'
   , ($scope, Trip, $location, $window, $interval) ->
-
       $scope.uuid = ->
         s4 = ->
           return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
@@ -37,7 +36,7 @@ angular.module('travel-components').controller 'PlanController'
             error: ->
               $interval.cancel(promise)
           })
-        ,
+      ,
         5000
       )
 
@@ -138,4 +137,4 @@ angular.module('travel-components').controller 'PlanController'
 
       $scope.changeVisibility = (column) ->
         $scope[column] = !$scope[column]
-]
+  ]

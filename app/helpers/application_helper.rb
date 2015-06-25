@@ -2,12 +2,10 @@ module ApplicationHelper
   TAB_PLAN = 'plan'
   TAB_REPORT = 'report'
 
-  def currency_symbol
-    currency = current_user.try(:currency) || CurrencyHelper::DEFAULT_CURRENCY
+  def currency_symbol currency = nil
+    currency = (current_user.try(:currency) || CurrencyHelper::DEFAULT_CURRENCY) if currency.blank?
     currency = Money::Currency.find(currency)
-    symbol = currency.try(:html_entity)
-    symbol = currency.try(:symbol) if symbol.blank?
-    symbol
+    currency.try(:symbol)
   end
 
   def exchange_money from, to, amount
