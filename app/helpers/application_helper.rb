@@ -4,7 +4,10 @@ module ApplicationHelper
 
   def currency_symbol
     currency = current_user.try(:currency) || CurrencyHelper::DEFAULT_CURRENCY
-    Money::Currency.find(currency).try(:html_entity)
+    currency = Money::Currency.find(currency)
+    symbol = currency.try(:html_entity)
+    symbol = currency.try(:symbol) if symbol.blank?
+    symbol
   end
 
   def exchange_money from, to, amount
