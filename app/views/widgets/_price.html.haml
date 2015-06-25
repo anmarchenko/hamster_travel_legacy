@@ -2,6 +2,14 @@
 - ng_model ||= ''
 - placeholder ||= ''
 %div{class: 'input-group input-group-sm'}
-  %span{class: 'input-group-addon'}
-    = fa_icon 'ruble'
+  %div{class: 'input-group-addon'}
+    %span.dropdown-toggle{type: 'button', 'data-toggle' => 'dropdown', 'aria-haspopup' => 'true',
+      'aria-expanded' => false}
+      = fa_icon 'ruble'
+      %span.caret
+    %ul.dropdown-menu
+      - CurrencyHelper.currencies_select(current_user.try(:currency)).each do |currency_data|
+        %li
+          %a{'ng-click' => "select(#{currency_data[1]})", href: 'javascript:void(0);'}
+            = currency_data[0]
   = text_field_tag name, '', 'ng-model' => ng_model, class: 'input-sm form-control', placeholder: placeholder, 'onlydigits' => 'true'

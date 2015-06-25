@@ -22,8 +22,8 @@ module CurrencyHelper
     ecb_currencies.map{|curr| Money::Currency.select{|c| c.iso_code == curr }.first}
   end
 
-  def self.currencies_select
-    CurrencyHelper.currency_list.map{|currency| ["#{currency.name} (#{currency.iso_code})",currency.iso_code] }
+  def self.currencies_select user_currency = nil, trip_currency = nil
+    CurrencyHelper.currency_list(user_currency, trip_currency).map{|currency| ["#{currency.name} (#{currency.iso_code})",currency.iso_code] }
   end
 
 
