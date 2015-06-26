@@ -9,3 +9,5 @@ script:
   - bundle exec rspec
 before_script:
   - psql -c 'create database travel_planner_test;' -U postgres
+notifications:
+  slack: hamstertravel:0cUdYv5PqtYYExONQ7d4SJg5
