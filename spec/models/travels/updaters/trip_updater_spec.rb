@@ -283,12 +283,16 @@ describe Travels::Updaters::TripUpdater do
       let(:params) { {'1' => {id: day.id.to_s,
                               expenses: [ {
                                     name: 'new_expense_name',
-                                    price: 45678,
-                                },
+                                    amount_cents: 456,
+                                    amount_currency: 'RUB',
+                                    amount_currency_text: 'R'
+                                }.with_indifferent_access,
                                 {
                                     name: 'new_expense_name_2',
-                                    price: 98765,
-                                }
+                                    amount_cents: 98765,
+                                    amount_currency: 'RUB',
+                                    amount_currency_text: 'R'
+                                }.with_indifferent_access
                               ]
       } } }
 
@@ -296,9 +300,9 @@ describe Travels::Updaters::TripUpdater do
         expenses = first_day_of(trip).expenses
         expect(expenses.count).to eq 2
         expect(expenses.first.name).to eq 'new_expense_name'
-        expect(expenses.first.price).to eq 45678
+        expect(expenses.first.amount.to_f).to eq 456.0
         expect(expenses.last.name).to eq 'new_expense_name_2'
-        expect(expenses.last.price).to eq 98765
+        expect(expenses.last.amount.to_f).to eq 98765.0
       end
 
       it 'updates expense' do
@@ -306,14 +310,16 @@ describe Travels::Updaters::TripUpdater do
         params['1'][:expenses] = [
             {
                 id: expenses.first.id.to_s,
-                name: 'updated_name'
+                name: 'updated_name',
+                amount_currency: 'EUR'
             }
         ]
         update_trip_days trip, params
 
         updated_expenses = first_day_of(trip).expenses
         expect(updated_expenses.count).to eq 1
-        expect(updated_expenses.first.name).to eq 'updated_name'
+        expect(updated_expenses.first.reload.name).to eq 'updated_name'
+        expect(updated_expenses.first.reload.amount).to eq(Money.new(45600, 'EUR'))
       end
 
       it 'removes expenses' do

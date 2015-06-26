@@ -5,15 +5,21 @@ module Travels
 
     belongs_to :expendable, polymorphic: true
 
+    monetize :amount_cents, with_model_currency: :price_currency
+
     def is_empty?
-      return price.blank? && name.blank?
+      return (amount_cents.blank? || amount_cents == 0) && name.blank?
     end
 
     def as_json(*args)
       json = super(except: [:_id])
       json['id'] = id.to_s
-      json['price'] = price
+
       json['name'] = name
+
+      json['amount_cents'] = amount_cents / 100
+      json['amount_currency'] = amount_currency
+      json['amount_currency_text'] = amount.currency.symbol
       json
     end
 

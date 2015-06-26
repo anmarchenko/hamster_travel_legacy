@@ -1,16 +1,27 @@
 - name ||= 'field'
+
 - ng_model ||= ''
+- object_model ||= ''
 - currency_model ||= ''
+- currency_text_model ||= ''
+
 - placeholder ||= ''
+
+- default_currency_text = "#{Money::Currency.find(CurrencyHelper::DEFAULT_CURRENCY).symbol}"
+
 %div{class: 'input-group input-group-sm'}
-  %div{class: 'input-group-addon', 'ng-controller' => 'CurrencyInputController', 'ng-init' => "currency_text = '#{Money::Currency.find('RUB').symbol}'"}
+  %div{class: 'input-group-addon', 'ng-controller' => 'CurrencyInputController'}
     %span.dropdown-toggle{type: 'button', 'data-toggle' => 'dropdown', 'aria-haspopup' => 'true',
       'aria-expanded' => false}
-      {{currency_text}}
+      - if !object_model.blank? && !currency_text_model.blank?
+        {{#{object_model}.#{currency_text_model}}}
+      - else
+        = default_currency_text
       %span.caret
     %ul.dropdown-menu
       - CurrencyHelper.currencies_select(current_user.try(:currency)).each do |currency_data|
         %li
-          %a{'ng-click' => "selectCurrency('#{currency_data[1]}', '#{currency_model}', '#{currency_data[2]}')", href: 'javascript:void(0);'}
+          %a{'ng-click' => "selectCurrency('#{currency_data[1]}', '#{currency_model}', '#{object_model}', '#{currency_data[2]}', '#{currency_text_model}')",
+          href: 'javascript:void(0);'}
             = currency_data[0]
   = text_field_tag name, '', 'ng-model' => ng_model, class: 'input-sm form-control', placeholder: placeholder, 'onlydigits' => 'true'

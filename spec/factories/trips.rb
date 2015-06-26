@@ -106,7 +106,8 @@ FactoryGirl.define do
   factory :expense, class: 'Travels::Expense' do
     trait :with_data do
       sequence(:name) {|n| "Day expense #{n}"}
-      price {rand(10000)}
+      amount_cents {rand(10000) * 100}
+      amount_currency {'RUB'}
     end
   end
 

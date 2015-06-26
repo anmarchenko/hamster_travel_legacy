@@ -28,5 +28,4 @@ module CurrencyHelper
     end
   end
 
-
 end

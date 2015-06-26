@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150607133103) do
+ActiveRecord::Schema.define(version: 20150626212652) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -189,10 +189,11 @@ ActiveRecord::Schema.define(version: 20150607133103) do
 
   create_table "expenses", force: :cascade do |t|
     t.string  "name"
-    t.integer "price"
     t.string  "mongo_id"
     t.integer "expendable_id"
     t.string  "expendable_type"
+    t.integer "amount_cents",    default: 0,     null: false
+    t.string  "amount_currency", default: "RUB", null: false
   end
 
   add_index "expenses", ["expendable_type", "expendable_id"], name: "index_expenses_on_expendable_type_and_expendable_id", using: :btree
