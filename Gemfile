@@ -127,4 +127,8 @@ group :test do
   gem 'email_spec'
   # launching cross-platform applications in a fire and forget manner
   gem 'launchy'
+
+  # tests coverage
+  gem 'coveralls', require: false
+
 end
