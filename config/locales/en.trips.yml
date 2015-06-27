@@ -9,6 +9,7 @@ en:
         author: Author
         status_code: Trip status
         private: Private trip
+        currency: Most used currency in this trip
   trips:
     index:
       title: Travels

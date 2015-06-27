@@ -122,7 +122,7 @@ module Travels
     end
 
     def copied_fields
-      [:name, :start_date, :end_date]
+      [:name, :start_date, :end_date, :currency]
     end
 
     def as_json(**args)

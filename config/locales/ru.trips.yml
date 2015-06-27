@@ -9,6 +9,7 @@ ru:
         author: Создатель
         status_code: Статус
         private: Скрытое
+        currency: Самая используемая валюта в путешествии
   trips:
     index:
       title: Путешествия

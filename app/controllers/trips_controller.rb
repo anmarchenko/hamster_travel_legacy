@@ -72,7 +72,7 @@ class TripsController < ApplicationController
 
   def params_trip
     params.require(:travels_trip).permit(:name, :short_description, :start_date, :end_date, :image, :status_code,
-      :private)
+      :private, :currency)
   end
 
   def find_trip

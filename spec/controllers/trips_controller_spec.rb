@@ -72,12 +72,13 @@ describe TripsController do
       end
 
       context 'when parameter copy from present' do
-        let(:trip) {FactoryGirl.create(:trip, :with_filled_days)}
+        let(:trip) {FactoryGirl.create(:trip, :with_filled_days, currency: 'USD')}
         let(:trip_private) { FactoryGirl.create(:trip, :with_filled_days, private: true) }
         context 'and when it is valid existing trip id' do
           it 'renders template with new trip copied from old trip' do
             get 'new', copy_from: trip.id
             new_trip = assigns(:trip)
+            expect(new_trip.currency).to eq 'USD'
             expect(new_trip.name).to eq trip.name + ' (Копия)'
             expect(new_trip.start_date).to eq trip.start_date
             expect(new_trip.end_date).to eq trip.end_date
@@ -172,6 +173,7 @@ describe TripsController do
           expect(trip.short_description).to eq params[:travels_trip]['short_description']
           expect(trip.start_date).to eq params[:travels_trip]['start_date']
           expect(trip.end_date).to eq params[:travels_trip]['end_date']
+          expect(trip.currency).to eq('RUB')
         end
 
         context 'and when trip is copied from original' do
@@ -345,7 +347,7 @@ describe TripsController do
   describe '#update' do
     let(:update_attrs) {{travels_trip: attrs.merge('name' => 'New Updated Name',
                                                    status_code: Travels::Trip::StatusCodes::PLANNED,
-                                                    private: true), id: trip.id}}
+                                                    private: true, currency: 'EUR'), id: trip.id}}
     context 'when user is logged in' do
       login_user
 
@@ -355,9 +357,11 @@ describe TripsController do
         context 'and when params are valid' do
           it 'updates trip and redirects to show with notice' do
             put 'update', update_attrs
-            expect(assigns(:trip).name).to eq 'New Updated Name'
-            expect(assigns(:trip).status_code).to eq Travels::Trip::StatusCodes::PLANNED
-            expect(assigns(:trip).private).to eq true
+            trip_updated = assigns(:trip).reload
+            expect(trip_updated.name).to eq 'New Updated Name'
+            expect(trip_updated.status_code).to eq Travels::Trip::StatusCodes::PLANNED
+            expect(trip_updated.private).to eq true
+            expect(trip_updated.currency).to eq('EUR')
             expect(response).to redirect_to trip_path(trip)
             expect(flash[:notice]).to eq I18n.t('common.update_successful')
           end

@@ -1,5 +1,4 @@
 - is_create = %w(new create).include?(params[:action])
-- is_edit = %w(edit update).include?(params[:action])
 
 .row
   .col-xs-12.col-sm-12.col-md-8.col-md-offset-2
@@ -42,6 +41,10 @@
                   placeholder: t('.end_date_placeholder'), min: 'start_date')
                 .input-group-addon
                   = fa_icon 'calendar'
+        .form-group
+          = f.label :currency, class: 'control-label'
+          = f.select :currency, options_for_select(CurrencyHelper.currencies_select_simple, @trip.currency || CurrencyHelper::DEFAULT_CURRENCY),
+            {}, {class: 'form-control'}
 
         .form-group
           = f.label :status_code, class: 'control-label'

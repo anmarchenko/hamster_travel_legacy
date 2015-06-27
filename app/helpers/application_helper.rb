@@ -8,6 +8,14 @@ module ApplicationHelper
     currency.try(:symbol)
   end
 
+  # def default_currency_for_trip trip
+  #   currency = trip.currency ||
+  # end
+  #
+  # def default_currency_text_for_trip trip
+  #   currency = trip.currency ||
+  # end
+
   def exchange_money from, to, amount
     Money.new(amount * 100, from).exchange_to(to)
   end
