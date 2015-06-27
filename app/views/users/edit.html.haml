@@ -21,7 +21,7 @@
       %div{class: 'form-group'}
         = f.label :currency, class: 'control-label col-md-3'
         %div{class: 'col-md-9'}
-          = f.select :currency, options_for_select(CurrencyHelper.currencies_select, @user.currency || CurrencyHelper::DEFAULT_CURRENCY),
+          = f.select :currency, options_for_select(CurrencyHelper.currencies_select_simple, @user.currency || CurrencyHelper::DEFAULT_CURRENCY),
           {}, {class: 'form-control'}
 
       %div{class: 'form-group pull-right'}

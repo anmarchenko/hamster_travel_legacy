@@ -28,4 +28,10 @@ module CurrencyHelper
     end
   end
 
+  def self.currencies_select_simple user_currency = nil
+    CurrencyHelper.currency_list(user_currency, trip_currency).map do |currency|
+      ["#{currency.name} (#{currency.iso_code})",currency.iso_code]
+    end
+  end
+
 end
