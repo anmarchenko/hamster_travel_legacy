@@ -5,7 +5,7 @@ module Travels
 
     belongs_to :expendable, polymorphic: true
 
-    monetize :amount_cents, with_model_currency: :price_currency
+    monetize :amount_cents
 
     def is_empty?
       return (amount_cents.blank? || amount_cents == 0) && name.blank?

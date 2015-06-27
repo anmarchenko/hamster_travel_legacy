@@ -13,9 +13,9 @@
       {{transfer.city_to_text}}
       %span{'ng-show' => '!!transfer.station_to'}
         ({{transfer.station_to}})
-    %span{'ng-show' => 'transfer.price != undefined'}
-      {{transfer.price}}
-      = fa_icon 'ruble'
+    %span{'ng-show' => 'transfer.amount_cents != undefined'}
+      {{transfer.amount_cents}}
+      {{transfer.amount_currency_text}}
 
 %div{'ng-show' => '!transfer.isCollapsed'}
   %p

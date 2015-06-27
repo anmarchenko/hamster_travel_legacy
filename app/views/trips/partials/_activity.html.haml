@@ -5,9 +5,9 @@
         %span{'ng-show' => 'day.activities.length > 1'}
           {{$index+1}}.
         {{activity.name}}
-      %span{'ng-show' => 'activity.price != undefined'}
-        {{activity.price}}
-        = fa_icon 'ruble'
+      %span{'ng-show' => 'activity.amount_cents != undefined'}
+        {{activity.amount_cents}}
+        {{activity.amount_currency_text}}
     %div{'ng-show' => '!activity.isCollapsed'}
       %p.text-italic{'ng-show' => '!activity.comment && !activity.link_url'}
         = t('common.no_comments')
@@ -41,7 +41,7 @@
       %div{'ng-show' => '!activity.isCollapsed'}
         .form-group{collapse: 'isCollapsed'}
           .col-md-12
-            = render 'widgets/price', name: 'activity_price', ng_model: 'activity.price',
+            = render 'widgets/price', name: 'activity_price', object_model: 'activity',
                                       placeholder: t('trips.show.price')
         .form-group
           .col-md-12
@@ -58,5 +58,5 @@
     %a.pull-left{href: 'javascript:void(0);', 'ng-click' => 'reload()', 'ng-show' => 'activity_edit'}
       = fa_icon 'undo'
     %a.pull-right{href: 'javascript:void(0);',
-        'ng-click' => 'add(day.activities, {"isCollapsed" : activitiesCollapsed})'}
+        'ng-click' => "add(day.activities, {\"isCollapsed\" : activitiesCollapsed, amount_currency_text: '#{Money::Currency.find(CurrencyHelper::DEFAULT_CURRENCY).symbol}'})"}
       = fa_icon 'plus'

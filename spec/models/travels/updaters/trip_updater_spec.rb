@@ -32,16 +32,17 @@ describe Travels::Updaters::TripUpdater do
                               hotel: {
                                   name: 'new_name',
                                   comment: 'new_comment',
-                                  price: 123,
+                                  amount_cents: 123,
+                                  amount_currency: 'EUR',
                                   links: [{url: 'http://new.url', description: 'new_description'}]
-                              }
+                              }.with_indifferent_access
       } } }
 
       it 'updates hotel attributes' do
         hotel = first_day_of(trip).hotel
         expect(hotel.name).to eq 'new_name'
         expect(hotel.comment).to eq 'new_comment'
-        expect(hotel.price).to eq 123
+        expect(hotel.amount).to eq Money.new(12300, 'EUR')
         expect(hotel.links.count).to eq 1
         expect(hotel.links.first.url).to eq 'http://new.url'
         expect(hotel.links.first.description).to eq 'New.url'

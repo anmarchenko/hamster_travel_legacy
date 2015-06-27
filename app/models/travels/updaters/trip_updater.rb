@@ -41,8 +41,9 @@ module Travels
 
           unless day_hash[:hotel].blank?
             hotel_hash = day_hash[:hotel]
-            day.hotel.update_attributes(name: hotel_hash[:name], price: hotel_hash[:price],
-              comment: hotel_hash[:comment])
+            process_amount(hotel_hash)
+            day.hotel.update_attributes(name: hotel_hash[:name], amount_cents: hotel_hash[:amount_cents],
+                                        amount_currency: hotel_hash[:amount_currency], comment: hotel_hash[:comment])
             process_nested(day.hotel.links, day_hash[:hotel][:links] || [])
           end
 
@@ -71,14 +72,14 @@ module Travels
       private
 
       def prepare_activities_params act_params
-        act_params.delete_if{|hash| hash[:name].blank?} || []
+        act_params.delete_if { |hash| hash[:name].blank? } || []
       end
 
       # TODO permit only some params - possible security problem
       def process_nested(collection, params)
         to_delete = []
         collection.each do |item|
-          to_delete << item.id if params.select{|v| v[:id] == item.id.to_s}.count == 0
+          to_delete << item.id if params.select { |v| v[:id] == item.id.to_s }.count == 0
         end
         collection.where(:id => to_delete).destroy_all
         params.each do |item_hash|

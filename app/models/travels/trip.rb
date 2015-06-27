@@ -104,18 +104,15 @@ module Travels
 
     def budget_sum currency = CurrencyHelper::DEFAULT_CURRENCY
       currency ||= CurrencyHelper::DEFAULT_CURRENCY
-      result = 0
       result_new = Money.new(0, currency)
       (days || []).each do |day|
-        result += (day.hotel.price || 0)
-        (day.transfers || []).each {|transfer| result += (transfer.price || 0)}
-        (day.activities || []).each {|activity| result += (activity.price || 0)}
+        result_new += day.hotel.amount.exchange_to(currency)
+        (day.transfers || []).each {|transfer| result_new += transfer.amount.exchange_to(currency)}
+        (day.activities || []).each {|activity| result_new += activity.amount.exchange_to(currency)}
         (day.expenses || []).each {|expense| result_new += expense.amount.exchange_to(currency)}
       end
 
-      result = Money.new(result * 100, CurrencyHelper::DEFAULT_CURRENCY).exchange_to(currency)
-      result += result_new
-      result.to_f
+      result_new.to_f
     end
 
     def copy trip

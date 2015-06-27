@@ -187,7 +187,7 @@ describe TripsController do
               expect(trip.days.first.comment).to eq original.days.first.comment
               expect(trip.days.first.date_when).to eq params[:travels_trip]['start_date']
               expect(trip.days.first.transfers.count).to eq original.days.first.transfers.count
-              expect(trip.days.first.transfers.first.price).to eq original.days.first.transfers.first.price
+              expect(trip.days.first.transfers.first.amount).to eq original.days.first.transfers.first.amount
 
               expect(trip.days.first.places.count).to eq original.days.first.places.count
 
@@ -236,7 +236,7 @@ describe TripsController do
               expect(trip.days.first.comment).to eq original.days.first.comment
               expect(trip.days.first.date_when).to eq params[:travels_trip]['start_date']
               expect(trip.days.first.transfers.count).to eq original.days.first.transfers.count
-              expect(trip.days.first.transfers.first.price).to eq original.days.first.transfers.first.price
+              expect(trip.days.first.transfers.first.amount).to eq original.days.first.transfers.first.amount
 
               expect(trip.days.last.comment).to be_nil
               expect(trip.days.last.date_when).to eq params[:travels_trip]['end_date']
@@ -255,7 +255,7 @@ describe TripsController do
               expect(trip.days.first.comment).to eq original.days.first.comment
               expect(trip.days.first.date_when).to eq params[:travels_trip]['start_date']
               expect(trip.days.first.transfers.count).to eq original.days.first.transfers.count
-              expect(trip.days.first.transfers.first.price).to eq original.days.first.transfers.first.price
+              expect(trip.days.first.transfers.first.amount).to eq original.days.first.transfers.first.amount
 
               expect(trip.days.last.comment).to eq original.days[-2].comment
               expect(trip.days.last.date_when).to eq params[:travels_trip]['end_date']

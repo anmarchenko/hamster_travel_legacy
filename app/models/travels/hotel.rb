@@ -5,6 +5,8 @@ module Travels
     belongs_to :day, class_name: 'Travels::Day'
     has_many :links, class_name: 'ExternalLink', as: :linkable
 
+    monetize :amount_cents
+
     def as_json(*args)
       json = super(except: [:_id])
       json['id'] = id.to_s
@@ -13,11 +15,13 @@ module Travels
       else
         json['links'] = links.as_json(args)
       end
+      json['amount_cents'] = amount_cents / 100
+      json['amount_currency_text'] = amount.currency.symbol
       json
     end
 
     def is_empty?
-      [:name, :price, :comment].each do |field|
+      [:name, :comment].each do |field|
         return false unless self.send(field).blank?
       end
       (links || []).each do |link|

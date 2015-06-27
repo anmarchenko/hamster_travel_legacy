@@ -8,6 +8,8 @@ module Travels
 
     belongs_to :day, class_name: 'Travels::Day'
 
+    monetize :amount_cents
+
     module Types
       FLIGHT = 'flight'
       TRAIN = 'train'
@@ -46,6 +48,8 @@ module Travels
       json['start_time'] = start_time.try(:strftime, '%Y-%m-%dT%H:%M+00:00')
       json['end_time'] = end_time.try(:strftime, '%Y-%m-%dT%H:%M+00:00')
       json['type_icon'] = type_icon
+      json['amount_cents'] = amount_cents / 100
+      json['amount_currency_text'] = amount.currency.symbol
       json
     end
 

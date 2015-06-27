@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150626212652) do
+ActiveRecord::Schema.define(version: 20150627101041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,12 +19,13 @@ ActiveRecord::Schema.define(version: 20150626212652) do
   create_table "activities", force: :cascade do |t|
     t.integer "order_index"
     t.string  "name"
-    t.integer "price"
     t.text    "comment"
     t.string  "link_description"
     t.text    "link_url"
     t.string  "mongo_id"
     t.integer "day_id"
+    t.integer "amount_cents",     default: 0,     null: false
+    t.string  "amount_currency",  default: "RUB", null: false
   end
 
   add_index "activities", ["day_id"], name: "index_activities_on_day_id", using: :btree
@@ -210,10 +211,11 @@ ActiveRecord::Schema.define(version: 20150626212652) do
 
   create_table "hotels", force: :cascade do |t|
     t.string  "name"
-    t.integer "price"
     t.text    "comment"
     t.string  "mongo_id"
     t.integer "day_id"
+    t.integer "amount_cents",    default: 0,     null: false
+    t.string  "amount_currency", default: "RUB", null: false
   end
 
   add_index "hotels", ["day_id"], name: "index_hotels_on_day_id", using: :btree
@@ -265,9 +267,10 @@ ActiveRecord::Schema.define(version: 20150626212652) do
     t.datetime "start_time"
     t.datetime "end_time"
     t.text     "comment"
-    t.integer  "price"
     t.string   "mongo_id"
     t.integer  "day_id"
+    t.integer  "amount_cents",    default: 0,     null: false
+    t.string   "amount_currency", default: "RUB", null: false
   end
 
   add_index "transfers", ["day_id"], name: "index_transfers_on_day_id", using: :btree

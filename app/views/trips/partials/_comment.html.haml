@@ -23,10 +23,7 @@
           placeholder: t('trips.show.expense')
     .col-md-6.relative-position.day-expense-container
       = render 'widgets/price', name: 'expense_price', placeholder: t('trips.show.price'),
-        ng_model: 'expense.amount_cents',
-        object_model: 'expense',
-        currency_model: 'amount_currency',
-        currency_text_model: 'amount_currency_text'
+        object_model: 'expense'
 
       %a.delete-button{href: 'javascript:void(0);', 'ng-click' => 'remove(day.expenses, $index)',
           'ng-show' => 'day.expenses.length > 1'}

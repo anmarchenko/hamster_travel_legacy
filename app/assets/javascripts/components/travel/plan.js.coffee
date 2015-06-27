@@ -75,7 +75,9 @@ angular.module('travel-components').controller 'PlanController'
         prev_hotel = prev_day.hotel
         if prev_hotel
           hotel.name = prev_hotel.name
-          hotel.price = prev_hotel.price
+          hotel.amount_cents = prev_hotel.amount_cents
+          hotel.amount_currency = prev_hotel.amount_currency
+          hotel.amount_currency_text = prev_hotel.amount_currency_text
           hotel.links = []
           for link in prev_hotel.links
             hotel.links.push JSON.parse(JSON.stringify(link))

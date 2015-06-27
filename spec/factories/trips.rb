@@ -51,7 +51,8 @@ FactoryGirl.define do
       city_to_code {Geo::City.all.last.geonames_code}
       city_to_text {Geo::City.all.last.name}
 
-      price {rand(10000)}
+      amount_cents {rand(10000) * 100}
+      amount_currency {'RUB'}
     end
 
     trait :flight do
@@ -61,7 +62,8 @@ FactoryGirl.define do
       city_to_code {Geo::City.all.last.geonames_code}
       city_to_text {Geo::City.all.last.name}
 
-      price {rand(10000)}
+      amount_cents {rand(10000) * 100}
+      amount_currency {'RUB'}
 
       type {Travels::Transfer::Types::FLIGHT}
 
@@ -81,7 +83,8 @@ FactoryGirl.define do
   factory :activity, class: 'Travels::Activity' do
     trait :with_data do
       name {'Activity'}
-      price {rand(10000)}
+      amount_cents {rand(10000) * 100}
+      amount_currency {'RUB'}
       comment {'Activity comment'}
       link_description {'Activity link description'}
       link_url {'http://cool.site'}
@@ -98,7 +101,8 @@ FactoryGirl.define do
   factory :hotel, class: 'Travels::Hotel' do
     trait :with_data do
       name {'Hotel'}
-      price {rand(10000)}
+      amount_cents {rand(10000) * 100}
+      amount_currency {'RUB'}
       comment {'Comment'}
     end
   end
