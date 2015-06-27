@@ -43,7 +43,7 @@
                   = fa_icon 'calendar'
         .form-group
           = f.label :currency, class: 'control-label'
-          = f.select :currency, options_for_select(CurrencyHelper.currencies_select_simple, @trip.currency || CurrencyHelper::DEFAULT_CURRENCY),
+          = f.select :currency, options_for_select(CurrencyHelper.currencies_select_simple, @trip.currency || current_user.currency || CurrencyHelper::DEFAULT_CURRENCY),
             {}, {class: 'form-control'}
 
         .form-group
