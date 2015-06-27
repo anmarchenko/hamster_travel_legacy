@@ -58,5 +58,5 @@
     %a.pull-left{href: 'javascript:void(0);', 'ng-click' => 'reload()', 'ng-show' => 'activity_edit'}
       = fa_icon 'undo'
     %a.pull-right{href: 'javascript:void(0);',
-        'ng-click' => "add(day.activities, {\"isCollapsed\" : activitiesCollapsed, amount_currency_text: '#{Money::Currency.find(CurrencyHelper::DEFAULT_CURRENCY).symbol}'})"}
+        'ng-click' => "add(day.activities, {\"isCollapsed\" : activitiesCollapsed, #{default_currency_hash(@trip, current_user)}})"}
       = fa_icon 'plus'

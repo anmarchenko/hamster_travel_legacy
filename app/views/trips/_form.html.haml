@@ -63,5 +63,5 @@
         %hr
 
         .form-actions.text-right
-          = link_to t('.return'), is_create ? trips_path : trip_path(@trip), class: 'btn btn-primary pull-left'
-          = submit_tag t('.save'), class: 'btn btn-success'
+          = submit_tag t('.save'), class: 'btn btn-success pull-left'
+          = link_to t('.return'), is_create ? trips_path : trip_path(@trip), class: 'btn btn-primary'

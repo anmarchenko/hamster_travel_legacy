@@ -160,11 +160,11 @@ describe TripsController do
       login_user
 
       context 'and when trip is valid' do
-        let(:params) { {travels_trip: attrs} }
+        let(:params) { {travels_trip: attrs.merge(currency: 'INR')} }
 
         it 'creates new trip and redirects to show' do
           post 'create', params
-          trip = assigns(:trip)
+          trip = assigns(:trip).reload
           expect(response).to redirect_to trip_path(trip)
           expect(trip).to be_persisted
           expect(trip.author_user).to eq subject.current_user
@@ -173,7 +173,8 @@ describe TripsController do
           expect(trip.short_description).to eq params[:travels_trip]['short_description']
           expect(trip.start_date).to eq params[:travels_trip]['start_date']
           expect(trip.end_date).to eq params[:travels_trip]['end_date']
-          expect(trip.currency).to eq('RUB')
+          expect(trip.currency).to eq('INR')
+          expect(trip.days.first.hotel.amount_currency).to eq('INR')
         end
 
         context 'and when trip is copied from original' do

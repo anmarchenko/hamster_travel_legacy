@@ -20,5 +20,5 @@
       = fa_icon 'undo'
 
     %a.pull-right{href: 'javascript:void(0);',
-    'ng-click' => "add(day.transfers, {\"isCollapsed\" : transfersCollapsed, amount_currency_text: '#{Money::Currency.find(CurrencyHelper::DEFAULT_CURRENCY).symbol}'})"}
+    'ng-click' => "add(day.transfers, {\"isCollapsed\" : transfersCollapsed, #{default_currency_hash(@trip, current_user)}})"}
       = fa_icon 'plus'

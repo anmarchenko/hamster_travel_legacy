@@ -8,13 +8,19 @@ module ApplicationHelper
     currency.try(:symbol)
   end
 
-  # def default_currency_for_trip trip
-  #   currency = trip.currency ||
-  # end
-  #
-  # def default_currency_text_for_trip trip
-  #   currency = trip.currency ||
-  # end
+  def default_currency_hash trip, user
+    "amount_currency_text: '#{default_currency_text_for_trip(trip, user)}', amount_currency: '#{default_currency_for_trip(trip, user)}'"
+  end
+
+  def default_currency_for_trip trip, user
+    trip.currency || user.try(:currency) || CurrencyHelper::DEFAULT_CURRENCY
+  end
+
+  def default_currency_text_for_trip trip, user
+    currency = default_currency_for_trip(trip, user)
+    currency = Money::Currency.find(currency)
+    currency.try(:symbol)
+  end
 
   def exchange_money from, to, amount
     Money.new(amount * 100, from).exchange_to(to)

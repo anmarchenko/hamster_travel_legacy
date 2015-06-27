@@ -17,8 +17,8 @@ module Travels
 
     def init
       self.places = [Travels::Place.new] if self.places.count == 0
-      self.hotel = Travels::Hotel.new if self.hotel.blank?
-      self.expenses = [Travels::Expense.new] if self.expenses.count == 0
+      self.hotel = Travels::Hotel.new(amount_currency: trip.currency) if self.hotel.blank?
+      self.expenses = [Travels::Expense.new(amount_currency: trip.currency)] if self.expenses.count == 0
     end
 
     def date_when_s
