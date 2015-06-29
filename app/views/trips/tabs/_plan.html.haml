@@ -57,14 +57,14 @@
           = t('trips.show.day')
         %th{class: 'col-md-1', 'ng-show' => 'show_place'}
           = t('trips.show.place')
-        %th{class: 'col-md-5', 'ng-show' => 'show_transfers'}
+        %th{class: 'col-md-6', 'ng-show' => 'show_transfers'}
           = t('trips.show.transfers')
           %a{class: 'pull-right', href: 'javascript:void(0);', 'ng-click' => 'toggleTransfers()'}
             %span{'ng-show' => '!transfersCollapsed'}
               = fa_icon 'arrow-down'
             %span{'ng-show' => 'transfersCollapsed'}
               = fa_icon 'arrow-right'
-        %th{class: 'col-md-5', 'ng-show' => 'show_hotel'}
+        %th{class: 'col-md-4', 'ng-show' => 'show_hotel'}
           = t('trips.show.hotel')
 
     %tbody
