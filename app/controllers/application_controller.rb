@@ -7,6 +7,18 @@ class ApplicationController < ActionController::Base
     I18n.locale = params[:locale] || current_user.try(:locale) || I18n.default_locale
   end
 
+  before_filter :load_exchange_rates
+  def load_exchange_rates
+    cache = "#{Rails.root}/lib/ecb_rates.xml"
+    @bank = Money.default_bank
+    if !@bank.rates_updated_at || @bank.rates_updated_at < Time.now - 1.days
+      p "Loading exchange rates from ECB..."
+      @bank.save_rates(cache)
+      @bank.update_rates(cache)
+      p "Exchange rates are loaded."
+    end
+  end
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception

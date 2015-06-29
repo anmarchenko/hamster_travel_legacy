@@ -1,7 +1,8 @@
-eu_bank = EuCentralBank.new
+cache = "#{Rails.root}/lib/ecb_rates.xml"
 
+eu_bank = EuCentralBank.new
 Money.default_bank = eu_bank
 
-p "Loading exchange rates from ECB..."
-eu_bank.update_rates("#{Rails.root}/lib/ecb_rates.xml")
-p "Exchange rates loaded."
+p "Loading exchange rates from ECB local..."
+eu_bank.update_rates(cache)
+p "Exchange rates are loaded."
