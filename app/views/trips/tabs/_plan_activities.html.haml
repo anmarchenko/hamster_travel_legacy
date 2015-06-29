@@ -32,23 +32,23 @@
             = fa_icon 'square-o'
           = fa_icon 'map-marker'
         %a{class: "list-group-item",
-                         'ng-click' => 'changeVisibility("show_transfers")',
-                         'ng-class' => '{active: show_transfers}',
-                         'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.transfers')}
-          %span{'ng-show' => 'show_transfers'}
+                         'ng-click' => 'changeVisibility("show_activities")',
+                         'ng-class' => '{active: show_activities}',
+                         'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.activities')}
+          %span{'ng-show' => 'show_activities'}
             = fa_icon 'check-square-o'
-          %span{'ng-show' => '!show_transfers'}
+          %span{'ng-show' => '!show_activities'}
             = fa_icon 'square-o'
-          = fa_icon 'car'
+          = fa_icon 'university'
         %a{class: "list-group-item",
-                         'ng-click' => 'changeVisibility("show_hotel")',
-                         'ng-class' => '{active: show_hotel}',
-                         'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.hotel')}
-          %span{'ng-show' => 'show_hotel'}
+                         'ng-click' => 'changeVisibility("show_comments")',
+                         'ng-class' => '{active: show_comments}',
+                         'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.comments')}
+          %span{'ng-show' => 'show_comments'}
             = fa_icon 'check-square-o'
-          %span{'ng-show' => '!show_hotel'}
+          %span{'ng-show' => '!show_comments'}
             = fa_icon 'square-o'
-          = fa_icon 'home'
+          = fa_icon 'pencil'
 
   %table.table.table-black-bordered.fixed-head.plan-table
     %thead.plan-affix
@@ -57,15 +57,15 @@
           = t('trips.show.day')
         %th{class: 'col-md-1', 'ng-show' => 'show_place'}
           = t('trips.show.place')
-        %th{class: 'col-md-5', 'ng-show' => 'show_transfers'}
-          = t('trips.show.transfers')
-          %a{class: 'pull-right', href: 'javascript:void(0);', 'ng-click' => 'toggleTransfers()'}
-            %span{'ng-show' => '!transfersCollapsed'}
+        %th{class: 'col-md-7', 'ng-show' => 'show_activities'}
+          = t('trips.show.activities')
+          %a{class: 'pull-right', href: 'javascript:void(0);', 'ng-click' => 'toggleActivities()'}
+            %span{'ng-show' => '!activitiesCollapsed'}
               = fa_icon 'arrow-down'
-            %span{'ng-show' => 'transfersCollapsed'}
+            %span{'ng-show' => 'activitiesCollapsed'}
               = fa_icon 'arrow-right'
-        %th{class: 'col-md-5', 'ng-show' => 'show_hotel'}
-          = t('trips.show.hotel')
+        %th{class: 'col-md-3', 'ng-show' => 'show_comments'}
+          = t('trips.show.comments')
 
     %tbody
       - @trip.days.each_with_index do |day, day_index|
@@ -76,11 +76,11 @@
                                          'ng-mouseenter' => 'mouse_over_place = true'}
             %span{'ng-cloak' => ''}
               = render 'trips/partials/place'
-          %td{'ng-show' => 'show_transfers', 'ng-mouseleave' => 'mouse_over_transfers = false',
-                                             'ng-mouseenter' => 'mouse_over_transfers = true'}
+          %td{'ng-show' => 'show_activities', 'ng-mouseleave' => 'mouse_over_activities = false',
+                                              'ng-mouseenter' => 'mouse_over_activities = true'}
             %span{'ng-cloak' => ''}
-              = render 'trips/partials/transfer'
-          %td{'ng-show' => 'show_hotel', 'ng-mouseleave' => 'mouse_over_hotel = false',
-                                         'ng-mouseenter' => 'mouse_over_hotel = true'}
+              = render 'trips/partials/activity'
+          %td{'ng-show' => 'show_comments', 'ng-mouseleave' => 'mouse_over_comments = false',
+                                            'ng-mouseenter' => 'mouse_over_comments = true'}
             %span{'ng-cloak' => ''}
-              = render 'trips/partials/hotel'
+              = render 'trips/partials/comment'

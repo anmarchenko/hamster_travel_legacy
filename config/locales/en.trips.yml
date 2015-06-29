@@ -21,7 +21,8 @@ en:
     show:
       title: Travel
       travellers: 'Participants:'
-      plan: Plan
+      plan: Transfers and hotels
+      plan_activities: Activities
       day: Day
       place: Cities
       transfers: Transfers

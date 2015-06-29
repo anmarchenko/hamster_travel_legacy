@@ -1,6 +1,7 @@
 module ApplicationHelper
   TAB_PLAN = 'plan'
   TAB_REPORT = 'report'
+  TAB_PLAN_ACTIVITIES = 'plan_activities'
 
   def currency_symbol currency = nil
     currency = (current_user.try(:currency) || CurrencyHelper::DEFAULT_CURRENCY) if currency.blank?

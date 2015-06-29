@@ -65,6 +65,9 @@
 - if params[:tab].blank? || params[:tab] == ApplicationHelper::TAB_PLAN
   = render 'trips/tabs/plan'
 
+- if params[:tab].blank? || params[:tab] == ApplicationHelper::TAB_PLAN_ACTIVITIES
+  = render 'trips/tabs/plan_activities'
+
 - if params[:tab] == ApplicationHelper::TAB_REPORT
   = render 'trips/tabs/report'
 

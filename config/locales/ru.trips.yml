@@ -21,7 +21,8 @@ ru:
     show:
       title: Путешествие
       travellers: 'Участники:'
-      plan: План
+      plan: Трансферы и размещение
+      plan_activities: Впечатления
       day: День
       place: Города
       transfers: Трансферы
