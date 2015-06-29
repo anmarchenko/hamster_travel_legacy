@@ -1,5 +1,5 @@
-%div{'ng-controller' => 'PlanController', 'ng-init' => "createDays(#{@trip.days.count}, #{@trip.to_json}, #{@trip.budget_sum(current_user.try(:currency))})"}
-  .row{'ng-cloak' => ''}
+%div{'ng-controller' => 'PlanController', 'ng-init' => "createDays(#{@trip.days.count}, #{@trip.to_json}, #{@trip.budget_sum(current_user.try(:currency))})", 'ng-cloak' => ''}
+  .row
     .col-md-12
       = render 'trips/partials/buttons'
       = render 'trips/partials/tabs'
