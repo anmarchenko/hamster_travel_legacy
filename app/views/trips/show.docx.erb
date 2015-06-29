@@ -5,7 +5,7 @@
 
     <%= docx_body(body_props) do %>
 
-        <%= docx_table(gridSize: 15834, grid: @grid,
+        <%= docx_table(gridSize: 15834, grid: @transfers_grid,
                        borders: [:left, :right, :top, :bottom, :top, :insideH, :insideV]) do %>
             <%= docx_table_row do %>
 
@@ -15,43 +15,177 @@
                     <% end %>
                 <% end %>
 
-                <% if params[:cols].include?('show_place') %>
-                    <%= docx_table_cell do %>
-                        <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
-                            <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.place') %><% end %>
-                        <% end %>
+                <%= docx_table_cell do %>
+                    <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
+                        <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.place') %><% end %>
                     <% end %>
                 <% end %>
 
-                <% if params[:cols].include?('show_transfers') %>
-                    <%= docx_table_cell do %>
-                        <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
-                            <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.transfers') %><% end %>
-                        <% end %>
+                <%= docx_table_cell do %>
+                    <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
+                        <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.transfers') %><% end %>
                     <% end %>
                 <% end %>
 
-                <% if params[:cols].include?('show_hotel') %>
-                    <%= docx_table_cell do %>
-                        <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
-                            <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.hotel') %><% end %>
-                        <% end %>
+                <%= docx_table_cell do %>
+                    <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
+                        <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.hotel') %><% end %>
                     <% end %>
                 <% end %>
 
-                <% if params[:cols].include?('show_activities') %>
+            <% end %>
+
+            <% @trip.days.each do |day| %>
+                <%= docx_table_row do %>
+
                     <%= docx_table_cell do %>
-                        <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
-                            <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.activities') %><% end %>
+                        <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
+                            <%= docx_text(fontSize: fontSize) do %><%= day.date_when_s %><% end %>
                         <% end %>
+                    <% end %>
+
+                    <%= docx_table_cell do %>
+                        <% unless day.places.blank? %>
+                            <% day.places.each do |place| %>
+                                <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 100) do %>
+                                    <%= docx_text(fontSize: fontSize) do %><%= place.city_text %><% end %>
+                                <% end %>
+                            <% end %>
+                        <% else %>
+                            <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 100) do %>
+                                <%= docx_text(fontSize: fontSize) do %><% end %>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+
+                    <%= docx_table_cell do %>
+                        <% unless day.transfers.blank? %>
+                            <% day.transfers.each do |transfer| %>
+                                <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
+                                    <%= docx_text(fontSize: fontSize, underscored: true) do %>
+                                        <%= transfer.city_from_text %>
+                                    <% end %>
+                                    <% unless transfer.station_from.blank? %>
+                                        <%= docx_text(fontSize: fontSize, prespace: true) do %>
+                                            (<%= transfer.station_from %>)
+                                        <% end %>
+                                    <% end %>
+                                    <%= docx_text(fontSize: fontSize, prespace: true) do %>-<% end %>
+                                    <%= docx_text(fontSize: fontSize, prespace: true, underscored: true) do %>
+                                        <%= transfer.city_to_text %>
+                                    <% end %>
+                                    <% unless transfer.station_to.blank? %>
+                                        <%= docx_text(fontSize: fontSize, prespace: true) do %>
+                                            (<%= transfer.station_to %>)
+                                        <% end %>
+                                    <% end %>
+                                    <% unless transfer.amount.blank? %>
+                                        <%= docx_text(fontSize: fontSize, prespace: true) do %>
+                                            <%= transfer.amount.to_f %> <%= transfer.amount_currency %>
+                                        <% end %>
+                                    <% end %>
+                                <% end %>
+                                <% if !transfer.code.blank? || !transfer.company.blank? %>
+                                    <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
+                                        <% unless transfer.code.blank? %>
+                                            <%= docx_text(fontSize: fontSize, prespace: true) do %>
+                                                <%= transfer.code %>
+                                            <% end %>
+                                        <% end %>
+                                        <% unless transfer.company.blank? %>
+                                            <%= docx_text(fontSize: fontSize, prespace: true) do %>
+                                                <%= transfer.company %>
+                                            <% end %>
+                                        <% end %>
+                                    <% end %>
+                                <% end %>
+                                <% unless transfer.start_time.blank? %>
+                                    <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
+                                    <%= docx_text(fontSize: fontSize, prespace: true) do %>
+                                    <%= t('.departure')%> <%= transfer.start_time.strftime('%H:%M %d.%m.%Y') %>
+                                    <% end %>
+                                    <% end %>
+                                <% end %>
+                                <% unless transfer.end_time.blank? %>
+                                    <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
+                                    <%= docx_text(fontSize: fontSize, prespace: true) do %>
+                                    <%= t('.arrival')%> <%= transfer.end_time.strftime('%H:%M %d.%m.%Y') %>
+                                    <% end %>
+                                    <% end %>
+                                <% end %>
+                                <% unless transfer.comment.blank? %>
+                                    <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
+                                        <%= docx_text(fontSize: fontSize, italic: true) do %>
+                                            <%= transfer.comment %>
+                                        <% end %>
+                                    <% end %>
+                                <% end %>
+                                <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
+                                    <%= docx_text(fontSize: fontSize, prespace: true) do %>
+                                    <% end %>
+                                <% end %>
+                            <% end %>
+                        <% else %>
+                            <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 100) do %>
+                                <%= docx_text(fontSize: fontSize) do %><% end %>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+
+                    <%= docx_table_cell do %>
+                        <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
+                            <%= docx_text(fontSize: fontSize) do %>
+                                <%= day.hotel.name %>
+                            <% end %>
+                        <% end %>
+                        <% if !day.hotel.amount.blank? && day.hotel.amount_cents != 0 %>
+                            <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
+                                <%= docx_text(fontSize: fontSize, italic: true) do %>
+                                    <%= day.hotel.amount.to_f %> <%= day.hotel.amount_currency %>
+                                <% end %>
+                            <% end %>
+                        <% end %>
+                        <% unless day.hotel.comment.blank? %>
+                            <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
+                                <%= docx_text(fontSize: fontSize, italic: true) do %>
+                                    <%= day.hotel.comment %>
+                                <% end %>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+
+                <% end %>
+            <% end %>
+        <% end %>
+
+        <%= docx_next_page do %>
+        <% end %>
+
+        <%= docx_table(gridSize: 15834, grid: @activities_grid,
+                       borders: [:left, :right, :top, :bottom, :top, :insideH, :insideV]) do %>
+            <%= docx_table_row do %>
+
+                <%= docx_table_cell do %>
+                    <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
+                        <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.day') %><% end %>
                     <% end %>
                 <% end %>
 
-                <% if params[:cols].include?('show_comments') %>
-                    <%= docx_table_cell do %>
-                        <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
-                            <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.comments') %><% end %>
-                        <% end %>
+                <%= docx_table_cell do %>
+                    <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
+                        <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.place') %><% end %>
+                    <% end %>
+                <% end %>
+
+                <%= docx_table_cell do %>
+                    <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
+                        <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.activities') %><% end %>
+                    <% end %>
+                <% end %>
+
+                <%= docx_table_cell do %>
+                    <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
+                        <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.comments') %><% end %>
                     <% end %>
                 <% end %>
             <% end %>
@@ -65,173 +199,67 @@
                         <% end %>
                     <% end %>
 
-                    <% if params[:cols].include?('show_place') %>
-                        <%= docx_table_cell do %>
-                            <% unless day.places.blank? %>
-                                <% day.places.each do |place| %>
-                                    <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 100) do %>
-                                        <%= docx_text(fontSize: fontSize) do %><%= place.city_text %><% end %>
-                                    <% end %>
-                                <% end %>
-                            <% else %>
+                    <%= docx_table_cell do %>
+                        <% unless day.places.blank? %>
+                            <% day.places.each do |place| %>
                                 <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 100) do %>
-                                    <%= docx_text(fontSize: fontSize) do %><% end %>
+                                    <%= docx_text(fontSize: fontSize) do %><%= place.city_text %><% end %>
                                 <% end %>
+                            <% end %>
+                        <% else %>
+                            <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 100) do %>
+                                <%= docx_text(fontSize: fontSize) do %><% end %>
                             <% end %>
                         <% end %>
                     <% end %>
 
-                    <% if params[:cols].include?('show_transfers') %>
-                        <%= docx_table_cell do %>
-                            <% unless day.transfers.blank? %>
-                                <% day.transfers.each do |transfer| %>
-                                    <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
-                                        <%= docx_text(fontSize: fontSize, underscored: true) do %>
-                                            <%= transfer.city_from_text %>
-                                        <% end %>
-                                        <% unless transfer.station_from.blank? %>
-                                            <%= docx_text(fontSize: fontSize, prespace: true) do %>
-                                                (<%= transfer.station_from %>)
-                                            <% end %>
-                                        <% end %>
-                                        <%= docx_text(fontSize: fontSize, prespace: true) do %>-<% end %>
-                                        <%= docx_text(fontSize: fontSize, prespace: true, underscored: true) do %>
-                                            <%= transfer.city_to_text %>
-                                        <% end %>
-                                        <% unless transfer.station_to.blank? %>
-                                            <%= docx_text(fontSize: fontSize, prespace: true) do %>
-                                                (<%= transfer.station_to %>)
-                                            <% end %>
-                                        <% end %>
-                                        <% unless transfer.price.blank? %>
-                                            <%= docx_text(fontSize: fontSize, prespace: true) do %>
-                                                <%= transfer.price %> р
-                                            <% end %>
-                                        <% end %>
-                                    <% end %>
-                                    <% if !transfer.code.blank? || !transfer.company.blank? %>
-                                        <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
-                                            <% unless transfer.code.blank? %>
-                                                <%= docx_text(fontSize: fontSize, prespace: true) do %>
-                                                    <%= transfer.code %>
-                                                <% end %>
-                                            <% end %>
-                                            <% unless transfer.company.blank? %>
-                                                <%= docx_text(fontSize: fontSize, prespace: true) do %>
-                                                    <%= transfer.company %>
-                                                <% end %>
-                                            <% end %>
-                                        <% end %>
-                                    <% end %>
-                                    <% unless transfer.start_time.blank? %>
-                                        <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
-                                        <%= docx_text(fontSize: fontSize, prespace: true) do %>
-                                        <%= t('.departure')%> <%= transfer.start_time.strftime('%H:%M %d.%m.%Y') %>
-                                        <% end %>
-                                        <% end %>
-                                    <% end %>
-                                    <% unless transfer.end_time.blank? %>
-                                        <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
-                                        <%= docx_text(fontSize: fontSize, prespace: true) do %>
-                                        <%= t('.arrival')%> <%= transfer.end_time.strftime('%H:%M %d.%m.%Y') %>
-                                        <% end %>
-                                        <% end %>
-                                    <% end %>
-                                    <% unless transfer.comment.blank? %>
-                                        <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
-                                            <%= docx_text(fontSize: fontSize, italic: true) do %>
-                                                <%= transfer.comment %>
-                                            <% end %>
-                                        <% end %>
-                                    <% end %>
-                                    <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
-                                        <%= docx_text(fontSize: fontSize, prespace: true) do %>
-                                        <% end %>
-                                    <% end %>
-                                <% end %>
-                            <% else %>
-                                <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 100) do %>
-                                    <%= docx_text(fontSize: fontSize) do %><% end %>
-                                <% end %>
-                            <% end %>
-                        <% end %>
-                    <% end %>
-
-                    <% if params[:cols].include?('show_hotel') %>
-                        <%= docx_table_cell do %>
-                            <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
-                                <%= docx_text(fontSize: fontSize) do %>
-                                    <%= day.hotel.name %>
-                                <% end %>
-                            <% end %>
-                            <% unless day.hotel.price.blank? %>
-                                <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
-                                    <%= docx_text(fontSize: fontSize, italic: true) do %>
-                                        <%= day.hotel.price %> р
-                                    <% end %>
-                                <% end %>
-                            <% end %>
-                            <% unless day.hotel.comment.blank? %>
-                                <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
-                                    <%= docx_text(fontSize: fontSize, italic: true) do %>
-                                        <%= day.hotel.comment %>
-                                    <% end %>
-                                <% end %>
-                            <% end %>
-                        <% end %>
-                    <% end %>
-
-                    <% if params[:cols].include?('show_activities') %>
-                        <%= docx_table_cell do %>
-                            <% unless day.activities.blank? %>
-                                <% day.activities.each_with_index do |activity, index| %>
-                                    <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50,
-                                                       spacingBefore: (100 if index > 0) ) do %>
-                                        <% if day.activities.count > 1 %>
+                    <%= docx_table_cell do %>
+                        <% unless day.activities.blank? %>
+                            <% day.activities.each_with_index do |activity, index| %>
+                                <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50,
+                                                   spacingBefore: (100 if index > 0) ) do %>
+                                    <% if day.activities.count > 1 %>
                                         <%= docx_text(fontSize: fontSize, underscored: true) do %><%= index + 1 %>.<% end %>
-                                        <% end %>
-                                        <%= docx_text(fontSize: fontSize, underscored: true, prespace: true) do %>
-                                            <%= activity.name %>
-                                        <% end %>
                                     <% end %>
-                                    <% unless activity.price.blank? %>
-                                        <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
-                                            <%= docx_text(fontSize: fontSize) do %><%= activity.price %> р<% end %>
-                                        <% end %>
-                                    <% end %>
-                                    <% unless activity.comment.blank? %>
-                                        <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
-                                            <%= docx_text(fontSize: fontSize, italic: true) do %><%= activity.comment %><% end %>
-                                        <% end %>
+                                    <%= docx_text(fontSize: fontSize, underscored: true, prespace: true) do %>
+                                        <%= activity.name %>
                                     <% end %>
                                 <% end %>
-                            <% else %>
-                                <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
-                                    <%= docx_text(fontSize: fontSize) do %><% end %>
+                                <% unless activity.amount.blank? %>
+                                    <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
+                                        <%= docx_text(fontSize: fontSize) do %><%= activity.amount.to_f %> <%= activity.amount_currency %><% end %>
+                                    <% end %>
                                 <% end %>
+                                <% unless activity.comment.blank? %>
+                                    <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
+                                        <%= docx_text(fontSize: fontSize, italic: true) do %><%= activity.comment %><% end %>
+                                    <% end %>
+                                <% end %>
+                            <% end %>
+                        <% else %>
+                            <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
+                                <%= docx_text(fontSize: fontSize) do %><% end %>
                             <% end %>
                         <% end %>
                     <% end %>
 
-                    <% if params[:cols].include?('show_comments') %>
-                        <%= docx_table_cell do %>
-                            <% if !day.expenses.blank? || !day.comment.blank? %>
-                                <% unless day.comment.blank? %>
-                                    <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
-                                        <%= docx_text(fontSize: fontSize, italic: true) do %><%= day.comment %><% end %>
+                    <%= docx_table_cell do %>
+                        <% if !day.expenses.blank? || !day.comment.blank? %>
+                            <% unless day.comment.blank? %>
+                                <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
+                                    <%= docx_text(fontSize: fontSize, italic: true) do %><%= day.comment %><% end %>
+                                <% end %>
+                            <% end %>
+                            <% unless day.expenses.blank? %>
+                                <% day.expenses.each do |expense| %>
+                                    <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
+                                        <%= docx_text(fontSize: fontSize) do %><% if !expense.name.blank? || (!expense.amount.blank? && !expense.amount_cents == 0)%><%= expense.name %> <%= expense.amount.to_f %> <%= expense.amount_currency %><% end %><% end %>
                                     <% end %>
                                 <% end %>
-                                <% unless day.expenses.blank? %>
-                                    <% day.expenses.each do |expense| %>
-                                        <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
-                                            <%= docx_text(fontSize: fontSize) do %><% if !expense.name.blank? || !expense.price.blank?%><%= expense.name %> <%= expense.price %> р<% end %><% end %>
-                                        <% end %>
-                                    <% end %>
-                                <% end %>
-                            <% else %>
-                                <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
-                                    <%= docx_text(fontSize: fontSize, italic: true) do %><% end %>
-                                <% end %>
+                            <% end %>
+                        <% else %>
+                            <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
+                                <%= docx_text(fontSize: fontSize, italic: true) do %><% end %>
                             <% end %>
                         <% end %>
                     <% end %>

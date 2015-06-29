@@ -2,9 +2,6 @@ class TripsController < ApplicationController
 
   include Concerns::ImageUploading
 
-  WEIGHTS = {'day' => 0.1, 'show_place' => 0.1, 'show_transfers' => 0.15, 'show_hotel' => 0.15,
-             'show_activities' => 0.35, 'show_comments' => 0.15}
-
   before_filter :authenticate_user!, only: [:edit, :update, :new, :create, :destroy, :upload_photo]
   before_filter :find_trip, only: [:show, :edit, :update, :destroy, :upload_photo]
   before_filter :find_original_trip, only: [:new, :create]
@@ -55,7 +52,8 @@ class TripsController < ApplicationController
     respond_to do |format|
       format.html
       format.docx do
-        @grid = docx_grid
+        @transfers_grid = [0.1, 0.1, 0.45, 0.35]
+        @activities_grid = [0.1, 0.1, 0.5, 0.3]
 
         headers["Content-Disposition"] = "attachment; filename=\"#{@trip.name_for_file}.docx\""
       end
@@ -99,23 +97,6 @@ class TripsController < ApplicationController
     return unless @trip.private
     no_access and return unless user_signed_in?
     no_access and return unless @trip.can_be_seen_by?(current_user)
-  end
-
-  def docx_grid
-    params[:cols] ||= []
-    count = params[:cols].select{|col| col != 'show_place'}.count
-    cols = ['day'] + params[:cols]
-    grid = []
-    cols.each {|col| grid << WEIGHTS[col]}
-
-    WEIGHTS.keys.each do |key|
-      unless cols.include?(key)
-        add = WEIGHTS[key] / count
-        grid.each_index {|index| grid[index] += add unless grid[index] == 0.1 }
-      end
-    end
-
-    grid
   end
 
 end

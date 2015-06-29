@@ -131,9 +131,7 @@ angular.module('travel-components').controller 'PlanController'
         $scope.toggleCollapse(is_change, 'transfers')
 
       $scope.downloadWord = ->
-        url = "/trips/#{$scope.trip_id}.docx?"
-        for field in ['show_place', 'show_transfers', 'show_hotel', 'show_activities', 'show_comments']
-          url += "&cols[]=#{field}" if $scope[field]
+        url = "/trips/#{$scope.trip_id}.docx"
         $window.open url, '_blank'
         return true
 
