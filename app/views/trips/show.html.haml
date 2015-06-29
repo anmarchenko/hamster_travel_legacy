@@ -62,10 +62,10 @@
       = t('.travellers')
     = render'trips/partials/participants', participants: @trip.users
 
+- if params[:tab].blank? || params[:tab] == ApplicationHelper::TAB_PLAN
+  = render 'trips/tabs/plan'
+
 - if params[:tab] == ApplicationHelper::TAB_REPORT
   = render 'trips/tabs/report'
 
-- content_for :additional_content do
-  - if params[:tab].blank? || params[:tab] == ApplicationHelper::TAB_PLAN
-    = render 'trips/tabs/plan'
 
