@@ -419,23 +419,10 @@ describe TripsController do
 
           it 'renders docx' do
             get 'show', id: trip.id, format: :docx
-            expect(assigns(:grid)).to eq [0.1]
+            expect(assigns(:transfers_grid)).to eq TripsController::TRANSFERS_GRID
+            expect(assigns(:activities_grid)).to eq TripsController::ACTIVITIES_GRID
           end
 
-          it 'renders docx with transfers and hotel' do
-            get 'show', id: trip.id, cols: ['show_place', 'show_transfers', 'show_hotel'], format: :docx
-            expect(assigns(:grid)).to eq [0.1, 0.1, 0.39999999999999997, 0.39999999999999997]
-          end
-
-          it 'renders docx with activities and comments' do
-            get 'show', id: trip.id, cols: ['show_place', 'show_activities', 'show_comments'], format: :docx
-            expect(assigns(:grid)).to eq [0.1, 0.1, 0.5, 0.3]
-          end
-
-          it 'renders docx with only places' do
-            get 'show', id: trip.id, cols: ['show_place'], format: :docx
-            expect(assigns(:grid)).to eq [0.1, 0.1]
-          end
         end
 
         context 'and when trip is private' do
