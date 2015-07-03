@@ -1,7 +1,7 @@
 angular.module('travel-components').controller 'PlanController'
 , [
-    '$scope', 'Trip', '$location', '$window', '$interval'
-  , ($scope, Trip, $location, $window, $interval) ->
+    '$scope', 'Trip', '$location', '$window', '$interval', '$cookies'
+  , ($scope, Trip, $location, $window, $interval, $cookies) ->
       $scope.uuid = ->
         s4 = ->
           return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
@@ -17,11 +17,28 @@ angular.module('travel-components').controller 'PlanController'
       $scope.edit = false
 
       # show checkboxes
-      $scope.show_place = true
-      $scope.show_transfers = true
-      $scope.show_hotel = true
-      $scope.show_activities = true
-      $scope.show_comments = true
+
+      $scope.restoreVisibilityFromCookie = (column) ->
+        key = "#{$scope.trip_id}_#{column}"
+        cookie_val = $cookies[key]
+        console.log key
+        console.log cookie_val
+        if cookie_val == undefined
+          $scope[column] = true
+        else
+          $scope[column] = cookie_val == 'true'
+
+      $scope.saveVisibilityToCookie = (column) ->
+        key = "#{$scope.trip_id}_#{column}"
+        $cookies[key] = $scope[column]
+        console.log $cookies
+
+      $scope.changeVisibility = (column) ->
+        $scope[column] = !$scope[column]
+        $scope.saveVisibilityToCookie(column)
+
+      for column in ['show_place', 'show_transfers', 'show_hotel', 'show_activities', 'show_comments']
+        $scope.restoreVisibilityFromCookie(column)
 
       # budget
       $scope.budget = 0
@@ -135,6 +152,4 @@ angular.module('travel-components').controller 'PlanController'
         $window.open url, '_blank'
         return true
 
-      $scope.changeVisibility = (column) ->
-        $scope[column] = !$scope[column]
   ]

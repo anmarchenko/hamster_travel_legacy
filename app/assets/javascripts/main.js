@@ -11,6 +11,7 @@
 //= require jquery.stickytableheaders
 //= require_tree ./common
 //= require angular
+//= require angular-cookies
 //= require angularjs/rails/resource
 //= require angular-ui-bootstrap-tpls
 //= require_tree ./lib
