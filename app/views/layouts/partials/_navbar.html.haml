@@ -19,5 +19,13 @@
       %ul{class: 'nav navbar-nav navbar-right'}
         %li
           = link_to t('.trips'), trips_path
+        - if user_signed_in?
+          %li
+            = link_to t('.my_trips'), trips_path(my: true)
+          %li
+            = link_to t('.my_ideas'), trips_path(my_draft: true)
+          %li
+            = link_to new_trip_path, class: 'new-plan' do
+              = fa_icon 'plus', text: t('trips.index.create')
         = render 'layouts/partials/locale_bar'
         = render 'layouts/partials/user_navbar'

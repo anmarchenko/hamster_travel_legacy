@@ -15,7 +15,7 @@ en:
       title: Travels
       all: All travels
       my: My travels
-      create: Add travel
+      create: Add plan
     new:
       title: New travel
     show:

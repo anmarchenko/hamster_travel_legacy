@@ -21,8 +21,6 @@ angular.module('travel-components').controller 'PlanController'
       $scope.restoreVisibilityFromCookie = (column) ->
         key = "#{$scope.trip_id}_#{column}"
         cookie_val = $cookies[key]
-        console.log key
-        console.log cookie_val
         if cookie_val == undefined
           $scope[column] = true
         else
@@ -31,7 +29,6 @@ angular.module('travel-components').controller 'PlanController'
       $scope.saveVisibilityToCookie = (column) ->
         key = "#{$scope.trip_id}_#{column}"
         $cookies[key] = $scope[column]
-        console.log $cookies
 
       $scope.changeVisibility = (column) ->
         $scope[column] = !$scope[column]

@@ -1,15 +1,3 @@
 - content_for :title, t('.title')
 
-- if user_signed_in?
-  .row
-    .col-md-6.col-xs-12
-      %ul.nav.nav-tabs
-        %li{class: ('active' unless params[:my])}
-          = link_to t('.all'), trips_path
-        %li{class: ('active' if params[:my])}
-          = link_to t('.my'), trips_path(my: true)
-    .col-md-6.text-right.col-xs-12
-      = link_to new_trip_path, class: 'btn btn-success btn-sm btn-add-trip' do
-        = fa_icon 'plus', text: t('.create')
-
 = render 'widgets/trips/grid', trips: @trips

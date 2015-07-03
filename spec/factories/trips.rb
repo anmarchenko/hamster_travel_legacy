@@ -7,6 +7,7 @@ FactoryGirl.define do
     sequence(:start_date) { |n| Date.today - 7 + n }
     sequence(:end_date) { |n| Date.today + n }
     currency { 'RUB' }
+    status_code {Travels::Trip::StatusCodes::DRAFT}
 
     association :author_user, factory: :user
 
