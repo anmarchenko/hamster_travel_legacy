@@ -5,6 +5,7 @@ gem 'russian'
 
 # DB
 gem 'pg'
+gem 'annotate', '~> 2.6.6'
 
 # pagination
 gem 'kaminari'

@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: hotels
+#
+#  id              :integer          not null, primary key
+#  name            :string
+#  comment         :text
+#  mongo_id        :string
+#  day_id          :integer
+#  amount_cents    :integer          default(0), not null
+#  amount_currency :string           default("RUB"), not null
+#
+
 module Travels
   class Hotel < ActiveRecord::Base
     include Concerns::Copyable

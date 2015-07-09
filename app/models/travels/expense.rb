@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: expenses
+#
+#  id              :integer          not null, primary key
+#  name            :string
+#  mongo_id        :string
+#  expendable_id   :integer
+#  expendable_type :string
+#  amount_cents    :integer          default(0), not null
+#  amount_currency :string           default("RUB"), not null
+#
+
 module Travels
 
   class Expense < ActiveRecord::Base

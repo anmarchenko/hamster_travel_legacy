@@ -1,3 +1,34 @@
+# == Schema Information
+#
+# Table name: countries
+#
+#  id                         :integer          not null, primary key
+#  geonames_code              :string
+#  geonames_modification_date :date
+#  name                       :string
+#  name_ru                    :string
+#  name_en                    :string
+#  latitude                   :float
+#  longitude                  :float
+#  population                 :integer
+#  country_code               :string
+#  region_code                :string
+#  district_code              :string
+#  adm3_code                  :string
+#  adm4_code                  :string
+#  adm5_code                  :string
+#  timezone                   :string
+#  iso_code                   :string
+#  iso3_code                  :string
+#  iso_numeric_code           :string
+#  area                       :integer
+#  currency_code              :string
+#  currency_text              :string
+#  languages                  :text             default([]), is an Array
+#  continent                  :string
+#  mongo_id                   :string
+#
+
 module Geo
   class Country < ActiveRecord::Base
 

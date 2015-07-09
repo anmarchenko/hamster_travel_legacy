@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: activities
+#
+#  id               :integer          not null, primary key
+#  order_index      :integer
+#  name             :string
+#  comment          :text
+#  link_description :string
+#  link_url         :text
+#  mongo_id         :string
+#  day_id           :integer
+#  amount_cents     :integer          default(0), not null
+#  amount_currency  :string           default("RUB"), not null
+#
+
 module Travels
 
   class Activity < ActiveRecord::Base

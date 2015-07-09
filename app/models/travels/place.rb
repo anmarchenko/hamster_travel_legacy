@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: places
+#
+#  id        :integer          not null, primary key
+#  city_code :string
+#  city_text :string
+#  mongo_id  :string
+#  day_id    :integer
+#
+
 module Travels
   class Place < ActiveRecord::Base
 

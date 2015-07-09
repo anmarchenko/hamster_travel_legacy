@@ -1,3 +1,25 @@
+# == Schema Information
+#
+# Table name: trips
+#
+#  id                :integer          not null, primary key
+#  name              :string
+#  short_description :text
+#  start_date        :date
+#  end_date          :date
+#  archived          :boolean          default(FALSE)
+#  comment           :text
+#  budget_for        :integer          default(1)
+#  private           :boolean          default(FALSE)
+#  image_uid         :string
+#  status_code       :string           default("0_draft")
+#  author_user_id    :integer
+#  mongo_id          :string
+#  updated_at        :datetime
+#  created_at        :datetime
+#  currency          :string
+#
+
 module Travels
   class Trip < ActiveRecord::Base
 
