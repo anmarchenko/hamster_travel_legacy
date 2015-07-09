@@ -97,7 +97,7 @@ describe TripsController do
             get 'new', copy_from: trip.id
             new_trip = assigns(:trip)
             expect(new_trip.currency).to eq 'USD'
-            expect(new_trip.name).to eq trip.name + ' (Копия)'
+            expect(new_trip.name).to eq trip.name + " (#{I18n.t('common.copy')})"
             expect(new_trip.start_date).to eq trip.start_date
             expect(new_trip.end_date).to eq trip.end_date
             expect(new_trip.short_description).to be_nil
