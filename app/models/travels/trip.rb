@@ -14,9 +14,9 @@ module Travels
       ALL = [DRAFT, PLANNED, FINISHED]
       OPTIONS = ALL.map{|type| [I18n.t("common.#{type}"), type] }
       TYPE_TO_TEXT = {
-          DRAFT => I18n.t("common.#{DRAFT}"),
-          PLANNED => I18n.t("common.#{PLANNED}"),
-          FINISHED => I18n.t("common.#{FINISHED}")
+          DRAFT => "common.#{DRAFT}",
+          PLANNED => "common.#{PLANNED}",
+          FINISHED => "common.#{FINISHED}"
       }
     end
 
@@ -33,7 +33,7 @@ module Travels
     end
 
     def status_text
-      StatusCodes::TYPE_TO_TEXT[status_code]
+      I18n.t(StatusCodes::TYPE_TO_TEXT[status_code])
     end
 
     validates_presence_of :name, :start_date, :end_date, :author_user_id
