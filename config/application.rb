@@ -23,7 +23,7 @@ module Travel
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     I18n.enforce_available_locales = true
-    I18n.default_locale = :ru
+    I18n.default_locale = :en
 
     config.action_view.field_error_proc = Proc.new { |html_tag, instance|
       "<div class=\"has-error form-group\">#{html_tag}</div>".html_safe
