@@ -30,6 +30,11 @@
       = t('common.photo_processing')
 
   .col-md-9.col-sm-9
+    .well.well-sm.trip-status.pull-right{class: trip_status_class(@trip.status_code)}
+      %big
+        = @trip.status_text
+        - if @trip.private
+          (#{t('activerecord.attributes.travels/trip.private')})
     %h4
       = @trip.name
       %small
@@ -51,15 +56,6 @@
 
     %p.travel-text{} #{@trip.short_description}
 
-    .well.well-sm.trip-status{class: trip_status_class(@trip.status_code)}
-      %big
-        = t('.status_code')
-        = @trip.status_text
-        - if @trip.private
-          (#{t('activerecord.attributes.travels/trip.private')})
-
-    %h4
-      = t('.travellers')
     = render'trips/partials/participants', participants: @trip.users
 
 - if params[:tab].blank? || params[:tab] == ApplicationHelper::TAB_PLAN
