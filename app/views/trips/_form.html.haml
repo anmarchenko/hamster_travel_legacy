@@ -52,7 +52,7 @@
           %span.help-block
             - Travels::Trip::StatusCodes::ALL.each do |type|
               %b
-                = Travels::Trip::StatusCodes::TYPE_TO_TEXT[type]
+                = I18n.t(Travels::Trip::StatusCodes::TYPE_TO_TEXT[type])
               = t(".#{type}_help")
               %br
 

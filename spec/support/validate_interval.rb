@@ -12,7 +12,7 @@ shared_examples 'a model with date interval' do |model_factory, start_date_field
     let (:object) { FactoryGirl.build(model_factory, start_date_field => Date.today, end_date_field => Date.today)}
 
     it 'is valid' do
-      expect(object).not_to be_valid
+      expect(object).to be_valid
     end
   end
 
