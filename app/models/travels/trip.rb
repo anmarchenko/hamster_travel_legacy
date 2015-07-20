@@ -34,7 +34,7 @@ module Travels
       FINISHED = '2_finished'
 
       ALL = [DRAFT, PLANNED, FINISHED]
-      OPTIONS = ALL.map{|type| [I18n.t("common.#{type}"), type] }
+      OPTIONS = ALL.map{|type| ["common.#{type}", type] }
       TYPE_TO_TEXT = {
           DRAFT => "common.#{DRAFT}",
           PLANNED => "common.#{PLANNED}",

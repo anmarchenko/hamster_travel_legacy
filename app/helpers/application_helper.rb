@@ -46,13 +46,13 @@ module ApplicationHelper
 
   def datepicker_options(model_name, record = nil)
     res = {'datepicker-popup' => 'dd.MM.yyyy', 'ng-model' => model_name, 'show-weeks' => 'false',
-        'datepicker-options' =>"{'starting-day': 1}",
-        'current-text' => I18n.t('common.today'),
-        'toggle-weeks-text' => I18n.t('common.toggle_weeks'),
-        'clear-text' => I18n.t('common.clear'),
-        'close-text' => I18n.t('common.datepicker_close') }
+           'datepicker-options' => "{'starting-day': 1}",
+           'current-text' => I18n.t('common.today'),
+           'toggle-weeks-text' => I18n.t('common.toggle_weeks'),
+           'clear-text' => I18n.t('common.clear'),
+           'close-text' => I18n.t('common.datepicker_close')}
     res.merge!('ng-init' => "#{model_name}=#{record.send(model_name).strftime('%Q')}") unless record.blank? or
-          record.send(model_name).blank?
+        record.send(model_name).blank?
     res
   end
 
@@ -66,6 +66,12 @@ module ApplicationHelper
 
   def trip_period trip, original_trip
     original_trip.blank? ? trip.last_non_empty_day_index : original_trip.period
+  end
+
+  def trip_status_options
+    Travels::Trip::StatusCodes::OPTIONS.map do |option|
+      [I18n.t(option[0]), option[1]]
+    end
   end
 
 end
