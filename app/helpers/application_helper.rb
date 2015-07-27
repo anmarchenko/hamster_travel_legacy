@@ -74,4 +74,10 @@ module ApplicationHelper
     end
   end
 
+  def transfer_type_options
+    Travels::Transfer::Types::OPTIONS.map do |option|
+      [I18n.t(option[0]), option[1]]
+    end
+  end
+
 end
