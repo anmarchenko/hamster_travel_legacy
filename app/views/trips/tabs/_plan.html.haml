@@ -66,13 +66,14 @@
               = fa_icon 'arrow-right'
         %th{class: 'col-md-4', 'ng-show' => 'show_hotel'}
           = t('trips.show.hotel')
-          %a{href: 'javascript:void(0);', 'ng-click' => 'savePlan()',
-              class: 'pull-right', 'ng-show' => '!saving', 'data-placement' => "bottom",
-              'data-toggle' => 'tooltip', title: t('trips.show.save_plan')}
-            = fa_icon 'save'
-          %a.pull-right{'ng-show' => 'saving'}
-            %i.fa.fa-spinner.fa-spin
-            = t('trips.show.saving_plan')
+          - if @user_can_edit
+            %a{href: 'javascript:void(0);', 'ng-click' => 'savePlan()',
+                class: 'pull-right', 'ng-show' => '!saving', 'data-placement' => "bottom",
+                'data-toggle' => 'tooltip', title: t('trips.show.save_plan')}
+              = fa_icon 'save'
+            %a.pull-right{'ng-show' => 'saving'}
+              %i.fa.fa-spinner.fa-spin
+              = t('trips.show.saving_plan')
 
     %tbody
       - @trip.days.each_with_index do |day, day_index|
