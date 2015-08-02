@@ -121,6 +121,7 @@ group :test do
   # test data fixtures
   gem 'factory_girl'
   gem 'factory_girl_rails'
+  gem 'faker'
   # integration test (selenium)
   gem 'capybara'
 

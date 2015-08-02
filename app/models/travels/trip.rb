@@ -48,6 +48,7 @@ module Travels
     belongs_to :author_user, class_name: 'User', inverse_of: :authored_trips
 
     has_many :days, class_name: 'Travels::Day'
+    has_many :caterings, class_name: 'Travels::Catering'
 
     dragonfly_accessor :image
     def image_url_or_default

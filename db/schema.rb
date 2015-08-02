@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150627114607) do
+ActiveRecord::Schema.define(version: 20150802120928) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,6 +96,19 @@ ActiveRecord::Schema.define(version: 20150627114607) do
 
   add_index "adm5s", ["geonames_code"], name: "index_adm5s_on_geonames_code", using: :btree
   add_index "adm5s", ["population"], name: "index_adm5s_on_population", using: :btree
+
+  create_table "caterings", force: :cascade do |t|
+    t.string  "city_code"
+    t.string  "city_text"
+    t.text    "description"
+    t.integer "days_count"
+    t.integer "persons_count"
+    t.integer "trip_id"
+    t.integer "price_cents",    default: 0,     null: false
+    t.string  "price_currency", default: "RUB", null: false
+  end
+
+  add_index "caterings", ["trip_id"], name: "index_caterings_on_trip_id", using: :btree
 
   create_table "cities", force: :cascade do |t|
     t.string  "geonames_code"

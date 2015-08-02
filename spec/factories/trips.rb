@@ -7,7 +7,7 @@ FactoryGirl.define do
     sequence(:start_date) { |n| Date.today - 7 + n }
     sequence(:end_date) { |n| Date.today + n }
     currency { 'RUB' }
-    status_code {Travels::Trip::StatusCodes::DRAFT}
+    status_code { Travels::Trip::StatusCodes::DRAFT }
 
     association :author_user, factory: :user
 
@@ -115,6 +115,19 @@ FactoryGirl.define do
       amount_cents { rand(10000) * 100 }
       amount_currency { 'RUB' }
     end
+  end
+
+  factory :catering, class: 'Travels::Catering' do
+    city_code { Faker::Number.number(10).to_s }
+    city_text { Faker::Address.city }
+
+    description { Faker::Lorem.paragraph }
+
+    price_cents { Faker::Number.number(5) }
+    price_currency { 'EUR' }
+
+    days_count(3)
+    persons_count(2)
   end
 
 end
