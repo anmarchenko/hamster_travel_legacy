@@ -21,6 +21,8 @@ module Travels
 
     belongs_to :trip, class_name: 'Travels::Trip'
 
+    has_many :expenses, :class_name => 'Travels::Expense', as: :expendable
+
     monetize :amount_cents
 
     def as_json(*args)
@@ -28,6 +30,7 @@ module Travels
       json['id'] = id.to_s
       json['amount_cents'] = amount_cents / 100
       json['amount_currency_text'] = amount.currency.symbol
+      json['expenses'] = expenses.as_json(args)
       json
     end
 

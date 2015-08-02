@@ -69,6 +69,10 @@ en:
       no_catering_description: No cuisine description yet
       no_city: No city
       catering_description: National cuisine, what to try and what to avoid
+      example_espenses: Prices
+      add_expense: Add price
+      food_price: Food price
+      for_day: for day
     edit:
       title: Edit travel
     form:

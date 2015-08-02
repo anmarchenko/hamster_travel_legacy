@@ -69,6 +69,10 @@ ru:
       no_catering_description: Описания кухни пока нет
       no_city: Выберите город...
       catering_description: Национальная кухня, что следует попробовать, а что нет
+      example_espenses: Цены
+      add_expense: Добавить цены
+      food_price: Сумма на еду
+      for_day: в день
     edit:
       title: Редактирование путешествия
     form:
