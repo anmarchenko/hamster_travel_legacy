@@ -8,19 +8,60 @@ describe Travels::Updaters::TripUpdater do
     Travels::Updaters::TripUpdater.new(tr, prms).process_days
   end
 
+  def update_trip_caterings tr, prms
+    Travels::Updaters::TripUpdater.new(tr, prms).process_caterings
+  end
+
   def update_trip tr, prms
     Travels::Updaters::TripUpdater.new(tr, prms).process_trip
   end
 
-  let(:trip){FactoryGirl.create(:trip)}
-  let(:day){first_day_of trip}
+  let(:trip) { FactoryGirl.create(:trip) }
+  let(:day) { first_day_of trip }
+
+  describe '#process_caterings' do
+    before(:example) { update_trip_caterings trip, params }
+
+    context 'when there are caterings params' do
+
+      let(:params) { {
+          '1' => FactoryGirl.build(:catering).attributes.merge(id: Time.now.to_i),
+          '2' => FactoryGirl.build(:catering).attributes.merge(id: Time.now.to_i)
+      } }
+      it 'creates new caterings' do
+        caterings = trip.reload.caterings
+        expect(caterings.count).to eq(2)
+        expect(caterings.first.trip_id).to eq(trip.id)
+      end
+
+      it 'updates caterings' do
+        params['1']['id'] = trip.caterings.first.id
+        params['1']['city_text'] = 'Paris'
+
+        update_trip_caterings trip, params
+
+        caterings = trip.reload.caterings
+        expect(caterings.count).to eq(2)
+        expect(caterings.where(id: params['1']['id']).first.city_text).to eq('Paris')
+      end
+
+      it 'deletes caterings' do
+        params.delete('2')
+
+        update_trip_caterings trip, params
+
+        caterings = trip.reload.caterings
+        expect(caterings.count).to eq(1)
+      end
+    end
+  end
 
   describe '#process_days' do
 
-    before(:example) {update_trip_days trip, params}
+    before(:example) { update_trip_days trip, params }
 
     context 'when params have non existing days' do
-      let(:params) {{ '1' => {id: 'non_existing'} }}
+      let(:params) { {'1' => {id: 'non_existing'}} }
       it 'does nothing' do
         expect(first_day_of(trip).hotel).not_to be_blank
       end
@@ -36,7 +77,7 @@ describe Travels::Updaters::TripUpdater do
                                   amount_currency: 'EUR',
                                   links: [{url: 'http://new.url', description: 'new_description'}]
                               }.with_indifferent_access
-      } } }
+      }} }
 
       it 'updates hotel attributes' do
         hotel = first_day_of(trip).hotel
@@ -74,11 +115,13 @@ describe Travels::Updaters::TripUpdater do
     end
 
     context 'when params have day attributes' do
-      let(:params) { {'1' => {
-                                id: day.id.to_s,
-                                comment: 'new_day_comment'
-                              }
-                    }
+      let(:params) {
+        {
+            '1' => {
+                id: day.id.to_s,
+                comment: 'new_day_comment'
+            }
+        }
       }
 
       it 'updates day data' do
@@ -99,21 +142,21 @@ describe Travels::Updaters::TripUpdater do
 
     context 'when params have places' do
       let(:params) { {'1' => {
-                              id: day.id.to_s,
-                              places: [
-                                  {
-                                      id: day.places.first.id.to_s,
-                                      city_code: 'new_city_code_1',
-                                      city_text: 'new_city_text_1'
-                                  },
-                                  {
-                                      city_code: 'new_city_code_2',
-                                      city_text: 'new_city_text_2'
-                                  }
-                              ]
+          id: day.id.to_s,
+          places: [
+              {
+                  id: day.places.first.id.to_s,
+                  city_code: 'new_city_code_1',
+                  city_text: 'new_city_text_1'
+              },
+              {
+                  city_code: 'new_city_code_2',
+                  city_text: 'new_city_text_2'
+              }
+          ]
 
-          }
-        }
+      }
+      }
       }
 
       it 'updates and creates new places' do
@@ -159,33 +202,33 @@ describe Travels::Updaters::TripUpdater do
 
     context 'when params have transfers' do
       let(:params) { {'1' => {
-                                id: day.id.to_s,
-                                transfers: [
-                                    {
-                                        city_from_code: 'city_from_code_1',
-                                        city_to_code: 'city_to_code_1',
-                                        isCollapsed: true
-                                    },
-                                    {
-                                        city_from_code: 'city_from_code_2',
-                                        city_to_code: 'city_to_code_2',
-                                        isCollapsed: false
-                                    },
-                                    {
-                                        city_from_code: 'city_from_code_3',
-                                        city_to_code: 'city_to_code_3',
-                                        isCollapsed: false
-                                    },
-                                    {
-                                        city_from_code: 'city_from_code_4',
-                                        city_to_code: 'city_to_code_4',
-                                        isCollapsed: false
-                                    }
-                                ]
-
-                            }
-                  }
+          id: day.id.to_s,
+          transfers: [
+              {
+                  city_from_code: 'city_from_code_1',
+                  city_to_code: 'city_to_code_1',
+                  isCollapsed: true
+              },
+              {
+                  city_from_code: 'city_from_code_2',
+                  city_to_code: 'city_to_code_2',
+                  isCollapsed: false
+              },
+              {
+                  city_from_code: 'city_from_code_3',
+                  city_to_code: 'city_to_code_3',
+                  isCollapsed: false
+              },
+              {
+                  city_from_code: 'city_from_code_4',
+                  city_to_code: 'city_to_code_4',
+                  isCollapsed: false
               }
+          ]
+
+      }
+      }
+      }
 
       it 'creates new transfers' do
         updated_day = first_day_of trip
@@ -222,29 +265,29 @@ describe Travels::Updaters::TripUpdater do
 
     context 'when has activities' do
       let(:params) { {'1' => {
-                              id: day.id.to_s,
-                              activities: [
-                                  {
-                                      name: 'name 1',
-                                      isCollapsed: true
-                                  },
-                                  {
-                                      name: 'name 2',
-                                      isCollapsed: true
-                                  },
-                                  {
-                                      name: 'name 3',
-                                      isCollapsed: true
-                                  },
-                                  {
-                                      name: '',
-                                      isCollapsed: true,
-                                      comment: 'some comment'
-                                  }
-                              ]
+          id: day.id.to_s,
+          activities: [
+              {
+                  name: 'name 1',
+                  isCollapsed: true
+              },
+              {
+                  name: 'name 2',
+                  isCollapsed: true
+              },
+              {
+                  name: 'name 3',
+                  isCollapsed: true
+              },
+              {
+                  name: '',
+                  isCollapsed: true,
+                  comment: 'some comment'
+              }
+          ]
 
-                          }
-                    }
+      }
+      }
       }
 
       it 'creates new activities skipping activity without name' do
@@ -282,20 +325,20 @@ describe Travels::Updaters::TripUpdater do
     context 'when params have day expenses data' do
 
       let(:params) { {'1' => {id: day.id.to_s,
-                              expenses: [ {
-                                    name: 'new_expense_name',
-                                    amount_cents: 456,
-                                    amount_currency: 'RUB',
-                                    amount_currency_text: 'R'
-                                }.with_indifferent_access,
-                                {
-                                    name: 'new_expense_name_2',
-                                    amount_cents: 98765,
-                                    amount_currency: 'RUB',
-                                    amount_currency_text: 'R'
-                                }.with_indifferent_access
+                              expenses: [{
+                                             name: 'new_expense_name',
+                                             amount_cents: 456,
+                                             amount_currency: 'RUB',
+                                             amount_currency_text: 'R'
+                                         }.with_indifferent_access,
+                                         {
+                                             name: 'new_expense_name_2',
+                                             amount_cents: 98765,
+                                             amount_currency: 'RUB',
+                                             amount_currency_text: 'R'
+                                         }.with_indifferent_access
                               ]
-      } } }
+      }} }
 
       it 'updates expenses attributes' do
         expenses = first_day_of(trip).expenses
@@ -334,8 +377,8 @@ describe Travels::Updaters::TripUpdater do
   end
 
   describe '#process_trip' do
-    let(:params){ {comment: 'New comment!!!', short_description: 'super short short desc', budget_for: 2} }
-    before(:example) {update_trip trip, params}
+    let(:params) { {comment: 'New comment!!!', short_description: 'super short short desc', budget_for: 2} }
+    before(:example) { update_trip trip, params }
 
     it 'updates comment field' do
       updated_trip = trip.reload

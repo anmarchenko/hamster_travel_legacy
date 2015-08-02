@@ -64,6 +64,14 @@ module Travels
         end
       end
 
+      def process_caterings
+        caterings = []
+        params.each do |_, catering_hash|
+          caterings << catering_hash
+        end
+        process_nested(trip.caterings, caterings)
+      end
+
       def process_trip
         trip.update_attributes(comment: params[:comment], budget_for: params[:budget_for])
         trip
@@ -105,6 +113,8 @@ module Travels
       def process_amount(hash)
         hash['amount_cents'] = hash['amount_cents'].to_i * 100 if hash['amount_cents'].present?
         hash.delete('amount_currency_text')
+        hash['price_cents'] = hash['price_cents'].to_i * 100 if hash['price_cents'].present?
+        hash.delete('price_currency_text')
       end
 
     end
