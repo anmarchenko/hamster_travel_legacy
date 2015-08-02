@@ -43,6 +43,13 @@ FactoryGirl.define do
         trip.save validate: false
       end
     end
+
+    trait :with_caterings do
+      after :create do |trip|
+        3.times { |index| trip.caterings.create(build(:catering, order_index: index).attributes) }
+        trip.save validate: false
+      end
+    end
   end
 
   factory :transfer, class: 'Travels::Transfer' do
@@ -123,8 +130,8 @@ FactoryGirl.define do
 
     description { Faker::Lorem.paragraph }
 
-    price_cents { Faker::Number.number(5) }
-    price_currency { 'EUR' }
+    amount_cents { Faker::Number.number(5) }
+    amount_currency { 'EUR' }
 
     days_count(3)
     persons_count(2)

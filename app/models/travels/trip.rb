@@ -138,6 +138,10 @@ module Travels
       result_new.to_f
     end
 
+    def caterings_data
+      caterings.blank? ? [Travels::Catering.new] : caterings
+    end
+
     def copy trip
       super
       self.name += " (#{I18n.t('common.copy')})" unless self.name.blank?

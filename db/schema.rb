@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150802120928) do
+ActiveRecord::Schema.define(version: 20150802133947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,8 +104,9 @@ ActiveRecord::Schema.define(version: 20150802120928) do
     t.integer "days_count"
     t.integer "persons_count"
     t.integer "trip_id"
-    t.integer "price_cents",    default: 0,     null: false
-    t.string  "price_currency", default: "RUB", null: false
+    t.integer "amount_cents",    default: 0,     null: false
+    t.string  "amount_currency", default: "RUB", null: false
+    t.integer "order_index"
   end
 
   add_index "caterings", ["trip_id"], name: "index_caterings_on_trip_id", using: :btree

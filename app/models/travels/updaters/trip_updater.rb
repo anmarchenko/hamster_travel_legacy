@@ -69,6 +69,7 @@ module Travels
         params.each do |_, catering_hash|
           caterings << catering_hash
         end
+        process_ordered(caterings)
         process_nested(trip.caterings, caterings)
       end
 
@@ -113,8 +114,6 @@ module Travels
       def process_amount(hash)
         hash['amount_cents'] = hash['amount_cents'].to_i * 100 if hash['amount_cents'].present?
         hash.delete('amount_currency_text')
-        hash['price_cents'] = hash['price_cents'].to_i * 100 if hash['price_cents'].present?
-        hash.delete('price_currency_text')
       end
 
     end
