@@ -126,18 +126,19 @@ describe Travels::Trip do
     end
 
     context 'when filled trip' do
-      let(:trip) {FactoryGirl.create(:trip, :with_filled_days)}
+      let(:trip) {FactoryGirl.create(:trip, :with_filled_days, :with_caterings)}
 
       it 'returns right budget in right currency' do
         hotel_price = trip.days.inject(0) { |sum, day| sum += ((day.hotel.amount_cents || 0) / 100) }
         days_add_price = trip.days.inject(0) { |sum, day| sum += day.expenses.inject(0) {|i_s, ex| i_s += ((ex.amount_cents || 0) / 100) } }
         transfers_price = trip.days.inject(0) { |s, day| s += day.transfers.inject(0) { |i_s, tr| i_s += ((tr.amount_cents || 0) / 100)} }
         activities_price = trip.days.inject(0) { |s, day| s += day.activities.inject(0) { |i_s, ac| i_s += ((ac.amount_cents || 0) / 100)} }
+        caterings_price = trip.caterings.inject(0) { |s, cat| s += ((cat.amount_cents || 0) / 100) * cat.days_count * cat.persons_count}
 
-        expect(trip.budget_sum).to eq([hotel_price, days_add_price, transfers_price, activities_price].reduce(&:+))
+        expect(trip.budget_sum).to eq([hotel_price, days_add_price, transfers_price, activities_price, caterings_price].reduce(&:+))
 
         budget_eur = trip.budget_sum('EUR')
-        should_be_eur = Money.new([hotel_price, days_add_price, transfers_price, activities_price].reduce(&:+)*100, CurrencyHelper::DEFAULT_CURRENCY).exchange_to('EUR').to_f
+        should_be_eur = Money.new([hotel_price, days_add_price, transfers_price, activities_price, caterings_price].reduce(&:+)*100, CurrencyHelper::DEFAULT_CURRENCY).exchange_to('EUR').to_f
         expect((budget_eur - should_be_eur).abs).to be < 1.0
       end
     end

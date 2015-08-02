@@ -1,0 +1,69 @@
+.span{'ng-controller' => 'PlanController', 'ng-init' => "loadCatering(#{@trip.to_json}, #{@trip.budget_sum(current_user.try(:currency))})", 'ng-cloak' => ''}
+  .row{'ng-cloak' => ''}
+    .col-md-12
+      = render 'trips/partials/buttons'
+      = render 'trips/partials/tabs'
+  .row
+    .col-md-12
+      = render 'trips/partials/watching_users'
+  .row.plan-header-second-row
+    .col-md-12
+      = render 'trips/partials/budget'
+
+  %div{'ng-repeat' => 'catering in caterings track by catering.id'}
+
+    %div{'ng-show' => '!edit'}
+      .row
+        .col-md-12
+          %p
+            %b
+              {{catering.city_text || '#{I18n.t('trips.show.no_city')}'}}
+          %p.travel-text{} {{catering.description || '#{I18n.t('trips.show.no_catering_description')}'}}
+          %p
+            {{catering.amount_cents || 0}}
+            {{catering.amount_currency_text}}
+            = fa_icon 'times'
+            {{catering.persons_count}}
+            = t('trips.show.persons')
+            = fa_icon 'times'
+            {{catering.days_count}}
+            = t('trips.show.days')
+            = fa_icon 'arrow-right'
+            {{(catering.amount_cents || 0) * (catering.persons_count || 0) * (catering.days_count || 0)}}
+            {{catering.amount_currency_text}}
+
+
+    .catering.well{'ng-show' => 'edit'}
+      .row
+        .col-md-3.col-xs-11
+          .form-group
+            = render 'widgets/typeahead/cities', model_name: 'catering.city', classes: 'input-sm form-control',
+                placeholder: t('trips.show.city'), show_loading: false
+        .col-md-9.col-xs-1
+          %a{href: 'javascript:void(0);', 'ng-click' => 'remove(caterings, $index)', class: 'pull-right margin-right-10 big-control'}
+            = fa_icon 'times'
+      .row
+        .col-md-12
+          .form-group
+            = text_area_tag 'catering_description', '', 'ng-model' => 'catering.description', class: 'form-control',
+              placeholder: t('trips.show.catering_description'), rows: 5
+      .row
+        .col-md-12.form-inline
+          = render 'widgets/price', name: 'catering_price', object_model: 'catering', placeholder: t('trips.show.price')
+          = fa_icon 'times'
+          = select_tag 'catering_persons', options_for_select((1..10).step(1)),
+                      {class: 'input-sm', 'ng-model' => 'catering.persons_count'}
+          = t('trips.show.persons')
+          = fa_icon 'times'
+          = number_field_tag 'catering', '', {class: 'input-sm form-control-inline', 'ng-model' => 'catering.days_count', min: 0}
+          = t('trips.show.days')
+          = fa_icon 'arrow-right'
+          {{(catering.amount_cents || 0) * (catering.persons_count || 0) * (catering.days_count || 0)}}
+          {{catering.amount_currency_text}}
+
+  .row{'ng-show' => 'edit'}
+    .col-md-12
+      %a.pull-right{href: 'javascript:void(0);', class: 'pull-right margin-right-10 big-control',
+      'ng-click' => "add(caterings, {persons_count: trip.budget_for, days_count: 1, #{default_currency_hash(@trip, current_user)}})"}
+        = fa_icon 'plus'
+

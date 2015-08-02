@@ -25,8 +25,8 @@ describe Travels::Updaters::TripUpdater do
     context 'when there are caterings params' do
 
       let(:params) { {
-          '1' => FactoryGirl.build(:catering).attributes.merge(id: Time.now.to_i),
-          '2' => FactoryGirl.build(:catering).attributes.merge(id: Time.now.to_i)
+          '1' => FactoryGirl.build(:catering).as_json.merge(id: Time.now.to_i),
+          '2' => FactoryGirl.build(:catering).as_json.merge(id: Time.now.to_i)
       } }
       it 'creates new caterings' do
         caterings = trip.reload.caterings

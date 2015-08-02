@@ -13,7 +13,7 @@
       %article.trip-report{'ng-show' => '!edit'}
         %h3
           = t('trips.show.report')
-        %p{class: 'travel-text'}
+        %p.travel-text
           {{trip.comment || '#{t('trips.show.no_report')}'}}
 
       %div{'ng-show' => 'edit', class: 'form-horizontal'}

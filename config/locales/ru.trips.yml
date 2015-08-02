@@ -23,7 +23,9 @@ ru:
       travellers: 'Участники:'
       plan: Трансферы и размещение
       plan_activities: Впечатления
+      catering: Еда
       day: День
+      days: дней
       place: Города
       transfers: Трансферы
       hotel: Отель
@@ -64,6 +66,9 @@ ru:
       budget_for: на
       persons: чел.
       watching_now: Просматривают сейчас
+      no_catering_description: Описания кухни пока нет
+      no_city: Выберите город...
+      catering_description: Национальная кухня, что следует попробовать, а что нет
     edit:
       title: Редактирование путешествия
     form:

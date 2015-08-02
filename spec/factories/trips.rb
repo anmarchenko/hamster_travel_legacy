@@ -130,8 +130,8 @@ FactoryGirl.define do
 
     description { Faker::Lorem.paragraph }
 
-    amount_cents { Faker::Number.number(5) }
-    amount_currency { 'EUR' }
+    amount_cents { rand(10000) * 100 }
+    amount_currency { 'RUB' }
 
     days_count(3)
     persons_count(2)

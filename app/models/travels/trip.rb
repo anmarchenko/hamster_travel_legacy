@@ -128,6 +128,9 @@ module Travels
     def budget_sum currency = CurrencyHelper::DEFAULT_CURRENCY
       currency ||= CurrencyHelper::DEFAULT_CURRENCY
       result_new = Money.new(0, currency)
+      (caterings || []).each do |catering|
+        result_new += catering.amount.exchange_to(currency) * catering.days_count * catering.persons_count
+      end
       (days || []).each do |day|
         result_new += day.hotel.amount.exchange_to(currency)
         (day.transfers || []).each {|transfer| result_new += transfer.amount.exchange_to(currency)}
@@ -139,7 +142,8 @@ module Travels
     end
 
     def caterings_data
-      caterings.blank? ? [Travels::Catering.new] : caterings
+      caterings.blank? ? [Travels::Catering.new(id: Time.now.to_i, persons_count: self.budget_for,
+                          days_count: 1, amount_currency: self.currency )] : caterings
     end
 
     def copy trip

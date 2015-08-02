@@ -23,7 +23,9 @@ en:
       travellers: 'Participants:'
       plan: Transfers and hotels
       plan_activities: Activities
+      catering: Food
       day: Day
+      days: days
       place: Cities
       transfers: Transfers
       hotel: Hotel
@@ -64,6 +66,9 @@ en:
       budget_for: for
       persons: pers.
       watching_now: Watching now
+      no_catering_description: No cuisine description yet
+      no_city: No city
+      catering_description: National cuisine, what to try and what to avoid
     edit:
       title: Edit travel
     form:

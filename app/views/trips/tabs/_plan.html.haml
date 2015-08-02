@@ -8,19 +8,7 @@
       = render 'trips/partials/watching_users'
   .row.plan-header-second-row
     .col-md-12
-      %big
-        = t('common.budget')
-        {{budget}}
-        = currency_symbol.html_safe
-        %span{'ng-show' => '!edit'}
-          = t('trips.show.budget_for')
-          {{trip.budget_for}}
-          = t('trips.show.persons')
-        %span{'ng-show' => 'edit'}
-          = t('trips.show.budget_for')
-          = select_tag 'trip_budget_for', options_for_select((1..10).step(1)),
-                      {class: 'input-sm', 'ng-model' => 'trip.budget_for'}
-          = t('trips.show.persons')
+      = render 'trips/partials/budget'
       %div{class: "list-group list-group-horizontal pull-right"}
         %a{class: "list-group-item",
                          'ng-click' => 'changeVisibility("show_place")',

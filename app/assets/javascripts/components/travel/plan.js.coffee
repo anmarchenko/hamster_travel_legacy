@@ -68,6 +68,13 @@ angular.module('travel-components').controller 'PlanController'
         $scope.trip = trip
         $scope.budget = budget
 
+      $scope.loadCatering = (trip, budget) ->
+        $scope.trip = trip
+        $scope.budget = budget
+
+        $scope.tripService.getCaterings().then (caterings) ->
+          $scope.caterings = caterings
+
       $scope.add = (field, obj = {}) ->
         obj['id'] = new Date().getTime()
         field.push(obj)
@@ -110,9 +117,13 @@ angular.module('travel-components').controller 'PlanController'
         return if $scope.saving
         $scope.saving = true
         $scope.tripService.updateTrip($scope.trip).then ->
-          $scope.saving = false unless $scope.days
+          $scope.saving = false unless $scope.days || $scope.caterings
         if $scope.days
           $scope.tripService.createDays($scope.days).then ->
+            $scope.saving = false
+            $scope.loadBudget()
+        if $scope.caterings
+          $scope.tripService.createCaterings($scope.caterings).then ->
             $scope.saving = false
             $scope.loadBudget()
 
@@ -123,6 +134,10 @@ angular.module('travel-components').controller 'PlanController'
             $scope.tripService.reloadDay day, (new_day) ->
               $scope.setDayCollapse(new_day, 'transfers')
               $scope.setDayCollapse(new_day, 'activities')
+        if $scope.caterings
+          $scope.tripService.getCaterings().then (caterings) ->
+            $scope.caterings = caterings
+
         $scope.load()
       # END OF API
 

@@ -1,58 +1,67 @@
 angular.module('travel-services').config(["railsSerializerProvider",
-  (railsSerializerProvider) ->
-    railsSerializerProvider.underscore(angular.identity).camelize(angular.identity);
-]
-).service 'Trip', [ 'railsResourceFactory', (railsResourceFactory) ->
-
+    (railsSerializerProvider) ->
+      railsSerializerProvider.underscore(angular.identity).camelize(angular.identity);
+  ]
+).service 'Trip', ['railsResourceFactory', (railsResourceFactory) ->
   {
-    init: (trip_id) ->
+  init: (trip_id) ->
+    {
+    trip_id: trip_id
 
-      {
-        trip_id: trip_id
+    Days: railsResourceFactory(
+      url: "/api/trips/#{trip_id}/days",
+      name: 'days'
+    )
 
-        Days: railsResourceFactory(
-          url: "/api/trips/#{trip_id}/days",
-          name: 'days'
-        )
+    Caterings: railsResourceFactory(
+      url: "/api/trips/#{trip_id}/caterings",
+      name: 'caterings'
+    )
 
-        Trips: railsResourceFactory(
-          url: "/api/trips",
-          name: 'trip'
-        )
+    Trips: railsResourceFactory(
+      url: "/api/trips",
+      name: 'trip'
+    )
 
-        Budgets: railsResourceFactory(
-          url: '/api/budgets',
-          name: 'budget'
-        )
+    Budgets: railsResourceFactory(
+      url: '/api/budgets',
+      name: 'budget'
+    )
 
-        getDays:  ->
-          this.Days.query()
+    getDays: ->
+      this.Days.query()
 
-        getDay: (day_id) ->
-          this.Days.get(day_id)
+    getDay: (day_id) ->
+      this.Days.get(day_id)
 
-        createDays: (days) ->
-          new this.Days(days).create()
+    createDays: (days) ->
+      new this.Days(days).create()
 
-        updateDay: (day) ->
-          new this.Days(day).update()
+    updateDay: (day) ->
+      new this.Days(day).update()
 
-        reloadDay: (day, callback = null) ->
-          this.getDay(day.id).then (new_day) ->
-            for prop in ['places', 'transfers', 'hotel', 'comment', 'activities', 'add_price']
-              day[prop] = new_day[prop]
+    reloadDay: (day, callback = null) ->
+      this.getDay(day.id).then (new_day) ->
+        for prop in ['places', 'transfers', 'hotel', 'comment', 'activities', 'add_price']
+          day[prop] = new_day[prop]
 
-            callback(day) if callback
+        callback(day) if callback
 
-        getTrip: ->
-          this.Trips.get(this.trip_id)
+    getCaterings: ->
+      this.Caterings.query()
 
-        updateTrip: (trip) ->
-          new this.Trips(trip).update()
+    createCaterings: (caterings) ->
+      new this.Caterings(caterings).create()
 
-        getBudget: (trip_id) ->
-          this.Budgets.get(trip_id)
-      }
+    getTrip: ->
+      this.Trips.get(this.trip_id)
+
+    updateTrip: (trip) ->
+      new this.Trips(trip).update()
+
+    getBudget: (trip_id) ->
+      this.Budgets.get(trip_id)
+    }
 
   }
 ]
