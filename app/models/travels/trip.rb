@@ -34,7 +34,7 @@ module Travels
       FINISHED = '2_finished'
 
       ALL = [DRAFT, PLANNED, FINISHED]
-      OPTIONS = ALL.map{|type| ["common.#{type}", type] }
+      OPTIONS = ALL.map { |type| ["common.#{type}", type] }
       TYPE_TO_TEXT = {
           DRAFT => "common.#{DRAFT}",
           PLANNED => "common.#{PLANNED}",
@@ -51,6 +51,7 @@ module Travels
     has_many :caterings, class_name: 'Travels::Catering'
 
     dragonfly_accessor :image
+
     def image_url_or_default
       self.image.try(:remote_url) || 'https://s3.amazonaws.com/altmer-cdn/images/no-image.png'
     end
@@ -61,16 +62,16 @@ module Travels
 
     validates_presence_of :name, :start_date, :end_date, :author_user_id
 
-    validates :start_date, date: { before_or_equal_to: :end_date, message: I18n.t('errors.date_before')  }
-    validates :end_date, date: {before: Proc.new {|record| record.start_date + 30.days},
+    validates :start_date, date: {before_or_equal_to: :end_date, message: I18n.t('errors.date_before')}
+    validates :end_date, date: {before: Proc.new { |record| record.start_date + 30.days },
                                 message: I18n.t('errors.end_date_days', period: 30)}
 
     validates_size_of :image, maximum: 10.megabytes, message: "should be no more than 10 MB", if: :image_changed?
 
     validates_property :format, of: :image, in: [:jpeg, :jpg, :png, :bmp], case_sensitive: false,
-                          message: "should be either .jpeg, .jpg, .png, .bmp", if: :image_changed?
+                       message: "should be either .jpeg, .jpg, .png, .bmp", if: :image_changed?
 
-    default_scope ->{where(:archived => false)}
+    default_scope -> { where(:archived => false) }
 
     after_save :update_plan
 
@@ -133,17 +134,32 @@ module Travels
       end
       (days || []).each do |day|
         result_new += day.hotel.amount.exchange_to(currency)
-        (day.transfers || []).each {|transfer| result_new += transfer.amount.exchange_to(currency)}
-        (day.activities || []).each {|activity| result_new += activity.amount.exchange_to(currency)}
-        (day.expenses || []).each {|expense| result_new += expense.amount.exchange_to(currency)}
+        (day.transfers || []).each { |transfer| result_new += transfer.amount.exchange_to(currency) }
+        (day.activities || []).each { |activity| result_new += activity.amount.exchange_to(currency) }
+        (day.expenses || []).each { |expense| result_new += expense.amount.exchange_to(currency) }
       end
 
       result_new.to_f
     end
 
     def caterings_data
-      caterings.blank? ? [Travels::Catering.new(id: Time.now.to_i, persons_count: self.budget_for,
-                          days_count: 1, amount_currency: self.currency )] : caterings
+      caterings.blank? ? create_caterings : caterings
+    end
+
+    def create_caterings
+      city_codes = self.days.joins(:places).pluck('places.city_code')
+      uniq_city_codes = city_codes.compact.uniq
+      uniq_city_codes.each_with_index.map do |city_code, index|
+        Travels::Catering.new(
+            id: Time.now.to_i + index,
+            persons_count: self.budget_for,
+            days_count: city_codes.count{|code| code == city_code},
+            amount_currency: self.currency,
+            city_code: city_code,
+            city_text: Geo::City.by_geonames_code(city_code).try(:translated_name),
+            expenses: Travels::Catering.default_expenses(self.currency)
+        )
+      end
     end
 
     def copy trip
@@ -159,7 +175,7 @@ module Travels
     def as_json(**args)
       attrs = {}
       ['id', 'comment', 'start_date', 'end_date', 'name', 'short_description',
-        'archived', 'private', 'budget_for'].each do |field|
+       'archived', 'private', 'budget_for'].each do |field|
         attrs[field] = self.send(field)
       end
       attrs['id'] = attrs['id'].to_s

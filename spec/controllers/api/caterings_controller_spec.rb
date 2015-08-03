@@ -2,7 +2,7 @@ describe Api::CateringsController do
 
   describe '#index' do
     let(:trip) { FactoryGirl.create(:trip, :with_caterings) }
-    let(:empty_trip) { FactoryGirl.create(:trip) }
+    let(:empty_trip) { FactoryGirl.create(:trip, :with_filled_days) }
 
     context 'when user is logged in' do
       login_user
@@ -16,11 +16,13 @@ describe Api::CateringsController do
           expect(json.first['city_code']).to eq(trip.caterings.first.city_code)
         end
 
-        it 'returns one catering if there are nothing' do
+        it 'returns one catering for each visited place if there are nothing' do
           get 'index', trip_id: empty_trip.id.to_s, format: :json
           expect(response).to have_http_status 200
           json = JSON.parse(response.body)
-          expect(json.count).to eq(1)
+
+          expect(json.count).to eq(empty_trip.days.joins(:places).pluck('places.city_code').compact.uniq.count)
+          expect(json.first['expenses'].count).to eq(Travels::Catering::EXPENSES.count)
         end
       end
 

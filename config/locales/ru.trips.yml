@@ -11,6 +11,12 @@ ru:
         private: Скрытое
         currency: Самая используемая валюта в путешествии
   trips:
+    expenses:
+      breakfast: Завтрак
+      dinner: Ужин
+      main_course: Главное блюдо
+      lunch: Обед
+      coffee: Кофе
     index:
       title: Путешествия
       all: Все путешествия

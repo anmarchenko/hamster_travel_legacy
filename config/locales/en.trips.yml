@@ -11,6 +11,12 @@ en:
         private: Private trip
         currency: Most used currency in this trip
   trips:
+    expenses:
+      breakfast: Breakfast
+      dinner: Dinner
+      main_course: Main course
+      lunch: Lunch
+      coffee: Coffee
     index:
       title: Travels
       all: All travels
