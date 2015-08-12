@@ -42,7 +42,7 @@ module Travels
           unless day_hash[:hotel].blank?
             hotel_hash = day_hash[:hotel]
             process_amount(hotel_hash)
-            day.hotel.update_attributes(name: hotel_hash[:name], amount_cents: hotel_hash[:amount_cents],
+            day.hotel.update_attributes(name: hotel_hash[:name], amount_cents: hotel_hash[:amount_cents].to_i,
                                         amount_currency: hotel_hash[:amount_currency], comment: hotel_hash[:comment])
             process_nested(day.hotel.links, day_hash[:hotel][:links] || [])
           end

@@ -107,6 +107,20 @@ describe Travels::Updaters::TripUpdater do
         expect(updated_hotel.links.first.description).to eq 'Updated.url'
       end
 
+      it 'removes hotel name and price' do
+        hotel = first_day_of(trip).hotel
+        params['1'][:hotel][:name] = ''
+        params['1'][:hotel][:amount_cents] = ''
+        params['1'][:hotel][:comment] = ''
+
+        update_trip_days trip, params
+
+        updated_hotel = first_day_of(trip).hotel
+        expect(updated_hotel.name).to be_blank
+        expect(updated_hotel.amount_cents).to eq(0)
+        expect(updated_hotel.comment).to be_blank
+      end
+
       it 'removes hotel link' do
         params['1'][:hotel].delete(:links)
         update_trip_days trip, params
