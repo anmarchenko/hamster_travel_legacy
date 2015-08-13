@@ -2,6 +2,7 @@
     <% body_props = {pageHeight: 11906, pageSize: 16834, pageOrient: :landscape,
                      marginLeft: 500, marginRight: 500, marginTop: 700, marginBottom: 700} %>
     <% fontSize = 9 %>
+    <% biggerFontSize = 12 %>
 
     <%= docx_body(body_props) do %>
 
@@ -262,6 +263,37 @@
                                 <%= docx_text(fontSize: fontSize, italic: true) do %><% end %>
                             <% end %>
                         <% end %>
+                    <% end %>
+                <% end %>
+            <% end %>
+        <% end %>
+
+
+        <% @trip.caterings.each do |catering| %>
+            <%= docx_paragraph(align: :left, fontSize: biggerFontSize, spacingBefore: 250) do %>
+                <%= docx_text(fontSize: biggerFontSize, bold: true) do %>
+                    <%= catering.city_text %>
+                <% end %>
+            <% end %>
+
+            <%= docx_paragraph(align: :left, fontSize: fontSize, spacingBefore: 100) do %>
+                <%= docx_text(fontSize: fontSize) do %>
+                    <%= catering.amount_cents || 0 %> <%= catering.amount_currency %> x <%= catering.persons_count %> <%= t('trips.show.persons') %> x <%= catering.days_count %> <%= t('trips.show.days') %> = <%= (catering.amount_cents || 0) * (catering.persons_count || 0) * (catering.days_count || 0) %> <%= catering.amount_currency %>
+                <% end %>
+            <% end %>
+
+            <% if catering.description.present? %>
+            <%= docx_paragraph(align: :left, fontSize: fontSize, spacingBefore: 100, spacingAfter: 100) do %>
+                <%= docx_text(fontSize: fontSize) do %>
+                    <%= catering.description %>
+                <% end %>
+            <% end %>
+            <% end %>
+
+            <% (catering.expenses || []).each do |expense| %>
+                <% if !expense.amount.blank? && !(expense.amount_cents == 0) %>
+                    <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
+                        <%= docx_text(fontSize: fontSize) do %><%= expense.name %> <%= expense.amount.to_f %> <%= expense.amount_currency %><% end %>
                     <% end %>
                 <% end %>
             <% end %>
