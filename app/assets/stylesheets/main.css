@@ -1,7 +1,6 @@
 /*
- *= require_tree './lib'
+ *= require 'datetimepicker'
  *= require jquery.Jcrop
- *= require 'scaffolds'
- *= require_tree './overrides'
+ *= require 'style'
 */
 
