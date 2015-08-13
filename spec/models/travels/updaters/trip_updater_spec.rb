@@ -163,14 +163,14 @@ describe Travels::Updaters::TripUpdater do
                   id: day.places.first.id.to_s,
                   city_code: 'new_city_code_1',
                   city_text: 'new_city_text_1'
-              },
+              }.with_indifferent_access,
               {
                   city_code: 'new_city_code_2',
                   city_text: 'new_city_text_2'
-              }
+              }.with_indifferent_access
           ]
 
-      }
+      }.with_indifferent_access
       }
       }
 
@@ -223,25 +223,25 @@ describe Travels::Updaters::TripUpdater do
                   city_from_code: 'city_from_code_1',
                   city_to_code: 'city_to_code_1',
                   isCollapsed: true
-              },
+              }.with_indifferent_access,
               {
                   city_from_code: 'city_from_code_2',
                   city_to_code: 'city_to_code_2',
                   isCollapsed: false
-              },
+              }.with_indifferent_access,
               {
                   city_from_code: 'city_from_code_3',
                   city_to_code: 'city_to_code_3',
                   isCollapsed: false
-              },
+              }.with_indifferent_access,
               {
                   city_from_code: 'city_from_code_4',
                   city_to_code: 'city_to_code_4',
                   isCollapsed: false
-              }
+              }.with_indifferent_access
           ]
 
-      }
+      }.with_indifferent_access
       }
       }
 
@@ -285,20 +285,20 @@ describe Travels::Updaters::TripUpdater do
               {
                   name: 'name 1',
                   isCollapsed: true
-              },
+              }.with_indifferent_access,
               {
                   name: 'name 2',
                   isCollapsed: true
-              },
+              }.with_indifferent_access,
               {
                   name: 'name 3',
                   isCollapsed: true
-              },
+              }.with_indifferent_access,
               {
                   name: '',
                   isCollapsed: true,
                   comment: 'some comment'
-              }
+              }.with_indifferent_access
           ]
 
       }
@@ -364,14 +364,14 @@ describe Travels::Updaters::TripUpdater do
         expect(expenses.last.amount.to_f).to eq 98765.0
       end
 
-      it 'updates expense' do
+      it 'updates expense and removes' do
         expenses = first_day_of(trip).expenses
         params['1'][:expenses] = [
             {
                 id: expenses.first.id.to_s,
                 name: 'updated_name',
                 amount_currency: 'EUR'
-            }
+            }.with_indifferent_access
         ]
         update_trip_days trip, params
 
@@ -381,11 +381,29 @@ describe Travels::Updaters::TripUpdater do
         expect(updated_expenses.first.reload.amount).to eq(Money.new(45600, 'EUR'))
       end
 
+      it 'updates expense when amount is empty' do
+        expenses = first_day_of(trip).expenses
+        params['1'][:expenses] = [
+            {
+                id: expenses.first.id.to_s,
+                name: '',
+                amount_cents: '',
+                amount_currency: 'EUR'
+            }.with_indifferent_access
+        ]
+        update_trip_days trip, params
+
+        updated_expenses = first_day_of(trip).expenses
+        expect(updated_expenses.count).to eq 1
+        expect(updated_expenses.first.reload.name).to eq ''
+        expect(updated_expenses.first.reload.amount).to eq(Money.new(0, 'EUR'))
+      end
+
       it 'removes expenses' do
         params['1'].delete(:expenses)
         update_trip_days trip, params
         updated_day = first_day_of(trip)
-        expect(updated_day.expenses.count).to eq 1
+        expect(updated_day.expenses.count).to eq 1 # default one
       end
     end
 
