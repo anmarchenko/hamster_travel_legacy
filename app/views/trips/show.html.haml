@@ -38,7 +38,7 @@
 
   .col-md-9.col-sm-9
     - if user_signed_in?
-      .btn-toolbar
+      .btn-toolbar.pull-right
         = link_to "#{new_trip_path}?copy_from=#{@trip.id}", target: '_blank', class: 'btn btn-default' do
           = fa_icon 'copy', text: t('trips.show.clone')
 
@@ -51,9 +51,10 @@
               'data-confirm'=> t('common.delete_confirm')  do
               = fa_icon 'times', text: t('trips.show.delete_trip')
 
+    = render'trips/partials/participants', participants: @trip.users
+
     %p.travel-text{} #{@trip.short_description}
 
-    = render'trips/partials/participants', participants: @trip.users
 
 .work-area
   - if params[:tab].blank? || params[:tab] == ApplicationHelper::TAB_PLAN

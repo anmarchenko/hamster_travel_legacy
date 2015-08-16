@@ -1,5 +1,5 @@
 - participants.each_slice(3) do |slice|
-  .row
+  .row.participants
     - slice.each do |participant|
-      .col-md-4
-        = render 'widgets/user_card', user: participant
+      = link_to user_path(participant), class: 'pull-left' do
+        %img.img-circle.small-profile-pic.participant{ src: participant.image_url_or_default, 'data-toggle' => "tooltip", 'data-placement' => "bottom", title: participant.full_name}

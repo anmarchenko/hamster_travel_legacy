@@ -170,13 +170,13 @@
 
   .trip-name {
     border-right: 5px solid;
-    &.b-0_draft{
+    &.b-0_draft {
       border-color: $draft;
     }
-    &.b-2_finished{
+    &.b-2_finished {
       border-color: $finished;
     }
-    &.b-1_planned{
+    &.b-1_planned {
       border-color: $planned;
     }
   }
@@ -187,6 +187,21 @@
 
     .trip-image {
       border: 1px solid $main-grey;
+    }
+
+    .participants {
+      a {
+        text-decoration: none;
+      }
+      .participant {
+        margin: 0px 10px;
+        &:hover{
+          border: 1px solid $link;
+          -webkit-box-shadow: 0px 0px 5px 1px $link;
+          -moz-box-shadow: 0px 0px 5px 1px $link;
+          box-shadow: 0px 0px 5px 1px $link;
+        }
+      }
     }
   }
 
