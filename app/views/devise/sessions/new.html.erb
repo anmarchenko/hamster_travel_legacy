@@ -4,8 +4,7 @@
   <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
     <%= form_for(resource, as: resource_name, url: session_path(resource_name), role: 'formr') do |f| %>
       <fieldset>
-        <h2><%= t('.welcome') %></h2>
-        <hr class="colorgraph">
+        <h3><%= t('.welcome') %></h3>
         <div class="form-group">
           <%= f.email_field :email, autofocus: true, class: 'form-control input-lg', placeholder: t('.email') %>
         </div>
@@ -13,20 +12,23 @@
           <%= f.password_field :password, autocomplete: 'off', class: 'form-control input-lg', placeholder: t('.password') %>
         </div>
         <% if devise_mapping.rememberable? -%>
+          <div class="form-group">
             <span class="button-checkbox">
                 <button type="button" class="btn" data-color="info"><%= t('.remember') %></button>
                 <%= f.check_box :remember_me, class: 'hidden', checked: 'checked' %>
                 <%# <a href="" class="btn btn-link pull-right">Forgot Password?</a> %>
             </span>
+          </div>
         <% end -%>
-        <hr class="colorgraph">
         <div class="row">
-          <div class="col-xs-6 col-sm-6 col-md-6">
+          <div class="col-xs-12 col-sm-12 col-md-12">
             <%= f.submit t('.sign_in'), class: 'btn btn-lg btn-success btn-block' %>
           </div>
+          <% if false %>
           <div class="col-xs-6 col-sm-6 col-md-6">
             <%= link_to t('.register'), new_user_registration_path, class: 'btn btn-lg btn-primary btn-block' %>
           </div>
+          <% end %>
         </div>
       </fieldset>
     <% end %>
