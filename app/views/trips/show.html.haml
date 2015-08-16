@@ -39,17 +39,20 @@
   .col-md-9.col-sm-9
     - if user_signed_in?
       .btn-toolbar.pull-right
-        = link_to "#{new_trip_path}?copy_from=#{@trip.id}", target: '_blank', class: 'btn btn-default' do
-          = fa_icon 'copy', text: t('trips.show.clone')
+        = link_to "#{new_trip_path}?copy_from=#{@trip.id}", target: '_blank', class: 'btn ghost-button',
+        'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.clone') do
+          = fa_icon 'copy'
 
         - if @user_can_edit
-          = link_to edit_trip_path(@trip), class: 'btn btn-default' do
-            = fa_icon 'pencil', text: t('trips.show.edit_trip')
+          = link_to edit_trip_path(@trip), class: 'btn ghost-button',
+          'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.edit_trip') do
+            = fa_icon 'pencil'
 
           - if @trip.author_user_id == current_user.id
-            = link_to trip_path(@trip), class: 'btn btn-default', method: :delete,
+            = link_to trip_path(@trip), class: 'btn ghost-button', method: :delete,
+              'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.delete_trip'),
               'data-confirm'=> t('common.delete_confirm')  do
-              = fa_icon 'times', text: t('trips.show.delete_trip')
+              = fa_icon 'times'
 
     = render'trips/partials/participants', participants: @trip.users
 
