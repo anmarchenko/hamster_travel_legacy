@@ -1,0 +1,86 @@
+.dashboard-content {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+
+  background: url(https://s3.eu-central-1.amazonaws.com/hamster-travel-images/backgrounds/berlin-germany.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+header {
+  z-index: 10;
+}
+
+.navbar-transparent {
+  background-color: rgba(255, 255, 255, 0.5);
+  a {
+    color: #444444 !important;
+  }
+}
+
+.welcome-area {
+  margin-top: 14%;
+  text-align: center;
+  .btn-browse {
+    margin-right: 15px;
+  }
+  .btns {
+    margin-top: 50px
+  }
+  h2 {
+    color: white;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+  }
+  h3 {
+    color: white;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+  }
+}
+
+@media (min-width: 992px) {
+  .welcome-area {
+    .btn {
+      padding: 15px 40px 15px 40px;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .welcome-area {
+    margin-top: 150px;
+    h2 {
+      font-size: 24px;
+    }
+    h3 {
+      color: white;
+      font-size: 16px;
+    }
+  }
+}
+
+.dropdown-toggle{
+  cursor: pointer;
+}
+
+.img-nav{
+  height: 40px;
+  margin-right: 5px;
+}
+
+.user-menu-toggle{
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+.new-plan{
+  color: green !important;
+}
+
+.big-control{
+  font-size: 18px;
+}

@@ -38,9 +38,9 @@
     %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.hotel.links, $index)', 'ng-show' => 'day.hotel.links.length > 1',
       class: 'delete-button'}
       = fa_icon 'times'
-  .form-group
+  .form-group.edit-actions
     .col-md-12
-      %a.pull-left.margin-right-10{href: 'javascript:void(0);', 'ng-click' => 'save()',
+      %a.pull-left{href: 'javascript:void(0);', 'ng-click' => 'save()',
             'ng-show' => 'hotel_edit'}
         = fa_icon 'check'
       %a.pull-left{href: 'javascript:void(0);', 'ng-click' => 'reload()', 'ng-show' => 'hotel_edit'}

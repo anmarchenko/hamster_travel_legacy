@@ -108,7 +108,6 @@ describe Travels::Updaters::TripUpdater do
       end
 
       it 'removes hotel name and price' do
-        hotel = first_day_of(trip).hotel
         params['1'][:hotel][:name] = ''
         params['1'][:hotel][:amount_cents] = ''
         params['1'][:hotel][:comment] = ''

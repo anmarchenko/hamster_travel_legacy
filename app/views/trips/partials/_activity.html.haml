@@ -51,8 +51,8 @@
           .col-md-12
             = render 'widgets/link', ng_model_url: 'activity.link_url'
 
-  .form-group
-    %a.pull-left.margin-right-10{href: 'javascript:void(0);', 'ng-click' => 'save()',
+  .form-group.edit-actions
+    %a.pull-left{href: 'javascript:void(0);', 'ng-click' => 'save()',
           'ng-show' => 'activity_edit'}
       = fa_icon 'check'
     %a.pull-left{href: 'javascript:void(0);', 'ng-click' => 'reload()', 'ng-show' => 'activity_edit'}

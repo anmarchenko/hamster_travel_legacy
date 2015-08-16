@@ -52,7 +52,7 @@
             = render 'widgets/typeahead/cities', model_name: 'catering.city', classes: 'input-sm form-control',
                 placeholder: t('trips.show.city'), show_loading: false
         .col-md-9.col-xs-1
-          %a{href: 'javascript:void(0);', 'ng-click' => 'remove(caterings, $index)', class: 'pull-right margin-right-10 big-control'}
+          %a{href: 'javascript:void(0);', 'ng-click' => 'remove(caterings, $index)', class: 'pull-right big-control'}
             = fa_icon 'times'
       .row
         .col-md-12
@@ -80,7 +80,7 @@
         .col-md-12
           .form-group
             = t('trips.show.example_espenses')
-            %a.pull-right{href: 'javascript:void(0);', class: 'pull-right margin-right-10',
+            %a.pull-right{href: 'javascript:void(0);', class: 'pull-right',
             'ng-click' => "add(catering.expenses, {#{default_currency_hash(@trip, current_user)}})"}
               = fa_icon 'plus', text: t('trips.show.add_expense')
 
@@ -98,7 +98,7 @@
 
   .row{'ng-show' => 'edit'}
     .col-md-12
-      %a.pull-right{href: 'javascript:void(0);', class: 'pull-right margin-right-10 big-control',
+      %a.pull-right{href: 'javascript:void(0);', class: 'pull-right big-control',
       'ng-click' => "add(caterings, {persons_count: trip.budget_for, days_count: 1, #{default_currency_hash(@trip, current_user)}})"}
         = fa_icon 'plus'
 

@@ -1,49 +1,86 @@
-.profile-pic{
-    width:120px;
-}
-.small-profile-pic{
-    width: 60px;
-    border: 1px solid grey;
-}
-.login-profile-pic
-{
-    margin-top:50px;
-    margin-left:50px;
-    margin-bottom:-60px;
+.profile-pic {
+  width: 120px;
 }
 
-.login-profile-panel
-{
-    background-image:url('https://s3.amazonaws.com/altmer-cdn/images/wallpaper.jpg');
-    margin-bottom: 80px;
+.small-profile-pic {
+  width: 60px;
+  border: 1px solid grey;
 }
 
-.login-profile-name
-{
-    position:absolute;
-    padding-left:200px;
-    font-size:30px;
-    padding-top: 20px;
+.login-profile-pic {
+  margin-top: 50px;
+  margin-left: 50px;
+  margin-bottom: -60px;
 }
 
-.login-profile-dropdown
-{
-    position:absolute;
+.login-profile-panel {
+  background-image: url('https://s3.amazonaws.com/altmer-cdn/images/wallpaper.jpg');
+  margin-bottom: 80px;
 }
 
-.login-profile-change
-{
-    position:relative;
-    bottom:20px;
-    padding:1px;
-    color:white;
-    text-decoration:none;
+.login-profile-name {
+  position: absolute;
+  padding-left: 200px;
+  font-size: 30px;
+  padding-top: 20px;
 }
 
+.login-profile-dropdown {
+  position: absolute;
+}
 
-.login-profile-change:hover
-{
-    text-decoration:none;
-    background-color:black;
-    color:white;
+.login-profile-change {
+  position: relative;
+  bottom: 20px;
+  padding: 1px;
+  color: white;
+  text-decoration: none;
+}
+
+.login-profile-change:hover {
+  text-decoration: none;
+  background-color: black;
+  color: white;
+}
+
+.settings-link-position {
+  position: absolute;
+  z-index: 10;
+  bottom: 10px;
+}
+
+.settings-link {
+  color: white;
+  padding: 3px;
+  background-color: rgba(0, 0, 0, 0.498039);
+  border-radius: 3px;
+  margin-left: 10px;
+}
+
+.upload-user-image-button {
+  left: 5px;
+}
+
+.delete-user-image-button {
+  left: 30px;
+}
+
+.user-profile-links {
+  right: 10px;
+}
+
+.user-settings-link {
+  right: 230px;
+}
+
+.user-edit-link {
+  right: 91px;
+}
+
+.user-signout-link {
+  right: 10px;
+}
+
+.user-profile-link {
+  right: 339px;
 }
