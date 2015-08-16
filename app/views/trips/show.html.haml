@@ -1,4 +1,5 @@
 - content_for :title, @trip.name
+- @body_class = 'trip'
 
 .row.trip-header
   .col-md-3.col-sm-3
@@ -17,9 +18,7 @@
             'ng-show' => 'mouse_over_image' do
             = fa_icon 'upload'
 
-      %img{class: 'img-thumbnail', id: 'trip_image',
-        src: @trip.image_url_or_default,
-        width: '100%'}
+      %img{id: 'trip_image', src: @trip.image_url_or_default, width: '100%'}
 
     .progress-wrapper
       .progress
@@ -58,14 +57,15 @@
 
     = render'trips/partials/participants', participants: @trip.users
 
-- if params[:tab].blank? || params[:tab] == ApplicationHelper::TAB_PLAN
-  = render 'trips/tabs/plan'
+.work-area
+  - if params[:tab].blank? || params[:tab] == ApplicationHelper::TAB_PLAN
+    = render 'trips/tabs/plan'
 
-- if params[:tab] == ApplicationHelper::TAB_PLAN_ACTIVITIES
-  = render 'trips/tabs/plan_activities'
+  - if params[:tab] == ApplicationHelper::TAB_PLAN_ACTIVITIES
+    = render 'trips/tabs/plan_activities'
 
-- if params[:tab] == ApplicationHelper::TAB_REPORT
-  = render 'trips/tabs/report'
+  - if params[:tab] == ApplicationHelper::TAB_REPORT
+    = render 'trips/tabs/report'
 
-- if params[:tab] == ApplicationHelper::TAB_CATERING
-  = render 'trips/tabs/catering'
+  - if params[:tab] == ApplicationHelper::TAB_CATERING
+    = render 'trips/tabs/catering'

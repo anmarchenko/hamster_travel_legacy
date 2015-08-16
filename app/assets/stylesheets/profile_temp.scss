@@ -33,14 +33,14 @@
   position: relative;
   bottom: 20px;
   padding: 1px;
-  color: white;
+  color: $white;
   text-decoration: none;
 }
 
 .login-profile-change:hover {
   text-decoration: none;
   background-color: black;
-  color: white;
+  color: $white;
 }
 
 .settings-link-position {
@@ -50,7 +50,7 @@
 }
 
 .settings-link {
-  color: white;
+  color: $white;
   padding: 3px;
   background-color: rgba(0, 0, 0, 0.498039);
   border-radius: 3px;

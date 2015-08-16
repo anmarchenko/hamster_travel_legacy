@@ -1,5 +1,5 @@
 %div.activity-place{'ng-show' => '!edit && !activity_edit', 'ng-model' => 'day.activities'}
-  %div.region-grey{'ng-repeat' => 'activity in day.activities track by activity.id'}
+  %div.day-activity-container{'ng-repeat' => 'activity in day.activities track by activity.id'}
     %span{'ng-click' => 'activity.isCollapsed = !activity.isCollapsed'}
       %span{class: 'collapse-header'}
         %span{'ng-show' => 'day.activities.length > 1'}
@@ -22,7 +22,7 @@
 %div{'ng-show' => 'edit || activity_edit'}
   %div.activity-place-edit{'ng-model' => 'day.activities',
                             'ui-sortable' => '{connectWith: \'.activity-place-edit\', placeholder: \'well\'}'}
-    %div.form-horizontal.region-grey.day-activity-container{'ng-repeat' => 'activity in day.activities track by activity.id'}
+    %div.form-horizontal.day-activity-container{'ng-repeat' => 'activity in day.activities track by activity.id'}
       .form-group
         .col-md-1.activity-index
           %big
