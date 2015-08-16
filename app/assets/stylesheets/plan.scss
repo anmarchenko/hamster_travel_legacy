@@ -1,166 +1,199 @@
-.trip{
+.trip {
   background-color: $background-grey;
 
-  .work-area{
+  .work-area {
     margin: -20px -40px;
 
     padding: 20px 40px;
     background-color: $white;
+
+    .nav-tabs {
+      li {
+        margin-right: 20px;
+      }
+    }
+
+    .edit-actions {
+      a.pull-left {
+        margin-right: 10px;
+      }
+      a.pull-right {
+        margin-left: 10px;
+      }
+    }
+
+    .relative-position {
+      position: relative;
+    }
+
+    .day-place-container .up-button {
+      position: absolute;
+      right: 25px;
+      top: 5px
+    }
+
+    .day-place-container .delete-button {
+      position: absolute;
+      right: 5px;
+      top: 5px
+    }
+
+    .day-expense-container .delete-button {
+      position: absolute;
+      right: 20px;
+      top: 5px
+    }
+
+    .relative-position .expand-button {
+      position: absolute;
+      right: 40px;
+      top: 5px
+    }
+
+    .day-place-container {
+      input {
+        padding-right: 37px !important;
+      }
+    }
+
+    .day-activity-container {
+      position: relative;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+
+    .day-activity-container .delete-button {
+      position: absolute;
+      right: 20px;
+      top: 5px
+    }
+
+    .day-activity-container .expand-button {
+      position: absolute;
+      right: 40px;
+      top: 5px
+    }
+
+    .collapse-header {
+      cursor: pointer;
+      cursor: hand;
+      margin-right: 5px;
+    }
+
+    .activity-index {
+      margin-top: 8px
+    }
+
+    .activity-index big {
+      padding-left: 10px
+    }
+
+    .table-black-bordered > thead > tr > th, .table-black-bordered > tbody > tr > th, .table-black-bordered > tfoot > tr > th, .table-black-bordered > thead > tr > td, .table-black-bordered > tbody > tr > td, .table-black-bordered > tfoot > tr > td {
+      background-color: $white;
+      border: 1px solid $black !important;
+    }
+    .actions-butons {
+      a {
+        font-size: 18px;
+        padding: 5px 10px;
+        color: $main-grey;
+      }
+    }
+    .plan-header a {
+      text-decoration: none;
+    }
+
+    .show-column-checkboxes {
+      width: 70px;
+    }
+
+    .activity-place {
+      min-width: 100px;
+      min-height: 20px;
+    }
+
+    .activity-place-edit {
+      min-width: 100px;
+      min-height: 20px;
+    }
+
+    .transfer-place {
+      min-width: 100px;
+      min-height: 20px;
+    }
+
+    .transfer-place-edit {
+      min-width: 100px;
+      min-height: 20px;
+    }
+
+    .plan-row td {
+      position: relative;
+    }
+
+    .edit-hover-button {
+      position: absolute;
+      right: 8px;
+      top: 8px
+    }
+
+    .plan-header-second-row {
+      height: 60px;
+      vertical-align: middle;
+      padding-top: 20px;
+    }
+
+    .list-group-horizontal {
+      .list-group-item {
+        display: inline-block;
+        margin-bottom: 0;
+        margin-left: -6px;
+        margin-right: 0;
+        padding: 5px 15px;
+        cursor: pointer;
+      }
+      .list-group-item:first-child {
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 4px;
+      }
+      .list-group-item:last-child {
+        border-top-right-radius: 4px;
+        border-bottom-left-radius: 0;
+      }
+      .list-group-item.active {
+        background-color: $main-grey;
+        border-color: $border-grey;
+      }
+    }
+
   }
-}
 
-.relative-position {
-  position: relative;
-}
-
-.day-place-container .up-button {
-  position: absolute;
-  right: 25px;
-  top: 5px
-}
-
-.day-place-container .delete-button {
-  position: absolute;
-  right: 5px;
-  top: 5px
-}
-
-.day-expense-container .delete-button {
-  position: absolute;
-  right: 20px;
-  top: 5px
-}
-
-.relative-position .expand-button {
-  position: absolute;
-  right: 40px;
-  top: 5px
-}
-
-.day-place-container {
-  input {
-    padding-right: 37px !important;
+  .trip-name {
+    border-right: 5px solid;
+    &.b-0_draft{
+      border-color: $draft;
+    }
+    &.b-2_finished{
+      border-color: $finished;
+    }
+    &.b-1_planned{
+      border-color: $planned;
+    }
   }
-}
 
-.day-activity-container {
-  position: relative;
-  padding: 5px;
-  margin-bottom: 10px;
-}
+  .trip-header {
+    margin-top: 23px;
+    margin-bottom: 60px;
 
-.day-activity-container .delete-button {
-  position: absolute;
-  right: 20px;
-  top: 5px
-}
-
-.day-activity-container .expand-button {
-  position: absolute;
-  right: 40px;
-  top: 5px
-}
-
-.collapse-header {
-  cursor: pointer;
-  cursor: hand;
-  margin-right: 5px;
-}
-
-.activity-index {
-  margin-top: 8px
-}
-
-.activity-index big {
-  padding-left: 10px
-}
-
-.table-black-bordered > thead > tr > th, .table-black-bordered > tbody > tr > th, .table-black-bordered > tfoot > tr > th, .table-black-bordered > thead > tr > td, .table-black-bordered > tbody > tr > td, .table-black-bordered > tfoot > tr > td {
-  background-color: $white;
-  border: 1px solid #000000 !important;
-}
-
-.actions-butons {
-  a {
-    font-size: 18px;
-    padding: 5px 10px;
-    color: grey;
+    .trip-image {
+      border: 1px solid $main-grey;
+    }
   }
+
 }
 
 .input-group .form-control {
   z-index: auto;
-}
-
-.plan-header a {
-  text-decoration: none;
-}
-
-.show-column-checkboxes {
-  width: 70px;
-}
-
-.activity-place {
-  min-width: 100px;
-  min-height: 20px;
-}
-
-.activity-place-edit {
-  min-width: 100px;
-  min-height: 20px;
-}
-
-.transfer-place {
-  min-width: 100px;
-  min-height: 20px;
-}
-
-.transfer-place-edit {
-  min-width: 100px;
-  min-height: 20px;
-}
-
-.plan-row td {
-  position: relative;
-}
-
-.edit-hover-button {
-  position: absolute;
-  right: 8px;
-  top: 8px
-}
-
-.trip-status {
-  display: inline-block;
-}
-
-.plan-header-second-row {
-  height: 60px;
-  vertical-align: middle;
-  padding-top: 20px;
-}
-
-.list-group-horizontal {
-  .list-group-item {
-    display: inline-block;
-    margin-bottom: 0;
-    margin-left: -6px;
-    margin-right: 0;
-    padding: 5px 15px;
-    cursor: pointer;
-  }
-  .list-group-item:first-child {
-    border-top-right-radius: 0;
-    border-bottom-left-radius: 4px;
-  }
-  .list-group-item:last-child {
-    border-top-right-radius: 4px;
-    border-bottom-left-radius: 0;
-  }
-  .list-group-item.active {
-    background-color: grey;
-    border-color: lightgrey;
-  }
 }
 
 .watching-users {
@@ -170,26 +203,4 @@
   font-size: 16px;
 }
 
-.trip-header {
-  margin-top: 23px;
-  margin-bottom: 60px;
-  h4 {
-    margin-top: 0px;
-  }
-}
-
-.nav-tabs {
-  li {
-    margin-right: 20px;
-  }
-}
-
-.edit-actions {
-  a.pull-left {
-    margin-right: 10px;
-  }
-  a.pull-right {
-    margin-left: 10px;
-  }
-}
 

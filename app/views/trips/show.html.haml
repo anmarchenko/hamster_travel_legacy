@@ -1,6 +1,14 @@
 - content_for :title, @trip.name
 - @body_class = 'trip'
 
+
+.row
+  .col-md-12
+    %h4{class: "trip-name b-#{@trip.status_code}"}
+      = @trip.name
+      %small
+        = l @trip.start_date, format: :month
+
 .row.trip-header
   .col-md-3.col-sm-3
     .fileupload-form{'ng-mouseleave' => 'mouse_over_image = false',
@@ -18,7 +26,7 @@
             'ng-show' => 'mouse_over_image' do
             = fa_icon 'upload'
 
-      %img{id: 'trip_image', src: @trip.image_url_or_default, width: '100%'}
+      %img{id: 'trip_image', src: @trip.image_url_or_default, width: '100%', class: 'trip-image'}
 
     .progress-wrapper
       .progress
@@ -29,16 +37,6 @@
       = t('common.photo_processing')
 
   .col-md-9.col-sm-9
-    .well.well-sm.trip-status.pull-right{class: trip_status_class(@trip.status_code)}
-      %big
-        = @trip.status_text
-        - if @trip.private
-          (#{t('activerecord.attributes.travels/trip.private')})
-    %h4
-      = @trip.name
-      %small
-        = l @trip.start_date, format: :month
-
     - if user_signed_in?
       .btn-toolbar
         = link_to "#{new_trip_path}?copy_from=#{@trip.id}", target: '_blank', class: 'btn btn-default' do

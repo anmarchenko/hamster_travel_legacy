@@ -25,7 +25,7 @@
           %li
             = link_to t('.my_ideas'), trips_path(my_draft: true)
           %li
-            = link_to new_trip_path, class: 'new-plan' do
+            = link_to new_trip_path do
               = fa_icon 'plus', text: t('trips.index.create')
         = render 'layouts/partials/locale_bar'
         = render 'layouts/partials/user_navbar'
