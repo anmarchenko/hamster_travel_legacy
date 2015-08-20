@@ -110,21 +110,37 @@
     .activity-place {
       min-width: 100px;
       min-height: 20px;
+
+      .activity-place-edit {
+        min-width: 100px;
+        min-height: 20px;
+      }
     }
 
-    .activity-place-edit {
+    .transfer-place, .transfer-place-edit {
       min-width: 100px;
       min-height: 20px;
-    }
 
-    .transfer-place {
-      min-width: 100px;
-      min-height: 20px;
-    }
+      .transfer-edit-container {
+        padding: 5px;
+        margin-bottom: 2em;
 
-    .transfer-place-edit {
-      min-width: 100px;
-      min-height: 20px;
+        &:hover{
+          background-color: $light-grey;
+        }
+      }
+
+      .transfer-show-container{
+        padding: 5px;
+        margin-bottom: 10px;
+
+        &:hover{
+          background-color: $light-grey;
+        }
+
+        .header{
+        }
+      }
     }
 
     .plan-row td {

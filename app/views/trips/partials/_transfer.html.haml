@@ -1,6 +1,6 @@
 .transfer-place{'ng-show' => '!edit && !transfer_edit', 'ng-model' => 'day.transfers'}
 
-  %div{'ng-repeat' => 'transfer in day.transfers track by transfer.id'}
+  %div.transfer-show-container{'ng-repeat' => 'transfer in day.transfers track by transfer.id'}
     = render 'trips/partials/show_transfer'
 
   - if @user_can_edit
@@ -8,10 +8,12 @@
       = fa_icon 'pencil'
 
 %div{'ng-show' => 'edit || transfer_edit'}
+
   %div.form-horizontal.transfer-place-edit{'ng-model' => 'day.transfers',
         'ui-sortable' => '{connectWith: \'.transfer-place-edit\', placeholder: \'well\'}'}
-    %div{'ng-repeat' => 'transfer in day.transfers track by transfer.id'}
+    %div.transfer-edit-container{'ng-repeat' => 'transfer in day.transfers track by transfer.id'}
       = render 'trips/partials/edit_transfer'
+
   .form-group.edit-actions
     %a.pull-left{href: 'javascript:void(0);', 'ng-click' => 'save()',
           'ng-show' => 'transfer_edit'}

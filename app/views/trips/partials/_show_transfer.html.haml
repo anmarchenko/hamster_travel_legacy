@@ -1,7 +1,5 @@
-%hr{'ng-show' => '$index > 0'}
-
 %span{'ng-click' => 'transfer.isCollapsed = !transfer.isCollapsed'}
-  %p{class: 'collapse-header'}
+  %p.collapse-header.header
     %span{'ng-show' => '!!transfer.type_icon'}
       %i{class: '{{transfer.type_icon}}'}
     %span
