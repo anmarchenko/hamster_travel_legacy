@@ -10,13 +10,12 @@
         = render 'trips/partials/watching_users'
   .row{'ng-cloak' => ''}
     .col-md-12
-      %article.trip-report{'ng-show' => '!edit'}
-        %h3
+      %article.trip-report
+        %p.header
           = t('trips.show.report')
-        %p.travel-text
-          {{trip.comment || '#{t('trips.show.no_report')}'}}
 
-      %div{'ng-show' => 'edit', class: 'form-horizontal'}
-        %div{class: 'form-group'}
-          = text_area_tag 'day_comment', '', 'ng-model' => 'trip.comment', class: 'form-control',
-            placeholder: t('trips.show.comment'), rows: 40
+        %p.travel-text{'ng-show' => '!edit'} {{trip.comment || '#{t('trips.show.no_report')}'}}
+        %div{'ng-show' => 'edit', class: 'form-horizontal'}
+          %div{class: 'form-group'}
+            = text_area_tag 'day_comment', '', 'ng-model' => 'trip.comment', class: 'form-control',
+              placeholder: t('trips.show.comment'), rows: 40

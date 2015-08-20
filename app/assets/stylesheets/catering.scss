@@ -1,3 +1,23 @@
-.catering{
-  margin-bottom: 20px;
+.catering-container{
+  margin-top: 2em;
+
+  .catering-form, .catering-show{
+    margin-bottom: 2em;
+  }
+
+  .catering-show{
+    .header{
+      color: $text-grey;
+      font-size: 20px;
+    }
+
+    .expenses{
+      font-size: 18px;
+    }
+
+    .text {
+      white-space: pre-line;
+    }
+
+  }
 }

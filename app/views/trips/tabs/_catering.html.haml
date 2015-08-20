@@ -10,18 +10,14 @@
     .col-md-12
       = render 'trips/partials/budget'
 
-  %div{'ng-repeat' => 'catering in caterings track by catering.id'}
+  %div.catering-container{'ng-repeat' => 'catering in caterings track by catering.id'}
 
-    %div{'ng-show' => '!edit'}
+    .catering-show{'ng-show' => '!edit'}
       .row
         .col-md-12
-          %p
-            %b
-              {{catering.city_text || '#{I18n.t('trips.show.no_city')}'}}
-          %p.travel-text{} {{catering.description || '#{I18n.t('trips.show.no_catering_description')}'}}
-          %p
-            = t('trips.show.food_price')
-          %p
+          %p.header
+            {{catering.city_text || '#{I18n.t('trips.show.no_city')}'}}
+          %p.expenses
             {{catering.amount_cents || 0}}
             {{catering.amount_currency_text}}
             = fa_icon 'times'
@@ -30,22 +26,13 @@
             = fa_icon 'times'
             {{catering.days_count}}
             = t('trips.show.days')
-            = fa_icon 'arrow-right'
+            \=
             {{(catering.amount_cents || 0) * (catering.persons_count || 0) * (catering.days_count || 0)}}
             {{catering.amount_currency_text}}
-      .row{'ng-show' => 'catering.expenses.length > 0' }
-        .col-md-12
-          %p
-            = t('trips.show.example_espenses')
-      .row
-        .col-md-3{'ng-repeat' => 'expense in catering.expenses'}
-          %p
-            {{expense.name}}
-            {{expense.amount_cents}}
-            {{expense.amount_currency_text}}
+          %p.text{} {{catering.description || '#{I18n.t('trips.show.no_catering_description')}'}}
 
 
-    .catering.well{'ng-show' => 'edit'}
+    .catering-form{'ng-show' => 'edit'}
       .row
         .col-md-3.col-xs-11
           .form-group
@@ -54,15 +41,6 @@
         .col-md-9.col-xs-1
           %a{href: 'javascript:void(0);', 'ng-click' => 'remove(caterings, $index)', class: 'pull-right big-control'}
             = fa_icon 'times'
-      .row
-        .col-md-12
-          .form-group
-            = text_area_tag 'catering_description', '', 'ng-model' => 'catering.description', class: 'form-control',
-              placeholder: t('trips.show.catering_description'), rows: 5
-      .row
-        .col-md-12
-          .form-group
-            = t('trips.show.food_price')
       .row
         .col-md-12.form-inline.form-group
           = render 'widgets/price', name: 'catering_price', object_model: 'catering', placeholder: t('trips.show.for_day')
@@ -79,22 +57,8 @@
       .row
         .col-md-12
           .form-group
-            = t('trips.show.example_espenses')
-            %a.pull-right{href: 'javascript:void(0);', class: 'pull-right',
-            'ng-click' => "add(catering.expenses, {#{default_currency_hash(@trip, current_user)}})"}
-              = fa_icon 'plus', text: t('trips.show.add_expense')
-
-      .row
-        %span{'ng-repeat' => 'expense in catering.expenses track by expense.id'}
-          .col-md-3
-            .form-group
-              = text_field_tag 'catering_expense_name', '', class: 'input-sm form-control', 'ng-model' => 'expense.name',
-              placeholder: t('trips.show.expense')
-          .col-md-3
-            .form-group.day-expense-container
-              = render 'widgets/price', name: 'catering_expense_amount', object_model: 'expense', placeholder: t('trips.show.price')
-              %a{href: 'javascript:void(0);', 'ng-click' => 'remove(catering.expenses, $index)', class: 'delete-button'}
-                = fa_icon 'times'
+            = text_area_tag 'catering_description', '', 'ng-model' => 'catering.description', class: 'form-control',
+              placeholder: t('trips.show.catering_description'), rows: 5
 
   .row{'ng-show' => 'edit'}
     .col-md-12

@@ -1,4 +1,19 @@
-.travel-text {
-  white-space: pre-line;
-  padding-top: 10px;
+.trip-report {
+  max-width: 80em;
+  margin: auto;
+
+  .header {
+    font-size: 28px;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 1.6;
+    text-align: justify;
+    margin: 0 0 0.5em;
+  }
+
+  .travel-text {
+    white-space: pre-line;
+  }
 }

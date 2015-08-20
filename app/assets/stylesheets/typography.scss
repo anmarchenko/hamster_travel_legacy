@@ -5,12 +5,6 @@ body {
   line-height: 18px;
 }
 
-p, ol, ul, td {
-  font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;
-  line-height: 18px;
-}
-
 body {
   text-rendering: optimizeLegibility;
 }
@@ -19,23 +13,6 @@ body,
 input,
 button {
   -webkit-font-smoothing: antialiased;
-}
-
-.trip-report {
-  max-width: 80em;
-  margin: auto;
-  font-family: Arial, sans-serif;
-
-  h3 {
-    margin-bottom: 1em;
-  }
-
-  p {
-    font-size: 15px;
-    line-height: 1.6;
-    text-align: justify;
-    margin: 0 0 1em;
-  }
 }
 
 .text-italic {
