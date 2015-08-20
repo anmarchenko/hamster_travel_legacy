@@ -37,12 +37,8 @@
       = t('common.photo_processing')
 
   .col-md-9.col-sm-9
-    - if user_signed_in?
-      .btn-toolbar.pull-right
-        = link_to "#{new_trip_path}?copy_from=#{@trip.id}", target: '_blank', class: 'btn ghost-button',
-        'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.clone') do
-          = fa_icon 'copy'
-
+    .btn-toolbar.pull-right
+      - if user_signed_in?
         - if @user_can_edit
           = link_to edit_trip_path(@trip), class: 'btn ghost-button',
           'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.edit_trip') do
@@ -53,6 +49,14 @@
               'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.delete_trip'),
               'data-confirm'=> t('common.delete_confirm')  do
               = fa_icon 'times'
+
+        = link_to "#{new_trip_path}?copy_from=#{@trip.id}", target: '_blank', class: 'btn ghost-button',
+        'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.clone') do
+          = fa_icon 'copy'
+
+      = link_to "#{trip_path(@trip)}.docx", target: '_blank', class: 'btn ghost-button',
+        'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.download_word') do
+        = fa_icon 'file-word-o'
 
     = render'trips/partials/participants', participants: @trip.users
 

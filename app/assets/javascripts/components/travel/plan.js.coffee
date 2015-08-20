@@ -159,9 +159,5 @@ angular.module('travel-components').controller 'PlanController'
       $scope.toggleTransfers = (is_change = true) ->
         $scope.toggleCollapse(is_change, 'transfers')
 
-      $scope.downloadWord = ->
-        url = "/trips/#{$scope.trip_id}.docx"
-        $window.open url, '_blank'
-        return true
 
   ]

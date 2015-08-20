@@ -1,8 +1,4 @@
 .btn-toolbar.actions-butons.pull-right{'ng-cloak' => ''}
-  %a.pull-right{href: 'javascript:void(0);', 'ng-click' => 'downloadWord()', 'data-placement' => "bottom",
-        'data-toggle' => 'tooltip', title: t('trips.show.download_word')}
-    = fa_icon 'file-word-o'
-
   - if @user_can_edit
     %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(true)',
         class: 'pull-right', 'ng-show' => '!edit', 'data-placement' => "bottom",
