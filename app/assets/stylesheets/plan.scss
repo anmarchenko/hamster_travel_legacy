@@ -56,24 +56,6 @@
       }
     }
 
-    .day-activity-container {
-      position: relative;
-      padding: 5px;
-      margin-bottom: 10px;
-    }
-
-    .day-activity-container .delete-button {
-      position: absolute;
-      right: 20px;
-      top: 5px
-    }
-
-    .day-activity-container .expand-button {
-      position: absolute;
-      right: 40px;
-      top: 5px
-    }
-
     .collapse-header {
       cursor: pointer;
       cursor: hand;
@@ -107,14 +89,36 @@
       width: 70px;
     }
 
-    .activity-place {
+    .activity-place, .activity-place-edit {
       min-width: 100px;
       min-height: 20px;
 
-      .activity-place-edit {
-        min-width: 100px;
-        min-height: 20px;
+      .day-activity-container {
+        position: relative;
+        padding: 5px;
+        margin-bottom: 10px;
+
+        &.form-horizontal{
+          margin-bottom: 2em;
+        }
+
+        &:hover{
+          background-color: $light-grey;
+        }
+
+        .delete-button {
+          position: absolute;
+          right: 20px;
+          top: 5px
+        }
+
+        .expand-button {
+          position: absolute;
+          right: 40px;
+          top: 5px
+        }
       }
+
     }
 
     .transfer-place, .transfer-place-edit {
