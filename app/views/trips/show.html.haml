@@ -36,30 +36,34 @@
         = t('common.photo_processing')
 
     .col-md-9.col-sm-9
-      .btn-toolbar.pull-right
-        - if user_signed_in?
-          - if @user_can_edit
-            = link_to edit_trip_path(@trip), class: 'btn ghost-button', 'ng-disabled' => 'edit',
-            'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.edit_trip') do
-              = fa_icon 'pencil'
+      .row
+        .col-md-7.col-xs-12
+          = render'trips/partials/participants', participants: @trip.users
 
-            - if @trip.author_user_id == current_user.id
-              = link_to trip_path(@trip), class: 'btn ghost-button', method: :delete, 'ng-disabled' => 'edit',
-                'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.delete_trip'),
-                'data-confirm'=> t('common.delete_confirm')  do
-                = fa_icon 'times'
+        .col-md-5.col-xs-12
+          .btn-toolbar.pull-right
+            - if user_signed_in?
+              - if @user_can_edit
+                = link_to edit_trip_path(@trip), class: 'btn ghost-button', 'ng-disabled' => 'edit',
+                'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.edit_trip') do
+                  = fa_icon 'pencil'
 
-          = link_to "#{new_trip_path}?copy_from=#{@trip.id}", target: '_blank', class: 'btn ghost-button',
-          'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.clone'),
-          'ng-disabled' => 'edit' do
-            = fa_icon 'copy'
+                - if @trip.author_user_id == current_user.id
+                  = link_to trip_path(@trip), class: 'btn ghost-button', method: :delete, 'ng-disabled' => 'edit',
+                    'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.delete_trip'),
+                    'data-confirm'=> t('common.delete_confirm')  do
+                    = fa_icon 'times'
 
-        = link_to "#{trip_path(@trip)}.docx", target: '_blank', class: 'btn ghost-button',
-          'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.download_word'),
-          'ng-disabled' => 'edit' do
-          = fa_icon 'file-word-o'
+              = link_to "#{new_trip_path}?copy_from=#{@trip.id}", target: '_blank', class: 'btn ghost-button',
+              'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.clone'),
+              'ng-disabled' => 'edit' do
+                = fa_icon 'copy'
 
-      = render'trips/partials/participants', participants: @trip.users
+            = link_to "#{trip_path(@trip)}.docx", target: '_blank', class: 'btn ghost-button',
+              'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.download_word'),
+              'ng-disabled' => 'edit' do
+              = fa_icon 'file-word-o'
+
 
       %p.travel-text{} #{@trip.short_description}
 
