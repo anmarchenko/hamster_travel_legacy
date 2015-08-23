@@ -77,8 +77,23 @@
     .actions-butons {
       a {
         font-size: 18px;
-        padding: 5px 10px;
         color: $main-grey;
+
+        &.btn {
+          color: $white;
+          background-color: $main-grey;
+
+          &:active:hover {
+            background-color: $black;
+          }
+        }
+
+        &.saving {
+          padding-top: 14px;
+          &:hover {
+            text-decoration: none;
+          }
+        }
       }
     }
     .plan-header a {
@@ -98,11 +113,11 @@
         padding: 5px;
         margin-bottom: 10px;
 
-        &.form-horizontal{
+        &.form-horizontal {
           margin-bottom: 2em;
         }
 
-        &:hover{
+        &:hover {
           background-color: $light-grey;
         }
 
@@ -129,20 +144,20 @@
         padding: 5px;
         margin-bottom: 2em;
 
-        &:hover{
+        &:hover {
           background-color: $light-grey;
         }
       }
 
-      .transfer-show-container{
+      .transfer-show-container {
         padding: 5px;
         margin-bottom: 10px;
 
-        &:hover{
+        &:hover {
           background-color: $light-grey;
         }
 
-        .header{
+        .header {
         }
       }
     }
@@ -216,7 +231,7 @@
       }
       .participant {
         margin: 0px 10px;
-        &:hover{
+        &:hover {
           border: 1px solid $link;
           -webkit-box-shadow: 0px 0px 5px 1px $link;
           -moz-box-shadow: 0px 0px 5px 1px $link;

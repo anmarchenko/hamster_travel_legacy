@@ -1,4 +1,4 @@
-.span{'ng-controller' => 'PlanController', 'ng-init' => "loadCatering(#{@trip.to_json}, #{@trip.budget_sum(current_user.try(:currency))})", 'ng-cloak' => ''}
+.span{'ng-init' => "loadCatering(#{@trip.to_json}, #{@trip.budget_sum(current_user.try(:currency))})", 'ng-cloak' => ''}
   .row{'ng-cloak' => ''}
     .col-md-12
       = render 'trips/partials/buttons'

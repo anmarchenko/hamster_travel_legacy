@@ -1,23 +1,23 @@
 .btn-toolbar.actions-butons.pull-right{'ng-cloak' => ''}
   - if @user_can_edit
     %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(true)',
-        class: 'pull-right', 'ng-show' => '!edit', 'data-placement' => "bottom",
+        class: 'btn pull-right', 'ng-show' => '!edit', 'data-placement' => "bottom",
         'data-toggle' => 'tooltip', title: t('trips.show.edit_plan')}
       = fa_icon 'edit'
     %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(false)',
-        class: 'pull-right', 'ng-show' => 'edit', 'data-placement' => "bottom",
+        class: 'btn pull-right', 'ng-show' => 'edit', 'data-placement' => "bottom",
         'data-toggle' => 'tooltip', title: t('trips.show.show_plan')}
       = fa_icon 'eye'
 
     %a{href: 'javascript:void(0);', 'ng-click' => 'cancelEdits()',
-        class: 'pull-right', 'ng-show' => 'edit', 'data-placement' => "bottom",
+        class: 'btn pull-right', 'ng-show' => 'edit', 'data-placement' => "bottom",
         'data-toggle' => 'tooltip', title: t('trips.show.cancel')}
       = fa_icon 'undo'
 
     %a{href: 'javascript:void(0);', 'ng-click' => 'savePlan()',
-        class: 'pull-right', 'ng-show' => '!saving && edit', 'data-placement' => "bottom",
+        class: 'btn pull-right', 'ng-show' => '!saving && edit', 'data-placement' => "bottom",
         'data-toggle' => 'tooltip', title: t('trips.show.save_plan')}
       = fa_icon 'save'
-    %a.pull-right{'ng-show' => 'saving'}
+    %a.saving.pull-right{'ng-show' => 'saving'}
       %i.fa.fa-spinner.fa-spin
       = t('trips.show.saving_plan')
