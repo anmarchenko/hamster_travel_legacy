@@ -13,7 +13,7 @@ describe Api::CateringsController do
           expect(response).to have_http_status 200
           json = JSON.parse(response.body)
           expect(json.count).to eq(3)
-          expect(json.first['city_code']).to eq(trip.caterings.first.city_code)
+          expect(json.first['name']).to eq(trip.caterings.first.name)
         end
 
         it 'returns one catering for each visited place if there are nothing' do
@@ -40,7 +40,7 @@ describe Api::CateringsController do
         expect(response).to have_http_status 200
         json = JSON.parse(response.body)
         expect(json.count).to eq(3)
-        expect(json.first['city_code']).to eq(trip.caterings.first.city_code)
+        expect(json.first['name']).to eq(trip.caterings.first.name)
       end
     end
 
@@ -53,7 +53,7 @@ describe Api::CateringsController do
       login_user
 
       let(:trip) {FactoryGirl.create :trip, users: [subject.current_user]}
-      let(:catering_params) { { caterings: {'1' => {id: Time.now.to_i, city_text: 'Paris'} } } }
+      let(:catering_params) { { caterings: {'1' => {id: Time.now.to_i, name: 'Paris'} } } }
 
       context 'and when there is trip' do
 
@@ -62,7 +62,7 @@ describe Api::CateringsController do
             post 'create', catering_params.merge(trip_id: trip.id), format: :json
             expect(response).to have_http_status 200
             updated_catering = trip.reload.caterings.first
-            expect(updated_catering.city_text).to eq 'Paris'
+            expect(updated_catering.name).to eq 'Paris'
           end
         end
 

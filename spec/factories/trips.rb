@@ -125,8 +125,7 @@ FactoryGirl.define do
   end
 
   factory :catering, class: 'Travels::Catering' do
-    city_code { Faker::Number.number(10).to_s }
-    city_text { Faker::Address.city }
+    name { Faker::Address.city }
 
     description { Faker::Lorem.paragraph }
 

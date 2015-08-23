@@ -79,6 +79,7 @@ en:
       add_expense: Add price
       food_price: Food price
       for_day: for day
+      catering_name: Region or city
     edit:
       title: Edit travel
     form:

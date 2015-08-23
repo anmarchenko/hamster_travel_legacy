@@ -32,17 +32,18 @@ describe Travels::Updaters::TripUpdater do
         caterings = trip.reload.caterings
         expect(caterings.count).to eq(2)
         expect(caterings.first.trip_id).to eq(trip.id)
+        expect(caterings.first.name).not_to be_blank
       end
 
       it 'updates caterings' do
         params['1']['id'] = trip.caterings.first.id
-        params['1']['city_text'] = 'Paris'
+        params['1']['name'] = 'Paris'
 
         update_trip_caterings trip, params
 
         caterings = trip.reload.caterings
         expect(caterings.count).to eq(2)
-        expect(caterings.where(id: params['1']['id']).first.city_text).to eq('Paris')
+        expect(caterings.where(id: params['1']['id']).first.name).to eq('Paris')
       end
 
       it 'deletes caterings' do

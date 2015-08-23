@@ -79,6 +79,7 @@ ru:
       add_expense: Добавить цены
       food_price: Сумма на еду
       for_day: в день
+      catering_name: Регион или город
     edit:
       title: Редактирование путешествия
     form:

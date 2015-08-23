@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150802133947) do
+ActiveRecord::Schema.define(version: 20150823155541) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,8 +98,6 @@ ActiveRecord::Schema.define(version: 20150802133947) do
   add_index "adm5s", ["population"], name: "index_adm5s_on_population", using: :btree
 
   create_table "caterings", force: :cascade do |t|
-    t.string  "city_code"
-    t.string  "city_text"
     t.text    "description"
     t.integer "days_count"
     t.integer "persons_count"
@@ -107,6 +105,7 @@ ActiveRecord::Schema.define(version: 20150802133947) do
     t.integer "amount_cents",    default: 0,     null: false
     t.string  "amount_currency", default: "RUB", null: false
     t.integer "order_index"
+    t.string  "name"
   end
 
   add_index "caterings", ["trip_id"], name: "index_caterings_on_trip_id", using: :btree

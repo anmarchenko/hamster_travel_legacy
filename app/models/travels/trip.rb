@@ -147,18 +147,15 @@ module Travels
     end
 
     def create_caterings
-      city_codes = self.days.joins(:places).pluck('places.city_code')
-      uniq_city_codes = city_codes.compact.uniq
-      uniq_city_codes.each_with_index.map do |city_code, index|
+      [
         Travels::Catering.new(
-            id: Time.now.to_i + index,
+            id: Time.now.to_i,
             persons_count: self.budget_for,
-            days_count: city_codes.count{|code| code == city_code},
+            days_count: self.days_count,
             amount_currency: self.currency,
-            city_code: city_code,
-            city_text: Geo::City.by_geonames_code(city_code).try(:translated_name)
+            name: "#{self.name} (#{I18n.t('trips.show.catering')})"
         )
-      end
+      ]
     end
 
     def copy trip

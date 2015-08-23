@@ -16,7 +16,7 @@
       .row
         .col-md-12
           %p.header
-            {{catering.city_text || '#{I18n.t('trips.show.no_city')}'}}
+            {{catering.name}}
           %p.expenses
             {{catering.amount_cents || 0}}
             {{catering.amount_currency_text}}
@@ -34,11 +34,11 @@
 
     .catering-form{'ng-show' => 'edit'}
       .row
-        .col-md-3.col-xs-11
+        .col-md-11
           .form-group
-            = render 'widgets/typeahead/cities', model_name: 'catering.city', classes: 'input-sm form-control',
-                placeholder: t('trips.show.city'), show_loading: false
-        .col-md-9.col-xs-1
+            = text_field_tag 'catering_name', '', 'ng-model' => 'catering.name', class: 'input-sm form-control',
+                placeholder: t('trips.show.catering_name')
+        .col-md-1
           %a{href: 'javascript:void(0);', 'ng-click' => 'remove(caterings, $index)', class: 'pull-right big-control'}
             = fa_icon 'times'
       .row

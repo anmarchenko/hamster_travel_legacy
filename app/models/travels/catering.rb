@@ -3,8 +3,7 @@
 # Table name: caterings
 #
 #  id              :integer          not null, primary key
-#  city_code       :string
-#  city_text       :string
+#  name            :string
 #  description     :text
 #  days_count      :integer
 #  persons_count   :integer
