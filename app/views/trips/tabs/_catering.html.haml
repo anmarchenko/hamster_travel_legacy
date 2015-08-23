@@ -17,18 +17,31 @@
         .col-md-12
           %p.header
             {{catering.name}}
-          %p.expenses
-            {{catering.amount_cents || 0}}
-            {{catering.amount_currency_text}}
-            = fa_icon 'times'
-            {{catering.persons_count}}
-            = t('trips.show.persons')
-            = fa_icon 'times'
-            {{catering.days_count}}
-            = t('trips.show.days')
-            \=
-            {{(catering.amount_cents || 0) * (catering.persons_count || 0) * (catering.days_count || 0)}}
-            {{catering.amount_currency_text}}
+          .row.expenses
+            .col-md-1.text-center.separator-times.col-xs-3.col-sm-3
+              .main
+                {{catering.amount_cents || 0}}
+                {{catering.amount_currency_text}}
+              .descr
+                = t('trips.show.for_day')
+            .col-md-1.text-center.separator-times.col-xs-3.col-sm-3
+              .main
+                {{catering.persons_count}}
+                = fa_icon 'user'
+              .descr
+                = t('trips.show.persons')
+            .col-md-1.text-center.separator-equal.col-xs-3.col-sm-3
+              .main
+                {{catering.days_count}}
+                = fa_icon 'calendar'
+              .descr
+                = t('trips.show.days')
+            .col-md-1.text-center.col-xs-3.col-sm-3
+              .main
+                {{(catering.amount_cents || 0) * (catering.persons_count || 0) * (catering.days_count || 0)}}
+                {{catering.amount_currency_text}}
+              .descr
+                = t('trips.show.overall')
           %p.text{} {{catering.description || '#{I18n.t('trips.show.no_catering_description')}'}}
 
 

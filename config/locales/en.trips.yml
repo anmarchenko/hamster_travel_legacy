@@ -80,6 +80,7 @@ en:
       food_price: Food price
       for_day: for day
       catering_name: Region or city
+      overall: overall
     edit:
       title: Edit travel
     form:
