@@ -19,11 +19,7 @@ module Travels
     include Concerns::Ordered
     include Concerns::Copyable
 
-    EXPENSES = ['breakfast', 'lunch', 'dinner', 'coffee', 'main_course']
-
     belongs_to :trip, class_name: 'Travels::Trip'
-
-    has_many :expenses, :class_name => 'Travels::Expense', as: :expendable
 
     monetize :amount_cents
 
@@ -32,14 +28,7 @@ module Travels
       json['id'] = id.to_s
       json['amount_cents'] = amount_cents / 100
       json['amount_currency_text'] = amount.currency.symbol
-      json['expenses'] = expenses.as_json(args)
       json
-    end
-
-    def self.default_expenses currency
-      EXPENSES.each_with_index.map do |exp, index|
-        Travels::Expense.new(amount_currency: currency, name: I18n.t("trips.expenses.#{exp}"), id: Time.now.to_i + index)
-      end
     end
 
   end

@@ -72,7 +72,7 @@ module Travels
         end
 
         process_ordered(caterings)
-        process_nested(trip.caterings, caterings, [:expenses])
+        process_nested(trip.caterings, caterings)
       end
 
       def process_trip
@@ -87,7 +87,7 @@ module Travels
       end
 
       # TODO permit only some params - possible security problem
-      def process_nested(collection, params, recursive = [])
+      def process_nested(collection, params)
         to_delete = []
         collection.each do |item|
           to_delete << item.id if params.select { |v| v[:id] == item.id.to_s }.count == 0
@@ -100,29 +100,12 @@ module Travels
           # TODO remove - only for client side
           item_hash.delete(:isCollapsed)
 
-          recursive_hash = process_recursive(recursive, item_hash)
           if item.blank?
             item = collection.create(item_hash)
           else
             item.update_attributes(item_hash)
           end
-
-          run_recursive(item, recursive_hash)
         end
-      end
-
-      def run_recursive item, rec_hash
-        rec_hash.each do |relation, data|
-          process_nested(item.send(relation), data || [])
-        end
-      end
-
-      def process_recursive recursive, item_hash
-        res = {}
-        recursive.each do |relation|
-          res[relation] = item_hash.delete(relation)
-        end
-        res
       end
 
       def process_ordered(params)

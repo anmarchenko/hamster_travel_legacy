@@ -156,8 +156,7 @@ module Travels
             days_count: city_codes.count{|code| code == city_code},
             amount_currency: self.currency,
             city_code: city_code,
-            city_text: Geo::City.by_geonames_code(city_code).try(:translated_name),
-            expenses: Travels::Catering.default_expenses(self.currency)
+            city_text: Geo::City.by_geonames_code(city_code).try(:translated_name)
         )
       end
     end

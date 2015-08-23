@@ -22,7 +22,6 @@ describe Api::CateringsController do
           json = JSON.parse(response.body)
 
           expect(json.count).to eq(empty_trip.days.joins(:places).pluck('places.city_code').compact.uniq.count)
-          expect(json.first['expenses'].count).to eq(Travels::Catering::EXPENSES.count)
         end
       end
 
