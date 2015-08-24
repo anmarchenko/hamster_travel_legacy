@@ -435,8 +435,12 @@ describe TripsController do
             expect(trip.status_code).to eq Travels::Trip::StatusCodes::DRAFT
           end
 
+          let(:filled_trip) { FactoryGirl.create(:trip, :with_filled_days, :with_caterings) }
+
           it 'renders docx' do
-            get 'show', id: trip.id, format: :docx
+            get 'show', id: filled_trip.id, format: :docx
+            expect(response).to have_http_status 200
+            expect(response).to render_template 'trips/show'
             expect(assigns(:transfers_grid)).to eq TripsController::TRANSFERS_GRID
             expect(assigns(:activities_grid)).to eq TripsController::ACTIVITIES_GRID
           end

@@ -272,7 +272,7 @@
         <% @trip.caterings.each do |catering| %>
             <%= docx_paragraph(align: :left, fontSize: biggerFontSize, spacingBefore: 250) do %>
                 <%= docx_text(fontSize: biggerFontSize, bold: true) do %>
-                    <%= catering.city_text %>
+                    <%= catering.name %>
                 <% end %>
             <% end %>
 
@@ -290,13 +290,6 @@
             <% end %>
             <% end %>
 
-            <% (catering.expenses || []).each do |expense| %>
-                <% if !expense.amount.blank? && !(expense.amount_cents == 0) %>
-                    <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
-                        <%= docx_text(fontSize: fontSize) do %><%= expense.name %> <%= expense.amount.to_f %> <%= expense.amount_currency %><% end %>
-                    <% end %>
-                <% end %>
-            <% end %>
         <% end %>
 
     <% end %>
