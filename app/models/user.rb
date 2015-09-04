@@ -33,9 +33,11 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  # TODO fix it
   has_many :authored_trips, class_name: 'Travels::Trip', inverse_of: :author_user
   has_and_belongs_to_many :trips, class_name: 'Travels::Trip', inverse_of: :users, join_table: 'users_trips'
+
+  has_many :outgoing_invites, class_name: 'Travels::TripInvite', inverse_of: :inviting_user, foreign_key: :inviting_user_id
+  has_many :incoming_invites, class_name: 'Travels::TripInvite', inverse_of: :invited_user, foreign_key: :invited_user_id
 
   # photo
   dragonfly_accessor :image

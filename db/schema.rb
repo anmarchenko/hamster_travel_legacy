@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150823155541) do
+ActiveRecord::Schema.define(version: 20150904160048) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -288,6 +288,16 @@ ActiveRecord::Schema.define(version: 20150823155541) do
 
   add_index "transfers", ["day_id"], name: "index_transfers_on_day_id", using: :btree
   add_index "transfers", ["order_index"], name: "index_transfers_on_order_index", using: :btree
+
+  create_table "trip_invites", force: :cascade do |t|
+    t.integer "inviting_user_id"
+    t.integer "invited_user_id"
+    t.integer "trip_id"
+  end
+
+  add_index "trip_invites", ["invited_user_id"], name: "index_trip_invites_on_invited_user_id", using: :btree
+  add_index "trip_invites", ["inviting_user_id"], name: "index_trip_invites_on_inviting_user_id", using: :btree
+  add_index "trip_invites", ["trip_id"], name: "index_trip_invites_on_trip_id", using: :btree
 
   create_table "trips", force: :cascade do |t|
     t.string   "name"
