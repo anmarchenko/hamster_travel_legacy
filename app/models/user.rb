@@ -64,4 +64,9 @@ class User < ActiveRecord::Base
     Geo::City.where(geonames_code: home_town_code).first
   end
 
+  def self.find_by_term term
+    term = Regexp.escape(term)
+    where("first_name ILIKE ? OR last_name ILIKE ?", "#{term}%", "#{term}%").order(last_name: :asc)
+  end
+
 end

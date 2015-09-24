@@ -47,4 +47,38 @@ describe User do
     end
   end
 
+  describe '#find_by_term' do
+    before do
+      User.destroy_all
+      FactoryGirl.create_list(:user, 5, first_name: 'Sven', last_name: 'Petersson')
+      FactoryGirl.create_list(:user, 8, first_name: 'Max', last_name: 'Mustermann')
+      FactoryGirl.create_list(:user, 15)
+    end
+
+    def check_order users
+      users.each_with_index do |user, index|
+        next if users[index + 1].blank?
+        expect(users[index + 1].last_name).to be >= users[index].last_name
+      end
+    end
+
+    it 'finds by last_name' do
+      term = 'mus'
+      users = User.find_by_term(term).to_a
+      users.each { |user| expect(user.last_name =~ /#{term}/i).not_to be_blank }
+      expect(users.count).to eq(8)
+      check_order users
+    end
+
+    it 'finds by first_name' do
+      term = 'sve'
+      users = User.find_by_term(term).to_a
+      users.each { |user| expect(user.first_name =~ /#{term}/i).not_to be_blank }
+      expect(users.count).to eq(5)
+      check_order users
+    end
+
+  end
+
+
 end
