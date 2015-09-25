@@ -3,19 +3,23 @@
 - text_field_name = "#{model_name}_text"
 - code_field_name = "#{model_name}_code"
 - placeholder ||= ''
+- template ||= nil
+- min_length ||= 3
+- callback ||= "''"
 
 -#   'typeahead-append-to-body' => true, ATTENTION: CAUSING MEMORY LEAK
 
 - options_text = { 'ng-model' => text_field_name,
   'ng-change' => "#{code_field_name}='';",
   typeahead: "item.name as item.text for item in #{function}($viewValue)",
-  'typeahead-on-select' => "onSelect($item, $model, $label, {'#{code_field_name}' : 'code'})",
+  'typeahead-on-select' => "onSelect($item, $model, $label, {'#{code_field_name}' : 'code'}, #{callback})",
   'typeahead-editable' => editable,
   'typeahead-loading' => 'typeahead_loading',
-  'typeahead-min-length' => 3,
+  'typeahead-min-length' => min_length,
   'typeahead-wait-ms' => 500,
+  'typeahead-template-url' => template,
   placeholder: placeholder,
-  class: "#{classes}" }
+  class: "#{classes}"}
 
 - options_code = { value: "{{#{code_field_name}}}" }
 

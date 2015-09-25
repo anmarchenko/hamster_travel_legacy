@@ -65,8 +65,22 @@ class User < ActiveRecord::Base
   end
 
   def self.find_by_term term
-    term = Regexp.escape(term)
-    where("first_name ILIKE ? OR last_name ILIKE ?", "#{term}%", "#{term}%").order(last_name: :asc)
+    return [] if term.blank?
+    query = ''
+    terms = []
+
+    parts = term.split(/\s+/)
+    return [] if parts.blank?
+
+    if parts.count == 1
+      query = "first_name ILIKE ? OR last_name ILIKE ?"
+      terms = ["#{parts.first}%", "#{parts.first}%"]
+    else
+      query = "first_name ILIKE ? AND last_name ILIKE ?"
+      terms = ["#{parts[0]}%", "#{parts[1]}%"]
+    end
+
+    where([query, terms].flatten).order(last_name: :asc)
   end
 
 end

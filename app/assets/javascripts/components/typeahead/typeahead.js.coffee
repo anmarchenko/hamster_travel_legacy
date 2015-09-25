@@ -1,12 +1,18 @@
 angular.module('travel-components').controller 'TypeaheadController'
 , [
-    '$scope', 'City'
-, ($scope, City) ->
+    '$scope', 'City', 'User'
+, ($scope, City, User) ->
 
     $scope.getCities = (term) ->
       City.query(term: term)
 
-    $scope.onSelect = ($item, $model, $label, bindings) ->
+    $scope.getUsers = (term) ->
+      User.query(term: term)
+
+    $scope.selectUser = () ->
+      console.log 'YAAAYAYUDHASUHFUHDAFUGDYGY'
+
+    $scope.onSelect = ($item, $model, $label, bindings, callback) ->
       for model_key,item_property of bindings
         if model_key.indexOf('.') != -1
           keys = model_key.split('.')
@@ -17,5 +23,5 @@ angular.module('travel-components').controller 'TypeaheadController'
         else
           $scope[model_key] = $item[item_property]
 
-
+      callback($item, $model, $label, $scope) if callback
 ]
