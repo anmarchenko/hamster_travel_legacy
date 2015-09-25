@@ -5,7 +5,7 @@
   %script{type: 'text/ng-template', id: 'userTemplate.html'}
     %a
       %img{'ng-src' => '{{match.model.photo_url}}', class: 'img-circle typeahead-profile-pic'}
-      %span{'bind-html-unsafe' => 'match.label'}
+      %span{'ng-bind-html' => 'match.label'}
 
 %div{'ng-controller' => 'PlanController',}
   .row

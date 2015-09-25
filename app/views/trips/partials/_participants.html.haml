@@ -1,4 +1,4 @@
-.participants
-  - participants.each do |participant|
-    = link_to user_path(participant) do
-      %img.img-circle.small-profile-pic.participant{ src: participant.image_url_or_default, 'data-toggle' => "tooltip", 'data-placement' => "bottom", title: participant.full_name}
+.participants{'ng-controller' => 'ParticipantsController', 'ng-init' => 'loadParticipants()', 'ng-cloak' => ''}
+  = link_to '/users/{{participant.id}}', 'ng-repeat' => 'participant in participants track by participant.id' do
+    %img.img-circle.small-profile-pic.participant{ 'ng-src' => '{{participant.photo_url}}',
+      'tooltip-placement' => "bottom", 'tooltip' => '{{participant.name}}'}

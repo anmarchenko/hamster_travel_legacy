@@ -12,6 +12,7 @@
 //= require_tree ./common
 //= require angular
 //= require angular-cookies
+//= require angular-animate
 //= require angularjs/rails/resource
 //= require angular-ui-bootstrap-tpls
 //= require_tree ./lib
