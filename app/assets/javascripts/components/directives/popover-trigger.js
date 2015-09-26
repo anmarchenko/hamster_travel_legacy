@@ -4,7 +4,7 @@ angular.module('travel-components')
         $tooltipProvider.setTriggers({'open': 'close'});
     })
 
-    .directive('popoverToggle', function($timeout) {
+    .directive('popoverToggle', ['$timeout', function($timeout) {
         return {
             scope: true,
             link: function(scope, element, attrs) {
@@ -17,4 +17,4 @@ angular.module('travel-components')
                 return element.on('click', scope.toggle);
             }
         };
-    });
+    }]);
