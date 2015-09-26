@@ -9,9 +9,6 @@ angular.module('travel-components').controller 'TypeaheadController'
     $scope.getUsers = (term) ->
       User.query(term: term)
 
-    $scope.selectUser = () ->
-      console.log 'YAAAYAYUDHASUHFUHDAFUGDYGY'
-
     $scope.onSelect = ($item, $model, $label, bindings, callback) ->
       for model_key,item_property of bindings
         if model_key.indexOf('.') != -1

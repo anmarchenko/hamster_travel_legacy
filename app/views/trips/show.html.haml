@@ -5,7 +5,13 @@
   %script{type: 'text/ng-template', id: 'userTemplate.html'}
     %a
       %img{'ng-src' => '{{match.model.photo_url}}', class: 'img-circle typeahead-profile-pic'}
-      %span{'ng-bind-html' => 'match.label'}
+      %span
+        {{match.label}}
+
+  %script{type: 'text/ng-template', id: 'invitePopover.html'}
+    .form-group
+      = render 'widgets/typeahead/users', model_name: 'selected_user', classes: 'form-control', placeholder: 'USER', show_loading: false
+
 
 %div{'ng-controller' => 'PlanController',}
   .row
@@ -70,7 +76,6 @@
               'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.download_word'),
               'ng-disabled' => 'edit' do
               = fa_icon 'file-word-o'
-              =# render 'widgets/typeahead/users', model_name: 'selected_user', classes: 'form-control', placeholder: 'USER', show_loading: false
 
       %p.travel-text{} #{@trip.short_description}
 

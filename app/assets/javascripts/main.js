@@ -13,6 +13,7 @@
 //= require angular
 //= require angular-cookies
 //= require angular-animate
+//= require angular-sanitize
 //= require angularjs/rails/resource
 //= require angular-ui-bootstrap-tpls
 //= require_tree ./lib
