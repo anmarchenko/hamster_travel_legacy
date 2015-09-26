@@ -16,6 +16,8 @@ module Travels
     belongs_to :invited_user, class_name: 'User', inverse_of: :incoming_invites
     belongs_to :trip, class_name: 'Travels::Trip', inverse_of: :pending_invites
 
+    validates :invited_user_id, uniqueness: {scope: :trip_id}
+
   end
 
 end
