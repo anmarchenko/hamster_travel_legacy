@@ -2,12 +2,8 @@ class Api::TripInvitesController < ApplicationController
 
   respond_to :json
   before_filter :find_trip
-  before_filter :authenticate_user!, only: [:create]
-  before_filter :authorize, only: [:create]
-
-  def index
-
-  end
+  before_filter :authenticate_user!
+  before_filter :authorize
 
   def create
     invited_user = User.find(params[:user_id]) rescue nil

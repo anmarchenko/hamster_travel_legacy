@@ -44,6 +44,13 @@ FactoryGirl.define do
       end
     end
 
+    trait :with_invited do
+      after :create do |trip|
+        user = create(:user)
+        Travels::TripInvite.create(trip: trip, inviting_user: trip.author, invited_user: user)
+      end
+    end
+
     trait :with_caterings do
       after :create do |trip|
         3.times { |index| trip.caterings.create(build(:catering, order_index: index).attributes) }

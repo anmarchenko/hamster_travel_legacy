@@ -50,6 +50,7 @@ module Travels
     has_many :days, class_name: 'Travels::Day'
     has_many :caterings, class_name: 'Travels::Catering'
     has_many :pending_invites, class_name: 'Travels::TripInvite', inverse_of: :trip
+    has_many :invited_users, class_name: 'User', through: :pending_invites
 
     dragonfly_accessor :image
 

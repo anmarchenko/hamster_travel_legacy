@@ -18,7 +18,7 @@ Travel::Application.routes.draw do
       resources :cities, only: [:index]
       resources :users, only: [:index]
       resources :participants, only: [:index]
-      resources :trip_invites, only: [:index, :create]
+      resources :trip_invites, only: [:create]
       resources :trips, only: [:show, :update] do
         resources :days, only: [:index, :create, :show, :update]
         resources :caterings, only: [:index, :create]
