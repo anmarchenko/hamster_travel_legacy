@@ -10,4 +10,7 @@ angular.module('travel-components').controller 'ParticipantsController'
       $scope.selectUser = () ->
         console.log 'YAAAYAYUDHASUHFUHDAFUGDYGY'
 
+      $scope.$on 'popover-shown', ->
+        console.log("show")
+
   ]

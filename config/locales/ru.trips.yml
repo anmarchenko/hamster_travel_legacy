@@ -81,6 +81,8 @@ ru:
       for_day: в день
       catering_name: Регион или город
       overall: всего
+      add_friend: Пригласить друга
+      type_name: Имя друга
     edit:
       title: Редактирование путешествия
     form:

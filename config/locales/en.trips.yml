@@ -81,6 +81,8 @@ en:
       for_day: for day
       catering_name: Region or city
       overall: overall
+      add_friend: Invite friend
+      type_name: Friend's name
     edit:
       title: Edit travel
     form:

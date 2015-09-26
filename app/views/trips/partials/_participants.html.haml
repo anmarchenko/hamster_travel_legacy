@@ -3,6 +3,11 @@
     %img.img-circle.small-profile-pic.participant{ 'ng-src' => '{{participant.photo_url}}',
       'tooltip-placement' => "bottom", 'tooltip' => '{{participant.name}}'}
 
-  %a{href: 'javascript:void(0)', 'popover-template' => "'invitePopover.html'", 'popover-title' => 'Invite friend',
-    'popover-placement' => 'bottom'}
-    %img.img-circle.small-profile-pic.add-participant{src: image_path('material/plus.png')}
+  %a{href: 'javascript:void(0)',
+      'popover-template' => "'invitePopover.html'",
+      'popover-title' => t('trips.show.add_friend'),
+      'popover-placement' => 'bottom',
+      'popover-toggle' => ''}
+
+    %img.img-circle.small-profile-pic.add-participant{src: image_path('material/plus.png'), 'ng-hide' => 'popover_opened'}
+    %img.img-circle.small-profile-pic.add-participant{src: image_path('material/close.png'), 'ng-show' => 'popover_opened'}
