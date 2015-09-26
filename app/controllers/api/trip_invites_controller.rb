@@ -16,7 +16,7 @@ class Api::TripInvitesController < ApplicationController
 
   def destroy
     if params[:trip_invite_id].present?
-      trip_invite = Travels::TripInvite.where(id: params[:trip_invite_id]).first
+      trip_invite = @trip.pending_invites.where(invited_user: params[:trip_invite_id]).first
       head 404 and return if trip_invite.blank?
       trip_invite.destroy
     elsif params[:user_id].present?

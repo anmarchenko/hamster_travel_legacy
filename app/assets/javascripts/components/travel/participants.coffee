@@ -14,4 +14,11 @@ angular.module('travel-components').controller 'ParticipantsController'
         $http.post('/api/trip_invites', {id: $scope.$parent.trip_id, user_id: $item.code}).success (data) ->
           $scope.loadParticipants()
 
+      $scope.deleteUser = (user_id) ->
+        $http.delete("/api/trip_invites/#{$scope.$parent.trip_id}?user_id=#{user_id}").success (data) ->
+          $scope.loadParticipants()
+
+      $scope.deleteInvitedUser = (user_id) ->
+        $http.delete("/api/trip_invites/#{$scope.$parent.trip_id}?trip_invite_id=#{user_id}").success (data) ->
+          $scope.loadParticipants()
   ]

@@ -114,7 +114,7 @@ describe Api::TripInvitesController do
 
       context 'when requested to delete invited user' do
         it 'deletes participant from trip' do
-          delete 'destroy', id: trip.id, trip_invite_id: trip.pending_invites.first.id, format: :json
+          delete 'destroy', id: trip.id, trip_invite_id: trip.invited_users.first.id, format: :json
           expect(response).to have_http_status(200)
           expect(trip.reload.include_user(subject.current_user)).to eq(true)
           expect(trip.reload.include_user(some_user)).to eq(true)
