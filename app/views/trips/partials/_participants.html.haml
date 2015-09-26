@@ -19,12 +19,13 @@
         'ng-show' => "participant.id != #{current_user.id} && edit"}
         = fa_icon 'times'
 
-  %a{href: 'javascript:void(0)',
-      'popover-template' => "'invitePopover.html'",
-      'popover-title' => t('trips.show.add_friend'),
-      'popover-placement' => 'bottom',
-      'popover-trigger' => 'open',
-      'popover-toggle' => ''}
+  - if @user_can_edit
+    %a{href: 'javascript:void(0)',
+        'popover-template' => "'invitePopover.html'",
+        'popover-title' => t('trips.show.add_friend'),
+        'popover-placement' => 'bottom',
+        'popover-trigger' => 'open',
+        'popover-toggle' => ''}
 
-    %img.img-circle.small-profile-pic.add-participant{src: image_path('material/plus.png'), 'ng-hide' => 'popover_opened'}
-    %img.img-circle.small-profile-pic.add-participant{src: image_path('material/close.png'), 'ng-show' => 'popover_opened'}
+      %img.img-circle.small-profile-pic.add-participant{src: image_path('material/plus.png'), 'ng-hide' => 'popover_opened'}
+      %img.img-circle.small-profile-pic.add-participant{src: image_path('material/close.png'), 'ng-show' => 'popover_opened'}
