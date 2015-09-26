@@ -75,6 +75,22 @@ header {
 .user-menu-toggle{
   padding-top: 10px !important;
   padding-bottom: 10px !important;
+
+  position: relative;
+  overflow: auto;
+
+  .incoming-invites {
+    color: $white;
+    font-weight: bolder;
+    font-size: 12px;
+    position: absolute;
+    top: 3px;
+    left: 38px;
+
+    padding: 0px 8px;
+    border-radius: 50%;
+    background-color: $dark-grey;
+  }
 }
 
 .big-control{

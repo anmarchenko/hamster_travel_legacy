@@ -2,6 +2,10 @@
   %li{class: 'dropdown'}
     %a{href: '#', class: 'dropdown-toggle user-menu-toggle', 'data-toggle' => 'dropdown'}
       %img.img-circle.img-nav{id: 'profile_image', src: current_user.image_url_or_default}
+      - invites_count = current_user.incoming_invites.count
+      - if invites_count > 0
+        %span.incoming-invites
+          = invites_count
       = current_user.first_name
       %b{class: 'caret'}
     %ul{class: 'dropdown-menu'}
