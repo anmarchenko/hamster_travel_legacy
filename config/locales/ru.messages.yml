@@ -2,4 +2,5 @@ ru:
   messages:
     index:
       title: Приглашения
-      invites_you_to: приглашает вас в
+      invites_you_to: приглашает вас в путешествие
+      to_my_trips: Назад к моим путешествиям

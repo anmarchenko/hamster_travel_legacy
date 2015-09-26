@@ -2,4 +2,5 @@ en:
   messages:
     index:
       title: Invites
-      invites_you_to: invites you to
+      invites_you_to: invites you to the trip
+      to_my_trips: Back to my trips

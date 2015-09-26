@@ -1,16 +1,22 @@
 - content_for :title, t('.title')
 
-- @invites.each do |invite|
-  .row.message-row
-    .col-md-1.col-sm-1.col-xs-6.photo
-      = link_to user_path(invite.inviting_user), class: 'pic-url' do
-        %img.img-circle.small-profile-pic{src: invite.inviting_user.image_url_or_default}
-    .col-md-9.hidden-xs.col-sm-8
-      = render 'messages/invite_text', invite: invite
-    .col-md-2.col-xs-6.controls.col-sm-3
-      %button{class: 'btn btn-danger'}
-        = fa_icon 'times'
-      %button{class: 'btn btn-primary'}
-        = fa_icon 'check'
-    .col-xs-12.visible-xs.second-row
-      = render 'messages/invite_text', invite: invite
+%div{'ng-controller' => 'MessagesController'}
+  - @invites.each do |invite|
+    .row.message-row{'ng-show' => "show_message_#{invite.id}", 'ng-init' => "show_message_#{invite.id} = true"}
+      .col-md-1.col-sm-1.col-xs-6.photo
+        = link_to user_path(invite.inviting_user), class: 'pic-url' do
+          %img.img-circle.small-profile-pic{src: invite.inviting_user.image_url_or_default}
+      .col-md-9.hidden-xs.col-sm-8
+        = render 'messages/invite_text', invite: invite
+      .col-md-2.col-xs-6.controls.col-sm-3
+        %button{class: 'btn btn-danger', 'ng-click' => "decline(#{invite.id})"}
+          = fa_icon 'times'
+        %button{class: 'btn btn-primary', 'ng-click' => "accept(#{invite.id})"}
+          = fa_icon 'check'
+      .col-xs-12.visible-xs.second-row
+        = render 'messages/invite_text', invite: invite
+
+  .row
+    .col-md-12.text-center
+      = link_to trips_path(my: true), class: 'btn btn-primary btn-lg' do
+        = t('.to_my_trips')
