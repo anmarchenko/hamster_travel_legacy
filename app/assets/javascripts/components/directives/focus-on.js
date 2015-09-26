@@ -1,4 +1,4 @@
-angular.module('travel-components').directive('focusOn', function ($timeout) {
+angular.module('travel-components').directive('focusOn', ['$timeout', function ($timeout) {
     return {
         restrict: 'A',
         priority: -100,
@@ -19,4 +19,4 @@ angular.module('travel-components').directive('focusOn', function ($timeout) {
 
         }
     };
-});
+}]);
