@@ -9,6 +9,8 @@ angular.module('travel-components').controller 'ParticipantsController'
 
       $scope.selectUser = ($item, $model, $label, $scope) ->
         $scope.toggle()
-        console.log $item
+
+        $http.post('/api/trip_invites', {id: $scope.$parent.trip_id, user_id: $item.code}).success (data) ->
+          $scope.loadParticipants()
 
   ]
