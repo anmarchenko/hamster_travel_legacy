@@ -3,7 +3,8 @@
 - classes ||= nil
 - placeholder ||= nil
 - show_loading ||= nil
+- custom_attrs ||= {}
 
 = render 'widgets/typeahead/typeahead', form: form, model_name: model_name, function: 'getUsers', classes: classes,
   placeholder: placeholder, show_loading: show_loading, template: 'userTemplate.html', min_length: 2,
-  callback: 'selectUser'
+  callback: 'selectUser', custom_attrs: custom_attrs

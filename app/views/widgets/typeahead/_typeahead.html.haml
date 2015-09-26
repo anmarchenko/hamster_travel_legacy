@@ -6,6 +6,7 @@
 - template ||= nil
 - min_length ||= 3
 - callback ||= "''"
+- custom_attrs ||= {}
 
 -#   'typeahead-append-to-body' => true, ATTENTION: CAUSING MEMORY LEAK
 
@@ -19,7 +20,7 @@
   'typeahead-wait-ms' => 500,
   'typeahead-template-url' => template,
   placeholder: placeholder,
-  class: "#{classes}"}
+  class: "#{classes}"}.merge(custom_attrs)
 
 - options_code = { value: "{{#{code_field_name}}}" }
 

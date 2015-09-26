@@ -11,7 +11,7 @@
   %script{type: 'text/ng-template', id: 'invitePopover.html'}
     .form-group
       = render 'widgets/typeahead/users', model_name: 'selected_user', classes: 'form-control',
-        placeholder: t('trips.show.type_name'), show_loading: false
+        placeholder: t('trips.show.type_name'), show_loading: false, custom_attrs: {'focus-on' => 'popover_opened'}
 
 
 %div{'ng-controller' => 'PlanController',}
