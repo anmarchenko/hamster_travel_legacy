@@ -83,6 +83,7 @@ ru:
       overall: всего
       add_friend: Пригласить друга
       type_name: Имя друга
+      invite_sent: приглашение отправлено
     edit:
       title: Редактирование путешествия
     form:

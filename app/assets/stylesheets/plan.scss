@@ -226,11 +226,13 @@
 
     .participants {
       margin-bottom: 10px;
+
       a {
         text-decoration: none;
-      }
-      .participant {
         margin: 0px 10px;
+      }
+
+      .participant,.invited-user {
         &:hover {
           border: 1px solid $link;
           -webkit-box-shadow: 0px 0px 5px 1px $link;
@@ -239,8 +241,11 @@
         }
       }
 
+      .invited-user {
+        opacity: .3;
+      }
+
       .add-participant {
-        margin: 0px 10px;
         opacity: .4;
         &:hover {
           opacity: .5;
@@ -250,6 +255,7 @@
           box-shadow: 0px 0px 5px 1px $main-grey;
         }
       }
+
 
       .popover {
         margin-top: 30px;

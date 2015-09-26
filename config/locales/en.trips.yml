@@ -83,6 +83,7 @@ en:
       overall: overall
       add_friend: Invite friend
       type_name: Friend's name
+      invite_sent: invite sent
     edit:
       title: Edit travel
     form:

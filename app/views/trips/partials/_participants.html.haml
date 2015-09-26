@@ -3,6 +3,10 @@
     %img.img-circle.small-profile-pic.participant{ 'ng-src' => '{{participant.photo_url}}',
       'tooltip-placement' => "bottom", 'tooltip' => '{{participant.name}}'}
 
+  = link_to '/users/{{participant.id}}', 'ng-repeat' => 'participant in invited track by participant.id' do
+    %img.img-circle.small-profile-pic.invited-user{ 'ng-src' => '{{participant.photo_url}}',
+      'tooltip-placement' => "bottom", 'tooltip' => "{{participant.name}} (#{t('trips.show.invite_sent')})"}
+
   %a{href: 'javascript:void(0)',
       'popover-template' => "'invitePopover.html'",
       'popover-title' => t('trips.show.add_friend'),
