@@ -43,7 +43,7 @@ gem 'uglifier', '>= 1.3.0'
 # chosen js library
 gem 'chosen-rails'
 # AngularJS magic framework
-gem 'angularjs-rails'
+gem 'angularjs-rails', '1.4.0'
 gem 'angular-ui-bootstrap-rails', '0.13.3'
 gem 'angularjs-rails-resource', '~> 1.0.0'
 # File upload

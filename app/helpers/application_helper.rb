@@ -51,7 +51,10 @@ module ApplicationHelper
            'current-text' => I18n.t('common.today'),
            'toggle-weeks-text' => I18n.t('common.toggle_weeks'),
            'clear-text' => I18n.t('common.clear'),
-           'close-text' => I18n.t('common.datepicker_close')}
+           'close-text' => I18n.t('common.datepicker_close'),
+           'is-open' => "datepicker_opened_#{model_name}",
+           'ng-focus' => "datepicker_opened_#{model_name} = true"
+    }
     res.merge!('ng-init' => "#{model_name}=#{record.send(model_name).strftime('%Q')}") unless record.blank? or
         record.send(model_name).blank?
     res
