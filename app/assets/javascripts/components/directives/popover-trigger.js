@@ -1,8 +1,8 @@
 angular.module('travel-components')
 
-    .config(function($tooltipProvider) {
+    .config(['$tooltipProvider', function($tooltipProvider) {
         $tooltipProvider.setTriggers({'open': 'close'});
-    })
+    }])
 
     .directive('popoverToggle', ['$timeout', function($timeout) {
         return {
