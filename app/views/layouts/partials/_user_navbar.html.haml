@@ -9,6 +9,11 @@
       = current_user.first_name
       %b{class: 'caret'}
     %ul{class: 'dropdown-menu'}
+      - if invites_count > 0
+        %li
+          = link_to messages_path do
+            %strong
+              = fa_icon 'envelope', text: "#{t('common.invites')} (#{invites_count})"
       %li
         = link_to user_path(current_user) do
           = fa_icon 'user', text: t('common.profile')

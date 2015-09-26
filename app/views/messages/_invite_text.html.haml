@@ -1,0 +1,5 @@
+= link_to user_path(invite.inviting_user) do
+  = invite.inviting_user.full_name
+= t('messages.index.invites_you_to')
+%strong
+  = "\"#{invite.trip.name}\""

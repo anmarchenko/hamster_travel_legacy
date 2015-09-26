@@ -13,6 +13,7 @@ Travel::Application.routes.draw do
         post :upload_photo
       end
     end
+    resources :messages, only: [:index, :destroy, :update]
 
     namespace :api do
       resources :cities, only: [:index]
