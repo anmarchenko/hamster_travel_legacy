@@ -255,15 +255,6 @@
         }
       }
 
-      .participant,.invited-user {
-        &:hover {
-          border: 1px solid $link;
-          -webkit-box-shadow: 0px 0px 5px 1px $link;
-          -moz-box-shadow: 0px 0px 5px 1px $link;
-          box-shadow: 0px 0px 5px 1px $link;
-        }
-      }
-
       .invited-user {
         opacity: .3;
       }
