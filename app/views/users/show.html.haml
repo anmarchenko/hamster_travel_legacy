@@ -3,4 +3,4 @@
 = render layout: 'common/user_profile_layout', locals: {page: :show} do
   %h3
     = t('.trips')
-  = render 'widgets/trips/grid', trips: @trips
+  = render 'trips/partials/trip_list', trips: @trips

@@ -1,0 +1,35 @@
+- trips ||= []
+- without_pagination ||= false
+
+.trip-list
+  - if trips.blank?
+    = t('.no_trips')
+  - else
+    - trips.each do |trip|
+      .row.trip-row
+        .col-md-2.image-cell.hidden-xs.hidden-sm{class: "b-#{trip.status_code}"}
+          = link_to trip_path(trip) do
+            %img{class: 'img-responsive',
+              src: trip.image_url_or_default}
+        .col-md-8.col-xs-10.content-cell{class: "b-#{trip.status_code}"}
+          %p.header
+            = link_to trip.name, trip_path(trip)
+            %small
+              = l trip.start_date, format: :month
+
+          %p.budget
+            = t('common.budget').mb_chars.capitalize
+            = trip.budget_sum(current_user.try(:currency))
+            = currency_symbol.html_safe
+            \/
+            = trip.days_count
+            = t('common.days', count: trip.days_count)
+            = t('trips.show.budget_for')
+            = trip.budget_for
+            = t('trips.show.persons')
+
+        .col-md-2.col-xs-2.author-cell
+          = link_to trip.author.full_name, user_path(trip.author)
+
+    - unless without_pagination
+      = paginate trips
