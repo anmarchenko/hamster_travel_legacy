@@ -21,7 +21,7 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:web), in: :sequence, wait: 5 do
-      rvm = '~/.rvm/bin/rvm 2.1.2 do'
+      rvm = '~/.rvm/bin/rvm 2.2.3 do'
       cd = 'cd /var/applications/travel_planner/current;'
       execute "#{cd}RAILS_ENV=production #{rvm} bundle exec rake db:migrate"
 
@@ -33,7 +33,7 @@ namespace :deploy do
     end
 
     on roles(:backend), in: :sequence, wait: 5 do
-      rvm = '~/.rvm/bin/rvm 2.1.2 do'
+      rvm = '~/.rvm/bin/rvm 2.2.3 do'
       cd = 'cd /var/applications/travel_planner/current;'
 
       # execute "if [ \"$( ps -A | grep ruby )\" ]; then killall -9 ruby; fi", pty: true
