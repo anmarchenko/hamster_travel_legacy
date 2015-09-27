@@ -11,7 +11,7 @@
           = link_to trip_path(trip) do
             %img{class: 'img-responsive',
               src: trip.image_url_or_default}
-        .col-md-8.col-xs-10.content-cell{class: "b-#{trip.status_code}"}
+        .col-md-10.col-xs-12.content-cell{class: "b-#{trip.status_code}"}
           %p.header
             = link_to trip.name, trip_path(trip)
             %small
@@ -28,11 +28,8 @@
             = trip.budget_for
             = t('trips.show.persons')
 
-        .col-md-2.col-xs-2.author-cell.text-center
-          = link_to user_path(trip.author) do
-            %img.img-circle.small-profile-pic.image-url{ 'ng-src' => "#{trip.author.image_url_or_default}",
-              'tooltip-placement' => "bottom",
-              'tooltip' => "#{trip.author.full_name}" }
+          %p.author
+            = link_to trip.author.full_name, user_path(trip.author)
 
     - unless without_pagination
       = paginate trips
