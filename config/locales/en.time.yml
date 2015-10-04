@@ -1,4 +1,4 @@
 en:
   date:
     formats:
-      month: '%B %Y'
+      month: '%&nbsp;%Y'
