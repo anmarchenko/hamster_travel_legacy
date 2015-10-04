@@ -11,7 +11,7 @@
       .col-md-2.col-xs-6.controls.col-sm-3
         %button{class: 'btn btn-danger', 'ng-click' => "decline(#{invite.id})"}
           = fa_icon 'times'
-        %button{class: 'btn btn-primary', 'ng-click' => "accept(#{invite.id})"}
+        %button{class: 'btn btn-success', 'ng-click' => "accept(#{invite.id})"}
           = fa_icon 'check'
       .col-xs-12.visible-xs.second-row
         = render 'messages/invite_text', invite: invite
