@@ -173,9 +173,10 @@ module Travels
     def as_json(**args)
       attrs = {}
       ['id', 'comment', 'start_date', 'end_date', 'name', 'short_description',
-       'archived', 'private', 'budget_for'].each do |field|
+       'archived', 'private'].each do |field|
         attrs[field] = self.send(field)
       end
+      attrs['budget_for'] = self.budget_for.to_s
       attrs['id'] = attrs['id'].to_s
       attrs
     end
