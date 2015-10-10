@@ -20,7 +20,7 @@
       %h4{class: "trip-name b-#{@trip.status_code}"}
         = @trip.name
         %small
-          = l @trip.start_date, format: :month
+          = (l @trip.start_date, format: :month).html_safe
 
   .row.trip-header
     .col-md-3.col-sm-3
