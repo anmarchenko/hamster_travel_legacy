@@ -1,5 +1,7 @@
 en:
   common:
+    yesss: "Yes"
+    noooo: "No"
     sign_out: Sign Out
     sign_in: Login
     sign_up: Register
@@ -30,8 +32,6 @@ en:
     hamster: Yulia Marchenko
     andrey: Andrey Marchenko
     no_comments: No comments
-    yesss: Yes
-    noooo: No
     0_draft: Draft
     1_planned: Planned
     2_finished: Finished
