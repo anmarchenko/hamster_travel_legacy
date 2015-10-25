@@ -2,13 +2,12 @@
 
 .dashboard-content
   .welcome-area
-    .row
-      .col-md-6.col-md-offset-3
-        %h2
-          = t('.welcome')
-        %h3
-          = t('.welcome_second')
+    .col-md-6.col-md-offset-3
+      %h2
+        = t('.welcome')
+      %h3
+        = t('.welcome_second')
 
-        .form-group.btns
-          %a.btn.btn-primary.btn-lg.btn-browse{href: trips_path}
-            = t('.browse')
+      .form-group.btns
+        %a.btn.btn-primary.btn-lg.btn-browse{href: trips_path}
+          = t('.browse')
