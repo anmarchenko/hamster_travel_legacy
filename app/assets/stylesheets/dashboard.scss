@@ -24,7 +24,9 @@ header {
 }
 
 .welcome-area {
-  margin-top: 14%;
+  padding-top: 14%;
+  background-color: rgba(0,0,0,0.4);
+  height: 100%;
   text-align: center;
   .btn-browse {
     margin-right: 15px;
@@ -52,7 +54,7 @@ header {
 
 @media (max-width: 992px) {
   .welcome-area {
-    margin-top: 150px;
+    padding-top: 150px;
     h2 {
       font-size: 24px;
     }

@@ -12,6 +12,3 @@
         .form-group.btns
           %a.btn.btn-primary.btn-lg.btn-browse{href: trips_path}
             = t('.browse')
-          - if user_signed_in?
-            %a.btn.btn-success.btn-lg{href: new_trip_path}
-              = t('.add')
