@@ -15,6 +15,7 @@ class TripsController < ApplicationController
   def index
     if params[:my] && !current_user.blank?
       @trips = current_user.trips.where.not(status_code: Travels::Trip::StatusCodes::DRAFT)
+      @trips = @trips.order(start_date: :desc)
     elsif params[:my_draft] && !current_user.blank?
       @trips = current_user.trips.where(status_code: Travels::Trip::StatusCodes::DRAFT)
       @trips = @trips.order(start_date: :desc)
