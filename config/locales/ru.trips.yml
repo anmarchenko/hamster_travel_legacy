@@ -87,8 +87,8 @@ ru:
     edit:
       title: Редактирование путешествия
     form:
-      create_title: Создать путешествие
-      edit_title: Редактировать путешествие
+      create_title: Новый план
+      edit_title: План
       name_placeholder: Запоминающееся и яркое название
       short_description_placeholder: Пара слов о путешествии в целом
       start_date_placeholder: Когда поедем?

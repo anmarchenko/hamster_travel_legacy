@@ -29,7 +29,7 @@
                   = fa_icon Travels::Trip::StatusCodes::TYPE_TO_ICON[type]
                 .status-header
                   = I18n.t(Travels::Trip::StatusCodes::TYPE_TO_TEXT[type])
-                .status-description
+                .status-description.hidden-xs
                   = t(".#{type}_help")
 
         .row

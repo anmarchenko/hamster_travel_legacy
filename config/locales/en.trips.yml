@@ -87,8 +87,8 @@ en:
     edit:
       title: Edit travel
     form:
-      create_title: Create travel
-      edit_title: Edit travel
+      create_title: Create plan
+      edit_title: Edit plan
       name_placeholder: Nice and catchy name for your travel
       short_description_placeholder: Few words about your trip
       start_date_placeholder: When will you go?
