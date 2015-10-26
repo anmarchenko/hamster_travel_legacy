@@ -42,12 +42,18 @@ describe TripsController do
         end
       end
 
-      it 'shows user\'s trips when parameter \'my\' is present' do
+      it 'shows user\'s plans without drafts when parameter \'my\' is present' do
         get 'index', my: true
         trips = assigns(:trips)
-        expect(trips.to_a.count).to eq 8
-        trips.each do |trip|
+        expect(trips.to_a.count).to eq 6
+        trips.each_with_index do |trip, i|
           expect(trip.include_user(subject.current_user)).to be true
+          expect(trip.status_code).not_to eq(Travels::Trip::StatusCodes::DRAFT)
+
+          next if trips[i+1].blank?
+          expect(
+            trips[i].start_date >= trips[i+1].start_date
+          ).to be true
         end
       end
       it 'shows user\'s drafts when parameter \'my_draft\' is present' do

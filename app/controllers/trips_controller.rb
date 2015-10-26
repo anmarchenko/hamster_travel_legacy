@@ -14,13 +14,14 @@ class TripsController < ApplicationController
 
   def index
     if params[:my] && !current_user.blank?
-      @trips = current_user.trips
+      @trips = current_user.trips.where.not(status_code: Travels::Trip::StatusCodes::DRAFT)
     elsif params[:my_draft] && !current_user.blank?
       @trips = current_user.trips.where(status_code: Travels::Trip::StatusCodes::DRAFT)
+      @trips = @trips.order(start_date: :desc)
     else
       @trips = Travels::Trip.where(private: false).where.not(status_code: Travels::Trip::StatusCodes::DRAFT)
+      @trips = @trips.order(status_code: :desc, start_date: :desc)
     end
-    @trips = @trips.order(status_code: :desc, start_date: :desc)
     @trips = @trips.includes(:author_user)
     @trips = @trips.page(params[:page] || 1)
   end
