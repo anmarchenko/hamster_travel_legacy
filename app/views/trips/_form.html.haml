@@ -18,7 +18,7 @@
           = f.label :name, class: 'control-label'
           = f.text_field :name, class: 'form-control', placeholder: t('.name_placeholder')
 
-        = f.hidden_field :status_code, class: 'control-label', 'ng-model' => 'status'
+        = f.hidden_field :status_code, class: 'control-label', value: '{{status}}'
 
         .form-group
           .row.trip-status
