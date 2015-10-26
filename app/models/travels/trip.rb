@@ -40,6 +40,12 @@ module Travels
           PLANNED => "common.#{PLANNED}",
           FINISHED => "common.#{FINISHED}"
       }
+
+      TYPE_TO_ICON = {
+          DRAFT => 'lightbulb-o',
+          PLANNED => 'map-o',
+          FINISHED => 'archive'
+      }
     end
 
     paginates_per 9

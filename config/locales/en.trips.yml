@@ -97,6 +97,6 @@ en:
       return: Return
       confirm: 'Days number will become less! Last days data will be lost. Continue?'
       private_help: Private plans are seen only by you (on the tab 'My travels')!
-      0_draft_help: '- just a simple draft of future plan'
-      1_planned_help: '- trip that will take place in the near future'
-      2_finished_help: '- past trip with report'
+      0_draft_help: 'just a simple draft of future plan'
+      1_planned_help: 'trip that will take place in the near future'
+      2_finished_help: 'past trip with report'

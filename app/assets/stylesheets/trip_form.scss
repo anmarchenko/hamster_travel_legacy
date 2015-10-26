@@ -1,0 +1,39 @@
+.trip-form {
+  .form-group {
+    margin-bottom: 30px;
+  }
+
+  .trip-status {
+
+    .status {
+      padding: 15px;
+      cursor: pointer;
+    }
+
+    .active {
+      background-color: $light-grey;
+    }
+
+    .fa {
+      font-size: 48px;
+      color: $main-grey;
+    }
+
+    .status-image {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .status-header {
+      color: $dark-grey;
+      font-size: 16px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .status-description {
+      text-align: center;
+      color: $main-grey;
+    }
+  }
+}

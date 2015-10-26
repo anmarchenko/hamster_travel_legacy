@@ -5,6 +5,8 @@ angular.module('travel-components').controller 'TripEditController'
       $scope.initScope = (attrs) ->
         $scope.last_day_index = attrs['last_day_index']
         $scope.message = attrs['message']
+        $scope.status = attrs['status']
+
       $scope.submit = ($event) ->
         diff = moment.duration ( moment($scope.end_date).diff(moment($scope.start_date)) )
         new_days = diff.days()
