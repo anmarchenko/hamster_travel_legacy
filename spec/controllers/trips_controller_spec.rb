@@ -1,6 +1,7 @@
 describe TripsController do
 
   let(:attrs) { FactoryGirl.build(:trip).attributes }
+  let(:attrs_no_dates) { FactoryGirl.build(:trip, :no_dates).attributes }
 
   describe '#index' do
 
@@ -52,7 +53,7 @@ describe TripsController do
 
           next if trips[i+1].blank?
           expect(
-            trips[i].start_date >= trips[i+1].start_date
+              trips[i].start_date >= trips[i+1].start_date
           ).to be true
         end
       end
@@ -199,6 +200,29 @@ describe TripsController do
           expect(trip.end_date).to eq params[:travels_trip]['end_date']
           expect(trip.currency).to eq('INR')
           expect(trip.days.first.hotel.amount_currency).to eq('INR')
+        end
+
+        context 'and when trip is without dates' do
+
+          let(:params) { {travels_trip: attrs_no_dates} }
+
+          it 'creates new trip and redirects to show' do
+            post 'create', params
+            trip = assigns(:trip).reload
+            expect(trip).to be_persisted
+            expect(response).to redirect_to trip_path(trip)
+
+            expect(trip.author_user).to eq subject.current_user
+            expect(trip.users).to eq [subject.current_user]
+            expect(trip.name).to eq params[:travels_trip]['name']
+            expect(trip.short_description).to eq params[:travels_trip]['short_description']
+            expect(trip.start_date).to eq nil
+            expect(trip.end_date).to eq nil
+            expect(trip.days_count).to eq 3
+            expect(trip.planned_days_count).to eq 3
+            expect(trip.currency).to eq('RUB')
+          end
+
         end
 
         context 'and when trip is copied from original' do
