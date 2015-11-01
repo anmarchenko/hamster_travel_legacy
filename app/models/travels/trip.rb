@@ -2,22 +2,24 @@
 #
 # Table name: trips
 #
-#  id                :integer          not null, primary key
-#  name              :string
-#  short_description :text
-#  start_date        :date
-#  end_date          :date
-#  archived          :boolean          default(FALSE)
-#  comment           :text
-#  budget_for        :integer          default(1)
-#  private           :boolean          default(FALSE)
-#  image_uid         :string
-#  status_code       :string           default("0_draft")
-#  author_user_id    :integer
-#  mongo_id          :string
-#  updated_at        :datetime
-#  created_at        :datetime
-#  currency          :string
+#  id                 :integer          not null, primary key
+#  name               :string
+#  short_description  :text
+#  start_date         :date
+#  end_date           :date
+#  dates_unknown      :boolean
+#  planned_days_count :integer
+#  archived           :boolean          default(FALSE)
+#  comment            :text
+#  budget_for         :integer          default(1)
+#  private            :boolean          default(FALSE)
+#  image_uid          :string
+#  status_code        :string           default("0_draft")
+#  author_user_id     :integer
+#  mongo_id           :string
+#  updated_at         :datetime
+#  created_at         :datetime
+#  currency           :string
 #
 
 module Travels
@@ -68,11 +70,16 @@ module Travels
       I18n.t(StatusCodes::TYPE_TO_TEXT[status_code])
     end
 
-    validates_presence_of :name, :start_date, :end_date, :author_user_id
+    validates_presence_of :name, :author_user_id
 
-    validates :start_date, date: {before_or_equal_to: :end_date, message: I18n.t('errors.date_before')}
+    validates_presence_of :start_date, :end_date, if: :should_have_dates?
+    validates_presence_of :planned_days_count, if: :without_dates?
+
+    validates_numericality_of :planned_days_count, greater_than: 0, less_than: 31, if: :without_dates?
+
+    validates :start_date, date: {before_or_equal_to: :end_date, message: I18n.t('errors.date_before')}, if: :should_have_dates?
     validates :end_date, date: {before: Proc.new { |record| record.start_date + 30.days },
-                                message: I18n.t('errors.end_date_days', period: 30)}
+                                message: I18n.t('errors.end_date_days', period: 30)}, if: :should_have_dates?
 
     validates_size_of :image, maximum: 10.megabytes, message: "should be no more than 10 MB", if: :image_changed?
 
@@ -82,25 +89,19 @@ module Travels
     default_scope -> { where(:archived => false) }
 
     after_save :update_plan
-
     def update_plan
       self.days ||= []
-      days_count = (self.end_date - self.start_date).to_i + 1
-      self.days.each_with_index do |day, index|
-        day.date_when = (self.start_date + index.days)
-        day.save
-      end
-      (days_count - self.days.length).times do
-        date = self.days.last.try(:date_when)
-        if date.blank?
-          date = self.start_date
-        else
-          date = date + 1.day
-        end
-        self.days.create(date_when: date)
+
+      # ensure order
+      ensure_days_order
+
+      # push new days
+      (self.days_count - self.days.length).times do
+        push_new_day
       end
 
-      (self.days[days_count..-1] || []).each { |day| day.destroy }
+      # delete not needed days
+      delete_last_days
     end
 
     def include_user(user)
@@ -117,6 +118,7 @@ module Travels
     end
 
     def days_count
+      return planned_days_count if without_dates?
       (end_date - start_date + 1).to_i
     end
 
@@ -166,6 +168,26 @@ module Travels
       ]
     end
 
+    def draft?
+      self.status_code == StatusCodes::DRAFT
+    end
+
+    def plan?
+      self.status_code == StatusCodes::PLANNED
+    end
+
+    def report?
+      self.status_code == StatusCodes::FINISHED
+    end
+
+    def without_dates?
+      self.dates_unknown && self.draft?
+    end
+
+    def should_have_dates?
+      !self.without_dates?
+    end
+
     def copy trip
       super
       self.name += " (#{I18n.t('common.copy')})" unless self.name.blank?
@@ -185,6 +207,38 @@ module Travels
       attrs['budget_for'] = self.budget_for.to_s
       attrs['id'] = attrs['id'].to_s
       attrs
+    end
+
+    private
+
+    def ensure_days_order
+      self.days.each_with_index do |day, index|
+        if without_dates?
+          day.date_when = nil
+        else
+          day.date_when = (self.start_date + index.days)
+        end
+        day.index = index
+        day.save
+      end
+    end
+
+    def push_new_day
+      index = self.days.last.try(:index) || -1
+      date = nil
+      if should_have_dates?
+        date = self.days.last.try(:date_when)
+        if date.blank?
+          date = self.start_date
+        else
+          date = date + 1.day
+        end
+      end
+      self.days.create(date_when: date, index: index + 1)
+    end
+
+    def delete_last_days
+      (self.days[days_count..-1] || []).each { |day| day.destroy }
     end
 
   end

@@ -8,6 +8,7 @@ FactoryGirl.define do
     sequence(:end_date) { |n| Date.today + n }
     currency { 'RUB' }
     status_code { Travels::Trip::StatusCodes::DRAFT }
+    dates_unknown { false }
 
     association :author_user, factory: :user
 
@@ -56,6 +57,13 @@ FactoryGirl.define do
         3.times { |index| trip.caterings.create(build(:catering, order_index: index).attributes) }
         trip.save validate: false
       end
+    end
+
+    trait :no_dates do
+      start_date { nil }
+      end_date { nil }
+      dates_unknown { true }
+      planned_days_count { 3 }
     end
   end
 

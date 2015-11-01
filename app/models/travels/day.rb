@@ -22,7 +22,7 @@ module Travels
     has_many :activities, class_name: 'Travels::Activity'
     has_many :expenses, class_name: 'Travels::Expense', as: :expendable
 
-    default_scope ->{order(date_when: :asc)}
+    default_scope ->{order(date_when: :asc, index: :asc)}
 
     before_save :init
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150904160048) do
+ActiveRecord::Schema.define(version: 20151101194259) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -175,6 +175,7 @@ ActiveRecord::Schema.define(version: 20150904160048) do
     t.date    "date_when"
     t.text    "comment"
     t.integer "trip_id"
+    t.integer "index"
   end
 
   add_index "days", ["trip_id"], name: "index_days_on_trip_id", using: :btree
@@ -304,17 +305,19 @@ ActiveRecord::Schema.define(version: 20150904160048) do
     t.text     "short_description"
     t.date     "start_date"
     t.date     "end_date"
-    t.boolean  "archived",          default: false
+    t.boolean  "archived",           default: false
     t.text     "comment"
-    t.integer  "budget_for",        default: 1
-    t.boolean  "private",           default: false
+    t.integer  "budget_for",         default: 1
+    t.boolean  "private",            default: false
     t.string   "image_uid"
-    t.string   "status_code",       default: "0_draft"
+    t.string   "status_code",        default: "0_draft"
     t.integer  "author_user_id"
     t.string   "mongo_id"
     t.datetime "updated_at"
     t.datetime "created_at"
     t.string   "currency"
+    t.boolean  "dates_unknown"
+    t.integer  "planned_days_count"
   end
 
   add_index "trips", ["author_user_id"], name: "index_trips_on_author_user_id", using: :btree
