@@ -6,3 +6,11 @@
 .input-lg {
   min-height: 57px;
 }
+
+.error-message {
+  color: $error;
+}
+
+.has-error {
+  color: $error !important;
+}
