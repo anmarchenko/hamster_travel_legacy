@@ -13,6 +13,7 @@ describe TripsController do
       before { Travels::Trip.destroy_all }
 
       before { FactoryGirl.create_list(:trip, 2, user_ids: [subject.current_user.id]) }
+      before { FactoryGirl.create_list(:trip, 1, :no_dates, user_ids: [subject.current_user.id]) }
 
       before { FactoryGirl.create_list(:trip, 1, user_ids: [subject.current_user.id],
                                        status_code: Travels::Trip::StatusCodes::FINISHED) }
@@ -60,11 +61,19 @@ describe TripsController do
       it 'shows user\'s drafts when parameter \'my_draft\' is present' do
         get 'index', my_draft: true
         trips = assigns(:trips)
-        expect(trips.to_a.count).to eq 2
+        expect(trips.to_a.count).to eq 3
         trips.each do |trip|
           expect(trip.include_user(subject.current_user)).to be true
           expect(trip.status_code).to eq(Travels::Trip::StatusCodes::DRAFT)
         end
+      end
+
+      it 'shows trips without dates last' do
+        get 'index', my_draft: true
+        trips = assigns(:trips)
+        expect(trips.to_a.count).to eq 3
+        expect(trips.first.start_date).not_to be_nil
+        expect(trips.last.start_date).to be_nil
       end
 
     end

@@ -19,7 +19,7 @@ class TripsController < ApplicationController
       @trips = @trips.order(start_date: :desc)
     elsif params[:my_draft] && !current_user.blank?
       @trips = current_user.trips.where(status_code: Travels::Trip::StatusCodes::DRAFT)
-      @trips = @trips.order(start_date: :desc)
+      @trips = @trips.order(dates_unknown: :asc, start_date: :desc)
     else
       @trips = Travels::Trip.where(private: false).where.not(status_code: Travels::Trip::StatusCodes::DRAFT)
       @trips = @trips.order(status_code: :desc, start_date: :desc)
