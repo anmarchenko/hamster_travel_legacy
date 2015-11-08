@@ -34,7 +34,8 @@ module Travels
     end
 
     def date_when_s
-      I18n.l(date_when, format: '%d.%m.%Y %A') unless date_when.blank?
+      return I18n.l(date_when, format: '%d.%m.%Y %A') unless date_when.blank?
+      I18n.t('common.day_number', number: self.index + 1)
     end
 
     def is_empty?

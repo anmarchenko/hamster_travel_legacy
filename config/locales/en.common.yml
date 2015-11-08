@@ -45,3 +45,4 @@ en:
       few: days
       many: days
       other: days
+    day_number: Day %{number}

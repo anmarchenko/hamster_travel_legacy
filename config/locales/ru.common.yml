@@ -45,3 +45,4 @@ ru:
       few: дня
       many: дней
       other: дней
+    day_number: День %{number}
