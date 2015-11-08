@@ -11,6 +11,6 @@
   color: $error;
 }
 
-.has-error {
-  color: $error !important;
+.has-error label {
+  color: inherit !important;
 }
