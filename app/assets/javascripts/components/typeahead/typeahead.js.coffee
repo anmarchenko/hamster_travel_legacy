@@ -3,8 +3,10 @@ angular.module('travel-components').controller 'TypeaheadController'
     '$scope', 'City', 'User'
 , ($scope, City, User) ->
 
+    $scope.locale = LOCALE
+
     $scope.getCities = (term) ->
-      City.query(term: term)
+      City.query(term: term, locale: $scope.locale)
 
     $scope.getUsers = (term) ->
       User.query(term: term)
