@@ -8,8 +8,10 @@ en:
         end_date: Last day
         author: Author
         status_code: Trip status
-        private: Private trip
+        private: Private plan (can only be seen by you and other participants)
         currency: Most used currency in this trip
+        dates_unknown: Exact dates are unknown yet
+        planned_days_count: Planned days count
   trips:
     expenses:
       breakfast: Breakfast

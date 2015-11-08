@@ -88,7 +88,18 @@ module Travels
 
     default_scope -> { where(:archived => false) }
 
+    before_save :set_model_state
+    def set_model_state
+      if self.dates_unknown
+        self.start_date = nil
+        self.end_date = nil
+      else
+        self.planned_days_count = nil
+      end
+    end
+
     after_save :update_plan
+
     def update_plan
       self.days ||= []
 
@@ -119,7 +130,13 @@ module Travels
 
     def days_count
       return planned_days_count if without_dates?
+      return nil if start_date.blank? || end_date.blank?
       (end_date - start_date + 1).to_i
+    end
+
+    def period
+      return 0 unless days_count
+      days_count - 1
     end
 
     def name_for_file
@@ -130,10 +147,6 @@ module Travels
       result = -1
       (days || []).each_with_index { |day, index| result = index unless day.is_empty? }
       return result
-    end
-
-    def period
-      ((end_date - start_date) unless start_date.blank? or end_date.blank?) || 1
     end
 
     def budget_sum currency = CurrencyHelper::DEFAULT_CURRENCY

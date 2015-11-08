@@ -84,4 +84,8 @@ module ApplicationHelper
     end
   end
 
+  def trip_start_date trip
+    (l trip.start_date, format: :month).html_safe if trip.start_date.present?
+  end
+
 end

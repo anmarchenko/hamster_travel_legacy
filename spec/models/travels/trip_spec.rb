@@ -102,8 +102,11 @@ describe Travels::Trip do
       end
 
       it 'converts to trip without dates without losing data' do
-        trip.update_attributes(start_date: nil, end_date: nil, planned_days_count: 5, dates_unknown: true)
+        trip.update_attributes(planned_days_count: 5, dates_unknown: true)
         updated_trip = trip.reload
+
+        expect(updated_trip.start_date).to be_nil
+        expect(updated_trip.end_date).to be_nil
 
         expect(updated_trip.days.count).to eq(5)
         expect(updated_trip.days.first.date_when).to be_nil
@@ -148,10 +151,11 @@ describe Travels::Trip do
       end
 
       it 'converts to trip with dates preserving data' do
-        trip.update_attributes(start_date: Date.today, end_date: Date.today + 4.days, dates_unknown: false,
-                               planned_days_count: nil)
+        trip.update_attributes(start_date: Date.today, end_date: Date.today + 4.days, dates_unknown: false)
 
         updated_trip = trip.reload
+
+        expect(updated_trip.planned_days_count).to be_nil
 
         expect(updated_trip.days.count).to eq(5)
         expect(updated_trip.days.first.index).to eq(0)
@@ -283,6 +287,15 @@ describe Travels::Trip do
   end
 
   describe '#days_count' do
+
+    context 'when new not saved trip' do
+      let(:trip) {Travels::Trip.new}
+
+      it 'returns nil' do
+        expect(trip.days_count).to be_nil
+      end
+    end
+
     context 'when a week trip' do
       let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
 

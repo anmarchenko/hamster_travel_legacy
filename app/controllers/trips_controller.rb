@@ -13,6 +13,7 @@ class TripsController < ApplicationController
   before_filter :authorize_show, only: [:show]
 
   def index
+    # TODO move to service
     if params[:my] && !current_user.blank?
       @trips = current_user.trips.where.not(status_code: Travels::Trip::StatusCodes::DRAFT)
       @trips = @trips.order(start_date: :desc)

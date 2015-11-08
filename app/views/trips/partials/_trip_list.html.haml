@@ -15,7 +15,7 @@
           %p.header
             = link_to trip.name, trip_path(trip)
             %small
-              = (l trip.start_date, format: :month).html_safe
+              = trip_start_date(trip)
 
           %p.budget
             = t('common.budget').mb_chars.capitalize

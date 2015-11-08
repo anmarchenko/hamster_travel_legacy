@@ -24,6 +24,7 @@ module Travels
 
     default_scope ->{order(date_when: :asc, index: :asc)}
 
+    # TODO: performance issue
     before_save :init
 
     def init
