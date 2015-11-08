@@ -16,7 +16,6 @@
             = link_to trip.name, trip_path(trip)
             %small
               = trip_start_date(trip)
-            = trip_status_icon(trip.status_code)
 
           %p.budget
             = t('common.budget').mb_chars.capitalize
@@ -32,5 +31,6 @@
           %p.author
             = link_to trip.author.full_name, user_path(trip.author)
 
+          = trip_status_icon(trip.status_code)
     - unless without_pagination
       = paginate trips
