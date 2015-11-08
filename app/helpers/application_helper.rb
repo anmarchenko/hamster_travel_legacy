@@ -49,12 +49,13 @@ module ApplicationHelper
     res = {
            'ng-model' => model_name,
            'data-provide' => 'datepicker',
-           'data-placement' => 'top',
+           'data-placement' => 'bottom',
            'data-date-format' => 'dd.mm.yyyy',
            'data-date-week-start' => 1,
            'data-date-autoclose' => true,
            'data-date-language' => I18n.locale,
-           'data-date-start-view' => 'day'
+           'data-date-start-view' => 'day',
+           'autocomplete' => 'off'
     }
     res.merge!('ng-init' => "#{model_name}='#{record.send(model_name)}'") unless record.blank? or
         record.send(model_name).blank?
