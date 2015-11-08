@@ -46,16 +46,17 @@ module ApplicationHelper
   end
 
   def datepicker_options(model_name, record = nil)
-    res = {'datepicker-popup' => 'dd.MM.yyyy', 'ng-model' => model_name, 'show-weeks' => 'false',
-           'datepicker-options' => "{'starting-day': 1}",
-           'current-text' => I18n.t('common.today'),
-           'toggle-weeks-text' => I18n.t('common.toggle_weeks'),
-           'clear-text' => I18n.t('common.clear'),
-           'close-text' => I18n.t('common.datepicker_close'),
-           'is-open' => "datepicker_opened_#{model_name}",
-           'ng-focus' => "datepicker_opened_#{model_name} = true"
+    res = {
+           'ng-model' => model_name,
+           'data-provide' => 'datepicker',
+           'data-placement' => 'top',
+           'data-date-format' => 'dd.mm.yyyy',
+           'data-date-week-start' => 1,
+           'data-date-autoclose' => true,
+           'data-date-language' => I18n.locale,
+           'data-date-start-view' => 'day'
     }
-    res.merge!('ng-init' => "#{model_name}=#{record.send(model_name).strftime('%Q')}") unless record.blank? or
+    res.merge!('ng-init' => "#{model_name}='#{record.send(model_name)}'") unless record.blank? or
         record.send(model_name).blank?
     res
   end

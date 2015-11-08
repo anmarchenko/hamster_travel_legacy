@@ -9,6 +9,9 @@
 //= require jquery-fileupload/basic
 //= require jquery.Jcrop
 //= require jquery.stickytableheaders
+//= require bootstrap-datepicker/core
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.en-GB.js
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.ru.js
 //= require_tree ./common
 //= require angular
 //= require angular-cookies

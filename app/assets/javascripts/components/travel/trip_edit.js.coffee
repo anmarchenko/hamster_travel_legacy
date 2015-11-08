@@ -15,7 +15,7 @@ angular.module('travel-components').controller 'TripEditController'
         if $scope.hideDates()
           new_days = $scope.planned_days_count - 1
         else
-          diff = moment.duration ( moment($scope.end_date).diff(moment($scope.start_date)) )
+          diff = moment.duration ( moment($scope.end_date, 'DD.MM.YYYY').diff(moment($scope.start_date, 'DD.MM.YYYY')) )
           new_days = diff.days()
 
         if new_days < $scope.last_day_index

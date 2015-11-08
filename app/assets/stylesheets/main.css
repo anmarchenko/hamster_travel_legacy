@@ -2,6 +2,7 @@
  *= require 'datetimepicker'
  *= require jquery.Jcrop
  *= require bootstrap-slider.min
+ *= require bootstrap-datepicker3
  *= require 'style'
 */
 

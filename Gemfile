@@ -14,6 +14,9 @@ gem 'kaminari-i18n'
 # validate dates
 gem 'date_validator'
 
+# dates
+gem 'bootstrap-datepicker-rails', '~> 1.3.1.1'
+
 # views
 gem 'haml'
 gem 'haml-rails'
