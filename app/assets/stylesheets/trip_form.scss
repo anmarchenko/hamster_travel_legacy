@@ -16,6 +16,20 @@
     margin-bottom: 30px;
   }
 
+  .date-picker-group {
+    position: relative;
+
+    &:before {
+      font: normal normal normal 24px/1 FontAwesome;
+      content: "\f073";
+      position: absolute;
+      right: 10px;
+      top: 40px;
+      color: $main-grey;
+      opacity: .5;
+    }
+  }
+
   .trip-status {
 
     .status {

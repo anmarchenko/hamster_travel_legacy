@@ -40,23 +40,16 @@
         .row{'ng-hide' => 'hideDates()'}
 
           .col-xs-12.col-sm-8.col-md-6
-            .form-group
+            .form-group.date-picker-group
               = f.label :start_date, class: 'control-label'
-              %span{class: 'input-group'}
-
-                = f.text_field :start_date, datepicker_options('start_date', f.object).merge(class: 'form-control input-lg',
+              = f.text_field :start_date, datepicker_options('start_date', f.object).merge(class: 'form-control input-lg',
                   placeholder: t('.start_date_placeholder'), 'ng-disabled' => 'hideDates()')
-                .input-group-addon
-                  = fa_icon 'calendar'
 
           .col-xs-12.col-sm-8.col-md-6
-            .form-group
+            .form-group.date-picker-group
               = f.label :end_date, class: 'control-label'
-              %span{class: 'input-group'}
-                = f.text_field :end_date, datepicker_options('end_date', f.object).merge(class: 'form-control input-lg',
+              = f.text_field :end_date, datepicker_options('end_date', f.object).merge(class: 'form-control input-lg',
                   placeholder: t('.end_date_placeholder'), min: 'start_date', 'ng-disabled' => 'hideDates()')
-                .input-group-addon
-                  = fa_icon 'calendar'
 
         .form-group{'ng-show' => 'hideDates()'}
           .days-count
