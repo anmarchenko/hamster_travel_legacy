@@ -17,10 +17,11 @@
 %div{'ng-controller' => 'PlanController',}
   .row
     .col-md-12
-      %h4{class: "trip-name b-#{@trip.status_code}"}
+      %h4
         = @trip.name
         %small
           = trip_start_date(@trip)
+        = trip_status_icon(@trip.status_code)
 
   .row.trip-header
     .col-md-3.col-sm-3

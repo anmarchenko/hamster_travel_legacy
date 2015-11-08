@@ -7,15 +7,16 @@
   - else
     - trips.each do |trip|
       .row.trip-row
-        .col-md-2.image-cell.hidden-xs.hidden-sm{class: "b-#{trip.status_code}"}
+        .col-md-2.image-cell.hidden-xs.hidden-sm
           = link_to trip_path(trip) do
             %img{class: 'img-responsive',
               src: trip.image_url_or_default}
-        .col-md-10.col-xs-12.content-cell{class: "b-#{trip.status_code}"}
+        .col-md-10.col-xs-12.content-cell
           %p.header
             = link_to trip.name, trip_path(trip)
             %small
               = trip_start_date(trip)
+            = trip_status_icon(trip.status_code)
 
           %p.budget
             = t('common.budget').mb_chars.capitalize

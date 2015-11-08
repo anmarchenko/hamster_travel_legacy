@@ -203,19 +203,6 @@
 
   }
 
-  .trip-name {
-    border-right: 5px solid;
-    &.b-0_draft {
-      border-color: $draft;
-    }
-    &.b-2_finished {
-      border-color: $finished;
-    }
-    &.b-1_planned {
-      border-color: $planned;
-    }
-  }
-
   .trip-header {
     margin-top: 23px;
     margin-bottom: 60px;

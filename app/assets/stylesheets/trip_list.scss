@@ -8,18 +8,9 @@
 
     &:hover {
       background-color: $background-grey;
-    }
 
-    .image-cell {
-      border-left: 5px solid;
-      &.b-0_draft {
-        border-color: $draft;
-      }
-      &.b-2_finished {
-        border-color: $finished;
-      }
-      &.b-1_planned {
-        border-color: $planned;
+      .status-icon {
+        opacity: 1;
       }
     }
 
@@ -38,25 +29,5 @@
         }
       }
     }
-
-    @media (max-width: $screen-md-min) {
-      .content-cell {
-        border-left: 5px solid;
-        &.b-0_draft {
-          border-color: $draft;
-        }
-        &.b-2_finished {
-          border-color: $finished;
-        }
-        &.b-1_planned {
-          border-color: $planned;
-        }
-
-        .header {
-          font-size: 16px;
-        }
-      }
-    }
-
   }
 }
