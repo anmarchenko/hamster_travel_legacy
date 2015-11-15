@@ -48,5 +48,9 @@ module Geo
       )
     end
 
+    def iso_info
+      ISO3166::Country.find_country_by_alpha2(self.iso_code)
+    end
+
   end
 end

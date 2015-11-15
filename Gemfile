@@ -82,6 +82,9 @@ gem 'money'
 gem 'money-rails'
 gem 'eu_central_bank'
 
+# geo
+gem 'countries'
+
 # production caching
 group :production do
   gem 'rack-cache', :require => 'rack/cache'
