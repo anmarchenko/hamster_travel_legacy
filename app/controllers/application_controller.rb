@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
 
+  CACHE_RATES = "#{Rails.root}/lib/ecb_rates.xml"
+
   layout 'main'
 
   before_filter :set_locale
@@ -9,10 +11,9 @@ class ApplicationController < ActionController::Base
 
   before_filter :load_exchange_rates
   def load_exchange_rates
-    cache = "#{Rails.root}/lib/ecb_rates.xml"
     @bank = Money.default_bank
     ecb_updating_time = Time.new(Time.now.year, Time.now.month, Time.now.day, 13, 0, 0, 0)
-    @bank.update_rates(cache) if !@bank.rates_updated_at || (@bank.rates_updated_at < Time.now - 1.days && Time.now > ecb_updating_time)
+    @bank.update_rates(CACHE_RATES) if !@bank.rates_updated_at || (@bank.rates_updated_at < Time.now - 1.days && Time.now > ecb_updating_time)
   end
 
   # Prevent CSRF attacks by raising an exception.

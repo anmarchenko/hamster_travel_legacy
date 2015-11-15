@@ -85,6 +85,10 @@ gem 'eu_central_bank'
 # geo
 gem 'countries'
 
+# background jobs
+gem 'resque'
+gem 'resque-scheduler'
+
 # production caching
 group :production do
   gem 'rack-cache', :require => 'rack/cache'
