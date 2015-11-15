@@ -12,10 +12,7 @@ class ApplicationController < ActionController::Base
     cache = "#{Rails.root}/lib/ecb_rates.xml"
     @bank = Money.default_bank
     ecb_updating_time = Time.new(Time.now.year, Time.now.month, Time.now.day, 13, 0, 0, 0)
-    if !@bank.rates_updated_at || (@bank.rates_updated_at < Time.now - 1.days && Time.now > ecb_updating_time)
-      @bank.save_rates(cache)
-      @bank.update_rates(cache)
-    end
+    @bank.update_rates(cache) if !@bank.rates_updated_at || (@bank.rates_updated_at < Time.now - 1.days && Time.now > ecb_updating_time)
   end
 
   # Prevent CSRF attacks by raising an exception.
