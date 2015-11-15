@@ -3,25 +3,23 @@ namespace :geo do
 
 
   task :fix_english_names, [] => :environment do
-    GEO_OBJECTS = [Geo::Country,
-                   Geo::Region,
-                   Geo::District,
-                   Geo::Adm3,
-                   Geo::Adm4,
-                   Geo::Adm5,
+    GEO_OBJECTS = [#Geo::Country,
+                   #Geo::Region,
+                   #Geo::District,
+                   #Geo::Adm3,
+                   #Geo::Adm4,
+                   #Geo::Adm5,
                    Geo::City]
 
-    # GEO_OBJECTS.each do |klass|
-    #   p "Fixing #{klass}..."
-    #   started = Time.now
-    #
-    #   klass.all.each do |object|
-    #     object.update_attributes(name_en: object.name)
-    #   end
-    #   GC.start
-    #
-    #   p "Finished fixing #{klass} in #{Time.now - started} seconds."
-    # end
+    GEO_OBJECTS.each do |klass|
+      p "Fixing #{klass}..."
+      started = Time.now
+      klass.where("name <> name_en AND name_en <> ''").each_with_index do |object, index|
+        object.update_attributes(name_en: object.name)
+        p "Processed #{index}"
+      end
+      p "Finished fixing #{klass} in #{Time.now - started} seconds."
+    end
 
     Geo::Country.all.each do |country|
       iso_country_info = country.iso_info
