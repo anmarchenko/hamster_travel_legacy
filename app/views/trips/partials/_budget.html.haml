@@ -2,12 +2,13 @@
   = t('common.budget')
   {{budget}}
   = currency_symbol.html_safe
+
+  = t('trips.show.budget_for')
+
   %span{'ng-show' => '!edit'}
-    = t('trips.show.budget_for')
     {{trip.budget_for}}
-    = t('trips.show.persons')
   %span{'ng-show' => 'edit'}
-    = t('trips.show.budget_for')
     = select_tag 'trip_budget_for', options_for_select((1..10).step(1)),
                       {class: 'input-sm', 'ng-model' => 'trip.budget_for'}
-    = t('trips.show.persons')
+  = t('trips.show.persons')
+  = "(#{@trip.days_count} #{t('common.days', count: @trip.days_count)})"
