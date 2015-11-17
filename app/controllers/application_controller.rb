@@ -12,8 +12,14 @@ class ApplicationController < ActionController::Base
   before_filter :load_exchange_rates
   def load_exchange_rates
     @bank = Money.default_bank
-    ecb_updating_time = Time.new(Time.now.year, Time.now.month, Time.now.day, 13, 0, 0, 0)
-    @bank.update_rates(CACHE_RATES) if !@bank.rates_updated_at || (@bank.rates_updated_at < Time.now - 1.days && Time.now > ecb_updating_time)
+    if !@bank.rates_updated_at || @bank.rates_updated_at < Time.now - 1.days
+      rates = ExchangeRate.current.try(:test)
+      if rates
+        @bank.update_rates_from_s(rates.eu_file)
+      else
+        @bank.update_rates(CACHE_RATES)
+      end
+    end
   end
 
   # Prevent CSRF attacks by raising an exception.

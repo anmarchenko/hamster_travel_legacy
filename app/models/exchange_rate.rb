@@ -10,4 +10,7 @@
 #
 
 class ExchangeRate < ActiveRecord::Base
+
+  scope :current, -> {order(rates_date: :desc, created_at: :desc).first}
+
 end
