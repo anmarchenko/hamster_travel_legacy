@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: external_links
+#
+#  id            :integer          not null, primary key
+#  description   :string
+#  url           :text
+#  mongo_id      :string
+#  linkable_id   :integer
+#  linkable_type :string
+#
+
 describe ExternalLink do
 
   describe '#as_json' do

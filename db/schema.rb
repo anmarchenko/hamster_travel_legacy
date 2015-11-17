@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151108153304) do
+ActiveRecord::Schema.define(version: 20151117194641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -201,6 +201,13 @@ ActiveRecord::Schema.define(version: 20151108153304) do
 
   add_index "districts", ["geonames_code"], name: "index_districts_on_geonames_code", using: :btree
   add_index "districts", ["population"], name: "index_districts_on_population", using: :btree
+
+  create_table "exchange_rates", force: :cascade do |t|
+    t.text     "eu_file"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.date     "rates_date"
+  end
 
   create_table "expenses", force: :cascade do |t|
     t.string  "name"

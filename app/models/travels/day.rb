@@ -7,6 +7,7 @@
 #  date_when :date
 #  comment   :text
 #  trip_id   :integer
+#  index     :integer
 #
 
 module Travels

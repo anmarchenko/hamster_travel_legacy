@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: trip_invites
+#
+#  id               :integer          not null, primary key
+#  inviting_user_id :integer
+#  invited_user_id  :integer
+#  trip_id          :integer
+#
+
 describe Travels::TripInvite do
   let(:trip) { FactoryGirl.create(:trip) }
   let(:inviting_user) { FactoryGirl.create(:user) }

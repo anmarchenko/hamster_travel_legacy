@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: caterings
+#
+#  id              :integer          not null, primary key
+#  description     :text
+#  days_count      :integer
+#  persons_count   :integer
+#  trip_id         :integer
+#  amount_cents    :integer          default(0), not null
+#  amount_currency :string           default("RUB"), not null
+#  order_index     :integer
+#  name            :string
+#
+
 describe Travels::Catering do
   describe '.create' do
     let(:trip) {FactoryGirl.create(:trip, :with_filled_days)}

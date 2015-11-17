@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: places
+#
+#  id        :integer          not null, primary key
+#  city_code :string
+#  city_text :string
+#  mongo_id  :string
+#  day_id    :integer
+#
+
 describe Travels::Place do
   let(:place) {FactoryGirl.create(:trip, :with_filled_days).days.first.places.last}
   let(:place_empty) {FactoryGirl.create(:trip, :with_filled_days).days.first.places.first}

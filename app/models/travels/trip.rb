@@ -7,8 +7,6 @@
 #  short_description  :text
 #  start_date         :date
 #  end_date           :date
-#  dates_unknown      :boolean
-#  planned_days_count :integer
 #  archived           :boolean          default(FALSE)
 #  comment            :text
 #  budget_for         :integer          default(1)
@@ -20,6 +18,8 @@
 #  updated_at         :datetime
 #  created_at         :datetime
 #  currency           :string
+#  dates_unknown      :boolean          default(FALSE)
+#  planned_days_count :integer
 #
 
 module Travels

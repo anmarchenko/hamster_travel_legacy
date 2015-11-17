@@ -1,3 +1,34 @@
+# == Schema Information
+#
+# Table name: cities
+#
+#  id                         :integer          not null, primary key
+#  geonames_code              :string
+#  geonames_modification_date :date
+#  name                       :string
+#  name_ru                    :string
+#  name_en                    :string
+#  latitude                   :float
+#  longitude                  :float
+#  population                 :integer
+#  country_code               :string
+#  region_code                :string
+#  district_code              :string
+#  adm3_code                  :string
+#  adm4_code                  :string
+#  adm5_code                  :string
+#  timezone                   :string
+#  status                     :string
+#  country_text               :string
+#  country_text_ru            :string
+#  country_text_en            :string
+#  region_text                :string
+#  region_text_ru             :string
+#  region_text_en             :string
+#  denormalized               :boolean          default(FALSE)
+#  mongo_id                   :string
+#
+
 describe Geo::City do
   describe '#find_by_term' do
 

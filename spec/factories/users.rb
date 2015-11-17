@@ -1,3 +1,30 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                     :integer          not null, primary key
+#  email                  :string
+#  encrypted_password     :string
+#  reset_password_token   :string
+#  reset_password_sent_at :datetime
+#  remember_created_at    :datetime
+#  sign_in_count          :integer
+#  current_sign_in_at     :datetime
+#  last_sign_in_at        :datetime
+#  current_sign_in_ip     :string
+#  last_sign_in_ip        :string
+#  first_name             :string
+#  last_name              :string
+#  home_town_code         :string
+#  home_town_text         :string
+#  locale                 :string
+#  image_uid              :string
+#  mongo_id               :string
+#  created_at             :datetime
+#  updated_at             :datetime
+#  currency               :string
+#
+
 FactoryGirl.define do
 
   factory :user do

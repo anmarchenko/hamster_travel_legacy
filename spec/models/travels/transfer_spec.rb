@@ -1,3 +1,29 @@
+# == Schema Information
+#
+# Table name: transfers
+#
+#  id              :integer          not null, primary key
+#  order_index     :integer
+#  city_from_code  :string
+#  city_from_text  :string
+#  city_to_code    :string
+#  city_to_text    :string
+#  type            :string
+#  type_icon       :string
+#  code            :string
+#  company         :string
+#  link            :string
+#  station_from    :string
+#  station_to      :string
+#  start_time      :datetime
+#  end_time        :datetime
+#  comment         :text
+#  mongo_id        :string
+#  day_id          :integer
+#  amount_cents    :integer          default(0), not null
+#  amount_currency :string           default("RUB"), not null
+#
+
 describe Travels::Transfer do
   let(:trip) {FactoryGirl.create(:trip, :with_transfers)}
   let(:transfers) {trip.days.first.transfers.to_a}
