@@ -1,6 +1,6 @@
 load_exchange_rates:
   every:
-    - "30s"
+    - "1d"
     - :first_in: '2s'
   class: LoadExchangeRates
   queue: load_exchange_rates
