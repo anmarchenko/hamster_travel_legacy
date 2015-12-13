@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   def load_exchange_rates
     @bank = Money.default_bank
     if !@bank.rates_updated_at || @bank.rates_updated_at < Time.now - 1.days
-      rates = ExchangeRate.current.try(:test)
+      rates = ExchangeRate.current
       if rates
         @bank.update_rates_from_s(rates.eu_file)
       else

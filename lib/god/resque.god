@@ -1,7 +1,3 @@
-# ATTENTION
-# uncomment this if you need to change pid_file_directory
-God.pid_file_directory = '/home/vagrant/pids'
-
 # This is for regular resque tasks
 rails_env   = ENV['RAILS_ENV']  || "development"
 rails_root  = ENV['RAILS_ROOT'] || File.dirname(__FILE__) + '/../../'

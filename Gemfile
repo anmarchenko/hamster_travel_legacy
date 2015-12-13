@@ -87,6 +87,7 @@ gem 'countries'
 
 # background jobs
 gem 'resque'
+gem 'god'
 gem 'resque-scheduler'
 
 # production caching
