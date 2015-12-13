@@ -117,7 +117,7 @@ group :test do
   # BDD unit testing
   gem 'rspec', '~> 3.1'
   gem 'rspec-rails', '~> 3.1'
-  gem 'fuubar', '~> 2.0.0.rc1', require: false
+  gem 'nyan-cat-formatter'
 
   # BDD integration testing
   gem 'minitest'
