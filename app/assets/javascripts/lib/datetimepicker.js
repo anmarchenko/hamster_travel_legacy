@@ -203,7 +203,19 @@ angular.module('ui.bootstrap.datetimepicker', [])
             var startOfMonth = moment.utc(selectedDate).startOf('month');
             var endOfMonth = moment.utc(selectedDate).endOf('month');
 
-            var startDate = moment.utc(startOfMonth).subtract(Math.abs(startOfMonth.weekday() - configuration.weekStart), 'days');
+            var daysBeforeStartDate = startOfMonth.weekday() - configuration.weekStart;
+            if(daysBeforeStartDate < 0) {
+                daysBeforeStartDate += 7;
+            }
+            var startDate = moment.utc(startOfMonth).subtract(daysBeforeStartDate, 'days');
+
+            //console.log('WEEK START');
+            //console.log(configuration.weekStart);
+            //
+            //console.log('CALCULATED START DATE');
+            //console.log(startOfMonth);
+            //console.log(startOfMonth.weekday());
+            //console.log(startDate);
 
             var activeDate = scope.ngModel ? moment(scope.ngModel).format('YYYY-MMM-DD') : '';
 
@@ -240,6 +252,7 @@ angular.module('ui.bootstrap.datetimepicker', [])
               result.weeks.push(week);
             }
 
+            console.log(result);
             return result;
           },
 
