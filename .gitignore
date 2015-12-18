@@ -20,3 +20,4 @@ config/initializers/secret_token.rb
 test
 *.swp
 .DS_Store
+config/settings.local.yml

@@ -90,6 +90,9 @@ gem 'resque'
 gem 'god'
 gem 'resque-scheduler'
 
+# config
+gem 'rails_config'
+
 # production caching
 group :production do
   gem 'rack-cache', :require => 'rack/cache'
@@ -112,17 +115,11 @@ group :development do
   gem 'binding_of_caller'
 end
 
-# tests
 group :test do
-  # BDD unit testing
+  # unit testing
   gem 'rspec', '~> 3.1'
   gem 'rspec-rails', '~> 3.1'
   gem 'nyan-cat-formatter'
-
-  # BDD integration testing
-  gem 'minitest'
-  gem 'cucumber'
-  gem 'cucumber-rails', require: false
   gem 'database_cleaner'
 
   # matchers for tests
@@ -133,7 +130,7 @@ group :test do
   gem 'factory_girl'
   gem 'factory_girl_rails'
   gem 'faker'
-  # integration test (selenium)
+  # integration test
   gem 'capybara'
 
   # test email
@@ -143,5 +140,4 @@ group :test do
 
   # tests coverage
   gem 'coveralls', require: false
-
 end
