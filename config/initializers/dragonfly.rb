@@ -15,8 +15,8 @@ Dragonfly.app.configure do
   else
     datastore :s3,
       bucket_name: 'hamster-travel-uploads',
-      access_key_id: Rails.application.secrets.s3_key,
-      secret_access_key: Rails.application.secrets.s3_secret,
+      access_key_id: Settings.s3.key,
+      secret_access_key: Settings.s3.secret,
       url_scheme: 'https'
   end
 end

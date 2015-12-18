@@ -43,8 +43,6 @@ gem 'jquery-ui-rails', '~> 4.2.1'
 gem 'therubyracer', platforms: :ruby
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
-# chosen js library
-gem 'chosen-rails'
 # AngularJS magic framework
 gem 'angularjs-rails', '1.4.0'
 gem 'angular-ui-bootstrap-rails', '0.13.3'
