@@ -277,8 +277,6 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.2)
       loofah (~> 2.0)
-    rails_config (0.99.0)
-      config (>= 1.0.0.beta1)
     railties (4.2.5)
       actionpack (= 4.2.5)
       activesupport (= 4.2.5)
@@ -411,6 +409,7 @@ DEPENDENCIES
   capybara
   coffee-rails (~> 4.0.0)
   compass-rails
+  config
   countries
   coveralls
   dalli
@@ -446,7 +445,6 @@ DEPENDENCIES
   puma
   rack-cache
   rails (= 4.2.5)
-  rails_config
   redis
   resque
   resque-scheduler

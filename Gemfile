@@ -89,7 +89,7 @@ gem 'god'
 gem 'resque-scheduler'
 
 # config
-gem 'rails_config'
+gem 'config'
 
 # production caching
 group :production do
