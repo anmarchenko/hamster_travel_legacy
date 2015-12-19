@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151219153143) do
+ActiveRecord::Schema.define(version: 20151219155633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -148,13 +148,6 @@ ActiveRecord::Schema.define(version: 20151219153143) do
     t.string  "adm5_code"
     t.string  "timezone"
     t.string  "status"
-    t.string  "country_text"
-    t.string  "country_text_ru"
-    t.string  "country_text_en"
-    t.string  "region_text"
-    t.string  "region_text_ru"
-    t.string  "region_text_en"
-    t.boolean "denormalized",               default: false
     t.string  "mongo_id"
   end
 

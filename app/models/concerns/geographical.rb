@@ -15,9 +15,17 @@ module Concerns
     end
 
     def translated_name(locale = I18n.locale)
+      res = nil
       Globalize.with_locale(locale) do
-        self.name
+        res = self.name
       end
+      if res.blank?
+        # fallback
+        Globalize.with_locale(:en) do
+          res = self.name
+        end
+      end
+      res
     end
 
     def country

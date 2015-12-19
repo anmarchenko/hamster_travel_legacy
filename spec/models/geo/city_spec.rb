@@ -16,13 +16,6 @@
 #  adm5_code                  :string
 #  timezone                   :string
 #  status                     :string
-#  country_text               :string
-#  country_text_ru            :string
-#  country_text_en            :string
-#  region_text                :string
-#  region_text_ru             :string
-#  region_text_en             :string
-#  denormalized               :boolean          default(FALSE)
 #  mongo_id                   :string
 #
 
