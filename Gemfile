@@ -91,6 +91,9 @@ gem 'resque-scheduler'
 # config
 gem 'config'
 
+# translations
+gem 'globalize', '~> 5.0.0'
+
 # production caching
 group :production do
   gem 'rack-cache', :require => 'rack/cache'
@@ -127,6 +130,7 @@ group :test do
   # test data fixtures
   gem 'factory_girl'
   gem 'factory_girl_rails'
+  # better data for fixtures
   gem 'faker'
   # integration test
   gem 'capybara'
