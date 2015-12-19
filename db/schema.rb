@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151219122633) do
+ActiveRecord::Schema.define(version: 20151219153143) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,9 +45,6 @@ ActiveRecord::Schema.define(version: 20151219122633) do
   create_table "adm3s", force: :cascade do |t|
     t.string  "geonames_code"
     t.date    "geonames_modification_date"
-    t.string  "name"
-    t.string  "name_ru"
-    t.string  "name_en"
     t.float   "latitude"
     t.float   "longitude"
     t.integer "population"
@@ -78,9 +75,6 @@ ActiveRecord::Schema.define(version: 20151219122633) do
   create_table "adm4s", force: :cascade do |t|
     t.string  "geonames_code"
     t.date    "geonames_modification_date"
-    t.string  "name"
-    t.string  "name_ru"
-    t.string  "name_en"
     t.float   "latitude"
     t.float   "longitude"
     t.integer "population"
@@ -111,9 +105,6 @@ ActiveRecord::Schema.define(version: 20151219122633) do
   create_table "adm5s", force: :cascade do |t|
     t.string  "geonames_code"
     t.date    "geonames_modification_date"
-    t.string  "name"
-    t.string  "name_ru"
-    t.string  "name_en"
     t.float   "latitude"
     t.float   "longitude"
     t.integer "population"
@@ -146,9 +137,6 @@ ActiveRecord::Schema.define(version: 20151219122633) do
   create_table "cities", force: :cascade do |t|
     t.string  "geonames_code"
     t.date    "geonames_modification_date"
-    t.string  "name"
-    t.string  "name_ru"
-    t.string  "name_en"
     t.float   "latitude"
     t.float   "longitude"
     t.integer "population"
@@ -187,9 +175,6 @@ ActiveRecord::Schema.define(version: 20151219122633) do
   create_table "countries", force: :cascade do |t|
     t.string  "geonames_code"
     t.date    "geonames_modification_date"
-    t.string  "name"
-    t.string  "name_ru"
-    t.string  "name_en"
     t.float   "latitude"
     t.float   "longitude"
     t.integer "population"
@@ -249,9 +234,6 @@ ActiveRecord::Schema.define(version: 20151219122633) do
   create_table "districts", force: :cascade do |t|
     t.string  "geonames_code"
     t.date    "geonames_modification_date"
-    t.string  "name"
-    t.string  "name_ru"
-    t.string  "name_en"
     t.float   "latitude"
     t.float   "longitude"
     t.integer "population"
@@ -330,9 +312,6 @@ ActiveRecord::Schema.define(version: 20151219122633) do
   create_table "regions", force: :cascade do |t|
     t.string  "geonames_code"
     t.date    "geonames_modification_date"
-    t.string  "name"
-    t.string  "name_ru"
-    t.string  "name_en"
     t.float   "latitude"
     t.float   "longitude"
     t.integer "population"
