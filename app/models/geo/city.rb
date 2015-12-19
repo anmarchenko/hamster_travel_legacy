@@ -45,37 +45,14 @@ module Geo
     def translated_text(args = {with_region: true, with_country: true, locale: I18n.locale})
       text = translated_name(args[:locale])
       if args[:with_region]
-        reg = region_translated_name(args[:locale])
+        reg = self.region.try(:translated_name, args[:locale])
         text += ", #{reg}" unless reg.blank? or reg == text
       end
       if args[:with_country]
-        c = country_translated_name(args[:locale])
+        c = self.country.try(:translated_name, args[:locale])
         text += ", #{c}" unless c.blank?
       end
       text
-    end
-
-    def country_translated_name(locale = I18n.locale)
-      denormalize unless denormalized
-      self.send("country_text_#{locale}") || country_text
-    end
-
-    def region_translated_name(locale = I18n.locale)
-      denormalize unless denormalized
-      self.send("region_text_#{locale}") || region_text
-    end
-
-    def denormalize
-      self.country_text = self.country.try(:name)
-      self.country_text_ru = self.country.try(:name_ru)
-      self.country_text_en = self.country.try(:name_en)
-
-      self.region_text = self.region.try(:name)
-      self.region_text_ru = self.region.try(:name_ru)
-      self.region_text_en = self.region.try(:name_en)
-
-      self.denormalized = true
-      self.save
     end
 
     def is_capital?
