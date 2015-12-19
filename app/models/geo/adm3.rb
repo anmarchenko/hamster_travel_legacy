@@ -5,9 +5,6 @@
 #  id                         :integer          not null, primary key
 #  geonames_code              :string
 #  geonames_modification_date :date
-#  name                       :string
-#  name_ru                    :string
-#  name_en                    :string
 #  latitude                   :float
 #  longitude                  :float
 #  population                 :integer
