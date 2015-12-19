@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151117194641) do
+ActiveRecord::Schema.define(version: 20151219122633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,17 @@ ActiveRecord::Schema.define(version: 20151117194641) do
 
   add_index "activities", ["day_id"], name: "index_activities_on_day_id", using: :btree
   add_index "activities", ["order_index"], name: "index_activities_on_order_index", using: :btree
+
+  create_table "adm3_translations", force: :cascade do |t|
+    t.integer  "adm3_id",    null: false
+    t.string   "locale",     null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "name"
+  end
+
+  add_index "adm3_translations", ["adm3_id"], name: "index_adm3_translations_on_adm3_id", using: :btree
+  add_index "adm3_translations", ["locale"], name: "index_adm3_translations_on_locale", using: :btree
 
   create_table "adm3s", force: :cascade do |t|
     t.string  "geonames_code"
@@ -53,6 +64,17 @@ ActiveRecord::Schema.define(version: 20151117194641) do
   add_index "adm3s", ["geonames_code"], name: "index_adm3s_on_geonames_code", using: :btree
   add_index "adm3s", ["population"], name: "index_adm3s_on_population", using: :btree
 
+  create_table "adm4_translations", force: :cascade do |t|
+    t.integer  "adm4_id",    null: false
+    t.string   "locale",     null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "name"
+  end
+
+  add_index "adm4_translations", ["adm4_id"], name: "index_adm4_translations_on_adm4_id", using: :btree
+  add_index "adm4_translations", ["locale"], name: "index_adm4_translations_on_locale", using: :btree
+
   create_table "adm4s", force: :cascade do |t|
     t.string  "geonames_code"
     t.date    "geonames_modification_date"
@@ -74,6 +96,17 @@ ActiveRecord::Schema.define(version: 20151117194641) do
 
   add_index "adm4s", ["geonames_code"], name: "index_adm4s_on_geonames_code", using: :btree
   add_index "adm4s", ["population"], name: "index_adm4s_on_population", using: :btree
+
+  create_table "adm5_translations", force: :cascade do |t|
+    t.integer  "adm5_id",    null: false
+    t.string   "locale",     null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "name"
+  end
+
+  add_index "adm5_translations", ["adm5_id"], name: "index_adm5_translations_on_adm5_id", using: :btree
+  add_index "adm5_translations", ["locale"], name: "index_adm5_translations_on_locale", using: :btree
 
   create_table "adm5s", force: :cascade do |t|
     t.string  "geonames_code"
@@ -140,6 +173,17 @@ ActiveRecord::Schema.define(version: 20151117194641) do
   add_index "cities", ["geonames_code"], name: "index_cities_on_geonames_code", using: :btree
   add_index "cities", ["population"], name: "index_cities_on_population", using: :btree
 
+  create_table "city_translations", force: :cascade do |t|
+    t.integer  "city_id",    null: false
+    t.string   "locale",     null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "name"
+  end
+
+  add_index "city_translations", ["city_id"], name: "index_city_translations_on_city_id", using: :btree
+  add_index "city_translations", ["locale"], name: "index_city_translations_on_locale", using: :btree
+
   create_table "countries", force: :cascade do |t|
     t.string  "geonames_code"
     t.date    "geonames_modification_date"
@@ -170,6 +214,17 @@ ActiveRecord::Schema.define(version: 20151117194641) do
   add_index "countries", ["geonames_code"], name: "index_countries_on_geonames_code", using: :btree
   add_index "countries", ["population"], name: "index_countries_on_population", using: :btree
 
+  create_table "country_translations", force: :cascade do |t|
+    t.integer  "country_id", null: false
+    t.string   "locale",     null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "name"
+  end
+
+  add_index "country_translations", ["country_id"], name: "index_country_translations_on_country_id", using: :btree
+  add_index "country_translations", ["locale"], name: "index_country_translations_on_locale", using: :btree
+
   create_table "days", force: :cascade do |t|
     t.string  "mongo_id"
     t.date    "date_when"
@@ -179,6 +234,17 @@ ActiveRecord::Schema.define(version: 20151117194641) do
   end
 
   add_index "days", ["trip_id"], name: "index_days_on_trip_id", using: :btree
+
+  create_table "district_translations", force: :cascade do |t|
+    t.integer  "district_id", null: false
+    t.string   "locale",      null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "name"
+  end
+
+  add_index "district_translations", ["district_id"], name: "index_district_translations_on_district_id", using: :btree
+  add_index "district_translations", ["locale"], name: "index_district_translations_on_locale", using: :btree
 
   create_table "districts", force: :cascade do |t|
     t.string  "geonames_code"
@@ -249,6 +315,17 @@ ActiveRecord::Schema.define(version: 20151117194641) do
   end
 
   add_index "places", ["day_id"], name: "index_places_on_day_id", using: :btree
+
+  create_table "region_translations", force: :cascade do |t|
+    t.integer  "region_id",  null: false
+    t.string   "locale",     null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "name"
+  end
+
+  add_index "region_translations", ["locale"], name: "index_region_translations_on_locale", using: :btree
+  add_index "region_translations", ["region_id"], name: "index_region_translations_on_region_id", using: :btree
 
   create_table "regions", force: :cascade do |t|
     t.string  "geonames_code"

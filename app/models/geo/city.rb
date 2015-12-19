@@ -34,6 +34,8 @@ module Geo
 
     include Concerns::Geographical
 
+    translates :name, :fallbacks_for_empty_translations => true
+
     module Statuses
       CAPITAL = 'capital'
       REGION_CENTER = 'region_center'

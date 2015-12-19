@@ -34,6 +34,8 @@ module Geo
 
     include Concerns::Geographical
 
+    translates :name, :fallbacks_for_empty_translations => true
+
     def load_additional_info(str)
       values = Geo::Country.split_geonames_string(str)
       update_attributes(
