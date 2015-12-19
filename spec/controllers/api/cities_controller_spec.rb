@@ -4,7 +4,7 @@ describe Api::CitiesController do
     def check_cities body, term
       cities = Geo::City.find_by_term(term).page(1).to_a
       json = JSON.parse(body)
-      expect(json.first).to eq({"name" => cities.first.translated_name, "text" => cities.first.translated_text,
+      expect(json.first).to eq({"name" => cities.first.name, "text" => cities.first.translated_text,
                                 "code" => cities.first.geonames_code})
       expect(json.count).to eq cities.count
     end

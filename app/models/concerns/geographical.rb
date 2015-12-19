@@ -15,7 +15,9 @@ module Concerns
     end
 
     def translated_name(locale = I18n.locale)
-      self.send("name_#{locale}") || name
+      Globalize.with_locale(locale) do
+        self.name
+      end
     end
 
     def country
@@ -81,11 +83,6 @@ module Concerns
 
       def by_geonames_code(code)
         where(geonames_code: code).first
-      end
-
-      def find_by_term(term)
-        term = Regexp.escape(term)
-        where("name ILIKE ? OR name_ru ILIKE ? OR name_en ILIKE ?", "#{term}%", "#{term}%", "#{term}%").order(population: :desc)
       end
 
     end

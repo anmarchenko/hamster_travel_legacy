@@ -28,5 +28,10 @@ module Geo
 
     translates :name, :fallbacks_for_empty_translations => true
 
+    def self.find_by_term(term)
+      term = Regexp.escape(term)
+      self.all.with_translations.where("\"region_translations\".\"name\" ILIKE ?", "#{term}%").order(population: :desc)
+    end
+
   end
 end

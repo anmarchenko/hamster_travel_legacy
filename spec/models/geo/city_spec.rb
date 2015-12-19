@@ -42,15 +42,18 @@ describe Geo::City do
     it 'finds by english name' do
       term = 'city 1'
       cities = Geo::City.find_by_term(term).to_a
-      cities.each { |city| expect(city.name_en =~ /#{term}/i).not_to be_blank }
+      I18n.locale = :en
+      cities.each { |city| expect(city.name =~ /#{term}/i).not_to be_blank }
       check_order_and_term cities
     end
 
     it 'finds by russian name' do
       term = 'город 1'
       cities = Geo::City.find_by_term(term).to_a
-      cities.each { |city| expect(city.name_ru =~ /#{term}/i).not_to be_blank }
+      I18n.locale = :ru
+      cities.each { |city| expect(city.name =~ /#{term}/i).not_to be_blank }
       check_order_and_term cities
+      I18n.locale = :en
     end
 
   end

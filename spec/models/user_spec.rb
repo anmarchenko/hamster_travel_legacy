@@ -58,7 +58,6 @@ describe User do
         expect(town).not_to be_blank
         expect(town.geonames_code).to eq(user.home_town_code)
         expect(town.name).to eq(user.home_town_text)
-        expect(town.name_en).to eq(user.home_town_text)
       end
     end
   end

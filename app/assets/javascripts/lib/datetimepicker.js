@@ -252,7 +252,6 @@ angular.module('ui.bootstrap.datetimepicker', [])
               result.weeks.push(week);
             }
 
-            console.log(result);
             return result;
           },
 
