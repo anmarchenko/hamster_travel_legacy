@@ -17,6 +17,8 @@ module Travels
     belongs_to :day, class_name: 'Travels::Day'
     belongs_to :city, class_name: 'Geo::City', required: false
 
+    default_scope { includes(:city) }
+
     def is_empty?
       [:city_id, :city_text].each do |field|
         return false unless self.send(field).blank?

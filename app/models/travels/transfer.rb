@@ -38,6 +38,8 @@ module Travels
 
     monetize :amount_cents
 
+    default_scope { includes(:city_from, :city_to) }
+
     module Types
       FLIGHT = 'flight'
       TRAIN = 'train'

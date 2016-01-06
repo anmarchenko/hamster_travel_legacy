@@ -58,6 +58,8 @@ class User < ActiveRecord::Base
   validates_property :format, of: :image, in: [:jpeg, :jpg, :png, :bmp], case_sensitive: false,
                      message: "should be either .jpeg, .jpg, .png, .bmp", if: :image_changed?
 
+  default_scope { includes(:home_town) }
+
   def full_name
     '%s %s' % [first_name, last_name]
   end
