@@ -33,6 +33,8 @@ module Travels
     self.inheritance_column = 'inherit_type'
 
     belongs_to :day, class_name: 'Travels::Day'
+    belongs_to :city_from, class_name: 'Geo::City', required: false
+    belongs_to :city_to, class_name: 'Geo::City', required: false
 
     monetize :amount_cents
 

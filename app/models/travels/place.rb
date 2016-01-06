@@ -15,6 +15,7 @@ module Travels
     include Concerns::Copyable
 
     belongs_to :day, class_name: 'Travels::Day'
+    belongs_to :city, class_name: 'Geo::City', required: false
 
     def city
       ::Geo::City.by_geonames_code(city_code)

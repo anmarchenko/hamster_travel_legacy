@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151219155633) do
+ActiveRecord::Schema.define(version: 20160106103331) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -287,8 +287,10 @@ ActiveRecord::Schema.define(version: 20151219155633) do
     t.string  "city_text"
     t.string  "mongo_id"
     t.integer "day_id"
+    t.integer "city_id"
   end
 
+  add_index "places", ["city_id"], name: "index_places_on_city_id", using: :btree
   add_index "places", ["day_id"], name: "index_places_on_day_id", using: :btree
 
   create_table "region_translations", force: :cascade do |t|
@@ -341,8 +343,12 @@ ActiveRecord::Schema.define(version: 20151219155633) do
     t.integer  "day_id"
     t.integer  "amount_cents",    default: 0,     null: false
     t.string   "amount_currency", default: "RUB", null: false
+    t.integer  "city_to_id"
+    t.integer  "city_from_id"
   end
 
+  add_index "transfers", ["city_from_id"], name: "index_transfers_on_city_from_id", using: :btree
+  add_index "transfers", ["city_to_id"], name: "index_transfers_on_city_to_id", using: :btree
   add_index "transfers", ["day_id"], name: "index_transfers_on_day_id", using: :btree
   add_index "transfers", ["order_index"], name: "index_transfers_on_order_index", using: :btree
 
@@ -399,7 +405,10 @@ ActiveRecord::Schema.define(version: 20151219155633) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "currency"
+    t.integer  "home_town_id"
   end
+
+  add_index "users", ["home_town_id"], name: "index_users_on_home_town_id", using: :btree
 
   create_table "users_trips", id: false, force: :cascade do |t|
     t.integer "trip_id"
@@ -409,4 +418,5 @@ ActiveRecord::Schema.define(version: 20151219155633) do
   add_index "users_trips", ["trip_id"], name: "index_users_trips_on_trip_id", using: :btree
   add_index "users_trips", ["user_id"], name: "index_users_trips_on_user_id", using: :btree
 
+  add_foreign_key "places", "cities"
 end

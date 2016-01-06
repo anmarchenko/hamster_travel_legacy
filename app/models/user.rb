@@ -39,6 +39,8 @@ class User < ActiveRecord::Base
   has_many :outgoing_invites, class_name: 'Travels::TripInvite', inverse_of: :inviting_user, foreign_key: :inviting_user_id
   has_many :incoming_invites, class_name: 'Travels::TripInvite', inverse_of: :invited_user, foreign_key: :invited_user_id
 
+  belongs_to :home_town, class_name: 'Geo::City', required: false
+
   # photo
   dragonfly_accessor :image
   def image_url_or_default
@@ -66,8 +68,6 @@ class User < ActiveRecord::Base
 
   def self.find_by_term term
     return [] if term.blank?
-    query = ''
-    terms = []
 
     parts = term.split(/\s+/)
     return [] if parts.blank?
