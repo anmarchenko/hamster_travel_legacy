@@ -15,14 +15,13 @@
 #  last_sign_in_ip        :string
 #  first_name             :string
 #  last_name              :string
-#  home_town_code         :string
-#  home_town_text         :string
 #  locale                 :string
 #  image_uid              :string
 #  mongo_id               :string
 #  created_at             :datetime
 #  updated_at             :datetime
 #  currency               :string
+#  home_town_id           :integer
 #
 
 FactoryGirl.define do
@@ -35,7 +34,6 @@ FactoryGirl.define do
 
     trait :with_home_town do
       home_town_id { Geo::City.where(status: Geo::City::Statuses::CAPITAL).first.try(:id) }
-      home_town_text { Geo::City.where(status: Geo::City::Statuses::CAPITAL).first.try(:name) }
     end
 
     trait :with_trips do

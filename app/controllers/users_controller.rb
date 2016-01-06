@@ -35,7 +35,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:locale, :home_town_text, :home_town_id, :image, :currency)
+    params.require(:user).permit(:locale, :home_town_id, :image, :currency)
   end
 
 end

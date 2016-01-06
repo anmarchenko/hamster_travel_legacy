@@ -98,7 +98,9 @@ module Travels
           process_amount(item_hash)
           item = collection.where(id: item_id).first unless item_id.nil?
           # TODO remove - only for client side
-          item_hash.delete(:isCollapsed)
+          [:isCollapsed, :city_text, :city_from_text, :city_to_text].each do |forbidden_attribute|
+            item_hash.delete(forbidden_attribute)
+          end
 
           if item.blank?
             item = collection.create(item_hash)

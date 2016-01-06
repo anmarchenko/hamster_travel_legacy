@@ -2,11 +2,10 @@
 #
 # Table name: places
 #
-#  id        :integer          not null, primary key
-#  city_code :string
-#  city_text :string
-#  mongo_id  :string
-#  day_id    :integer
+#  id       :integer          not null, primary key
+#  mongo_id :string
+#  day_id   :integer
+#  city_id  :integer
 #
 
 describe Travels::Place do

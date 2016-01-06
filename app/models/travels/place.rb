@@ -2,11 +2,10 @@
 #
 # Table name: places
 #
-#  id        :integer          not null, primary key
-#  city_code :string
-#  city_text :string
-#  mongo_id  :string
-#  day_id    :integer
+#  id       :integer          not null, primary key
+#  mongo_id :string
+#  day_id   :integer
+#  city_id  :integer
 #
 
 module Travels
@@ -33,6 +32,7 @@ module Travels
     def as_json(*args)
       json = super(except: [:_id])
       json['id'] = id.to_s
+      json['city_text'] = self.city_text
       json
     end
 

@@ -15,14 +15,13 @@
 #  last_sign_in_ip        :string
 #  first_name             :string
 #  last_name              :string
-#  home_town_code         :string
-#  home_town_text         :string
 #  locale                 :string
 #  image_uid              :string
 #  mongo_id               :string
 #  created_at             :datetime
 #  updated_at             :datetime
 #  currency               :string
+#  home_town_id           :integer
 #
 
 describe User do

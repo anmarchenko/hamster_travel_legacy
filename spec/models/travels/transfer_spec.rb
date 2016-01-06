@@ -4,10 +4,6 @@
 #
 #  id              :integer          not null, primary key
 #  order_index     :integer
-#  city_from_code  :string
-#  city_from_text  :string
-#  city_to_code    :string
-#  city_to_text    :string
 #  type            :string
 #  type_icon       :string
 #  code            :string
@@ -22,6 +18,8 @@
 #  day_id          :integer
 #  amount_cents    :integer          default(0), not null
 #  amount_currency :string           default("RUB"), not null
+#  city_to_id      :integer
+#  city_from_id    :integer
 #
 
 describe Travels::Transfer do
