@@ -160,11 +160,11 @@ describe Travels::Updaters::TripUpdater do
           places: [
               {
                   id: day.places.first.id.to_s,
-                  city_code: 'new_city_code_1',
+                  city_id: Geo::City.all.first.id,
                   city_text: 'new_city_text_1'
               }.with_indifferent_access,
               {
-                  city_code: 'new_city_code_2',
+                  city_id: Geo::City.all.last.id,
                   city_text: 'new_city_text_2'
               }.with_indifferent_access
           ]
@@ -178,11 +178,11 @@ describe Travels::Updaters::TripUpdater do
         expect(updated_day.places.count).to eq 2
 
         expect(updated_day.places.first.id).to eq day.places.first.id
-        expect(updated_day.places.first.city_code).to eq 'new_city_code_1'
+        expect(updated_day.places.first.city_id).to eq Geo::City.all.first.id
         expect(updated_day.places.first.city_text).to eq 'new_city_text_1'
 
         expect(updated_day.places.last.id).not_to eq day.places.first.id
-        expect(updated_day.places.last.city_code).to eq 'new_city_code_2'
+        expect(updated_day.places.last.city_id).to eq Geo::City.all.last.id
         expect(updated_day.places.last.city_text).to eq 'new_city_text_2'
       end
 
@@ -190,18 +190,18 @@ describe Travels::Updaters::TripUpdater do
         original_day = first_day_of trip
         params['1'][:places].first[:id] = original_day.places.first.id.to_s
         params['1'][:places].last[:id] = original_day.places.last.id.to_s
-        params['1'][:places].last[:city_code] = 'new_city_code_3'
+        params['1'][:places].last[:city_id] = Geo::City.all.to_a[1].id
         update_trip_days trip, params
 
         updated_day = first_day_of trip
         expect(updated_day.places.count).to eq 2
 
         expect(updated_day.places.first.id).to eq original_day.places.first.id
-        expect(updated_day.places.first.city_code).to eq 'new_city_code_1'
+        expect(updated_day.places.first.city_id).to eq Geo::City.all.to_a[0].id
         expect(updated_day.places.first.city_text).to eq 'new_city_text_1'
 
         expect(updated_day.places.last.id).to eq original_day.places.last.id
-        expect(updated_day.places.last.city_code).to eq 'new_city_code_3'
+        expect(updated_day.places.last.city_id).to eq Geo::City.all.to_a[1].id
         expect(updated_day.places.last.city_text).to eq 'new_city_text_2'
       end
 
@@ -219,23 +219,23 @@ describe Travels::Updaters::TripUpdater do
           id: day.id.to_s,
           transfers: [
               {
-                  city_from_code: 'city_from_code_1',
-                  city_to_code: 'city_to_code_1',
+                  city_from_id: Geo::City.all.to_a[0].id,
+                  city_to_id: Geo::City.all.to_a[1].id,
                   isCollapsed: true
               }.with_indifferent_access,
               {
-                  city_from_code: 'city_from_code_2',
-                  city_to_code: 'city_to_code_2',
+                  city_from_id: Geo::City.all.to_a[1].id,
+                  city_to_id: Geo::City.all.to_a[1].id,
                   isCollapsed: false
               }.with_indifferent_access,
               {
-                  city_from_code: 'city_from_code_3',
-                  city_to_code: 'city_to_code_3',
+                  city_from_id: Geo::City.all.to_a[2].id,
+                  city_to_id: Geo::City.all.to_a[2].id,
                   isCollapsed: false
               }.with_indifferent_access,
               {
-                  city_from_code: 'city_from_code_4',
-                  city_to_code: 'city_to_code_4',
+                  city_from_id: Geo::City.all.to_a[3].id,
+                  city_to_id: Geo::City.all.to_a[3].id,
                   isCollapsed: false
               }.with_indifferent_access
           ]
@@ -249,8 +249,8 @@ describe Travels::Updaters::TripUpdater do
 
         expect(updated_day.transfers.count).to eq 4
 
-        expect(updated_day.transfers.first.city_from_code).to eq 'city_from_code_1'
-        expect(updated_day.transfers.first.city_to_code).to eq 'city_to_code_1'
+        expect(updated_day.transfers.first.city_from_id).to eq Geo::City.all.to_a[0].id
+        expect(updated_day.transfers.first.city_to_id).to eq Geo::City.all.to_a[1].id
       end
 
       it 'reorders transfers' do
@@ -267,8 +267,7 @@ describe Travels::Updaters::TripUpdater do
         updated_day = first_day_of trip
         expect(updated_day.transfers.count).to eq 4
         updated_day.transfers.each_with_index do |tr, index|
-          expect(tr.city_from_code).to eq "city_from_code_#{permutation[index] + 1}"
-          expect(tr.city_to_code).to eq "city_to_code_#{permutation[index] + 1}"
+          expect(tr.city_from_id).to eq Geo::City.all.to_a[permutation[index]].id
           expect(tr.order_index).to eq index
           expect(tr.id).to eq original_day.transfers[permutation[index]].id
         end

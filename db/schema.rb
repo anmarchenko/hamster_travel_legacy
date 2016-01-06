@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160106103331) do
+ActiveRecord::Schema.define(version: 20160106130204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -283,7 +283,6 @@ ActiveRecord::Schema.define(version: 20160106103331) do
   add_index "hotels", ["day_id"], name: "index_hotels_on_day_id", using: :btree
 
   create_table "places", force: :cascade do |t|
-    t.string  "city_code"
     t.string  "city_text"
     t.string  "mongo_id"
     t.integer "day_id"
@@ -325,9 +324,7 @@ ActiveRecord::Schema.define(version: 20160106103331) do
 
   create_table "transfers", force: :cascade do |t|
     t.integer  "order_index"
-    t.string   "city_from_code"
     t.string   "city_from_text"
-    t.string   "city_to_code"
     t.string   "city_to_text"
     t.string   "type"
     t.string   "type_icon"
@@ -397,7 +394,6 @@ ActiveRecord::Schema.define(version: 20160106103331) do
     t.string   "last_sign_in_ip"
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "home_town_code"
     t.string   "home_town_text"
     t.string   "locale"
     t.string   "image_uid"

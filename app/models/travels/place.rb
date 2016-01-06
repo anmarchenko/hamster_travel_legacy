@@ -18,7 +18,7 @@ module Travels
     belongs_to :city, class_name: 'Geo::City', required: false
 
     def is_empty?
-      [:city_code, :city_text].each do |field|
+      [:city_id, :city_text].each do |field|
         return false unless self.send(field).blank?
       end
       return true
