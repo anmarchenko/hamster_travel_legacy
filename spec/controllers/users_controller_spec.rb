@@ -1,6 +1,7 @@
 describe UsersController do
 
   let(:attrs) {FactoryGirl.build(:user, :with_home_town).attributes}
+  let(:attrs_invalid) {FactoryGirl.build(:user, :with_home_town_invalid).attributes}
 
   describe '#show' do
     context 'when user is logged in' do
@@ -88,7 +89,6 @@ describe UsersController do
 
   describe '#update' do
     let(:update_attrs) {{ user: attrs.merge(home_town_text: 'new home town text', email: 'new email!!!', currency: 'EUR')}}
-    let(:update_attrs_invalid) {{ user: attrs.merge(home_town_id: nil, email: 'new email!!!')}}
 
     context 'when user is logged in' do
       login_user
@@ -100,19 +100,10 @@ describe UsersController do
             put 'update', update_attrs.merge(id: subject.current_user.id)
             expect(response).to redirect_to edit_user_path(subject.current_user, locale: subject.current_user.locale)
             user = assigns(:user)
-            expect(user.home_town_text).to eq 'new home town text'
+            expect(user.home_town_text).to eq user.home_town.translated_name(I18n.locale)
             expect(user.home_town_id).to eq update_attrs[:user]['home_town_id']
             expect(user.email).to eq subject.current_user.email
             expect(user.currency).to eq('EUR')
-          end
-        end
-
-        context 'and when update params are not valid' do
-          it 'renders edit view with errors' do
-            put 'update', update_attrs_invalid.merge(id: subject.current_user.id)
-
-            expect(response).to render_template 'users/edit'
-            expect(assigns(:user).errors).not_to be_blank
           end
         end
 

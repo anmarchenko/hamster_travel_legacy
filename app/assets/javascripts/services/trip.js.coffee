@@ -29,10 +29,10 @@ angular.module('travel-services').config(["railsSerializerProvider",
     )
 
     getDays: ->
-      this.Days.query()
+      this.Days.query(locale: LOCALE)
 
     getDay: (day_id) ->
-      this.Days.get(day_id)
+      this.Days.get(day_id, locale: LOCALE)
 
     createDays: (days) ->
       new this.Days(days).create()
@@ -54,7 +54,7 @@ angular.module('travel-services').config(["railsSerializerProvider",
       new this.Caterings(caterings).create()
 
     getTrip: ->
-      this.Trips.get(this.trip_id)
+      this.Trips.get(this.trip_id, locale: LOCALE)
 
     updateTrip: (trip) ->
       new this.Trips(trip).update()

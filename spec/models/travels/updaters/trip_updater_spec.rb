@@ -179,11 +179,11 @@ describe Travels::Updaters::TripUpdater do
 
         expect(updated_day.places.first.id).to eq day.places.first.id
         expect(updated_day.places.first.city_id).to eq Geo::City.all.first.id
-        expect(updated_day.places.first.city_text).to eq 'new_city_text_1'
+        expect(updated_day.places.first.city_text).to eq Geo::City.all.first.translated_name
 
         expect(updated_day.places.last.id).not_to eq day.places.first.id
         expect(updated_day.places.last.city_id).to eq Geo::City.all.last.id
-        expect(updated_day.places.last.city_text).to eq 'new_city_text_2'
+        expect(updated_day.places.last.city_text).to eq Geo::City.all.last.translated_name
       end
 
       it 'updates second place' do
@@ -198,11 +198,11 @@ describe Travels::Updaters::TripUpdater do
 
         expect(updated_day.places.first.id).to eq original_day.places.first.id
         expect(updated_day.places.first.city_id).to eq Geo::City.all.to_a[0].id
-        expect(updated_day.places.first.city_text).to eq 'new_city_text_1'
+        expect(updated_day.places.first.city_text).to eq Geo::City.all.to_a[0].translated_name
 
         expect(updated_day.places.last.id).to eq original_day.places.last.id
         expect(updated_day.places.last.city_id).to eq Geo::City.all.to_a[1].id
-        expect(updated_day.places.last.city_text).to eq 'new_city_text_2'
+        expect(updated_day.places.last.city_text).to eq Geo::City.all.to_a[1].translated_name
       end
 
       it 'deletes places' do

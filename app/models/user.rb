@@ -51,7 +51,6 @@ class User < ActiveRecord::Base
   validates_presence_of :last_name
   validates_presence_of :first_name
   validates_uniqueness_of :email, :case_sensitive => false
-  validates :home_town_text, typeahead: true
 
   validates_size_of :image, maximum: 10.megabytes, message: "should be no more than 10 MB", if: :image_changed?
 
@@ -59,6 +58,10 @@ class User < ActiveRecord::Base
                      message: "should be either .jpeg, .jpg, .png, .bmp", if: :image_changed?
 
   default_scope { includes(:home_town) }
+
+  def home_town_text
+    self.home_town.try(:translated_name, I18n.locale)
+  end
 
   def full_name
     '%s %s' % [first_name, last_name]

@@ -19,6 +19,10 @@ module Travels
 
     default_scope { includes(:city) }
 
+    def city_text
+      self.city.try(:translated_name, I18n.locale)
+    end
+
     def is_empty?
       [:city_id, :city_text].each do |field|
         return false unless self.send(field).blank?

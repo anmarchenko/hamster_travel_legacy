@@ -34,8 +34,8 @@ FactoryGirl.define do
     password '12345678'
 
     trait :with_home_town do
-      home_town_id {Geo::City.where(status: Geo::City::Statuses::CAPITAL).first.try(:id)}
-      home_town_text {Geo::City.where(status: Geo::City::Statuses::CAPITAL).first.try(:name)}
+      home_town_id { Geo::City.where(status: Geo::City::Statuses::CAPITAL).first.try(:id) }
+      home_town_text { Geo::City.where(status: Geo::City::Statuses::CAPITAL).first.try(:name) }
     end
 
     trait :with_trips do

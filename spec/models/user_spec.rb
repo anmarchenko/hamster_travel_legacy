@@ -31,7 +31,6 @@ describe User do
   it { should validate_presence_of(:first_name) }
 
   it_should_behave_like 'a model with unique field', :user, :email, false
-  it_should_behave_like 'a model with typeahead field', :user, :home_town_text
 
   describe '#full_name' do
     let(:user) {FactoryGirl.create(:user)}

@@ -60,6 +60,14 @@ module Travels
       }
     end
 
+    def city_from_text
+      self.city_from.try(:translated_name, I18n.locale)
+    end
+
+    def city_to_text
+      self.city_to.try(:translated_name, I18n.locale)
+    end
+
     def type_icon
       Types::ICONS[type] unless type.blank?
     end
