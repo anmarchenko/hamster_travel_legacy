@@ -5,7 +5,7 @@ describe Api::CitiesController do
       cities = Geo::City.find_by_term(term).page(1).to_a
       json = JSON.parse(body)
       expect(json.first).to eq({"name" => cities.first.name, "text" => cities.first.translated_text,
-                                "code" => cities.first.geonames_code})
+                                "code" => cities.first.id})
       expect(json.count).to eq cities.count
     end
 

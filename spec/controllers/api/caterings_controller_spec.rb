@@ -21,7 +21,7 @@ describe Api::CateringsController do
           expect(response).to have_http_status 200
           json = JSON.parse(response.body)
 
-          expect(json.count).to eq(empty_trip.days.joins(:places).pluck('places.city_code').compact.uniq.count)
+          expect(json.count).to eq(empty_trip.days.joins(:places).pluck('places.city_id').compact.uniq.count)
         end
       end
 

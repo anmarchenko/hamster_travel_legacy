@@ -49,7 +49,7 @@ describe Travels::Transfer do
     let(:city) {transfer.city_from}
     it 'returns city from geo database' do
       expect(city).not_to be_blank
-      expect(city.geonames_code).to eq transfer.city_from_code
+      expect(city.id).to eq transfer.city_from_id
       expect(city.name).to eq transfer.city_from_text
     end
   end
@@ -58,7 +58,7 @@ describe Travels::Transfer do
     let(:city) {transfer.city_to}
     it 'returns city from geo database' do
       expect(city).not_to be_blank
-      expect(city.geonames_code).to eq transfer.city_to_code
+      expect(city.id).to eq transfer.city_to_id
       expect(city.name).to eq transfer.city_to_text
     end
   end

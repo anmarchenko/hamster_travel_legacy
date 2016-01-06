@@ -1,5 +1,5 @@
 shared_examples 'a model with typeahead field' do |model_factory, field|
-  let(:code_field) {field.to_s.gsub('_text', '_code')}
+  let(:code_field) {field.to_s.gsub('_text', '_id')}
 
   context "#{model_factory} with text and code" do
     let (:object) { FactoryGirl.build(model_factory, field => 'text_value', code_field => 'code_value')}

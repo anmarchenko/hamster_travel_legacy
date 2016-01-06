@@ -93,10 +93,10 @@ FactoryGirl.define do
 
   factory :transfer, class: 'Travels::Transfer' do
     trait :with_destinations do
-      city_from_code { Geo::City.all.first.geonames_code }
+      city_from_id { Geo::City.all.first.id }
       city_from_text { Geo::City.all.first.name }
 
-      city_to_code { Geo::City.all.last.geonames_code }
+      city_to_id { Geo::City.all.last.id }
       city_to_text { Geo::City.all.last.name }
 
       amount_cents { rand(10000) * 100 }
@@ -104,10 +104,10 @@ FactoryGirl.define do
     end
 
     trait :flight do
-      city_from_code { Geo::City.all.first.geonames_code }
+      city_from_id { Geo::City.all.first.id }
       city_from_text { Geo::City.all.first.name }
 
-      city_to_code { Geo::City.all.last.geonames_code }
+      city_to_id { Geo::City.all.last.id }
       city_to_text { Geo::City.all.last.name }
 
       amount_cents { rand(10000) * 100 }
@@ -141,7 +141,7 @@ FactoryGirl.define do
 
   factory :place, class: 'Travels::Place' do
     trait :with_data do
-      city_code { Geo::City.all.first.geonames_code }
+      city_id { Geo::City.all.first.id }
       city_text { Geo::City.all.first.name }
     end
   end

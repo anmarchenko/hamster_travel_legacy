@@ -88,7 +88,7 @@ describe UsersController do
 
   describe '#update' do
     let(:update_attrs) {{ user: attrs.merge(home_town_text: 'new home town text', email: 'new email!!!', currency: 'EUR')}}
-    let(:update_attrs_invalid) {{ user: attrs.merge(home_town_code: nil, email: 'new email!!!')}}
+    let(:update_attrs_invalid) {{ user: attrs.merge(home_town_id: nil, email: 'new email!!!')}}
 
     context 'when user is logged in' do
       login_user
@@ -101,7 +101,7 @@ describe UsersController do
             expect(response).to redirect_to edit_user_path(subject.current_user, locale: subject.current_user.locale)
             user = assigns(:user)
             expect(user.home_town_text).to eq 'new home town text'
-            expect(user.home_town_code).to eq update_attrs[:user]['home_town_code']
+            expect(user.home_town_id).to eq update_attrs[:user]['home_town_id']
             expect(user.email).to eq subject.current_user.email
             expect(user.currency).to eq('EUR')
           end

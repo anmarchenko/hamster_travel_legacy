@@ -62,14 +62,6 @@ module Travels
       Types::ICONS[type] unless type.blank?
     end
 
-    def city_from
-      ::Geo::City.by_geonames_code(city_from_code)
-    end
-
-    def city_to
-      ::Geo::City.by_geonames_code(city_to_code)
-    end
-
     def as_json(*args)
       json = super(except: [:_id])
       json['id'] = id.to_s

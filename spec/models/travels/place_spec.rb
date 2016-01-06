@@ -18,21 +18,13 @@ describe Travels::Place do
       let(:city) {place.city}
       it 'returns city from geo database' do
         expect(city).not_to be_blank
-        expect(city.geonames_code).to eq place.city_code
+        expect(city.id).to eq place.city_id
         expect(city.name).to eq place.city_text
       end
     end
     context 'when no city' do
       let(:city) {place_empty.city}
       it 'returns nil' do
-        expect(city).to be_nil
-      end
-    end
-    context 'when city code is corrupted' do
-      before {place.update_attributes(city_code: 'evil mistake')}
-
-      it 'returns nil' do
-        city = place.city
         expect(city).to be_nil
       end
     end
@@ -58,7 +50,7 @@ describe Travels::Place do
       expect(place_json['id']).not_to be_blank
       expect(place_json['id']).to be_a String
       expect(place_json['id']).to eq(place.id.to_s)
-      expect(place_json['city_code']).to eq(place.city_code)
+      expect(place_json['city_id']).to eq(place.city_id)
       expect(place_json['city_text']).to eq(place.city_text)
     end
   end

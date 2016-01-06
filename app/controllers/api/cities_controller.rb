@@ -10,7 +10,7 @@ module Api
         query = Geo::City.find_by_term(term).page(1)
         query.collect { |city| {name: city.translated_name(I18n.locale),
                                 text: city.translated_text(with_region: true, with_country: true, locale: I18n.locale),
-                                code: city.geonames_code} }
+                                code: city.id} }
       end
       respond_with res
     end

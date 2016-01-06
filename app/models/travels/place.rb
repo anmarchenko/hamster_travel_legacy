@@ -17,10 +17,6 @@ module Travels
     belongs_to :day, class_name: 'Travels::Day'
     belongs_to :city, class_name: 'Geo::City', required: false
 
-    def city
-      ::Geo::City.by_geonames_code(city_code)
-    end
-
     def is_empty?
       [:city_code, :city_text].each do |field|
         return false unless self.send(field).blank?

@@ -56,7 +56,7 @@ describe User do
       it 'has home town from geo database' do
         town = user.home_town
         expect(town).not_to be_blank
-        expect(town.geonames_code).to eq(user.home_town_code)
+        expect(town.id).to eq(user.home_town_id)
         expect(town.name).to eq(user.home_town_text)
       end
     end
