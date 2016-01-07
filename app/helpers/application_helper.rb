@@ -95,6 +95,7 @@ module ApplicationHelper
   end
 
   def flag country_code, size = 16
+    return '' if country_code.blank?
     url = "#{Settings.images.base_url}/#{Settings.images.flags_folder}/#{size}/#{country_code.downcase}.png"
     "<img src='#{url}' class='flag flag-#{size}' />".html_safe
   end

@@ -7,13 +7,14 @@
 - min_length ||= 3
 - callback ||= "''"
 - custom_attrs ||= {}
+- custom_bindings ||= ''
 
 -#   'typeahead-append-to-body' => true, ATTENTION: CAUSING MEMORY LEAK
 
 - options_text = { 'ng-model' => text_field_name,
   'ng-change' => "#{code_field_name}='';",
   typeahead: "item.name as item.text for item in #{function}($viewValue)",
-  'typeahead-on-select' => "onSelect($item, $model, $label, {'#{code_field_name}' : 'code'}, #{callback})",
+  'typeahead-on-select' => "onSelect($item, $model, $label, {'#{code_field_name}' : 'code'#{(', ' + custom_bindings) if custom_bindings}}, #{callback})",
   'typeahead-editable' => editable,
   'typeahead-loading' => 'typeahead_loading',
   'typeahead-min-length' => min_length,

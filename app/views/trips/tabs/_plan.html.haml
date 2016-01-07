@@ -43,7 +43,7 @@
       %tr
         %th{class: 'col-md-1'}
           = t('trips.show.day')
-        %th{class: 'col-md-1', 'ng-show' => 'show_place'}
+        %th{class: 'col-md-2', 'ng-show' => 'show_place'}
           = t('trips.show.place')
         %th{class: 'col-md-6', 'ng-show' => 'show_transfers'}
           = t('trips.show.transfers')
@@ -52,7 +52,7 @@
               = fa_icon 'arrow-down'
             %span{'ng-show' => 'transfersCollapsed'}
               = fa_icon 'arrow-right'
-        %th{class: 'col-md-4', 'ng-show' => 'show_hotel'}
+        %th{class: 'col-md-3', 'ng-show' => 'show_hotel'}
           = t('trips.show.hotel')
           - if @user_can_edit
             %a{href: 'javascript:void(0);', 'ng-click' => 'savePlan()',

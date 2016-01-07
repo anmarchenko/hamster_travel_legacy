@@ -37,6 +37,7 @@ module Travels
       json = super(except: [:_id])
       json['id'] = id.to_s
       json['city_text'] = self.city_text
+      json['flag_image'] = ApplicationController.helpers.flag(self.country_code)
       json
     end
 

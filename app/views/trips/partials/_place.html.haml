@@ -1,5 +1,6 @@
 %div{'ng-show' => '!edit && !place_edit', 'ng-repeat' => 'place in day.places track by place.id'}
-  %p
+  %p.flag-text{'ng-show' => 'place.city_text && place.flag_image'}
+    %span{'ng-bind-html' => 'place.flag_image'}
     {{place.city_text}}
   - if @user_can_edit
     %a.edit-hover-button{'ng-show' => 'mouse_over_place', 'ng-click' => "setEdit(true, 'place')"}
@@ -19,7 +20,7 @@
       = fa_icon 'times'
     .form-group
       = render 'widgets/typeahead/cities', model_name: 'place.city', classes: 'input-sm form-control',
-        placeholder: t('trips.show.city'), show_loading: false
+        placeholder: t('trips.show.city'), show_loading: false, custom_bindings: "'place.flag_image' : 'flag_image'"
 
   .form-group.edit-actions
     %a.pull-left{href: 'javascript:void(0);', 'ng-click' => 'save()', 'ng-show' => 'place_edit'}

@@ -43,9 +43,9 @@
       %tr
         %th{class: 'col-md-1'}
           = t('trips.show.day')
-        %th{class: 'col-md-1', 'ng-show' => 'show_place'}
+        %th{class: 'col-md-2', 'ng-show' => 'show_place'}
           = t('trips.show.place')
-        %th{class: 'col-md-7', 'ng-show' => 'show_activities'}
+        %th{class: 'col-md-6', 'ng-show' => 'show_activities'}
           = t('trips.show.activities')
           %a{class: 'pull-right', href: 'javascript:void(0);', 'ng-click' => 'toggleActivities()'}
             %span{'ng-show' => '!activitiesCollapsed'}

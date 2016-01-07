@@ -98,7 +98,7 @@ module Travels
           process_amount(item_hash)
           item = collection.where(id: item_id).first unless item_id.nil?
           # TODO remove - only for client side
-          [:isCollapsed, :city_text, :city_from_text, :city_to_text].each do |forbidden_attribute|
+          [:isCollapsed, :city_text, :city_from_text, :city_to_text, :flag_image].each do |forbidden_attribute|
             item_hash.delete(forbidden_attribute)
           end
 
