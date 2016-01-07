@@ -8,6 +8,12 @@
       %span
         {{match.label}}
 
+  %script{type: 'text/ng-template', id: 'citiesTemplate.html'}
+    %a.flag-text
+      %span{ 'ng-bind-html' => 'match.model.flag_image' }
+      %span
+        {{match.label}}
+
   %script{type: 'text/ng-template', id: 'invitePopover.html'}
     .form-group
       = render 'widgets/typeahead/users', model_name: 'selected_user', classes: 'form-control',
