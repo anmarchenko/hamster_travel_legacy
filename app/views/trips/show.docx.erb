@@ -1,10 +1,26 @@
 <%= docx_document do %>
-    <% body_props = {pageHeight: 11906, pageSize: 16834, pageOrient: :landscape,
+    <% body_props_landscape = {pageHeight: 11906, pageSize: 16834, pageOrient: :landscape,
                      marginLeft: 500, marginRight: 500, marginTop: 700, marginBottom: 700} %>
+
+    <% body_props_portrait = {pageHeight: 16834, pageSize: 11906, pageOrient: :portrait,
+                     marginLeft: 800, marginRight: 800, marginTop: 700, marginBottom: 700} %>
+
     <% fontSize = 9 %>
     <% biggerFontSize = 12 %>
 
-    <%= docx_body(body_props) do %>
+    <%= docx_body do %>
+
+        <%= docx_paragraph(align: :left, fontSize: biggerFontSize, spacingAfter: 400) do %>
+            <%= docx_text(fontSize: biggerFontSize, bold: true) do %><%= @trip.name %><% end %>
+        <% end %>
+
+        <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
+            <%= docx_text(fontSize: fontSize) do %><%= @trip.short_description %><% end %>
+        <% end %>
+
+        <%= docx_section(body_props_portrait) do %>
+
+        <% end %>
 
         <%= docx_table(gridSize: 15834, grid: @transfers_grid,
                        borders: [:left, :right, :top, :bottom, :top, :insideH, :insideV]) do %>
@@ -160,6 +176,7 @@
         <% end %>
 
         <%= docx_next_page do %>
+
         <% end %>
 
         <%= docx_table(gridSize: 15834, grid: @activities_grid,
@@ -269,6 +286,10 @@
         <% end %>
 
 
+        <%= docx_section(body_props_landscape) do %>
+
+        <% end %>
+
         <% @trip.caterings.each do |catering| %>
             <%= docx_paragraph(align: :left, fontSize: biggerFontSize, spacingBefore: 250) do %>
                 <%= docx_text(fontSize: biggerFontSize, bold: true) do %>
@@ -283,12 +304,16 @@
             <% end %>
 
             <% if catering.description.present? %>
-            <%= docx_paragraph(align: :left, fontSize: fontSize, spacingBefore: 100, spacingAfter: 100) do %>
-                <%= docx_text(fontSize: fontSize) do %>
-                    <%= catering.description %>
+                <%= docx_paragraph(align: :left, fontSize: fontSize, spacingBefore: 100, spacingAfter: 100) do %>
+                    <%= docx_text(fontSize: fontSize) do %>
+                        <%= catering.description %>
+                    <% end %>
                 <% end %>
             <% end %>
-            <% end %>
+
+        <% end %>
+
+        <%= docx_section(body_props_portrait) do %>
 
         <% end %>
 

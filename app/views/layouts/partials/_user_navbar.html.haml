@@ -7,7 +7,6 @@
         %span.incoming-invites
           = invites_count
       = current_user.first_name
-      %b{class: 'caret'}
     %ul{class: 'dropdown-menu'}
       - if invites_count > 0
         %li
