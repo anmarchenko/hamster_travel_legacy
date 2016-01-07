@@ -94,4 +94,9 @@ module ApplicationHelper
     "<i class='status-icon #{trip_status_class(status_code)} fa fa-#{Travels::Trip::StatusCodes::TYPE_TO_ICON[status_code]}'></i>".html_safe
   end
 
+  def flag country_code, size = 16
+    url = "#{Settings.images.base_url}/#{Settings.images.flags_folder}/#{size}/#{country_code.downcase}.png"
+    "<img src='#{url}' class='flag flag-#{size}' />".html_safe
+  end
+
 end

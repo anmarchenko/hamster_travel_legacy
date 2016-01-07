@@ -56,5 +56,11 @@ module Geo
       self.all.with_translations.where("\"country_translations\".\"name\" ILIKE ?", "#{term}%").order(population: :desc)
     end
 
+    def self.method_missing(m, *args, &block)
+      country_code = m.upcase
+      country = Geo::Country.where('iso_code = ? or iso3_code = ?', country_code, country_code).first
+      country ? country : super
+    end
+
   end
 end

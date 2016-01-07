@@ -1,13 +1,12 @@
 %li{class: 'dropdown'}
   %a{href: '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown'}
-    %img{src: "https://s3.eu-central-1.amazonaws.com/hamster-travel-images/flags/#{I18n.locale == :ru ? 'RUS' : 'GBR'}_flag.jpg", class: 'flag-small', style: 'margin-right: 10px;'}
-    %b{class: 'caret'}
+    = flag I18n.locale == :ru ? 'ru' : 'gb'
   %ul{class: 'dropdown-menu'}
-    %li
+    %li.flag-text
       = link_to locale: 'ru' do
-        %img{src: 'https://s3.eu-central-1.amazonaws.com/hamster-travel-images/flags/RUS_flag.jpg', class: 'flag-small', style: 'margin-right: 10px;'}
+        = flag 'ru'
         Русский
-    %li
+    %li.flag-text
       = link_to locale: 'en' do
-        %img{src: 'https://s3.eu-central-1.amazonaws.com/hamster-travel-images/flags/GBR_flag.jpg', class: 'flag-small', style: 'margin-right: 10px;'}
+        = flag 'gb'
         English
