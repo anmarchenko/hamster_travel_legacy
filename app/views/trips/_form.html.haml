@@ -43,14 +43,15 @@
             .form-group.date-picker-group
               = f.label :start_date, class: 'control-label'
               = f.text_field :start_date, datepicker_options('start_date', f.object).merge(class: 'form-control input-lg',
-                  placeholder: t('.start_date_placeholder'), 'ng-disabled' => 'hideDates()')
+                  placeholder: t('.start_date_placeholder'), 'ng-disabled' => 'hideDates()',
+                  'startdate' => '#travels_trip_end_date')
               = render 'common/error_message', object: f.object, field: :start_date
 
           .col-xs-12.col-sm-8.col-md-6
             .form-group.date-picker-group
               = f.label :end_date, class: 'control-label'
               = f.text_field :end_date, datepicker_options('end_date', f.object).merge(class: 'form-control input-lg',
-                  placeholder: t('.end_date_placeholder'), 'data-date-start-date' => '{{start_date}}',
+                  placeholder: t('.end_date_placeholder'),
                   'ng-disabled' => 'hideDates()')
               = render 'common/error_message', object: f.object, field: :end_date
 
