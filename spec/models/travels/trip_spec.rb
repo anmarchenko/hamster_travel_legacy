@@ -313,7 +313,7 @@ describe Travels::Trip do
   describe '#days_count' do
 
     context 'when new not saved trip' do
-      let(:trip) {Travels::Trip.new}
+      let(:trip) { Travels::Trip.new }
 
       it 'returns nil' do
         expect(trip.days_count).to be_nil
@@ -342,6 +342,34 @@ describe Travels::Trip do
       it 'returns planned_days_count' do
         expect(trip.days_count).to eq(trip.planned_days_count)
       end
+    end
+  end
+
+  describe '#cities' do
+    let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
+
+    it 'returns list of all cities in trip' do
+      expect(trip.cities.count).to eq(trip.days.count)
+    end
+  end
+
+  describe '#visited_cities' do
+    let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
+    let(:visited_cities) { trip.visited_cities }
+
+    it 'returns list of all unique cities in trip' do
+      expect(visited_cities.count).to eq(1)
+      expect(visited_cities.first).to eq(trip.places.where.not(city_id: nil).first.city)
+    end
+  end
+
+  describe '#visited_countries_codes' do
+    let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
+    let(:visited_countries_codes) { trip.visited_countries_codes }
+
+    it 'returns list of all unique countries in trip' do
+      expect(visited_countries_codes.count).to eq(1)
+      expect(visited_countries_codes.first).to eq(trip.visited_cities.first.country_code)
     end
   end
 

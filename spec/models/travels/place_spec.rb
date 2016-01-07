@@ -53,4 +53,21 @@ describe Travels::Place do
       expect(place_json['city_text']).to eq(place.city_text)
     end
   end
+
+  describe '#country_code' do
+    context 'when city is present' do
+      let(:city) {place.city}
+      it 'returns country code of city' do
+        expect(place.country_code).not_to be_nil
+        expect(place.country_code).to eq(city.country_code)
+      end
+    end
+
+    context 'when no city' do
+      let(:country_code) {place_empty.country_code}
+      it 'returns nil' do
+        expect(country_code).to be_nil
+      end
+    end
+  end
 end

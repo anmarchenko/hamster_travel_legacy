@@ -58,7 +58,18 @@ module Travels
     has_many :days, class_name: 'Travels::Day'
     has_many :caterings, class_name: 'Travels::Catering'
     has_many :pending_invites, class_name: 'Travels::TripInvite', inverse_of: :trip
+
     has_many :invited_users, class_name: 'User', through: :pending_invites
+    has_many :places, class_name: 'Travels::Place', through: :days
+    has_many :cities, class_name: 'Geo::City', through: :places
+
+    def visited_cities
+      cities.uniq
+    end
+
+    def visited_countries_codes
+      visited_cities.map { |city| city.country_code }.uniq
+    end
 
     dragonfly_accessor :image
 
@@ -89,6 +100,7 @@ module Travels
     default_scope -> { where(:archived => false) }
 
     before_save :set_model_state
+
     def set_model_state
       if self.dates_unknown
         self.start_date = nil
@@ -171,13 +183,13 @@ module Travels
 
     def create_caterings
       [
-        Travels::Catering.new(
-            id: Time.now.to_i,
-            persons_count: self.budget_for,
-            days_count: self.days_count,
-            amount_currency: self.currency,
-            name: "#{self.name} (#{I18n.t('trips.show.catering')})"
-        )
+          Travels::Catering.new(
+              id: Time.now.to_i,
+              persons_count: self.budget_for,
+              days_count: self.days_count,
+              amount_currency: self.currency,
+              name: "#{self.name} (#{I18n.t('trips.show.catering')})"
+          )
       ]
     end
 

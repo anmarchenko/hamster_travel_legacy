@@ -22,6 +22,10 @@ module Travels
       self.city.try(:translated_name, I18n.locale)
     end
 
+    def country_code
+      self.city.try(:country_code)
+    end
+
     def is_empty?
       [:city_id, :city_text].each do |field|
         return false unless self.send(field).blank?
