@@ -1,36 +1,45 @@
 - trips ||= []
 - without_pagination ||= false
 
-.trip-list
+%ul.trip-list
   - if trips.blank?
     = t('.no_trips')
   - else
     - trips.each do |trip|
-      .row.trip-row
-        .col-md-2.image-cell.hidden-xs.hidden-sm
-          = link_to trip_path(trip) do
-            %img{class: 'img-responsive',
-              src: trip.image_url_or_default}
-        .col-md-10.col-xs-12.content-cell
-          %p.header
-            = link_to trip.name, trip_path(trip)
-            %small
-              = trip_start_date(trip)
+      %li
+        .trip-row
+          .image-cell.hidden-xs.hidden-sm
+            = link_to trip_path(trip) do
+              %img{class: 'img-responsive',
+                src: trip.image_url_or_default}
 
-          %p.budget
-            = t('common.budget').mb_chars.capitalize
-            = trip.budget_sum(current_user.try(:currency))
-            = currency_symbol.html_safe
-            \/
-            = trip.days_count
-            = t('common.days', count: trip.days_count)
-            = t('trips.show.budget_for')
-            = trip.budget_for
-            = t('trips.show.persons')
+          .content-cell
+            .header
+              = link_to trip_path(trip) do
+                = trip.name
+              %small
+                = trip_start_date(trip)
 
-          %p.author
-            = link_to trip.author.full_name, user_path(trip.author)
+            %span.budget
+              = trip.budget_sum(current_user.try(:currency))
+              = currency_symbol.html_safe
+              \/
+              = trip.days_count
+              = t('common.days', count: trip.days_count)
+              = t('trips.show.budget_for')
+              = trip.budget_for
+              = t('trips.show.persons')
 
-          = trip_status_icon(trip.status_code)
+            %span.author
+              = link_to user_path(trip.author) do
+                %img.img-circle.xs-profile-pic{ 'ng-src' => trip.author.image_url_or_default,
+                  'tooltip-placement' => "bottom", 'tooltip' => trip.author.full_name}
+
+          .tags-cell
+
+            .flags
+              - trip.visited_countries_codes.each do |country_code|
+                = flag country_code, 24, true
+
     - unless without_pagination
       = paginate trips

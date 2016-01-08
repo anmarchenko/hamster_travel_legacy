@@ -90,6 +90,7 @@ angular.module('travel-components').controller 'PlanController'
           prev_place = prev_day.places[prev_day.places.length - 1]
         place.city_id = prev_place.city_id
         place.city_text = prev_place.city_text
+        place.flag_image = prev_place.flag_image
 
       $scope.fillAsPreviousHotel = (hotel, day_index) ->
         prev_day = $scope.days[day_index - 1]

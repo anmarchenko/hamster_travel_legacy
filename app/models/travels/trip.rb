@@ -68,7 +68,7 @@ module Travels
     end
 
     def visited_countries_codes
-      visited_cities.map { |city| city.country_code }.uniq
+      visited_cities.map { |city| city.country_code }.uniq || []
     end
 
     dragonfly_accessor :image
