@@ -71,7 +71,7 @@ describe Api::CitiesController do
             json = JSON.parse(response.body)
             expect(json.count).to eq(2)
             check_city(json.first, subject.current_user.home_town)
-            check_city(json.last, trip.places.last.city)
+            check_city(json.last, trip.visited_cities.first)
           end
 
         end
