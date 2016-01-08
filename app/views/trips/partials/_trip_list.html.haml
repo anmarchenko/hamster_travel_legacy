@@ -45,5 +45,5 @@
               %div{class: "tag status-tag #{trip_status_class(trip.status_code)}"}
                 = trip.status_text
 
-    - unless without_pagination
-      = paginate trips
+- unless without_pagination
+  = paginate trips
