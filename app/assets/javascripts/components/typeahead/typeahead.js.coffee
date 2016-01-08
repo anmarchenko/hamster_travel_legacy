@@ -1,12 +1,12 @@
 angular.module('travel-components').controller 'TypeaheadController'
 , [
-    '$scope', 'City', 'User'
-, ($scope, City, User) ->
+    '$scope', 'City', 'User', '$timeout'
+, ($scope, City, User, $timeout) ->
 
     $scope.locale = LOCALE
 
     $scope.getCities = (term) ->
-      City.query(term: term, locale: $scope.locale)
+      City.query(term: term, locale: $scope.locale, trip_id: $scope.trip_id)
 
     $scope.getUsers = (term) ->
       User.query(term: term)
@@ -23,4 +23,8 @@ angular.module('travel-components').controller 'TypeaheadController'
           $scope[model_key] = $item[item_property]
 
       callback($item, $model, $label, $scope) if callback
-]
+
+    $scope.onFocus = (e) ->
+      $timeout ->
+        $(e.target).trigger('input')
+  ]

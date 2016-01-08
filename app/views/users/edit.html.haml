@@ -1,4 +1,10 @@
 - content_for :title, t('.title')
+- content_for :page_javascript do
+  %script{type: 'text/ng-template', id: 'citiesTemplate.html'}
+    %a.flag-text
+      %span{ 'ng-bind-html' => 'match.model.flag_image' }
+      %span
+        {{match.label}}
 
 = render layout: 'common/user_profile_layout', locals: {page: :edit} do
   = form_for @user, html: {class: 'form-horizontal'} do |f|

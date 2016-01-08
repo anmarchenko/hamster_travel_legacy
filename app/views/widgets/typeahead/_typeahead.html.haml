@@ -8,6 +8,7 @@
 - callback ||= "''"
 - custom_attrs ||= {}
 - custom_bindings ||= ''
+- allow_empty_typeahead ||= false
 
 -#   'typeahead-append-to-body' => true, ATTENTION: CAUSING MEMORY LEAK
 
@@ -20,8 +21,13 @@
   'typeahead-min-length' => min_length,
   'typeahead-wait-ms' => 500,
   'typeahead-template-url' => template,
+  'ng-trim' => false,
+  'ng-focus' => 'onFocus($event)',
   placeholder: placeholder,
-  class: "#{classes}"}.merge(custom_attrs)
+  class: "#{classes}" }.merge(custom_attrs)
+
+- if allow_empty_typeahead
+  - options_text = options_text.merge('empty-typeahead' => true)
 
 - options_code = { value: "{{#{code_field_name}}}" }
 

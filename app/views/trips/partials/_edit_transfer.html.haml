@@ -14,10 +14,10 @@
 %div{class: 'form-group'}
   %div{class: 'col-md-6'}
     = render 'widgets/typeahead/cities', model_name: 'transfer.city_from', classes: 'input-sm form-control',
-        placeholder: t('trips.show.from')
+        placeholder: t('trips.show.from'), allow_empty_typeahead: true
   %div{class: 'col-md-6'}
     = render 'widgets/typeahead/cities', model_name: 'transfer.city_to', classes: 'input-sm form-control',
-        placeholder: t('trips.show.to')
+        placeholder: t('trips.show.to'), allow_empty_typeahead: true
 
 %div{'ng-show' => '!transfer.isCollapsed'}
   %div{class: 'form-group'}
