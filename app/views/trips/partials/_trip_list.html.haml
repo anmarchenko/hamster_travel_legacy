@@ -38,8 +38,12 @@
           .tags-cell
 
             .flags
-              - trip.visited_countries_codes.each do |country_code|
+              - trip.visited_countries_codes[0..2].each do |country_code|
                 = flag country_code, 24, true
+
+            .tags
+              %div{class: "tag status-tag #{trip_status_class(trip.status_code)}"}
+                = trip.status_text
 
     - unless without_pagination
       = paginate trips
