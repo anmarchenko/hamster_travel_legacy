@@ -20,9 +20,9 @@
         placeholder: t('trips.show.type_name'), show_loading: false, custom_attrs: {'focus-on' => 'popover_opened'}
 
 
-%div{'ng-controller' => 'PlanController',}
+%div{'ng-controller' => 'PlanController'}
   .row
-    .col-md-12
+    .col-xs-9
       %h4
         = @trip.name
         %small
@@ -30,7 +30,7 @@
         = trip_status_icon(@trip.status_code)
 
   .row.trip-header
-    .col-md-3.col-sm-3
+    .col-xs-4.col-md-2
       .fileupload-form{'ng-mouseleave' => 'mouse_over_image = false',
            'ng-mouseenter' => 'mouse_over_image = true'}
         - if @user_can_edit
@@ -56,10 +56,10 @@
         %i.fa.fa-spinner.fa-spin
         = t('common.photo_processing')
 
-    .col-md-9.col-sm-9
+    .col-xs-8.col-md-10
       .row
         .col-md-7.col-xs-12
-          = render'trips/partials/participants', participants: @trip.users
+          = render'trips/partials/participants'
 
         .col-md-5.col-xs-12
           .btn-toolbar.pull-right
@@ -85,6 +85,7 @@
               'ng-disabled' => 'edit' do
               = fa_icon 'file-word-o'
 
+    .col-xs-12
       %p.travel-text{} #{@trip.short_description}
 
 
