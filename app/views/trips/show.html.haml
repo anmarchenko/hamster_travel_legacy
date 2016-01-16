@@ -28,7 +28,7 @@
   .row.trip-dates
     .col-xs-12
       = @trip.start_date
-      = "-"
+      = "-" if @trip.start_date.present?
       = @trip.days_count
       = t('common.days', count: @trip.days_count)
 
