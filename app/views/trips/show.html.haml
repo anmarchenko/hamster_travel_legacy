@@ -47,22 +47,21 @@
 
   .row.trip-header
     .col-xs-4.col-md-2
-      .fileupload-form{'ng-mouseleave' => 'mouse_over_image = false',
-           'ng-mouseenter' => 'mouse_over_image = true'}
-        - if @user_can_edit
-          = form_for @trip, url: upload_photo_trip_path(@trip), method: :post, multipart: true, remote: true do |f|
-            = f.hidden_field :remove_image, value: 'true'
-            = link_to '', class: 'delete-trip-image-button delete-image', 'ng-show' => 'mouse_over_image',
-                'data-confirm' => t('.delete_photo_cofirm') do
-              = fa_icon 'times'
-
-          = form_for @trip, url: upload_photo_trip_path(@trip), method: :post, multipart: true do |f|
-            = f.file_field :image, class: 'fileupload'
-            = link_to 'javascript:void(0)', class: 'upload-trip-image-button upload-link',
-              'ng-show' => 'mouse_over_image' do
-              = fa_icon 'upload'
-
+      .fileupload-form
         %img{id: 'trip_image', src: @trip.image_url_or_default, width: '100%', class: 'trip-image'}
+
+        - if @user_can_edit
+          .fileupload-buttons
+            = form_for @trip, url: upload_photo_trip_path(@trip), method: :post, multipart: true, remote: true do |f|
+              = f.hidden_field :remove_image, value: 'true'
+              = link_to '', class: 'btn btn-sm ghost-button delete-image',
+                  'data-confirm' => t('.delete_photo_cofirm') do
+                = fa_icon 'times'
+
+            = form_for @trip, url: upload_photo_trip_path(@trip), method: :post, multipart: true do |f|
+              = f.file_field :image, class: 'fileupload'
+              = link_to 'javascript:void(0)', class: 'btn btn-sm ghost-button upload-link' do
+                = fa_icon 'upload'
 
       .progress-wrapper
         .progress
