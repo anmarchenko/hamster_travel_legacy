@@ -101,31 +101,6 @@
           -webkit-align-self: flex-end;
           -ms-flex-item-align: end;
           align-self: flex-end;
-
-          text-transform: uppercase;
-          font-size: 12px;
-          font-weight: 200;
-          letter-spacing: .6px;
-          line-height: 15px;
-          color: $main-grey;
-
-          .tag {
-            border: dashed 1px $border-grey;
-            border-radius: 3px;
-            padding: 4px;
-          }
-
-          .status-tag {
-            &.bg-finished {
-              border-color: $finished;
-            }
-            &.bg-draft {
-              border-color: $draft;
-            }
-            &.bg-planned {
-              border-color: $planned;
-            }
-          }
         }
 
         .flags {

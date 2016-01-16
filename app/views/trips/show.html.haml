@@ -74,8 +74,17 @@
 
     .col-xs-8.col-md-10
       .row
-        .col-md-7.col-xs-12
+        .col-xs-12
           = render'trips/partials/participants'
+
+      .row.tags
+        .col-xs-12
+          %span{class: "tag status-tag #{trip_status_class(@trip.status_code)}"}
+            = @trip.status_text
+      .row
+        .col-xs-12
+
+
 
   .row.trip-description
     .col-xs-12
