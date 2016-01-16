@@ -40,6 +40,9 @@ angular.module('travel-components').controller 'PlanController'
       # budget
       $scope.budget = 0
 
+      $scope.tripService.getCountries($scope.trip_id).then (data) ->
+        $scope.countries = data.countries
+
       promise = $interval(
         () ->
           $.ajax({
@@ -108,6 +111,9 @@ angular.module('travel-components').controller 'PlanController'
       $scope.loadBudget = ->
         $scope.tripService.getBudget($scope.trip_id).then (budget) ->
           $scope.budget = budget
+
+        $scope.tripService.getCountries($scope.trip_id).then (data) ->
+          $scope.countries = data.countries
 
       $scope.load = ->
         $scope.tripService.getTrip().then (trip) ->

@@ -28,6 +28,11 @@ angular.module('travel-services').config(["railsSerializerProvider",
       name: 'budget'
     )
 
+    Countries: railsResourceFactory(
+      url: '/api/countries',
+      name: 'country'
+    )
+
     getDays: ->
       this.Days.query(locale: LOCALE)
 
@@ -61,6 +66,9 @@ angular.module('travel-services').config(["railsSerializerProvider",
 
     getBudget: (trip_id) ->
       this.Budgets.get(trip_id)
+
+    getCountries: (trip_id) ->
+      this.Countries.get(trip_id)
     }
 
   }

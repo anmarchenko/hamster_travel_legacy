@@ -26,6 +26,7 @@ Travel::Application.routes.draw do
       end
       resources :user_shows, only: [:show]
       resources :budgets, only: [:show]
+      resources :countries, only: [:show]
     end
   end
 
