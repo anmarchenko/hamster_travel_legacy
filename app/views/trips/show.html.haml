@@ -29,7 +29,8 @@
     .col-xs-12
       = @trip.start_date
       = "-"
-      = @trip.end_date
+      = @trip.days_count
+      = t('common.days', count: @trip.days_count)
 
   - if user_signed_in?
     - if @user_can_edit
