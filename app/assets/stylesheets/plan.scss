@@ -203,9 +203,28 @@
 
   }
 
+  .trip-dates {
+    font-size: 18px;
+    color: $main-grey;
+  }
+
+  .trip-links {
+    margin-top: 5px;
+
+    .trip-link {
+      color: $main-grey;
+      margin-right: 40px;
+      text-decoration: underline;
+    }
+  }
+
+  .trip-description {
+    margin-bottom: 40px;
+    margin-top: 20px;
+  }
+
   .trip-header {
     margin-top: 23px;
-    margin-bottom: 60px;
 
     .trip-image {
       border: 1px solid $main-grey;

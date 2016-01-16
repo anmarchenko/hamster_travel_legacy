@@ -22,12 +22,27 @@
 
 %div{'ng-controller' => 'PlanController'}
   .row
-    .col-xs-9
+    .col-xs-12
       %h4
         = @trip.name
-        %small
-          = trip_start_date(@trip)
-        = trip_status_icon(@trip.status_code)
+  .row.trip-dates
+    .col-xs-12
+      = @trip.start_date
+      = "-"
+      = @trip.end_date
+
+  - if user_signed_in?
+    - if @user_can_edit
+      .row.trip-links
+        .col-xs-12
+          = link_to edit_trip_path(@trip), class: 'trip-link' do
+            = t('trips.show.edit_trip')
+
+          - if @trip.author_user_id == current_user.id
+            = link_to trip_path(@trip), class: 'trip-link', method: :delete,
+                    'data-confirm'=> t('common.delete_confirm')  do
+              = t('trips.show.delete_trip')
+
 
   .row.trip-header
     .col-xs-4.col-md-2
@@ -64,16 +79,6 @@
         .col-md-5.col-xs-12
           .btn-toolbar.pull-right
             - if user_signed_in?
-              - if @user_can_edit
-                = link_to edit_trip_path(@trip), class: 'btn ghost-button', 'ng-disabled' => 'edit',
-                'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.edit_trip') do
-                  = fa_icon 'pencil'
-
-                - if @trip.author_user_id == current_user.id
-                  = link_to trip_path(@trip), class: 'btn ghost-button', method: :delete, 'ng-disabled' => 'edit',
-                    'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.delete_trip'),
-                    'data-confirm'=> t('common.delete_confirm')  do
-                    = fa_icon 'times'
 
               = link_to "#{new_trip_path}?copy_from=#{@trip.id}", target: '_blank', class: 'btn ghost-button',
               'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.clone'),
@@ -85,6 +90,7 @@
               'ng-disabled' => 'edit' do
               = fa_icon 'file-word-o'
 
+  .row.trip-description
     .col-xs-12
       %p.travel-text{} #{@trip.short_description}
 
