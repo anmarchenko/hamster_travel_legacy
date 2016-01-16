@@ -222,7 +222,7 @@
     margin-bottom: 40px;
     margin-top: 20px;
   }
-  
+
   .tags {
     margin-top: 10px;
   }
@@ -236,6 +236,11 @@
 
     .participants {
       margin-bottom: 10px;
+      @media (max-width: 992px) {
+        .small-profile-pic {
+          max-width: 30px;
+        }
+      }
 
       a {
         text-decoration: none;
