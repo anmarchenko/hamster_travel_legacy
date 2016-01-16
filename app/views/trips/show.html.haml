@@ -77,20 +77,6 @@
         .col-md-7.col-xs-12
           = render'trips/partials/participants'
 
-        .col-md-5.col-xs-12
-          .btn-toolbar.pull-right
-            - if user_signed_in?
-
-              = link_to "#{new_trip_path}?copy_from=#{@trip.id}", target: '_blank', class: 'btn ghost-button',
-              'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.clone'),
-              'ng-disabled' => 'edit' do
-                = fa_icon 'copy'
-
-            = link_to "#{trip_path(@trip)}.docx", target: '_blank', class: 'btn ghost-button',
-              'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.download_word'),
-              'ng-disabled' => 'edit' do
-              = fa_icon 'file-word-o'
-
   .row.trip-description
     .col-xs-12
       %p.travel-text{} #{@trip.short_description}
