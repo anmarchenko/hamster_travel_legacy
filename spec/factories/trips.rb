@@ -99,6 +99,9 @@ FactoryGirl.define do
 
       amount_cents { rand(10000) * 100 }
       amount_currency { 'RUB' }
+
+      start_time (Date.today.beginning_of_day)
+      end_time (Date.today.end_of_day)
     end
 
     trait :flight do

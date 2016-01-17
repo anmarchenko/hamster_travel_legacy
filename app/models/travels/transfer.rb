@@ -47,7 +47,7 @@ module Travels
       BOAT = 'boat'
 
       ALL = [FLIGHT, TRAIN, TAXI, BUS, BOAT, PERSONAL_CAR]
-      OPTIONS = ALL.map{|type| ["common.#{type}", type] }
+      OPTIONS = ALL.map { |type| ["common.#{type}", type] }
       ICONS = {
           FLIGHT => 'fa fa-plane',
           TRAIN => 'fa fa-train',
@@ -68,6 +68,18 @@ module Travels
 
     def type_icon
       Types::ICONS[type] unless type.blank?
+    end
+
+    def set_date! new_date
+      return if self.start_time.blank? && self.end_time.blank?
+      days_period = (end_time.to_date - start_time.to_date).to_i
+      new_end_date = new_date + days_period.days
+
+      self.start_time = self.start_time.change(day: new_date.day, year: new_date.year, month: new_date.month)
+      self.end_time = self.end_time.change(day: new_end_date.day,
+                                           year: new_end_date.year,
+                                           month: new_end_date.month)
+      self.save
     end
 
     def as_json(*args)

@@ -92,13 +92,15 @@ describe Travels::Trip do
         expect(trip.days.last.date_when).to eq(trip.end_date)
       end
 
-      it 'recounts dates on update preserving other data' do
+      it 'recounts dates on update preserving other data and updates transfer dates' do
         trip.update_attributes(start_date: 14.days.ago, end_date: 7.days.ago)
         updated_trip = trip.reload
 
         expect(updated_trip.days.count).to eq(8)
         expect(updated_trip.days.first.date_when).to eq(14.days.ago.to_date)
+        expect(updated_trip.days.first.transfers.first.start_time.to_date).to eq(updated_trip.days.first.date_when)
         expect(updated_trip.days.last.date_when).to eq(7.days.ago.to_date)
+        expect(updated_trip.days.last.transfers.first.start_time.to_date).to eq(updated_trip.days.last.date_when)
 
         updated_trip.days.each_with_index do |day, index|
           expect(day.comment).to eq("Day #{index}")

@@ -242,6 +242,8 @@ module Travels
           day.date_when = nil
         else
           day.date_when = (self.start_date + index.days)
+          # set dates of all transfers
+          day.transfers.each { |transfer| transfer.set_date!(day.date_when) }
         end
         day.index = index
         day.save
