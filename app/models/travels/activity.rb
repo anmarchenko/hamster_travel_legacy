@@ -39,7 +39,6 @@ module Travels
       attrs = super(args)
       attrs['id'] = id.to_s
       attrs = attrs.reject{|k, _| !PERMITTED.include?(k)}
-      attrs['amount_cents'] = amount_cents / 100
       attrs['amount_currency_text'] = amount.currency.symbol
       attrs
     end

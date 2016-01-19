@@ -28,7 +28,6 @@ module Travels
       else
         json['links'] = links.as_json(args)
       end
-      json['amount_cents'] = amount_cents / 100
       json['amount_currency_text'] = amount.currency.symbol
       json
     end

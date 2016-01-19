@@ -88,7 +88,6 @@ module Travels
       json['start_time'] = start_time.try(:strftime, '%Y-%m-%dT%H:%M+00:00')
       json['end_time'] = end_time.try(:strftime, '%Y-%m-%dT%H:%M+00:00')
       json['type_icon'] = type_icon
-      json['amount_cents'] = amount_cents / 100
       json['amount_currency_text'] = amount.currency.symbol
       json['city_from_text'] = self.city_from_text
       json['city_to_text'] = self.city_to_text

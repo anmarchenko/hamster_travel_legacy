@@ -90,15 +90,15 @@ module Travels
       def process_nested(collection, params)
         to_delete = []
         collection.each do |item|
-          to_delete << item.id if params.select { |v| v[:id] == item.id.to_s }.count == 0
+          to_delete << item.id if params.select { |v| v[:id].to_s == item.id.to_s }.count == 0
         end
         collection.where(:id => to_delete).destroy_all
         params.each do |item_hash|
           item_id = (item_hash.delete(:id).to_i % 2147483647) rescue nil
-          process_amount(item_hash)
           item = collection.where(id: item_id).first unless item_id.nil?
           # TODO remove - only for client side
-          [:isCollapsed, :city_text, :city_from_text, :city_to_text, :flag_image].each do |forbidden_attribute|
+          process_amount(item_hash)
+          [:isCollapsed, :city_text, :city_from_text, :city_to_text, :flag_image, :amount_currency_text].each do |forbidden_attribute|
             item_hash.delete(forbidden_attribute)
           end
 
@@ -116,9 +116,8 @@ module Travels
         end
       end
 
-      def process_amount(hash)
-        hash['amount_cents'] = hash['amount_cents'].to_i * 100 unless hash['amount_cents'].nil?
-        hash.delete('amount_currency_text')
+      def process_amount item_hash
+        (item_hash['amount_cents'] = item_hash['amount_cents'].to_i rescue nil) unless item_hash['amount_cents'].nil?
       end
 
     end

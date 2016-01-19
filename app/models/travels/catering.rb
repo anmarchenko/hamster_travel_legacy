@@ -25,7 +25,6 @@ module Travels
     def as_json(*args)
       json = super(except: [:_id])
       json['id'] = id.to_s
-      json['amount_cents'] = amount_cents / 100
       json['amount_currency_text'] = amount.currency.symbol
       json
     end

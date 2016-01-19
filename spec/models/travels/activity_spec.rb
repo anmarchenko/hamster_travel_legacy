@@ -64,7 +64,7 @@ describe Travels::Activity do
 
     it 'has all attributes' do
       expect(activity_json['name']).to eq(activity.name)
-      expect(activity_json['amount_cents']).to eq(activity.amount_cents / 100)
+      expect(activity_json['amount_cents']).to eq(activity.amount_cents)
       expect(activity_json['amount_currency']).to eq(activity.amount_currency)
       expect(activity_json['amount_currency_text']).to eq(activity.amount.currency.symbol)
       expect(activity_json['comment']).to eq(activity.comment)

@@ -25,9 +25,31 @@ describe Travels::Updaters::TripUpdater do
     context 'when there are caterings params' do
 
       let(:params) { {
-          '1' => FactoryGirl.build(:catering).as_json.merge(id: Time.now.to_i),
-          '2' => FactoryGirl.build(:catering).as_json.merge(id: Time.now.to_i)
-      } }
+          '1' => {
+              name: Faker::Address.city,
+
+              description: (Faker::Lorem.paragraph),
+              amount_cents: (rand(10000) * 100),
+              amount_currency: 'RUB',
+
+              days_count: 3,
+              persons_count: 2,
+              amount_currency_text: 'rouble'
+
+          },
+          '2' => {
+              name: Faker::Address.city,
+
+              description: (Faker::Lorem.paragraph),
+              amount_cents: (rand(10000) * 100),
+              amount_currency: 'RUB',
+
+              days_count: 3,
+              persons_count: 2,
+              amount_currency_text: 'rouble'
+          }
+      }.with_indifferent_access }
+
       it 'creates new caterings' do
         caterings = trip.reload.caterings
         expect(caterings.count).to eq(2)
@@ -36,14 +58,15 @@ describe Travels::Updaters::TripUpdater do
       end
 
       it 'updates caterings' do
-        params['1']['id'] = trip.caterings.first.id
+        id = trip.reload.caterings.first.id
+        params['1']['id'] = id
         params['1']['name'] = 'Paris'
 
         update_trip_caterings trip, params
 
         caterings = trip.reload.caterings
         expect(caterings.count).to eq(2)
-        expect(caterings.where(id: params['1']['id']).first.name).to eq('Paris')
+        expect(caterings.where(id: id).first.name).to eq('Paris')
       end
 
       it 'deletes caterings' do
@@ -84,7 +107,7 @@ describe Travels::Updaters::TripUpdater do
         hotel = first_day_of(trip).hotel
         expect(hotel.name).to eq 'new_name'
         expect(hotel.comment).to eq 'new_comment'
-        expect(hotel.amount).to eq Money.new(12300, 'EUR')
+        expect(hotel.amount).to eq Money.new(123, 'EUR')
         expect(hotel.links.count).to eq 1
         expect(hotel.links.first.url).to eq 'http://new.url'
         expect(hotel.links.first.description).to eq 'New.url'
@@ -340,13 +363,13 @@ describe Travels::Updaters::TripUpdater do
       let(:params) { {'1' => {id: day.id.to_s,
                               expenses: [{
                                              name: 'new_expense_name',
-                                             amount_cents: 456,
+                                             amount_cents: 45600,
                                              amount_currency: 'RUB',
                                              amount_currency_text: 'R'
                                          }.with_indifferent_access,
                                          {
                                              name: 'new_expense_name_2',
-                                             amount_cents: 98765,
+                                             amount_cents: 9876500,
                                              amount_currency: 'RUB',
                                              amount_currency_text: 'R'
                                          }.with_indifferent_access

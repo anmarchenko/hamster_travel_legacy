@@ -299,7 +299,7 @@
 
             <%= docx_paragraph(align: :left, fontSize: fontSize, spacingBefore: 100) do %>
                 <%= docx_text(fontSize: fontSize) do %>
-                    <%= catering.amount.to_f %> <%= catering.amount_currency %> x <%= catering.persons_count %> <%= t('trips.show.persons') %> x <%= catering.days_count %> <%= t('trips.show.days') %> = <%= ((catering.amount_cents || 0) * (catering.persons_count || 0) * (catering.days_count || 0)) / 100.0 %> <%= catering.amount_currency %>
+                    <%= catering.amount.to_f %> <%= catering.amount_currency %> x <%= catering.persons_count %> <%= t('trips.show.persons') %> x <%= catering.days_count %> <%= t('trips.show.days') %> = <%= ((catering.amount.to_f || 0) * (catering.persons_count || 0) * (catering.days_count || 0)) %> <%= catering.amount_currency %>
                 <% end %>
             <% end %>
 

@@ -30,7 +30,6 @@ module Travels
 
       json['name'] = name
 
-      json['amount_cents'] = amount_cents / 100
       json['amount_currency'] = amount_currency
       json['amount_currency_text'] = amount.currency.symbol
       json
