@@ -46,7 +46,7 @@
 
 
   .row.trip-header
-    .col-xs-4.col-md-2
+    .col-xs-4.col-md-3
       .fileupload-form
         %img{id: 'trip_image', src: @trip.image_url_or_default, width: '100%', class: 'trip-image'}
 
@@ -71,7 +71,7 @@
         %i.fa.fa-spinner.fa-spin
         = t('common.photo_processing')
 
-    .col-xs-8.col-md-10
+    .col-xs-8.col-md-9
       .row
         .col-xs-12
           = render'trips/partials/participants'
