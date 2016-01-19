@@ -1,6 +1,5 @@
 angular.module('travel-components').directive 'floatNumber', ['$filter', ($filter) ->
-  FLOAT_REGEXP_1 = /^\-?\d+.(\d{3})*(\,\d{0,2})?$/; #Numbers like: 1.123,56
-  FLOAT_REGEXP_2 = /^\-?\d+(\,\d{0,2})?$/; #Numbers like: 1123,56
+  FLOAT_REGEXP = /^\-?\d+(\.\d+)?$/; #Numbers like: 1123,56
 
   {
     require: 'ngModel'
@@ -20,15 +19,15 @@ angular.module('travel-components').directive 'floatNumber', ['$filter', ($filte
         number >= min
 
       elm.blur ->
-        return unless ctrl.$valid
         viewValue = ctrl.$modelValue
         for formatter in ctrl.$formatters
           viewValue = formatter(viewValue)
         ctrl.$viewValue = viewValue;
         ctrl.$render()
 
+
       ctrl.$parsers.unshift (viewValue) ->
-        if FLOAT_REGEXP_1.test(viewValue) || FLOAT_REGEXP_2.test(viewValue)
+        if FLOAT_REGEXP.test(viewValue)
           res = toFloat(viewValue)
           res_int = Math.round(res * 100)
           ctrl.$setValidity('floatFormat', true);
@@ -39,9 +38,10 @@ angular.module('travel-components').directive 'floatNumber', ['$filter', ($filte
           ctrl.$setValidity('floatFormat', false);
           ctrl.$setValidity('floatMax', true)
           ctrl.$setValidity('floatMin', true)
+          console.log 'wrong'
           return 0
 
       ctrl.$formatters.unshift (modelValue) ->
-        $filter('number')(parseInt(modelValue) / 100.0, 2)
+        (parseInt(modelValue) / 100.0).toFixed(2)
   }
 ]

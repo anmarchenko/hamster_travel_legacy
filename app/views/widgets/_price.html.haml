@@ -19,4 +19,5 @@
           %a{'ng-click' => "selectCurrency(#{object_model}, '#{currency_data[1]}', '#{currency_data[2]}')",
           href: 'javascript:void(0);'}
             = currency_data[0]
-  = number_field_tag name, '', 'ng-model' => ng_model, class: "#{input_class} form-control", placeholder: placeholder, 'float-number' => 'true'
+  = text_field_tag name, '', 'ng-model' => ng_model, class: "#{input_class} form-control", placeholder: placeholder,
+  'float-number' => 'true'
