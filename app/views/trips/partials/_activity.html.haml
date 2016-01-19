@@ -6,7 +6,7 @@
           {{$index+1}}.
         {{activity.name}}
       %span{'ng-show' => 'activity.amount_cents != undefined'}
-        {{activity.amount_cents}}
+        {{activity.amount_cents / 100.0 | number: 2}}
         {{activity.amount_currency_text}}
     %div{'ng-show' => '!activity.isCollapsed'}
       %p.text-italic{'ng-show' => '!activity.comment && !activity.link_url'}

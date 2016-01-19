@@ -1,6 +1,6 @@
 %big
   = t('common.budget')
-  {{budget}}
+  {{budget | number: 2}}
   = currency_symbol.html_safe
 
   = t('trips.show.budget_for')

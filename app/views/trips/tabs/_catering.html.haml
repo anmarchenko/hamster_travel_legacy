@@ -20,7 +20,7 @@
           .row.expenses
             .col-md-1.text-center.separator-times.col-xs-3.col-sm-3
               .main
-                {{catering.amount_cents || 0}}
+                {{(catering.amount_cents  / 100.0 | number: 2) || 0.0}}
                 {{catering.amount_currency_text}}
               .descr
                 = t('trips.show.for_day')

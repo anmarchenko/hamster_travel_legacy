@@ -4,7 +4,7 @@
     %span{'ng-show' => '!!expense.amount_cents'}
       {{expense.name}}
 
-      {{expense.amount_cents}}
+      {{expense.amount_cents / 100.0 | number: 2}}
       {{expense.amount_currency_text}}
 
   - if @user_can_edit

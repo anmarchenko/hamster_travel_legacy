@@ -12,7 +12,7 @@
       %span{'ng-show' => '!!transfer.station_to'}
         ({{transfer.station_to}})
     %span{'ng-show' => 'transfer.amount_cents != undefined'}
-      {{transfer.amount_cents}}
+      {{transfer.amount_cents / 100.0 | number: 2}}
       {{transfer.amount_currency_text}}
 
 %div{'ng-show' => '!transfer.isCollapsed'}

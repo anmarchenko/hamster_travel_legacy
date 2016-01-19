@@ -3,7 +3,7 @@
     {{day.hotel.name}}
     %br
     %span{'ng-show' => '!!day.hotel.amount_cents'}
-      {{day.hotel.amount_cents}}
+      {{day.hotel.amount_cents / 100.0 | number: 2}}
       {{day.hotel.amount_currency_text}}
   %p{class: 'travel-text text-italic'} {{day.hotel.comment}}
   %span{'ng-show' => '!!day.hotel.links'}
