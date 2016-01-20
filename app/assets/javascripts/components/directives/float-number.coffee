@@ -1,5 +1,6 @@
 angular.module('travel-components').directive 'floatNumber', ['$filter', ($filter) ->
   FLOAT_REGEXP = /^\-?\d+(\,\d+)?$/; #Numbers like: 1123,56
+  FLOAT_DOT_REGEXP = /^\-?\d+(\.\d+)?$/; #Numbers like: 1123.56
 
   {
     require: 'ngModel'
@@ -27,12 +28,15 @@ angular.module('travel-components').directive 'floatNumber', ['$filter', ($filte
 
 
       ctrl.$parsers.unshift (viewValue) ->
-        if FLOAT_REGEXP.test(viewValue)
+        if FLOAT_REGEXP.test(viewValue) || FLOAT_DOT_REGEXP.test(viewValue)
           res = toFloat(viewValue)
           res_int = Math.round(res * 100)
           ctrl.$setValidity('floatFormat', true);
           ctrl.$setValidity('floatMin', checkMin(res_int))
           ctrl.$setValidity('floatMax', checkMax(res_int))
+
+          if !checkMin(res_int) || !checkMax(res_int)
+            res_int = 0
           return res_int
         else
           ctrl.$setValidity('floatFormat', false);
@@ -41,6 +45,6 @@ angular.module('travel-components').directive 'floatNumber', ['$filter', ($filte
           return 0
 
       ctrl.$formatters.unshift (modelValue) ->
-        $filter('number')(parseInt(modelValue) / 100.0, 2)
+        $filter('number')(parseInt(modelValue) / 100.0, 2).replace(/\s+/g,'')
   }
 ]

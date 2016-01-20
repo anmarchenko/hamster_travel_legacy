@@ -21,7 +21,7 @@
                 = trip_start_date(trip)
 
             %span.budget
-              = trip.budget_sum(current_user.try(:currency))
+              = number_with_precision trip.budget_sum(current_user.try(:currency)), precision: 2, separator: ','
               = currency_symbol.html_safe
               \/
               = trip.days_count
