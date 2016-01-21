@@ -38,7 +38,7 @@
                 = t('trips.show.days')
             .col-md-1.text-center.col-xs-3.col-sm-3
               .main
-                Σ&nbsp;{{(catering.amount_cents || 0) * (catering.persons_count || 0) * (catering.days_count || 0)}}&nbsp;{{catering.amount_currency_text}}
+                Σ&nbsp;{{(catering.amount_cents || 0) * (catering.persons_count || 0) * (catering.days_count || 0) / 100.0 | number: 2}}&nbsp;{{catering.amount_currency_text}}
               .descr
                 = t('trips.show.overall')
           %p.text{} {{catering.description || '#{I18n.t('trips.show.no_catering_description')}'}}
@@ -53,31 +53,29 @@
         .col-md-1.col-sm-1.col-xs-1
           %a{href: 'javascript:void(0);', 'ng-click' => 'remove(caterings, $index)', class: 'pull-right big-control'}
             = fa_icon 'times'
-      .row
-        .col-md-12
-          .row.expenses
-            .col-md-2.text-center.separator-times.col-xs-5.col-sm-3
-              .main
-                = render 'widgets/price', name: 'catering_price', object_model: 'catering', placeholder: t('trips.show.for_day'),
-                      group_class: '', input_class: ''
+      .row.expenses
+        .col-md-2.text-center.separator-times.col-xs-5.col-sm-3
+          .main
+            = render 'widgets/price', name: 'catering_price', object_model: 'catering', placeholder: t('trips.show.for_day'),
+                  group_class: '', input_class: ''
 
-              .descr
-                = t('trips.show.for_day')
-            .col-md-2.text-center.separator-times.col-xs-2.col-sm-3
-              .main
-                = number_field_tag 'catering_persons', '', {'ng-model' => 'catering.persons_count', 'class' => 'form-control', min: 1}
-              .descr
-                = t('trips.show.persons')
-            .col-md-2.text-center.separator-equal.col-xs-2.col-sm-3
-              .main
-                = number_field_tag 'catering', '', {class: 'form-control-inline form-control', 'ng-model' => 'catering.days_count', min: 0}
-              .descr
-                = t('trips.show.days')
-            .col-md-2.text-center.col-xs-3.col-sm-3.overall
-              .main
-                Σ&nbsp;{{(catering.amount_cents || 0) * (catering.persons_count || 0) * (catering.days_count || 0)}}&nbsp;{{catering.amount_currency_text}}
-              .descr
-                = t('trips.show.overall')
+          .descr
+            = t('trips.show.for_day')
+        .col-md-2.text-center.separator-times.col-xs-2.col-sm-3
+          .main
+            = number_field_tag 'catering_persons', '', {'ng-model' => 'catering.persons_count', 'class' => 'form-control', min: 1}
+          .descr
+            = t('trips.show.persons')
+        .col-md-2.text-center.separator-equal.col-xs-2.col-sm-3
+          .main
+            = number_field_tag 'catering', '', {class: 'form-control-inline form-control', 'ng-model' => 'catering.days_count', min: 0}
+          .descr
+            = t('trips.show.days')
+        .col-md-2.text-center.col-xs-3.col-sm-3.overall
+          .main
+            Σ&nbsp;{{(catering.amount_cents || 0) * (catering.persons_count || 0) * (catering.days_count || 0)}}&nbsp;{{catering.amount_currency_text}}
+          .descr
+            = t('trips.show.overall')
       .row
         .col-md-12
           .form-group
