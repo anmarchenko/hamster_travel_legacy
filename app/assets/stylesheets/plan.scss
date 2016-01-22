@@ -2,10 +2,15 @@
   background-color: $background-grey;
 
   .work-area {
-    margin: -20px -40px;
+    margin: 0 -40px;
+    @media (max-width: 1250px) {
+      margin: 0;
+    }
 
-    padding: 20px 40px;
+    padding: 30px 40px;
     background-color: $white;
+
+    overflow: scroll;
 
     .nav-tabs {
       li {
