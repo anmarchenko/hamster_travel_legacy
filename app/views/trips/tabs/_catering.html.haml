@@ -85,6 +85,6 @@
   .row{'ng-show' => 'edit'}
     .col-md-12
       %a.pull-right{href: 'javascript:void(0);', class: 'pull-right big-control',
-      'ng-click' => "add(caterings, {persons_count: trip.budget_for, days_count: 1, #{default_currency_hash(@trip, current_user)}})"}
+      'ng-click' => "add(caterings, {persons_count: trip.budget_for * 1, days_count: 1, #{default_currency_hash(@trip, current_user)}})"}
         = fa_icon 'plus'
 
