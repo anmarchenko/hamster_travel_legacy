@@ -1,7 +1,6 @@
 %div{'ng-init' => "createDays(#{@trip.days.count}, #{@trip.to_json}, #{@trip.budget_sum(current_user.try(:currency))})", 'ng-cloak' => ''}
   .row
     .col-md-12
-      = render 'trips/partials/buttons'
       = render 'trips/partials/tabs'
   .row
     .col-md-12
@@ -37,6 +36,9 @@
           %span{'ng-show' => '!show_comments'}
             = fa_icon 'square-o'
           = fa_icon 'pencil'
+  .row
+    .col-md-12
+      = render 'trips/partials/buttons'
 
   %table.table.table-black-bordered.fixed-head.plan-table
     %thead.plan-affix

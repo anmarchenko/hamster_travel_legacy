@@ -68,7 +68,7 @@ ru:
       status_code: 'Статус путешествия:'
       name: Название
       expense: Расход
-      clone: Копия
+      clone: Сделать копию
       report: Отчет о путешествии
       no_report: У этого путешествия ещё нет отчёта.
       budget_for: на

@@ -1,14 +1,16 @@
 .span{'ng-init' => "loadCatering(#{@trip.to_json}, #{@trip.budget_sum(current_user.try(:currency))})", 'ng-cloak' => ''}
   .row{'ng-cloak' => ''}
     .col-md-12
-      = render 'trips/partials/buttons'
       = render 'trips/partials/tabs'
   .row
     .col-md-12
       = render 'trips/partials/watching_users'
-  .row.plan-header-second-row
+  .row
     .col-md-12
       = render 'trips/partials/budget'
+  .row
+    .col-md-12
+      = render 'trips/partials/buttons'
 
   %div.catering-container{'ng-repeat' => 'catering in caterings track by catering.id'}
 

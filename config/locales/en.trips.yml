@@ -68,7 +68,7 @@ en:
       status_code: 'Trip status:'
       name: Name
       expense: Expense
-      clone: Copy
+      clone: Make a copy
       report: Trip report
       no_report: No report has been added yet.
       budget_for: for

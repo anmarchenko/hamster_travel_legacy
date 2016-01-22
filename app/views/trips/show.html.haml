@@ -76,6 +76,22 @@
         .col-xs-12
           = render'trips/partials/participants'
 
+      - if user_signed_in?
+        .row.buttons
+          .col-xs-12
+
+            = link_to "#{new_trip_path}?copy_from=#{@trip.id}", target: '_blank', class: 'btn ghost-button btn-sm' do
+              %span{class: 'hidden-md hidden-lg'}
+                = fa_icon 'copy'
+              %span{class: 'hidden-sm hidden-xs'}
+                = fa_icon 'copy', text: t('trips.show.clone')
+
+            = link_to "#{trip_path(@trip)}.docx", target: '_blank', class: 'btn ghost-button btn-sm' do
+              %span{class: 'hidden-md hidden-lg'}
+                = fa_icon 'file-word-o'
+              %span{class: 'hidden-sm hidden-xs'}
+                = fa_icon 'file-word-o', text: t('trips.show.download_word')
+
       .row.flags
         .col-xs-12
           %span{'ng-repeat' => 'country in countries', 'ng-bind-html' => 'country'}

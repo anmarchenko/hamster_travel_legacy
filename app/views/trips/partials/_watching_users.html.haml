@@ -1,4 +1,4 @@
-%div.alert.alert-info.watching-users{'ng-show' => 'users.length > 0'}
+%div.alert.alert-info.watching-users{'ng-show' => 'users.length > 0', 'ng-cloak' => ''}
   = t('trips.show.watching_now')
   %i{'ng-repeat' => 'user in users'}
     {{user}}
