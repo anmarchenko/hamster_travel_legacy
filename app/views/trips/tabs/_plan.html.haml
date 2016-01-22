@@ -47,7 +47,7 @@
           = t('trips.show.place')
         %th{class: 'col-md-6', 'ng-show' => 'show_transfers'}
           = t('trips.show.transfers')
-          %a{class: 'pull-right', href: 'javascript:void(0);', 'ng-click' => 'toggleTransfers()'}
+          %a{class: 'pull-right', href: 'javascript:void(0);', 'ng-click' => 'toggleTransfers()', 'ng-show' => 'edit'}
             %span{'ng-show' => '!transfersCollapsed'}
               = fa_icon 'arrow-down'
             %span{'ng-show' => 'transfersCollapsed'}
