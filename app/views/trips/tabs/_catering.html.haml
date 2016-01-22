@@ -73,7 +73,7 @@
             = t('trips.show.days')
         .col-md-2.text-center.col-xs-3.col-sm-3.overall
           .main
-            Σ&nbsp;{{(catering.amount_cents || 0) * (catering.persons_count || 0) * (catering.days_count || 0)}}&nbsp;{{catering.amount_currency_text}}
+            Σ&nbsp;{{(catering.amount_cents || 0) * (catering.persons_count || 0) * (catering.days_count || 0) / 100.0 | number: 2}}&nbsp;{{catering.amount_currency_text}}
           .descr
             = t('trips.show.overall')
       .row
