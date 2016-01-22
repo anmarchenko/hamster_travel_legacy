@@ -48,6 +48,8 @@ FactoryGirl.define do
           3.times { day.expenses.create(build(:expense, :with_data).attributes) }
           day.save validate: false
         end
+
+        3.times { trip.caterings.create(build(:catering).attributes) }
       end
     end
 

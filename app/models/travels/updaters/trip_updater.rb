@@ -21,17 +21,23 @@ module Travels
         new_trip.author_user_id = user.id
         new_trip.users = [user]
         new_trip.save
-        unless trip.blank?
-          new_trip.days.each_with_index do |day, index|
-            original_day = (trip.days || [])[index]
-            next if original_day.blank?
-            date_when = day.date_when
-            day.copy(original_day, true)
-            day.date_when = date_when
-            day.save
-          end
-        end
+        copy_plan(trip, new_trip) unless trip.blank?
         new_trip
+      end
+
+      def copy_plan from, to
+        to.days.each_with_index do |day, index|
+          original_day = (from.days || [])[index]
+          next if original_day.blank?
+          date_when = day.date_when
+          day.copy(original_day, true)
+          day.date_when = date_when
+          day.save
+        end
+
+        from.caterings.each do |catering|
+          to.caterings.create(catering.attributes.except('id', 'trip_id'))
+        end
       end
 
       def process_days

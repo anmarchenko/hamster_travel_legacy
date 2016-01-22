@@ -244,6 +244,8 @@ describe TripsController do
               post 'create', params.merge(copy_from: original.id)
               trip = assigns(:trip)
               trip = trip.reload
+              expect(trip.days.count).to eq(original.days.count)
+
               expect(trip.days.first.comment).to eq original.days.first.comment
               expect(trip.days.first.date_when).to eq params[:travels_trip]['start_date']
               expect(trip.days.first.transfers.count).to eq original.days.first.transfers.count
@@ -253,6 +255,10 @@ describe TripsController do
 
               expect(trip.days.last.comment).to eq original.days.last.comment
               expect(trip.days.last.date_when).to eq params[:travels_trip]['end_date']
+
+              expect(trip.caterings.count).to eq(original.caterings.count)
+              expect(trip.caterings.first.persons_count).to eq(original.caterings.first.persons_count)
+              expect(trip.caterings.first.name).to eq(original.caterings.first.name)
             end
           end
 
