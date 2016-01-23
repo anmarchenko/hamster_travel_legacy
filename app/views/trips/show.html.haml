@@ -72,10 +72,6 @@
         = t('common.photo_processing')
 
     .col-xs-8.col-md-9
-      .row
-        .col-xs-12
-          = render'trips/partials/participants'
-
       - if user_signed_in?
         .row.buttons
           .col-xs-12
@@ -91,6 +87,10 @@
                 = fa_icon 'file-word-o'
               %span{class: 'hidden-sm hidden-xs'}
                 = fa_icon 'file-word-o', text: t('trips.show.download_word')
+
+      .row
+        .col-xs-12
+          = render'trips/partials/participants'
 
       .row.flags
         .col-xs-12
