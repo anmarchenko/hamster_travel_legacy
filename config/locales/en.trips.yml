@@ -76,12 +76,21 @@ en:
       watching_now: Watching now
       no_catering_description: No cuisine description yet
       no_city: No city
-      catering_description: National cuisine, what to try and what to avoid
+      catering_description: Cuisine description
+      catering_description_placeholder: National cuisine, what to try and what to avoid
       example_espenses: Prices
       add_expense: Add price
-      food_price: Food price
-      for_day: for day
-      catering_name: Region or city
+      for_day: Food expenses per day per person
+      catering_show_for_day: per day
+      catering_name: Section name
+      catering_name_placeholder: Region or city
+      catering_persons: How many people
+      catering_persons_show: persons
+      catering_days: How many days
+      catering_days_show: days
+      catering_delete: Delete section
+      catering_sum: Expenses
+      catering_add: Add section
       overall: overall
       add_friend: Invite friend
       type_name: Friend's name

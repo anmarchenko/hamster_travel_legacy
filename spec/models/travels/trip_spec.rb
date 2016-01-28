@@ -307,7 +307,7 @@ describe Travels::Trip do
       expect(trip_json['end_date']).to eq(trip.end_date)
       expect(trip_json['private']).to eq(trip.private)
       expect(trip_json['archived']).to eq(trip.archived)
-      expect(trip_json['budget_for']).to eq(trip.budget_for.to_s)
+      expect(trip_json['budget_for']).to eq(trip.budget_for)
     end
 
   end

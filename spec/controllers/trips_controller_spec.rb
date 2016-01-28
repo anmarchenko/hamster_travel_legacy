@@ -257,8 +257,6 @@ describe TripsController do
               expect(trip.days.last.date_when).to eq params[:travels_trip]['end_date']
 
               expect(trip.caterings.count).to eq(original.caterings.count)
-              expect(trip.caterings.first.persons_count).to eq(original.caterings.first.persons_count)
-              expect(trip.caterings.first.name).to eq(original.caterings.first.name)
             end
           end
 

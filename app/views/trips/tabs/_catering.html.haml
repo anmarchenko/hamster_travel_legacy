@@ -15,77 +15,71 @@
 
     .catering-show{'ng-show' => '!edit'}
       .row
-        .col-md-12
+        .col-xs-12.col-sm-5
           %p.header
             {{catering.name}}
-          .row.expenses
-            .col-md-1.text-center.separator-times.col-xs-3.col-sm-3
-              .main
-                {{(catering.amount_cents  / 100.0 | number: 2) || 0.0}}
-                {{catering.amount_currency_text}}
-              .descr
-                = t('trips.show.for_day')
-            .col-md-1.text-center.separator-times.col-xs-3.col-sm-3
-              .main
-                {{catering.persons_count}}
-                = fa_icon 'user'
-              .descr
-                = t('trips.show.persons')
-            .col-md-1.text-center.separator-equal.col-xs-3.col-sm-3
-              .main
-                {{catering.days_count}}
-                = fa_icon 'calendar-o'
-              .descr
-                = t('trips.show.days')
-            .col-md-1.text-center.col-xs-3.col-sm-3
-              .main
-                Σ&nbsp;{{(catering.amount_cents || 0) * (catering.persons_count || 0) * (catering.days_count || 0) / 100.0 | number: 2}}&nbsp;{{catering.amount_currency_text}}
-              .descr
-                = t('trips.show.overall')
+          %p.catering-value
+            = image_tag 'catering/wallet.svg', class: 'catering-wallet'
+            %span.catering-value-text
+              {{(catering.amount_cents  / 100.0 | number: 2) || 0.0}}
+              {{catering.amount_currency_text}}
+              = t('trips.show.catering_show_for_day')
+          %p.catering-value
+            = image_tag 'catering/users.svg'
+            %span.catering-value-text
+              {{catering.persons_count}}
+              = t('trips.show.catering_persons_show')
+          %p.catering-value
+            = image_tag 'catering/calendar.svg'
+            %span.catering-value-text
+              {{catering.days_count}}
+              = t('trips.show.catering_days_show')
+          %hr
+          .catering-value
+            = image_tag 'catering/money.svg'
+            %span.catering-value-text
+              = t('trips.show.catering_sum')
+              {{(catering.amount_cents || 0) * (catering.persons_count || 0) * (catering.days_count || 0) / 100.0 | number: 2}}&nbsp;{{catering.amount_currency_text}}
+        .col-xs-12.col-sm-7
           %p.text{} {{catering.description || '#{I18n.t('trips.show.no_catering_description')}'}}
 
 
     .catering-form{'ng-show' => 'edit'}
       .row
-        .col-md-11.col-xs-11.col-sm-11
+        .col-xs-12.col-sm-6
           .form-group
-            = text_field_tag 'catering_name', '', 'ng-model' => 'catering.name', class: 'input-lg form-control',
-                placeholder: t('trips.show.catering_name')
-        .col-md-1.col-sm-1.col-xs-1
-          %a{href: 'javascript:void(0);', 'ng-click' => 'remove(caterings, $index)', class: 'pull-right big-control'}
-            = fa_icon 'times'
-      .row.expenses
-        .col-md-2.text-center.separator-times.col-xs-5.col-sm-3
-          .main
+            = label_tag 'catering_name', t('trips.show.catering_name')
+            %a{href: 'javascript:void(0);', 'ng-click' => 'remove(caterings, $index)', class: 'delete-control big-control'}
+              %span.hidden-xs
+                = fa_icon 'times', text: t('trips.show.catering_delete')
+              %span.hidden-lg.hidden-sm.hidden-md
+                = fa_icon 'times'
+            = text_field_tag 'catering_name', '', 'ng-model' => 'catering.name', class: 'form-control',
+              placeholder: t('trips.show.catering_name_placeholder')
+          .form-group
+            = label_tag 'catering_price', t('trips.show.for_day')
             = render 'widgets/price', name: 'catering_price', object_model: 'catering', placeholder: t('trips.show.for_day'),
                   group_class: '', input_class: ''
-
-          .descr
-            = t('trips.show.for_day')
-        .col-md-2.text-center.separator-times.col-xs-2.col-sm-3
-          .main
-            = number_field_tag 'catering_persons', '', {'ng-model' => 'catering.persons_count', 'class' => 'form-control', min: 1}
-          .descr
-            = t('trips.show.persons')
-        .col-md-2.text-center.separator-equal.col-xs-2.col-sm-3
-          .main
-            = number_field_tag 'catering', '', {class: 'form-control-inline form-control', 'ng-model' => 'catering.days_count', min: 0}
-          .descr
-            = t('trips.show.days')
-        .col-md-2.text-center.col-xs-3.col-sm-3.overall
-          .main
-            Σ&nbsp;{{(catering.amount_cents || 0) * (catering.persons_count || 0) * (catering.days_count || 0) / 100.0 | number: 2}}&nbsp;{{catering.amount_currency_text}}
-          .descr
-            = t('trips.show.overall')
-      .row
-        .col-md-12
           .form-group
+            = label_tag 'catering_persons', t('trips.show.catering_persons')
+            = number_field_tag 'catering_persons', '', {'ng-model' => 'catering.persons_count', 'class' => 'form-control', min: 1}
+          .form-group
+            = label_tag 'catering_days', t('trips.show.catering_days')
+            = number_field_tag 'catering_days', '', {class: 'form-control-inline form-control', 'ng-model' => 'catering.days_count', min: 0}
+          .form-group.catering-value
+            = image_tag 'catering/money.svg'
+            %span.catering-value-text
+              = t('trips.show.catering_sum')
+              {{(catering.amount_cents || 0) * (catering.persons_count || 0) * (catering.days_count || 0) / 100.0 | number: 2}}&nbsp;{{catering.amount_currency_text}}
+        .col-xs-12.col-sm-6
+          .form-group
+            = label_tag 'catering_description', t('trips.show.catering_description')
             = text_area_tag 'catering_description', '', 'ng-model' => 'catering.description', class: 'form-control',
-              placeholder: t('trips.show.catering_description'), rows: 5
+              placeholder: t('trips.show.catering_description_placeholder'), rows: 5
 
   .row{'ng-show' => 'edit'}
     .col-md-12
-      %a.pull-right{href: 'javascript:void(0);', class: 'pull-right big-control',
-      'ng-click' => "add(caterings, {persons_count: trip.budget_for * 1, days_count: 1, #{default_currency_hash(@trip, current_user)}})"}
-        = fa_icon 'plus'
+      %a{href: 'javascript:void(0);', class: 'big-control',
+      'ng-click' => "add(caterings, {persons_count: trip.budget_for, days_count: 1, #{default_currency_hash(@trip, current_user)}})"}
+        = fa_icon 'plus', text: t('trips.show.catering_add')
 

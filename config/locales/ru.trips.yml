@@ -76,12 +76,21 @@ ru:
       watching_now: Просматривают сейчас
       no_catering_description: Описания кухни пока нет
       no_city: Выберите город...
-      catering_description: Национальная кухня, что следует попробовать, а что нет
+      catering_description: Описание кухни
+      catering_description_placeholder: Национальная кухня, что следует попробовать, а что нет
+      catering_delete: Удалить секцию
       example_espenses: Цены
       add_expense: Добавить цены
-      food_price: Сумма на еду
-      for_day: в день
-      catering_name: Регион или город
+      for_day: Затраты на еду в день с человека
+      catering_show_for_day: в день
+      catering_name: Название секции
+      catering_name_placeholder: Регион или город
+      catering_persons: Сколько человек
+      catering_persons_show: чел.
+      catering_days: Сколько дней
+      catering_days_show: дней
+      catering_sum: Сумма
+      catering_add: Добавить секцию
       overall: всего
       add_friend: Пригласить друга
       type_name: Имя друга
