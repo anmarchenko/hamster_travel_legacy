@@ -3,11 +3,13 @@
 
   .work-area {
     margin: 0 -40px;
+    padding: 30px 40px;
     @media (max-width: 1250px) {
       margin: 0;
+      padding-left: 15px;
+      padding-right: 15px;
     }
 
-    padding: 30px 40px;
     background-color: $white;
 
     overflow: scroll;
