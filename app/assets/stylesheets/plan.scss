@@ -20,11 +20,14 @@
       }
     }
 
-    .budget-persons-input {
-      margin-left: 5px;
-      margin-right: 5px;
-      max-width: 50px;
-      text-align: center;
+    .budget{
+      font-size: 18px;
+      .budget-persons-input {
+        margin-left: 5px;
+        margin-right: 5px;
+        max-width: 50px;
+        text-align: center;
+      }
     }
 
     .nav-tabs {
