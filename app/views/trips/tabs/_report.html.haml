@@ -1,12 +1,12 @@
 .span{'ng-init' => "createDays(0, #{@trip.to_json})"}
-  .row{'ng-cloak' => ''}
-    .col-md-12
-      = render 'trips/partials/tabs'
-  .row
-    .col-md-12
-      = render 'trips/partials/buttons'
-
-  = render 'trips/partials/watching_users'
+  .work-area-header
+    .row
+      .col-md-12
+        = render 'trips/partials/tabs'
+    = render 'trips/partials/watching_users'
+    .row
+      .col-md-12
+        = render 'trips/partials/buttons'
 
   .row{'ng-cloak' => ''}
     .col-md-12

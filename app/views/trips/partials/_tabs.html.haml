@@ -1,9 +1,9 @@
 %ul.nav.nav-tabs
   %li{class: ('active' if params[:tab].blank? || params[:tab] == ApplicationHelper::TAB_PLAN)}
-    = link_to t('trips.show.plan'), trip_path(@trip, tab: ApplicationHelper::TAB_PLAN)
+    = link_to t('trips.show.plan'), trip_path(@trip, tab: ApplicationHelper::TAB_PLAN, anchor: 'plan_area')
   %li{class: ('active' if params[:tab] == ApplicationHelper::TAB_PLAN_ACTIVITIES)}
-    = link_to t('trips.show.plan_activities'), trip_path(@trip, tab: ApplicationHelper::TAB_PLAN_ACTIVITIES)
+    = link_to t('trips.show.plan_activities'), trip_path(@trip, tab: ApplicationHelper::TAB_PLAN_ACTIVITIES, anchor: 'plan_area')
   %li{class: ('active' if params[:tab] == ApplicationHelper::TAB_CATERING)}
-    = link_to t('trips.show.catering'), trip_path(@trip, tab: ApplicationHelper::TAB_CATERING)
+    = link_to t('trips.show.catering'), trip_path(@trip, tab: ApplicationHelper::TAB_CATERING, anchor: 'plan_area')
   %li{class: ('active' if params[:tab] == ApplicationHelper::TAB_REPORT)}
-    = link_to t('trips.show.report'), trip_path(@trip, tab: ApplicationHelper::TAB_REPORT)
+    = link_to t('trips.show.report'), trip_path(@trip, tab: ApplicationHelper::TAB_REPORT, anchor: 'plan_area')

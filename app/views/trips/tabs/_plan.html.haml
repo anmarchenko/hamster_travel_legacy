@@ -1,45 +1,46 @@
 %div{'ng-init' => "createDays(#{@trip.days.count}, #{@trip.to_json}, #{@trip.budget_sum(current_user.try(:currency))})", 'ng-cloak' => ''}
-  .row
-    .col-md-12
-      = render 'trips/partials/tabs'
-  .row
-    .col-md-12
-      = render 'trips/partials/watching_users'
-  .row.plan-header-second-row
-    .col-md-12
-      = render 'trips/partials/budget'
-      %div{class: "list-group list-group-horizontal pull-right"}
-        %a{class: "list-group-item",
-                         'ng-click' => 'changeVisibility("show_place")',
-                         'ng-class' => '{active: show_place}',
-                         'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.place')}
-          %span{'ng-show' => 'show_place'}
-            = fa_icon 'check-square-o'
-          %span{'ng-show' => '!show_place'}
-            = fa_icon 'square-o'
-          = fa_icon 'map-marker'
-        %a{class: "list-group-item",
-                         'ng-click' => 'changeVisibility("show_transfers")',
-                         'ng-class' => '{active: show_transfers}',
-                         'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.transfers')}
-          %span{'ng-show' => 'show_transfers'}
-            = fa_icon 'check-square-o'
-          %span{'ng-show' => '!show_transfers'}
-            = fa_icon 'square-o'
-          = fa_icon 'car'
-        %a{class: "list-group-item",
-                         'ng-click' => 'changeVisibility("show_hotel")',
-                         'ng-class' => '{active: show_hotel}',
-                         'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.hotel')}
-          %span{'ng-show' => 'show_hotel'}
-            = fa_icon 'check-square-o'
-          %span{'ng-show' => '!show_hotel'}
-            = fa_icon 'square-o'
-          = fa_icon 'home'
+  .work-area-header
+    .row
+      .col-md-12
+        = render 'trips/partials/tabs'
+    = render 'trips/partials/watching_users'
+    .row
+      .col-md-12
+        = render 'trips/partials/budget'
+    .row
+      .col-md-12
+        %div{class: "list-group list-group-horizontal"}
+          %a{class: "list-group-item",
+                           'ng-click' => 'changeVisibility("show_place")',
+                           'ng-class' => '{active: show_place}',
+                           'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.place')}
+            %span{'ng-show' => 'show_place'}
+              = fa_icon 'check-square-o'
+            %span{'ng-show' => '!show_place'}
+              = fa_icon 'square-o'
+            = fa_icon 'map-marker'
+          %a{class: "list-group-item",
+                           'ng-click' => 'changeVisibility("show_transfers")',
+                           'ng-class' => '{active: show_transfers}',
+                           'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.transfers')}
+            %span{'ng-show' => 'show_transfers'}
+              = fa_icon 'check-square-o'
+            %span{'ng-show' => '!show_transfers'}
+              = fa_icon 'square-o'
+            = fa_icon 'car'
+          %a{class: "list-group-item",
+                           'ng-click' => 'changeVisibility("show_hotel")',
+                           'ng-class' => '{active: show_hotel}',
+                           'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.hotel')}
+            %span{'ng-show' => 'show_hotel'}
+              = fa_icon 'check-square-o'
+            %span{'ng-show' => '!show_hotel'}
+              = fa_icon 'square-o'
+            = fa_icon 'home'
 
-  .row
-    .col-md-12
-      = render 'trips/partials/buttons'
+    .row
+      .col-md-12
+        = render 'trips/partials/buttons'
 
   %table.table.table-black-bordered.fixed-head.plan-table
     %thead.plan-affix

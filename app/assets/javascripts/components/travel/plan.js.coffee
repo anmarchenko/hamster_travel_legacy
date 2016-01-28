@@ -1,14 +1,14 @@
 angular.module('travel-components').controller 'PlanController'
 , [
-    '$scope', 'Trip', '$location', '$window', '$interval', '$cookies'
-  , ($scope, Trip, $location, $window, $interval, $cookies) ->
+    '$scope', 'Trip', '$window', '$interval', '$cookies'
+  , ($scope, Trip, $window, $interval, $cookies) ->
       $scope.uuid = ->
         s4 = ->
           return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
         return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 
       # define controller
-      $scope.trip_id = (/trips\/([a-zA-Z0-9]+)/.exec($location.absUrl())[1]);
+      $scope.trip_id = (/trips\/([a-zA-Z0-9]+)/.exec($window.location)[1]);
       $scope.tripService = Trip.init($scope.trip_id)
 
       # tumblers

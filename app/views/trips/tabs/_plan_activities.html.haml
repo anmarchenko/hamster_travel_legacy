@@ -1,44 +1,45 @@
 %div{'ng-init' => "createDays(#{@trip.days.count}, #{@trip.to_json}, #{@trip.budget_sum(current_user.try(:currency))})", 'ng-cloak' => ''}
-  .row
-    .col-md-12
-      = render 'trips/partials/tabs'
-  .row
-    .col-md-12
-      = render 'trips/partials/watching_users'
-  .row.plan-header-second-row
-    .col-md-12
-      = render 'trips/partials/budget'
-      %div{class: "list-group list-group-horizontal pull-right"}
-        %a{class: "list-group-item",
-                         'ng-click' => 'changeVisibility("show_place")',
-                         'ng-class' => '{active: show_place}',
-                         'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.place')}
-          %span{'ng-show' => 'show_place'}
-            = fa_icon 'check-square-o'
-          %span{'ng-show' => '!show_place'}
-            = fa_icon 'square-o'
-          = fa_icon 'map-marker'
-        %a{class: "list-group-item",
-                         'ng-click' => 'changeVisibility("show_activities")',
-                         'ng-class' => '{active: show_activities}',
-                         'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.activities')}
-          %span{'ng-show' => 'show_activities'}
-            = fa_icon 'check-square-o'
-          %span{'ng-show' => '!show_activities'}
-            = fa_icon 'square-o'
-          = fa_icon 'university'
-        %a{class: "list-group-item",
-                         'ng-click' => 'changeVisibility("show_comments")',
-                         'ng-class' => '{active: show_comments}',
-                         'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.comments')}
-          %span{'ng-show' => 'show_comments'}
-            = fa_icon 'check-square-o'
-          %span{'ng-show' => '!show_comments'}
-            = fa_icon 'square-o'
-          = fa_icon 'pencil'
-  .row
-    .col-md-12
-      = render 'trips/partials/buttons'
+  .work-area-header
+    .row
+      .col-md-12
+        = render 'trips/partials/tabs'
+    = render 'trips/partials/watching_users'
+    .row
+      .col-md-12
+        = render 'trips/partials/budget'
+    .row
+      .col-md-12
+        %div{class: "list-group list-group-horizontal"}
+          %a{class: "list-group-item",
+                           'ng-click' => 'changeVisibility("show_place")',
+                           'ng-class' => '{active: show_place}',
+                           'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.place')}
+            %span{'ng-show' => 'show_place'}
+              = fa_icon 'check-square-o'
+            %span{'ng-show' => '!show_place'}
+              = fa_icon 'square-o'
+            = fa_icon 'map-marker'
+          %a{class: "list-group-item",
+                           'ng-click' => 'changeVisibility("show_activities")',
+                           'ng-class' => '{active: show_activities}',
+                           'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.activities')}
+            %span{'ng-show' => 'show_activities'}
+              = fa_icon 'check-square-o'
+            %span{'ng-show' => '!show_activities'}
+              = fa_icon 'square-o'
+            = fa_icon 'university'
+          %a{class: "list-group-item",
+                           'ng-click' => 'changeVisibility("show_comments")',
+                           'ng-class' => '{active: show_comments}',
+                           'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.comments')}
+            %span{'ng-show' => 'show_comments'}
+              = fa_icon 'check-square-o'
+            %span{'ng-show' => '!show_comments'}
+              = fa_icon 'square-o'
+            = fa_icon 'pencil'
+    .row
+      .col-md-12
+        = render 'trips/partials/buttons'
 
   %table.table.table-black-bordered.fixed-head.plan-table
     %thead.plan-affix

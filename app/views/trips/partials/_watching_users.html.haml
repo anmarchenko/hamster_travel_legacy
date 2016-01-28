@@ -1,6 +1,8 @@
-%div.alert.alert-info.watching-users{'ng-show' => 'users.length > 0', 'ng-cloak' => ''}
-  = t('trips.show.watching_now')
-  %i{'ng-repeat' => 'user in users'}
-    {{user}}
-    %span{'ng-hide' => '$index == users.length - 1'}
-      ,
+.row{'ng-if' => 'users.length > 0', 'ng-cloak' => ''}
+  .col-md-12
+    %div.alert.alert-info.watching-users
+    = t('trips.show.watching_now')
+    %i{'ng-repeat' => 'user in users'}
+      {{user}}
+      %span{'ng-hide' => '$index == users.length - 1'}
+        ,

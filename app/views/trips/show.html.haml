@@ -106,7 +106,7 @@
       %p.travel-text{} #{@trip.short_description}
 
 
-  .work-area
+  .work-area{id: 'plan_area'}
     - if params[:tab].blank? || params[:tab] == ApplicationHelper::TAB_PLAN
       = render 'trips/tabs/plan'
 
