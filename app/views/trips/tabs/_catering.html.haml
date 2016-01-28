@@ -15,7 +15,7 @@
 
     .catering-show{'ng-show' => '!edit'}
       .row
-        .col-xs-12.col-sm-5
+        .col-xs-12.col-sm-4
           %p.header
             {{catering.name}}
           %p.catering-value
@@ -40,7 +40,7 @@
             %span.catering-value-text
               = t('trips.show.catering_sum')
               {{(catering.amount_cents || 0) * (catering.persons_count || 0) * (catering.days_count || 0) / 100.0 | number: 2}}&nbsp;{{catering.amount_currency_text}}
-        .col-xs-12.col-sm-7
+        .col-xs-12.col-sm-8
           %p.text{} {{catering.description || '#{I18n.t('trips.show.no_catering_description')}'}}
 
 
