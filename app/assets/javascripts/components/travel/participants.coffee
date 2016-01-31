@@ -2,7 +2,6 @@ angular.module('travel-components').controller 'ParticipantsController'
 , [
     '$scope', '$window', '$http'
   , ($scope, $window, $http) ->
-
       $scope.loadParticipants = ->
         $http.get("/api/participants?id=#{$scope.$parent.trip_id}").success (data) ->
           $scope.participants = data.users
@@ -15,10 +14,31 @@ angular.module('travel-components').controller 'ParticipantsController'
           $scope.loadParticipants()
 
       $scope.deleteUser = (user_id) ->
-        $http.delete("/api/trip_invites/#{$scope.$parent.trip_id}?user_id=#{user_id}").success (data) ->
-          $scope.loadParticipants()
+        swal({
+          title: $scope.confirmationHeader,
+          text: $scope.confirmationText,
+          confirmButtonText: $scope.confirmationOk,
+          cancelButtonText: $scope.confirmationCancel
+          type: 'warning',
+          showCancelButton: true,
+          closeOnConfirm: true
+        }, ->
+          $http.delete("/api/trip_invites/#{$scope.$parent.trip_id}?user_id=#{user_id}").success (data) ->
+            $scope.loadParticipants()
+        )
+
 
       $scope.deleteInvitedUser = (user_id) ->
-        $http.delete("/api/trip_invites/#{$scope.$parent.trip_id}?trip_invite_id=#{user_id}").success (data) ->
-          $scope.loadParticipants()
-  ]
+        swal({
+          title: $scope.confirmationHeader,
+          text: $scope.confirmationText,
+          confirmButtonText: $scope.confirmationOk,
+          cancelButtonText: $scope.confirmationCancel
+          type: 'warning',
+          showCancelButton: true,
+          closeOnConfirm: true
+        }, ->
+          $http.delete("/api/trip_invites/#{$scope.$parent.trip_id}?trip_invite_id=#{user_id}").success (data) ->
+            $scope.loadParticipants()
+        )
+]

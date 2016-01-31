@@ -98,7 +98,7 @@
 
       .row.tags
         .col-xs-12
-          %span{class: "tag status-tag #{trip_status_class(@trip.status_code)}"}
+          %span{class: "tag focused status-tag #{trip_status_class(@trip.status_code)}"}
             = @trip.status_text
 
   .row.trip-description

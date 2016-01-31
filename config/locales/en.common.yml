@@ -18,6 +18,10 @@ en:
       current_password_placeholder: we need your current password to confirm your changes
       trips: Travels
       delete_photo_cofirm: Are you sure that you want to delete your profile photo?
+    are_you_sure: Are you sure?
+    participant_will_be_deleted: Participant will be deleted form this trip
+    yes_delete: Yes, delete
+    cancel: Cancel
     my_trips: My travels
     update_successful: Successfully updated
     delete_confirm: Are you sure you want to delete that?

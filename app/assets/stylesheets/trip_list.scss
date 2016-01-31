@@ -14,7 +14,7 @@
       background-color: $background-grey;
 
       .tag {
-        border-style: solid !important;
+        @extend .tag.focused;
       }
     }
 

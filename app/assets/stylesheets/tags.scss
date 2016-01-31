@@ -11,16 +11,23 @@
   border: dashed 1px $border-grey;
   border-radius: 3px;
   padding: 4px;
+
+  &.focused {
+    border-style: solid;
+  }
 }
 
 .status-tag {
   &.bg-finished {
     border-color: $finished;
+    color: $finished;
   }
   &.bg-draft {
     border-color: $draft;
+    color: $draft;
   }
   &.bg-planned {
     border-color: $planned;
+    color: $planned;
   }
 }

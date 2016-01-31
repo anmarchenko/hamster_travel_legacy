@@ -18,6 +18,10 @@ ru:
       current_password_placeholder: для подтверждения изменений необходимо ввести текущий пароль
       trips: Путешествия
       delete_photo_cofirm: Вы уверены, что хотите удалить фото профиля?
+    are_you_sure: Вы уверены?
+    participant_will_be_deleted: Участник будет удален из этого путешествия
+    yes_delete: Да, удалить
+    cancel: Отмена
     my_trips: Мои путешествия
     update_successful: Изменения сохранены
     delete_confirm: Вы уверены? Удаление необратимо.

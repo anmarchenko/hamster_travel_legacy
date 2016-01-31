@@ -1,13 +1,14 @@
-.participants{'ng-controller' => 'ParticipantsController', 'ng-init' => 'loadParticipants()', 'ng-cloak' => ''}
+.participants{'ng-controller' => 'ParticipantsController', 'ng-init' => "loadParticipants();confirmationHeader = '#{t('common.are_you_sure')}'; confirmationText = '#{t('common.participant_will_be_deleted')}'; confirmationOk = '#{t('common.yes_delete')}'; confirmationCancel = '#{t('common.cancel')}'",
+'ng-cloak' => ''}
 
-  %span{'ng-repeat' => 'participant in participants track by participant.id', class: 'participant-link'}
+  %span{'ng-repeat' => 'participant in participants track by participant.id', class: 'participant-link','ng-init' => ""}
     = link_to '/users/{{participant.id}}' do
       %img.img-circle.small-profile-pic.participant.image-url{ 'ng-src' => '{{participant.photo_url}}',
         'tooltip-placement' => "bottom", 'tooltip' => '{{participant.name}}'}
     - if current_user == @trip.author_user
       %a{href: 'javascript:void(0);', 'ng-click' => "deleteUser(participant.id)", class: 'delete-action',
-        'ng-show' => "participant.id != #{current_user.id} && edit"}
-        = fa_icon 'times'
+        'ng-show' => "participant.id != #{current_user.id}"}
+        = image_tag 'buttons/delete.svg'
 
   %span{'ng-repeat' => 'participant in invited track by participant.id', class: 'participant-link'}
     = link_to '/users/{{participant.id}}' do
@@ -16,8 +17,8 @@
 
     - if current_user == @trip.author_user
       %a{href: 'javascript:void(0);', 'ng-click' => "deleteInvitedUser(participant.id)", class: 'delete-action',
-        'ng-show' => "participant.id != #{current_user.id} && edit"}
-        = fa_icon 'times'
+        'ng-show' => "participant.id != #{current_user.id}"}
+        = image_tag 'buttons/delete.svg'
 
   - if @user_can_edit
     %a{href: 'javascript:void(0)',
