@@ -38,6 +38,10 @@ module Travels
 
     default_scope { includes(:city_from, :city_to) }
 
+    before_save do |transfer|
+      transfer.set_date(transfer.day.date_when)
+    end
+
     module Types
       FLIGHT = 'flight'
       TRAIN = 'train'
@@ -71,15 +75,18 @@ module Travels
     end
 
     def set_date! new_date
-      return if self.start_time.blank? && self.end_time.blank?
-      days_period = (end_time.to_date - start_time.to_date).to_i
-      new_end_date = new_date + days_period.days
-
-      self.start_time = self.start_time.change(day: new_date.day, year: new_date.year, month: new_date.month)
-      self.end_time = self.end_time.change(day: new_end_date.day,
-                                           year: new_end_date.year,
-                                           month: new_end_date.month)
+      self.set_date(new_date)
       self.save
+    end
+
+    def set_date new_date
+      return if new_date.blank?
+      self.start_time = self.start_time.change(day: new_date.day,
+                                               year: new_date.year,
+                                               month: new_date.month) if self.start_time.present?
+      self.end_time = self.end_time.change(day: new_date.day,
+                                           year: new_date.year,
+                                           month: new_date.month) if self.end_time.present?
     end
 
     def as_json(*args)

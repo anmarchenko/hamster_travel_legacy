@@ -51,7 +51,6 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     addressable (2.3.6)
-    angular-ui-bootstrap-rails (0.13.3)
     angularjs-rails (1.4.0)
     angularjs-rails-resource (1.0.2)
     annotate (2.6.10)
@@ -398,7 +397,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  angular-ui-bootstrap-rails (= 0.13.3)
   angularjs-rails (= 1.4.0)
   angularjs-rails-resource (~> 1.0.0)
   annotate (~> 2.6.6)

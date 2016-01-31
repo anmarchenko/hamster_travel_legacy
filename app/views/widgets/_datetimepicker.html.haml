@@ -1,11 +1,12 @@
-- id ||= nil
 - link_default_text ||= nil
 - model ||= nil
 
-%a{id: id, class: 'dropdown-toggle', role: 'button', 'data-toggle' => 'dropdown', 'data-target' => '#', href: 'javascript:void(0);'}
-  = "{{#{model} | date:'dd.MM.yyyy HH:mm':'UTC' }}"
-  %span{'ng-show' => "!#{model}"}
-    = link_default_text
-%ul{class: 'dropdown-menu', role: 'menu', 'aria-labelledby' => 'dLabel'}
-  %datetimepicker{'data-ng-model'=> model,
-    'data-datetimepicker-config' => "{ dropdownSelector: '##{id}', weekStart: 1 }"}
+%label
+  = link_default_text
+%div
+  %uib-timepicker{'ng-model' => model, 'show-meridian' => 'false', 'show-spinners' => 'false',
+    'datetimepicker-neutral-timezone' => true, 'mousewheel' => 'false'}
+
+  %span.clear-time
+    %a{'ng-click' => "#{model} = null"}
+      = image_tag 'buttons/delete.svg'

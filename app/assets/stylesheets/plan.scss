@@ -20,7 +20,7 @@
       }
     }
 
-    .budget{
+    .budget {
       font-size: 18px;
       .budget-persons-input {
         margin-left: 5px;
@@ -167,6 +167,28 @@
         &:hover {
           background-color: $light-grey;
         }
+
+        label {
+          color: $main-grey;
+        }
+
+        .has-error {
+          input {
+            box-shadow: inset 0 -1px 0 #ddd !important;
+          }
+        }
+
+        .clear-time {
+          margin-left: 5px;
+          img {
+            margin-top: -25px;
+            width: 15px;
+          }
+        }
+
+        .uib-timepicker {
+          display: inline-block;
+        }
       }
 
       .transfer-show-container {
@@ -297,7 +319,6 @@
         padding: 2px 6px;
         border: 1px solid $border-grey;
         background-color: $background-grey;
-
 
         &:hover {
           border-color: $ctaColor;

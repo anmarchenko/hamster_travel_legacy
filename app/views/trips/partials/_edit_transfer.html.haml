@@ -19,14 +19,22 @@
     = render 'widgets/typeahead/cities', model_name: 'transfer.city_to', classes: 'input-sm form-control',
         placeholder: t('trips.show.to'), allow_empty_typeahead: true
 
+
 %div{'ng-show' => '!transfer.isCollapsed'}
   %div{class: 'form-group'}
+    %div{class: 'col-md-6'}
+      = text_field_tag 'transfer_station_from', '', 'ng-model' => 'transfer.station_from', class: 'input-sm form-control',
+          placeholder: t('trips.show.station_from')
+
+    %div{class: 'col-md-6'}
+      = text_field_tag 'transfer_station_to', '', 'ng-model' => 'transfer.station_to', class: 'input-sm form-control',
+          placeholder: t('trips.show.station_to')
+
+  %div{class: 'form-group'}
     %div{class: 'col-md-6 dropdown'}
-      = render 'widgets/datetimepicker', id: 'dropdown-time-start-{{day.id}}-{{$index}}',
-          link_default_text: t('trips.show.departure'), model: 'transfer.start_time'
+      = render 'widgets/datetimepicker', link_default_text: t('trips.show.departure'), model: 'transfer.start_time'
     %div{class: 'col-md-6 dropdown'}
-      = render 'widgets/datetimepicker', id: 'dropdown-time-end-{{day.id}}-{{$index}}',
-          link_default_text: t('trips.show.arrival'), model: 'transfer.end_time'
+      = render 'widgets/datetimepicker', link_default_text: t('trips.show.arrival'), model: 'transfer.end_time'
 
   %div{class: 'form-group'}
     %div{class: 'col-md-12'}
@@ -50,12 +58,4 @@
       = text_field_tag 'transfer_company', '', 'ng-model' => 'transfer.company', class: 'input-sm form-control',
           placeholder: t('trips.show.carrier')
 
-  %div{class: 'form-group'}
-    %div{class: 'col-md-6'}
-      = text_field_tag 'transfer_station_from', '', 'ng-model' => 'transfer.station_from', class: 'input-sm form-control',
-          placeholder: t('trips.show.station_from')
-
-    %div{class: 'col-md-6'}
-      = text_field_tag 'transfer_station_to', '', 'ng-model' => 'transfer.station_to', class: 'input-sm form-control',
-          placeholder: t('trips.show.station_to')
 
