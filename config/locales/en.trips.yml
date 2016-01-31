@@ -91,6 +91,8 @@ en:
       catering_delete: Delete section
       catering_sum: Expenses
       catering_add: Add section
+      catering_add_info: Add here information about planned food expenses and national cuisine.
+      catering_call_to_action: "Let's go"
       overall: overall
       add_friend: Invite friend
       type_name: Friend's name

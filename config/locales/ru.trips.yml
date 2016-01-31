@@ -91,6 +91,8 @@ ru:
       catering_days_show: дней
       catering_sum: Сумма
       catering_add: Добавить секцию
+      catering_add_info: Добавьте сюда планируемые расходы на еду и информацию о национальной кухне.
+      catering_call_to_action: Поехали
       overall: всего
       add_friend: Пригласить друга
       type_name: Имя друга

@@ -11,6 +11,17 @@
       .col-md-12
         = render 'trips/partials/buttons'
 
+  %div.catering-empty-state{'ng-if' => 'caterings.length == 0 && !edit'}
+    %div.image
+      = image_tag 'catering/cup.svg'
+    %div.description
+      = t('trips.show.catering_add_info')
+
+    %div.call-to-action
+      %a.btn.btn-primary{href: 'javascript:void(0);',
+      'ng-click' => "add(caterings, {persons_count: trip.budget_for, days_count: 1, #{default_currency_hash(@trip, current_user)}}) && setEdit(true)"}
+        = t('trips.show.catering_call_to_action')
+
   %div.catering-container{'ng-repeat' => 'catering in caterings track by catering.id'}
 
     .catering-show{'ng-show' => '!edit'}
