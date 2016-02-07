@@ -199,14 +199,71 @@
 
       .transfer-show-container {
         padding: 5px;
-        margin-bottom: 10px;
+        margin-bottom: 30px;
+        display: flex;
+        flex-direction: column;
 
         &:hover {
           background-color: $light-grey;
         }
 
-        .header {
+        .transfer-direction {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+
+          .transfer-element {
+            margin-right: 25px;
+          }
+
+          .transfer-city {
+            .city-name {
+              font-size: 16px;
+              text-align: center;
+            }
+            .station-name {
+              font-size: 14px;
+              color: $text-grey;
+              text-align: center;
+            }
+            .time {
+              font-size: 18px;
+              margin-top: 5px;
+
+              text-align: center;
+            }
+          }
+
+          .transfer-icon {
+            font-size: 20px;
+            color: $main-grey;
+            opacity: .5;
+
+            img {
+              width: 30px;
+            }
+          }
         }
+
+        .transfer-price, .transfer-company {
+          margin-top: 10px;
+          img {
+            width: 15px;
+            margin-right: 5px;
+            opacity: .6;
+          }
+        }
+
+        .transfer-company {
+          img {
+            opacity: .8;
+          }
+        }
+
+        .transfer-comment {
+          margin-top: 10px;
+        }
+
       }
     }
 

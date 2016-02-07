@@ -1,31 +1,29 @@
-%p.header
-  %span{'ng-show' => '!!transfer.type_icon'}
-    %i{class: '{{transfer.type_icon}}'}
-  %span
-    {{transfer.city_from_text}}
-    %span{'ng-show' => '!!transfer.station_from'}
-      ({{transfer.station_from}})
-  = fa_icon 'arrow-right'
-  %span
-    {{transfer.city_to_text}}
-    %span{'ng-show' => '!!transfer.station_to'}
-      ({{transfer.station_to}})
-  %span{'ng-show' => 'transfer.amount_cents != undefined'}
-    {{transfer.amount_cents / 100.0 | number: 2}}
-    {{transfer.amount_currency_text}}
+.transfer-direction
+  .transfer-city.transfer-element
+    .city-name
+      {{transfer.city_from_text}}
+    .station-name
+      {{transfer.station_from}}
+    .time
+      {{transfer.start_time | date:'HH:mm':'UTC'}}
+  .transfer-icon.transfer-element
+    %img{src:'{{transfer.type_icon}}'}
+  .transfer-city.transfer-element
+    .city-name
+      {{transfer.city_to_text}}
+    .station-name
+      {{transfer.station_to}}
+    .time
+      {{transfer.end_time | date:'HH:mm':'UTC'}}
 
-%p
-  %span{'ng-show' => '!!transfer.code'}
-    {{transfer.code}}
-  %span{'ng-show' => '!!transfer.company'}
-    {{transfer.company}}
+.transfer-price{'ng-show' => 'transfer.amount_cents != undefined'}
+  = image_tag 'common/money.svg'
+  {{transfer.amount_cents / 100.0 | number: 2}}
+  {{transfer.amount_currency_text}}
 
-%p{'ng-show' => '!!transfer.start_time'}
-  = t('trips.show.departure')
-  {{transfer.start_time | date:'HH:mm':'UTC'}}
+.transfer-company{'ng-show' => '!!transfer.code || !!transfer.company'}
+  = image_tag 'transfers/tickets.svg'
+  {{transfer.code}}
+  {{transfer.company}}
 
-%p{'ng-show' => '!!transfer.end_time'}
-  = t('trips.show.arrival')
-  {{transfer.end_time | date:'HH:mm':'UTC'}}
-
-%p{'ng-show' => '!!transfer.comment', class: 'text text-italic' } {{transfer.comment}}
+.transfer-comment.text.text-italic{'ng-show' => '!!transfer.comment'} {{transfer.comment}}

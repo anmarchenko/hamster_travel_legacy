@@ -53,12 +53,12 @@ module Travels
       ALL = [FLIGHT, TRAIN, TAXI, BUS, BOAT, PERSONAL_CAR]
       OPTIONS = ALL.map { |type| ["common.#{type}", type] }
       ICONS = {
-          FLIGHT => 'fa fa-plane',
-          TRAIN => 'fa fa-train',
-          TAXI => 'fa fa-taxi',
-          BUS => 'fa fa-bus',
-          BOAT => 'fa fa-ship',
-          PERSONAL_CAR => 'fa fa-car'
+          FLIGHT => 'plane.svg',
+          TRAIN => 'train.svg',
+          TAXI => 'taxi.svg',
+          BUS => 'bus.svg',
+          BOAT => 'boat.svg',
+          PERSONAL_CAR => 'car.svg'
       }
     end
 
@@ -71,7 +71,9 @@ module Travels
     end
 
     def type_icon
-      Types::ICONS[type] unless type.blank?
+      icon = ActionController::Base.helpers.image_path("transfers/#{Types::ICONS[type]}") unless type.blank?
+      icon = ActionController::Base.helpers.image_path("transfers/arrow.svg") if icon.blank?
+      icon
     end
 
     def set_date! new_date

@@ -47,7 +47,7 @@
               = t('trips.show.catering_days_show')
           %hr
           .catering-value
-            = image_tag 'catering/money.svg'
+            = image_tag 'common/money.svg'
             %span.catering-value-text
               = t('trips.show.catering_sum')
               {{(catering.amount_cents || 0) * (catering.persons_count || 0) * (catering.days_count || 0) / 100.0 | number: 2}}&nbsp;{{catering.amount_currency_text}}
@@ -78,7 +78,7 @@
             = label_tag 'catering_days', t('trips.show.catering_days')
             = number_field_tag 'catering_days', '', {class: 'form-control-inline form-control', 'ng-model' => 'catering.days_count', min: 0}
           .form-group.catering-value
-            = image_tag 'catering/money.svg'
+            = image_tag 'common/money.svg'
             %span.catering-value-text
               = t('trips.show.catering_sum')
               {{(catering.amount_cents || 0) * (catering.persons_count || 0) * (catering.days_count || 0) / 100.0 | number: 2}}&nbsp;{{catering.amount_currency_text}}

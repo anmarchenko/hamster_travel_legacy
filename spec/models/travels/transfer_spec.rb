@@ -33,12 +33,12 @@ describe Travels::Transfer do
   describe '#type_icon' do
     context 'when empty transfer type' do
       it 'is nil' do
-        expect(transfer_empty.type_icon).to be_nil
+        expect(transfer_empty.type_icon).to eq('/assets/transfers/arrow.svg')
       end
     end
     context 'when transfer has type' do
       it 'is from constant' do
-        expect(transfer_flight.type_icon).to eq('fa fa-plane')
+        expect(transfer_flight.type_icon).to eq('/assets/transfers/plane.svg')
       end
     end
   end
