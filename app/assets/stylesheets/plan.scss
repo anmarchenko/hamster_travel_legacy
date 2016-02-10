@@ -180,7 +180,7 @@
 
         .clear-time {
           margin-left: 2px;
-          opacity: .5;
+          opacity: .3;
           cursor: pointer;
           img {
             margin-top: -25px;
@@ -225,7 +225,10 @@
               font-size: 14px;
               color: $text-grey;
               text-align: center;
-              min-height: 25px;
+
+              &.min-height {
+                min-height: 25px;
+              }
             }
             .time {
               font-size: 18px;

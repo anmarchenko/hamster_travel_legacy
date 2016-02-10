@@ -1,8 +1,8 @@
-.transfer-direction
+.transfer-direction{'ng-init' => 'min_height_station = (!!transfer.station_from != !!transfer.station_to)'}
   .transfer-city.transfer-element
     .city-name
       {{transfer.city_from_text}}
-    .station-name
+    .station-name{'ng-class' => "{'min-height': min_height_station}"}
       {{transfer.station_from}}
     .time
       {{transfer.start_time | date:'HH:mm':'UTC'}}
@@ -11,7 +11,7 @@
   .transfer-city.transfer-element
     .city-name
       {{transfer.city_to_text}}
-    .station-name
+    .station-name{'ng-class' => "{'min-height': min_height_station}"}
       {{transfer.station_to}}
     .time
       {{transfer.end_time | date:'HH:mm':'UTC'}}
