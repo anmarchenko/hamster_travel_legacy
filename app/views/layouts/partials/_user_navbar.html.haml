@@ -11,20 +11,20 @@
         %li
           = link_to messages_path do
             %strong
-              = fa_icon 'envelope', text: "#{t('common.invites')} (#{invites_count})"
+              = "#{t('common.invites')} (#{invites_count})"
       %li
         = link_to user_path(current_user) do
-          = fa_icon 'user', text: t('common.profile')
+          = t('common.profile')
       %li
         = link_to edit_user_path(current_user) do
-          = fa_icon 'gear', text: t('common.settings')
+          = t('common.settings')
       %li
         = link_to edit_user_registration_path do
-          = fa_icon 'edit', text: t('common.edit_user')
+          = t('common.edit_user')
       %li{class: 'divider'}
       %li
         = link_to destroy_user_session_path, method: :delete do
-          = fa_icon 'sign-out', text: t('common.sign_out')
+          = t('common.sign_out')
 - else
   %li
     = link_to t('common.sign_in'), new_user_session_path

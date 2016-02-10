@@ -3,17 +3,9 @@
   %div{class: 'container'}
 
     %div{class: 'navbar-header'}
-
-      %button{type: 'button', 'data-toggle' => 'collapse', 'data-target' => '.navbar-collapse', class: 'navbar-toggle'}
-        %span{class: 'icon-bar'}
-        %span{class: 'icon-bar'}
-        %span{class: 'icon-bar'}
-
       = link_to t('.apptitle'), root_path, {class: 'navbar-brand'}
 
-    %nav{class: 'navbar-collapse collapse'}
-
-
+    %nav
       %ul{class: 'nav navbar-nav'}
 
       %ul{class: 'nav navbar-nav navbar-right'}
@@ -25,7 +17,7 @@
           %li
             = link_to t('.my_ideas'), trips_path(my_draft: true)
           %li
-            = link_to new_trip_path do
-              = fa_icon 'plus', text: t('trips.index.create')
+            = link_to new_trip_path, class: 'add-trip-header-btn' do
+              = t('trips.index.create')
         = render 'layouts/partials/locale_bar'
         = render 'layouts/partials/user_navbar'

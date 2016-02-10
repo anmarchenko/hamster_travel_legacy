@@ -13,18 +13,41 @@
 
 header {
   z-index: 10;
+
+  .add-trip-header-btn {
+    border: 2px solid $ctaColor;
+    color: $ctaColor !important;
+    border-radius: 2px;
+    margin-top: 15.5px;
+    margin-bottom: 15.5px;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+
+    &:hover {
+      background-color: $background-grey !important;
+    }
+  }
 }
 
 .navbar-transparent {
   background-color: rgba(255, 255, 255, 0.8);
   a {
-    color: #444444 !important;
+    color: #444444;
+  }
+}
+
+@media(max-width: 992px) {
+  .navbar-transparent {
+    background-color: rgba(255, 255, 255, 1);
   }
 }
 
 .welcome-area {
   padding-top: 14%;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0, 0, 0, 0.4);
   height: 100%;
   text-align: center;
   .btn-browse {
@@ -64,16 +87,16 @@ header {
   }
 }
 
-.dropdown-toggle{
+.dropdown-toggle {
   cursor: pointer;
 }
 
-.img-nav{
+.img-nav {
   height: 40px;
   margin-right: 5px;
 }
 
-.user-menu-toggle{
+.user-menu-toggle {
   padding-top: 10px !important;
   padding-bottom: 10px !important;
 
@@ -94,6 +117,6 @@ header {
   }
 }
 
-.big-control{
+.big-control {
   font-size: 16px;
 }
