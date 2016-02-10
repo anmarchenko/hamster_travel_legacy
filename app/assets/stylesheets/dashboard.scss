@@ -25,11 +25,18 @@ header {
     padding-left: 10px;
     padding-right: 10px;
     text-align: center;
+    margin-left: 10px;
+    margin-right: 10px;
 
     &:hover {
       background-color: $background-grey !important;
     }
   }
+
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus {
+  background-color: inherit !important;
 }
 
 .navbar-transparent {
