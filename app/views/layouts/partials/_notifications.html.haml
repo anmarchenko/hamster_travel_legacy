@@ -1,0 +1,14 @@
+- if user_signed_in?
+  %li{class: 'dropdown notifications', 'ng-if' => 'invites.length > 0'}
+    %a{href: '#', class: 'dropdown-toggle notification-menu', 'data-toggle' => 'dropdown'}
+      = image_tag 'common/bell.svg', class: 'notification-image'
+    %ul{class: 'dropdown-menu'}
+      %li.invites{'ng-repeat' => 'invite in invites'}
+        %span
+          %a.invite-text
+            {{invite.text}}
+
+          %a.delete-img{href: 'javascript:void(0);'}
+            = image_tag 'buttons/delete.svg'
+          %a.approve-img{href: 'javascript:void(0);'}
+            = image_tag 'common/check.svg'

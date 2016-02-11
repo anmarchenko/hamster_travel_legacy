@@ -3,15 +3,7 @@
     %a{href: '#', class: 'dropdown-toggle user-menu-toggle', 'data-toggle' => 'dropdown'}
       %img.img-circle.img-nav{id: 'profile_image', src: current_user.image_url_or_default}
       - invites_count = current_user.incoming_invites.count
-      - if invites_count > 0
-        %span.incoming-invites
-          = invites_count
     %ul{class: 'dropdown-menu'}
-      - if invites_count > 0
-        %li
-          = link_to messages_path do
-            %strong
-              = "#{t('common.invites')} (#{invites_count})"
       %li
         = link_to user_path(current_user) do
           = t('common.profile')

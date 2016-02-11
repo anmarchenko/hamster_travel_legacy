@@ -18,6 +18,12 @@ module Travels
 
     validates :invited_user_id, uniqueness: {scope: :trip_id}
 
+    def as_json(*args)
+      res = super
+      res['text'] = "#{self.inviting_user.full_name} #{I18n.t('messages.index.invites_you_to')} \"#{self.trip.name}\""
+      res
+    end
+
   end
 
 end

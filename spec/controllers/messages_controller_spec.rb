@@ -3,7 +3,6 @@ describe MessagesController do
   describe '#index' do
 
     context 'when user is logged in' do
-      after { expect(response).to render_template 'messages/index' }
 
       login_user
 
@@ -16,11 +15,11 @@ describe MessagesController do
 
       it 'shows trips index page, all trips that are not draft' do
         get 'index'
-        invites = assigns(:invites)
-        expect(invites.count).to eq(1)
-        expect(invites.first.trip).to eq(trip)
-        expect(invites.first.inviting_user).to eq(some_user)
-        expect(invites.first.invited_user).to eq(subject.current_user)
+        json = JSON.parse(response.body)
+        expect(json['invites'].count).to eq(1)
+        expect(json['invites'].first['trip_id']).to eq(trip.id)
+        expect(json['invites'].first['inviting_user_id']).to eq(some_user.id)
+        expect(json['invites'].first['invited_user_id']).to eq(subject.current_user.id)
       end
 
     end

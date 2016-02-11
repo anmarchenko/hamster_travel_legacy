@@ -34,6 +34,62 @@ header {
   }
 
 }
+.notifications {
+  .notification-image {
+    max-height: 25px;
+  }
+
+  .notification-menu {
+
+  }
+
+  .invites {
+    span {
+      display: flex;
+      align-items: center;
+      padding: 3px 20px;
+      clear: both;
+      font-weight: normal;
+      line-height: 1.846;
+      color: #666666;
+      min-width: 300px;
+
+      a {
+        margin-left: 5px;
+        margin-right: 5px;
+
+        &:hover {
+          text-decoration: none;
+        }
+
+        &.delete-img {
+          opacity: .5;
+          img {
+            height: 13px;
+          }
+          &:hover {
+            opacity: 1;
+          }
+        }
+
+        &.approve-img {
+          opacity: .5;
+          img {
+            height: 20px;
+          }
+          &:hover {
+            opacity: 1;
+          }
+        }
+      }
+
+      .invite-text {
+        min-width: 300px;
+      }
+    }
+  }
+
+}
 
 .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus {
   background-color: inherit !important;

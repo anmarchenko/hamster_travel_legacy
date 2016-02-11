@@ -1,6 +1,7 @@
 class Api::TripInvitesController < ApplicationController
 
   respond_to :json
+
   before_filter :find_trip
   before_filter :authenticate_user!
   before_filter :authorize
