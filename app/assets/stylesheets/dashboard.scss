@@ -40,7 +40,7 @@ header {
   }
 
   .notification-menu {
-
+    // add here position: relative
   }
 
   .invites {
@@ -64,6 +64,7 @@ header {
 
         &.delete-img {
           opacity: .5;
+          margin-left: 15px;
           img {
             height: 13px;
           }
