@@ -21,6 +21,7 @@ module Travels
     def as_json(*args)
       res = super
       res['inviting_user_name'] = self.inviting_user.full_name
+      res['inviting_user_photo_url'] = self.inviting_user.image_url_or_default
       res['trip_name'] = self.trip.name
       res
     end

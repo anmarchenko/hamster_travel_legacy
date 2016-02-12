@@ -1,18 +1,27 @@
 - if user_signed_in?
+
   %li{class: 'dropdown notifications', 'ng-controller' => 'NotificationsController', 'ng-cloak' => ''}
-    %a{href: '#', class: 'dropdown-toggle notification-menu', 'data-toggle' => 'dropdown', 'ng-if' => 'invites.length > 0'}
+
+    %script{type: 'text/ng-template', id: 'inviteNotificationPopover.html'}
+      %ul.notifications-popover
+        %li{'ng-repeat' => 'invite in invites'}
+          %a.notification-column{href: '/users/{{invite.inviting_user_id}}'}
+            %img.img-circle.small-profile-pic.image-url{ 'ng-src' => '{{invite.inviting_user_photo_url}}'}
+
+          .invite-text.notification-column
+            {{invite.inviting_user_name}}
+            = t('messages.index.invites_you_to')
+            %span.invite-text-trip-name
+              {{invite.trip_name}}
+
+          %a.action.delete-img.notification-column{href: 'javascript:void(0);', 'ng-click' => 'decline(invite.id)'}
+            = image_tag 'buttons/delete.svg'
+          %a.action.approve-img.notification-column{href: 'javascript:void(0);', 'ng-click' => 'accept(invite.id)'}
+            = image_tag 'common/check.svg'
+
+    %a{href: 'javascript:void(0)', 'ng-if' => 'invites.length > 0', class: 'notification-menu',
+        'uib-popover-template' => "'inviteNotificationPopover.html'",
+        'popover-placement' => 'bottom', 'popover-trigger' => 'outsideClick'}
       = image_tag 'common/bell.svg', class: 'notification-image'
       .pending-number
         {{invites.length > 9 ? '*' : invites.length }}
-    %ul{class: 'dropdown-menu'}
-      %li.invites{'ng-repeat' => 'invite in invites'}
-        %span
-          %a.invite-text
-            {{invite.inviting_user_name}}
-            = t('messages.index.invites_you_to')
-            "{{invite.trip_name}}"
-
-          %a.delete-img{href: 'javascript:void(0);'}
-            = image_tag 'buttons/delete.svg'
-          %a.approve-img{href: 'javascript:void(0);'}
-            = image_tag 'common/check.svg'

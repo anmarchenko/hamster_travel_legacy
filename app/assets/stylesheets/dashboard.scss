@@ -34,6 +34,70 @@ header {
   }
 
 }
+
+.notifications-popover {
+  padding: 0;
+  list-style: none;
+  list-style-image: none;
+
+  li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 320px;
+    margin-bottom: 20px;
+
+    .small-profile-pic {
+      width: 36px;
+    }
+
+    .notification-column {
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+
+    .invite-text {
+      color: $text-grey;
+      font-size: 12px;
+
+      .invite-text-trip-name {
+        color: black;
+      }
+    }
+
+    .action {
+      border-radius: 50%;
+      border: 1px solid $border-grey;
+
+      img {
+        opacity: .4;
+      }
+
+      &:hover {
+        border-color: black;
+        img {
+          opacity: 1;
+        }
+      }
+    }
+
+    .delete-img {
+      padding: 3px 10px;
+      img {
+        width: 8px;
+      }
+    }
+
+    .approve-img {
+      padding: 3px 8px;
+      img {
+        width: 12px;
+      }
+    }
+  }
+
+}
+
 .notifications {
   .notification-image {
     max-height: 25px;
