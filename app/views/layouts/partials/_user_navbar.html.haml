@@ -17,7 +17,7 @@
 
   %li.dropdown
     %a{href: '#', class: 'user-menu-toggle', 'uib-popover-template' => "'profileMenu.html'",
-        'popover-placement' => 'bottom', 'popover-trigger' => 'outsideClick'}
+        'popover-placement' => 'bottom-right', 'popover-trigger' => 'outsideClick'}
       %img.img-circle.img-nav{id: 'profile_image', src: current_user.image_url_or_default}
 - else
   %li

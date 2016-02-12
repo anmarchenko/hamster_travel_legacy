@@ -2,23 +2,26 @@
 %header{class: "navbar navbar-default #{'navbar-transparent' if transparent}"}
   %div{class: 'container'}
 
-    %div{class: 'navbar-header'}
-      = link_to t('.apptitle'), root_path, {class: 'navbar-brand'}
-
     %nav
       %ul{class: 'nav navbar-nav'}
+        = link_to t('.apptitle'), root_path, {class: 'navbar-brand hidden-xs'}
+        = link_to root_path, {class: 'navbar-brand hidden-sm hidden-md hidden-lg'} do
+          = image_tag 'logo.svg'
+
 
       %ul{class: 'nav navbar-nav navbar-right'}
         - if user_signed_in?
           %li
-            = link_to new_trip_path, class: 'add-trip-header-btn' do
+            = link_to new_trip_path, class: 'add-trip-header-btn hidden-xs' do
               = t('trips.index.create')
-        %li
+            = link_to new_trip_path, class: 'add-trip-header-btn-image hidden-sm hidden-md hidden-lg' do
+              = image_tag 'common/add.svg'
+        %li.hidden-xs
           = link_to t('.trips'), trips_path
         - if user_signed_in?
-          %li
+          %li.hidden-xs
             = link_to t('.my_trips'), trips_path(my: true)
-          %li
+          %li.hidden-xs
             = link_to t('.my_ideas'), trips_path(my_draft: true)
 
         = render 'layouts/partials/locale_bar'

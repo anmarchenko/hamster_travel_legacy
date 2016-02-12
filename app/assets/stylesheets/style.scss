@@ -1,5 +1,4 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,300italic,300,600,600italic,700,700italic);
-
 @import "sweetalert2";
 @import "colors";
 @import "screen-sizes";
@@ -40,4 +39,35 @@
 
 .popover-content {
   padding: 0;
+}
+
+.navbar-nav > li, .navbar-nav {
+  float: left !important;
+}
+
+.navbar-right {
+  float: right !important;
+}
+
+.navbar-brand {
+  img {
+    height: 36px;
+    margin-top: -6px;
+  }
+}
+
+@media(max-width: 768px) {
+  .navbar-nav > li > a {
+    padding-top: 20.5px;
+    padding-bottom: 20.5px;
+  }
+
+  .navbar-nav {
+    margin: 0;
+  }
+
+  .nav > li > a {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }

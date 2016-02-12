@@ -33,6 +33,13 @@ header {
     }
   }
 
+  .add-trip-header-btn-image {
+    img {
+      max-height: 24px;
+      opacity: .8;
+    }
+  }
+
 }
 
 .menu-options-popover {
@@ -87,14 +94,25 @@ header {
     align-items: center;
     width: 320px;
     margin-bottom: 20px;
+    @media(max-width: 768px) {
+      width: 240px;
+    }
 
     .small-profile-pic {
       width: 36px;
+
+      @media(max-width: 768px) {
+        display: none;
+      }
     }
 
     .notification-column {
       margin-left: 5px;
       margin-right: 5px;
+      @media(max-width: 768px) {
+        margin-left: 2px;
+        margin-right: 2px;
+      }
     }
 
     .invite-text {
@@ -161,6 +179,10 @@ header {
       font-size: 10px;
       line-height: 10px;
       padding: 3px 5px;
+
+      @media(max-width: 768px) {
+        right: 7px;
+      }
     }
   }
 
