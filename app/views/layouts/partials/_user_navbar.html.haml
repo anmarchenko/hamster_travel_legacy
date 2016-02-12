@@ -1,24 +1,24 @@
 - if user_signed_in?
-  %li{class: 'dropdown'}
-    %a{href: '#', class: 'dropdown-toggle user-menu-toggle', 'data-toggle' => 'dropdown'}
-      %img.img-circle.img-nav{id: 'profile_image', src: current_user.image_url_or_default}
-      - invites_count = current_user.incoming_invites.count
-    %ul{class: 'dropdown-menu'}
-      %li
+  %script{type: 'text/ng-template', id: 'profileMenu.html'}
+    %ul.menu-options-popover
+      %li.major
         = link_to user_path(current_user) do
           = t('common.profile')
-      %li
+      %li.major
         = link_to edit_user_path(current_user) do
           = t('common.settings')
-      %li
+      %li.major
         = link_to edit_user_registration_path do
           = t('common.edit_user')
-      %li{class: 'divider'}
-      %li
+      %li.divider
+      %li.minor
         = link_to destroy_user_session_path, method: :delete do
           = t('common.sign_out')
+
+  %li.dropdown
+    %a{href: '#', class: 'user-menu-toggle', 'uib-popover-template' => "'profileMenu.html'",
+        'popover-placement' => 'bottom', 'popover-trigger' => 'outsideClick'}
+      %img.img-circle.img-nav{id: 'profile_image', src: current_user.image_url_or_default}
 - else
   %li
     = link_to t('common.sign_in'), new_user_session_path
-  -#%li
-  -#  = link_to t('common.sign_up'), new_user_registration_path

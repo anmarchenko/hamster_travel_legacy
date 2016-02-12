@@ -15,7 +15,7 @@
         {{match.label}}
 
   %script{type: 'text/ng-template', id: 'invitePopover.html'}
-    .form-group
+    .form-group.invite-users-popover
       = render 'widgets/typeahead/users', model_name: 'selected_user', classes: 'form-control',
         placeholder: t('trips.show.type_name'), show_loading: false, custom_attrs: {'focus-on' => 'popover_opened'}
 

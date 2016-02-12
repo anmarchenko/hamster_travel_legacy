@@ -1,12 +1,15 @@
-%li{class: 'dropdown'}
-  %a{href: '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown'}
-    = flag I18n.locale == :ru ? 'ru' : 'gb'
-  %ul{class: 'dropdown-menu'}
-    %li.flag-text
+%script{type: 'text/ng-template', id: 'localeMenu.html'}
+  %ul.menu-options-popover
+    %li.flag-text-menu
       = link_to locale: 'ru' do
-        = flag 'ru'
+        = flag 'ru', 24
         Русский
-    %li.flag-text
+    %li.flag-text-menu
       = link_to locale: 'en' do
-        = flag 'gb'
+        = flag 'gb', 24
         English
+
+%li.dropdown
+  %a{href: '#', 'uib-popover-template' => "'localeMenu.html'", 'popover-placement' => 'bottom',
+  'popover-trigger' => 'outsideClick'}
+    = flag I18n.locale == :ru ? 'ru' : 'gb'
