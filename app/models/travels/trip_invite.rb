@@ -20,7 +20,8 @@ module Travels
 
     def as_json(*args)
       res = super
-      res['text'] = "#{self.inviting_user.full_name} #{I18n.t('messages.index.invites_you_to')} \"#{self.trip.name}\""
+      res['inviting_user_name'] = self.inviting_user.full_name
+      res['trip_name'] = self.trip.name
       res
     end
 

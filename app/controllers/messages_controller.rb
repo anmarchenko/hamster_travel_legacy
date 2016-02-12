@@ -6,7 +6,7 @@ class MessagesController < ApplicationController
   before_filter :authorize!, only: [:update, :destroy]
 
   def index
-    render json: {invites: current_user.incoming_invites.includes(:inviting_user, :trip)}
+    render json: {invites: current_user.incoming_invites.includes(:inviting_user, :trip).limit(10)}
   end
 
   def destroy
