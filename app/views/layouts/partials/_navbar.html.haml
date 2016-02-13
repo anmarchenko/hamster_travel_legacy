@@ -8,14 +8,13 @@
         = link_to root_path, {class: 'navbar-brand hidden-sm hidden-md hidden-lg'} do
           = image_tag 'logo.svg'
 
-
       %ul{class: 'nav navbar-nav navbar-right'}
         - if user_signed_in?
           %li
             = link_to new_trip_path, class: 'add-trip-header-btn hidden-xs' do
               = t('trips.index.create')
             = link_to new_trip_path, class: 'add-trip-header-btn-image hidden-sm hidden-md hidden-lg' do
-              = image_tag 'common/add.svg'
+              = image_tag 'buttons/add.svg'
         %li.hidden-xs
           = link_to t('.trips'), trips_path
         - if user_signed_in?
