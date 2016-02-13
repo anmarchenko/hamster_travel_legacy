@@ -1,5 +1,5 @@
 - transparent ||= false
-%header{class: "navbar navbar-default #{'navbar-transparent' if transparent}"}
+%header{class: "navbar navbar-default navbar-first-mobile #{'navbar-transparent' if transparent}"}
   %div{class: 'container'}
 
     %nav
@@ -27,3 +27,14 @@
         = render 'layouts/partials/locale_bar'
         = render 'layouts/partials/notifications'
         = render 'layouts/partials/user_navbar'
+
+%div{class: "navbar navbar-default navbar-second-mobile hidden-sm hidden-md hidden-lg #{'navbar-transparent' if transparent}"}
+  %div{class: 'container'}
+    %ul{class: 'nav navbar-nav'}
+      %li
+        = link_to t('.trips'), trips_path
+      - if user_signed_in?
+        %li
+          = link_to t('.my_trips'), trips_path(my: true)
+        %li
+          = link_to t('.my_ideas'), trips_path(my_draft: true)
