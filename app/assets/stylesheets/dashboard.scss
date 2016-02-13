@@ -12,7 +12,7 @@
 }
 
 header {
-  z-index: 10;
+  z-index: 2;
 
   .add-trip-header-btn {
     border: 2px solid $ctaColor;
@@ -249,7 +249,7 @@ header {
   }
 
   .navbar-second-mobile {
-    z-index: 10;
+    z-index: 1;
   }
 
 }
