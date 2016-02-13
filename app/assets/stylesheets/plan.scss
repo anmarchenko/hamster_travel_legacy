@@ -32,8 +32,72 @@
 
     .nav-tabs {
       margin-bottom: 15px;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      font-weight: 300;
+      font-size: 1.25em;
+      position: relative;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: -moz-flex;
+      display: -ms-flex;
+      display: flex;
+      padding: 0;
+      max-width: 1200px;
+      list-style: none;
+      -ms-box-orient: horizontal;
+      -ms-box-pack: center;
+      -webkit-flex-flow: row wrap;
+      -moz-flex-flow: row wrap;
+      -ms-flex-flow: row wrap;
+      flex-flow: row wrap;
+      @media (max-width: 768px) {
+        -webkit-justify-content: space-between;
+        -moz-justify-content: space-between;
+        -ms-justify-content: space-between;
+        justify-content: space-between;
+      }
       li {
         margin-right: 20px;
+        text-align: center;
+        @media (max-width: 768px) {
+          margin-right: 10px;
+        }
+        .tab-image {
+          fill: $text-grey;
+          stroke: $text-grey;
+          width: 26px;
+          height: 26px;
+          margin-right: 7px;
+          display: inline-block;
+          margin-bottom: -10px;
+          @media (max-width: 768px) {
+            margin-right: 0;
+          }
+        }
+
+        a {
+          -webkit-box-shadow: inset 0 -2px 0 #ddd;
+          box-shadow: inset 0 -2px 0 #ddd;
+        }
+
+        a:hover {
+          .tab-image {
+            fill: $ctaColor;
+            stroke: $ctaColor;
+          }
+        }
+      }
+      li.active a, li.active a:focus {
+        border: none;
+        -webkit-box-shadow: inset 0 -2px 0 $ctaColor;
+        box-shadow: inset 0 -2px 0 $ctaColor;
+        color: $ctaColor;
+        .tab-image {
+          fill: $ctaColor;
+          stroke: $ctaColor;
+        }
       }
     }
 

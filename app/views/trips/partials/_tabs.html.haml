@@ -1,9 +1,21 @@
 %ul.nav.nav-tabs
   %li{class: ('active' if params[:tab].blank? || params[:tab] == ApplicationHelper::TAB_PLAN)}
-    = link_to t('trips.show.plan'), trip_path(@trip, tab: ApplicationHelper::TAB_PLAN, anchor: 'plan_area')
+    = link_to trip_path(@trip, tab: ApplicationHelper::TAB_PLAN, anchor: 'plan_area') do
+      = inline_svg 'plan/transfers.svg', class: 'tab-image transfers-img'
+      %span.hidden-xs
+        = t('trips.show.plan')
   %li{class: ('active' if params[:tab] == ApplicationHelper::TAB_PLAN_ACTIVITIES)}
-    = link_to t('trips.show.plan_activities'), trip_path(@trip, tab: ApplicationHelper::TAB_PLAN_ACTIVITIES, anchor: 'plan_area')
+    = link_to trip_path(@trip, tab: ApplicationHelper::TAB_PLAN_ACTIVITIES, anchor: 'plan_area') do
+      = inline_svg 'plan/activities.svg', class: 'tab-image activities-img'
+      %span.hidden-xs
+        = t('trips.show.plan_activities')
   %li{class: ('active' if params[:tab] == ApplicationHelper::TAB_CATERING)}
-    = link_to t('trips.show.catering'), trip_path(@trip, tab: ApplicationHelper::TAB_CATERING, anchor: 'plan_area')
+    = link_to trip_path(@trip, tab: ApplicationHelper::TAB_CATERING, anchor: 'plan_area') do
+      = inline_svg 'plan/catering.svg', class: 'tab-image catering-img'
+      %span.hidden-xs
+        = t('trips.show.catering')
   %li{class: ('active' if params[:tab] == ApplicationHelper::TAB_REPORT)}
-    = link_to t('trips.show.report'), trip_path(@trip, tab: ApplicationHelper::TAB_REPORT, anchor: 'plan_area')
+    = link_to trip_path(@trip, tab: ApplicationHelper::TAB_REPORT, anchor: 'plan_area') do
+      = inline_svg 'plan/report.svg', class: 'tab-image report-img'
+      %span.hidden-xs
+        = t('trips.show.report')

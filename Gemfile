@@ -93,6 +93,9 @@ gem 'config'
 # translations
 gem 'globalize', '~> 5.0.0'
 
+# inline svg for styling
+gem 'inline_svg'
+
 # production caching
 group :production do
   gem 'rack-cache', :require => 'rack/cache'
