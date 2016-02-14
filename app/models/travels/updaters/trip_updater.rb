@@ -58,7 +58,7 @@ module Travels
           process_nested(day.places, day_hash[:places] || [])
 
           process_ordered(day_hash[:transfers] || [])
-          process_nested(day.transfers, day_hash[:transfers] || [])
+          process_nested(day.transfers, day_hash[:transfers] || [], ['links'])
 
           activities_params = prepare_activities_params(day_hash[:activities] || [])
           process_ordered(activities_params)
@@ -93,7 +93,7 @@ module Travels
       end
 
       # TODO permit only some params - possible security problem
-      def process_nested(collection, params)
+      def process_nested(collection, params, nested_list = [])
         to_delete = []
         collection.each do |item|
           to_delete << item.id if params.select { |v| v[:id].to_s == item.id.to_s }.count == 0
@@ -107,11 +107,19 @@ module Travels
           [:isCollapsed, :city_text, :city_from_text, :city_to_text, :flag_image, :amount_currency_text].each do |forbidden_attribute|
             item_hash.delete(forbidden_attribute)
           end
+          nested_hash = {}
+          nested_list.each do |nested_attr|
+            nested_hash[nested_attr] = item_hash.delete(nested_attr)
+          end
 
           if item.blank?
             item = collection.create(item_hash)
           else
             item.update_attributes(item_hash)
+          end
+
+          nested_hash.each do |attr, values|
+            process_nested(item.send(attr), values) if values.present?
           end
         end
       end

@@ -60,7 +60,8 @@ en:
       carrier: Carrier
       station_from: From station
       station_to: To station
-      links: Bookmarks...
+      links: Bookmarks
+      add_link: Add bookmark
       activity:
         name: Where to go?
       download_word: Download as Word

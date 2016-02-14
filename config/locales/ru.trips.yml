@@ -60,7 +60,8 @@ ru:
       carrier: Перевозчик
       station_from: От станции
       station_to: До станции
-      links: Закладки...
+      links: Закладки
+      add_link: Добавить закладку
       activity:
         name: Куда пойдём?
       download_word: Выгрузить в Word

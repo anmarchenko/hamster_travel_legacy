@@ -1,5 +1,11 @@
 - ng_model_url ||= ''
+- ng_array ||= ''
 
-%div{class: 'form-group'}
-  %div{class: 'col-md-11'}
+.form-group
+  .col-xs-11
     = text_field_tag 'link_url', '', 'ng-model' => ng_model_url, class: 'input-sm form-control', placeholder: 'http://'
+  - if ng_array.present?
+    .col-xs-1
+      %a{href: 'javascript:void(0);', 'ng-click' => "remove(#{ng_array}, $index)", 'ng-show' => "#{ng_array}.length > 1"}
+        = fa_icon 'times'
+

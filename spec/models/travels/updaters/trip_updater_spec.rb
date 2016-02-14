@@ -244,7 +244,11 @@ describe Travels::Updaters::TripUpdater do
               {
                   city_from_id: Geo::City.all.to_a[0].id,
                   city_to_id: Geo::City.all.to_a[1].id,
-                  isCollapsed: true
+                  isCollapsed: true,
+                  links: [
+                      {id: nil, url: 'https://google.com', description: 'desc1'},
+                      {id: nil, url: 'https://rome2rio.com', description: 'desc2'}
+                  ]
               }.with_indifferent_access,
               {
                   city_from_id: Geo::City.all.to_a[1].id,
@@ -274,6 +278,7 @@ describe Travels::Updaters::TripUpdater do
 
         expect(updated_day.transfers.first.city_from_id).to eq Geo::City.all.to_a[0].id
         expect(updated_day.transfers.first.city_to_id).to eq Geo::City.all.to_a[1].id
+        expect(updated_day.transfers.first.links.count).to eq(2)
       end
 
       it 'reorders transfers' do

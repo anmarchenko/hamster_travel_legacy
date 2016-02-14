@@ -27,3 +27,7 @@
   {{transfer.company}}
 
 .transfer-comment.text.text-italic{'ng-show' => '!!transfer.comment'} {{transfer.comment}}
+
+.transfer-comment{'ng-show' => '!!transfer.links'}
+  %div.text-italic{'ng-repeat' => 'link in transfer.links track by link.id'}
+    = render 'widgets/link_show', ng_model_url: 'link.url', ng_model_description: 'link.description'

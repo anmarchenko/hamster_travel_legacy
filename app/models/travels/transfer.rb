@@ -34,6 +34,8 @@ module Travels
     belongs_to :city_from, class_name: 'Geo::City', required: false
     belongs_to :city_to, class_name: 'Geo::City', required: false
 
+    has_many :links, class_name: 'ExternalLink', as: :linkable
+
     monetize :amount_cents
 
     default_scope { includes(:city_from, :city_to) }
@@ -100,6 +102,11 @@ module Travels
       json['amount_currency_text'] = amount.currency.symbol
       json['city_from_text'] = self.city_from_text
       json['city_to_text'] = self.city_to_text
+      if links.blank?
+        json['links'] = [ExternalLink.new].as_json(args)
+      else
+        json['links'] = links.as_json(args)
+      end
       json
     end
 

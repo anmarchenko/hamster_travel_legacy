@@ -18,7 +18,7 @@
   .form-group.day-place-container.relative-position
     .col-md-12
       = text_field_tag 'hotel_name', '', 'ng-model' => 'day.hotel.name', class: 'input-sm form-control',
-        placeholder: 'Название'
+        placeholder: t('trips.show.name')
 
     %a{href: 'javascript:void(0);',  class: 'up-button',
       'ng-click' => 'fillAsPreviousHotel(day.hotel, day_index)',
