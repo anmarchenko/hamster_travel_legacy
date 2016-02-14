@@ -24,7 +24,11 @@
               = fa_icon 'edit', text: t('common.edit_user')
             = link_to destroy_user_session_path, method: :delete, class: 'settings-link' do
               = fa_icon 'sign-out', text: t('common.sign_out')
-        %img.login-profile-pic.profile-pic.img-circle.pic{id: 'profile_image', src: @user.image_url_or_default}
+        - if @user.image_url.present?
+          %img.login-profile-pic.profile-pic.img-circle.pic{id: 'profile_image', src: @user.image_url_or_default}
+        - else
+          .login-profile-pic.profile-pic.img-circle.pic.initials{id: 'profile_image', class: @user.background_color}
+            = @user.initials
 
       %div{class: 'login-profile-name name'}
         %small
