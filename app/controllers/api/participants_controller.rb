@@ -18,7 +18,7 @@ class Api::ParticipantsController < ApplicationController
 
   def collect_users users
     users.collect do |user|
-      {id: user.id.to_s, photo_url: user.image_url_or_default, name: user.full_name}
+      {id: user.id.to_s, photo_url: user.image_url, name: user.full_name, initials: user.initials, color: user.background_color}
     end
   end
 

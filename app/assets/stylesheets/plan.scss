@@ -517,7 +517,32 @@
 
 .small-profile-pic {
   width: 60px;
+  height: 60px;
   border: 1px solid grey;
+  text-align: center;
+  display: inline-block;
+
+  &.initials {
+    font-size: 24px;
+    color: white;
+    background-color: black;
+    vertical-align: middle;
+    padding-top: 18px;
+    line-height: 24px;
+
+    &.color0 {
+      background-color: $userBackground0;
+    }
+    &.color1 {
+      background-color: $userBackground1;
+    }
+    &.color2 {
+      background-color: $userBackground2;
+    }
+    &.color3 {
+      background-color: $userBackground3;
+    }
+  }
 }
 
 .xs-profile-pic {

@@ -1,0 +1,13 @@
+= link_to '/users/{{participant.id}}' do
+  %img.img-circle.small-profile-pic.participant.image-url{ 'ng-src' => '{{participant.photo_url}}',
+      'tooltip-placement' => "bottom", 'uib-tooltip' => "{{participant.name}}", 'ng-show' => '{{!!participant.photo_url}}',
+      class: "#{'invited-user' if invite}" }
+  .small-profile-pic.img-circle.participant.image-url.initials{'ng-show' => '{{!participant.photo_url}}',
+    'tooltip-placement' => "bottom", 'uib-tooltip' => "{{participant.name}} #{('(' + t('trips.show.invite_sent') + ')') if invite}",
+    class: "{{participant.color}} #{'invited-user' if invite}"}
+    {{participant.initials}}
+  - if current_user == @trip.author_user
+    %a.delete-action{href: 'javascript:void(0);',
+    'ng-click' => "#{invite ? 'deleteInvitedUser(participant.id)' : 'deleteUser(participant.id)'}",
+      'ng-show' => "participant.id != #{current_user.id}"}
+      = image_tag 'buttons/delete.svg'

@@ -45,6 +45,9 @@ class User < ActiveRecord::Base
   def image_url_or_default
     self.image.try(:remote_url) || 'https://s3.amazonaws.com/altmer-cdn/images/profile.jpeg'
   end
+  def image_url
+    self.image.try(:remote_url)
+  end
 
   # User data
   validates_presence_of :last_name
@@ -64,6 +67,14 @@ class User < ActiveRecord::Base
 
   def full_name
     '%s %s' % [first_name, last_name]
+  end
+
+  def initials
+    '%s%s' % [first_name[0].upcase, last_name[0].upcase]
+  end
+
+  def background_color
+    "color%s" % [(id % 4).to_s]
   end
 
   def self.find_by_term term

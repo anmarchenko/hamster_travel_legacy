@@ -2,23 +2,9 @@
 'ng-cloak' => ''}
 
   %span{'ng-repeat' => 'participant in participants track by participant.id', class: 'participant-link','ng-init' => ""}
-    = link_to '/users/{{participant.id}}' do
-      %img.img-circle.small-profile-pic.participant.image-url{ 'ng-src' => '{{participant.photo_url}}',
-        'tooltip-placement' => "bottom", 'uib-tooltip' => '{{participant.name}}'}
-    - if current_user == @trip.author_user
-      %a{href: 'javascript:void(0);', 'ng-click' => "deleteUser(participant.id)", class: 'delete-action',
-        'ng-show' => "participant.id != #{current_user.id}"}
-        = image_tag 'buttons/delete.svg'
-
+    = render 'trips/partials/participant', invite: false
   %span{'ng-repeat' => 'participant in invited track by participant.id', class: 'participant-link'}
-    = link_to '/users/{{participant.id}}' do
-      %img.img-circle.small-profile-pic.invited-user.image-url{ 'ng-src' => '{{participant.photo_url}}',
-        'tooltip-placement' => "bottom", 'uib-tooltip' => "{{participant.name}} (#{t('trips.show.invite_sent')})"}
-
-    - if current_user == @trip.author_user
-      %a{href: 'javascript:void(0);', 'ng-click' => "deleteInvitedUser(participant.id)", class: 'delete-action',
-        'ng-show' => "participant.id != #{current_user.id}"}
-        = image_tag 'buttons/delete.svg'
+    = render 'trips/partials/participant', invite: true
 
   - if @user_can_edit
     %a{href: 'javascript:void(0)',
