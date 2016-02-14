@@ -18,7 +18,11 @@
   %li.dropdown
     %a{href: '#', class: 'user-menu-toggle', 'uib-popover-template' => "'profileMenu.html'",
         'popover-placement' => 'bottom-right', 'popover-trigger' => 'outsideClick'}
-      %img.img-circle.img-nav{id: 'profile_image', src: current_user.image_url_or_default}
+      - if current_user.image_url.present?
+        %img.img-circle.img-nav{id: 'profile_image', src: current_user.image_url}
+      - else
+        .img-circle.img-nav.initials{id: 'profile_image', class: current_user.background_color}
+          = current_user.initials
 - else
   %li
     = link_to t('common.sign_in'), new_user_session_path
