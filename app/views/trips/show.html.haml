@@ -4,7 +4,9 @@
 - content_for :page_javascript do
   %script{type: 'text/ng-template', id: 'userTemplate.html'}
     %a
-      %img{'ng-src' => '{{match.model.photo_url}}', class: 'img-circle typeahead-profile-pic'}
+      %img.img-circle.typeahead-profile-pic{'ng-src' => '{{match.model.photo_url}}', 'ng-show' => '{{!!match.model.photo_url}}'}
+      .img-circle.typeahead-profile-pic.initials{'ng-src' => '{{match.model.photo_url}}', class: '{{match.model.color}}', 'ng-show' => '{{!match.model.photo_url}}'}
+        {{match.model.initials}}
       %span
         {{match.label}}
 

@@ -74,7 +74,7 @@ class User < ActiveRecord::Base
   end
 
   def background_color
-    "color%s" % [(id % 4).to_s]
+    "userColor%s" % [(id % 4).to_s]
   end
 
   def self.find_by_term term

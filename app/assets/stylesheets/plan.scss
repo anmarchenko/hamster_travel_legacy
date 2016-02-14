@@ -519,30 +519,35 @@
   width: 60px;
   height: 60px;
   border: 1px solid grey;
-  text-align: center;
-  display: inline-block;
 
   &.initials {
     font-size: 24px;
-    color: white;
-    background-color: black;
-    vertical-align: middle;
     padding-top: 18px;
     line-height: 24px;
-
-    &.color0 {
-      background-color: $userBackground0;
-    }
-    &.color1 {
-      background-color: $userBackground1;
-    }
-    &.color2 {
-      background-color: $userBackground2;
-    }
-    &.color3 {
-      background-color: $userBackground3;
-    }
   }
+}
+
+.initials {
+  color: white;
+  vertical-align: middle;
+  text-align: center;
+  display: inline-block;
+}
+
+.userColor0 {
+  background-color: $userBackground0;
+}
+
+.userColor1 {
+  background-color: $userBackground1;
+}
+
+.userColor2 {
+  background-color: $userBackground2;
+}
+
+.userColor3 {
+  background-color: $userBackground3;
 }
 
 .xs-profile-pic {
@@ -552,8 +557,15 @@
 
 .typeahead-profile-pic {
   width: 45px;
+  height: 45px;
   margin-right: 10px;
   border: 1px solid grey;
+
+  &.initials {
+    font-size: 18px;
+    line-height: 18px;
+    padding-top: 13px;
+  }
 }
 
 .invite-users-popover {
