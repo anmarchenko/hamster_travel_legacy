@@ -18,6 +18,7 @@
 //= require angular-animate
 //= require angular-sanitize
 //= require angularjs/rails/resource
+//= require sortable.min.js
 //= require_tree ./lib
 //= require app
 //= require_tree ./services
