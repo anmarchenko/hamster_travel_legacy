@@ -557,6 +557,20 @@ describe TripsController do
           expect(Travels::Trip.unscoped.where(id: trip.id, archived: true).first).not_to be_blank
           expect(response).to redirect_to trips_path(my: true)
         end
+
+        it 'destroys all associated invites' do
+          # create invite
+          inviting_user = FactoryGirl.create(:user)
+          Travels::TripInvite.create(inviting_user_id: inviting_user.id, invited_user_id: subject.current_user.id,
+                                     trip_id: trip.id)
+
+          expect(subject.current_user.incoming_invites.count).to eq(1)
+
+          delete 'destroy', id: trip.id
+          expect(Travels::Trip.where(id: trip.id).first).to be_nil
+
+          expect(subject.current_user.incoming_invites.count).to eq(0)
+        end
       end
 
       context 'and when user is just a participant' do

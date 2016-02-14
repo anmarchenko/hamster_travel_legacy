@@ -71,6 +71,7 @@ class TripsController < ApplicationController
   def destroy
     @trip.archived = true
     @trip.save validate: false
+    Travels::TripInvite.where(trip_id: @trip.id).destroy_all
     redirect_to trips_path(my: true)
   end
 
