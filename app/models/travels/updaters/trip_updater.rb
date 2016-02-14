@@ -66,6 +66,8 @@ module Travels
 
           process_nested(day.expenses, day_hash[:expenses] || [])
 
+          process_nested(day.links, day_hash[:links] || [])
+
           day.save
         end
       end

@@ -8,8 +8,8 @@
           %a.notification-column{href: '/users/{{invite.inviting_user_id}}'}
             %img.img-circle.small-profile-pic.image-url{ 'ng-src' => '{{invite.inviting_user_photo_url}}',
             'ng-show' => '{{!!invite.inviting_user_photo_url}}'}
-            .img-circle.small-profile-pic.image-url.initials{ 'ng-src' => '{{invite.inviting_user_photo_url}}',
-            'ng-show' => '{{!invite.inviting_user_photo_url}}', class: '{{invite.inviting_user_color}}'}
+            .img-circle.small-profile-pic.image-url.initials{'ng-show' => '{{!invite.inviting_user_photo_url}}',
+            class: '{{invite.inviting_user_color}}'}
               {{invite.inviting_user_initials}}
           .invite-text.notification-column
             {{invite.inviting_user_name}}

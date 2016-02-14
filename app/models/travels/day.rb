@@ -22,6 +22,7 @@ module Travels
     has_one :hotel, class_name: 'Travels::Hotel'
     has_many :activities, class_name: 'Travels::Activity'
     has_many :expenses, class_name: 'Travels::Expense', as: :expendable
+    has_many :links, class_name: 'ExternalLink', as: :linkable
 
     default_scope ->{order(date_when: :asc, index: :asc)}
 
@@ -61,6 +62,11 @@ module Travels
       json['places'] = places.as_json(args)
       json['hotel'] = hotel.as_json(args)
       json['expenses'] = expenses.as_json(args)
+      if links.blank?
+        json['links'] = [ExternalLink.new].as_json(args)
+      else
+        json['links'] = links.as_json(args)
+      end
       json
     end
 

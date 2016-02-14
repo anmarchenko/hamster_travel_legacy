@@ -363,6 +363,24 @@ describe Travels::Updaters::TripUpdater do
 
     end
 
+    context 'when params have day links data' do
+      let(:params) { {'1' => {id: day.id.to_s,
+                              links: [{
+                                             id: nil,
+                                             url: 'https://google.com',
+                                             description: 'fds'
+                                         }.with_indifferent_access,
+                              ]
+      }} }
+
+      it 'updates expenses attributes' do
+        links = first_day_of(trip).links
+        expect(links.count).to eq 1
+        expect(links.first.url).to eq 'https://google.com'
+      end
+
+    end
+
     context 'when params have day expenses data' do
 
       let(:params) { {'1' => {id: day.id.to_s,
