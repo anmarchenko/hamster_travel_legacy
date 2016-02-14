@@ -106,6 +106,12 @@ header {
       @media(max-width: 768px) {
         display: none;
       }
+
+      &.initials {
+        font-size: 14px;
+        line-height: 14px;
+        padding-top: 11px;
+      }
     }
 
     .notification-column {
