@@ -552,7 +552,14 @@
 
 .xs-profile-pic {
   width: 22px;
+  height: 22px;
   border: 1px solid grey;
+
+  &.initials {
+    font-size: 9px;
+    line-height: 9px;
+    padding-top: 5px;
+  }
 }
 
 .typeahead-profile-pic {

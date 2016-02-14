@@ -32,8 +32,14 @@
 
             %span.author
               = link_to user_path(trip.author) do
-                %img.img-circle.xs-profile-pic{ 'ng-src' => trip.author.image_url_or_default,
-                  'tooltip-placement' => "bottom", 'tooltip' => trip.author.full_name}
+                - if trip.author.image_url.present?
+                  %img.img-circle.xs-profile-pic{ 'src' => trip.author.image_url,
+                    'tooltip-placement' => "bottom", 'uib-tooltip' => trip.author.full_name}
+                - else
+                  .img-circle.xs-profile-pic.initials{'tooltip-placement' => "bottom", 'uib-tooltip' => trip.author.full_name,
+                  class: trip.author.background_color}
+                    = trip.author.initials
+
 
           .tags-cell
 

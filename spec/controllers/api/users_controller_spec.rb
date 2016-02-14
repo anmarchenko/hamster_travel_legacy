@@ -12,14 +12,15 @@ describe Api::UsersController do
       users = User.find_by_term(term).page(1).to_a
       json = JSON.parse(body)
       expect(json.first).to eq({"name" => users.first.full_name, "code" => users.first.id.to_s,
-                                "photo_url" => users.first.image_url_or_default, "text" => users.first.full_name})
+                                "photo_url" => users.first.image_url, "text" => users.first.full_name,
+                                "initials" => users.first.initials, "color" => users.first.background_color})
       expect(json.count).to eq users.count
     end
 
     context 'when user is logged in' do
       login_user
 
-      after(:each){Rails.cache.clear}
+      after(:each) { Rails.cache.clear }
 
       it 'responds with empty array if term is shorter than 2 letters' do
         get 'index', term: 'm', format: :json
