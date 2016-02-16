@@ -7,7 +7,7 @@
     .time
       {{transfer.start_time | date:'HH:mm':'UTC'}}
   .transfer-icon.transfer-element
-    %img{src:'{{transfer.type_icon}}'}
+    %img{'ng-src' => 'transfer.type_icon'}
   .transfer-city.transfer-element
     .city-name
       {{transfer.city_to_text}}
