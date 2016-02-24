@@ -1,9 +1,9 @@
 module Api
   class CateringsController < ApplicationController
 
-    before_filter :find_trip
-    before_filter :authenticate_user!, only: [:create]
-    before_filter :authorize, only: [:create]
+    before_action :find_trip
+    before_action :authenticate_user!, only: [:create]
+    before_action :authorize, only: [:create]
 
     respond_to :json
 

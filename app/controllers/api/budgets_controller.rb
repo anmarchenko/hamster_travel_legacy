@@ -1,7 +1,7 @@
 class Api::BudgetsController < ApplicationController
   respond_to :json
 
-  before_filter :find_trip
+  before_action :find_trip
 
   def show
     render json: {budget: @trip.budget_sum(current_user.try(:currency))}

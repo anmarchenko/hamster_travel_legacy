@@ -2,10 +2,10 @@ class Api::TripInvitesController < ApplicationController
 
   respond_to :json
 
-  before_filter :find_trip
-  before_filter :authenticate_user!
-  before_filter :authorize
-  before_filter :authorize_destroy, only: [:destroy]
+  before_action :find_trip
+  before_action :authenticate_user!
+  before_action :authorize
+  before_action :authorize_destroy, only: [:destroy]
 
   def create
     invited_user = User.find(params[:user_id]) rescue nil

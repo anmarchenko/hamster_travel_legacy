@@ -2,10 +2,10 @@ module Api
 
   class DaysController < ApplicationController
 
-    before_filter :find_trip
-    before_filter :find_day, only: [:show]
-    before_filter :authenticate_user!, only: [:create, :update]
-    before_filter :authorize, only: [:create, :update]
+    before_action :find_trip
+    before_action :find_day, only: [:show]
+    before_action :authenticate_user!, only: [:create, :update]
+    before_action :authorize, only: [:create, :update]
 
     respond_to :json
 

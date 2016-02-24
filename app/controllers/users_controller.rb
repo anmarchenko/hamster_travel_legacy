@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
   include Concerns::ImageUploading
 
-  before_filter :authenticate_user!, only: [:edit, :update, :upload_photo]
-  before_filter :find_user
-  before_filter :authorize, only: [:edit, :update, :upload_photo]
+  before_action :authenticate_user!, only: [:edit, :update, :upload_photo]
+  before_action :find_user
+  before_action :authorize, only: [:edit, :update, :upload_photo]
 
   def show
     @trips = @user.trips.page(params[:page] || 1)

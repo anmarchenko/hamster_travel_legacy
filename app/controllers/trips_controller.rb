@@ -5,12 +5,12 @@ class TripsController < ApplicationController
   TRANSFERS_GRID = [0.1, 0.1, 0.45, 0.35]
   ACTIVITIES_GRID = [0.1, 0.1, 0.5, 0.3]
 
-  before_filter :authenticate_user!, only: [:edit, :update, :new, :create, :destroy, :upload_photo]
-  before_filter :find_trip, only: [:show, :edit, :update, :destroy, :upload_photo]
-  before_filter :find_original_trip, only: [:new, :create]
-  before_filter :authorize, only: [:edit, :update, :upload_photo]
-  before_filter :authorize_destroy, only: [:destroy]
-  before_filter :authorize_show, only: [:show]
+  before_action :authenticate_user!, only: [:edit, :update, :new, :create, :destroy, :upload_photo]
+  before_action :find_trip, only: [:show, :edit, :update, :destroy, :upload_photo]
+  before_action :find_original_trip, only: [:new, :create]
+  before_action :authorize, only: [:edit, :update, :upload_photo]
+  before_action :authorize_destroy, only: [:destroy]
+  before_action :authorize_show, only: [:show]
 
   def index
     # TODO move to service

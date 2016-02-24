@@ -2,9 +2,9 @@ module Api
 
   class TripsController < ApplicationController
 
-    before_filter :find_trip, only: [:show, :update]
-    before_filter :authenticate_user!, only: [:update]
-    before_filter :authorize, only: [:update]
+    before_action :find_trip, only: [:show, :update]
+    before_action :authenticate_user!, only: [:update]
+    before_action :authorize, only: [:update]
 
     respond_to :json
 

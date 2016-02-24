@@ -2,9 +2,9 @@ module Api
 
   class UserShowsController < ApplicationController
 
-    before_filter :find_trip
-    before_filter :authenticate_user!
-    before_filter :authorize
+    before_action :find_trip
+    before_action :authenticate_user!
+    before_action :authorize
 
     respond_to :json
 

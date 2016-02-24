@@ -1,6 +1,6 @@
 class Api::ParticipantsController < ApplicationController
 
-  before_filter :find_trip
+  before_action :find_trip
 
   def index
     render json: {

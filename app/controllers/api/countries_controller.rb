@@ -1,7 +1,7 @@
 class Api::CountriesController < ApplicationController
   respond_to :json
 
-  before_filter :find_trip
+  before_action :find_trip
 
   def show
     render json: {

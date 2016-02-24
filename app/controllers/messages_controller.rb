@@ -1,9 +1,9 @@
 class MessagesController < ApplicationController
   respond_to :json
 
-  before_filter :authenticate_user!
-  before_filter :find_trip_invite, only: [:update, :destroy]
-  before_filter :authorize!, only: [:update, :destroy]
+  before_action :authenticate_user!
+  before_action :find_trip_invite, only: [:update, :destroy]
+  before_action :authorize!, only: [:update, :destroy]
 
   def index
     render json: {invites: current_user.incoming_invites.includes(:inviting_user, :trip).limit(10)}
