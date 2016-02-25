@@ -427,6 +427,13 @@
       @media (max-width: 992px) {
         .small-profile-pic {
           max-width: 30px;
+          max-height: 30px;
+
+          &.initials {
+            font-size: 12px;
+            padding-top: 9px;
+            line-height: 12px;
+          }
         }
       }
 
