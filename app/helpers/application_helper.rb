@@ -105,4 +105,8 @@ module ApplicationHelper
     "<img src='#{url}' class='flag flag-#{size}' #{tooltip_attrs} />".html_safe
   end
 
+  def days_count trip
+    "#{trip.days_count} #{I18n.t('common.days', count: trip.days_count)}"
+  end
+
 end
