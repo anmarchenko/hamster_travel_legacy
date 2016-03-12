@@ -89,7 +89,7 @@
                         <% unless day.transfers.blank? %>
                             <% day.transfers.each do |transfer| %>
                                 <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
-                                    <%= docx_text(fontSize: fontSize, underscored: true) do %>
+                                    <%= docx_text(fontSize: fontSize) do %>
                                         <%= transfer.city_from_text %>
                                     <% end %>
                                     <% unless transfer.station_from.blank? %>
@@ -99,7 +99,7 @@
                                     <% end %>
                                     <%= docx_text(fontSize: fontSize, prespace: true) do %>-
                                     <% end %>
-                                    <%= docx_text(fontSize: fontSize, prespace: true, underscored: true) do %>
+                                    <%= docx_text(fontSize: fontSize, prespace: true) do %>
                                         <%= transfer.city_to_text %>
                                     <% end %>
                                     <% unless transfer.station_to.blank? %>
