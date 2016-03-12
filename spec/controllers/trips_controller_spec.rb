@@ -485,7 +485,6 @@ describe TripsController do
             expect(response).to have_http_status 200
             expect(response).to render_template 'trips/show'
             expect(assigns(:transfers_grid)).to eq TripsController::TRANSFERS_GRID
-            expect(assigns(:activities_grid)).to eq TripsController::ACTIVITIES_GRID
           end
 
         end
