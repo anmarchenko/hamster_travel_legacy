@@ -3,7 +3,6 @@ class TripsController < ApplicationController
   include Concerns::ImageUploading
 
   TRANSFERS_GRID = [0.1, 0.1, 0.45, 0.35]
-  ACTIVITIES_GRID = [0.1, 0.1, 0.5, 0.3]
 
   before_action :authenticate_user!, only: [:edit, :update, :new, :create, :destroy, :upload_photo]
   before_action :find_trip, only: [:show, :edit, :update, :destroy, :upload_photo]
@@ -61,7 +60,6 @@ class TripsController < ApplicationController
       format.html
       format.docx do
         @transfers_grid = TRANSFERS_GRID
-        @activities_grid = ACTIVITIES_GRID
 
         headers["Content-Disposition"] = "attachment; filename=\"#{@trip.name_for_file}.docx\""
       end

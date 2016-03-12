@@ -1,21 +1,24 @@
 <%= docx_document do %>
     <% body_props_landscape = {pageHeight: 11906, pageSize: 16834, pageOrient: :landscape,
-                     marginLeft: 500, marginRight: 500, marginTop: 700, marginBottom: 700} %>
+                               marginLeft: 500, marginRight: 500, marginTop: 700, marginBottom: 700} %>
 
     <% body_props_portrait = {pageHeight: 16834, pageSize: 11906, pageOrient: :portrait,
-                     marginLeft: 800, marginRight: 800, marginTop: 700, marginBottom: 700} %>
+                              marginLeft: 800, marginRight: 800, marginTop: 700, marginBottom: 700} %>
 
     <% fontSize = 9 %>
     <% biggerFontSize = 12 %>
+    <% headerFontSize = 14 %>
 
     <%= docx_body do %>
 
-        <%= docx_paragraph(align: :left, fontSize: biggerFontSize, spacingAfter: 400) do %>
-            <%= docx_text(fontSize: biggerFontSize, bold: true) do %><%= @trip.name %><% end %>
+        <%= docx_paragraph(align: :left, fontSize: headerFontSize, spacingAfter: 400) do %>
+            <%= docx_text(fontSize: headerFontSize, bold: true) do %><%= @trip.name %>
+            <% end %>
         <% end %>
 
         <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
-            <%= docx_text(fontSize: fontSize) do %><%= @trip.short_description %><% end %>
+            <%= docx_text(fontSize: fontSize) do %><%= @trip.short_description %>
+            <% end %>
         <% end %>
 
         <%= docx_section(body_props_portrait) do %>
@@ -28,25 +31,29 @@
 
                 <%= docx_table_cell do %>
                     <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
-                        <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.day') %><% end %>
+                        <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.day') %>
+                        <% end %>
                     <% end %>
                 <% end %>
 
                 <%= docx_table_cell do %>
                     <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
-                        <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.place') %><% end %>
+                        <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.place') %>
+                        <% end %>
                     <% end %>
                 <% end %>
 
                 <%= docx_table_cell do %>
                     <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
-                        <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.transfers') %><% end %>
+                        <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.transfers') %>
+                        <% end %>
                     <% end %>
                 <% end %>
 
                 <%= docx_table_cell do %>
                     <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
-                        <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.hotel') %><% end %>
+                        <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.hotel') %>
+                        <% end %>
                     <% end %>
                 <% end %>
 
@@ -57,7 +64,8 @@
 
                     <%= docx_table_cell do %>
                         <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
-                            <%= docx_text(fontSize: fontSize) do %><%= day.date_when_s %><% end %>
+                            <%= docx_text(fontSize: fontSize) do %><%= day.date_when_s %>
+                            <% end %>
                         <% end %>
                     <% end %>
 
@@ -65,12 +73,14 @@
                         <% unless day.places.blank? %>
                             <% day.places.each do |place| %>
                                 <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 100) do %>
-                                    <%= docx_text(fontSize: fontSize) do %><%= place.city_text %><% end %>
+                                    <%= docx_text(fontSize: fontSize) do %><%= place.city_text %>
+                                    <% end %>
                                 <% end %>
                             <% end %>
                         <% else %>
                             <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 100) do %>
-                                <%= docx_text(fontSize: fontSize) do %><% end %>
+                                <%= docx_text(fontSize: fontSize) do %>
+                                <% end %>
                             <% end %>
                         <% end %>
                     <% end %>
@@ -87,7 +97,8 @@
                                             (<%= transfer.station_from %>)
                                         <% end %>
                                     <% end %>
-                                    <%= docx_text(fontSize: fontSize, prespace: true) do %>-<% end %>
+                                    <%= docx_text(fontSize: fontSize, prespace: true) do %>-
+                                    <% end %>
                                     <%= docx_text(fontSize: fontSize, prespace: true, underscored: true) do %>
                                         <%= transfer.city_to_text %>
                                     <% end %>
@@ -118,16 +129,16 @@
                                 <% end %>
                                 <% unless transfer.start_time.blank? %>
                                     <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
-                                    <%= docx_text(fontSize: fontSize, prespace: true) do %>
-                                    <%= t('.departure')%> <%= transfer.start_time.strftime('%H:%M %d.%m.%Y') %>
-                                    <% end %>
+                                        <%= docx_text(fontSize: fontSize, prespace: true) do %>
+                                            <%= t('.departure') %> <%= transfer.start_time.strftime('%H:%M %d.%m.%Y') %>
+                                        <% end %>
                                     <% end %>
                                 <% end %>
                                 <% unless transfer.end_time.blank? %>
                                     <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
-                                    <%= docx_text(fontSize: fontSize, prespace: true) do %>
-                                    <%= t('.arrival')%> <%= transfer.end_time.strftime('%H:%M %d.%m.%Y') %>
-                                    <% end %>
+                                        <%= docx_text(fontSize: fontSize, prespace: true) do %>
+                                            <%= t('.arrival') %> <%= transfer.end_time.strftime('%H:%M %d.%m.%Y') %>
+                                        <% end %>
                                     <% end %>
                                 <% end %>
                                 <% unless transfer.comment.blank? %>
@@ -144,7 +155,8 @@
                             <% end %>
                         <% else %>
                             <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 100) do %>
-                                <%= docx_text(fontSize: fontSize) do %><% end %>
+                                <%= docx_text(fontSize: fontSize) do %>
+                                <% end %>
                             <% end %>
                         <% end %>
                     <% end %>
@@ -175,124 +187,85 @@
             <% end %>
         <% end %>
 
-        <%= docx_next_page do %>
-
-        <% end %>
-
-        <%= docx_table(gridSize: 15834, grid: @activities_grid,
-                       borders: [:left, :right, :top, :bottom, :top, :insideH, :insideV]) do %>
-            <%= docx_table_row do %>
-
-                <%= docx_table_cell do %>
-                    <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
-                        <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.day') %><% end %>
-                    <% end %>
-                <% end %>
-
-                <%= docx_table_cell do %>
-                    <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
-                        <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.place') %><% end %>
-                    <% end %>
-                <% end %>
-
-                <%= docx_table_cell do %>
-                    <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
-                        <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.activities') %><% end %>
-                    <% end %>
-                <% end %>
-
-                <%= docx_table_cell do %>
-                    <%= docx_paragraph(align: :center, fontSize: fontSize) do %>
-                        <%= docx_text(fontSize: fontSize, bold: true) do %><%= t('.comments') %><% end %>
-                    <% end %>
-                <% end %>
-            <% end %>
-
-            <% @trip.days.each do |day| %>
-                <%= docx_table_row do %>
-
-                    <%= docx_table_cell do %>
-                        <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
-                            <%= docx_text(fontSize: fontSize) do %><%= day.date_when_s %><% end %>
-                        <% end %>
-                    <% end %>
-
-                    <%= docx_table_cell do %>
-                        <% unless day.places.blank? %>
-                            <% day.places.each do |place| %>
-                                <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 100) do %>
-                                    <%= docx_text(fontSize: fontSize) do %><%= place.city_text %><% end %>
-                                <% end %>
-                            <% end %>
-                        <% else %>
-                            <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 100) do %>
-                                <%= docx_text(fontSize: fontSize) do %><% end %>
-                            <% end %>
-                        <% end %>
-                    <% end %>
-
-                    <%= docx_table_cell do %>
-                        <% unless day.activities.blank? %>
-                            <% day.activities.each_with_index do |activity, index| %>
-                                <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50,
-                                                   spacingBefore: (100 if index > 0) ) do %>
-                                    <% if day.activities.count > 1 %>
-                                        <%= docx_text(fontSize: fontSize, underscored: true) do %><%= index + 1 %>.<% end %>
-                                    <% end %>
-                                    <%= docx_text(fontSize: fontSize, underscored: true, prespace: true) do %>
-                                        <%= activity.name %>
-                                    <% end %>
-                                <% end %>
-                                <% unless activity.amount.blank? %>
-                                    <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
-                                        <%= docx_text(fontSize: fontSize) do %><%= activity.amount.to_f %> <%= activity.amount_currency %><% end %>
-                                    <% end %>
-                                <% end %>
-                                <% unless activity.comment.blank? %>
-                                    <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
-                                        <%= docx_text(fontSize: fontSize, italic: true) do %><%= activity.comment %><% end %>
-                                    <% end %>
-                                <% end %>
-                            <% end %>
-                        <% else %>
-                            <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
-                                <%= docx_text(fontSize: fontSize) do %><% end %>
-                            <% end %>
-                        <% end %>
-                    <% end %>
-
-                    <%= docx_table_cell do %>
-                        <% if !day.expenses.blank? || !day.comment.blank? %>
-                            <% unless day.comment.blank? %>
-                                <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
-                                    <%= docx_text(fontSize: fontSize, italic: true) do %><%= day.comment %><% end %>
-                                <% end %>
-                            <% end %>
-                            <% unless day.expenses.blank? %>
-                                <% day.expenses.each do |expense| %>
-                                    <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
-                                        <%= docx_text(fontSize: fontSize) do %><% if !expense.name.blank? || (!expense.amount.blank? && !expense.amount_cents == 0)%><%= expense.name %> <%= expense.amount.to_f %> <%= expense.amount_currency %><% end %><% end %>
-                                    <% end %>
-                                <% end %>
-                            <% end %>
-                        <% else %>
-                            <%= docx_paragraph(align: :left, fontSize: fontSize) do %>
-                                <%= docx_text(fontSize: fontSize, italic: true) do %><% end %>
-                            <% end %>
-                        <% end %>
-                    <% end %>
-                <% end %>
-            <% end %>
-        <% end %>
-
-
         <%= docx_section(body_props_landscape) do %>
 
         <% end %>
 
+        <% @trip.days.each do |day| %>
+            <%= docx_paragraph(align: :left, fontSize: headerFontSize, spacingBefore: 250) do %>
+                <%= docx_text(fontSize: headerFontSize, bold: true) do %>
+                    <%= day.date_when_s %>
+                <% end %>
+            <% end %>
+
+            <% unless day.places.blank? %>
+                <%= docx_paragraph(align: :left, fontSize: biggerFontSize, spacingBefore: 100) do %>
+                    <%= docx_text(fontSize: biggerFontSize) do %>
+                        <% day.places.each_with_index do |place, index| %><%= ", " if index > 0 %><%= place.city_text %><% end %>
+                    <% end %>
+                <% end %>
+            <% end %>
+
+            <% if !day.expenses.blank? && day.expenses.first.try(:name).present? %>
+                <% day.expenses.each do |expense| %>
+                    <%= docx_paragraph(align: :left, fontSize: fontSize, spacingBefore: 200) do %>
+                        <%= docx_text(fontSize: fontSize) do %>
+                            <% if !expense.name.blank? || (!expense.amount.blank? && !expense.amount_cents == 0) %><%= expense.name %> <%= expense.amount.to_f %> <%= expense.amount_currency %>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                <% end %>
+            <% end %>
+
+            <% unless day.comment.blank? %>
+                <%= docx_paragraph(align: :left, fontSize: fontSize, spacingBefore: 200) do %>
+                    <%= docx_text(fontSize: fontSize, italic: true) do %><%= day.comment %>
+                    <% end %>
+                <% end %>
+            <% end %>
+
+            <% if day.activities.present? %>
+                <% day.activities.each_with_index do |activity, index| %>
+                    <%= docx_paragraph(align: :left, fontSize: biggerFontSize, spacingAfter: 150,
+                                       spacingBefore: 250) do %>
+                        <% if day.activities.count > 1 %>
+                            <%= docx_text(fontSize: biggerFontSize, underscored: true) do %><%= index + 1 %>.
+                            <% end %>
+                        <% end %>
+                        <%= docx_text(fontSize: biggerFontSize, underscored: true, prespace: true) do %>
+                            <%= activity.name %>
+                        <% end %>
+                    <% end %>
+                    <% unless activity.amount.blank? %>
+                        <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
+                            <%= docx_text(fontSize: fontSize) do %><%= activity.amount.to_f %> <%= activity.amount_currency %>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                    <% unless activity.comment.blank? %>
+                        <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
+                            <%= docx_text(fontSize: fontSize, italic: true) do %><%= activity.comment %>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                <% end %>
+            <% else %>
+                <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 150,
+                                   spacingBefore: 250) do %>
+                    <%= docx_text(fontSize: fontSize, italic: true) do %><%= t('trips.show.no_activities') %>
+                    <% end %>
+                <% end %>
+            <% end %>
+
+        <% end %>
+
+        <%= docx_next_page do %>
+
+        <% end %>
+
         <% @trip.caterings.each do |catering| %>
-            <%= docx_paragraph(align: :left, fontSize: biggerFontSize, spacingBefore: 250) do %>
-                <%= docx_text(fontSize: biggerFontSize, bold: true) do %>
+            <%= docx_paragraph(align: :left, fontSize: headerFontSize, spacingBefore: 250) do %>
+                <%= docx_text(fontSize: headerFontSize, bold: true) do %>
                     <%= catering.name %>
                 <% end %>
             <% end %>
