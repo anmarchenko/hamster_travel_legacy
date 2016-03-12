@@ -47,15 +47,15 @@ module ApplicationHelper
 
   def datepicker_options(model_name, record = nil)
     res = {
-           'ng-model' => model_name,
-           'data-provide' => 'datepicker',
-           'data-placement' => 'bottom',
-           'data-date-format' => 'dd.mm.yyyy',
-           'data-date-week-start' => 1,
-           'data-date-autoclose' => true,
-           'data-date-language' => I18n.locale,
-           'data-date-start-view' => 'day',
-           'autocomplete' => 'off'
+        'ng-model' => model_name,
+        'data-provide' => 'datepicker',
+        'data-placement' => 'bottom',
+        'data-date-format' => 'dd.mm.yyyy',
+        'data-date-week-start' => 1,
+        'data-date-autoclose' => true,
+        'data-date-language' => I18n.locale,
+        'data-date-start-view' => 'day',
+        'autocomplete' => 'off'
     }
     res.merge!('ng-init' => "#{model_name}='#{record.send(model_name)}'") unless record.blank? or
         record.send(model_name).blank?
@@ -107,6 +107,21 @@ module ApplicationHelper
 
   def days_count trip
     "#{trip.days_count} #{I18n.t('common.days', count: trip.days_count)}"
+  end
+
+  def trip_dates trip
+    if trip.start_date.present? && trip.end_date.present?
+      if trip.start_date == trip.end_date
+        res = "#{trip.start_date}"
+      else
+        res = "#{trip.start_date} - #{trip.end_date}"
+      end
+
+      res += " (#{days_count(trip)})"
+    else
+      res = days_count(trip)
+    end
+    res
   end
 
 end

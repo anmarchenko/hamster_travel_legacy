@@ -29,13 +29,7 @@
         = @trip.name
   .row.trip-dates
     .col-xs-12
-      - if @trip.start_date.present? && @trip.end_date.present?
-        = @trip.start_date
-        = "-"
-        = @trip.end_date
-        = "(#{days_count @trip})"
-      - else
-        = days_count @trip
+      = trip_dates(@trip)
 
   - if user_signed_in?
     - if @user_can_edit
