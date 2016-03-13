@@ -99,6 +99,7 @@ en:
       type_name: Friend's name
       invite_sent: invite sent
       no_activities: No activities planned for this day. Relax!
+      reorder_days: Reorder
     edit:
       title: Edit travel
     form:

@@ -74,5 +74,15 @@ module Travels
       ['places', 'transfers', 'hotel', 'activities', 'expenses']
     end
 
+    def short_hash
+      {
+          id: self.id.to_s,
+          date: self.date_when,
+          transfer_s: '',
+          activity_s: '',
+          city_s: ''
+      }
+    end
+
   end
 end

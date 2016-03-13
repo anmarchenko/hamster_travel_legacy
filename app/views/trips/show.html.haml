@@ -21,6 +21,17 @@
       = render 'widgets/typeahead/users', model_name: 'selected_user', classes: 'form-control',
         placeholder: t('trips.show.type_name'), show_loading: false, custom_attrs: {'focus-on' => 'popover_opened'}
 
+  %script{type: 'text/ng-template', id: 'daySortModal.html'}
+    .modal-header
+      %h4
+        Sort days
+    .modal-body
+      Here will be days
+    .modal-footer
+      %button.btn.btn-primary
+        OK
+      %button.btn.btn-default
+        Cancel
 
 %div{'ng-controller' => 'PlanController'}
   .row
