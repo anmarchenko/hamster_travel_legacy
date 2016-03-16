@@ -1,4 +1,4 @@
-class Api::DaySortingController < ApplicationController
+class Api::DaysSortingController < ApplicationController
   before_action :find_trip
   before_action :authenticate_user!
   before_action :authorize

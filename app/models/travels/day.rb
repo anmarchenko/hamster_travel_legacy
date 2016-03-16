@@ -75,12 +75,19 @@ module Travels
     end
 
     def short_hash
+      transfer = self.transfers.first
+      transfer_s = "#{transfer.city_from_text} - #{transfer.city_to_text}" if transfer
+      activity = self.activities.first
+      activity_s = "#{activity.name}" if activity
+      place = self.places.first
+      place_s = place.city_text if place
       {
           id: self.id.to_s,
           date: self.date_when,
-          transfer_s: '',
-          activity_s: '',
-          city_s: ''
+          index: self.index,
+          transfer_s: transfer_s,
+          activity_s: activity_s,
+          place_s: place_s
       }
     end
 
