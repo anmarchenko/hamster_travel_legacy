@@ -1,0 +1,27 @@
+.days-sorting {
+  display: table;
+  border-collapse: collapse;
+  width: 100%;
+  .day-sorted-row {
+    border: 1px solid $border-grey;
+    display: table-row;
+    background-color: white;
+
+    .column {
+      padding: 10px 15px;
+
+      display: table-cell;
+    }
+
+    @media(max-width: 768px) {
+      .activity {
+        display: none;
+      }
+    }
+  }
+}
+
+.days-sorting-placeholder {
+  height: 60px;
+  display: table-row;
+}

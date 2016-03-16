@@ -69,8 +69,12 @@
     %tbody
       - @trip.days.each_with_index do |day, day_index|
         %tr{'ng-controller' => 'DaysController', 'ng-init' => "setDay(#{day_index}, #{day.to_json})", class: 'plan-row'}
-          %td
-            = day.date_when_s
+          %td{'ng-controller' => 'DaySorterController'}
+            .day-date
+              = day.date_when_s
+            - if @user_can_edit
+              %a.reorder-link{'ng-click' => "startSorting('#{@trip.id}')", href: 'javascript:void(0);'}
+                = t('trips.show.reorder_days')
           %td{'ng-show' => 'show_place', 'ng-mouseleave' => 'mouse_over_place = false',
                                          'ng-mouseenter' => 'mouse_over_place = true'}
             %span{'ng-cloak' => ''}

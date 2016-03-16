@@ -22,17 +22,7 @@
         placeholder: t('trips.show.type_name'), show_loading: false, custom_attrs: {'focus-on' => 'popover_opened'}
 
   %script{type: 'text/ng-template', id: 'daySortModal.html'}
-    .modal-header
-      %h4
-        Sort days
-    .modal-body
-      Here will be days
-    .modal-footer
-      %button.btn.btn-primary
-        OK
-      %button.btn.btn-default
-        Cancel
-
+    = render 'modals/days_sort_modal'
 %div{'ng-controller' => 'PlanController'}
   .row
     .col-xs-12
