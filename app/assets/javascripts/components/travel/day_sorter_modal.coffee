@@ -1,9 +1,9 @@
 angular.module('travel-components').controller 'DaySorterModalController'
 , [
-    '$scope', '$uibModalInstance', '$http'
-  , ($scope, $uibModalInstance, $http) ->
+    '$scope', '$uibModalInstance', '$http', 'days'
+  , ($scope, $uibModalInstance, $http, days) ->
 
 
-      $scope.days = []
+      console.log days
 
   ]

@@ -19,7 +19,10 @@
 //= require angular-sanitize
 //= require angularjs/rails/resource
 //= require sortable.min.js
-//= require_tree ./lib
+//= require bootstrap-slider.min
+//= require angular-slider
+//= require sweetalert2.min
+//= require ui-bootstrap-tpls
 //= require app
 //= require_tree ./services
 //= require_tree ./components

@@ -8,7 +8,11 @@ angular.module('travel-components').controller 'DaySorterController'
             animation: true,
             templateUrl: 'daySortModal.html',
             controller: 'DaySorterModalController',
-            size: 'lg'
+            size: 'lg',
+            resolve: {
+              days: ->
+                []
+            }
           }
         )
 
