@@ -1,6 +1,6 @@
 .modal-header
   %h4
-    Sort days
+    = t('.title')
 .modal-body
   .row
     .col-md-12.days-sorting{'ui-sortable' => '{placeholder: \'days-sorting-placeholder\'}', 'ng-model' => 'days'}
@@ -25,6 +25,6 @@
           {{day.activity_s}}
 .modal-footer.days-sort-footer
   %button.btn.btn-primary.btn-lg{'ng-click' => 'save()'}
-    Сохранить
+    = t('common.save')
   %button.btn.btn-default.btn-lg{'ng-click' => 'closeModal()'}
-    Отменить
+    = t('common.cancel')

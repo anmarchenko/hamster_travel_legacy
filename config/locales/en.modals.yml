@@ -6,3 +6,5 @@ en:
       title: Select image region for upload
       cancel: Cancel
       upload: Upload
+    days_sort_modal:
+      title: Sort days

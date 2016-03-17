@@ -11,7 +11,7 @@ class Api::DaysSortingController < ApplicationController
 
   def create
     days = @trip.days.to_a
-    days_sorted = params[:day_ids].map {|day_id| days.find{|day| day.id.to_s == day_id } }
+    days_sorted = params[:day_ids].map {|day_id| days.find{|day| day.id.to_s == day_id.to_s } }
     @trip.ensure_days_order days_sorted
     render json: {result: :ok}
   end
