@@ -9,6 +9,10 @@ class Api::DaysSortingController < ApplicationController
     respond_with @trip.days.map { |day| day.short_hash }
   end
 
+  def create
+    @trip.days.index_by(&:id).slice(*array_of_ids).values
+  end
+
   private
 
   def find_trip

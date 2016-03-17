@@ -5,20 +5,26 @@
   .row
     .col-md-12.days-sorting{'ui-sortable' => '{placeholder: \'days-sorting-placeholder\'}', 'ng-model' => 'days'}
       .day-sorted-row{'ng-repeat' => 'day in days track by day.id'}
-        .column.move-buttons
+        .column.move-buttons.text-center
+          .up-button
+            %a{href: 'javascript:void(0);', 'ng-hide' => '$index == 0', 'ng-click' => 'moveUp($index)'}
+              = image_tag 'arrows/up.svg'
+          .down-button
+            %a{href: 'javascript:void(0);', 'ng-hide' => '$index == days.length - 1', 'ng-click' => 'moveDown($index)'}
+              = image_tag 'arrows/down.svg'
         .column.date-place
           .date{'ng-show' => 'day.date'}
             {{day.date | date:'dd.MM.yyyy'}}
           .index{'ng-hide' => 'day.date'}
-            = t('common.day_number', number: '{{day.index}}')
+            = t('common.day_number', number: '{{day.index + 1}}')
           .place
             {{day.place_s}}
         .column.transfer
           {{day.transfer_s}}
         .column.activity
           {{day.activity_s}}
-.modal-footer
-  %button.btn.btn-primary
-    OK
-  %button.btn.btn-default
-    Cancel
+.modal-footer.days-sort-footer
+  %button.btn.btn-primary.btn-lg{'ng-click' => 'save()'}
+    Сохранить
+  %button.btn.btn-default.btn-lg{'ng-click' => 'closeModal()'}
+    Отменить

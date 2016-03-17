@@ -6,22 +6,57 @@
     border: 1px solid $border-grey;
     display: table-row;
     background-color: white;
+    cursor: move;
+    vertical-align: top;
 
     .column {
       padding: 10px 15px;
 
       display: table-cell;
+      vertical-align: top;
     }
 
     @media(max-width: 768px) {
-      .activity {
+      .transfer {
         display: none;
       }
     }
+  }
+
+  .move-buttons {
+    width: 10%;
+    .up-button, .down-button {
+      height: 20px;
+      img {
+        height: 20px;
+        opacity: .5;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  .date-place, .transfer, .activity {
+    width: 30%;
   }
 }
 
 .days-sorting-placeholder {
   height: 60px;
   display: table-row;
+}
+
+.days-sort-footer {
+  display: flex;
+  justify-content: center;
+
+  .btn-primary {
+    margin-right: 20px;
+  }
+
+  button {
+    min-width: 100px;
+  }
 }
