@@ -233,10 +233,8 @@ module Travels
       attrs
     end
 
-    private
-
-    def ensure_days_order
-      self.days.each_with_index do |day, index|
+    def ensure_days_order days_to_order = nil
+      (days_to_order || self.days).each_with_index do |day, index|
         if without_dates?
           day.date_when = nil
         else
@@ -248,6 +246,8 @@ module Travels
         day.save
       end
     end
+
+    private
 
     def push_new_day
       index = self.days.last.try(:index) || -1

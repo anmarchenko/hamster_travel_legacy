@@ -1,7 +1,7 @@
 angular.module('travel-components').controller 'DaySorterModalController'
 , [
-    '$scope', '$uibModalInstance', '$http', 'days'
-  , ($scope, $uibModalInstance, $http, days) ->
+    '$scope', '$uibModalInstance', '$http', 'days', 'trip_id'
+  , ($scope, $uibModalInstance, $http, days, trip_id) ->
 
       $scope.days = days
 
@@ -21,5 +21,9 @@ angular.module('travel-components').controller 'DaySorterModalController'
         $uibModalInstance.close()
 
       $scope.save = ->
-        $uibModalInstance.close()
+        ids = $scope.days.map (day) ->
+          day.id
+
+        $http.post("/api/trips/#{trip_id}/days_sorting", {day_ids: ids}).then (response) ->
+          window.location.reload()
   ]

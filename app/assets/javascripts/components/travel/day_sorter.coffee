@@ -14,6 +14,8 @@ angular.module('travel-components').controller 'DaySorterController'
               resolve: {
                 days: ->
                   response.data
+                trip_id: ->
+                  trip_id
               }
             }
           )
