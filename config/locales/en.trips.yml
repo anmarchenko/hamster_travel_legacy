@@ -21,14 +21,11 @@ en:
       coffee: Coffee
     index:
       title: Travels
-      all: All travels
-      my: My travels
       create: Add plan
     new:
       title: New travel
     show:
       title: Travel
-      travellers: 'Participants:'
       plan: Transfers and hotels
       plan_activities: Activities
       catering: Food

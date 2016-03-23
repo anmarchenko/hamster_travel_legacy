@@ -6,6 +6,6 @@ en:
       navbar:
         apptitle: Hamster Travel
         account: My Account
-        trips: Browse trips
-        my_trips: My plans
+        trips: Trips
+        my_trips: My trips
         my_ideas: My ideas

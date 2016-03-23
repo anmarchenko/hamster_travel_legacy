@@ -21,14 +21,11 @@ ru:
       coffee: Кофе
     index:
       title: Путешествия
-      all: Все путешествия
-      my: Мои путешествия
       create: Добавить план
     new:
       title: Новое путешествие
     show:
       title: Путешествие
-      travellers: 'Участники:'
       plan: Трансферы и размещение
       plan_activities: Впечатления
       catering: Еда
