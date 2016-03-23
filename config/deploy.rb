@@ -37,6 +37,10 @@ namespace :god do
     execute :bundle, "exec god load #{config_file_scheduler}"
   end
 
+  def stop_god
+    execute :bundle, "exec god terminate"
+  end
+
   desc "Start god and his processes"
   task :start do
     on roles(:backend) do
@@ -53,7 +57,7 @@ namespace :god do
     on roles(:backend) do
       within release_path do
         if god_is_running
-          execute :bundle, "exec god terminate"
+          stop_god
         end
       end
     end
@@ -65,12 +69,11 @@ namespace :god do
       within release_path do
         with RAILS_ENV: fetch(:rails_env) do
           if god_is_running
-            execute :bundle, "exec god load #{config_file_resque}"
-            execute :bundle, "exec god load #{config_file_scheduler}"
-            execute :bundle, "exec god restart"
-          else
-            start_god
+            stop_god
+
+            sleep 10
           end
+          start_god
         end
       end
     end
