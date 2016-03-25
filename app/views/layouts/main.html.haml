@@ -40,8 +40,13 @@
                 %a{href: 'https://github.com/altmer'}
                   = t('common.andrey')
 
-    = render 'modals/confirm'
     = render 'modals/photo_preview'
+
+    %span.i18n{id: 'confirmation_header'} #{t('common.are_you_sure')}
+    %span.i18n{id: 'confirmation_ok'}
+      = t('common.yes_do_it')
+    %span.i18n{id: 'confirmation_cancel'}
+      = t('common.no_do_not')
     /
       Javascripts
       \==================================================

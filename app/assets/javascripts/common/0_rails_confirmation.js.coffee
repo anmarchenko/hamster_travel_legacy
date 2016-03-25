@@ -12,6 +12,15 @@ $ ->
 
   $.rails.showConfirmDialog = (link) ->
     message = link.attr 'data-confirm'
-    $("#confirm-modal").find(".modal-body").html(message)
-    $("#confirm-modal").modal()
-    $('#confirm-modal .confirm').off('click').on 'click', -> $.rails.confirmed(link)
+
+    swal({
+      title: $('#confirmation_header').text(),
+      text: message,
+      confirmButtonText: $('#confirmation_ok').text(),
+      cancelButtonText: $('#confirmation_cancel').text(),
+      type: 'warning',
+      showCancelButton: true,
+      closeOnConfirm: true
+    }, ->
+      $.rails.confirmed(link)
+    )

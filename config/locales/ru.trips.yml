@@ -26,6 +26,7 @@ ru:
     new:
       title: Новое путешествие
     show:
+      delete_confirm: Путешествие будет удалено!
       title: Путешествие
       plan: Трансферы и размещение
       plan_activities: Впечатления

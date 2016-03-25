@@ -41,7 +41,7 @@
 
           - if @trip.author_user_id == current_user.id
             = link_to trip_path(@trip), class: 'trip-link', method: :delete,
-                    'data-confirm'=> t('common.delete_confirm')  do
+                    'data-confirm'=> t('.delete_confirm')  do
               = t('trips.show.delete_trip')
 
 

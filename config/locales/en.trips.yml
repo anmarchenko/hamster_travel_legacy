@@ -26,6 +26,7 @@ en:
     new:
       title: New travel
     show:
+      delete_confirm: Trip will be deleted!
       title: Travel
       plan: Transfers and hotels
       plan_activities: Activities

@@ -8,6 +8,7 @@
     {{participant.initials}}
   - if current_user == @trip.author_user
     %a.delete-action{href: 'javascript:void(0);',
-    'ng-click' => "#{invite ? 'deleteInvitedUser(participant.id)' : 'deleteUser(participant.id)'}",
-      'ng-show' => "participant.id != #{current_user.id}"}
+      'ng-show' => "participant.id != #{current_user.id}",
+      'action-confirmation' => "#{invite ? 'deleteInvitedUser(participant.id)' : 'deleteUser(participant.id)'}",
+      'confirmation-text' => t('common.participant_will_be_deleted')}
       = image_tag 'buttons/delete.svg'

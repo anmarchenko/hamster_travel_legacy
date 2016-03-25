@@ -20,7 +20,8 @@ en:
       delete_photo_cofirm: Are you sure that you want to delete your profile photo?
     are_you_sure: Are you sure?
     participant_will_be_deleted: Participant will be deleted form this trip
-    yes_delete: Yes, delete
+    yes_do_it: Yes, do it
+    no_do_not: No, cancel
     cancel: Cancel
     my_trips: My travels
     update_successful: Successfully updated

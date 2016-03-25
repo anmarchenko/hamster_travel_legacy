@@ -1,4 +1,4 @@
-.participants{'ng-controller' => 'ParticipantsController', 'ng-init' => "loadParticipants();confirmationHeader = '#{t('common.are_you_sure')}'; confirmationText = '#{t('common.participant_will_be_deleted')}'; confirmationOk = '#{t('common.yes_delete')}'; confirmationCancel = '#{t('common.cancel')}'",
+.participants{'ng-controller' => 'ParticipantsController', 'ng-init' => "loadParticipants()",
 'ng-cloak' => ''}
 
   %span{'ng-repeat' => 'participant in participants track by participant.id', class: 'participant-link','ng-init' => ""}
