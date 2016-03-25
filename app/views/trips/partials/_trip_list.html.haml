@@ -49,7 +49,8 @@
 
             .tags
               - if trip.comment.present?
-                .tag.tag-icon{'uib-tooltip' => t('trips.index.with_report'), 'tooltip-placement' => 'bottom'}
+                .tag.tag-icon{'uib-tooltip' => t('trips.index.with_report'), 'tooltip-placement' => 'bottom',
+                'tooltip-append-to-body' => 'true'}
                   = image_tag 'plan/report.svg'
 
               %div{class: "tag status-tag #{trip_status_class(trip.status_code)}"}
