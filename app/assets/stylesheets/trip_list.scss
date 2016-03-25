@@ -27,6 +27,12 @@
       -ms-flex-pack: justify;
       justify-content: space-between;
 
+      @media (max-width: 768px) {
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+      }
+
       .image-cell {
         display: block;
         margin-right: 20px;
@@ -50,6 +56,12 @@
         -webkit-justify-content: space-between;
         -ms-flex-pack: justify;
         justify-content: space-between;
+
+        @media (max-width: 768px) {
+          span {
+            margin-bottom: 5px;
+          }
+        }
 
         .header {
           a {
@@ -96,6 +108,13 @@
         -webkit-flex-direction: column;
         -ms-flex-direction: column;
         flex-direction: column;
+        @media (max-width: 768px) {
+          -webkit-flex-direction: row;
+          -ms-flex-direction: row;
+          flex-direction: row;
+
+          margin-left: 0px;
+        }
 
         .tags {
           -webkit-align-self: flex-end;
