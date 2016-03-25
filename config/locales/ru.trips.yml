@@ -46,8 +46,8 @@ ru:
       saving_plan: Сохраняем...
       city: Город
       transfer: Трансфер
-      from: Из
-      to: В
+      from: Из...
+      to: В...
       departure: Отправление
       arrival: Прибытие
       price: Стоимость
@@ -56,8 +56,8 @@ ru:
       less: Меньше информации...
       comment: Комментарий
       carrier: Перевозчик
-      station_from: От станции
-      station_to: До станции
+      station_from: Станция
+      station_to: Станция
       links: Закладки
       add_link: Добавить закладку
       activity:

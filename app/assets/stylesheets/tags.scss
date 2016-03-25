@@ -13,11 +13,14 @@
   border: dashed 1px $border-grey;
   border-radius: 3px;
   padding: 4px;
-  margin-left: 10px;
 
   &.focused {
     border-style: solid;
   }
+}
+
+.tag + .tag {
+  margin-left: 10px;
 }
 
 .tag-icon {

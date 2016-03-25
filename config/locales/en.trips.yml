@@ -56,8 +56,8 @@ en:
       less: Less information...
       comment: Comment
       carrier: Carrier
-      station_from: From station
-      station_to: To station
+      station_from: station
+      station_to: station
       links: Bookmarks
       add_link: Add bookmark
       activity:
