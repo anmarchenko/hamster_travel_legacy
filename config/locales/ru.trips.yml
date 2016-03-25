@@ -22,6 +22,7 @@ ru:
     index:
       title: Путешествия
       create: Добавить план
+      with_report: Есть отчёт
     new:
       title: Новое путешествие
     show:

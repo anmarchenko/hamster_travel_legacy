@@ -100,7 +100,7 @@ module ApplicationHelper
     tooltip_attrs = nil
     if with_tooltip
       country = Geo::Country.send(country_code)
-      tooltip_attrs = "tooltip='#{country.try(:name)}' tooltip-placement='bottom'"
+      tooltip_attrs = "uib-tooltip='#{country.try(:name)}' tooltip-placement='bottom'"
     end
     "<img src='#{url}' class='flag flag-#{size}' #{tooltip_attrs} />".html_safe
   end

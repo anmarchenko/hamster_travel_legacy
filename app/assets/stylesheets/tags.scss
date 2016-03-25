@@ -5,15 +5,24 @@
   letter-spacing: .6px;
   line-height: 15px;
   color: $main-grey;
+  display: flex;
+  flex-flow: row;
 }
 
 .tag {
   border: dashed 1px $border-grey;
   border-radius: 3px;
   padding: 4px;
+  margin-left: 10px;
 
   &.focused {
     border-style: solid;
+  }
+}
+
+.tag-icon {
+  img {
+    width: 15px;
   }
 }
 

@@ -48,6 +48,10 @@
                 = flag country_code, 24, true
 
             .tags
+              - if trip.comment.present?
+                .tag.tag-icon{'uib-tooltip' => t('trips.index.with_report'), 'tooltip-placement' => 'bottom'}
+                  = image_tag 'plan/report.svg'
+
               %div{class: "tag status-tag #{trip_status_class(trip.status_code)}"}
                 = trip.status_text
 
