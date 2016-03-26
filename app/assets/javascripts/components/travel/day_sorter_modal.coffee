@@ -4,6 +4,7 @@ angular.module('travel-components').controller 'DaySorterModalController'
   , ($scope, $uibModalInstance, $http, days, trip_id) ->
 
       $scope.days = days
+      $scope.sortInProgress = false
 
       $scope.moveUp = (index) ->
         return if index <= 0 || index >= days.length
@@ -21,6 +22,8 @@ angular.module('travel-components').controller 'DaySorterModalController'
         $uibModalInstance.close()
 
       $scope.save = ->
+        $scope.sortInProgress = true
+
         ids = $scope.days.map (day) ->
           day.id
 

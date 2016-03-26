@@ -2,7 +2,7 @@
   %h4
     = t('.title')
 .modal-body
-  .row
+  .row{'ng-hide' => 'sortInProgress'}
     .col-md-12.days-sorting{'ui-sortable' => '{placeholder: \'days-sorting-placeholder\'}', 'ng-model' => 'days'}
       .day-sorted-row{'ng-repeat' => 'day in days track by day.id'}
         .column.move-buttons.text-center
@@ -23,8 +23,15 @@
           {{day.transfer_s}}
         .column.activity
           {{day.activity_s}}
+  .row{'ng-show' => 'sortInProgress'}
+    .col-md-12.days-sorting-progress
+      .header
+        = t('.please_wait')
+      .image
+        = image_tag 'lists/numbered.svg'
+
 .modal-footer.days-sort-footer
-  %button.btn.btn-primary.btn-lg{'ng-click' => 'save()'}
+  %button.btn.btn-primary.btn-lg{'ng-click' => 'save()', 'ng-disabled' => 'sortInProgress'}
     = t('common.save')
-  %button.btn.btn-default.btn-lg{'ng-click' => 'closeModal()'}
+  %button.btn.btn-default.btn-lg{'ng-click' => 'closeModal()', 'ng-disabled' => 'sortInProgress'}
     = t('common.cancel')
