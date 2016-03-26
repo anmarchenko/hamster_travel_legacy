@@ -1,4 +1,4 @@
-.span{'ng-init' => "loadCatering(#{@trip.to_json}, #{@trip.budget_sum(current_user.try(:currency))})", 'ng-cloak' => ''}
+.span{'ng-init' => "loadCatering(#{@trip.to_json})", 'ng-cloak' => ''}
   .work-area-header
     .row
       .col-md-12
@@ -6,7 +6,7 @@
     = render 'trips/partials/watching_users'
     .row
       .col-md-12
-        = render 'trips/partials/budget'
+        = render 'trips/partials/budget', options: {tab_budget: 'catering_budget'}
     .row
       .col-md-12
         = render 'trips/partials/buttons'

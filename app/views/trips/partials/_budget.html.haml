@@ -1,7 +1,14 @@
-%span.budget
+- options ||= {}
+
+%span.budget{'ng-show' => 'budget_loaded'}
   = t('common.budget')
   {{budget | number: 2}}
   = currency_symbol.html_safe
+
+  - if options[:tab_budget].present?
+    = "(#{t("common.#{options[:tab_budget]}")}"
+    {{#{options[:tab_budget]} | number: 2}}
+    = "#{currency_symbol.html_safe})"
 
   = t('trips.show.budget_for')
 

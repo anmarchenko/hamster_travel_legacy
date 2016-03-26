@@ -42,6 +42,9 @@ en:
     2_finished: Past
     photo_processing: Photo is being processed...
     budget: Budget
+    transfers_hotel_budget: transfers and accomodations
+    activities_other_budget: activities
+    catering_budget: food
     copy: Copy
     invites: Invites
     days:

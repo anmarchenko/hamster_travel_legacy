@@ -16,6 +16,9 @@ angular.module('travel-components').controller 'PlanController'
       $scope.transfersCollapsed = true
       $scope.edit = false
 
+      # loaded indicators
+      $scope.budget_loaded = false
+
       # show checkboxes
 
       $scope.restoreVisibilityFromCookie = (column) ->
@@ -66,14 +69,14 @@ angular.module('travel-components').controller 'PlanController'
           $scope.toggleActivities(false)
         $scope.edit = val
 
-      $scope.createDays = (count, trip, budget) ->
+      $scope.createDays = (count, trip) ->
         $scope.days = new Array(count) unless count == 0
         $scope.trip = trip
-        $scope.budget = budget
+        $scope.loadBudget()
 
-      $scope.loadCatering = (trip, budget) ->
+      $scope.loadCatering = (trip) ->
         $scope.trip = trip
-        $scope.budget = budget
+        $scope.loadBudget()
 
         $scope.tripService.getCaterings().then (caterings) ->
           $scope.caterings = caterings
@@ -110,10 +113,12 @@ angular.module('travel-components').controller 'PlanController'
       # REST: methods using API
       $scope.loadBudget = ->
         $scope.tripService.getBudget($scope.trip_id).then (budget) ->
-          $scope.budget = budget
-          $scope.transfers_hotel_budget = 0
-          $scope.activities_other_budget = 0
-          $scope.catering_budget = 0
+          $scope.budget = budget.sum
+          $scope.transfers_hotel_budget = budget.transfers_hotel_budget
+          $scope.activities_other_budget = budget.activities_other_budget
+          $scope.catering_budget = budget.catering_budget
+
+          $scope.budget_loaded = true
 
         $scope.tripService.getCountries($scope.trip_id).then (data) ->
           $scope.countries = data.countries
