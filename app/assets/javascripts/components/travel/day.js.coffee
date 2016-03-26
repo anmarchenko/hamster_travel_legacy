@@ -6,10 +6,16 @@ angular.module('travel-components').controller 'DaysController'
 
       $scope.tripService = $scope.$parent.tripService
 
-      $scope.setEdit = (val, object) ->
+      $scope.setEdit = (val, object, new_object) ->
         if val
           $scope.reload (day) ->
             $scope["#{object}_edit"] = val
+
+            if object == 'transfer' && day.transfers.length == 0
+              day.transfers = [new_object]
+
+            if object == 'activity' && day.activities.length == 0
+              day.activities = [new_object]
         else
           $scope["#{object}_edit"] = val
 

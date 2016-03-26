@@ -16,7 +16,7 @@
         = render 'widgets/link_show', ng_model_url: 'activity.link_url',
           ng_model_description: 'activity.link_description'
   - if @user_can_edit
-    %a.edit-hover-button{'ng-show' => 'mouse_over_activities', 'ng-click' => "setEdit(true, 'activity')"}
+    %a.edit-hover-button{'ng-show' => 'mouse_over_activities', 'ng-click' => "setEdit(true, 'activity', {\"isCollapsed\" : activitiesCollapsed, #{default_currency_hash(@trip, current_user)}})"}
       = fa_icon 'pencil'
 
 %div{'ng-show' => 'edit || activity_edit'}
