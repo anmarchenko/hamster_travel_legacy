@@ -1,9 +1,12 @@
-.span{'ng-init' => "createDays(0, #{@trip.to_json})"}
-  .work-area-header
+.span{'ng-init' => "createDays(0, #{@trip.to_json},  #{@trip.budget_sum(current_user.try(:currency))})"}
+  .work-area-header{'ng-cloak' => ''}
     .row
       .col-md-12
         = render 'trips/partials/tabs'
     = render 'trips/partials/watching_users'
+    .row
+      .col-md-12
+        = render 'trips/partials/budget'
     .row
       .col-md-12
         = render 'trips/partials/buttons'

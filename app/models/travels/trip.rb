@@ -163,18 +163,38 @@ module Travels
 
     def budget_sum currency = CurrencyHelper::DEFAULT_CURRENCY
       currency ||= CurrencyHelper::DEFAULT_CURRENCY
-      result_new = Money.new(0, currency)
-      (caterings || []).each do |catering|
-        result_new += catering.amount.exchange_to(currency) * catering.days_count * catering.persons_count
-      end
+      transfers_hotel_budget(currency) + activities_other_budget(currency) + catering_budget(currency)
+    end
+
+    def transfers_hotel_budget currency = CurrencyHelper::DEFAULT_CURRENCY
+      currency ||= CurrencyHelper::DEFAULT_CURRENCY
+      result = Money.new(0, currency)
       (days || []).each do |day|
-        result_new += day.hotel.amount.exchange_to(currency)
-        (day.transfers || []).each { |transfer| result_new += transfer.amount.exchange_to(currency) }
-        (day.activities || []).each { |activity| result_new += activity.amount.exchange_to(currency) }
-        (day.expenses || []).each { |expense| result_new += expense.amount.exchange_to(currency) }
+        result += day.hotel.amount.exchange_to(currency)
+        (day.transfers || []).each { |transfer| result += transfer.amount.exchange_to(currency) }
+      end
+      result.to_f
+    end
+
+    def activities_other_budget currency = CurrencyHelper::DEFAULT_CURRENCY
+      currency ||= CurrencyHelper::DEFAULT_CURRENCY
+      result = Money.new(0, currency)
+      (days || []).each do |day|
+        (day.activities || []).each { |activity| result += activity.amount.exchange_to(currency) }
+        (day.expenses || []).each { |expense| result += expense.amount.exchange_to(currency) }
+      end
+      result.to_f
+    end
+
+    def catering_budget currency = CurrencyHelper::DEFAULT_CURRENCY
+      currency ||= CurrencyHelper::DEFAULT_CURRENCY
+      result = Money.new(0, currency)
+
+      (caterings || []).each do |catering|
+        result += catering.amount.exchange_to(currency) * catering.days_count * catering.persons_count
       end
 
-      result_new.to_f
+      result.to_f
     end
 
     def caterings_data

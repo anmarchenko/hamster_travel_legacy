@@ -111,6 +111,9 @@ angular.module('travel-components').controller 'PlanController'
       $scope.loadBudget = ->
         $scope.tripService.getBudget($scope.trip_id).then (budget) ->
           $scope.budget = budget
+          $scope.transfers_hotel_budget = 0
+          $scope.activities_other_budget = 0
+          $scope.catering_budget = 0
 
         $scope.tripService.getCountries($scope.trip_id).then (data) ->
           $scope.countries = data.countries
