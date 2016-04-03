@@ -65,9 +65,9 @@ describe Travels::Trip do
 
     context 'when there are several trips' do
 
-      it 'paginates per 9 items by default' do
+      it 'paginates per 10 items by default' do
         trips = Travels::Trip.all.page(1).to_a
-        expect(trips.count).to eq(9)
+        expect(trips.count).to eq(10)
       end
 
       context 'and when one deleted trip' do
