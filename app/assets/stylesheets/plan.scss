@@ -599,3 +599,23 @@
 .invite-users-popover {
   padding: 7px 14px;
 }
+
+.inline-action {
+  img {
+    max-width: 18px;
+    opacity: .5;
+  }
+
+  &:hover {
+    img {
+      opacity: 1;
+    }
+    text-decoration: none;
+  }
+
+  &:active {
+    text-decoration: none;
+  }
+  margin-left: 10px;
+  text-decoration: none;
+}

@@ -15,9 +15,11 @@ angular.module('travel-components').controller 'PlanController'
       $scope.activitiesCollapsed = true
       $scope.transfersCollapsed = true
       $scope.edit = false
+      $scope.edit_persons_count = false
 
       # loaded indicators
       $scope.budget_loaded = false
+      $scope.trip_loaded = false
 
       # show checkboxes
 
@@ -69,17 +71,20 @@ angular.module('travel-components').controller 'PlanController'
           $scope.toggleActivities(false)
         $scope.edit = val
 
-      $scope.createDays = (count, trip) ->
+      $scope.init = (count) ->
         $scope.days = new Array(count) unless count == 0
-        $scope.trip = trip
-        $scope.loadBudget()
 
-      $scope.loadCatering = (trip) ->
-        $scope.trip = trip
         $scope.loadBudget()
+        $scope.loadTrip()
+        $scope.loadCountries()
 
+      $scope.initCatering = () ->
         $scope.tripService.getCaterings().then (caterings) ->
           $scope.caterings = caterings
+
+        $scope.loadTrip()
+        $scope.loadBudget()
+        $scope.loadCountries()
 
       $scope.add = (field, obj = {}) ->
         obj['id'] = new Date().getTime()
@@ -120,13 +125,16 @@ angular.module('travel-components').controller 'PlanController'
 
           $scope.budget_loaded = true
 
+      $scope.loadCountries = ->
         $scope.tripService.getCountries($scope.trip_id).then (data) ->
           $scope.countries = data.countries
 
-      $scope.load = ->
+      $scope.loadTrip = ->
         $scope.tripService.getTrip().then (trip) ->
           $scope.trip = trip
-        $scope.loadBudget()
+
+          $scope.trip_loaded = true
+          $scope.edit_persons_count = false
 
       $scope.savePlan = ->
         return if $scope.saving
@@ -137,10 +145,16 @@ angular.module('travel-components').controller 'PlanController'
           $scope.tripService.createDays($scope.days).then ->
             $scope.saving = false
             $scope.loadBudget()
+            $scope.loadCountries()
         if $scope.caterings
           $scope.tripService.createCaterings($scope.caterings).then ->
             $scope.saving = false
             $scope.loadBudget()
+            $scope.loadCountries()
+
+      $scope.saveTrip = ->
+        $scope.tripService.updateTrip($scope.trip).then ->
+          $scope.edit_persons_count = false
 
       $scope.cancelEdits = ->
         $scope.setEdit(false)
@@ -153,7 +167,9 @@ angular.module('travel-components').controller 'PlanController'
           $scope.tripService.getCaterings().then (caterings) ->
             $scope.caterings = caterings
 
-        $scope.load()
+        $scope.loadTrip()
+        $scope.loadBudget()
+        $scope.loadCountries()
       # END OF API
 
       $scope.setDayCollapse = (day, collection_name) ->

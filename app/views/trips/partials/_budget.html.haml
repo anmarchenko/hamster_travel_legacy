@@ -1,6 +1,6 @@
 - options ||= {}
 
-%span.budget{'ng-show' => 'budget_loaded'}
+%span.budget{'ng-show' => 'budget_loaded && trip_loaded'}
   = t('common.budget')
   {{budget | number: 2}}
   = currency_symbol.html_safe
@@ -12,9 +12,20 @@
 
   = t('trips.show.budget_for')
 
-  %span{'ng-show' => '!edit'}
+  %span{'ng-show' => '!edit && !edit_persons_count'}
     {{trip.budget_for}}
-  %span{'ng-show' => 'edit'}
+  %span{'ng-show' => 'edit || edit_persons_count'}
     = number_field_tag 'trip_budget_for', '', class: 'input-sm budget-persons-input', 'ng-model' => 'trip.budget_for'
   = t('trips.show.persons')
   = "(#{@trip.days_count} #{t('common.days', count: @trip.days_count)})"
+
+  - if @user_can_edit
+    %span{'ng-hide' => 'edit'}
+      %a.inline-action{href: 'javascript:void(0);', 'ng-click' => 'edit_persons_count = true', 'ng-hide' => 'edit_persons_count'}
+        = image_tag 'buttons/edit.svg'
+
+      %a.inline-action{href: 'javascript:void(0);', 'ng-click' => 'saveTrip()', 'ng-show' => 'edit_persons_count'}
+        = image_tag 'buttons/check.svg'
+
+      %a.inline-action{href: 'javascript:void(0);', 'ng-click' => 'loadTrip()', 'ng-show' => 'edit_persons_count'}
+        = image_tag 'buttons/delete.svg'
