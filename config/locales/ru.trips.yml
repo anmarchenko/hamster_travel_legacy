@@ -43,7 +43,7 @@ ru:
       delete_trip: Удалить
       show_plan: Просмотр
       save_plan: Сохранить
-      cancel: Отмена
+      cancel: Назад без сохранения
       saving_plan: Сохраняем...
       city: Город
       transfer: Трансфер

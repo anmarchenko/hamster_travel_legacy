@@ -15,13 +15,6 @@
       %i.fa.fa-spinner.fa-spin
       = t('trips.show.saving_plan')
 
-    %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(false)',
-        class: 'btn btn-primary btn-sm', 'ng-show' => 'edit' }
-      %span{class: 'hidden-md hidden-lg'}
-        = fa_icon 'eye'
-      %span{class: 'hidden-xs hidden-sm'}
-        = fa_icon 'eye', text: t('trips.show.show_plan')
-
     %a{href: 'javascript:void(0);', 'ng-click' => 'cancelEdits()',
         class: 'btn btn-primary btn-sm', 'ng-show' => 'edit' }
       %span{class: 'hidden-md hidden-lg'}

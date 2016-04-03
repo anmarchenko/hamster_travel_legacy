@@ -41,7 +41,7 @@ en:
       edit_plan: Edit
       edit_trip: Edit
       delete_trip: Delete
-      cancel: Cancel
+      cancel: Go back without save
       show_plan: Show
       save_plan: Save
       saving_plan: Saving...

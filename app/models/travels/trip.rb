@@ -50,7 +50,7 @@ module Travels
       }
     end
 
-    paginates_per 9
+    paginates_per 10
 
     has_and_belongs_to_many :users, class_name: 'User', inverse_of: :trips, join_table: 'users_trips'
     belongs_to :author_user, class_name: 'User', inverse_of: :authored_trips
