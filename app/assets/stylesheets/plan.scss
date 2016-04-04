@@ -2,7 +2,6 @@
   background-color: $background-grey;
 
   .work-area {
-    margin: 0 -40px;
     padding: 30px 40px;
     @media (max-width: 1250px) {
       margin: 0;
@@ -155,18 +154,11 @@
       margin-right: 5px;
     }
 
-    .activity-index {
-      margin-top: 8px
-    }
-
-    .activity-index big {
-      padding-left: 10px
-    }
-
     .table-black-bordered > thead > tr > th, .table-black-bordered > tbody > tr > th, .table-black-bordered > tfoot > tr > th, .table-black-bordered > thead > tr > td, .table-black-bordered > tbody > tr > td, .table-black-bordered > tfoot > tr > td {
       background-color: $white;
       border: 1px solid $black !important;
     }
+
     .actions-butons {
       margin-top: 5px;
       margin-bottom: 15px;
@@ -186,38 +178,6 @@
 
     .show-column-checkboxes {
       width: 70px;
-    }
-
-    .activity-place, .activity-place-edit {
-      min-width: 100px;
-      min-height: 20px;
-
-      .day-activity-container {
-        position: relative;
-        padding: 5px;
-        margin-bottom: 10px;
-
-        &.form-horizontal {
-          margin-bottom: 2em;
-        }
-
-        &:hover {
-          background-color: $light-grey;
-        }
-
-        .delete-button {
-          position: absolute;
-          right: 20px;
-          top: 5px
-        }
-
-        .expand-button {
-          position: absolute;
-          right: 40px;
-          top: 5px
-        }
-      }
-
     }
 
     .transfer-place, .transfer-place-edit {
@@ -333,6 +293,57 @@
           margin-top: 10px;
         }
 
+      }
+    }
+
+    .activities {
+      .activity {
+        .activity-day-header {
+          margin-top: 25px;
+          .activity-day-date {
+            font-size: 20px;
+            display: inline;
+          }
+        }
+
+        .activity-action-link {
+          margin-left: 5px;
+          display: inline;
+          text-decoration: underline;
+        }
+
+        .activity-day-places {
+          display: flex;
+          flex-flow: row;
+          margin-top: 10px;
+
+          .activity-day-place {
+            margin-right: 10px;
+            display: inline;
+          }
+        }
+
+        .activity-day-info {
+          margin-top: 10px;
+
+          .activity-day-comment {
+            font-style: italic;
+          }
+          .activity-day-add-info {
+            .activity-day-expenses {
+              .activity-day-expenses-header {
+                img {
+                  width: 16px;
+                  opacity: .4;
+                  margin-right: 3px;
+                }
+              }
+              .activity-day-expense {
+                margin-top: 8px;
+              }
+            }
+          }
+        }
       }
     }
 

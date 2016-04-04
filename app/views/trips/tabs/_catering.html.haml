@@ -30,7 +30,7 @@
           %p.header
             {{catering.name}}
           %p.catering-value
-            = image_tag 'catering/wallet.svg', class: 'catering-wallet'
+            = image_tag 'common/wallet.svg', class: 'catering-wallet'
             %span.catering-value-text
               {{(catering.amount_cents  / 100.0 | number: 2) || 0.0}}
               {{catering.amount_currency_text}}

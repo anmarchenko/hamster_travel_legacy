@@ -1,4 +1,4 @@
-%div{'ng-init' => "init(#{@trip.days.count})", 'ng-cloak' => ''}
+%div{'ng-cloak' => ''}
   .work-area-header
     .row
       .col-md-12
@@ -9,81 +9,37 @@
         = render 'trips/partials/budget', options: {tab_budget: 'activities_other_budget'}
     .row
       .col-md-12
-        %div{class: "list-group list-group-horizontal"}
-          %a{class: "list-group-item",
-                           'ng-click' => 'changeVisibility("show_place")',
-                           'ng-class' => '{active: show_place}',
-                           'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.place')}
-            %span{'ng-show' => 'show_place'}
-              = fa_icon 'check-square-o'
-            %span{'ng-show' => '!show_place'}
-              = fa_icon 'square-o'
-            = fa_icon 'map-marker'
-          %a{class: "list-group-item",
-                           'ng-click' => 'changeVisibility("show_activities")',
-                           'ng-class' => '{active: show_activities}',
-                           'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.activities')}
-            %span{'ng-show' => 'show_activities'}
-              = fa_icon 'check-square-o'
-            %span{'ng-show' => '!show_activities'}
-              = fa_icon 'square-o'
-            = fa_icon 'university'
-          %a{class: "list-group-item",
-                           'ng-click' => 'changeVisibility("show_comments")',
-                           'ng-class' => '{active: show_comments}',
-                           'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.comments')}
-            %span{'ng-show' => 'show_comments'}
-              = fa_icon 'check-square-o'
-            %span{'ng-show' => '!show_comments'}
-              = fa_icon 'square-o'
-            = fa_icon 'pencil'
-    .row
-      .col-md-12
         = render 'trips/partials/buttons'
 
-  %table.table.table-black-bordered.fixed-head.plan-table
-    %thead.plan-affix
-      %tr
-        %th{class: 'col-md-1'}
-          = t('trips.show.day')
-        %th{class: 'col-md-2', 'ng-show' => 'show_place'}
-          = t('trips.show.place')
-        %th{class: 'col-md-6', 'ng-show' => 'show_activities'}
-          = t('trips.show.activities')
-          %a{class: 'pull-right', href: 'javascript:void(0);', 'ng-click' => 'toggleActivities()'}
-            %span{'ng-show' => '!activitiesCollapsed'}
-              = fa_icon 'arrow-down'
-            %span{'ng-show' => 'activitiesCollapsed'}
-              = fa_icon 'arrow-right'
-        %th{class: 'col-md-3', 'ng-show' => 'show_comments'}
-          = t('trips.show.comments')
-          - if @user_can_edit
-            %a{href: 'javascript:void(0);', 'ng-click' => 'savePlan()',
-                class: 'pull-right', 'ng-show' => '!saving', 'data-placement' => "bottom",
-                'data-toggle' => 'tooltip', title: t('trips.show.save_plan')}
-              = fa_icon 'save'
-            %a.pull-right{'ng-show' => 'saving'}
-              %i.fa.fa-spinner.fa-spin
-              = t('trips.show.saving_plan')
-
-    %tbody
-      - @trip.days.each_with_index do |day, day_index|
-        %tr{'ng-controller' => 'DaysController', 'ng-init' => "setDay(#{day_index}, #{day.to_json})", class: 'plan-row'}
-          %td{'ng-controller' => 'DaySorterController'}
-            .day-date
+  .activities
+    - @trip.days.each do |day|
+      .activity{'ng-controller' => 'ActivitiesDayController', 'ng-init' => "load('#{day.id}')", 'ng-show' => 'day_loaded'}
+        .row.activity-day-header
+          .col-md-12
+            .activity-day-date
               = day.date_when_s
             - if @user_can_edit && @trip.days_count > 1
-              %a.reorder-link{'ng-click' => "startSorting('#{@trip.id}')", href: 'javascript:void(0);'}
-                = t('trips.show.reorder_days')
-          %td{'ng-show' => 'show_place', 'ng-mouseleave' => 'mouse_over_place = false',
-                                         'ng-mouseenter' => 'mouse_over_place = true'}
-            %span{'ng-cloak' => ''}
-              = render 'trips/partials/place'
-          %td{'ng-show' => 'show_activities', 'ng-mouseleave' => 'mouse_over_activities = false',
-                                              'ng-mouseenter' => 'mouse_over_activities = true'}
-            %span{'ng-cloak' => ''}
-              = render 'trips/partials/activity'
-          %td{'ng-show' => 'show_comments', 'ng-mouseleave' => 'mouse_over_comments = false',
-                                            'ng-mouseenter' => 'mouse_over_comments = true'}
-            %span{'ng-cloak' => ''}
-              = render 'trips/partials/comment'
+              .activity-action-link{'ng-controller' => 'DaySorterController'}
+                %a{'ng-click' => "startSorting('#{@trip.id}')", href: 'javascript:void(0);'}
+                  = t('trips.show.reorder_days')
+        .row.activity-day-places
+          .col-md-12
+            .activity-day-place.flag-text{'ng-show' => 'place.city_text && place.flag_image && !edit && !day_edit',
+              'ng-repeat' => 'place in day.places track by place.id'}
+              %span{'ng-bind-html' => 'place.flag_image'}
+              {{place.city_text}}
+        .row.activity-day-info
+          .col-md-3.col-xs-12.activity-day-add-info{'ng-show' => 'expensesPresent() || bookmarksPresent()'}
+            .activity-day-expenses{'ng-show' => 'expensesPresent()'}
+              .activity-day-expenses-header
+                = image_tag 'common/wallet.svg'
+                = t('trips.show.expenses')
+
+              .activity-day-expense{'ng-repeat' => 'expense in day.expenses track by expense.id'}
+                %span{'ng-show' => '!!expense.amount_cents'}
+                  {{expense.name}}
+                  {{expense.amount_cents / 100.0 | number: 2}}
+                  {{expense.amount_currency_text}}
+
+          .col-md-9.col-xs-12.activity-day-comment
+            %p.travel-text{} {{day.comment}}

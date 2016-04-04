@@ -39,7 +39,7 @@ angular.module('travel-components').controller 'PlanController'
         $scope[column] = !$scope[column]
         $scope.saveVisibilityToCookie(column)
 
-      for column in ['show_place', 'show_transfers', 'show_hotel', 'show_activities', 'show_comments']
+      for column in ['show_place', 'show_transfers', 'show_hotel']
         $scope.restoreVisibilityFromCookie(column)
 
       # budget
@@ -74,17 +74,9 @@ angular.module('travel-components').controller 'PlanController'
       $scope.init = (count) ->
         $scope.days = new Array(count) unless count == 0
 
-        $scope.loadBudget()
-        $scope.loadTrip()
-        $scope.loadCountries()
-
       $scope.initCatering = () ->
         $scope.tripService.getCaterings().then (caterings) ->
           $scope.caterings = caterings
-
-        $scope.loadTrip()
-        $scope.loadBudget()
-        $scope.loadCountries()
 
       $scope.add = (field, obj = {}) ->
         obj['id'] = new Date().getTime()

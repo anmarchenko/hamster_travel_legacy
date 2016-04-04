@@ -1,6 +1,6 @@
 - options ||= {}
 
-%span.budget{'ng-show' => 'budget_loaded && trip_loaded'}
+%span.budget{'ng-show' => 'budget_loaded && trip_loaded', 'ng-init' => 'loadBudget()'}
   = t('common.budget')
   {{budget | number: 2}}
   = currency_symbol.html_safe
