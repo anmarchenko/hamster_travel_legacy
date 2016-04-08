@@ -16,6 +16,13 @@ Travel::Application.routes.draw do
     resources :messages, only: [:index, :destroy, :update]
 
     namespace :api do
+      namespace :v2 do
+        resources :trips, only: [] do
+          resources :days, only: [] do
+            resources :activities, only: [:index]
+          end
+        end
+      end
       resources :cities, only: [:index]
       resources :users, only: [:index]
       resources :participants, only: [:index]

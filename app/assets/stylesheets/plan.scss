@@ -324,24 +324,39 @@
         }
 
         .activity-day-info {
-          margin-top: 10px;
+          margin-top: 20px;
+          color: $text-grey;
+          .activity-day-comment-header {
+            font-weight: bolder;
+          }
 
           .activity-day-comment {
             font-style: italic;
           }
           .activity-day-add-info {
-            .activity-day-expenses {
-              .activity-day-expenses-header {
+            .activity-day-expenses, .activity-day-bookmarks {
+              .activity-day-expenses-header, .activity-day-bookmarks-header {
+                font-weight: bolder;
                 img {
                   width: 16px;
-                  opacity: .4;
                   margin-right: 3px;
                 }
               }
-              .activity-day-expense {
+              .activity-day-expense, .activity-day-bookmark {
                 margin-top: 8px;
               }
             }
+
+            .activity-day-bookmarks {
+              margin-top: 20px;
+            }
+          }
+        }
+
+        .activity-info {
+          margin-top: 25px;
+          .activity-header {
+            font-size: 16px;
           }
         }
       }

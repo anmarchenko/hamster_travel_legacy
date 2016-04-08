@@ -53,20 +53,24 @@ module Travels
       return hotel.blank? || hotel.is_empty?
     end
 
-    def as_json(**args)
-      json = super(except: [:_id])
+    def as_json(args = {})
+      json = super(args.merge(except: [:_id]))
       json['id'] = id.to_s
       json['date'] = date_when_s
-      json['transfers'] = transfers.as_json(args)
-      json['activities'] = activities.as_json(args)
-      json['places'] = places.as_json(args)
-      json['hotel'] = hotel.as_json(args)
-      json['expenses'] = expenses.as_json(args)
-      if links.blank?
-        json['links'] = [ExternalLink.new].as_json(args)
-      else
-        json['links'] = links.as_json(args)
+
+      unless args[:normal_json]
+        json['transfers'] = transfers.as_json(args)
+        json['activities'] = activities.as_json(args)
+        json['places'] = places.as_json(args)
+        json['hotel'] = hotel.as_json(args)
+        json['expenses'] = expenses.as_json(args)
+        if links.blank?
+          json['links'] = [ExternalLink.new].as_json(args)
+        else
+          json['links'] = links.as_json(args)
+        end
       end
+
       json
     end
 
