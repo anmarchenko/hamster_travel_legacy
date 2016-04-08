@@ -301,7 +301,7 @@
         .activity-day-header {
           margin-top: 25px;
           .activity-day-date {
-            font-size: 20px;
+            font-size: 24px;
             display: inline;
           }
         }
@@ -356,7 +356,13 @@
         .activity-info {
           margin-top: 25px;
           .activity-header {
-            font-size: 16px;
+            font-size: 18px;
+          }
+
+          .activity-add-info {
+            .activity-comment {
+              font-style: italic;
+            }
           }
         }
       }
