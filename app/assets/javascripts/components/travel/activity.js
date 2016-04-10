@@ -14,6 +14,11 @@ angular.module('travel-components').controller('ActivityController'
             $scope.triggerShowMore = function () {
                 $scope.show_more = !$scope.show_more;
             }
+
+            $scope.$on('activities_show_more', function (event, show_more) {
+                    $scope.show_more = show_more;
+                }
+            )
         }
 
     ]

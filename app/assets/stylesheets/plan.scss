@@ -297,6 +297,21 @@
     }
 
     .activities {
+      .activity-show-more {
+        padding-top: 4px;
+        cursor: pointer;
+        position: relative;
+        .activity-show-more-img {
+          width: 18px;
+          height: 24px;
+          margin-left: 10px;
+          position: absolute;
+        }
+        &.active {
+          fill: $link;
+        }
+      }
+
       .activity {
         img {
           width: 16px;
@@ -305,6 +320,7 @@
 
         .activity-day-header {
           margin-top: 25px;
+          cursor: pointer;
           .activity-day-date {
             font-size: 24px;
             display: inline;
@@ -356,22 +372,9 @@
 
         .activity-info {
           margin-top: 15px;
-          .activity-show-more {
-            padding-top: 4px;
-            cursor: pointer;
-            position: relative;
-            .activity-show-more-img {
-              width: 18px;
-              height: 24px;
-              margin-left: 10px;
-              position: absolute;
-            }
-            &.active {
-              fill: $link;
-            }
-          }
           .activity-header {
             font-size: 16px;
+            cursor: pointer;
           }
 
           .activity-comment {

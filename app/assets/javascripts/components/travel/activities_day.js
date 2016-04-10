@@ -9,6 +9,8 @@ angular.module('travel-components').controller('ActivitiesDayController'
             $scope.day_edit = false;
             $scope.day_loaded = false;
 
+            $scope.show_more = false;
+
             $scope.reload = function () {
                 Activities.index($scope.trip_id, $scope.day_id).success(function (day) {
                     $scope.day = day;
@@ -35,6 +37,13 @@ angular.module('travel-components').controller('ActivitiesDayController'
             $scope.bookmarksPresent = function(){
                 return $scope.day.links && $scope.day.links.length > 0 && $scope.day.links[0].url;
             }
+
+            $scope.triggerShowMore = function () {
+                $scope.show_more = !$scope.show_more;
+
+                $scope.$broadcast('activities_show_more', $scope.show_more)
+            }
+
         }
 
     ]

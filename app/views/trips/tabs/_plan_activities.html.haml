@@ -16,7 +16,7 @@
       .activity{'ng-controller' => 'ActivitiesDayController', 'ng-init' => "load('#{@trip.id}', '#{day.id}')", 'ng-show' => 'day_loaded'}
         .row.activity-day-header
           .col-md-12
-            .activity-day-date
+            .activity-day-date{'ng-click' => 'triggerShowMore()'}
               = day.date_when_s
             - if @user_can_edit && @trip.days_count > 1
               .activity-action-link{'ng-controller' => 'DaySorterController'}
@@ -57,7 +57,7 @@
 
         .activity-info{'ng-repeat' => 'activity in day.activities track by activity.id'}
           %span{'ng-controller' => 'ActivityController'}
-            .row.activity-header
+            .row.activity-header{'ng-click' => 'triggerShowMore()'}
               .col-md-12
                 %span{'ng-show' => 'day.activities.length > 1'}
                   {{$index+1}}.
@@ -65,7 +65,7 @@
                 {{activity.amount_cents / 100.0 | number: 2}}
                 {{activity.amount_currency_text}}
 
-                %span.activity-show-more{'ng-class' => '{active: show_more}', 'ng-click' => 'triggerShowMore()'}
+                %span.activity-show-more{'ng-class' => '{active: show_more}'}
                   = inline_svg 'common/eye.svg', class: 'activity-show-more-img'
 
             .row.activity-link{'ng-show' => 'showMore()'}
