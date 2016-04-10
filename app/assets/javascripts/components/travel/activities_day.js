@@ -3,11 +3,11 @@ angular.module('travel-components').controller('ActivitiesDayController'
         '$scope', 'Activities'
         , function ($scope, Activities) {
             $scope.day = {}
-            $scope.day_id = null
-            $scope.trip_id = null
+            $scope.day_id = null;
+            $scope.trip_id = null;
 
-            $scope.day_edit = false
-            $scope.day_loaded = false
+            $scope.day_edit = false;
+            $scope.day_loaded = false;
 
             $scope.reload = function () {
                 Activities.index($scope.trip_id, $scope.day_id).success(function (day) {
@@ -19,8 +19,8 @@ angular.module('travel-components').controller('ActivitiesDayController'
             }
 
             $scope.load = function (trip_id, day_id) {
-                $scope.day_id = day_id
-                $scope.trip_id = trip_id
+                $scope.day_id = day_id;
+                $scope.trip_id = trip_id;
                 Activities.index($scope.trip_id, $scope.day_id).success(function (day) {
                     $scope.day = day;
                     $scope.day_loaded = true;
