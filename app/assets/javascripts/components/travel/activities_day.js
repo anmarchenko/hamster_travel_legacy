@@ -6,10 +6,10 @@ angular.module('travel-components').controller('ActivitiesDayController'
             $scope.day_id = null;
             $scope.trip_id = null;
 
-            $scope.day_edit = false;
             $scope.day_loaded = false;
 
             $scope.show_more = false;
+            $scope.edit = false;
 
             $scope.reload = function () {
                 Activities.index($scope.trip_id, $scope.day_id).success(function (day) {
@@ -42,6 +42,10 @@ angular.module('travel-components').controller('ActivitiesDayController'
                 $scope.show_more = !$scope.show_more;
 
                 $scope.$broadcast('activities_show_more', $scope.show_more)
+            }
+
+            $scope.startEdit = function () {
+                $scope.edit = true;
             }
 
         }

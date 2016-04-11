@@ -23,12 +23,22 @@
               .activity-action-link{'ng-controller' => 'DaySorterController'}
                 %a{'ng-click' => "startSorting('#{@trip.id}')", href: 'javascript:void(0);'}
                   = t('trips.show.reorder_days')
+              .activity-action-link{'ng-hide' => 'edit'}
+                %a{'ng-click' => 'startEdit()', href: 'javascript:void(0);'}
+                  = t('trips.show.edit_plan')
         .row.activity-day-places
-          .col-md-12
-            .activity-day-place.flag-text{'ng-show' => 'place.city_text && place.flag_image && !edit && !day_edit',
+          .col-md-12{'ng-hide' => 'edit'}
+            .activity-day-place{'ng-show' => 'place.city_text && place.flag_image && !edit && !day_edit',
               'ng-repeat' => 'place in day.places track by place.id'}
               %span{'ng-bind-html' => 'place.flag_image'}
               {{place.city_text}}
+          .col-md-12{'ng-show' => 'edit'}
+            .activity-day-place-edit.form-inline{'ng-repeat' => 'place in day.places track by place.id'}
+              .form-group
+                = render 'widgets/typeahead/cities', model_name: 'place.city', classes: 'input-sm form-control',
+                  placeholder: t('trips.show.city'), show_loading: false,
+                  custom_bindings: "'place.flag_image' : 'flag_image'",
+                  allow_empty_typeahead: true
         .row.activity-day-info{'ng-show' => 'expensesPresent() || bookmarksPresent() || day.comment'}
           .col-md-3.col-xs-12.activity-day-add-info{'ng-show' => 'expensesPresent() || bookmarksPresent()'}
             .activity-day-expenses{'ng-show' => 'expensesPresent()'}
@@ -77,6 +87,13 @@
                 {{activity.comment}}
                 %span{'ng-show' => '!activity.comment'}
                   = t('common.no_comments')
+        .activity-empty-state{'ng-show' => 'day.activities.length == 0'}
+          .activity-empty-state-header
+            = t('trips.show.no_activities')
+          .activity-empty-state-cta
+            %a{href: 'javascript:void(0)', class: 'btn ghost-button btn-sm', 'ng-click' => ''}
+            = t('trips.show.add_activities')
+
         .activity-mockup{'ng-hide' => 'day_loaded'}
           .row
             .col-md-12
