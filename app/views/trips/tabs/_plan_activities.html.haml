@@ -13,7 +13,8 @@
 
   .activities
     - @trip.days.each do |day|
-      .activity{'ng-controller' => 'ActivitiesDayController', 'ng-init' => "load('#{@trip.id}', '#{day.id}')", 'ng-show' => 'day_loaded'}
+      .activity{'ng-controller' => 'ActivitiesDayController', 'ng-init' => "load('#{@trip.id}', '#{day.id}')",
+                'ng-show' => 'day_loaded'}
         .row.activity-day-header
           .col-md-12
             .activity-day-date{'ng-click' => 'triggerShowMore()'}
@@ -76,3 +77,30 @@
                 {{activity.comment}}
                 %span{'ng-show' => '!activity.comment'}
                   = t('common.no_comments')
+        .activity-mockup{'ng-hide' => 'day_loaded'}
+          .row
+            .col-md-12
+              .activity-mockup-day-header
+          .row
+            .col-md-12
+              .activity-mockup-day-places
+                .activity-mockup-day-places-place
+                .activity-mockup-day-places-place
+          .row
+            .col-md-3.col-xs-12.activity-mockup-day-info-expenses
+              .activity-mockup-day-info-expenses-line
+              .activity-mockup-day-info-expenses-line
+              .activity-mockup-day-info-expenses-line
+            .col-md-9.col-xs-12.activity-mockup-day-info-comment
+              .activity-mockup-day-info-comment-line
+              .activity-mockup-day-info-comment-line
+              .activity-mockup-day-info-comment-line
+          .row
+            .col-md-12
+              .activity-mockup-header
+          .row
+            .col-md-12
+              .activity-mockup-header
+          .row
+            .col-md-12
+              .activity-mockup-header

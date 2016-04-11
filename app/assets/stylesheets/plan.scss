@@ -382,6 +382,48 @@
           }
         }
       }
+
+      .activity-mockup {
+        .activity-mockup-day-header {
+          background-color: $light-grey;
+          height: 24px;
+          margin-top: 25px;
+          border-radius: 4px;
+          width: 35%;
+        }
+
+        .activity-mockup-day-places-place {
+          display: inline-block;
+          height: 13px;
+          margin-right: 10px;
+          margin-top: 10px;
+          background-color: $light-grey;
+          width: 10%;
+        }
+
+        .activity-mockup-day-info-expenses {
+          margin-top: 15px;
+        }
+
+        .activity-mockup-day-info-expenses-line {
+          width: 80%;
+          height: 13px;
+          background-color: $light-grey;
+        }
+
+        .activity-mockup-day-info-comment-line {
+          width: 100%;
+          height: 13px;
+          background-color: $light-grey;
+        }
+
+        .activity-mockup-header {
+          margin-top: 15px;
+          width: 30%;
+          height: 16px;
+          background-color: $light-grey;
+        }
+      }
     }
 
     .plan-row td {
