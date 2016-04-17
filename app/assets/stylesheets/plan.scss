@@ -296,6 +296,17 @@
       }
     }
 
+    .bookmark-edit {
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+      margin-top: 5px;
+      img {
+        width: 16px;
+        margin-left: 5px;
+      }
+    }
+
     .activities {
       .activity-show-more {
         padding-top: 4px;
@@ -315,12 +326,13 @@
       .activity {
         img {
           width: 16px;
-          margin-right: 3px;
+          &.image-text {
+            margin-right: 3px;
+          }
         }
 
         .activity-day-header {
           margin-top: 25px;
-          cursor: pointer;
           .activity-day-date {
             font-size: 24px;
             display: inline;
@@ -385,12 +397,47 @@
               .activity-day-expense, .activity-day-bookmark {
                 margin-top: 8px;
               }
+              .activity-day-expense-edit {
+                display: flex;
+                flex-flow: row;
+                align-items: center;
+                margin-top: 10px;
+
+                .expense-name {
+                  width: 45%;
+                }
+                .input-group {
+                  width: 45%;
+                }
+                .delete-expense {
+                  margin-left: 10px;
+                  img {
+                    vertical-align: middle;
+                  }
+                }
+
+              }
             }
 
             .activity-day-bookmarks {
               margin-top: 20px;
+
+              .activity-day-bookmark-edit {
+                margin-top: 10px;
+              }
             }
           }
+        }
+
+        .activity-day-activities-header {
+          font-size: 17px;
+          margin-top: 15px;
+          color: $text-grey;
+          font-weight: bold;
+          cursor: pointer;
+        }
+        .activity-day-activities-footer {
+          margin-top: 10px;
         }
 
         .activity-info {
@@ -398,6 +445,37 @@
           .activity-header {
             font-size: 16px;
             cursor: pointer;
+          }
+
+          .activity-edit {
+            display: flex;
+            flex-flow: column;
+            .activity-edit-row {
+              margin-bottom: 10px;
+            }
+            .delete-activity {
+              margin-left: 10px;
+            }
+          }
+
+          .activity-edit-header {
+            display: flex;
+            flex-flow: row;
+            align-items: center;
+
+            input {
+              margin-left: 15px;
+              max-width: 75%;
+            }
+
+            .activity-show-more {
+              padding-top: 0px;
+              padding-bottom: 18px;
+            }
+          }
+
+          .activity-edit-more {
+            margin-top: 10px;
           }
 
           .activity-comment {

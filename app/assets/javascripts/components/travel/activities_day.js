@@ -44,8 +44,12 @@ angular.module('travel-components').controller('ActivitiesDayController'
                 $scope.$broadcast('activities_show_more', $scope.show_more)
             }
 
-            $scope.startEdit = function () {
+            $scope.startEdit = function (new_activity) {
                 $scope.edit = true;
+
+                if($scope.day.activities.length == 0) {
+                    $scope.day.activities = [new_activity]
+                }
             }
             $scope.cancelEdit = function () {
                 $scope.edit = false;

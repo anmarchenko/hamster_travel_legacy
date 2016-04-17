@@ -101,6 +101,8 @@ en:
       reorder_days: Reorder
       no_activities: No activities planned for the day yet.
       add_city: Add city
+      add_expense: Add expense
+      add_activity: Add activity
     edit:
       title: Edit travel
     form:
