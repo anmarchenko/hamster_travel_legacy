@@ -2,23 +2,17 @@
   .btn-toolbar.actions-butons{'ng-cloak' => ''}
     %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(true)',
         class: 'btn btn-primary btn-sm', 'ng-show' => '!edit' }
-      = fa_icon 'edit', text: t('trips.show.edit_plan')
+      = t('trips.show.edit_plan')
 
     %a{href: 'javascript:void(0);', 'ng-click' => 'savePlan()',
-        class: 'btn btn-primary btn-sm', 'ng-show' => '!saving && edit' }
-      %span{class: 'hidden-md hidden-lg'}
-        = fa_icon 'save'
-      %span{class: 'hidden-xs hidden-sm'}
-        = fa_icon 'save', text: t('trips.show.save_plan')
+        class: 'btn btn-success btn-sm', 'ng-show' => '!saving && edit' }
+      = t('trips.show.save_plan')
 
     %a.saving{'ng-show' => 'saving'}
       %i.fa.fa-spinner.fa-spin
       = t('trips.show.saving_plan')
 
     %a{href: 'javascript:void(0);', 'ng-click' => 'cancelEdits()',
-        class: 'btn btn-primary btn-sm', 'ng-show' => 'edit' }
-      %span{class: 'hidden-md hidden-lg'}
-        = fa_icon 'undo'
-      %span{class: 'hidden-xs hidden-sm'}
-        = fa_icon 'undo', text: t('trips.show.cancel')
+        class: 'btn ghost-button btn-sm', 'ng-show' => 'edit' }
+      = t('common.cancel')
 

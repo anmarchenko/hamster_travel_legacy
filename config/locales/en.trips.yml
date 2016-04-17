@@ -100,6 +100,7 @@ en:
       invite_sent: invite sent
       reorder_days: Reorder
       no_activities: No activities planned for the day yet.
+      add_city: Add city
     edit:
       title: Edit travel
     form:

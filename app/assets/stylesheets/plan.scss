@@ -330,7 +330,9 @@
         .activity-action-link {
           margin-left: 10px;
           display: inline;
-          text-decoration: underline;
+          a:not(.btn) {
+            text-decoration: underline;
+          }
         }
 
         .activity-day-places {
@@ -343,6 +345,27 @@
             display: inline;
           }
         }
+
+        .activity-day-places-edit {
+          display: flex;
+          flex-flow: row;
+          flex-wrap: wrap;
+          align-items: center;
+
+          .form-group {
+            display: flex;
+            flex-flow: row;
+            align-items: center;
+            a {
+              margin-left: 5px;
+            }
+          }
+
+          .activity-day-place-edit {
+            margin-right: 20px;
+          }
+        }
+
 
         .activity-day-info {
           margin-top: 15px;

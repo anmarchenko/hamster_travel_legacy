@@ -47,6 +47,11 @@ angular.module('travel-components').controller('ActivitiesDayController'
             $scope.startEdit = function () {
                 $scope.edit = true;
             }
+            $scope.cancelEdit = function () {
+                $scope.edit = false;
+
+                $scope.reload();
+            }
 
         }
 

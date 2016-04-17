@@ -101,6 +101,7 @@ ru:
       reorder_days: Переместить
       no_activities: На этот день пока ничего не запланировано.
       add_activities: Добавить впечатления
+      add_city: Добавить город
     edit:
       title: Редактирование путешествия
     form:

@@ -60,3 +60,7 @@ fieldset[disabled] .btn-primary.active {
 a {
   color: $ctaColor;
 }
+
+.btn-success, .btn-primary {
+  fill: white;
+}

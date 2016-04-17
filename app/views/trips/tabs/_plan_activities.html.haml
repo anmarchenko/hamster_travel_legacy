@@ -20,25 +20,46 @@
             .activity-day-date{'ng-click' => 'triggerShowMore()'}
               = day.date_when_s
             - if @user_can_edit && @trip.days_count > 1
-              .activity-action-link{'ng-controller' => 'DaySorterController'}
+              .activity-action-link{'ng-controller' => 'DaySorterController', 'ng-hide' => 'edit'}
                 %a{'ng-click' => "startSorting('#{@trip.id}')", href: 'javascript:void(0);'}
                   = t('trips.show.reorder_days')
               .activity-action-link{'ng-hide' => 'edit'}
                 %a{'ng-click' => 'startEdit()', href: 'javascript:void(0);'}
                   = t('trips.show.edit_plan')
+              .activity-action-link{'ng-show' => 'edit'}
+                %a.btn.btn-sm.btn-success{'ng-click' => 'save()', href: 'javascript:void(0);'}
+                  = t('common.save')
+              .activity-action-link{'ng-show' => 'edit'}
+                %a.btn.btn-sm.ghost-button{'ng-click' => 'cancelEdit()', href: 'javascript:void(0);'}
+                  = t('common.cancel')
+
         .row.activity-day-places
+          =# Show places
           .col-md-12{'ng-hide' => 'edit'}
             .activity-day-place{'ng-show' => 'place.city_text && place.flag_image && !edit && !day_edit',
               'ng-repeat' => 'place in day.places track by place.id'}
               %span{'ng-bind-html' => 'place.flag_image'}
               {{place.city_text}}
-          .col-md-12{'ng-show' => 'edit'}
+
+          =# Edit places
+          .col-md-12.activity-day-places-edit{'ng-show' => 'edit'}
             .activity-day-place-edit.form-inline{'ng-repeat' => 'place in day.places track by place.id'}
               .form-group
                 = render 'widgets/typeahead/cities', model_name: 'place.city', classes: 'input-sm form-control',
                   placeholder: t('trips.show.city'), show_loading: false,
                   custom_bindings: "'place.flag_image' : 'flag_image'",
                   allow_empty_typeahead: true
+
+                %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.places, $index)',
+                      'ng-show' => 'day.places.length > 1'}
+                  = image_tag 'buttons/delete.svg'
+
+            .activity-day-place-edit.form-inline
+              .form-group
+                %a{href: 'javascript:void(0);', 'ng-click' => 'add(day.places, {})'}
+                  = t('trips.show.add_city')
+
+
         .row.activity-day-info{'ng-show' => 'expensesPresent() || bookmarksPresent() || day.comment'}
           .col-md-3.col-xs-12.activity-day-add-info{'ng-show' => 'expensesPresent() || bookmarksPresent()'}
             .activity-day-expenses{'ng-show' => 'expensesPresent()'}
@@ -92,7 +113,7 @@
             = t('trips.show.no_activities')
           .activity-empty-state-cta
             %a{href: 'javascript:void(0)', class: 'btn ghost-button btn-sm', 'ng-click' => ''}
-            = t('trips.show.add_activities')
+              = t('trips.show.add_activities')
 
         .activity-mockup{'ng-hide' => 'day_loaded'}
           .row
