@@ -164,6 +164,14 @@
                 'ng-click' => "add(day.activities, {#{default_currency_hash(@trip, current_user)}})"}
               = t('trips.show.add_activity')
 
+          .activity-day-activities-footer{'ng-show' => 'edit'}
+            .activity-action-link.no-margin
+              %a.btn.btn-sm.btn-success{'ng-click' => 'save()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
+                = t('common.save')
+            .activity-action-link
+              %a.btn.btn-sm.ghost-button{'ng-click' => 'cancelEdit()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
+                = t('common.cancel')
+
           .activity-empty-state{'ng-show' => 'day.activities.length == 0 && !edit'}
             .activity-empty-state-header
               = t('trips.show.no_activities')
