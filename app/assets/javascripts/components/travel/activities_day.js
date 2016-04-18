@@ -10,9 +10,10 @@ angular.module('travel-components').controller('ActivitiesDayController'
 
             $scope.show_more = false;
             $scope.edit = false;
+            $scope.saving = false;
 
             $scope.reload = function () {
-                Activities.index($scope.trip_id, $scope.day_id).success(function (day) {
+                Activities.get($scope.trip_id, $scope.day_id).success(function (day) {
                     $scope.day = day;
 
                     $scope.loadBudget();
@@ -23,12 +24,20 @@ angular.module('travel-components').controller('ActivitiesDayController'
             $scope.load = function (trip_id, day_id) {
                 $scope.day_id = day_id;
                 $scope.trip_id = trip_id;
-                Activities.index($scope.trip_id, $scope.day_id).success(function (day) {
+                Activities.get($scope.trip_id, $scope.day_id).success(function (day) {
                     $scope.day = day;
                     $scope.day_loaded = true;
                 })
             }
 
+            $scope.save = function () {
+                $scope.saving = true;
+
+                Activities.saveAll($scope.trip_id, $scope.day).success(function (data) {
+                    $scope.reload();
+                    $scope.saving = false;
+                })
+            }
 
             $scope.expensesPresent = function(){
                 return $scope.day.expenses && $scope.day.expenses.length > 0 && $scope.day.expenses[0].amount_cents > 0;
@@ -49,6 +58,10 @@ angular.module('travel-components').controller('ActivitiesDayController'
 
                 if($scope.day.activities.length == 0) {
                     $scope.day.activities = [new_activity]
+                }
+
+                if($scope.day.links.length == 0) {
+                    $scope.day.links = [{}]
                 }
             }
             $scope.cancelEdit = function () {

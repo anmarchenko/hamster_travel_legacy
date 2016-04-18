@@ -1,10 +1,7 @@
 angular.module('travel-components').controller('ActivityController'
     , [
-        '$scope', 'Activities'
-        , function ($scope, Activities) {
-            $scope.day_id = null;
-            $scope.trip_id = null;
-
+        '$scope'
+        , function ($scope) {
             $scope.show_more = false;
 
             $scope.showMore = function () {
@@ -13,6 +10,12 @@ angular.module('travel-components').controller('ActivityController'
 
             $scope.triggerShowMore = function () {
                 $scope.show_more = !$scope.show_more;
+            }
+
+            $scope.init = function (activity) {
+                if(!activity.name){
+                    $scope.show_more = true;
+                }
             }
 
             $scope.$on('activities_show_more', function (event, show_more) {

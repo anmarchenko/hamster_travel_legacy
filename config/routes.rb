@@ -19,7 +19,7 @@ Travel::Application.routes.draw do
       namespace :v2 do
         resources :trips, only: [] do
           resources :days, only: [] do
-            resources :activities, only: [:index]
+            resources :activities, only: [:index, :create]
           end
         end
       end
