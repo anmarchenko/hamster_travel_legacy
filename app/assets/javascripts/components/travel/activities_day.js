@@ -45,6 +45,8 @@ angular.module('travel-components').controller('ActivitiesDayController'
                 Activities.saveAll($scope.trip_id, $scope.day).success(function (data) {
                     $scope.reload();
                     $scope.saving = false;
+
+                    toastr["success"]($('#notification_saved').text());
                 })
             }
 

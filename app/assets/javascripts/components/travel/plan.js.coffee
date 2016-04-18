@@ -62,22 +62,12 @@ angular.module('travel-components').controller 'PlanController'
         5000
       )
 
-      $scope.setEdit = (val) ->
-        $scope.edit = val
-
       $scope.init = (count) ->
         $scope.days = new Array(count) unless count == 0
 
       $scope.initCatering = () ->
         $scope.tripService.getCaterings().then (caterings) ->
           $scope.caterings = caterings
-
-      $scope.add = (field, obj = {}) ->
-        obj['id'] = new Date().getTime()
-        field.push(obj)
-
-      $scope.remove = (field, index) ->
-        field.splice(index, 1)
 
       $scope.fillAsPreviousPlace = (place, place_index, day, day_index) ->
         if day.places[place_index - 1]
@@ -101,7 +91,7 @@ angular.module('travel-components').controller 'PlanController'
           for link in prev_hotel.links
             hotel.links.push JSON.parse(JSON.stringify(link))
 
-      # REST: methods using API
+      # REST: methods using old API
       $scope.loadBudget = ->
         $scope.tripService.getBudget($scope.trip_id).then (budget) ->
           $scope.budget = budget.sum
@@ -156,7 +146,17 @@ angular.module('travel-components').controller 'PlanController'
         $scope.loadCountries()
       # END OF API
 
-      # NEW EPOCH CODE
+      # NEW EPOCH CODE - WILL SURVIVE
+      $scope.add = (field, obj = {}) ->
+        obj['id'] = new Date().getTime()
+        field.push(obj)
+
+      $scope.remove = (field, index) ->
+        field.splice(index, 1)
+
+      $scope.setEdit = (val) ->
+        $scope.edit = val
+        # emit event
 
       # END NEW EPOCH CODE
 
