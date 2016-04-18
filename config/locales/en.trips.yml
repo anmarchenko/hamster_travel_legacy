@@ -103,6 +103,7 @@ en:
       add_city: Add city
       add_expense: Add expense
       add_activity: Add activity
+      edit_day: Edit day
     edit:
       title: Edit travel
     form:

@@ -11,13 +11,22 @@ angular.module('travel-components').controller('ActivitiesDayController'
             $scope.show_more = false;
             $scope.edit = false;
             $scope.saving = false;
+            $scope.reloading = false;
 
             $scope.reload = function () {
+                if (!$scope.edit) {
+                    $scope.reloading = true;
+                }
                 Activities.get($scope.trip_id, $scope.day_id).success(function (day) {
                     $scope.day = day;
 
                     $scope.loadBudget();
                     $scope.loadCountries();
+                    if ($scope.edit) {
+                        $scope.setDefaults();
+                    }
+
+                    $scope.reloading = false;
                 })
             }
 
@@ -39,11 +48,11 @@ angular.module('travel-components').controller('ActivitiesDayController'
                 })
             }
 
-            $scope.expensesPresent = function(){
+            $scope.expensesPresent = function () {
                 return $scope.day.expenses && $scope.day.expenses.length > 0 && $scope.day.expenses[0].amount_cents > 0;
             }
 
-            $scope.bookmarksPresent = function(){
+            $scope.bookmarksPresent = function () {
                 return $scope.day.links && $scope.day.links.length > 0 && $scope.day.links[0].url;
             }
 
@@ -53,17 +62,22 @@ angular.module('travel-components').controller('ActivitiesDayController'
                 $scope.$broadcast('activities_show_more', $scope.show_more)
             }
 
-            $scope.startEdit = function (new_activity) {
-                $scope.edit = true;
-
-                if($scope.day.activities.length == 0) {
-                    $scope.day.activities = [new_activity]
+            $scope.setDefaults = function () {
+                if ($scope.day.activities.length == 0) {
+                    $scope.day.activities = [$scope.new_activity_template];
                 }
 
-                if($scope.day.links.length == 0) {
-                    $scope.day.links = [{}]
+                if ($scope.day.links.length == 0) {
+                    $scope.day.links = [{}];
                 }
             }
+
+            $scope.startEdit = function (new_activity) {
+                $scope.edit = true;
+                $scope.new_activity_template = new_activity;
+                $scope.setDefaults();
+            }
+
             $scope.cancelEdit = function () {
                 $scope.edit = false;
 

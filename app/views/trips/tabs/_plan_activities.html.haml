@@ -14,160 +14,161 @@
   .activities
     - @trip.days.each do |day|
       .activity{'ng-controller' => 'ActivitiesDayController', 'ng-init' => "load('#{@trip.id}', '#{day.id}')",
-                'ng-show' => 'day_loaded'}
-        .row.activity-day-header
-          .col-md-12
-            .activity-day-date
-              = day.date_when_s
-            - if @user_can_edit && @trip.days_count > 1
-              .activity-action-link{'ng-controller' => 'DaySorterController', 'ng-hide' => 'edit'}
-                %a{'ng-click' => "startSorting('#{@trip.id}')", href: 'javascript:void(0);'}
-                  = t('trips.show.reorder_days')
-              .activity-action-link{'ng-hide' => 'edit'}
-                %a{'ng-click' => "startEdit({#{default_currency_hash(@trip, current_user)}})", href: 'javascript:void(0);'}
-                  = t('trips.show.edit_plan')
-              .activity-action-link{'ng-show' => 'edit'}
-                %a.btn.btn-sm.btn-success{'ng-click' => 'save()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
-                  = t('common.save')
-              .activity-action-link{'ng-show' => 'edit'}
-                %a.btn.btn-sm.ghost-button{'ng-click' => 'cancelEdit()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
-                  = t('common.cancel')
+      'ng-class' => '{shadowed: reloading}'}
+        .activity-content{'ng-show' => 'day_loaded'}
+          .row.activity-day-header
+            .col-md-12
+              .activity-day-date
+                = day.date_when_s
+              - if @user_can_edit && @trip.days_count > 1
+                .activity-action-link{'ng-controller' => 'DaySorterController', 'ng-hide' => 'edit'}
+                  %a{'ng-click' => "startSorting('#{@trip.id}')", href: 'javascript:void(0);'}
+                    = t('trips.show.reorder_days')
+                .activity-action-link{'ng-hide' => 'edit'}
+                  %a{'ng-click' => "startEdit({#{default_currency_hash(@trip, current_user)}})", href: 'javascript:void(0);'}
+                    = t('trips.show.edit_plan')
+                .activity-action-link{'ng-show' => 'edit'}
+                  %a.btn.btn-sm.btn-success{'ng-click' => 'save()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
+                    = t('common.save')
+                .activity-action-link{'ng-show' => 'edit'}
+                  %a.btn.btn-sm.ghost-button{'ng-click' => 'cancelEdit()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
+                    = t('common.cancel')
 
-        .row.activity-day-places
-          =# Show places
-          .col-md-12{'ng-hide' => 'edit'}
-            .activity-day-place{'ng-show' => 'place.city_text && place.flag_image && !edit && !day_edit',
-              'ng-repeat' => 'place in day.places track by place.id'}
-              %span{'ng-bind-html' => 'place.flag_image'}
-              {{place.city_text}}
+          .row.activity-day-places
+            =# Show places
+            .col-md-12{'ng-hide' => 'edit'}
+              .activity-day-place{'ng-show' => 'place.city_text && place.flag_image && !edit && !day_edit',
+                'ng-repeat' => 'place in day.places track by place.id'}
+                %span{'ng-bind-html' => 'place.flag_image'}
+                {{place.city_text}}
 
-          =# Edit places
-          .col-md-12.activity-day-places-edit{'ng-show' => 'edit'}
-            .activity-day-place-edit.form-inline{'ng-repeat' => 'place in day.places track by place.id'}
-              .form-group
-                = render 'widgets/typeahead/cities', model_name: 'place.city', classes: 'input-sm form-control',
-                  placeholder: t('trips.show.city'), show_loading: false,
-                  custom_bindings: "'place.flag_image' : 'flag_image'",
-                  allow_empty_typeahead: true
+            =# Edit places
+            .col-md-12.activity-day-places-edit{'ng-show' => 'edit'}
+              .activity-day-place-edit.form-inline{'ng-repeat' => 'place in day.places track by place.id'}
+                .form-group
+                  = render 'widgets/typeahead/cities', model_name: 'place.city', classes: 'input-sm form-control',
+                    placeholder: t('trips.show.city'), show_loading: false,
+                    custom_bindings: "'place.flag_image' : 'flag_image'",
+                    allow_empty_typeahead: true
 
-                %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.places, $index)',
-                      'ng-show' => 'day.places.length > 1'}
-                  = image_tag 'buttons/delete.svg'
-
-            .activity-day-place-edit.form-inline
-              .form-group
-                %a{href: 'javascript:void(0);', 'ng-click' => 'add(day.places, {})'}
-                  = t('trips.show.add_city')
-
-
-        .row.activity-day-info{'ng-show' => 'expensesPresent() || bookmarksPresent() || day.comment || edit'}
-          .col-md-3.col-xs-12.activity-day-add-info{'ng-show' => 'expensesPresent() || bookmarksPresent() || edit'}
-            .activity-day-expenses{'ng-show' => 'expensesPresent() || edit'}
-              .activity-day-expenses-header
-                = image_tag 'common/money.svg', class: 'image-text'
-                = t('trips.show.expenses')
-
-              .activity-day-expense{'ng-repeat' => 'expense in day.expenses track by expense.id', 'ng-hide' => 'edit'}
-                %span{'ng-show' => '!!expense.amount_cents'}
-                  {{expense.name}}
-                  {{expense.amount_cents / 100.0 | number: 2}}
-                  {{expense.amount_currency_text}}
-
-              .activity-day-expense-edit{'ng-repeat' => 'expense in day.expenses track by expense.id', 'ng-show' => 'edit'}
-                = text_field_tag 'expense_name', '', 'ng-model' => 'expense.name', class: 'form-control input-sm expense-name',
-                    placeholder: t('trips.show.expense')
-                = render 'widgets/price', name: 'expense_price', placeholder: t('trips.show.price'),
-                  object_model: 'expense'
-                %a.delete-expense{href: 'javascript:void(0);', 'ng-click' => 'remove(day.expenses, $index)',
-                    'ng-show' => 'day.expenses.length > 1'}
-                  = image_tag 'buttons/delete.svg'
-              .activity-day-expense-edit{'ng-show' => 'edit'}
-                %a{href: 'javascript:void(0);',
-                    'ng-click' => "add(day.expenses, {#{default_currency_hash(@trip, current_user)}})"}
-                  = t('trips.show.add_expense')
-            .activity-day-bookmarks{'ng-show' => 'bookmarksPresent() || edit'}
-              .activity-day-bookmarks-header
-                = image_tag 'common/link.svg', class: 'image-text'
-                = t('trips.show.links')
-
-              .activity-day-bookmark{'ng-repeat' => 'link in day.links track by link.id', 'ng-hide' => 'edit'}
-                = render 'widgets/link_show', ng_model_url: 'link.url', ng_model_description: 'link.description'
-
-              .activity-day-bookmark-edit{'ng-repeat' => 'link in day.links track by link.id', 'ng-show' => 'edit'}
-                = render 'widgets/link', ng_model_descr: 'link.description', ng_model_url: 'link.url', ng_array: 'day.links'
-
-              .activity-day-bookmark-edit{'ng-show' => 'edit'}
-                %a{href: 'javascript:void(0);', 'ng-click' => 'add(day.links)'}
-                  = t('trips.show.add_link')
-
-          .col-md-9.col-xs-12{'ng-show' => 'day.comment || edit'}
-            .activity-day-comment-header
-              = t('trips.show.comments')
-            .activity-day-comment{'ng-hide' => 'edit'}
-              %p.travel-text{} {{day.comment}}
-            .activity-day-comment{'ng-show' => 'edit'}
-              = text_area_tag 'day_comment', '', 'ng-model' => 'day.comment', class: 'form-control',
-                placeholder: t('trips.show.comment'), rows: 4
-
-        .activity-day-activities-header{'ng-click' => 'triggerShowMore()'}
-          = t('trips.show.activities')
-
-        .activity-info{'ng-repeat' => 'activity in day.activities track by activity.id'}
-          %span{'ng-controller' => 'ActivityController', 'ng-init' => 'init(activity)'}
-            .row.activity-header{'ng-click' => 'triggerShowMore()', 'ng-hide' => 'edit'}
-              .col-md-12
-                %span{'ng-show' => 'day.activities.length > 1'}
-                  {{$index+1}}.
-                {{activity.name}}
-                {{activity.amount_cents / 100.0 | number: 2}}
-                {{activity.amount_currency_text}}
-
-            .row.activity-link{'ng-show' => 'showMore() && !edit'}
-              .col-md-12
-                = render 'widgets/link_show', ng_model_url: 'activity.link_url', ng_model_description: 'activity.link_description'
-            .row.activity-comment{'ng-show' => 'showMore() && !edit'}
-              .col-md-12
-                {{activity.comment}}
-                %span{'ng-show' => '!activity.comment'}
-                  = t('common.no_comments')
-
-            .row{'ng-show' => 'edit'}
-              .col-md-4.col-xs-12.activity-edit
-                .activity-edit-row.activity-edit-header
-                  %big
-                    {{$index+1}}.
-                  = text_field_tag 'activity_name', '', 'ng-model' => 'activity.name', class: 'input-sm form-control',
-                    placeholder: t('trips.show.activity.name')
-
-                  %a.delete-activity{href: 'javascript:void(0);', 'ng-click' => 'remove(day.activities, $index)',
-                      'ng-show' => 'day.activities.length > 1'}
+                  %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.places, $index)',
+                        'ng-show' => 'day.places.length > 1'}
                     = image_tag 'buttons/delete.svg'
 
-                  %a.activity-show-more{'ng-class' => '{active: show_more}', 'ng-click' => 'triggerShowMore()'}
-                    = inline_svg 'common/eye.svg', class: 'activity-show-more-img'
+              .activity-day-place-edit.form-inline
+                .form-group
+                  %a{href: 'javascript:void(0);', 'ng-click' => 'add(day.places, {})'}
+                    = t('trips.show.add_city')
 
-                .activity-edit-row{'ng-show' => 'showMore()'}
-                  = render 'widgets/price', name: 'activity_price', object_model: 'activity',
-                                            placeholder: t('trips.show.price')
-                .activity-edit-row{'ng-show' => 'showMore()'}
-                  = render 'widgets/link', ng_model_url: 'activity.link_url'
 
-              .col-md-8.col-xs-12{'ng-show' => 'showMore()'}
-                = text_area_tag 'activity_comment', '', 'ng-model' => 'activity.comment', class: 'form-control',
+          .row.activity-day-info{'ng-show' => 'expensesPresent() || bookmarksPresent() || day.comment || edit'}
+            .col-md-3.col-xs-12.activity-day-add-info{'ng-show' => 'expensesPresent() || bookmarksPresent() || edit'}
+              .activity-day-expenses{'ng-show' => 'expensesPresent() || edit'}
+                .activity-day-expenses-header
+                  = image_tag 'common/money.svg', class: 'image-text'
+                  = t('trips.show.expenses')
+
+                .activity-day-expense{'ng-repeat' => 'expense in day.expenses track by expense.id', 'ng-hide' => 'edit'}
+                  %span{'ng-show' => '!!expense.amount_cents'}
+                    {{expense.name}}
+                    {{expense.amount_cents / 100.0 | number: 2}}
+                    {{expense.amount_currency_text}}
+
+                .activity-day-expense-edit{'ng-repeat' => 'expense in day.expenses track by expense.id', 'ng-show' => 'edit'}
+                  = text_field_tag 'expense_name', '', 'ng-model' => 'expense.name', class: 'form-control input-sm expense-name',
+                      placeholder: t('trips.show.expense')
+                  = render 'widgets/price', name: 'expense_price', placeholder: t('trips.show.price'),
+                    object_model: 'expense'
+                  %a.delete-expense{href: 'javascript:void(0);', 'ng-click' => 'remove(day.expenses, $index)',
+                      'ng-show' => 'day.expenses.length > 1'}
+                    = image_tag 'buttons/delete.svg'
+                .activity-day-expense-edit{'ng-show' => 'edit'}
+                  %a{href: 'javascript:void(0);',
+                      'ng-click' => "add(day.expenses, {#{default_currency_hash(@trip, current_user)}})"}
+                    = t('trips.show.add_expense')
+              .activity-day-bookmarks{'ng-show' => 'bookmarksPresent() || edit'}
+                .activity-day-bookmarks-header
+                  = image_tag 'common/link.svg', class: 'image-text'
+                  = t('trips.show.links')
+
+                .activity-day-bookmark{'ng-repeat' => 'link in day.links track by link.id', 'ng-hide' => 'edit'}
+                  = render 'widgets/link_show', ng_model_url: 'link.url', ng_model_description: 'link.description'
+
+                .activity-day-bookmark-edit{'ng-repeat' => 'link in day.links track by link.id', 'ng-show' => 'edit'}
+                  = render 'widgets/link', ng_model_descr: 'link.description', ng_model_url: 'link.url', ng_array: 'day.links'
+
+                .activity-day-bookmark-edit{'ng-show' => 'edit'}
+                  %a{href: 'javascript:void(0);', 'ng-click' => 'add(day.links)'}
+                    = t('trips.show.add_link')
+
+            .col-md-9.col-xs-12{'ng-show' => 'day.comment || edit'}
+              .activity-day-comment-header
+                = t('trips.show.comments')
+              .activity-day-comment{'ng-hide' => 'edit'}
+                %p.travel-text{} {{day.comment}}
+              .activity-day-comment{'ng-show' => 'edit'}
+                = text_area_tag 'day_comment', '', 'ng-model' => 'day.comment', class: 'form-control',
                   placeholder: t('trips.show.comment'), rows: 4
 
-        .activity-day-activities-footer{'ng-show' => 'edit'}
-          %a{href: 'javascript:void(0);',
-              'ng-click' => "add(day.activities, {#{default_currency_hash(@trip, current_user)}})"}
-            = t('trips.show.add_activity')
+          .activity-day-activities-header{'ng-click' => 'triggerShowMore()'}
+            = t('trips.show.activities')
 
-        .activity-empty-state{'ng-show' => 'day.activities.length == 0 && !edit'}
-          .activity-empty-state-header
-            = t('trips.show.no_activities')
-          .activity-empty-state-cta
-            %a{href: 'javascript:void(0)', class: 'btn ghost-button btn-sm',
-            'ng-click' => "startEdit({#{default_currency_hash(@trip, current_user)}})"}
-              = t('trips.show.add_activities')
+          .activity-info{'ng-repeat' => 'activity in day.activities track by activity.id'}
+            %span{'ng-controller' => 'ActivityController', 'ng-init' => 'init(activity)'}
+              .row.activity-header{'ng-click' => 'triggerShowMore()', 'ng-hide' => 'edit'}
+                .col-md-12
+                  %span{'ng-show' => 'day.activities.length > 1'}
+                    {{$index+1}}.
+                  {{activity.name}}
+                  {{activity.amount_cents / 100.0 | number: 2}}
+                  {{activity.amount_currency_text}}
+
+              .row.activity-link{'ng-show' => 'showMore() && !edit'}
+                .col-md-12
+                  = render 'widgets/link_show', ng_model_url: 'activity.link_url', ng_model_description: 'activity.link_description'
+              .row.activity-comment{'ng-show' => 'showMore() && !edit'}
+                .col-md-12
+                  {{activity.comment}}
+                  %span{'ng-show' => '!activity.comment'}
+                    = t('common.no_comments')
+
+              .row{'ng-show' => 'edit'}
+                .col-md-4.col-xs-12.activity-edit
+                  .activity-edit-row.activity-edit-header
+                    %big
+                      {{$index+1}}.
+                    = text_field_tag 'activity_name', '', 'ng-model' => 'activity.name', class: 'input-sm form-control',
+                      placeholder: t('trips.show.activity.name')
+
+                    %a.delete-activity{href: 'javascript:void(0);', 'ng-click' => 'remove(day.activities, $index)',
+                        'ng-show' => 'day.activities.length > 1'}
+                      = image_tag 'buttons/delete.svg'
+
+                    %a.activity-show-more{'ng-class' => '{active: show_more}', 'ng-click' => 'triggerShowMore()'}
+                      = inline_svg 'common/eye.svg', class: 'activity-show-more-img'
+
+                  .activity-edit-row{'ng-show' => 'showMore()'}
+                    = render 'widgets/price', name: 'activity_price', object_model: 'activity',
+                                              placeholder: t('trips.show.price')
+                  .activity-edit-row{'ng-show' => 'showMore()'}
+                    = render 'widgets/link', ng_model_url: 'activity.link_url'
+
+                .col-md-8.col-xs-12{'ng-show' => 'showMore()'}
+                  = text_area_tag 'activity_comment', '', 'ng-model' => 'activity.comment', class: 'form-control',
+                    placeholder: t('trips.show.comment'), rows: 4
+
+          .activity-day-activities-footer{'ng-show' => 'edit'}
+            %a{href: 'javascript:void(0);',
+                'ng-click' => "add(day.activities, {#{default_currency_hash(@trip, current_user)}})"}
+              = t('trips.show.add_activity')
+
+          .activity-empty-state{'ng-show' => 'day.activities.length == 0 && !edit'}
+            .activity-empty-state-header
+              = t('trips.show.no_activities')
+            .activity-empty-state-cta
+              %a{href: 'javascript:void(0)', class: 'btn ghost-button btn-sm',
+              'ng-click' => "startEdit({#{default_currency_hash(@trip, current_user)}})"}
+                = t('trips.show.edit_day')
 
         .activity-mockup{'ng-hide' => 'day_loaded'}
           .row
@@ -178,8 +179,8 @@
               .activity-mockup-day-places
                 .activity-mockup-day-places-place
                 .activity-mockup-day-places-place
-          .row
-            .col-md-3.col-xs-12.activity-mockup-day-info-expenses
+          .row.activity-mockup-day-info-expenses
+            .col-md-3.col-xs-12
               .activity-mockup-day-info-expenses-line
               .activity-mockup-day-info-expenses-line
               .activity-mockup-day-info-expenses-line

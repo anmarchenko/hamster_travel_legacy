@@ -16,6 +16,7 @@ class Api::V2::ActivitiesController < ApplicationController
     Updaters::Activities.new(@day, prms.delete(:activities)).process
     Updaters::DayExpenses.new(@day, prms.delete(:expenses)).process
     Updaters::DayLinks.new(@day, prms.delete(:links)).process
+    Updaters::DayPlaces.new(@day, prms.delete(:places)).process
     Updaters::Day.new(@day, prms).process
     render json: {status: 0}
   end
@@ -33,6 +34,9 @@ class Api::V2::ActivitiesController < ApplicationController
         ],
         expenses: [
             :id, :name, :amount_cents, :amount_currency
+        ],
+        places: [
+            :id, :city_id
         ]
     )
   end
