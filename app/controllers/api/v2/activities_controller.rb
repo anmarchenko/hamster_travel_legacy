@@ -1,6 +1,8 @@
 class Api::V2::ActivitiesController < ApplicationController
   before_action :find_trip
   before_action :find_day
+  before_action :authenticate_user!, only: [:create, :update]
+  before_action :authorize, only: [:create, :update]
 
   def index
     render json: @day.as_json(normal_json: true).merge(
@@ -39,6 +41,10 @@ class Api::V2::ActivitiesController < ApplicationController
             :id, :city_id
         ]
     )
+  end
+
+  def authorize
+    head 403 and return if !@trip.include_user(current_user)
   end
 
   def find_trip

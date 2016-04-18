@@ -37,9 +37,6 @@ angular.module('travel-components').controller 'DaysController'
         $scope.tripService.reloadDay $scope.day, ->
           $scope.setEditAll(false)
 
-          $scope.$parent.setDayCollapse($scope.day, 'transfers')
-          $scope.$parent.setDayCollapse($scope.day, 'activities')
-
           $scope.$parent.loadBudget()
           $scope.$parent.loadCountries()
 

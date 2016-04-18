@@ -73,6 +73,9 @@ angular.module('travel-components').controller('ActivitiesDayController'
             }
 
             $scope.startEdit = function (new_activity) {
+                if ($scope.reloading){
+                    return;
+                }
                 $scope.edit = true;
                 $scope.new_activity_template = new_activity;
                 $scope.setDefaults();

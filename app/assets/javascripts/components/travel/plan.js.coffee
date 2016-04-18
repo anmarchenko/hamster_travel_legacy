@@ -63,12 +63,6 @@ angular.module('travel-components').controller 'PlanController'
       )
 
       $scope.setEdit = (val) ->
-        if val
-          $scope.activitiesCollapsed = false
-          $scope.toggleActivities(false)
-        else
-          $scope.activitiesCollapsed = true
-          $scope.toggleActivities(false)
         $scope.edit = val
 
       $scope.init = (count) ->
@@ -152,9 +146,7 @@ angular.module('travel-components').controller 'PlanController'
         $scope.setEdit(false)
         if $scope.days
           for day in $scope.days
-            $scope.tripService.reloadDay day, (new_day) ->
-              $scope.setDayCollapse(new_day, 'transfers')
-              $scope.setDayCollapse(new_day, 'activities')
+            $scope.tripService.reloadDay day
         if $scope.caterings
           $scope.tripService.getCaterings().then (caterings) ->
             $scope.caterings = caterings
@@ -164,23 +156,8 @@ angular.module('travel-components').controller 'PlanController'
         $scope.loadCountries()
       # END OF API
 
-      $scope.setDayCollapse = (day, collection_name) ->
-        return if !day
-        if day[collection_name]
-          for object in day[collection_name]
-            object.isCollapsed = $scope["#{collection_name}Collapsed"]
+      # NEW EPOCH CODE
 
-      $scope.toggleCollapse = (is_change = true, collection_name) ->
-        $scope["#{collection_name}Collapsed"] = !$scope["#{collection_name}Collapsed"] if is_change
-        return unless $scope.days
-        for day in $scope.days
-          $scope.setDayCollapse(day, collection_name)
-
-      $scope.toggleActivities = (is_change = true) ->
-        $scope.toggleCollapse(is_change, 'activities')
-
-      $scope.toggleTransfers = (is_change = true) ->
-        $scope.toggleCollapse(is_change, 'transfers')
-
+      # END NEW EPOCH CODE
 
   ]

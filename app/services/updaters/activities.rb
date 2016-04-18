@@ -11,6 +11,7 @@ class Updaters::Activities < Updaters::Entity
     self.activities = reject_empty(self.activities || [])
     process_ordered(self.activities)
     process_nested(day.activities, self.activities)
+    day.save
   end
 
   def reject_empty acts

@@ -9,6 +9,7 @@ class Updaters::DayLinks < Updaters::Entity
 
   def process
     process_nested(day.links, links || [])
+    day.save
   end
 
 end
