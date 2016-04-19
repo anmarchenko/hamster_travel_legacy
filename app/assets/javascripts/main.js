@@ -25,5 +25,4 @@
 //= require ui-bootstrap-tpls
 //= require toastr
 //= require app
-//= require_tree ./services
-//= require_tree ./components
+//= require_tree ./angular
