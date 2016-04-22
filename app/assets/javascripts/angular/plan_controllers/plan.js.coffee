@@ -1,7 +1,7 @@
 angular.module('travel-components').controller 'PlanController'
 , [
-    '$scope', 'Trip', '$window', '$interval', '$cookies'
-  , ($scope, Trip, $window, $interval, $cookies) ->
+    '$scope', 'Trip', '$window', '$interval', '$cookies', 'Days'
+  , ($scope, Trip, $window, $interval, $cookies, Days) ->
       $scope.uuid = ->
         s4 = ->
           return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
@@ -116,7 +116,7 @@ angular.module('travel-components').controller 'PlanController'
         return if $scope.saving
         $scope.saving = true
         $scope.tripService.updateTrip($scope.trip).then ->
-          $scope.saving = false unless $scope.days || $scope.caterings
+          $scope.saving = false unless $scope.days || $scope.caterings || $scope.planDays
         if $scope.days
           $scope.tripService.createDays($scope.days).then ->
             $scope.saving = false
@@ -127,6 +127,13 @@ angular.module('travel-components').controller 'PlanController'
             $scope.saving = false
             $scope.loadBudget()
             $scope.loadCountries()
+        if $scope.planDays
+          Days.saveWithActivities($scope.trip_id, $scope.planDays).success ->
+            $scope.saving = false
+            toastr["success"]($('#notification_saved').text());
+            $scope.loadBudget()
+            $scope.loadCountries()
+
 
       $scope.saveTrip = ->
         $scope.tripService.updateTrip($scope.trip).then ->
@@ -150,6 +157,13 @@ angular.module('travel-components').controller 'PlanController'
 
       # days of the plan gathered from child controllers
       $scope.planDays = []
+      $scope.$on('day_activities_loaded', (event, day) ->
+        $scope.planDays.push day
+      )
+      $scope.$on('day_activities_reloaded', (event, day) ->
+        $scope.planDays = $scope.planDays.filter (old_day) -> old_day.id != day.id
+        $scope.planDays.push day
+      )
 
       $scope.add = (field, obj = {}) ->
         obj['id'] = new Date().getTime()

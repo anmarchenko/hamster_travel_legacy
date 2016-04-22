@@ -1,8 +1,8 @@
 class Api::V2::ActivitiesController < ApplicationController
   before_action :find_trip
   before_action :find_day
-  before_action :authenticate_user!, only: [:create, :update]
-  before_action :authorize, only: [:create, :update]
+  before_action :authenticate_user!, only: [:create]
+  before_action :authorize, only: [:create]
 
   def index
     render json: @day.as_json(normal_json: true).merge(

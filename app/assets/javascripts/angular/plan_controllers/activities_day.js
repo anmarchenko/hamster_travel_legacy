@@ -30,6 +30,8 @@ angular.module('travel-components').controller('ActivitiesDayController'
                     }
 
                     $scope.reloading = false;
+
+                    $scope.$emit('day_activities_reloaded', day)
                 })
             }
 
@@ -39,13 +41,16 @@ angular.module('travel-components').controller('ActivitiesDayController'
                 Activities.get($scope.trip_id, $scope.day_id).success(function (day) {
                     $scope.day = day;
                     $scope.day_loaded = true;
+
+                    // send this day to parent controller
+                    $scope.$emit('day_activities_loaded', day)
                 })
             }
 
             $scope.save = function () {
                 $scope.saving = true;
 
-                Activities.saveAll($scope.trip_id, $scope.day).success(function (data) {
+                Activities.saveAll($scope.trip_id, $scope.day).success(function () {
                     $scope.reload();
                     $scope.saving = false;
 
