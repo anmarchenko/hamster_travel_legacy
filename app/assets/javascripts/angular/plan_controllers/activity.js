@@ -13,7 +13,7 @@ angular.module('travel-components').controller('ActivityController'
             }
 
             $scope.init = function (activity) {
-                if(!activity.name){
+                if(activity && !activity.name){
                     $scope.show_more = true;
                 }
             }

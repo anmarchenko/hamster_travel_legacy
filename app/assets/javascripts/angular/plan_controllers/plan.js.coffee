@@ -147,6 +147,10 @@ angular.module('travel-components').controller 'PlanController'
       # END OF API
 
       # NEW EPOCH CODE - WILL SURVIVE
+
+      # days of the plan gathered from child controllers
+      $scope.planDays = []
+
       $scope.add = (field, obj = {}) ->
         obj['id'] = new Date().getTime()
         field.push(obj)
@@ -157,6 +161,7 @@ angular.module('travel-components').controller 'PlanController'
       $scope.setEdit = (val) ->
         $scope.edit = val
         # emit event
+        $scope.$broadcast('whole_plan_edit', val)
 
       # END NEW EPOCH CODE
 

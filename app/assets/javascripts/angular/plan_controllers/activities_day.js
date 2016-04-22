@@ -9,7 +9,10 @@ angular.module('travel-components').controller('ActivitiesDayController'
             $scope.day_loaded = false;
 
             $scope.show_more = false;
+
             $scope.edit = false;
+            $scope.whole_plan_edit = false;
+
             $scope.saving = false;
             $scope.reloading = false;
 
@@ -75,11 +78,13 @@ angular.module('travel-components').controller('ActivitiesDayController'
             }
 
             $scope.startEdit = function (new_activity) {
-                if ($scope.reloading){
+                if ($scope.reloading) {
                     return;
                 }
                 $scope.edit = true;
-                $scope.new_activity_template = new_activity;
+                if (new_activity) {
+                    $scope.new_activity_template = new_activity;
+                }
                 $scope.setDefaults();
             }
 
@@ -88,6 +93,17 @@ angular.module('travel-components').controller('ActivitiesDayController'
 
                 $scope.reload();
             }
+
+            $scope.$on('whole_plan_edit', function (event, edit) {
+                    if (edit) {
+                        $scope.whole_plan_edit = true;
+                        $scope.startEdit();
+                    } else {
+                        $scope.whole_plan_edit = false;
+                        $scope.cancelEdit();
+                    }
+                }
+            )
 
         }
 
