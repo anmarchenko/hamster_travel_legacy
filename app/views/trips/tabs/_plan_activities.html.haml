@@ -14,7 +14,7 @@
   .activities
     - @trip.days.each do |day|
       .activity{'ng-controller' => 'ActivitiesDayController',
-                'ng-init' => "load('#{@trip.id}', '#{day.id}')",
+                'ng-init' => "load(#{@trip.id}, #{day.id})",
                 'ng-class' => '{shadowed: reloading}'}
         .activity-content{'ng-show' => 'day_loaded'}
           .row.activity-day-header
@@ -210,3 +210,4 @@
           .row
             .col-md-12
               .activity-mockup-header
+  .post-activities-init{'ng-init' => 'initActivities()'}

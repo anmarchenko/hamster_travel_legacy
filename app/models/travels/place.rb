@@ -33,7 +33,7 @@ module Travels
       return true
     end
 
-    def as_json(*args)
+    def serializable_hash(*args)
       json = super(except: [:_id])
       json['id'] = id.to_s
       json['city_text'] = self.city_text

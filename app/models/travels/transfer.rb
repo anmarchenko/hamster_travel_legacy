@@ -93,7 +93,7 @@ module Travels
                                            month: new_date.month) if self.end_time.present?
     end
 
-    def as_json(*args)
+    def serializable_hash(*args)
       json = super(except: [:_id])
       json['id'] = id.to_s
       json['start_time'] = start_time.try(:strftime, '%Y-%m-%dT%H:%M+00:00')
@@ -103,9 +103,9 @@ module Travels
       json['city_from_text'] = self.city_from_text
       json['city_to_text'] = self.city_to_text
       if links.blank?
-        json['links'] = [ExternalLink.new].as_json(args)
+        json['links'] = [{}]
       else
-        json['links'] = links.as_json(args)
+        json['links'] = links
       end
       json
     end

@@ -20,13 +20,13 @@ module Travels
 
     monetize :amount_cents
 
-    def as_json(*args)
+    def serializable_hash(*args)
       json = super(except: [:_id])
       json['id'] = id.to_s
       if links.blank?
-        json['links'] = [ExternalLink.new].as_json(args)
+        json['links'] = [{}]
       else
-        json['links'] = links.as_json(args)
+        json['links'] = links
       end
       json['amount_currency_text'] = amount.currency.symbol
       json

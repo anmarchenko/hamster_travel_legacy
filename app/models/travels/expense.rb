@@ -24,7 +24,7 @@ module Travels
       return (amount_cents.blank? || amount_cents == 0) && name.blank?
     end
 
-    def as_json(*args)
+    def serializable_hash(*args)
       json = super(except: [:_id])
       json['id'] = id.to_s
 

@@ -35,7 +35,7 @@ module Travels
 
     PERMITTED = %w(name amount_cents amount_currency comment link_description link_url order_index id)
 
-    def as_json(**args)
+    def serializable_hash(**args)
       attrs = super(args)
       attrs['id'] = id.to_s
       attrs = attrs.reject{|k, _| !PERMITTED.include?(k)}

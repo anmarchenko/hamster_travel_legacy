@@ -67,9 +67,8 @@ describe Travels::Hotel do
         expect(hotel_json['amount_currency']).to eq(hotel.amount_currency)
         expect(hotel_json['amount_currency_text']).to eq(hotel.amount.currency.symbol)
         expect(hotel_json['comment']).to eq(hotel.comment)
-        expect(hotel_json['links']).to be_a Array
         expect(hotel_json['links'].count).to eq 1
-        expect(hotel_json['links'][0]).to eq hotel.links.first.as_json
+        expect(hotel_json['links'][0]).to eq hotel.links.first
       end
     end
 

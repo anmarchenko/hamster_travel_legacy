@@ -163,9 +163,13 @@ angular.module('travel-components').controller 'PlanController'
 
       # days of the plan gathered from child controllers
       $scope.planDays = []
-      $scope.$on('day_activities_loaded', (event, day) ->
-        $scope.planDays.push day
-      )
+
+      $scope.initActivities = ->
+        Days.getActivities($scope.trip_id).then (response) ->
+          for day in response.data.days
+            $scope.planDays.push day
+            $scope.$broadcast('day_activities_loaded', day)
+
       $scope.$on('day_activities_reloaded', (event, day) ->
         $scope.planDays = $scope.planDays.filter (old_day) -> old_day.id != day.id
         $scope.planDays.push day
