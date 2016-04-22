@@ -152,7 +152,7 @@ angular.module('travel-components').controller 'PlanController'
           Days.getActivities($scope.trip_id).then (response) ->
             for day in response.data.days
               $scope.planDays.push day
-              $scope.$emit('day_activities_updated', day)
+              $scope.$broadcast('day_activities_updated', day)
 
         $scope.loadTrip()
         $scope.loadBudget()
