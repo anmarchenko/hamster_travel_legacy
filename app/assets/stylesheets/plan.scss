@@ -1,6 +1,10 @@
 .trip {
   background-color: $background-grey;
 
+  .sticky-row {
+    background: white;
+  }
+
   .work-area {
     padding: 30px 40px;
     @media (max-width: 1250px) {

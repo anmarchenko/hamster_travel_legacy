@@ -24,5 +24,6 @@
 //= require sweetalert2.min
 //= require ui-bootstrap-tpls
 //= require toastr
+//= require sticky.min.js
 //= require app
 //= require_tree ./angular
