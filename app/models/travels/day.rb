@@ -54,7 +54,7 @@ module Travels
     end
 
     def as_json(args = {})
-      json = super(args.merge(except: [:_id]))
+      json = super(args)
       json['id'] = id.to_s
       json['date'] = date_when_s
 

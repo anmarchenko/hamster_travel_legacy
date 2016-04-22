@@ -31,6 +31,7 @@ angular.module('travel-components').controller('ActivitiesDayController'
 
                     $scope.reloading = false;
 
+                    // send this day to parent controller
                     $scope.$emit('day_activities_reloaded', day)
                 })
             }
@@ -93,10 +94,12 @@ angular.module('travel-components').controller('ActivitiesDayController'
                 $scope.setDefaults();
             }
 
-            $scope.cancelEdit = function () {
+            $scope.cancelEdit = function (no_reload) {
                 $scope.edit = false;
 
-                $scope.reload();
+                if (!no_reload){
+                    $scope.reload();
+                }
             }
 
             $scope.$on('whole_plan_edit', function (event, edit) {
@@ -105,7 +108,14 @@ angular.module('travel-components').controller('ActivitiesDayController'
                         $scope.startEdit();
                     } else {
                         $scope.whole_plan_edit = false;
-                        $scope.cancelEdit();
+                        $scope.cancelEdit(true);
+                    }
+                }
+            )
+
+            $scope.$on('day_activities_updated', function (event, day) {
+                    if ($scope.day.id == day.id) {
+                        $scope.day = day;
                     }
                 }
             )

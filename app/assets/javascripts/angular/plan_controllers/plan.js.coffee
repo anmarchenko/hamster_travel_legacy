@@ -147,6 +147,12 @@ angular.module('travel-components').controller 'PlanController'
         if $scope.caterings
           $scope.tripService.getCaterings().then (caterings) ->
             $scope.caterings = caterings
+        if $scope.planDays
+          $scope.planDays = []
+          Days.getActivities($scope.trip_id).then (response) ->
+            for day in response.data.days
+              $scope.planDays.push day
+              $scope.$emit('day_activities_updated', day)
 
         $scope.loadTrip()
         $scope.loadBudget()

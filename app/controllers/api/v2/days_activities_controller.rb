@@ -3,6 +3,12 @@ class Api::V2::DaysActivitiesController < ApplicationController
   before_action :authenticate_user!, only: [:create]
   before_action :authorize!, only: [:create]
 
+  def index
+    render json: {
+        days: @trip.days.as_json(normal_json: true, include: [:expenses, :activities, :links, :places])
+    }
+  end
+
   def create
     prms = days_params
     (prms[:days] || []).each do |day_params|
