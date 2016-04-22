@@ -13,8 +13,9 @@
 
   .activities
     - @trip.days.each do |day|
-      .activity{'ng-controller' => 'ActivitiesDayController', 'ng-init' => "load('#{@trip.id}', '#{day.id}')",
-      'ng-class' => '{shadowed: reloading}'}
+      .activity{'ng-controller' => 'ActivitiesDayController',
+                'ng-init' => "load('#{@trip.id}', '#{day.id}')",
+                'ng-class' => '{shadowed: reloading}'}
         .activity-content{'ng-show' => 'day_loaded'}
           .row.activity-day-header
             .col-md-12
@@ -115,49 +116,51 @@
           .activity-day-activities-header{'ng-click' => 'triggerShowMore()'}
             = t('trips.show.activities')
 
-          .activity-info{'ng-repeat' => 'activity in day.activities track by activity.id'}
-            %span{'ng-controller' => 'ActivityController', 'ng-init' => 'init(activity)'}
-              .row.activity-header{'ng-click' => 'triggerShowMore()', 'ng-hide' => 'edit'}
-                .col-md-12
-                  %span{'ng-show' => 'day.activities.length > 1'}
-                    {{$index+1}}.
-                  {{activity.name}}
-                  {{activity.amount_cents / 100.0 | number: 2}}
-                  {{activity.amount_currency_text}}
-
-              .row.activity-link{'ng-show' => 'showMore() && !edit'}
-                .col-md-12
-                  = render 'widgets/link_show', ng_model_url: 'activity.link_url', ng_model_description: 'activity.link_description'
-              .row.activity-comment{'ng-show' => 'showMore() && !edit'}
-                .col-md-12
-                  {{activity.comment}}
-                  %span{'ng-show' => '!activity.comment'}
-                    = t('common.no_comments')
-
-              .row{'ng-show' => 'edit'}
-                .col-md-4.col-xs-12.activity-edit
-                  .activity-edit-row.activity-edit-header
-                    %big
+          .activities-container{'ng-model' => 'day.activities',
+          'ui-sortable' => '{connectWith: \'.activities-container\', placeholder: \'well\', disabled: !edit}'}
+            .activity-info{'ng-repeat' => 'activity in day.activities track by activity.id'}
+              %span{'ng-controller' => 'ActivityController', 'ng-init' => 'init(activity)'}
+                .row.activity-header{'ng-click' => 'triggerShowMore()', 'ng-hide' => 'edit'}
+                  .col-md-12
+                    %span{'ng-show' => 'day.activities.length > 1'}
                       {{$index+1}}.
-                    = text_field_tag 'activity_name', '', 'ng-model' => 'activity.name', class: 'input-sm form-control',
-                      placeholder: t('trips.show.activity.name')
+                    {{activity.name}}
+                    {{activity.amount_cents / 100.0 | number: 2}}
+                    {{activity.amount_currency_text}}
 
-                    %a.delete-activity{href: 'javascript:void(0);', 'ng-click' => 'remove(day.activities, $index)',
-                        'ng-show' => 'day.activities.length > 1'}
-                      = image_tag 'buttons/delete.svg'
+                .row.activity-link{'ng-show' => 'showMore() && !edit'}
+                  .col-md-12
+                    = render 'widgets/link_show', ng_model_url: 'activity.link_url', ng_model_description: 'activity.link_description'
+                .row.activity-comment{'ng-show' => 'showMore() && !edit'}
+                  .col-md-12
+                    {{activity.comment}}
+                    %span{'ng-show' => '!activity.comment'}
+                      = t('common.no_comments')
 
-                    %a.activity-show-more{'ng-class' => '{active: show_more}', 'ng-click' => 'triggerShowMore()'}
-                      = inline_svg 'common/eye.svg', class: 'activity-show-more-img'
+                .row{'ng-show' => 'edit'}
+                  .col-md-4.col-xs-12.activity-edit
+                    .activity-edit-row.activity-edit-header
+                      %big
+                        {{$index+1}}.
+                      = text_field_tag 'activity_name', '', 'ng-model' => 'activity.name', class: 'input-sm form-control',
+                        placeholder: t('trips.show.activity.name')
 
-                  .activity-edit-row{'ng-show' => 'showMore()'}
-                    = render 'widgets/price', name: 'activity_price', object_model: 'activity',
-                                              placeholder: t('trips.show.price')
-                  .activity-edit-row{'ng-show' => 'showMore()'}
-                    = render 'widgets/link', ng_model_url: 'activity.link_url'
+                      %a.delete-activity{href: 'javascript:void(0);', 'ng-click' => 'remove(day.activities, $index)',
+                          'ng-show' => 'day.activities.length > 1'}
+                        = image_tag 'buttons/delete.svg'
 
-                .col-md-8.col-xs-12{'ng-show' => 'showMore()'}
-                  = text_area_tag 'activity_comment', '', 'ng-model' => 'activity.comment', class: 'form-control',
-                    placeholder: t('trips.show.comment'), rows: 4
+                      %a.activity-show-more{'ng-class' => '{active: show_more}', 'ng-click' => 'triggerShowMore()'}
+                        = inline_svg 'common/eye.svg', class: 'activity-show-more-img'
+
+                    .activity-edit-row{'ng-show' => 'showMore()'}
+                      = render 'widgets/price', name: 'activity_price', object_model: 'activity',
+                                                placeholder: t('trips.show.price')
+                    .activity-edit-row{'ng-show' => 'showMore()'}
+                      = render 'widgets/link', ng_model_url: 'activity.link_url'
+
+                  .col-md-8.col-xs-12{'ng-show' => 'showMore()'}
+                    = text_area_tag 'activity_comment', '', 'ng-model' => 'activity.comment', class: 'form-control',
+                      placeholder: t('trips.show.comment'), rows: 4
 
           .activity-day-activities-footer{'ng-show' => 'edit'}
             %a{href: 'javascript:void(0);',
