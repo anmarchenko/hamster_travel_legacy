@@ -38,7 +38,8 @@ en:
       hotel: Hotel
       activities: Activities
       comments: Comments
-      edit_plan: Edit
+      edit_plan: Edit plan
+      edit_day: Edit day
       edit_trip: Edit
       delete_trip: Delete
       cancel: Go back without save
@@ -103,7 +104,6 @@ en:
       add_city: Add city
       add_expense: Add expense
       add_activity: Add activity
-      edit_day: Edit day
     edit:
       title: Edit travel
     form:

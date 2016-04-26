@@ -22,20 +22,20 @@
               .activity-day-date
                 = day.date_when_s
               - if @user_can_edit && @trip.days_count > 1
-                .activity-action-link{'ng-controller' => 'DaySorterController', 'ng-hide' => 'edit'}
-                  %a{'ng-click' => "startSorting('#{@trip.id}')", href: 'javascript:void(0);',
+                .activity-action-link.pull-right{'ng-hide' => 'edit'}
+                  %a.btn.btn-sm.ghost-button{'ng-click' => "startEdit({#{default_currency_hash(@trip, current_user)}})",
+                  'ng-disabled' => 'reloading', href: 'javascript:void(0);'}
+                    = t('trips.show.edit_day')
+                .activity-action-link.pull-right{'ng-controller' => 'DaySorterController', 'ng-hide' => 'edit'}
+                  %a.btn.btn-sm.ghost-button{'ng-click' => "startSorting('#{@trip.id}')", href: 'javascript:void(0);',
                   'ng-disabled' => 'reloading'}
                     = t('trips.show.reorder_days')
-                .activity-action-link{'ng-hide' => 'edit'}
-                  %a{'ng-click' => "startEdit({#{default_currency_hash(@trip, current_user)}})",
-                  'ng-disabled' => 'reloading', href: 'javascript:void(0);'}
-                    = t('trips.show.edit_plan')
-                .activity-action-link{'ng-show' => 'edit && !whole_plan_edit'}
-                  %a.btn.btn-sm.btn-success{'ng-click' => 'save()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
-                    = t('common.save')
-                .activity-action-link{'ng-show' => 'edit && !whole_plan_edit'}
+                .activity-action-link.pull-right{'ng-show' => 'edit && !whole_plan_edit'}
                   %a.btn.btn-sm.ghost-button{'ng-click' => 'cancelEdit()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
                     = t('common.cancel')
+                .activity-action-link.pull-right{'ng-show' => 'edit && !whole_plan_edit'}
+                  %a.btn.btn-sm.btn-success{'ng-click' => 'save()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
+                    = t('common.save')
 
           .row.activity-day-places
             =# Show places
@@ -178,10 +178,11 @@
           .activity-empty-state{'ng-show' => 'day.activities.length == 0 && !edit'}
             .activity-empty-state-header
               = t('trips.show.no_activities')
-            .activity-empty-state-cta
-              %a{href: 'javascript:void(0)', class: 'btn ghost-button btn-sm',
-              'ng-click' => "startEdit({#{default_currency_hash(@trip, current_user)}})"}
-                = t('trips.show.edit_day')
+
+          .activity-cta{'ng-hide' => 'edit'}
+            %a{href: 'javascript:void(0)', class: 'btn ghost-button btn-sm',
+            'ng-click' => "startEdit({#{default_currency_hash(@trip, current_user)}})"}
+              = t('trips.show.edit_day')
 
         .activity-mockup{'ng-hide' => 'day_loaded'}
           .row

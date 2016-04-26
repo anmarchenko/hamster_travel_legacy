@@ -329,6 +329,9 @@
 
       .activity {
 
+        border-bottom: solid 1px $border-grey;
+        padding-bottom: 30px;
+
         &.shadowed {
           opacity: .5;
         }
@@ -544,14 +547,10 @@
           font-size: 15px;
           color: $text-grey;
         }
-        .activity-empty-state-cta {
-          img {
-            opacity: .5;
-            width: 32px;
-            margin-right: 8px;
-          }
-          margin-top: 10px;
-        }
+      }
+
+      .activity-cta {
+        margin-top: 20px;
       }
     }
 
