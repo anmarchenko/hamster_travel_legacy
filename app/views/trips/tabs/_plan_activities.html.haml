@@ -60,7 +60,8 @@
 
               .activity-day-place-edit.form-inline
                 .form-group
-                  %a{href: 'javascript:void(0);', 'ng-click' => 'add(day.places, {})'}
+                  %a.link-with-icon{href: 'javascript:void(0);', 'ng-click' => 'add(day.places, {})'}
+                    = inline_svg 'buttons/add_plain.svg'
                     = t('trips.show.add_city')
 
 
@@ -86,8 +87,9 @@
                       'ng-show' => 'day.expenses.length > 1'}
                     = image_tag 'buttons/delete.svg'
                 .activity-day-expense-edit{'ng-show' => 'edit'}
-                  %a{href: 'javascript:void(0);',
+                  %a.link-with-icon{href: 'javascript:void(0);',
                       'ng-click' => "add(day.expenses, {#{default_currency_hash(@trip, current_user)}})"}
+                    = inline_svg 'buttons/add_plain.svg'
                     = t('trips.show.add_expense')
               .activity-day-bookmarks{'ng-show' => 'bookmarksPresent() || edit'}
                 .activity-day-bookmarks-header
@@ -101,7 +103,8 @@
                   = render 'widgets/link', ng_model_descr: 'link.description', ng_model_url: 'link.url', ng_array: 'day.links'
 
                 .activity-day-bookmark-edit{'ng-show' => 'edit'}
-                  %a{href: 'javascript:void(0);', 'ng-click' => 'add(day.links)'}
+                  %a.link-with-icon{href: 'javascript:void(0);', 'ng-click' => 'add(day.links)'}
+                    = inline_svg 'buttons/add_plain.svg'
                     = t('trips.show.add_link')
 
             .col-md-9.col-xs-12{'ng-show' => 'day.comment || edit'}
@@ -163,8 +166,9 @@
                       placeholder: t('trips.show.comment'), rows: 4
 
           .activity-day-activities-footer{'ng-show' => 'edit'}
-            %a{href: 'javascript:void(0);',
+            %a.link-with-icon.add-activity-link{href: 'javascript:void(0);',
                 'ng-click' => "add(day.activities, {#{default_currency_hash(@trip, current_user)}})"}
+              = inline_svg 'buttons/add_plain.svg'
               = t('trips.show.add_activity')
 
           .activity-day-activities-footer{'ng-show' => 'edit && !whole_plan_edit'}
