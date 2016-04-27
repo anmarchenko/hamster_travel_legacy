@@ -82,9 +82,13 @@
 }
 
 .link-with-icon {
+  display: inline-block;
+  line-height: 1;
   svg {
     height: 1.5em;
     width: 1.5em;
     fill: $link;
+    vertical-align: text-top;
+    display: inline-block;
   }
 }
