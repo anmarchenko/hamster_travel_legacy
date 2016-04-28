@@ -548,9 +548,21 @@
       .activity-empty-state {
         text-align: left;
         .activity-empty-state-header {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
           margin-top: 15px;
           font-size: 15px;
           color: $text-grey;
+          max-width: 50em;
+
+          svg {
+            margin-right: 1em;
+            fill: $main-grey;
+            width: 48px;
+            height: 48px;
+          }
         }
       }
 

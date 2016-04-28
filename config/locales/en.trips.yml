@@ -100,7 +100,8 @@ en:
       type_name: Friend's name
       invite_sent: invite sent
       reorder_days: Reorder
-      no_activities: No activities planned for the day yet.
+      no_activities: No activities planned for the day yet. No need to hurry, you could just relax whole day... or add some
+        exciting plans!
       add_city: Add city
       add_expense: Add expense
       add_activity: Add activity
