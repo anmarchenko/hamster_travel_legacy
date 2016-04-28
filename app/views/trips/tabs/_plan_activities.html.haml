@@ -189,12 +189,6 @@
               %span
                 = t('trips.show.no_activities')
 
-          .activity-cta{'ng-hide' => 'edit'}
-            %a.link-with-icon.btn.ghost-button.btn-sm{href: 'javascript:void(0)',
-            'ng-click' => "startEdit({#{default_currency_hash(@trip, current_user)}})"}
-              = inline_svg 'buttons/edit.svg'
-              = t('trips.show.edit_day')
-
         .activity-mockup{'ng-hide' => 'day_loaded'}
           .row
             .col-md-12
