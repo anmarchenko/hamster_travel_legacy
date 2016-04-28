@@ -1,18 +1,20 @@
 - if @user_can_edit
   .btn-toolbar.actions-butons{'ng-cloak' => ''}
-    %a{href: 'javascript:void(0);', 'ng-click' => 'setEdit(true)',
-        class: 'btn btn-primary btn-sm', 'ng-show' => '!edit' }
+    %a.link-with-icon.btn.btn-primary.btn-sm{href: 'javascript:void(0);', 'ng-click' => 'setEdit(true)',
+         'ng-show' => '!edit' }
+      = inline_svg 'buttons/edit.svg'
       = t('trips.show.edit_plan')
 
-    %a{href: 'javascript:void(0);', 'ng-click' => 'savePlan()',
-        class: 'btn btn-success btn-sm', 'ng-show' => '!saving && edit' }
+    %a.link-with-icon.btn.btn-success.btn-sm{href: 'javascript:void(0);', 'ng-click' => 'savePlan()',
+         'ng-show' => '!saving && edit' }
+      = inline_svg 'buttons/check.svg'
       = t('trips.show.save_plan')
 
     %a.saving{'ng-show' => 'saving'}
       %i.fa.fa-spinner.fa-spin
       = t('trips.show.saving_plan')
 
-    %a{href: 'javascript:void(0);', 'ng-click' => 'cancelEdits()',
-        class: 'btn ghost-button btn-sm', 'ng-show' => 'edit' }
+    %a.btn.ghost-button.btn-sm{href: 'javascript:void(0);', 'ng-click' => 'cancelEdits()',
+        'ng-show' => 'edit' }
       = t('common.cancel')
 

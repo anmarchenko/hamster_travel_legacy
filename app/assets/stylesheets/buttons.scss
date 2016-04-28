@@ -8,10 +8,16 @@
   -webkit-box-shadow: none;
   color: $main-grey;
   border: 1px solid $main-grey;
+  svg {
+    fill: $main-grey !important;
+  }
 
   &:hover {
     color: $dark-grey;
     border-color: $dark-grey;
+    svg {
+      fill: $dark-grey !important;
+    }
   }
 }
 
@@ -62,5 +68,7 @@ a {
 }
 
 .btn-success, .btn-primary {
-  fill: white;
+  svg {
+    fill: white !important;
+  }
 }

@@ -24,7 +24,9 @@
       %a.inline-action{href: 'javascript:void(0);', 'ng-click' => 'edit_persons_count = true', 'ng-hide' => 'edit_persons_count'}
         = image_tag 'buttons/edit.svg'
 
-      %a.inline-action.btn.btn-sm.btn-success{href: 'javascript:void(0);', 'ng-click' => 'saveTrip()', 'ng-show' => 'edit_persons_count'}
+      %a.link-with-icon.inline-action.btn.btn-sm.btn-success{href: 'javascript:void(0);', 'ng-click' => 'saveTrip()',
+      'ng-show' => 'edit_persons_count'}
+        = inline_svg 'buttons/check.svg'
         = t('common.save')
 
       %a.inline-action.btn.btn-sm.ghost-button{href: 'javascript:void(0);', 'ng-click' => 'loadTrip()', 'ng-show' => 'edit_persons_count'}

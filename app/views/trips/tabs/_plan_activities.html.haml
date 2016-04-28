@@ -23,18 +23,21 @@
                 = day.date_when_s
               - if @user_can_edit && @trip.days_count > 1
                 .activity-action-link.pull-right{'ng-hide' => 'edit'}
-                  %a.btn.btn-sm.ghost-button{'ng-click' => "startEdit({#{default_currency_hash(@trip, current_user)}})",
+                  %a.link-with-icon.btn.btn-sm.ghost-button{'ng-click' => "startEdit({#{default_currency_hash(@trip, current_user)}})",
                   'ng-disabled' => 'reloading', href: 'javascript:void(0);'}
+                    = inline_svg 'buttons/edit.svg'
                     = t('trips.show.edit_day')
                 .activity-action-link.pull-right{'ng-controller' => 'DaySorterController', 'ng-hide' => 'edit'}
-                  %a.btn.btn-sm.ghost-button{'ng-click' => "startSorting('#{@trip.id}')", href: 'javascript:void(0);',
+                  %a.link-with-icon.btn.btn-sm.ghost-button{'ng-click' => "startSorting('#{@trip.id}')", href: 'javascript:void(0);',
                   'ng-disabled' => 'reloading'}
+                    = inline_svg 'buttons/reorder.svg'
                     = t('trips.show.reorder_days')
                 .activity-action-link.pull-right{'ng-show' => 'edit && !whole_plan_edit'}
                   %a.btn.btn-sm.ghost-button{'ng-click' => 'cancelEdit()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
                     = t('common.cancel')
                 .activity-action-link.pull-right{'ng-show' => 'edit && !whole_plan_edit'}
-                  %a.btn.btn-sm.btn-success{'ng-click' => 'save()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
+                  %a.link-with-icon.btn.btn-sm.btn-success{'ng-click' => 'save()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
+                    = inline_svg 'buttons/check.svg'
                     = t('common.save')
 
           .row.activity-day-places
@@ -173,7 +176,8 @@
 
           .activity-day-activities-footer{'ng-show' => 'edit && !whole_plan_edit'}
             .activity-action-link.no-margin
-              %a.btn.btn-sm.btn-success{'ng-click' => 'save()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
+              %a.link-with-icon.btn.btn-sm.btn-success{'ng-click' => 'save()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
+                = inline_svg 'buttons/check.svg'
                 = t('common.save')
             .activity-action-link
               %a.btn.btn-sm.ghost-button{'ng-click' => 'cancelEdit()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
@@ -184,8 +188,9 @@
               = t('trips.show.no_activities')
 
           .activity-cta{'ng-hide' => 'edit'}
-            %a{href: 'javascript:void(0)', class: 'btn ghost-button btn-sm',
+            %a.link-with-icon.btn.ghost-button.btn-sm{href: 'javascript:void(0)',
             'ng-click' => "startEdit({#{default_currency_hash(@trip, current_user)}})"}
+              = inline_svg 'buttons/edit.svg'
               = t('trips.show.edit_day')
 
         .activity-mockup{'ng-hide' => 'day_loaded'}
