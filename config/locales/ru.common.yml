@@ -24,6 +24,7 @@ ru:
     yes_do_it: Да, сделать это
     no_do_not: Нет, отменить
     cancel: Отмена
+    back: Назад
     my_trips: Мои путешествия
     update_successful: Изменения сохранены
     delete_confirm: Вы уверены? Удаление необратимо.

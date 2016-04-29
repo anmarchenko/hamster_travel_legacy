@@ -24,6 +24,7 @@ en:
     yes_do_it: Yes, do it
     no_do_not: No, cancel
     cancel: Cancel
+    back: Go back
     my_trips: My travels
     update_successful: Successfully updated
     delete_confirm: Are you sure you want to delete that?
