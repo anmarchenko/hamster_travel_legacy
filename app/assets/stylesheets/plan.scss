@@ -393,22 +393,16 @@
 
 
         .activity-day-info {
-          margin-top: 15px;
           color: $text-grey;
-          .activity-day-comment-header {
-            font-weight: bolder;
-          }
 
           .activity-day-comment {
             font-style: italic;
+            margin-top: 10px;
           }
           .activity-day-add-info {
             .activity-day-expenses, .activity-day-bookmarks {
-              .activity-day-expenses-header, .activity-day-bookmarks-header {
-                font-weight: bolder;
-              }
               .activity-day-expense, .activity-day-bookmark {
-                margin-top: 8px;
+                margin-top: 10px;
               }
               .activity-day-expense-edit {
                 display: flex;
@@ -433,8 +427,6 @@
             }
 
             .activity-day-bookmarks {
-              margin-top: 20px;
-
               .activity-day-bookmark-edit {
                 margin-top: 10px;
               }
