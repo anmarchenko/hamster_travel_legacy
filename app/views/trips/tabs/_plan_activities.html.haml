@@ -19,7 +19,7 @@
         .activity-content{'ng-show' => 'day_loaded'}
           .row.activity-day-header
             .col-md-12
-              .activity-day-date
+              .activity-day-date{'ng-click' => 'triggerShowMore()'}
                 = day.date_when_s
               - if @user_can_edit && @trip.days_count > 1
                 .activity-action-link.pull-right{'ng-hide' => 'edit'}
@@ -118,9 +118,6 @@
               .activity-day-comment{'ng-show' => 'edit'}
                 = text_area_tag 'day_comment', '', 'ng-model' => 'day.comment', class: 'form-control',
                   placeholder: t('trips.show.comment'), rows: 4
-
-          .activity-day-activities-header{'ng-click' => 'triggerShowMore()'}
-            = t('trips.show.activities')
 
           .activities-container{'ng-model' => 'day.activities',
           'ui-sortable' => '{connectWith: \'.activities-container\', placeholder: \'well\', disabled: !edit}'}
