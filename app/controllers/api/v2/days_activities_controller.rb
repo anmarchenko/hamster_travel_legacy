@@ -5,7 +5,8 @@ class Api::V2::DaysActivitiesController < ApplicationController
 
   def index
     render json: {
-        days: @trip.days.as_json(normal_json: true, include: [:expenses, :activities, :links, :places])
+        days: @trip.days.includes(:expenses, :activities, :links, :places)
+                  .as_json(normal_json: true, include: [:expenses, :activities, :links, :places])
     }
   end
 
