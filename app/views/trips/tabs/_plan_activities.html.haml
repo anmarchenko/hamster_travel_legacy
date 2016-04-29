@@ -18,28 +18,30 @@
                 'ng-class' => '{shadowed: reloading}'}
         .activity-content{'ng-show' => 'day_loaded'}
           .row.activity-day-header
-            .col-md-12
+            .col-md-3.col-xs-12
               .activity-day-date{'ng-click' => 'triggerShowMore()'}
                 = day.date_when_s
+
+            .col-md-9.col-xs-12.activities-actions
               - if @user_can_edit
-                .activity-action-link.pull-right{'ng-hide' => 'edit'}
-                  %a.link-with-icon.btn.btn-sm.ghost-button{'ng-click' => "startEdit({#{default_currency_hash(@trip, current_user)}})",
-                  'ng-disabled' => 'reloading', href: 'javascript:void(0);'}
-                    = inline_svg 'buttons/edit.svg'
-                    = t('trips.show.edit_day')
                 - if @trip.days.count > 2
-                  .activity-action-link.pull-right{'ng-controller' => 'DaySorterController', 'ng-hide' => 'edit'}
+                  .activity-action-link{'ng-controller' => 'DaySorterController', 'ng-hide' => 'edit'}
                     %a.link-with-icon.btn.btn-sm.ghost-button{'ng-click' => "startSorting('#{@trip.id}')", href: 'javascript:void(0);',
                     'ng-disabled' => 'reloading'}
                       = inline_svg 'buttons/reorder.svg'
                       = t('trips.show.reorder_days')
-                .activity-action-link.pull-right{'ng-show' => 'edit && !whole_plan_edit'}
-                  %a.btn.btn-sm.ghost-button{'ng-click' => 'cancelEdit()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
-                    = t('common.back')
-                .activity-action-link.pull-right{'ng-show' => 'edit && !whole_plan_edit'}
+                .activity-action-link{'ng-hide' => 'edit'}
+                  %a.link-with-icon.btn.btn-sm.ghost-button{'ng-click' => "startEdit({#{default_currency_hash(@trip, current_user)}})",
+                  'ng-disabled' => 'reloading', href: 'javascript:void(0);'}
+                    = inline_svg 'buttons/edit.svg'
+                    = t('trips.show.edit_day')
+                .activity-action-link{'ng-show' => 'edit && !whole_plan_edit'}
                   %a.link-with-icon.btn.btn-sm.btn-success{'ng-click' => 'save()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
                     = inline_svg 'buttons/check.svg'
                     = t('common.save')
+                .activity-action-link{'ng-show' => 'edit && !whole_plan_edit'}
+                  %a.btn.btn-sm.ghost-button{'ng-click' => 'cancelEdit()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
+                    = t('common.back')
 
           .row.activity-day-places
             =# Show places

@@ -342,6 +342,15 @@
           }
         }
 
+        .activities-actions {
+          @media (min-width: 768px) {
+            text-align: right;
+          }
+          @media (max-width: 768px) {
+            margin-top: 10px;
+          }
+        }
+
         .activity-day-header {
           margin-top: 25px;
           .activity-day-date {
@@ -353,10 +362,15 @@
         }
 
         .activity-action-link {
-          margin-left: 10px;
           display: inline;
           a:not(.btn) {
             text-decoration: underline;
+          }
+        }
+
+        @media (min-width: 768px) {
+          .activity-action-link + .activity-action-link {
+            margin-left: 10px;
           }
         }
 
