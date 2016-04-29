@@ -59,7 +59,7 @@ angular.module('travel-components').controller 'PlanController'
               $interval.cancel(promise)
           })
       ,
-        5000
+        10000
       )
 
       $scope.init = (count) ->

@@ -1,7 +1,7 @@
 angular.module('travel-components').controller('ActivitiesDayController'
     , [
-        '$scope', 'Activities'
-        , function ($scope, Activities) {
+        '$scope', 'Activities', '$timeout'
+        , function ($scope, Activities, $timeout) {
             $scope.day = {}
             $scope.day_id = null;
             $scope.trip_id = null;
@@ -90,7 +90,7 @@ angular.module('travel-components').controller('ActivitiesDayController'
             $scope.cancelEdit = function (no_reload) {
                 $scope.edit = false;
 
-                if (!no_reload){
+                if (!no_reload) {
                     $scope.reload();
                 }
             }
@@ -120,7 +120,13 @@ angular.module('travel-components').controller('ActivitiesDayController'
                     if (day.id == $scope.day_id) {
                         $scope.day = day;
 
-                        $scope.day_loaded = true;
+                        $timeout(function () {
+                                $scope.day_loaded = true;
+
+                            }, 200
+                        )
+
+
                     }
                 }
             )

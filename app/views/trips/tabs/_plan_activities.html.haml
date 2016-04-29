@@ -68,9 +68,9 @@
                     = t('trips.show.add_city')
 
 
-          .row.activity-day-info{'ng-show' => 'expensesPresent() || bookmarksPresent() || day.comment || edit'}
+          .row.activity-day-info
             .col-md-3.col-xs-12.activity-day-add-info{'ng-show' => 'expensesPresent() || bookmarksPresent() || edit'}
-              .activity-day-expenses{'ng-show' => 'expensesPresent() || edit'}
+              .activity-day-expenses
                 .activity-day-expense{'ng-repeat' => 'expense in day.expenses track by expense.id', 'ng-hide' => 'edit'}
                   %span{'ng-show' => '!!expense.amount_cents'}
                     {{expense.name}}
@@ -90,7 +90,7 @@
                       'ng-click' => "add(day.expenses, {#{default_currency_hash(@trip, current_user)}})"}
                     = inline_svg 'buttons/add_plain.svg'
                     = t('trips.show.add_expense')
-              .activity-day-bookmarks{'ng-show' => 'bookmarksPresent() || edit'}
+              .activity-day-bookmarks
                 .activity-day-bookmark{'ng-repeat' => 'link in day.links track by link.id', 'ng-hide' => 'edit'}
                   = render 'widgets/link_show', ng_model_url: 'link.url', ng_model_description: 'link.description'
 
