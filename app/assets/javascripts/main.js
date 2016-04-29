@@ -9,6 +9,7 @@
 //= require jquery-fileupload/basic
 //= require jquery.Jcrop
 //= require jquery.stickytableheaders
+//= require bootstrap.min
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.en-GB.js
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.ru.js
@@ -27,3 +28,5 @@
 //= require sticky.min.js
 //= require app
 //= require_tree ./angular
+//= require angular-locale_ru
+//= require moment-with-langs.min

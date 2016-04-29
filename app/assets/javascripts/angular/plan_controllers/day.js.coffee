@@ -2,7 +2,7 @@ angular.module('travel-components').controller 'DaysController'
 , [
     '$scope'
   , ($scope) ->
-      EDIT_VARIABLES = ['place', 'transfer', 'activity', 'comment', 'hotel']
+      EDIT_VARIABLES = ['place', 'transfer', 'comment', 'hotel']
 
       $scope.tripService = $scope.$parent.tripService
 
@@ -13,9 +13,6 @@ angular.module('travel-components').controller 'DaysController'
 
             if object == 'transfer' && day.transfers.length == 0
               day.transfers = [new_object]
-
-            if object == 'activity' && day.activities.length == 0
-              day.activities = [new_object]
         else
           $scope["#{object}_edit"] = val
 
@@ -28,9 +25,6 @@ angular.module('travel-components').controller 'DaysController'
         $scope.day = day
 
         $scope.$parent.days[day_index] = $scope.day
-
-        $scope.$parent.toggleActivities(false)
-        $scope.$parent.toggleTransfers(false)
 
       # REST: methods using API
       $scope.reload = (callback = null) ->
