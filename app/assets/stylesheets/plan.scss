@@ -566,10 +566,14 @@
           color: $text-grey;
           max-width: 50em;
 
+          @media (max-width: 768px) {
+            font-size: 13px;
+          }
+
           svg {
             margin-right: 1em;
             fill: $main-grey;
-            width: 48px;
+            min-width: 48px;
             height: 48px;
           }
         }

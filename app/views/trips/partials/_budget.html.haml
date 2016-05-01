@@ -1,33 +1,34 @@
 - options ||= {}
+.row
+  .col-xs-12
+    %span.budget{'ng-show' => 'budget_loaded && trip_loaded', 'ng-init' => 'loadBudget()'}
+      = t('common.budget')
+      {{budget | number: 2}}
+      = currency_symbol.html_safe
 
-%span.budget{'ng-show' => 'budget_loaded && trip_loaded', 'ng-init' => 'loadBudget()'}
-  = t('common.budget')
-  {{budget | number: 2}}
-  = currency_symbol.html_safe
+      - if options[:tab_budget].present?
+        = "(#{t("common.#{options[:tab_budget]}")}"
+        {{#{options[:tab_budget]} | number: 2}}
+        = "#{currency_symbol.html_safe})"
 
-  - if options[:tab_budget].present?
-    = "(#{t("common.#{options[:tab_budget]}")}"
-    {{#{options[:tab_budget]} | number: 2}}
-    = "#{currency_symbol.html_safe})"
+      = t('trips.show.budget_for')
 
-  = t('trips.show.budget_for')
+      %span{'ng-show' => '!edit && !edit_persons_count'}
+        {{trip.budget_for}}
+      %span{'ng-show' => 'edit || edit_persons_count'}
+        = number_field_tag 'trip_budget_for', '', class: 'input-sm budget-persons-input', 'ng-model' => 'trip.budget_for'
+      = t('trips.show.persons')
+      = "(#{@trip.days_count} #{t('common.days', count: @trip.days_count)})"
 
-  %span{'ng-show' => '!edit && !edit_persons_count'}
-    {{trip.budget_for}}
-  %span{'ng-show' => 'edit || edit_persons_count'}
-    = number_field_tag 'trip_budget_for', '', class: 'input-sm budget-persons-input', 'ng-model' => 'trip.budget_for'
-  = t('trips.show.persons')
-  = "(#{@trip.days_count} #{t('common.days', count: @trip.days_count)})"
+    - if @user_can_edit
+      %span{'ng-hide' => 'edit'}
+        %a.inline-action{href: 'javascript:void(0);', 'ng-click' => 'edit_persons_count = true', 'ng-hide' => 'edit_persons_count'}
+          = image_tag 'buttons/edit.svg'
 
-  - if @user_can_edit
-    %span{'ng-hide' => 'edit'}
-      %a.inline-action{href: 'javascript:void(0);', 'ng-click' => 'edit_persons_count = true', 'ng-hide' => 'edit_persons_count'}
-        = image_tag 'buttons/edit.svg'
+        %a.link-with-icon.inline-action.btn.btn-sm.btn-success{href: 'javascript:void(0);', 'ng-click' => 'saveTrip()',
+        'ng-show' => 'edit_persons_count'}
+          = inline_svg 'buttons/check.svg'
+          = t('common.save')
 
-      %a.link-with-icon.inline-action.btn.btn-sm.btn-success{href: 'javascript:void(0);', 'ng-click' => 'saveTrip()',
-      'ng-show' => 'edit_persons_count'}
-        = inline_svg 'buttons/check.svg'
-        = t('common.save')
-
-      %a.inline-action.btn.btn-sm.ghost-button{href: 'javascript:void(0);', 'ng-click' => 'loadTrip()', 'ng-show' => 'edit_persons_count'}
-        = t('common.back')
+        %a.inline-action.btn.btn-sm.ghost-button{href: 'javascript:void(0);', 'ng-click' => 'loadTrip()', 'ng-show' => 'edit_persons_count'}
+          = t('common.back')
