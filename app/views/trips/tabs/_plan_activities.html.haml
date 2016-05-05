@@ -115,30 +115,31 @@
             = t('trips.show.activities')
 
           .activities-container{'ng-model' => 'day.activities',
-          'ui-sortable' => '{connectWith: \'.activities-container\', placeholder: \'well\', disabled: !edit}'}
+          'ui-sortable' => '{connectWith: \'.activities-container\', placeholder: \'well\', disabled: !edit, handle: \'.activity-drag-handle\'}'}
             .activity-info{'ng-repeat' => 'activity in day.activities track by activity.id'}
               %span{'ng-controller' => 'ActivityController', 'ng-init' => 'init(activity)'}
-                .row.activity-header{'ng-click' => 'triggerShowMore()', 'ng-hide' => 'edit'}
-                  .col-md-12
-                    %span{'ng-show' => 'day.activities.length > 1'}
-                      {{$index+1}}.
-                    {{activity.name}}
-                    {{activity.amount_cents / 100.0 | number: 2}}
-                    {{activity.amount_currency_text}}
+                %div{'ng-if' => '!edit'}
+                  .row.activity-header{'ng-click' => 'triggerShowMore()'}
+                    .col-md-12
+                      %span.activity-drag-handle{'ng-show' => 'day.activities.length > 1'}
+                        {{$index+1}}.
+                      {{activity.name}}
+                      {{activity.amount_cents / 100.0 | number: 2}}
+                      {{activity.amount_currency_text}}
 
-                .row.activity-link{'ng-show' => 'showMore() && !edit'}
-                  .col-md-12
-                    = render 'widgets/link_show', ng_model_url: 'activity.link_url', ng_model_description: 'activity.link_description'
-                .row.activity-comment{'ng-show' => 'showMore() && !edit'}
-                  .col-md-12
-                    {{activity.comment}}
-                    %span{'ng-show' => '!activity.comment'}
-                      = t('common.no_comments')
+                  .row.activity-link{'ng-show' => 'showMore()'}
+                    .col-md-12
+                      = render 'widgets/link_show', ng_model_url: 'activity.link_url', ng_model_description: 'activity.link_description'
+                  .row.activity-comment{'ng-show' => 'showMore()'}
+                    .col-md-12
+                      {{activity.comment}}
+                      %span{'ng-show' => '!activity.comment'}
+                        = t('common.no_comments')
 
-                .row{'ng-show' => 'edit'}
+                .row{'ng-if' => 'edit'}
                   .col-md-4.col-xs-12.activity-edit
                     .activity-edit-row.activity-edit-header
-                      %big
+                      %big.activity-drag-handle
                         {{$index+1}}.
                       = text_field_tag 'activity_name', '', 'ng-model' => 'activity.name', class: 'input-sm form-control',
                         placeholder: t('trips.show.activity.name')
