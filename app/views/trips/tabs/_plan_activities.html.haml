@@ -111,10 +111,11 @@
                 = text_area_tag 'day_comment', '', 'ng-model' => 'day.comment', class: 'form-control',
                   placeholder: t('trips.show.comment'), rows: 4
 
+          .activity-day-activities-header{'ng-if' => 'edit', 'ng-click' => 'triggerShowMore()'}
+            = t('trips.show.activities')
+
           .activities-container{'ng-model' => 'day.activities',
           'ui-sortable' => '{connectWith: \'.activities-container\', placeholder: \'well\', disabled: !edit}'}
-            .activity-day-activities-header{'ng-show' => 'edit', 'ng-click' => 'triggerShowMore()'}
-              = t('trips.show.activities')
             .activity-info{'ng-repeat' => 'activity in day.activities track by activity.id'}
               %span{'ng-controller' => 'ActivityController', 'ng-init' => 'init(activity)'}
                 .row.activity-header{'ng-click' => 'triggerShowMore()', 'ng-hide' => 'edit'}
