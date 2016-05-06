@@ -128,6 +128,9 @@
                       {{activity.amount_cents / 100.0 | number: 2}}
                       {{activity.amount_currency_text}}
 
+                      %a.move-activity{href: 'javascript:void(0);', 'ng-click' => 'move($event, activity)'}
+                        = image_tag 'buttons/reorder.svg'
+
                   .row.activity-link{'ng-show' => 'showMore()'}
                     .col-md-12
                       = render 'widgets/link_show', ng_model_url: 'activity.link_url', ng_model_description: 'activity.link_description'
@@ -149,6 +152,9 @@
                       %a.delete-activity{href: 'javascript:void(0);', 'ng-click' => 'remove(day.activities, $index)',
                           'ng-show' => 'day.activities.length > 1'}
                         = image_tag 'buttons/delete.svg'
+
+                      %a.move-activity{href: 'javascript:void(0);', 'ng-click' => 'move($event, activity)'}
+                        = image_tag 'buttons/reorder.svg'
 
                       %a.activity-show-more{'ng-class' => '{active: show_more}', 'ng-click' => 'triggerShowMore()'}
                         = inline_svg 'common/eye.svg', class: 'activity-show-more-img'

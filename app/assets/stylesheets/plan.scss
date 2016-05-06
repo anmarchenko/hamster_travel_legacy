@@ -496,11 +496,22 @@
             .activity-drag-image{
               display: block;
             }
+            .activity-header {
+              .move-activity {
+                display: inline-block;
+              }
+            }
           }
 
           .activity-header {
             font-size: 15px;
             cursor: pointer;
+
+            .move-activity {
+              display: none;
+              margin-left: 10px;
+              opacity: .5;
+            }
           }
 
           .activity-edit {
@@ -509,7 +520,7 @@
             .activity-edit-row {
               margin-bottom: 10px;
             }
-            .delete-activity {
+            .delete-activity, .move-activity {
               margin-left: 10px;
             }
           }
@@ -521,7 +532,7 @@
 
             input {
               margin-left: 15px;
-              max-width: 75%;
+              max-width: 65%;
             }
 
             .activity-show-more {

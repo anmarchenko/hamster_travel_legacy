@@ -103,6 +103,12 @@ angular.module('travel-components').controller('ActivitiesDayController'
                 }
             }
 
+            $scope.move = function ($event, activity) {
+                $event.stopPropagation();
+
+                
+            }
+
             $scope.$on('whole_plan_edit', function (event, edit) {
                     if (edit) {
                         $scope.whole_plan_edit = true;
@@ -133,8 +139,6 @@ angular.module('travel-components').controller('ActivitiesDayController'
 
                             }, 200
                         )
-
-
                     }
                 }
             )
