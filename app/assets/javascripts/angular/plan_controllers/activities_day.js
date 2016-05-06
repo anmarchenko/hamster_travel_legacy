@@ -41,14 +41,16 @@ angular.module('travel-components').controller('ActivitiesDayController'
                 $scope.trip_id = trip_id;
             }
 
-            $scope.save = function () {
+            $scope.save = function (skip_notification) {
                 $scope.saving = true;
 
                 Activities.saveAll($scope.trip_id, $scope.day).success(function () {
                     $scope.reload();
                     $scope.saving = false;
 
-                    toastr["success"]($('#notification_saved').text());
+                    if (!skip_notification){
+                        toastr["success"]($('#notification_saved').text());
+                    }
                 })
             }
 
@@ -92,6 +94,12 @@ angular.module('travel-components').controller('ActivitiesDayController'
 
                 if (!no_reload) {
                     $scope.reload();
+                }
+            }
+
+            $scope.onDragFinish = function (e, ui) {
+                if (!$scope.edit) {
+                    $scope.save(true);
                 }
             }
 

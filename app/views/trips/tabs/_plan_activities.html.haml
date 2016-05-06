@@ -115,13 +115,14 @@
             = t('trips.show.activities')
 
           .activities-container{'ng-model' => 'day.activities',
-          'ui-sortable' => '{connectWith: \'.activities-container\', placeholder: \'well\', disabled: !edit, handle: \'.activity-drag-handle\'}'}
+          'ui-sortable' => '{connectWith: \'.activities-container\', placeholder: \'well\', handle: \'.activity-drag-handle\', update: onDragFinish}'}
             .activity-info{'ng-repeat' => 'activity in day.activities track by activity.id'}
               %span{'ng-controller' => 'ActivityController', 'ng-init' => 'init(activity)'}
                 %div{'ng-if' => '!edit'}
                   .row.activity-header{'ng-click' => 'triggerShowMore()'}
                     .col-md-12
                       %span.activity-drag-handle{'ng-show' => 'day.activities.length > 1'}
+                        = image_tag 'buttons/drag.svg', class: 'activity-drag-image hidden-xs hidden-sm'
                         {{$index+1}}.
                       {{activity.name}}
                       {{activity.amount_cents / 100.0 | number: 2}}
@@ -140,6 +141,7 @@
                   .col-md-4.col-xs-12.activity-edit
                     .activity-edit-row.activity-edit-header
                       %big.activity-drag-handle
+                        = image_tag 'buttons/drag.svg', class: 'activity-drag-image hidden-xs hidden-sm'
                         {{$index+1}}.
                       = text_field_tag 'activity_name', '', 'ng-model' => 'activity.name', class: 'input-sm form-control',
                         placeholder: t('trips.show.activity.name')

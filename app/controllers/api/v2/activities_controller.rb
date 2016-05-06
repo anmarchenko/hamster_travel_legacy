@@ -15,11 +15,11 @@ class Api::V2::ActivitiesController < ApplicationController
 
   def create
     prms = day_params
-    Updaters::Activities.new(@day, prms.delete(:activities)).process
-    Updaters::DayExpenses.new(@day, prms.delete(:expenses)).process
-    Updaters::DayLinks.new(@day, prms.delete(:links)).process
-    Updaters::DayPlaces.new(@day, prms.delete(:places)).process
-    Updaters::Day.new(@day, prms).process
+    ::Updaters::Activities.new(@day, prms.delete(:activities)).process
+    ::Updaters::DayExpenses.new(@day, prms.delete(:expenses)).process
+    ::Updaters::DayLinks.new(@day, prms.delete(:links)).process
+    ::Updaters::DayPlaces.new(@day, prms.delete(:places)).process
+    ::Updaters::Day.new(@day, prms).process
     render json: {status: 0}
   end
 
