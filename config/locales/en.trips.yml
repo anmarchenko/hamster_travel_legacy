@@ -105,6 +105,7 @@ en:
       add_city: Add city
       add_expense: Add expense
       add_activity: Add activity
+      move_activity: Move activity to another day
     edit:
       title: Edit travel
     form:

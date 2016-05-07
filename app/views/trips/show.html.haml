@@ -24,6 +24,13 @@
   %script{type: 'text/ng-template', id: 'daySortModal.html'}
     = render 'modals/days_sort_modal'
 
+  %script{type: 'text/ng-template', id: 'moveActivity.html'}
+    .days-info-popover{'ng-controller' => 'ActivityMovePopupController', 'ng-init' => 'init(activity, planDays)'}
+      %ul
+        %li.day-info-popover{'ng-repeat' => 'day in plan_days_info track by day.id'}
+          %a
+            {{day.date}}
+
 %div{'ng-controller' => 'PlanController'}
   .row
     .col-xs-12

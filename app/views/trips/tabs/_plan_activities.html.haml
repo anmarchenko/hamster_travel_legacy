@@ -7,7 +7,7 @@
     = render 'trips/partials/budget', options: {tab_budget: 'activities_other_budget'}
     .row.hidden-xs.sticky-row{'sticky' => 'true'}
       .col-md-12
-        = render 'trips/partials/buttons'
+        = render 'trips/partials/buttons', save_action: 'saveActivities()', undo_action: 'cancelEditsActivities()'
 
   .activities
     - @trip.days.each do |day|
@@ -128,7 +128,9 @@
                       {{activity.amount_cents / 100.0 | number: 2}}
                       {{activity.amount_currency_text}}
 
-                      %a.move-activity{href: 'javascript:void(0);', 'ng-click' => 'move($event, activity)'}
+                      %a.move-activity{href: 'javascript:void(0);', 'uib-popover-template' => "'moveActivity.html'",
+                      'popover-trigger' => 'outsideClick', 'ng-click' => 'noop($event)', 'popover-placement' => 'bottom',
+                      'popover-title' => t('trips.show.move_activity')}
                         = image_tag 'buttons/reorder.svg'
 
                   .row.activity-link{'ng-show' => 'showMore()'}
@@ -153,7 +155,9 @@
                           'ng-show' => 'day.activities.length > 1'}
                         = image_tag 'buttons/delete.svg'
 
-                      %a.move-activity{href: 'javascript:void(0);', 'ng-click' => 'move($event, activity)'}
+                      %a.move-activity{href: 'javascript:void(0);', 'uib-popover-template' => "'moveActivity.html'",
+                        'popover-trigger' => 'outsideClick', 'popover-placement' => 'bottom',
+                        'popover-title' => t('trips.show.move_activity')}
                         = image_tag 'buttons/reorder.svg'
 
                       %a.activity-show-more{'ng-class' => '{active: show_more}', 'ng-click' => 'triggerShowMore()'}

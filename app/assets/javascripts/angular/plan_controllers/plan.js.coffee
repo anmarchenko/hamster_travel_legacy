@@ -127,13 +127,6 @@ angular.module('travel-components').controller 'PlanController'
             $scope.saving = false
             $scope.loadBudget()
             $scope.loadCountries()
-        if $scope.planDays
-          Days.saveWithActivities($scope.trip_id, $scope.planDays).success ->
-            $scope.saving = false
-            toastr["success"]($('#notification_saved').text());
-            $scope.loadBudget()
-            $scope.loadCountries()
-
 
       $scope.saveTrip = ->
         $scope.tripService.updateTrip($scope.trip).then ->
@@ -147,33 +140,21 @@ angular.module('travel-components').controller 'PlanController'
         if $scope.caterings
           $scope.tripService.getCaterings().then (caterings) ->
             $scope.caterings = caterings
-        if $scope.planDays
-          $scope.planDays = []
-          Days.getActivities($scope.trip_id).then (response) ->
-            for day in response.data.days
-              $scope.planDays.push day
-              $scope.$broadcast('day_activities_updated', day)
 
         $scope.loadTrip()
         $scope.loadBudget()
         $scope.loadCountries()
+
+
       # END OF API
 
       # NEW EPOCH CODE - WILL SURVIVE
-
-      # days of the plan gathered from child controllers
-      $scope.planDays = []
-
-      $scope.initActivities = ->
-        Days.getActivities($scope.trip_id).then (response) ->
-          for day in response.data.days
-            $scope.planDays.push day
-            $scope.$broadcast('day_activities_loaded', day)
-
-      $scope.$on('day_activities_reloaded', (event, day) ->
-        $scope.planDays = $scope.planDays.filter (old_day) -> old_day.id != day.id
-        $scope.planDays.push day
-      )
+      # Start code that will stay in big controller
+      $scope.cancelEditsPlan = ->
+        $scope.setEdit(false)
+        $scope.loadTrip()
+        $scope.loadBudget()
+        $scope.loadCountries()
 
       $scope.add = (field, obj = {}) ->
         obj['id'] = new Date().getTime()
@@ -186,6 +167,45 @@ angular.module('travel-components').controller 'PlanController'
         $scope.edit = val
         # emit event
         $scope.$broadcast('whole_plan_edit', val)
+      # Edit code that will stay in big controller
+
+      # Start activities specific code
+      # days of the plan gathered from child controllers
+      $scope.planDays = []
+      $scope.initActivities = ->
+        Days.getActivities($scope.trip_id).then (response) ->
+          for day in response.data.days
+            $scope.planDays.push day
+            $scope.$broadcast('day_activities_loaded', day)
+
+      $scope.saveActivities = ->
+        return if $scope.saving
+        $scope.saving = true
+
+        # replace with new code
+        $scope.tripService.updateTrip($scope.trip)
+
+        Days.saveWithActivities($scope.trip_id, $scope.planDays).success ->
+          $scope.saving = false
+          toastr["success"]($('#notification_saved').text());
+
+          $scope.loadBudget()
+          $scope.loadCountries()
+
+      $scope.cancelEditsActivities = ->
+        $scope.cancelEditsTrip()
+
+        $scope.planDays = []
+        Days.getActivities($scope.trip_id).then (response) ->
+          for day in response.data.days
+            $scope.planDays.push day
+            $scope.$broadcast('day_activities_updated', day)
+
+      $scope.$on('day_activities_reloaded', (event, day) ->
+        $scope.planDays = $scope.planDays.filter (old_day) -> old_day.id != day.id
+        $scope.planDays.push day
+      )
+      # end activities specific code
 
       # END NEW EPOCH CODE
 

@@ -169,7 +169,7 @@ module Travels
     def transfers_hotel_budget currency = CurrencyHelper::DEFAULT_CURRENCY
       currency ||= CurrencyHelper::DEFAULT_CURRENCY
       result = Money.new(0, currency)
-      (days || []).each do |day|
+      (days.includes(:hotel, :transfers, :activities, :expenses) || []).each do |day|
         result += day.hotel.amount.exchange_to(currency)
         (day.transfers || []).each { |transfer| result += transfer.amount.exchange_to(currency) }
       end
@@ -179,7 +179,7 @@ module Travels
     def activities_other_budget currency = CurrencyHelper::DEFAULT_CURRENCY
       currency ||= CurrencyHelper::DEFAULT_CURRENCY
       result = Money.new(0, currency)
-      (days || []).each do |day|
+      (days.includes(:hotel, :transfers, :activities, :expenses) || []).each do |day|
         (day.activities || []).each { |activity| result += activity.amount.exchange_to(currency) }
         (day.expenses || []).each { |expense| result += expense.amount.exchange_to(currency) }
       end
