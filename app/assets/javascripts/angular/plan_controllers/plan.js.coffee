@@ -193,7 +193,7 @@ angular.module('travel-components').controller 'PlanController'
           $scope.loadCountries()
 
       $scope.cancelEditsActivities = ->
-        $scope.cancelEditsTrip()
+        $scope.cancelEditsPlan()
 
         $scope.planDays = []
         Days.getActivities($scope.trip_id).then (response) ->

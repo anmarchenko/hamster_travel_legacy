@@ -106,7 +106,8 @@ ru:
       add_city: Добавить город
       add_expense: Добавить расходы
       add_activity: Добавить впечатление
-      move_activity: Переместить впечатление на другой день
+      move_activity: Переместить на другой день
+      move_activity_action: Переместить
     edit:
       title: Редактирование путешествия
     form:

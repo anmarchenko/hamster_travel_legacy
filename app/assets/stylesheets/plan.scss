@@ -913,36 +913,5 @@
 }
 
 .days-info-popover {
-  padding: 20px 25px;
-  max-width: 280px;
-
-  ul {
-    padding: 0;
-    list-style-type: none;
-    margin: 0;
-
-    display: flex;
-    flex-flow: row;
-    flex-wrap: wrap;
-
-    li {
-      border: 1px solid $border-grey;
-      border-radius: 2px;
-      max-width: 100px;
-      margin: 5px;
-      padding: 5px;
-
-      &:hover {
-        background-color: $background-grey;
-      }
-
-      a {
-        color: $dark-grey;
-        &:hover {
-          text-decoration: none;
-        }
-      }
-    }
-
-  }
+  padding: 15px;
 }

@@ -25,11 +25,13 @@
     = render 'modals/days_sort_modal'
 
   %script{type: 'text/ng-template', id: 'moveActivity.html'}
-    .days-info-popover{'ng-controller' => 'ActivityMovePopupController', 'ng-init' => 'init(activity, planDays)'}
-      %ul
-        %li.day-info-popover{'ng-repeat' => 'day in plan_days_info track by day.id'}
-          %a
-            {{day.date}}
+    .days-info-popover{'ng-controller' => 'ActivityMovePopupController', 'ng-init' => 'init(activity, day)'}
+      .form-group
+        = select_tag 'day_select', options_from_collection_for_select(@trip.days, :id, :date_when_s), class: 'form-control',
+            'ng-model' => 'target_day_id'
+      .form-group.text-center
+        %button.btn.btn-primary.btn-sm{'ng-click' => 'moveActivity($event)'}
+          = t('.reorder_days')
 
 %div{'ng-controller' => 'PlanController'}
   .row

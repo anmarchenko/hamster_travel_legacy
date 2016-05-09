@@ -119,14 +119,15 @@
             .activity-info{'ng-repeat' => 'activity in day.activities track by activity.id'}
               %span{'ng-controller' => 'ActivityController', 'ng-init' => 'init(activity)'}
                 %div{'ng-if' => '!edit'}
-                  .row.activity-header{'ng-click' => 'triggerShowMore()'}
+                  .row.activity-header
                     .col-md-12
-                      %span.activity-drag-handle{'ng-show' => 'day.activities.length > 1'}
-                        = image_tag 'buttons/drag.svg', class: 'activity-drag-image hidden-xs hidden-sm'
-                        {{$index+1}}.
-                      {{activity.name}}
-                      {{activity.amount_cents / 100.0 | number: 2}}
-                      {{activity.amount_currency_text}}
+                      %span{'ng-click' => 'triggerShowMore()'}
+                        %span.activity-drag-handle{'ng-show' => 'day.activities.length > 1'}
+                          = image_tag 'buttons/drag.svg', class: 'activity-drag-image hidden-xs hidden-sm'
+                          {{$index+1}}.
+                        {{activity.name}}
+                        {{activity.amount_cents / 100.0 | number: 2}}
+                        {{activity.amount_currency_text}}
 
                       %a.move-activity{href: 'javascript:void(0);', 'uib-popover-template' => "'moveActivity.html'",
                       'popover-trigger' => 'outsideClick', 'ng-click' => 'noop($event)', 'popover-placement' => 'bottom',
