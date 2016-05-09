@@ -1,7 +1,7 @@
 angular.module('travel-components').controller('ActivityMovePopupController'
     , [
-        '$scope'
-        , function ($scope) {
+        '$scope', '$rootScope'
+        , function ($scope, $rootScope) {
             // logic
 
             $scope.init = function (activity, day) {
@@ -10,9 +10,15 @@ angular.module('travel-components').controller('ActivityMovePopupController'
                 $scope.target_day_id = day.id;
             }
 
-            $scope.moveActivity = function ($event) {
+            $scope.moveActivity = function () {
                 // close popover
                 $('body').trigger('click');
+
+                $rootScope.$emit('move_activity', {
+                    source_id: $scope.source_day.id,
+                    target_id: $scope.target_day_id,
+                    activity: $scope.moved_activtiy
+                });
             }
         }
 

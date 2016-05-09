@@ -1,7 +1,7 @@
 angular.module('travel-components').controller('ActivitiesDayController'
     , [
-        '$scope', 'Activities', '$timeout'
-        , function ($scope, Activities, $timeout) {
+        '$scope', 'Activities', '$timeout', '$rootScope'
+        , function ($scope, Activities, $timeout, $rootScope) {
             $scope.day = {}
             $scope.day_id = null;
             $scope.trip_id = null;
@@ -48,7 +48,7 @@ angular.module('travel-components').controller('ActivitiesDayController'
                     $scope.reload();
                     $scope.saving = false;
 
-                    if (!skip_notification){
+                    if (!skip_notification) {
                         toastr["success"]($('#notification_saved').text());
                     }
                 })
@@ -129,12 +129,36 @@ angular.module('travel-components').controller('ActivitiesDayController'
                         $scope.day = day;
 
                         $timeout(function () {
-                                $scope.day_loaded = true;
-                            }, Math.random() * 1000
+                            $scope.day_loaded = true;
+                        }, Math.random() * 1000
                         )
                     }
                 }
             )
+
+            $rootScope.$on('move_activity', function (event, payload) {
+                if ($scope.day.id == payload.source_id) {
+                    activity_index = undefined;
+                    // TODO: rewrite with ES6
+                    for (i = 0; i < $scope.day.activities.length; i++) {
+                        if ($scope.day.activities[i].id == payload.activity.id) {
+                            activity_index = i;
+                        }
+                    }
+                    if (activity_index != undefined) {
+                        $scope.day.activities.splice(activity_index, 1);
+                        $scope.save(true);
+
+                        if ($scope.edit) {
+                            $scope.setDefaults();
+                        }
+                    }
+                }
+                if ($scope.day.id == payload.target_id) {
+                    $scope.day.activities.push(payload.activity);
+                    $scope.save(true);
+                }
+            })
 
         }
 

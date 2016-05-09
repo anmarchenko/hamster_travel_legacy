@@ -129,9 +129,12 @@
                         {{activity.amount_cents / 100.0 | number: 2}}
                         {{activity.amount_currency_text}}
 
-                      %a.move-activity{href: 'javascript:void(0);', 'uib-popover-template' => "'moveActivity.html'",
-                      'popover-trigger' => 'outsideClick', 'ng-click' => 'noop($event)', 'popover-placement' => 'bottom',
-                      'popover-title' => t('trips.show.move_activity')}
+                      %a.move-activity.hidden-xs{href: 'javascript:void(0);',
+                        'uib-popover-template' => "'moveActivity.html'",
+                        'popover-trigger' => 'outsideClick',
+                        'popover-placement' => 'top',
+                        'popover-title' => t('trips.show.move_activity'),
+                        'popover-append-to-body' => true}
                         = image_tag 'buttons/reorder.svg'
 
                   .row.activity-link{'ng-show' => 'showMore()'}
@@ -152,13 +155,15 @@
                       = text_field_tag 'activity_name', '', 'ng-model' => 'activity.name', class: 'input-sm form-control',
                         placeholder: t('trips.show.activity.name')
 
-                      %a.delete-activity{href: 'javascript:void(0);', 'ng-click' => 'remove(day.activities, $index)',
-                          'ng-show' => 'day.activities.length > 1'}
+                      %a.delete-activity{href: 'javascript:void(0);', 'ng-click' => 'remove(day.activities, $index)'}
                         = image_tag 'buttons/delete.svg'
 
-                      %a.move-activity{href: 'javascript:void(0);', 'uib-popover-template' => "'moveActivity.html'",
-                        'popover-trigger' => 'outsideClick', 'popover-placement' => 'bottom',
-                        'popover-title' => t('trips.show.move_activity')}
+                      %a.move-activity.hidden-xs{href: 'javascript:void(0);',
+                        'uib-popover-template' => "'moveActivity.html'",
+                        'popover-trigger' => 'outsideClick',
+                        'popover-placement' => 'top',
+                        'popover-title' => t('trips.show.move_activity'),
+                        'popover-append-to-body' => true}
                         = image_tag 'buttons/reorder.svg'
 
                       %a.activity-show-more{'ng-class' => '{active: show_more}', 'ng-click' => 'triggerShowMore()'}
