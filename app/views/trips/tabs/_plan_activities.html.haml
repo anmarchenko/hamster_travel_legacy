@@ -22,7 +22,7 @@
 
             .col-md-9.col-xs-12.activities-actions
               - if @user_can_edit
-                - if @trip.days.count > 2
+                - if @trip.days.count > 1
                   .activity-action-link{'ng-controller' => 'DaySorterController', 'ng-hide' => 'edit'}
                     %a.link-with-icon.btn.btn-sm.ghost-button{'ng-click' => "startSorting('#{@trip.id}')", href: 'javascript:void(0);',
                     'ng-disabled' => 'reloading'}
@@ -129,13 +129,13 @@
                         {{activity.amount_cents / 100.0 | number: 2}}
                         {{activity.amount_currency_text}}
 
-                      %a.move-activity.hidden-xs{href: 'javascript:void(0);',
-                        'uib-popover-template' => "'moveActivity.html'",
-                        'popover-trigger' => 'outsideClick',
-                        'popover-placement' => 'top',
-                        'popover-title' => t('trips.show.move_activity'),
-                        'popover-append-to-body' => true}
-                        = image_tag 'buttons/reorder.svg'
+                      - if @trip.days.count > 1
+                        %a.move-activity.hidden-xs{href: 'javascript:void(0);',
+                          'uib-popover-template' => "'moveActivity.html'",
+                          'popover-trigger' => 'outsideClick',
+                          'popover-placement' => 'top',
+                          'popover-title' => t('trips.show.move_activity')}
+                          = image_tag 'buttons/reorder.svg'
 
                   .row.activity-link{'ng-show' => 'showMore()'}
                     .col-md-12
@@ -158,13 +158,13 @@
                       %a.delete-activity{href: 'javascript:void(0);', 'ng-click' => 'remove(day.activities, $index)'}
                         = image_tag 'buttons/delete.svg'
 
-                      %a.move-activity.hidden-xs{href: 'javascript:void(0);',
-                        'uib-popover-template' => "'moveActivity.html'",
-                        'popover-trigger' => 'outsideClick',
-                        'popover-placement' => 'top',
-                        'popover-title' => t('trips.show.move_activity'),
-                        'popover-append-to-body' => true}
-                        = image_tag 'buttons/reorder.svg'
+                      - if @trip.days.count > 1
+                        %a.move-activity.hidden-xs{href: 'javascript:void(0);',
+                          'uib-popover-template' => "'moveActivity.html'",
+                          'popover-trigger' => 'outsideClick',
+                          'popover-placement' => 'top',
+                          'popover-title' => t('trips.show.move_activity')}
+                          = image_tag 'buttons/reorder.svg'
 
                       %a.activity-show-more{'ng-class' => '{active: show_more}', 'ng-click' => 'triggerShowMore()'}
                         = inline_svg 'common/eye.svg', class: 'activity-show-more-img'
