@@ -107,6 +107,9 @@ en:
       add_activity: Add activity
       move_activity: Move activity to another day
       move_activity_action: Move
+      activity_must_see: Must see
+      activity_nice_to_visit: Nice to visit
+      activity_not_necessary: Not necessary
     edit:
       title: Edit travel
     form:

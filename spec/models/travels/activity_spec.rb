@@ -12,6 +12,7 @@
 #  day_id           :integer
 #  amount_cents     :integer          default(0), not null
 #  amount_currency  :string           default("RUB"), not null
+#  rating           :integer          default(2)
 #
 
 describe Travels::Activity do

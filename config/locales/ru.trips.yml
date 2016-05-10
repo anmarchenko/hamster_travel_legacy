@@ -108,6 +108,9 @@ ru:
       add_activity: Добавить впечатление
       move_activity: Переместить на другой день
       move_activity_action: Переместить
+      activity_must_see: Must see
+      activity_nice_to_visit: Надо посетить
+      activity_not_necessary: Необязательно
     edit:
       title: Редактирование путешествия
     form:

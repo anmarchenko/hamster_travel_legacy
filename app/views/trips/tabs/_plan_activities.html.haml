@@ -30,7 +30,7 @@
                       %span.hidden-xs
                         = t('trips.show.reorder_days')
                 .activity-action-link{'ng-hide' => 'edit'}
-                  %a.link-with-icon.btn.btn-sm.ghost-button{'ng-click' => "startEdit({#{default_currency_hash(@trip, current_user)}})",
+                  %a.link-with-icon.btn.btn-sm.ghost-button{'ng-click' => "startEdit({#{default_currency_hash(@trip, current_user)}, rating: 2})",
                   'ng-disabled' => 'reloading', href: 'javascript:void(0);'}
                     = inline_svg 'buttons/edit.svg'
                     = t('trips.show.edit_day')
@@ -168,20 +168,43 @@
 
                       %a.activity-show-more{'ng-class' => '{active: show_more}', 'ng-click' => 'triggerShowMore()'}
                         = inline_svg 'common/eye.svg', class: 'activity-show-more-img'
+                    %div{'ng-show' => 'showMore()'}
+                      .activity-edit-row.activity-ratings
+                        .activity-rating{'ng-class' => '{selected: activity.rating == 3}',
+                                         'ng-click' => 'activity.rating = 3'}
+                          .activity-stars
+                            = image_tag 'activities/star.svg'
+                            = image_tag 'activities/star.svg'
+                            = image_tag 'activities/star.svg'
+                          .activity-text
+                            = t('trips.show.activity_must_see')
+                        .activity-rating{'ng-class' => '{selected: activity.rating == 2}',
+                                         'ng-click' => 'activity.rating = 2'}
+                          .activity-stars
+                            = image_tag 'activities/star.svg'
+                            = image_tag 'activities/star.svg'
+                          .activity-text
+                            = t('trips.show.activity_nice_to_visit')
+                        .activity-rating{'ng-class' => '{selected: activity.rating == 1}',
+                                         'ng-click' => 'activity.rating = 1'}
+                          .activity-stars
+                            = image_tag 'activities/star.svg'
+                          .activity-text
+                            = t('trips.show.activity_not_necessary')
 
-                    .activity-edit-row{'ng-show' => 'showMore()'}
-                      = render 'widgets/price', name: 'activity_price', object_model: 'activity',
-                                                placeholder: t('trips.show.price')
-                    .activity-edit-row{'ng-show' => 'showMore()'}
-                      = render 'widgets/link', ng_model_url: 'activity.link_url'
+                      .activity-edit-row
+                        = render 'widgets/price', name: 'activity_price', object_model: 'activity',
+                                                  placeholder: t('trips.show.price')
+                      .activity-edit-row
+                        = render 'widgets/link', ng_model_url: 'activity.link_url'
 
                   .col-md-8.col-xs-12{'ng-show' => 'showMore()'}
                     = text_area_tag 'activity_comment', '', 'ng-model' => 'activity.comment', class: 'form-control',
-                      placeholder: t('trips.show.comment'), rows: 4
+                      placeholder: t('trips.show.comment'), rows: 6
 
           .activity-day-activities-footer{'ng-show' => 'edit'}
             %a.link-with-icon.add-activity-link{href: 'javascript:void(0);',
-                'ng-click' => "add(day.activities, {#{default_currency_hash(@trip, current_user)}})"}
+                'ng-click' => "add(day.activities, {#{default_currency_hash(@trip, current_user)}, rating: 2})"}
               = inline_svg 'buttons/add_plain.svg'
               = t('trips.show.add_activity')
 

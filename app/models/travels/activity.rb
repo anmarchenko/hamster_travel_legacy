@@ -12,6 +12,7 @@
 #  day_id           :integer
 #  amount_cents     :integer          default(0), not null
 #  amount_currency  :string           default("RUB"), not null
+#  rating           :integer          default(2)
 #
 
 module Travels
@@ -33,7 +34,7 @@ module Travels
       ExternalLink.new(url: link_url).description
     end
 
-    PERMITTED = %w(name amount_cents amount_currency comment link_description link_url order_index id)
+    PERMITTED = %w(name amount_cents amount_currency comment link_description link_url order_index id rating)
 
     def serializable_hash(**args)
       attrs = super(args)
