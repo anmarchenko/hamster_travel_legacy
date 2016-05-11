@@ -12,7 +12,7 @@
   .activities
     - @trip.days.each do |day|
       .activity{'ng-controller' => 'ActivitiesDayController',
-                'ng-init' => "load(#{@trip.id}, #{day.id})",
+                'ng-init' => "load(#{@trip.id}, #{day.id}, {#{default_currency_hash(@trip, current_user)}, rating: 2})",
                 'ng-class' => '{shadowed: reloading}'}
         .activity-content{'ng-show' => 'day_loaded'}
           .row.activity-day-header
@@ -30,7 +30,7 @@
                       %span.hidden-xs
                         = t('trips.show.reorder_days')
                 .activity-action-link{'ng-hide' => 'edit'}
-                  %a.link-with-icon.btn.btn-sm.ghost-button{'ng-click' => "startEdit({#{default_currency_hash(@trip, current_user)}, rating: 2})",
+                  %a.link-with-icon.btn.btn-sm.ghost-button{'ng-click' => "startEdit()",
                   'ng-disabled' => 'reloading', href: 'javascript:void(0);'}
                     = inline_svg 'buttons/edit.svg'
                     = t('trips.show.edit_day')
@@ -119,7 +119,7 @@
             .activity-info{'ng-repeat' => 'activity in day.activities track by activity.id'}
               %span{'ng-controller' => 'ActivityController', 'ng-init' => 'init(activity)'}
                 %div{'ng-if' => '!edit'}
-                  .row.activity-header
+                  .row.activity-header{'ng-class' => '{high: activity.rating == 3, low: activity.rating == 1}'}
                     .col-md-12
                       %span{'ng-click' => 'triggerShowMore()'}
                         %span.activity-drag-handle{'ng-show' => 'day.activities.length > 1'}
@@ -204,7 +204,7 @@
 
           .activity-day-activities-footer{'ng-show' => 'edit'}
             %a.link-with-icon.add-activity-link{href: 'javascript:void(0);',
-                'ng-click' => "add(day.activities, {#{default_currency_hash(@trip, current_user)}, rating: 2})"}
+                'ng-click' => "add(day.activities, new_activity_template)"}
               = inline_svg 'buttons/add_plain.svg'
               = t('trips.show.add_activity')
 

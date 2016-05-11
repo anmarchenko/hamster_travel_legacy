@@ -5,6 +5,7 @@ angular.module('travel-components').controller('ActivitiesDayController'
             $scope.day = {}
             $scope.day_id = null;
             $scope.trip_id = null;
+            $scope.new_activity_template = {}
 
             $scope.day_loaded = false;
 
@@ -36,9 +37,10 @@ angular.module('travel-components').controller('ActivitiesDayController'
                 })
             }
 
-            $scope.load = function (trip_id, day_id) {
+            $scope.load = function (trip_id, day_id, new_activity_template) {
                 $scope.day_id = day_id;
                 $scope.trip_id = trip_id;
+                $scope.new_activity_template = new_activity_template;
             }
 
             $scope.save = function (skip_notification) {
@@ -70,7 +72,9 @@ angular.module('travel-components').controller('ActivitiesDayController'
 
             $scope.setDefaults = function () {
                 if ($scope.day.activities.length == 0) {
-                    $scope.day.activities = [$scope.new_activity_template];
+                    var obj = {};
+                    angular.copy($scope.new_activity_template, obj);
+                    $scope.day.activities = [obj];
                 }
 
                 if ($scope.day.links.length == 0) {
@@ -78,14 +82,11 @@ angular.module('travel-components').controller('ActivitiesDayController'
                 }
             }
 
-            $scope.startEdit = function (new_activity) {
+            $scope.startEdit = function () {
                 if ($scope.reloading) {
                     return;
                 }
                 $scope.edit = true;
-                if (new_activity) {
-                    $scope.new_activity_template = new_activity;
-                }
                 $scope.setDefaults();
             }
 

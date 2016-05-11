@@ -156,9 +156,11 @@ angular.module('travel-components').controller 'PlanController'
         $scope.loadBudget()
         $scope.loadCountries()
 
-      $scope.add = (field, obj = {}) ->
-        obj['id'] = new Date().getTime()
-        field.push(obj)
+      $scope.add = (arr, template = {}) ->
+        obj = {}
+        angular.copy(template, obj)
+        obj.id = new Date().getTime()
+        arr.push(obj)
 
       $scope.remove = (field, index) ->
         field.splice(index, 1)
