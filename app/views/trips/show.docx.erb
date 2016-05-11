@@ -232,7 +232,8 @@
                             <%= docx_text(fontSize: biggerFontSize, underscored: true) do %><%= index + 1 %>.
                             <% end %>
                         <% end %>
-                        <%= docx_text(fontSize: biggerFontSize, underscored: true, prespace: true) do %>
+                        <%= docx_text(fontSize: biggerFontSize, underscored: true, prespace: true,
+                                        bold: activity.rating == 3, italic: activity.rating == 1) do %>
                             <%= activity.name %>
                         <% end %>
                     <% end %>
