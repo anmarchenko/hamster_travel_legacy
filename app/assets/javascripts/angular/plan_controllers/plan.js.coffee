@@ -116,7 +116,7 @@ angular.module('travel-components').controller 'PlanController'
         return if $scope.saving
         $scope.saving = true
         $scope.tripService.updateTrip($scope.trip).then ->
-          $scope.saving = false unless $scope.days || $scope.caterings || $scope.planDays
+          $scope.saving = false unless $scope.days || $scope.caterings
         if $scope.days
           $scope.tripService.createDays($scope.days).then ->
             $scope.saving = false
