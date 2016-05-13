@@ -531,6 +531,22 @@
             .activity-edit-row {
               margin-bottom: 10px;
             }
+            .activity-address-edit {
+              .input-group-addon {
+                padding-right: 6px;
+                padding-left: 2px;
+              }
+              img {
+                width: 24px;
+                margin-top: -2px;
+              }
+            }
+            .activity-working-hours-edit {
+              .input-group-addon {
+                padding-right: 10px;
+                padding-left: 6px;
+              }
+            }
             .delete-activity, .move-activity {
               margin-left: 10px;
             }

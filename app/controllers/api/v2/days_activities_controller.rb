@@ -32,7 +32,7 @@ class Api::V2::DaysActivitiesController < ApplicationController
                           :comment,
                           {
                               activities: [
-                                  :id, :name, :comment, :link_url, :amount_cents, :amount_currency, :rating
+                                  :id, :name, :comment, :link_url, :amount_cents, :amount_currency, :rating, :address, :working_hours
                               ]
                           },
                           {

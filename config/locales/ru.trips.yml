@@ -111,6 +111,8 @@ ru:
       activity_must_see: Must see
       activity_nice_to_visit: Надо посетить
       activity_not_necessary: Необязательно
+      address: адрес
+      working_hours: часы работы
     edit:
       title: Редактирование путешествия
     form:

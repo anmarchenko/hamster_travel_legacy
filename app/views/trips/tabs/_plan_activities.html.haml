@@ -137,14 +137,25 @@
                           'popover-title' => t('trips.show.move_activity')}
                           = image_tag 'buttons/reorder.svg'
 
-                  .row.activity-link{'ng-show' => 'showMore()'}
-                    .col-md-12
-                      = render 'widgets/link_show', ng_model_url: 'activity.link_url', ng_model_description: 'activity.link_description'
-                  .row.activity-comment{'ng-show' => 'showMore()'}
-                    .col-md-12
-                      {{activity.comment}}
-                      %span{'ng-show' => '!activity.comment'}
-                        = t('common.no_comments')
+                  %div{'ng-show' => 'showMore()'}
+                    .row.activity-link
+                      .col-md-12
+                        = render 'widgets/link_show', ng_model_url: 'activity.link_url', ng_model_description: 'activity.link_description'
+                    .row{'ng-show' => 'activity.address'}
+                      .col-md-12
+                        %i
+                          = t('trips.show.address').mb_chars.capitalize + ":"
+                          {{activity.address}}
+                    .row{'ng-show' => 'activity.working_hours'}
+                      .col-md-12
+                        %i
+                          = t('trips.show.working_hours').mb_chars.capitalize + ":"
+                          {{activity.working_hours}}
+                    .row.activity-comment
+                      .col-md-12
+                        {{activity.comment}}
+                        %span{'ng-show' => '!activity.comment'}
+                          = t('common.no_comments')
 
                 .row{'ng-if' => 'edit'}
                   .col-md-4.col-xs-12.activity-edit
@@ -197,10 +208,22 @@
                                                   placeholder: t('trips.show.price')
                       .activity-edit-row
                         = render 'widgets/link', ng_model_url: 'activity.link_url'
+                      .activity-edit-row.activity-address-edit
+                        %div.input-group
+                          %span.input-group-addon
+                            = image_tag 'activities/address.svg'
+                          = text_field_tag 'activity_address', '', 'ng-model' => 'activity.address', class: "input-sm form-control",
+                                            placeholder: t('trips.show.address')
+                      .activity-edit-row.activity-working-hours-edit
+                        %div.input-group
+                          %span.input-group-addon
+                            = image_tag 'activities/clock.svg'
+                          = text_field_tag 'activity_working_hours', '', 'ng-model' => 'activity.working_hours', class: "input-sm form-control",
+                                            placeholder: t('trips.show.working_hours')
 
                   .col-md-8.col-xs-12{'ng-show' => 'showMore()'}
                     = text_area_tag 'activity_comment', '', 'ng-model' => 'activity.comment', class: 'form-control',
-                      placeholder: t('trips.show.comment'), rows: 6
+                      placeholder: t('trips.show.comment'), rows: 9
 
           .activity-day-activities-footer{'ng-show' => 'edit'}
             %a.link-with-icon.add-activity-link{href: 'javascript:void(0);',

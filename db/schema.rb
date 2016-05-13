@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160510193026) do
+ActiveRecord::Schema.define(version: 20160513184800) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 20160510193026) do
     t.integer "amount_cents",     default: 0,     null: false
     t.string  "amount_currency",  default: "RUB", null: false
     t.integer "rating",           default: 2
+    t.string  "address"
+    t.string  "working_hours"
   end
 
   add_index "activities", ["day_id"], name: "index_activities_on_day_id", using: :btree

@@ -67,6 +67,13 @@ describe Api::V2::ActivitiesController do
                             city_text: 'City',
                             missing_attr: 'AAAAA'
                         }
+                    ],
+                    activities: [
+                        {
+                            name: 'new_activity',
+                            address: '10553 Berlin Randomstr. 12',
+                            working_hours: '12 - 18'
+                        }
                     ]
                 }
         }
@@ -82,6 +89,10 @@ describe Api::V2::ActivitiesController do
             expect(updated_day.comment).to eq 'new_day_comment'
             expect(updated_day.places.count).to eq(1)
             expect(updated_day.places.first.city_id).to eq(Geo::City.all.first.id)
+            expect(updated_day.activities.count).to eq(1)
+            expect(updated_day.activities.first.name).to eq('new_activity')
+            expect(updated_day.activities.first.address).to eq('10553 Berlin Randomstr. 12')
+            expect(updated_day.activities.first.working_hours).to eq('12 - 18')
           end
         end
 

@@ -29,7 +29,7 @@ class Api::V2::ActivitiesController < ApplicationController
     params.require(:day).permit(
         :comment,
         activities: [
-            :id, :name, :comment, :link_url, :amount_cents, :amount_currency, :rating
+            :id, :name, :comment, :link_url, :amount_cents, :amount_currency, :rating, :address, :working_hours
         ],
         links: [
             :id, :description, :url

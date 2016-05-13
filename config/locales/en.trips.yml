@@ -110,6 +110,8 @@ en:
       activity_must_see: Must see
       activity_nice_to_visit: Nice to visit
       activity_not_necessary: Not necessary
+      address: address
+      working_hours: working hours
     edit:
       title: Edit travel
     form:
