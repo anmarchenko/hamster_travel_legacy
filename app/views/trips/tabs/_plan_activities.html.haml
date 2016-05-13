@@ -1,4 +1,4 @@
-%div{'ng-cloak' => ''}
+%div{'ng-cloak' => '', 'ng-controller' => 'ActivitiesPlanController'}
   .work-area-header
     .row
       .col-md-12
@@ -7,7 +7,7 @@
     = render 'trips/partials/budget', options: {tab_budget: 'activities_other_budget'}
     .row.hidden-xs.sticky-row{'sticky' => 'true'}
       .col-md-12
-        = render 'trips/partials/buttons', save_action: 'saveActivities()', undo_action: 'cancelEditsActivities()'
+        = render 'trips/partials/buttons'
 
   .activities
     - @trip.days.each do |day|
@@ -273,4 +273,4 @@
           .row
             .col-md-12
               .activity-mockup-header
-  .post-activities-init{'ng-init' => 'initActivities()'}
+  .post-activities-init{'ng-init' => "initActivities('#{@trip.id}')"}

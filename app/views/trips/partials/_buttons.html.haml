@@ -1,6 +1,3 @@
-- save_action ||= 'savePlan()'
-- undo_action ||= 'cancelEdits()'
-
 - if @user_can_edit
   .btn-toolbar.actions-butons{'ng-cloak' => ''}
     %a.link-with-icon.btn.btn-primary.btn-sm{href: 'javascript:void(0);', 'ng-click' => 'setEdit(true)',
@@ -8,7 +5,7 @@
       = inline_svg 'buttons/edit.svg'
       = t('trips.show.edit_plan')
 
-    %a.link-with-icon.btn.btn-success.btn-sm{href: 'javascript:void(0);', 'ng-click' => save_action,
+    %a.link-with-icon.btn.btn-success.btn-sm{href: 'javascript:void(0);', 'ng-click' => 'savePlan()',
          'ng-show' => '!saving && edit' }
       = inline_svg 'buttons/check.svg'
       = t('trips.show.save_plan')
@@ -17,7 +14,7 @@
       %i.fa.fa-spinner.fa-spin
       = t('trips.show.saving_plan')
 
-    %a.btn.ghost-button.btn-sm{href: 'javascript:void(0);', 'ng-click' => undo_action,
+    %a.btn.ghost-button.btn-sm{href: 'javascript:void(0);', 'ng-click' => 'cancelEdits()',
         'ng-show' => 'edit' }
       = t('common.back')
 

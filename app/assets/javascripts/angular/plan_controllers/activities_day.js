@@ -139,9 +139,9 @@ angular.module('travel-components').controller('ActivitiesDayController'
 
             $rootScope.$on('move_activity', function (event, payload) {
                 if ($scope.day.id == payload.source_id) {
-                    activity_index = undefined;
+                    var activity_index = undefined;
                     // TODO: rewrite with ES6
-                    for (i = 0; i < $scope.day.activities.length; i++) {
+                    for (var i = 0; i < $scope.day.activities.length; i++) {
                         if ($scope.day.activities[i].id == payload.activity.id) {
                             activity_index = i;
                         }
