@@ -84,7 +84,7 @@ module Travels
       end
 
       def process_trip
-        trip.update_attributes(comment: params[:comment], budget_for: params[:budget_for])
+        trip.update_attributes(comment: params[:comment])
         trip
       end
 

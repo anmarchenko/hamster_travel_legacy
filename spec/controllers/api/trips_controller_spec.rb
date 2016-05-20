@@ -50,7 +50,6 @@ describe Api::TripsController do
             expect(response).to have_http_status 204
             updated_trip = trip.reload
             expect(updated_trip.comment).to eq 'new_comment'
-            expect(updated_trip.budget_for).to eq 2
             expect(updated_trip.archived).to eq false
           end
         end
@@ -75,7 +74,7 @@ describe Api::TripsController do
     context 'when no logged user' do
       let(:trip) {FactoryGirl.create :trip}
       let(:trip_params) { { trip: {comment: 'new_comment', archived: true, budget_for: 2} } }
-      
+
       it 'return unauthorized' do
         put 'update', trip_params.merge(id: trip.id, format: :json)
         expect(response).to have_http_status 401

@@ -23,11 +23,6 @@ angular.module('travel-services').config(["railsSerializerProvider",
       name: 'trip'
     )
 
-    Budgets: railsResourceFactory(
-      url: '/api/budgets',
-      name: 'budget'
-    )
-
     Countries: railsResourceFactory(
       url: '/api/countries',
       name: 'country'
@@ -63,9 +58,6 @@ angular.module('travel-services').config(["railsSerializerProvider",
 
     updateTrip: (trip) ->
       new this.Trips(trip).update()
-
-    getBudget: (trip_id) ->
-      this.Budgets.get(trip_id)
 
     getCountries: (trip_id) ->
       this.Countries.get(trip_id)

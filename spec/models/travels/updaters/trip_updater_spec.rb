@@ -228,7 +228,6 @@ describe Travels::Updaters::TripUpdater do
     it 'updates comment field' do
       updated_trip = trip.reload
       expect(updated_trip.comment).to eq('New comment!!!')
-      expect(updated_trip.budget_for).to eq(2)
       expect(updated_trip.short_description).to eq('short_description')
     end
   end

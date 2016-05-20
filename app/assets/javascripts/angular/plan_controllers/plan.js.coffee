@@ -14,10 +14,8 @@ angular.module('travel-components').controller 'PlanController'
       # tumblers
       $scope.transfersCollapsed = true
       $scope.edit = false
-      $scope.edit_persons_count = false
 
       # loaded indicators
-      $scope.budget_loaded = false
       $scope.trip_loaded = false
 
       # show checkboxes
@@ -40,12 +38,6 @@ angular.module('travel-components').controller 'PlanController'
 
       for column in ['show_place', 'show_transfers', 'show_hotel']
         $scope.restoreVisibilityFromCookie(column)
-
-      # budget
-      $scope.budget = 0
-
-      $scope.tripService.getCountries($scope.trip_id).then (data) ->
-        $scope.countries = data.countries
 
       promise = $interval(
         () ->
@@ -91,14 +83,6 @@ angular.module('travel-components').controller 'PlanController'
             hotel.links.push JSON.parse(JSON.stringify(link))
 
       # REST: methods using old API
-      $scope.loadBudget = ->
-        $scope.tripService.getBudget($scope.trip_id).then (budget) ->
-          $scope.budget = budget.sum
-          $scope.transfers_hotel_budget = budget.transfers_hotel_budget
-          $scope.activities_other_budget = budget.activities_other_budget
-          $scope.catering_budget = budget.catering_budget
-
-          $scope.budget_loaded = true
 
       $scope.loadCountries = ->
         $scope.tripService.getCountries($scope.trip_id).then (data) ->
@@ -109,7 +93,6 @@ angular.module('travel-components').controller 'PlanController'
           $scope.trip = trip
 
           $scope.trip_loaded = true
-          $scope.edit_persons_count = false
 
       $scope.savePlan = ->
         return if $scope.saving
@@ -128,8 +111,7 @@ angular.module('travel-components').controller 'PlanController'
             $scope.loadCountries()
 
       $scope.saveTrip = ->
-        $scope.tripService.updateTrip($scope.trip).then ->
-          $scope.edit_persons_count = false
+        $scope.tripService.updateTrip($scope.trip)
 
       $scope.cancelEdits = ->
         $scope.setEdit(false)
@@ -148,6 +130,9 @@ angular.module('travel-components').controller 'PlanController'
 
       # NEW EPOCH CODE - WILL SURVIVE
       # Start code that will stay in big controller
+      $scope.loadBudget = ->
+        $scope.$broadcast('budget_updated')
+
       $scope.cancelEditsPlan = ->
         $scope.setEdit(false)
         $scope.loadTrip()
@@ -167,7 +152,6 @@ angular.module('travel-components').controller 'PlanController'
         $scope.edit = val
         # emit event
         $scope.$broadcast('whole_plan_edit', val)
-      # Edit code that will stay in big controller
 
       # END NEW EPOCH CODE
 

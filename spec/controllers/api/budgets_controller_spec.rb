@@ -19,6 +19,7 @@ describe Api::BudgetsController do
           expect(json['budget']['transfers_hotel_budget']).to eq(trip.transfers_hotel_budget('EUR'))
           expect(json['budget']['activities_other_budget']).to eq(trip.activities_other_budget('EUR'))
           expect(json['budget']['catering_budget']).to eq(trip.catering_budget('EUR'))
+          expect(json['budget']['budget_for']).to eq(trip.budget_for)
         end
       end
 
@@ -39,7 +40,11 @@ describe Api::BudgetsController do
         expect(json['budget']['transfers_hotel_budget']).to eq(trip.transfers_hotel_budget('RUB'))
         expect(json['budget']['activities_other_budget']).to eq(trip.activities_other_budget('RUB'))
         expect(json['budget']['catering_budget']).to eq(trip.catering_budget('RUB'))
+        expect(json['budget']['budget_for']).to eq(trip.budget_for)
       end
     end
+  end
+
+  describe '#create' do
   end
 end
