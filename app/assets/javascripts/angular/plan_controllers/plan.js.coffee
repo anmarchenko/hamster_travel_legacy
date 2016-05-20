@@ -12,7 +12,6 @@ angular.module('travel-components').controller 'PlanController'
       $scope.tripService = Trip.init($scope.trip_id)
 
       # tumblers
-      $scope.activitiesCollapsed = true
       $scope.transfersCollapsed = true
       $scope.edit = false
       $scope.edit_persons_count = false

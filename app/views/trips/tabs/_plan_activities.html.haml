@@ -115,7 +115,7 @@
             = t('trips.show.activities')
 
           .activities-container{'ng-model' => 'day.activities',
-          'ui-sortable' => '{connectWith: \'.activities-container\', placeholder: \'well\', handle: \'.activity-drag-handle\', update: onDragFinish}'}
+          'ui-sortable' => "{connectWith: '.activities-container', placeholder: 'well', handle: '.activity-drag-handle', update: onDragFinish, disabled: !#{@user_can_edit}}"}
             .activity-info{'ng-repeat' => 'activity in day.activities track by activity.id'}
               %span{'ng-controller' => 'ActivityController', 'ng-init' => 'init(activity)'}
                 %div{'ng-if' => '!edit'}
@@ -123,13 +123,14 @@
                     .col-md-12
                       %span{'ng-click' => 'triggerShowMore()'}
                         %span.activity-drag-handle{'ng-show' => 'day.activities.length > 1'}
-                          = image_tag 'buttons/drag.svg', class: 'activity-drag-image hidden-xs hidden-sm'
+                          - if @user_can_edit
+                            = image_tag 'buttons/drag.svg', class: 'activity-drag-image hidden-xs hidden-sm'
                           {{$index+1}}.
                         {{activity.name}}
                         {{activity.amount_cents / 100.0 | number: 2}}
                         {{activity.amount_currency_text}}
 
-                      - if @trip.days.count > 1
+                      - if @trip.days.count > 1 && @user_can_edit
                         %a.move-activity.hidden-xs{href: 'javascript:void(0);',
                           'uib-popover-template' => "'moveActivity.html'",
                           'popover-trigger' => 'outsideClick',
