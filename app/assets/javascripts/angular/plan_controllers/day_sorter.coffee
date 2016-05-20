@@ -5,7 +5,7 @@ angular.module('travel-components').controller 'DaySorterController'
       $scope.startSorting = (trip_id) ->
         # get info about days
 
-        $http.get("/api/trips/#{trip_id}/days_sorting.json").then (response) ->
+        $http.get("/api/trips/#{trip_id}/days_sorting.json?locale=#{LOCALE}").then (response) ->
           $uibModal.open({
               animation: true,
               templateUrl: 'daySortModal.html',
