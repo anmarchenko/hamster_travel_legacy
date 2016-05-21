@@ -115,7 +115,7 @@
     .col-xs-12
       %p.travel-text{} #{@trip.short_description}
 
-  .work-area{id: 'plan_area', 'ng-init' => 'loadTrip()'}
+  .work-area{id: 'plan_area'}
     - if params[:tab].blank? || params[:tab] == ApplicationHelper::TAB_PLAN
       = render 'trips/tabs/plan'
 

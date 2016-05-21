@@ -216,20 +216,5 @@ describe Travels::Updaters::TripUpdater do
 
       end
     end
-
-
-
   end
-
-  describe '#process_trip' do
-    let(:params) { {comment: 'New comment!!!', short_description: 'super short short desc', budget_for: 2} }
-    before(:example) { update_trip trip, params }
-
-    it 'updates comment field' do
-      updated_trip = trip.reload
-      expect(updated_trip.comment).to eq('New comment!!!')
-      expect(updated_trip.short_description).to eq('short_description')
-    end
-  end
-
 end

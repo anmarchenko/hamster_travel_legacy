@@ -45,6 +45,45 @@ describe Api::BudgetsController do
     end
   end
 
-  describe '#create' do
+  describe '#update' do
+
+    context 'when user is logged in' do
+      login_user
+
+      context 'and when user is a participant' do
+        let(:trip) {FactoryGirl.create(:trip, :with_filled_days, users: [subject.current_user])}
+
+        it 'updates budget_for field and returns ok status' do
+          put 'update', {id: trip.id, budget_for: 42}, format: :json
+          json = JSON.parse(response.body)
+          expect(json['res']).to eq(true)
+
+          expect(trip.reload.budget_for).to eq(42)
+        end
+      end
+
+      context 'and when user is not a participant' do
+        let(:trip) {FactoryGirl.create(:trip, :with_filled_days)}
+
+        it 'returns not authorized error and does not update budget_for field' do
+          put 'update', {id: trip.id, budget_for: 42}, format: :json
+
+          expect(response).to have_http_status 403
+
+          expect(trip.reload.budget_for).to eq(1)
+        end
+      end
+
+
+    end
+
+    context 'when no logged user' do
+      let(:trip) {FactoryGirl.create(:trip, :with_filled_days)}
+
+      it 'redirects to sign in' do
+        put 'update', {id: trip.id, budget_for: 42}, format: :json
+        expect(response).to redirect_to '/users/sign_in'
+      end
+    end
   end
 end

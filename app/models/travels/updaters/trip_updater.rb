@@ -83,11 +83,6 @@ module Travels
         process_nested(trip.caterings, caterings)
       end
 
-      def process_trip
-        trip.update_attributes(comment: params[:comment])
-        trip
-      end
-
       private
 
       def prepare_activities_params act_params

@@ -15,9 +15,6 @@ angular.module('travel-components').controller 'PlanController'
       $scope.transfersCollapsed = true
       $scope.edit = false
 
-      # loaded indicators
-      $scope.trip_loaded = false
-
       # show checkboxes
 
       $scope.restoreVisibilityFromCookie = (column) ->
@@ -88,17 +85,9 @@ angular.module('travel-components').controller 'PlanController'
         $scope.tripService.getCountries($scope.trip_id).then (data) ->
           $scope.countries = data.countries
 
-      $scope.loadTrip = ->
-        $scope.tripService.getTrip().then (trip) ->
-          $scope.trip = trip
-
-          $scope.trip_loaded = true
-
       $scope.savePlan = ->
         return if $scope.saving
         $scope.saving = true
-        $scope.tripService.updateTrip($scope.trip).then ->
-          $scope.saving = false unless $scope.days || $scope.caterings
         if $scope.days
           $scope.tripService.createDays($scope.days).then ->
             $scope.saving = false
@@ -110,9 +99,6 @@ angular.module('travel-components').controller 'PlanController'
             $scope.loadBudget()
             $scope.loadCountries()
 
-      $scope.saveTrip = ->
-        $scope.tripService.updateTrip($scope.trip)
-
       $scope.cancelEdits = ->
         $scope.setEdit(false)
         if $scope.days
@@ -122,7 +108,6 @@ angular.module('travel-components').controller 'PlanController'
           $scope.tripService.getCaterings().then (caterings) ->
             $scope.caterings = caterings
 
-        $scope.loadTrip()
         $scope.loadBudget()
         $scope.loadCountries()
 
@@ -135,7 +120,6 @@ angular.module('travel-components').controller 'PlanController'
 
       $scope.cancelEditsPlan = ->
         $scope.setEdit(false)
-        $scope.loadTrip()
         $scope.loadBudget()
         $scope.loadCountries()
 

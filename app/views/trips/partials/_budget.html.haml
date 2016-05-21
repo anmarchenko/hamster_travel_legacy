@@ -20,16 +20,18 @@
       = t('trips.show.persons')
       = "(#{@trip.days_count} #{t('common.days', count: @trip.days_count)})"
 
-    - if @user_can_edit
-      %span{'ng-hide' => 'edit'}
-        %a.inline-action{href: 'javascript:void(0);', 'ng-click' => 'edit_persons_count = true', 'ng-hide' => 'edit_persons_count'}
+      - if @user_can_edit
+        %a.inline-action{href: 'javascript:void(0);', 'ng-click' => 'edit_persons_count = true',
+          'ng-hide' => 'edit_persons_count'}
           = image_tag 'buttons/edit.svg'
 
         %a.link-with-icon.inline-action.btn.btn-sm.btn-success{href: 'javascript:void(0);', 'ng-click' => 'saveBudget()',
-        'ng-show' => 'edit_persons_count && !whole_plan_edit'}
+        'ng-show' => 'edit_persons_count'}
           = inline_svg 'buttons/check.svg'
           = t('common.save')
 
         %a.inline-action.btn.btn-sm.ghost-button{href: 'javascript:void(0);', 'ng-click' => 'cancelBudgetEdit()',
-        'ng-show' => 'edit_persons_count && !whole_plan_edit'}
+        'ng-show' => 'edit_persons_count'}
           = t('common.back')
+    %span.budget{'ng-hide' => 'budget_loaded'}
+      .budget-mockup

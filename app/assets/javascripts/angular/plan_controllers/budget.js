@@ -5,7 +5,6 @@ angular.module('travel-components').controller('BudgetController'
             $scope.budget = {};
             $scope.budget_loaded = false;
             $scope.edit_persons_count = false;
-            $scope.whole_plan_edit = false;
 
             $scope.initBudget = function (trip_id) {
                 $scope.trip_id = trip_id;
@@ -27,7 +26,7 @@ angular.module('travel-components').controller('BudgetController'
 
             $scope.saveBudget = function () {
                 $scope.edit_persons_count = false;
-                $http.post('/api/budgets/' + $scope.trip_id, {budget_for: $scope.budget_for}).success(function () {
+                $http.put('/api/budgets/' + $scope.trip_id, {budget_for: $scope.budget_for}).success(function () {
                     toastr["success"]($('#notification_saved').text());
                 });
             };
@@ -39,14 +38,6 @@ angular.module('travel-components').controller('BudgetController'
 
             $scope.$on('budget_updated', function () {
                 $scope.load();
-            });
-
-            $scope.$on('whole_plan_edit', function (event, edit) {
-                if(!edit) {
-                    $scope.cancelBudgetEdit();
-                }
-                $scope.edit_persons_count = edit;
-                $scope.whole_plan_edit = edit;
             });
 
         }

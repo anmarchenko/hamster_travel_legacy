@@ -2,6 +2,8 @@ class Api::BudgetsController < ApplicationController
   respond_to :json
 
   before_action :find_trip
+  before_action :authenticate_user!, only: [:update]
+  before_action :authorize, only: [:update]
 
   def show
     render json: {
@@ -15,14 +17,18 @@ class Api::BudgetsController < ApplicationController
     }
   end
 
-  def create
-
+  def update
+    res = ::Updaters::Trip.new(@trip).update_budget_for(params[:budget_for])
     render json: {
-        res: true
+        res: res
     }
   end
 
   private
+
+  def authorize
+    head 403 and return if !@trip.include_user(current_user)
+  end
 
   def find_trip
     @trip = Travels::Trip.where(id: params[:id]).first
