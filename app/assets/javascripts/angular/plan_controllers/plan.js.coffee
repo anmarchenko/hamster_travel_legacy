@@ -53,10 +53,6 @@ angular.module('travel-components').controller 'PlanController'
       $scope.init = (count) ->
         $scope.days = new Array(count) unless count == 0
 
-      $scope.initCatering = () ->
-        $scope.tripService.getCaterings().then (caterings) ->
-          $scope.caterings = caterings
-
       $scope.fillAsPreviousPlace = (place, place_index, day, day_index) ->
         if day.places[place_index - 1]
           prev_place = day.places[place_index - 1]
@@ -89,20 +85,12 @@ angular.module('travel-components').controller 'PlanController'
             $scope.saving = false
             $scope.loadBudget()
             $scope.loadCountries()
-        if $scope.caterings
-          $scope.tripService.createCaterings($scope.caterings).then ->
-            $scope.saving = false
-            $scope.loadBudget()
-            $scope.loadCountries()
 
       $scope.cancelEdits = ->
         $scope.setEdit(false)
         if $scope.days
           for day in $scope.days
             $scope.tripService.reloadDay day
-        if $scope.caterings
-          $scope.tripService.getCaterings().then (caterings) ->
-            $scope.caterings = caterings
 
         $scope.loadBudget()
         $scope.loadCountries()

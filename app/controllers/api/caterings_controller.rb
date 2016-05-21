@@ -2,25 +2,33 @@ module Api
   class CateringsController < ApplicationController
 
     before_action :find_trip
-    before_action :authenticate_user!, only: [:create]
-    before_action :authorize, only: [:create]
+    before_action :authenticate_user!, only: [:update]
+    before_action :authorize, only: [:update]
 
     respond_to :json
 
-    def index
-      respond_with @trip.caterings_data
+    def show
+      render json: {
+        caterings: @trip.caterings_data
+      }
     end
 
-    def create
-      params.permit!
-      Travels::Updaters::TripUpdater.new(@trip, params[:caterings]).process_caterings
-      head 200
+    def update
+      ::Updaters::Caterings.new(@trip, params_caterings[:caterings]).process
+      render json: {
+          res: true
+      }
     end
 
     private
 
+    def params_caterings
+      params.require(:trip).permit(caterings: [:id, :name, :description, :days_count, :persons_count,
+                                        :amount_cents, :amount_currency])
+    end
+
     def find_trip
-      @trip = Travels::Trip.where(id: params[:trip_id]).first
+      @trip = Travels::Trip.where(id: params[:id]).first
       head 404 and return if @trip.blank?
     end
 

@@ -53,41 +53,16 @@ module Travels
             process_nested(day.hotel.links, day_hash[:hotel][:links] || [])
           end
 
-          day.update_attributes(comment: day_hash[:comment])
-
           process_nested(day.places, day_hash[:places] || [])
 
           process_ordered(day_hash[:transfers] || [])
           process_nested(day.transfers, day_hash[:transfers] || [], ['links'])
 
-          activities_params = prepare_activities_params(day_hash[:activities] || [])
-          process_ordered(activities_params)
-          process_nested(day.activities, activities_params)
-
-          process_nested(day.expenses, day_hash[:expenses] || [])
-
-          process_nested(day.links, day_hash[:links] || [])
-
           day.save
         end
       end
 
-      def process_caterings
-        caterings = []
-
-        params.each do |_, catering_hash|
-          caterings << catering_hash
-        end
-
-        process_ordered(caterings)
-        process_nested(trip.caterings, caterings)
-      end
-
       private
-
-      def prepare_activities_params act_params
-        act_params.delete_if { |hash| hash[:name].blank? } || []
-      end
 
       # TODO permit only some params - possible security problem
       def process_nested(collection, params, nested_list = [])

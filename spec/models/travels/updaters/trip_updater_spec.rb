@@ -19,67 +19,6 @@ describe Travels::Updaters::TripUpdater do
   let(:trip) { FactoryGirl.create(:trip) }
   let(:day) { first_day_of trip }
 
-  describe '#process_caterings' do
-    before(:example) { update_trip_caterings trip, params }
-
-    context 'when there are caterings params' do
-
-      let(:params) { {
-          '1' => {
-              name: Faker::Address.city,
-
-              description: (Faker::Lorem.paragraph),
-              amount_cents: (rand(10000) * 100),
-              amount_currency: 'RUB',
-
-              days_count: 3,
-              persons_count: 2,
-              amount_currency_text: 'rouble'
-
-          },
-          '2' => {
-              name: Faker::Address.city,
-
-              description: (Faker::Lorem.paragraph),
-              amount_cents: (rand(10000) * 100),
-              amount_currency: 'RUB',
-
-              days_count: 3,
-              persons_count: 2,
-              amount_currency_text: 'rouble'
-          }
-      }.with_indifferent_access }
-
-      it 'creates new caterings' do
-        caterings = trip.reload.caterings
-        expect(caterings.count).to eq(2)
-        expect(caterings.first.trip_id).to eq(trip.id)
-        expect(caterings.first.name).not_to be_blank
-      end
-
-      it 'updates caterings' do
-        id = trip.reload.caterings.first.id
-        params['1']['id'] = id
-        params['1']['name'] = 'Paris'
-
-        update_trip_caterings trip, params
-
-        caterings = trip.reload.caterings
-        expect(caterings.count).to eq(2)
-        expect(caterings.where(id: id).first.name).to eq('Paris')
-      end
-
-      it 'deletes caterings' do
-        params.delete('2')
-
-        update_trip_caterings trip, params
-
-        caterings = trip.reload.caterings
-        expect(caterings.count).to eq(1)
-      end
-    end
-  end
-
   describe '#process_days' do
 
     before(:example) { update_trip_days trip, params }
