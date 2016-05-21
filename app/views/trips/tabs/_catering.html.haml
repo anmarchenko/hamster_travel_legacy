@@ -21,7 +21,19 @@
         = t('trips.show.catering_call_to_action')
 
   %div.catering-mockup{'ng-if' => '!caterings_loaded'}
-    MOCKUP
+    .row
+      .col-xs-12.col-sm-4
+        .catering-mockup-header
+        .catering-mockup-value
+        .catering-mockup-value
+        .catering-mockup-value
+        %hr
+        .catering-mockup-value
+      .col-xs-12.col-sm-6
+        .catering-mockup-line
+        .catering-mockup-line
+        .catering-mockup-line
+        .catering-mockup-line
 
   %div.catering-container{'ng-show' => 'caterings_loaded', 'ng-repeat' => 'catering in caterings track by catering.id'}
 

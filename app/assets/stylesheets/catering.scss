@@ -87,3 +87,29 @@
     max-width: 100px;
   }
 }
+
+.catering-mockup {
+  .catering-mockup-header {
+    background-color: $light-grey;
+    height: 24px;
+    border-radius: 4px;
+    width: 60%;
+    margin-bottom: 20px;
+  }
+
+  .catering-mockup-value {
+    background-color: $light-grey;
+    height: 16px;
+    border-radius: 4px;
+    width: 80%;
+    margin-bottom: 10px;
+  }
+
+  .catering-mockup-line {
+    background-color: $light-grey;
+    height: 13px;
+    border-radius: 4px;
+    width: 80%;
+    margin-bottom: 10px;
+  }
+}

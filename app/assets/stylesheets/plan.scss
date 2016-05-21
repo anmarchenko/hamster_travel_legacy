@@ -51,21 +51,27 @@
       }
 
       .empty-report {
-        div {
-          display: inline-block;
-        }
+        margin-top: 20px;
+        margin-bottom: 60px;
 
-        .empty-report-image {
-          margin-right: 10px;
-          opacity: .7;
+        .image {
+          width: 75px;
+          margin: auto;
+          opacity: .6;
+
           img {
-            width: 32px;
+            width: 100%;
           }
         }
 
-        .empty-report-header {
+        .description {
+          margin-bottom: 20px;
+          text-align: center;
           font-size: 18px;
-          color: $text-grey;
+          color: $main-grey;
+          max-width: 300px;
+          margin-left: auto;
+          margin-right: auto;
         }
       }
     }

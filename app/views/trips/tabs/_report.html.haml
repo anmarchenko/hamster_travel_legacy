@@ -15,10 +15,10 @@
         %div{'ng-show' => '!edit'}
           %p.travel-text{'ng-show' => 'report'} {{report}}
           .empty-report{'ng-hide' => 'report'}
-            .empty-report-image
-              = image_tag 'empty/report.svg'
-            .empty-report-header
+            .description
               = t('trips.show.no_report')
+            .image
+              = image_tag 'empty/report.svg'
 
         %div{'ng-show' => 'edit', class: 'form-horizontal'}
           %div{class: 'form-group'}

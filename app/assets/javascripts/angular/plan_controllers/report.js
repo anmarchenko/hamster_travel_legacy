@@ -30,8 +30,9 @@ angular.module('travel-components').controller('ReportController'
             };
 
             $scope.cancelEdits = function () {
-                $scope.load();
                 $scope.cancelEditsPlan();
+
+                $scope.load();
             };
 
         }
