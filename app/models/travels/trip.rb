@@ -267,6 +267,10 @@ module Travels
       end
     end
 
+    def report
+      self.comment
+    end
+
     private
 
     def push_new_day

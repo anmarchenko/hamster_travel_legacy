@@ -1,4 +1,4 @@
-.span{'ng-init' => "init(0)"}
+.span{'ng-controller' => 'ReportController', 'ng-init' => "init('#{@trip.id}')"}
   .work-area-header{'ng-cloak' => ''}
     .row
       .col-md-12
@@ -11,12 +11,27 @@
 
   .row{'ng-cloak' => ''}
     .col-md-12
-      %article.trip-report{'ng-show' => 'REPORT_loaded'}
-        %p.header
-          = t('trips.show.report')
+      %article.trip-report{'ng-show' => 'report_loaded'}
+        %div{'ng-show' => '!edit'}
+          %p.travel-text{'ng-show' => 'report'} {{report}}
+          .empty-report{'ng-hide' => 'report'}
+            .empty-report-image
+              = image_tag 'empty/report.svg'
+            .empty-report-header
+              = t('trips.show.no_report')
 
-        %p.travel-text{'ng-show' => '!edit'} {{trip.comment || '#{t('trips.show.no_report')}'}}
         %div{'ng-show' => 'edit', class: 'form-horizontal'}
           %div{class: 'form-group'}
-            = text_area_tag 'day_comment', '', 'ng-model' => 'trip.comment', class: 'form-control',
+            = text_area_tag 'day_comment', '', 'ng-model' => 'report', class: 'form-control',
               placeholder: t('trips.show.comment'), rows: 40
+
+      %article.trip-report{'ng-hide' => 'report_loaded'}
+        .report-mockup
+          .report-line
+          .report-line
+          .report-line
+          .report-line
+          .report-line
+          .report-line
+          .report-line
+          .report-line

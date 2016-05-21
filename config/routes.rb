@@ -17,6 +17,7 @@ Travel::Application.routes.draw do
 
     namespace :api do
       namespace :v2 do
+        resources :reports, only: [:show, :update]
         resources :trips, only: [] do
           resources :days, only: [] do
             resources :activities, only: [:index, :create]

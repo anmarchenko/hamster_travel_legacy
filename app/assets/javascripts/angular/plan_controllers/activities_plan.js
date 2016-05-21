@@ -23,7 +23,6 @@ angular.module('travel-components').controller('ActivitiesPlanController'
                     return;
                 }
                 $scope.saving = true;
-                $scope.saveTrip();
 
                 Days.saveWithActivities($scope.trip_id, $scope.planDays).success(function () {
                     $scope.saving = false;
