@@ -769,6 +769,14 @@
     img {
       margin-right: 8px;
     }
+    .flag-mockup{
+      display: inline-block;
+      background-color: $main-grey;
+      height: 24px;
+      border-radius: 4px;
+      width: 32px;
+      margin-right: 8px;
+    }
   }
 
   .delete-control {

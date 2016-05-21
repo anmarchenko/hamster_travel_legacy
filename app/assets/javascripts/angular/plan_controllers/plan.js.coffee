@@ -81,10 +81,6 @@ angular.module('travel-components').controller 'PlanController'
 
       # REST: methods using old API
 
-      $scope.loadCountries = ->
-        $scope.tripService.getCountries($scope.trip_id).then (data) ->
-          $scope.countries = data.countries
-
       $scope.savePlan = ->
         return if $scope.saving
         $scope.saving = true
@@ -117,6 +113,9 @@ angular.module('travel-components').controller 'PlanController'
       # Start code that will stay in big controller
       $scope.loadBudget = ->
         $scope.$broadcast('budget_updated')
+
+      $scope.loadCountries = ->
+        $scope.$broadcast('countries_updated')
 
       $scope.cancelEditsPlan = ->
         $scope.setEdit(false)
