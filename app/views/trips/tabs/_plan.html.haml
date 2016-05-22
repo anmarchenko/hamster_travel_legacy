@@ -49,7 +49,8 @@
           = t('trips.show.place')
         %th{class: 'col-md-6', 'ng-show' => 'show_transfers'}
           = t('trips.show.transfers')
-          %a{class: 'pull-right', href: 'javascript:void(0);', 'ng-click' => 'toggleTransfers()', 'ng-show' => 'edit'}
+          %a{class: 'pull-right', href: 'javascript:void(0);', 'ng-click' => 'transfersCollapsed = !transfersCollapsed',
+              'ng-show' => 'edit'}
             %span{'ng-show' => '!transfersCollapsed'}
               = fa_icon 'arrow-down'
             %span{'ng-show' => 'transfersCollapsed'}
@@ -67,7 +68,7 @@
 
     %tbody
       - @trip.days.each do |day|
-        %tr{'ng-controller' => 'TransfersDayController', class: 'plan-row'}
+        %tr.plan-row{'ng-controller' => 'TransfersDayController', 'ng-init' => "init('#{@trip.id}', '#{day.id}')"}
           %td{'ng-controller' => 'DaySorterController'}
             .day-date
               = day.date_when_s
@@ -76,13 +77,27 @@
                 = t('trips.show.reorder_days')
           %td{'ng-show' => 'show_place', 'ng-mouseleave' => 'mouse_over_place = false',
                                          'ng-mouseenter' => 'mouse_over_place = true'}
-            %span{'ng-cloak' => ''}
+            %span{'ng-cloak' => '', 'ng-show' => 'day_loaded'}
               = render 'trips/partials/place'
+            %span{'ng-cloak' => '', 'ng-hide' => 'day_loaded'}
+              .transfers-mockup-line
           %td{'ng-show' => 'show_transfers', 'ng-mouseleave' => 'mouse_over_transfers = false',
                                              'ng-mouseenter' => 'mouse_over_transfers = true'}
-            %span{'ng-cloak' => ''}
+            %span{'ng-cloak' => '', 'ng-show' => 'day_loaded'}
               = render 'trips/partials/transfer'
+            %span{'ng-cloak' => '', 'ng-hide' => 'day_loaded'}
+              .transfer-mockup
+                .transfer-destination-mockup
+                  .transfer-city-mockup
+                  .transfer-station-mockup
+                .transfer-icon-mockup
+                .transfer-destination-mockup
+                  .transfer-city-mockup
+                  .transfer-station-mockup
           %td{'ng-show' => 'show_hotel', 'ng-mouseleave' => 'mouse_over_hotel = false',
                                          'ng-mouseenter' => 'mouse_over_hotel = true'}
-            %span{'ng-cloak' => ''}
+            %span{'ng-cloak' => '', 'ng-show' => 'day_loaded'}
               = render 'trips/partials/hotel'
+            %span{'ng-cloak' => '', 'ng-hide' => 'day_loaded'}
+              .transfers-mockup-line
+              .transfers-mockup-line

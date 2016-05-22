@@ -23,6 +23,7 @@ Travel::Application.routes.draw do
             resources :activities, only: [:index, :create]
           end
           resources :days_activities, only: [:index, :create]
+          resources :days_transfers, only: [:index, :create]
         end
       end
       resources :cities, only: [:index]
@@ -30,7 +31,6 @@ Travel::Application.routes.draw do
       resources :participants, only: [:index]
       resources :trip_invites, only: [:create, :destroy]
       resources :trips, only: [] do
-        resources :days, only: [:index, :create, :show, :update]
         resources :days_sorting, only: [:index, :create]
       end
       resources :caterings, only: [:show, :update]

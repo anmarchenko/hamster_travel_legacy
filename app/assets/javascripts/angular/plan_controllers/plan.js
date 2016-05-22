@@ -16,11 +16,10 @@ angular.module('travel-components').controller('PlanController', [
         };
 
         $scope.add = function (arr, template) {
-            var obj;
             if (template == null) {
                 template = {};
             }
-            obj = {};
+            var obj = {};
             angular.copy(template, obj);
             obj.id = new Date().getTime();
             return arr.push(obj);

@@ -736,6 +736,45 @@
 
     .plan-row td {
       position: relative;
+
+      .transfers-mockup-line {
+        background-color: $light-grey;
+        height: 13px;
+        border-radius: 4px;
+        width: 45%;
+        margin-bottom: 10px;
+      }
+
+      .transfer-mockup {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        .transfer-destination-mockup, .transfer-icon-mockup {
+          margin-right: 25px;
+        }
+
+        .transfer-city-mockup {
+          background-color: $light-grey;
+          height: 16px;
+          border-radius: 4px;
+          width: 70px;
+          margin-bottom: 10px;
+        }
+        .transfer-station-mockup {
+          background-color: $light-grey;
+          height: 14px;
+          border-radius: 4px;
+          width: 30px;
+          margin-bottom: 10px;
+          margin-left: 20px;
+        }
+        .transfer-icon-mockup {
+          background-color: $light-grey;
+          height: 30px;
+          border-radius: 4px;
+          width: 30px;
+        }
+      }
     }
 
     .edit-hover-button {
