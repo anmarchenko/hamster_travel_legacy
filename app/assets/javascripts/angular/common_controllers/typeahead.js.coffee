@@ -1,15 +1,20 @@
 angular.module('travel-components').controller 'TypeaheadController'
 , [
-    '$scope', 'City', 'User', '$timeout'
-, ($scope, City, User, $timeout) ->
+    '$scope', '$timeout', '$http', '$window'
+, ($scope, $timeout, $http, $window) ->
 
     $scope.locale = LOCALE
 
     $scope.getCities = (term) ->
-      City.query(term: term, locale: $scope.locale, trip_id: $scope.trip_id)
+      # TODO: pass trip_id as a parameter here
+      trip_id = (/trips\/([a-zA-Z0-9]+)/.exec($window.location)[1]);
+      $http.get('/api/cities?trip_id=' + trip_id + '&locale=' + $scope.locale + '&term=' + term).then (response) ->
+        response.data
 
     $scope.getUsers = (term) ->
-      User.query(term: term)
+      $http.get('/api/users?term=' + term).then( (response) ->
+        response.data
+      )
 
     $scope.onSelect = ($item, $model, $label, bindings, callback) ->
       for model_key,item_property of bindings

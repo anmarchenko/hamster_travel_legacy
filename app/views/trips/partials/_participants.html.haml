@@ -1,4 +1,4 @@
-.participants{'ng-controller' => 'ParticipantsController', 'ng-init' => "loadParticipants()",
+.participants{'ng-controller' => 'ParticipantsController', 'ng-init' => "init('#{@trip.id}')",
 'ng-cloak' => ''}
 
   %span{'ng-repeat' => 'participant in participants track by participant.id', class: 'participant-link','ng-init' => ""}

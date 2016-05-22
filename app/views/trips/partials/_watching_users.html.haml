@@ -1,8 +1,9 @@
-.row{'ng-if' => 'users.length > 0', 'ng-cloak' => ''}
+.row{'ng-controller' => 'EditingUsersController', 'ng-show' => 'editing_users.length > 0',
+     'ng-cloak' => '', 'ng-init' => "init('#{@trip.id}')"}
   .col-md-12
     %div.alert.alert-info.watching-users
       = t('trips.show.watching_now')
-      %i{'ng-repeat' => 'user in users'}
+      %i{'ng-repeat' => 'user in editing_users'}
         {{user}}
-        %span{'ng-hide' => '$index == users.length - 1'}
+        %span{'ng-hide' => '$index == editing_users.length - 1'}
           ,

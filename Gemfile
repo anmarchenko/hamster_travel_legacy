@@ -45,7 +45,6 @@ gem 'therubyracer', platforms: :ruby
 gem 'uglifier', '>= 1.3.0'
 # AngularJS magic framework
 gem 'angularjs-rails', '1.4.7'
-gem 'angularjs-rails-resource', '~> 1.0.0'
 # File upload
 gem 'jquery-fileupload-rails', github: 'Springest/jquery-fileupload-rails'
 # Jcrop library for cropping images before upload
@@ -136,11 +135,6 @@ group :test do
   gem 'faker'
   # integration test
   gem 'capybara'
-
-  # test email
-  gem 'email_spec'
-  # launching cross-platform applications in a fire and forget manner
-  gem 'launchy'
 
   # tests coverage
   gem 'coveralls', require: false

@@ -18,7 +18,6 @@
 //= require angular-cookies
 //= require angular-animate
 //= require angular-sanitize
-//= require angularjs/rails/resource
 //= require sortable.min.js
 //= require bootstrap-slider.min
 //= require angular-slider
@@ -26,7 +25,7 @@
 //= require ui-bootstrap-tpls
 //= require toastr
 //= require sticky.min.js
-//= require app
+//= require angular/app.js
 //= require_tree ./angular
 //= require angular-locale_ru
 //= require moment-with-langs.min

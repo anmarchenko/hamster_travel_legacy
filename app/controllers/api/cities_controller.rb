@@ -1,10 +1,8 @@
 module Api
   class CitiesController < ApplicationController
-    respond_to :json
-
     def index
       term = params[:term] || ''
-      respond_with [] and return if term.blank? || term.length < 3
+      render json: [] and return if term.blank? || term.length < 3
 
       if term == '[$empty$]'
         trip = Travels::Trip.find(params[:trip_id]) rescue nil
@@ -17,7 +15,7 @@ module Api
           query.collect { |city| city_json(city) }
         end
       end
-      respond_with res
+      render json: res
     end
 
     private

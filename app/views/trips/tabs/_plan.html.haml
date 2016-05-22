@@ -1,4 +1,4 @@
-%div{'ng-init' => "init(#{@trip.days.count})", 'ng-cloak' => ''}
+%div{'ng-controller' => 'TransfersPlanController', 'ng-init' => "init('#{@trip.id}')", 'ng-cloak' => ''}
   .work-area-header
     .row
       .col-md-12
@@ -66,8 +66,8 @@
               = t('trips.show.saving_plan')
 
     %tbody
-      - @trip.days.each_with_index do |day, day_index|
-        %tr{'ng-controller' => 'DaysController', 'ng-init' => "setDay(#{day_index}, #{day.to_json})", class: 'plan-row'}
+      - @trip.days.each do |day|
+        %tr{'ng-controller' => 'TransfersDayController', class: 'plan-row'}
           %td{'ng-controller' => 'DaySorterController'}
             .day-date
               = day.date_when_s
