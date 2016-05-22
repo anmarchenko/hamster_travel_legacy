@@ -12,7 +12,7 @@ angular.module('travel-components').controller('EditingUsersController'
                     }).error(function () {
                         $interval.cancel(promise);
                     });
-                }, 1000);
+                }, 10000);
             }
 
         }
