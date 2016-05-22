@@ -8,12 +8,17 @@ class Updaters::Entity
     collection.where(:id => to_delete).destroy_all
   end
 
-  def process_nested(collection, params)
+  def process_nested(collection, params, nested_list = [])
     delete_nested collection, params
     params.each do |item_hash|
 
       item_id = (item_hash.delete(:id).to_i % 2147483647) rescue nil
       item = collection.where(id: item_id).first unless item_id.nil?
+
+      nested_hash = {}
+      nested_list.each do |nested_attr|
+        nested_hash[nested_attr] = item_hash.delete(nested_attr)
+      end
 
       process_amount(item_hash)
       if item.blank?
@@ -22,6 +27,9 @@ class Updaters::Entity
         item.update_attributes(item_hash)
       end
 
+      nested_hash.each do |attr, values|
+        process_nested(item.send(attr), values) if values.present?
+      end
     end
   end
 

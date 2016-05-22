@@ -28,11 +28,11 @@ class TripsController < ApplicationController
   end
 
   def new
-    @trip = Travels::Updaters::TripUpdater.new(@original_trip, params).new_trip
+    @trip = Creators::Trip.new(@original_trip, params).new_trip
   end
 
   def create
-    @trip = Travels::Updaters::TripUpdater.new(@original_trip, params_trip, current_user).create_trip
+    @trip = Creators::Trip.new(@original_trip, params_trip, current_user).create_trip
     redirect_to trip_path(@trip) and return if @trip.errors.blank?
     render 'new'
   end
