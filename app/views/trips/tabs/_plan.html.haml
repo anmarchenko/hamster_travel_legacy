@@ -58,8 +58,8 @@
         %th{class: 'col-md-3', 'ng-show' => 'show_hotel'}
           = t('trips.show.hotel')
           - if @user_can_edit
-            %a{href: 'javascript:void(0);', 'ng-click' => 'savePlan()',
-                class: 'pull-right', 'ng-show' => '!saving', 'data-placement' => "bottom",
+            %a.pull-right{href: 'javascript:void(0);', 'ng-click' => 'savePlan()',
+                'ng-show' => '!saving && edit', 'data-placement' => "bottom",
                 'data-toggle' => 'tooltip', title: t('trips.show.save_plan')}
               = fa_icon 'save'
             %a.pull-right{'ng-show' => 'saving'}

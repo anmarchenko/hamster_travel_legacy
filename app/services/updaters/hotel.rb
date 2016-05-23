@@ -3,14 +3,13 @@ class Updaters::Hotel < Updaters::Entity
 
   def initialize day, hotel
     self.day = day
-    self.hotel = hotel
+    self.hotel = hotel || {}
   end
 
   def process
+    process_nested(day.hotel.links, hotel.delete(:links) || [])
     process_amount(hotel)
-    day.hotel.update_attributes(name: hotel[:name], amount_cents: hotel[:amount_cents],
-                                amount_currency: hotel[:amount_currency], comment: hotel[:comment])
-    process_nested(day.hotel.links, hotel[:links] || [])
+    day.hotel.update_attributes(hotel)
     day.save
   end
 

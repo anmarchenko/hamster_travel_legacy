@@ -32,6 +32,14 @@ angular.module('travel-components').controller('TransfersPlanController'
                     return;
                 }
                 $scope.saving = true;
+
+                $http.post("/api/v2/trips/" + $scope.trip_id + "/days_transfers/", {days: $scope.days}).success(function () {
+                    $scope.saving = false;
+                    toastr["success"]($('#notification_saved').text());
+
+                    $scope.loadBudget();
+                    $scope.loadCountries();
+                })
             };
 
             $scope.cancelEdits = function () {

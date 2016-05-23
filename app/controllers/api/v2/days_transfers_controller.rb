@@ -13,7 +13,6 @@ class Api::V2::DaysTransfersController < ApplicationController
   def create
     prms = days_params
     (prms[:days] || []).each do |day_params|
-      p day_params
       day = @trip.days.where(id: day_params.delete(:id)).first
       Updaters::Transfers.new(day, day_params.delete(:transfers)).process
       Updaters::DayPlaces.new(day, day_params.delete(:places)).process
@@ -30,12 +29,24 @@ class Api::V2::DaysTransfersController < ApplicationController
                           :id,
                           {
                               transfers: [
-                                  :id, :name, :comment, :link_url, :amount_cents, :amount_currency, :rating, :address, :working_hours
+                                  :id, :type, :code, :company, :station_from, :station_to, :start_time,
+                                  :end_time, :comment, :amount_cents, :amount_currency, :city_to_id, :city_from_id,
+                                  {
+                                      links: [
+                                          :id, :url, :description
+                                      ]
+                                  }
                               ]
                           },
                           {
                               hotel: [
-                                  :id, :description, :url
+                                  :id, :name, :comment, :amount_cents, :amount_currency,
+                                  {
+                                      links: [
+                                          :id, :url, :description
+                                      ]
+                                  }
+
                               ]
                           },
                           {

@@ -18,7 +18,7 @@ module Travels
     belongs_to :day, class_name: 'Travels::Day'
     has_many :links, class_name: 'ExternalLink', as: :linkable
 
-    monetize :amount_cents
+    monetize :amount_cents, :allow_nil => true
 
     def serializable_hash(*args)
       json = super(except: [:_id])

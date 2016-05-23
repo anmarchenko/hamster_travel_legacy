@@ -7,8 +7,8 @@ class Updaters::Transfers < Updaters::Entity
   end
 
   def process
-    process_ordered(self.transfers)
-    process_nested(day.transfers, self.transfers, ['links'])
+    process_ordered(self.transfers || [])
+    process_nested(day.transfers, self.transfers || [], ['links'])
     day.save
   end
 
