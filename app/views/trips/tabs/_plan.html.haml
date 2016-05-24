@@ -49,12 +49,6 @@
           = t('trips.show.place')
         %th{class: 'col-md-6', 'ng-show' => 'show_transfers'}
           = t('trips.show.transfers')
-          %a{class: 'pull-right', href: 'javascript:void(0);', 'ng-click' => 'transfersCollapsed = !transfersCollapsed',
-              'ng-show' => 'edit'}
-            %span{'ng-show' => '!transfersCollapsed'}
-              = fa_icon 'arrow-down'
-            %span{'ng-show' => 'transfersCollapsed'}
-              = fa_icon 'arrow-right'
         %th{class: 'col-md-3', 'ng-show' => 'show_hotel'}
           = t('trips.show.hotel')
           - if @user_can_edit
@@ -68,7 +62,7 @@
 
     %tbody
       - @trip.days.each do |day|
-        %tr.plan-row{'ng-controller' => 'TransfersDayController', 'ng-init' => "init('#{@trip.id}', '#{day.id}')"}
+        %tr.plan-row{'ng-controller' => 'TransfersDayController', 'ng-init' => "init('#{@trip.id}', '#{day.id}', {\"links\" : [{}], #{default_currency_hash(@trip, current_user)}})"}
           %td{'ng-controller' => 'DaySorterController'}
             .day-date
               = day.date_when_s

@@ -23,6 +23,8 @@ angular.module('travel-components').controller('TransfersPlanController'
                         var day = response.data.days[i];
                         $scope.days.push(day);
                         $scope.$broadcast('day_transfers_loaded', day);
+
+                        $scope.collapseTransfers(day);
                     }
                 })
             };
@@ -50,10 +52,21 @@ angular.module('travel-components').controller('TransfersPlanController'
                     for (var i = 0; i < response.data.days.length; i++) {
                         var day = response.data.days[i];
                         $scope.days.push(day);
+                        $scope.collapseTransfers(day);
                         $scope.$broadcast('day_transfers_updated', day);
                     }
                 })
-            }
+            };
+
+            $scope.$on('day_transfers_reloaded', function(event, day) {
+                for (var i = 0; i < $scope.days.length; i++) {
+                    if($scope.days[i].id === day.id) {
+                        $scope.days.splice(i, 1);
+                        break;
+                    }
+                }
+                $scope.days.push(day);
+            });
 
             $scope.restoreVisibilityFromCookie = function(column) {
                 var cookie_val, key;
@@ -76,6 +89,12 @@ angular.module('travel-components').controller('TransfersPlanController'
                 $scope[column] = !$scope[column];
                 $scope.saveVisibilityToCookie(column);
             };
+
+            $scope.collapseTransfers = function (day) {
+                for (var j = 0; j < day.transfers.length; j++){
+                    day.transfers[j].isCollapsed = true;
+                }
+            }
 
         }
     ]

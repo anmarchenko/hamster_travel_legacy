@@ -35,13 +35,13 @@ angular.module('travel-components').controller('ActivitiesDayController'
                     // send this day to parent controller
                     $scope.$emit('day_activities_reloaded', day)
                 })
-            }
+            };
 
             $scope.load = function (trip_id, day_id, new_activity_template) {
                 $scope.day_id = day_id;
                 $scope.trip_id = trip_id;
                 $scope.new_activity_template = new_activity_template;
-            }
+            };
 
             $scope.save = function (skip_notification) {
                 $scope.saving = true;
@@ -55,21 +55,21 @@ angular.module('travel-components').controller('ActivitiesDayController'
                         toastr["success"]($('#notification_saved').text());
                     }
                 })
-            }
+            };
 
             $scope.expensesPresent = function () {
                 return $scope.day.expenses && $scope.day.expenses.length > 0 && $scope.day.expenses[0].amount_cents > 0;
-            }
+            };
 
             $scope.bookmarksPresent = function () {
                 return $scope.day.links && $scope.day.links.length > 0 && $scope.day.links[0].url;
-            }
+            };
 
             $scope.triggerShowMore = function () {
                 $scope.show_more = !$scope.show_more;
 
                 $scope.$broadcast('activities_show_more', $scope.show_more)
-            }
+            };
 
             $scope.setDefaults = function () {
                 if ($scope.day.activities.length == 0) {
@@ -81,7 +81,7 @@ angular.module('travel-components').controller('ActivitiesDayController'
                 if ($scope.day.links.length == 0) {
                     $scope.day.links = [{}];
                 }
-            }
+            };
 
             $scope.startEdit = function () {
                 if ($scope.reloading) {
@@ -89,7 +89,7 @@ angular.module('travel-components').controller('ActivitiesDayController'
                 }
                 $scope.edit = true;
                 $scope.setDefaults();
-            }
+            };
 
             $scope.cancelEdit = function (no_reload) {
                 $scope.edit = false;
@@ -97,13 +97,13 @@ angular.module('travel-components').controller('ActivitiesDayController'
                 if (!no_reload) {
                     $scope.reload();
                 }
-            }
+            };
 
             $scope.onDragFinish = function (e, ui) {
                 if (!$scope.edit) {
                     $scope.save(true);
                 }
-            }
+            };
 
             $scope.$on('whole_plan_edit', function (event, edit) {
                     if (edit) {
@@ -115,7 +115,7 @@ angular.module('travel-components').controller('ActivitiesDayController'
                         $scope.reloading = true;
                     }
                 }
-            )
+            );
 
             $scope.$on('day_activities_updated', function (event, day) {
                     if ($scope.day.id == day.id) {
@@ -124,7 +124,7 @@ angular.module('travel-components').controller('ActivitiesDayController'
                         $scope.reloading = false;
                     }
                 }
-            )
+            );
 
             $scope.$on('day_activities_loaded', function (event, day) {
                     if (day.id == $scope.day_id) {
@@ -136,7 +136,7 @@ angular.module('travel-components').controller('ActivitiesDayController'
                         )
                     }
                 }
-            )
+            );
 
             $rootScope.$on('move_activity', function (event, payload) {
                 if ($scope.day.id == payload.source_id) {

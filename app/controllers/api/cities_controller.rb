@@ -6,7 +6,7 @@ module Api
 
       if term == '[$empty$]'
         trip = Travels::Trip.find(params[:trip_id]) rescue nil
-        query = [current_user.try(:home_town), trip.try(:visited_cities)].flatten.compact
+        query = [current_user.try(:home_town), trip.try(:visited_cities)].flatten.compact.uniq
         res = query.collect { |city| city_json(city) }
       else
         # cache here by term

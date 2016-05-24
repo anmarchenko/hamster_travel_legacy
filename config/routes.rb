@@ -21,6 +21,7 @@ Travel::Application.routes.draw do
         resources :trips, only: [] do
           resources :days, only: [] do
             resources :activities, only: [:index, :create]
+            resources :transfers, only: [:index, :create]
           end
           resources :days_activities, only: [:index, :create]
           resources :days_transfers, only: [:index, :create]

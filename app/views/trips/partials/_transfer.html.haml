@@ -4,7 +4,7 @@
     = render 'trips/partials/show_transfer'
 
   - if @user_can_edit
-    %a.edit-hover-button{'ng-show' => 'mouse_over_transfers', 'ng-click' => "setEdit(true, 'transfer', {\"isCollapsed\" : transfersCollapsed, \"links\" : [{}], #{default_currency_hash(@trip, current_user)}})"}
+    %a.edit-hover-button{'ng-show' => 'mouse_over_transfers', 'ng-click' => "setEdit(true, 'transfer')"}
       = fa_icon 'pencil'
 
 %div{'ng-show' => 'edit || transfer_edit'}
@@ -22,5 +22,5 @@
       = fa_icon 'undo'
 
     %a.pull-right{href: 'javascript:void(0);',
-    'ng-click' => "add(day.transfers, {\"isCollapsed\" : transfersCollapsed, \"links\" : [{}], #{default_currency_hash(@trip, current_user)}})"}
+    'ng-click' => "add(day.transfers, {\"links\" : [{}], #{default_currency_hash(@trip, current_user)}})"}
       = fa_icon 'plus'

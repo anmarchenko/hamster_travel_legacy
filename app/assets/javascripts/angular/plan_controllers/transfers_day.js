@@ -5,21 +5,20 @@ angular.module('travel-components').controller('TransfersDayController'
 
             $scope.day_loaded = false;
 
-            $scope.reloading = false;
-            $scope.saving = false;
+            $scope.new_transfer_template = {};
 
             var EDIT_VARIABLES = ['place', 'transfer', 'comment', 'hotel'];
 
-            $scope.init = function (trip_id, day_id) {
+            $scope.init = function (trip_id, day_id, new_transfer_template) {
                 $scope.trip_id = trip_id;
                 $scope.day_id = day_id;
+                $scope.new_transfer_template = new_transfer_template;
+                $scope.setEditAll(false);
             };
 
             $scope.$on('day_transfers_updated', function (event, day) {
                     if ($scope.day_id == day.id) {
                         $scope.day = day;
-
-                        $scope.reloading = false;
                     }
                 }
             );
@@ -36,46 +35,52 @@ angular.module('travel-components').controller('TransfersDayController'
                 }
             );
 
-            // $scope.setEdit = function(val, object, new_object) {
-            //     if (val) {
-            //         return $scope.reload(function(day) {
-            //             $scope[object + "_edit"] = val;
-            //             if (object === 'transfer' && day.transfers.length === 0) {
-            //                 day.transfers = [new_object];
-            //             }
-            //         });
-            //     } else {
-            //         $scope[object + "_edit"] = val;
-            //     }
-            // };
-            //
-            // $scope.reload = function(callback) {
-            //     if (callback == null) {
-            //         callback = null;
-            //     }
-            //     return $scope.tripService.reloadDay($scope.day, function() {
-            //         $scope.setEditAll(false);
-            //         $scope.loadBudget();
-            //         $scope.loadCountries();
-            //         if (callback) {
-            //             callback($scope.day);
-            //         }
-            //     });
-            // };
-            //
-            // $scope.save = function() {
-            //     return $scope.tripService.updateDay($scope.day).then(function() {
-            //         $scope.reload();
-            //     });
-            // };
-            //
-            // $scope.setEditAll = function(val) {
-            //     for (var i = 0, len = EDIT_VARIABLES.length; i < len; i++) {
-            //         $scope.setEdit(val, EDIT_VARIABLES[i]);
-            //     }
-            // };
-            //
-            // $scope.setEditAll(false);
+            $scope.setDefaults = function () {
+                if ($scope.day.transfers.length == 0) {
+                    var obj = {};
+                    angular.copy($scope.new_transfer_template, obj);
+                    $scope.day.transfers = [obj];
+                }
+            };
+
+            $scope.reload = function () {
+                $http.get("/api/v2/trips/" + $scope.trip_id + "/days/" + $scope.day_id + "/transfers").success(function (day) {
+                    $scope.day = day;
+
+                    $scope.loadBudget();
+                    $scope.loadCountries();
+                    $scope.setEditAll(false);
+
+                    // send this day to parent controller
+                    $scope.$emit('day_transfers_reloaded', day)
+                })
+            };
+            $scope.setEditAll = function(val) {
+                 for (var i = 0, len = EDIT_VARIABLES.length; i < len; i++) {
+                     $scope.setEdit(val, EDIT_VARIABLES[i]);
+                 }
+            };
+
+            $scope.setEdit = function(val, object) {
+                if (val) {
+                    $scope[object + "_edit"] = val;
+                    if ($scope['transfers_edit']) {
+                        $scope.setDefaults();
+                    }
+                } else {
+                    $scope[object + "_edit"] = val;
+                }
+            };
+
+            $scope.save = function () {
+                $http.post("/api/v2/trips/" + $scope.trip_id + "/days/" + $scope.day.id + "/transfers",
+                    {day: $scope.day}).success(function () {
+
+                    $scope.reload();
+                    toastr["success"]($('#notification_saved').text());
+
+                })
+            };
 
 
 

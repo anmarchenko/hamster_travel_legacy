@@ -15,7 +15,7 @@ angular.module('travel-components').controller('ActivitiesPlanController'
                         $scope.$broadcast('day_activities_loaded', day);
                     }
                 })
-            }
+            };
 
             $scope.savePlan = function () {
                 if ($scope.saving) {
@@ -30,7 +30,7 @@ angular.module('travel-components').controller('ActivitiesPlanController'
                     $scope.loadBudget();
                     $scope.loadCountries();
                 })
-            }
+            };
 
 
             $scope.cancelEdits = function () {
@@ -46,7 +46,7 @@ angular.module('travel-components').controller('ActivitiesPlanController'
                     }
                 })
 
-            }
+            };
 
             // TODO: ES6
             $scope.$on('day_activities_reloaded', function(event, day) {
