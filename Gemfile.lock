@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git://github.com/altmer/docx-rails.git
-  revision: a73b599e84fd9b1bb5c5448a840a6a27af92e29d
+  revision: c43401cd78a3f31f1bdf4d4a452a5f59a2c1f7b2
   specs:
     docx_rails (0.0.1)
 
@@ -457,6 +457,3 @@ DEPENDENCIES
   timecop
   uglifier (>= 1.3.0)
   zip-zip
-
-BUNDLED WITH
-   1.11.2
