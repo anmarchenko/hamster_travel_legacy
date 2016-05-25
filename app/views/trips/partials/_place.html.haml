@@ -11,7 +11,7 @@
 
   %div{'ng-repeat' => 'place in day.places track by place.id', class: 'day-place-container relative-position'}
     %a{href: 'javascript:void(0);',  class: 'up-button',
-       'ng-click' => 'fillAsPreviousPlace(place, $index, day, day_index)',
+       'ng-click' => 'fillAsPreviousPlace(place, $index)',
        'ng-show' => '($index > 0 || day_index > 0) && !place.city_code'}
       = fa_icon 'arrow-up'
 

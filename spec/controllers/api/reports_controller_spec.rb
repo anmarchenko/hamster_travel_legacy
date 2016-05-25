@@ -1,4 +1,4 @@
-describe Api::V2::ReportsController do
+describe Api::ReportsController do
   describe '#show' do
     let(:trip) {FactoryGirl.create(:trip)}
 

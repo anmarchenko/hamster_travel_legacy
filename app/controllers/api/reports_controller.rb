@@ -1,4 +1,4 @@
-class Api::V2::ReportsController < ApplicationController
+class Api::ReportsController < ApplicationController
   respond_to :json
 
   before_action :find_trip

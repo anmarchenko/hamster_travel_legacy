@@ -21,7 +21,7 @@
         placeholder: t('trips.show.name')
 
     %a{href: 'javascript:void(0);',  class: 'up-button',
-      'ng-click' => 'fillAsPreviousHotel(day.hotel, day_index)',
+      'ng-click' => 'fillAsPreviousHotel(day.hotel)',
       'ng-show' => 'day_index > 0'}
       = fa_icon 'arrow-up'
 

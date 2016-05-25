@@ -11,7 +11,7 @@ angular.module('travel-components').controller('ReportController'
             };
 
             $scope.load = function () {
-                $http.get('/api/v2/reports/' + $scope.trip_id).success(function (response) {
+                $http.get('/api/reports/' + $scope.trip_id).success(function (response) {
                     $scope.report = response.report;
                     $scope.report_loaded = true;
                 })
@@ -23,7 +23,7 @@ angular.module('travel-components').controller('ReportController'
                 }
                 $scope.saving = true;
 
-                $http.put('/api/v2/reports/' + $scope.trip_id, {report: $scope.report}).success(function () {
+                $http.put('/api/reports/' + $scope.trip_id, {report: $scope.report}).success(function () {
                     $scope.saving = false;
                     toastr["success"]($('#notification_saved').text());
                 });

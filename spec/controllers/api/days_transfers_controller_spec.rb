@@ -1,4 +1,4 @@
-describe Api::V2::DaysTransfersController do
+describe Api::DaysTransfersController do
   describe '#index' do
     let(:trip) {FactoryGirl.create(:trip, :with_filled_days)}
 

@@ -1,4 +1,4 @@
-describe Api::V2::TransfersController do
+describe Api::TransfersController do
   describe '#index' do
     let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
     let(:day) { trip.days.first }
@@ -136,6 +136,62 @@ describe Api::V2::TransfersController do
       it 'redirects to sign in' do
         post 'create', days_params.merge(trip_id: trip.id, day_id: day.id), format: :json
         expect(response).to redirect_to '/users/sign_in'
+      end
+    end
+
+  end
+
+  describe '#previous_place' do
+
+    context 'when trip is full' do
+      let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
+      let(:day) { trip.days.to_a[3] }
+      let(:prev_day) { trip.days.to_a[2] }
+      let(:prev_place) { prev_day.places.last }
+      let(:first_day) { trip.days.to_a[0] }
+
+      it 'returns last place from previous day' do
+        get 'previous_place', trip_id: trip.id, day_id: day.id
+
+        json = JSON.parse(response.body)
+        expect(json['place']).not_to be_blank
+        expect(json['place']['id']).to eq(prev_place.id.to_s)
+        expect(json['place']['city_id']).to eq(prev_place.city_id)
+      end
+
+      it 'returns nil if asked for the first day' do
+        get 'previous_place', trip_id: trip.id, day_id: first_day.id
+
+        json = JSON.parse(response.body)
+        expect(json['place']).to be_blank
+      end
+    end
+
+  end
+
+  describe '#previous_hotel' do
+
+    context 'when trip is full' do
+      let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
+      let(:day) { trip.days.to_a[3] }
+      let(:prev_day) { trip.days.to_a[2] }
+      let(:prev_hotel) { prev_day.hotel }
+      let(:first_day) { trip.days.to_a[0] }
+
+      it 'returns hotel from previous day' do
+        get 'previous_hotel', trip_id: trip.id, day_id: day.id
+
+        json = JSON.parse(response.body)
+        expect(json['hotel']).not_to be_blank
+        expect(json['hotel']['id']).to eq(prev_hotel.id.to_s)
+        expect(json['hotel']['name']).to eq(prev_hotel.name)
+      end
+
+      it 'returns nil if asked for the first day' do
+        get 'previous_hotel', trip_id: trip.id, day_id: first_day.id
+
+        json = JSON.parse(response.body)
+        expect(json['hotel']).to be_blank
       end
     end
 

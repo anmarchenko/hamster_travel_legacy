@@ -1,4 +1,4 @@
-class Api::V2::TransfersController < ApplicationController
+class Api::TransfersController < ApplicationController
   before_action :find_trip
   before_action :find_day
   before_action :authenticate_user!, only: [:create]
@@ -18,6 +18,20 @@ class Api::V2::TransfersController < ApplicationController
     Updaters::DayPlaces.new(@day, prms.delete(:places)).process
     Updaters::Hotel.new(@day, prms.delete(:hotel)).process
     render json: {status: 0}
+  end
+
+  def previous_place
+    previous_day = @trip.days.where(index: @day.index - 1).first
+    render json: {
+        place: previous_day.try(:places).try(:last)
+    }
+  end
+
+  def previous_hotel
+    previous_day = @trip.days.where(index: @day.index - 1).first
+    render json: {
+        hotel: previous_day.try(:hotel)
+    }
   end
 
   private

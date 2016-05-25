@@ -1,4 +1,4 @@
-describe Api::V2::DaysActivitiesController do
+describe Api::DaysActivitiesController do
   describe '#create' do
     let(:trip_without_user) { FactoryGirl.create :trip }
 

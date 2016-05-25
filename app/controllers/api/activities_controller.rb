@@ -1,4 +1,4 @@
-class Api::V2::ActivitiesController < ApplicationController
+class Api::ActivitiesController < ApplicationController
   before_action :find_trip
   before_action :find_day
   before_action :authenticate_user!, only: [:create]

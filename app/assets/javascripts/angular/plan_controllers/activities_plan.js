@@ -7,7 +7,7 @@ angular.module('travel-components').controller('ActivitiesPlanController'
 
             $scope.initActivities = function (trip_id) {
                 $scope.trip_id = trip_id;
-                $http.get("/api/v2/trips/" + $scope.trip_id + "/days_activities/").then( function(response) {
+                $http.get("/api/trips/" + $scope.trip_id + "/days_activities/").then( function(response) {
                     // TODO: ES6
                     for (var i = 0; i < response.data.days.length; i++) {
                         var day = response.data.days[i];
@@ -23,7 +23,7 @@ angular.module('travel-components').controller('ActivitiesPlanController'
                 }
                 $scope.saving = true;
 
-                $http.post("/api/v2/trips/" + $scope.trip_id + "/days_activities/", {days: $scope.planDays}).success(function () {
+                $http.post("/api/trips/" + $scope.trip_id + "/days_activities/", {days: $scope.planDays}).success(function () {
                     $scope.saving = false;
                     toastr["success"]($('#notification_saved').text());
 
@@ -37,7 +37,7 @@ angular.module('travel-components').controller('ActivitiesPlanController'
                 $scope.cancelEditsPlan();
 
                 $scope.planDays = [];
-                $http.get("/api/v2/trips/" + $scope.trip_id + "/days_activities/").then( function(response) {
+                $http.get("/api/trips/" + $scope.trip_id + "/days_activities/").then( function(response) {
                     // TODO: ES6
                     for (var i = 0; i < response.data.days.length; i++) {
                         var day = response.data.days[i];

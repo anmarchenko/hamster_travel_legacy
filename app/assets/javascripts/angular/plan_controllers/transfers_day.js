@@ -9,11 +9,16 @@ angular.module('travel-components').controller('TransfersDayController'
 
             var EDIT_VARIABLES = ['place', 'transfer', 'comment', 'hotel'];
 
-            $scope.init = function (trip_id, day_id, new_transfer_template) {
+            $scope.init = function (trip_id, day_id, day_index, new_transfer_template) {
                 $scope.trip_id = trip_id;
                 $scope.day_id = day_id;
                 $scope.new_transfer_template = new_transfer_template;
+                $scope.day_index = day_index;
                 $scope.setEditAll(false);
+            };
+
+            $scope.apiUrl = function () {
+                return "/api/trips/" + $scope.trip_id + "/days/" + $scope.day_id + "/transfers";
             };
 
             $scope.$on('day_transfers_updated', function (event, day) {
@@ -44,7 +49,7 @@ angular.module('travel-components').controller('TransfersDayController'
             };
 
             $scope.reload = function () {
-                $http.get("/api/v2/trips/" + $scope.trip_id + "/days/" + $scope.day_id + "/transfers").success(function (day) {
+                $http.get($scope.apiUrl()).success(function (day) {
                     $scope.day = day;
 
                     $scope.loadBudget();
@@ -55,13 +60,13 @@ angular.module('travel-components').controller('TransfersDayController'
                     $scope.$emit('day_transfers_reloaded', day)
                 })
             };
-            $scope.setEditAll = function(val) {
-                 for (var i = 0, len = EDIT_VARIABLES.length; i < len; i++) {
-                     $scope.setEdit(val, EDIT_VARIABLES[i]);
-                 }
+            $scope.setEditAll = function (val) {
+                for (var i = 0, len = EDIT_VARIABLES.length; i < len; i++) {
+                    $scope.setEdit(val, EDIT_VARIABLES[i]);
+                }
             };
 
-            $scope.setEdit = function(val, object) {
+            $scope.setEdit = function (val, object) {
                 if (val) {
                     $scope[object + "_edit"] = val;
                     if ($scope['transfers_edit']) {
@@ -73,7 +78,7 @@ angular.module('travel-components').controller('TransfersDayController'
             };
 
             $scope.save = function () {
-                $http.post("/api/v2/trips/" + $scope.trip_id + "/days/" + $scope.day.id + "/transfers",
+                $http.post($scope.apiUrl(),
                     {day: $scope.day}).success(function () {
 
                     $scope.reload();
@@ -82,38 +87,44 @@ angular.module('travel-components').controller('TransfersDayController'
                 })
             };
 
+            $scope.copyPlace = function (from ,to) {
+                if (from && to) {
+                    to.city_id = from.city_id;
+                    to.city_text = from.city_text;
+                    to.flag_image = from.flag_image;
+                }
+            };
 
+            $scope.fillAsPreviousPlace = function (place, place_index) {
+                if ($scope.day.places[place_index - 1]) {
+                    var prev_place = $scope.day.places[place_index - 1];
+                    $scope.copyPlace(prev_place, place);
+                } else {
+                    $http.get($scope.apiUrl() + "/previous_place").success(function (data) {
+                        $scope.copyPlace(data.place, place);
+                    });
+                }
+            };
 
-            // $scope.fillAsPreviousPlace = function(place, place_index, day, day_index) {
-            //     var prev_day, prev_place;
-            //     if (day.places[place_index - 1]) {
-            //         prev_place = day.places[place_index - 1];
-            //     } else {
-            //         prev_day = $scope.days[day_index - 1];
-            //         prev_place = prev_day.places[prev_day.places.length - 1];
-            //     }
-            //     place.city_id = prev_place.city_id;
-            //     place.city_text = prev_place.city_text;
-            //     place.flag_image = prev_place.flag_image;
-            // };
-            //
-            // $scope.fillAsPreviousHotel = function(hotel, day_index) {
-            //     var link, prev_day, prev_hotel, ref;
-            //     prev_day = $scope.days[day_index - 1];
-            //     prev_hotel = prev_day.hotel;
-            //     if (prev_hotel) {
-            //         hotel.name = prev_hotel.name;
-            //         hotel.amount_cents = prev_hotel.amount_cents;
-            //         hotel.amount_currency = prev_hotel.amount_currency;
-            //         hotel.amount_currency_text = prev_hotel.amount_currency_text;
-            //         hotel.links = [];
-            //         ref = prev_hotel.links;
-            //         for (var i = 0, len = ref.length; i < len; i++) {
-            //             link = ref[i];
-            //             hotel.links.push(JSON.parse(JSON.stringify(link)));
-            //         }
-            //     }
-            // };
+            $scope.copyHotel = function (from, to) {
+                if (from && to) {
+                    to.name = from.name;
+                    to.amount_cents = from.amount_cents;
+                    to.amount_currency = from.amount_currency;
+                    to.amount_currency_text = from.amount_currency_text;
+                    to.links = [];
+                    for (var i = 0, len = from.links.length; i < len; i++) {
+                        var link = from.links[i];
+                        to.links.push(JSON.parse(JSON.stringify(link)));
+                    }
+                }
+            };
+
+            $scope.fillAsPreviousHotel = function (hotel) {
+                $http.get($scope.apiUrl() + "/previous_hotel").success(function (data) {
+                    $scope.copyHotel(data.hotel, hotel);
+                });
+            };
 
         }
     ]

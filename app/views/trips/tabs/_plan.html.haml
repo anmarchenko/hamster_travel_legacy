@@ -61,8 +61,9 @@
               = t('trips.show.saving_plan')
 
     %tbody
-      - @trip.days.each do |day|
-        %tr.plan-row{'ng-controller' => 'TransfersDayController', 'ng-init' => "init('#{@trip.id}', '#{day.id}', {\"links\" : [{}], #{default_currency_hash(@trip, current_user)}})"}
+      - @trip.days.each_with_index do |day, day_index|
+        %tr.plan-row{'ng-controller' => 'TransfersDayController',
+        'ng-init' => "init('#{@trip.id}', '#{day.id}', #{day_index}, {\"links\" : [{}], #{default_currency_hash(@trip, current_user)}})"}
           %td{'ng-controller' => 'DaySorterController'}
             .day-date
               = day.date_when_s

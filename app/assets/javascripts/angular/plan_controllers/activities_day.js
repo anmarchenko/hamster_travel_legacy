@@ -21,7 +21,7 @@ angular.module('travel-components').controller('ActivitiesDayController'
                 if (!$scope.edit) {
                     $scope.reloading = true;
                 }
-                $http.get("/api/v2/trips/" + $scope.trip_id + "/days/" + $scope.day_id + "/activities").success(function (day) {
+                $http.get("/api/trips/" + $scope.trip_id + "/days/" + $scope.day_id + "/activities").success(function (day) {
                     $scope.day = day;
 
                     $scope.loadBudget();
@@ -46,7 +46,7 @@ angular.module('travel-components').controller('ActivitiesDayController'
             $scope.save = function (skip_notification) {
                 $scope.saving = true;
 
-                $http.post("/api/v2/trips/" + $scope.trip_id + "/days/" + $scope.day.id + "/activities",
+                $http.post("/api/trips/" + $scope.trip_id + "/days/" + $scope.day.id + "/activities",
                     {day: $scope.day}).success(function () {
                     $scope.reload();
                     $scope.saving = false;

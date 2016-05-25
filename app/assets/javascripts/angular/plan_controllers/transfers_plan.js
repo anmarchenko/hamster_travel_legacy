@@ -17,7 +17,7 @@ angular.module('travel-components').controller('TransfersPlanController'
                     $scope.restoreVisibilityFromCookie(columns[i]);
                 }
 
-                $http.get("/api/v2/trips/" + $scope.trip_id + "/days_transfers").then( function(response) {
+                $http.get("/api/trips/" + $scope.trip_id + "/days_transfers").then( function(response) {
                     // TODO: ES6
                     for (var i = 0; i < response.data.days.length; i++) {
                         var day = response.data.days[i];
@@ -35,7 +35,7 @@ angular.module('travel-components').controller('TransfersPlanController'
                 }
                 $scope.saving = true;
 
-                $http.post("/api/v2/trips/" + $scope.trip_id + "/days_transfers/", {days: $scope.days}).success(function () {
+                $http.post("/api/trips/" + $scope.trip_id + "/days_transfers/", {days: $scope.days}).success(function () {
                     $scope.saving = false;
                     toastr["success"]($('#notification_saved').text());
 
@@ -47,7 +47,7 @@ angular.module('travel-components').controller('TransfersPlanController'
             $scope.cancelEdits = function () {
                 $scope.cancelEditsPlan();
                 $scope.days = [];
-                $http.get("/api/v2/trips/" + $scope.trip_id + "/days_transfers").then( function(response) {
+                $http.get("/api/trips/" + $scope.trip_id + "/days_transfers").then( function(response) {
                     // TODO: ES6
                     for (var i = 0; i < response.data.days.length; i++) {
                         var day = response.data.days[i];
@@ -69,19 +69,17 @@ angular.module('travel-components').controller('TransfersPlanController'
             });
 
             $scope.restoreVisibilityFromCookie = function(column) {
-                var cookie_val, key;
-                key = $scope.trip_id + "_" + column;
-                cookie_val = $cookies.get(key);
+                var key = $scope.trip_id + "_" + column;
+                var cookie_val = $cookies.get(key);
                 if (cookie_val === void 0) {
-                    return $scope[column] = true;
+                    $scope[column] = true;
                 } else {
-                    return $scope[column] = cookie_val === 'true';
+                    $scope[column] = cookie_val === 'true';
                 }
             };
 
             $scope.saveVisibilityToCookie = function(column) {
-                var key;
-                key = $scope.trip_id + "_" + column;
+                var key = $scope.trip_id + "_" + column;
                 $cookies.put(key, $scope[column]);
             };
 

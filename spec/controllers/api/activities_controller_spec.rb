@@ -1,4 +1,4 @@
-describe Api::V2::ActivitiesController do
+describe Api::ActivitiesController do
 
   describe '#index' do
     let!(:trip) { FactoryGirl.create(:trip, :with_filled_days) }

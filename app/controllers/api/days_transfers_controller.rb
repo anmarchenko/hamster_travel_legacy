@@ -1,4 +1,4 @@
-class Api::V2::DaysTransfersController < ApplicationController
+class Api::DaysTransfersController < ApplicationController
   before_action :find_trip
   before_action :authenticate_user!, only: [:create]
   before_action :authorize!, only: [:create]
