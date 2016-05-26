@@ -19,7 +19,7 @@ module CurrencyHelper
         [0, curr]
       end
     end
-    ecb_currencies.map{|curr| Money::Currency.select{|c| c.iso_code == curr }.first}
+    ecb_currencies.map{|curr| Money::Currency.find(curr) }
   end
 
   def self.currencies_select user_currency = nil, trip_currency = nil

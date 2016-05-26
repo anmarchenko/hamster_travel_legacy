@@ -3,7 +3,7 @@ class Updaters::Entity
   def delete_nested collection, params
     to_delete = []
     collection.each do |item|
-      to_delete << item.id if params.select { |v| v[:id].to_s == item.id.to_s }.count == 0
+      to_delete << item.id if params.count { |v| v[:id].to_s == item.id.to_s } == 0
     end
     collection.where(:id => to_delete).destroy_all
   end
