@@ -1,5 +1,5 @@
 .span{'ng-controller' => 'ReportController', 'ng-init' => "init('#{@trip.id}')"}
-  .work-area-header{'ng-cloak' => ''}
+  .work-area-header
     .row
       .col-md-12
         = render 'trips/partials/tabs'
@@ -9,16 +9,14 @@
       .col-md-12
         = render 'trips/partials/buttons'
 
-  .row{'ng-cloak' => ''}
+  .row
     .col-md-12
-      %article.trip-report{'ng-show' => 'report_loaded'}
+      %article.trip-report{'ng-show' => 'report_loaded', 'ng-cloak' => ''}
         %div{'ng-show' => '!edit'}
           %p.travel-text{'ng-show' => 'report'} {{report}}
           .empty-report{'ng-hide' => 'report'}
             .description
               = t('trips.show.no_report')
-            .image
-              = image_tag 'empty/report.svg'
 
         %div{'ng-show' => 'edit', class: 'form-horizontal'}
           %div{class: 'form-group'}

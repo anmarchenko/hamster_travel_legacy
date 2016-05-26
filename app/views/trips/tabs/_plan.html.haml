@@ -1,4 +1,4 @@
-%div{'ng-controller' => 'TransfersPlanController', 'ng-init' => "init('#{@trip.id}')", 'ng-cloak' => ''}
+%div{'ng-controller' => 'TransfersPlanController', 'ng-init' => "init('#{@trip.id}')"}
   .work-area-header
     .row
       .col-md-12
@@ -7,7 +7,7 @@
     = render 'trips/partials/budget', options: {tab_budget: 'transfers_hotel_budget'}
     .row
       .col-md-12
-        %div{class: "list-group list-group-horizontal"}
+        %div{class: "list-group list-group-horizontal", 'ng-cloak' => ''}
           %a{class: "list-group-item",
                            'ng-click' => 'changeVisibility("show_place")',
                            'ng-class' => '{active: show_place}',
@@ -52,11 +52,11 @@
         %th{class: 'col-md-3', 'ng-show' => 'show_hotel'}
           = t('trips.show.hotel')
           - if @user_can_edit
-            %a.pull-right{href: 'javascript:void(0);', 'ng-click' => 'savePlan()',
+            %a.pull-right{href: 'javascript:void(0);', 'ng-click' => 'savePlan()', 'ng-cloak' => '',
                 'ng-show' => '!saving && edit', 'data-placement' => "bottom",
                 'data-toggle' => 'tooltip', title: t('trips.show.save_plan')}
               = fa_icon 'save'
-            %a.pull-right{'ng-show' => 'saving'}
+            %a.pull-right{'ng-show' => 'saving', 'ng-cloak' => ''}
               %i.fa.fa-spinner.fa-spin
               = t('trips.show.saving_plan')
 
@@ -74,13 +74,13 @@
                                          'ng-mouseenter' => 'mouse_over_place = true'}
             %span{'ng-cloak' => '', 'ng-show' => 'day_loaded'}
               = render 'trips/partials/place'
-            %span{'ng-cloak' => '', 'ng-hide' => 'day_loaded'}
+            %span{'ng-hide' => 'day_loaded'}
               .transfers-mockup-line
           %td{'ng-show' => 'show_transfers', 'ng-mouseleave' => 'mouse_over_transfers = false',
                                              'ng-mouseenter' => 'mouse_over_transfers = true'}
             %span{'ng-cloak' => '', 'ng-show' => 'day_loaded'}
               = render 'trips/partials/transfer'
-            %span{'ng-cloak' => '', 'ng-hide' => 'day_loaded'}
+            %span{'ng-hide' => 'day_loaded'}
               .transfer-mockup
                 .transfer-destination-mockup
                   .transfer-city-mockup
@@ -93,6 +93,6 @@
                                          'ng-mouseenter' => 'mouse_over_hotel = true'}
             %span{'ng-cloak' => '', 'ng-show' => 'day_loaded'}
               = render 'trips/partials/hotel'
-            %span{'ng-cloak' => '', 'ng-hide' => 'day_loaded'}
+            %span{'ng-hide' => 'day_loaded'}
               .transfers-mockup-line
               .transfers-mockup-line

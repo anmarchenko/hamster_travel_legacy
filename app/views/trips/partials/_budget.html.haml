@@ -1,7 +1,7 @@
 - options ||= {}
-.row{'ng-controller' => 'BudgetController'}
+.row{'ng-controller' => 'BudgetController', 'ng-init' => "initBudget('#{@trip.id}')"}
   .col-xs-12
-    %span.budget{'ng-show' => 'budget_loaded', 'ng-init' => "initBudget('#{@trip.id}')"}
+    %span.budget{'ng-show' => 'budget_loaded', 'ng-cloak' => ''}
       = t('common.budget')
       {{budget | number: 2}}
       = currency_symbol.html_safe
