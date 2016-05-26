@@ -138,4 +138,5 @@ group :test do
 
   # tests coverage
   gem 'simplecov', :require => false
+  gem 'codacy-coverage', :require => false
 end
