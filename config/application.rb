@@ -19,7 +19,7 @@ module Travel
     I18n.enforce_available_locales = true
     I18n.default_locale = :en
 
-    config.action_view.field_error_proc = Proc.new { |html_tag, instance|
+    config.action_view.field_error_proc = Proc.new { |html_tag, _instance|
       "<div class=\"has-error\">#{html_tag}</div>".html_safe
     }
     config.middleware.delete "Rack::Lock"

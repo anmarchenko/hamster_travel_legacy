@@ -22,7 +22,7 @@ module Travels
 
     monetize :amount_cents
 
-    def as_json(*args)
+    def as_json(_args)
       json = super(except: [:_id])
       json['id'] = id.to_s
       json['amount_currency_text'] = amount.currency.symbol

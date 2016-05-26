@@ -95,15 +95,6 @@ namespace :deploy do
         execute "cd /var/applications/travel_planner/current; #{rvm} bundle exec puma -p #{port} -e production -d"
       end
     end
-
-    on roles(:backend), in: :sequence, wait: 5 do
-      rvm = '~/.rvm/bin/rvm 2.3.0 do'
-      cd = 'cd /var/applications/travel_planner/current;'
-
-      # execute "if [ \"$( ps -A | grep ruby )\" ]; then killall -9 ruby; fi", pty: true
-      # execute "#{cd}RAILS_ENV=production #{rvm} bundle exec rake websocket_rails:start_server"
-
-    end
   end
 
   after :publishing, :restart

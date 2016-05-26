@@ -20,7 +20,7 @@ module Travels
 
     monetize :amount_cents, :allow_nil => true
 
-    def serializable_hash(*args)
+    def serializable_hash(_args)
       json = super(except: [:_id])
       json['id'] = id.to_s
       if links.blank?

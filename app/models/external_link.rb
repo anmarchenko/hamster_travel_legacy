@@ -27,7 +27,7 @@ class ExternalLink < ActiveRecord::Base
     (parsed_uri.try(:host) || '').gsub('www.', '').capitalize
   end
 
-  def serializable_hash(*args)
+  def serializable_hash(_args)
     json = super(except: [:linkable_id, :linkable_type, :mongo_id])
     json['id'] = id.to_s
     json

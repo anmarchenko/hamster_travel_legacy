@@ -93,7 +93,7 @@ module Travels
                                            month: new_date.month) if self.end_time.present?
     end
 
-    def serializable_hash(*args)
+    def serializable_hash(_args)
       json = super(except: [:_id])
       json['id'] = id.to_s
       json['start_time'] = start_time.try(:strftime, '%Y-%m-%dT%H:%M+00:00')
