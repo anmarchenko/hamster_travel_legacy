@@ -137,5 +137,5 @@ group :test do
   gem 'capybara'
 
   # tests coverage
-  gem 'coveralls', require: false
+  gem 'simplecov', :require => false
 end
