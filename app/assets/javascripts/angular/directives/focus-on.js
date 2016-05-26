@@ -11,8 +11,11 @@ angular.module('travel-components').directive('focusOn', ['$timeout', function (
                             ? $element
                             : $element.find('input');
 
-                        _focusVal ? inputElement.focus()
-                            : inputElement.blur();
+                        if(_focusVal){
+                            inputElement.focus();
+                        } else {
+                            inputElement.blur();
+                        }
                     });
                 }
             );
