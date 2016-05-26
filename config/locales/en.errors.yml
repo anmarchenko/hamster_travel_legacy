@@ -1,6 +1,0 @@
-en:
-  errors:
-    unathorized: Not enough rights
-    from_list: must be from list
-    date_before: must be valid date and not later the end date
-    end_date_days: must be valid date and before start date plus 30 days

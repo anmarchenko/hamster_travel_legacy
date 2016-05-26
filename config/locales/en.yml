@@ -1,0 +1,359 @@
+en:
+  devise:
+    confirmations:
+      confirmed: "Your account was successfully confirmed."
+      send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
+      send_paranoid_instructions: "If your email address exists in our database, you will receive an email with instructions about how to confirm your account in a few minutes."
+    failure:
+      already_authenticated: "You are already signed in."
+      inactive: "Your account is not activated yet."
+      invalid: "Invalid email or password."
+      locked: "Your account is locked."
+      last_attempt: "You have one more attempt before your account will be locked."
+      not_found_in_database: "Invalid email or password."
+      timeout: "Your session expired. Please sign in again to continue."
+      unauthenticated: "You need to sign in or sign up before continuing."
+      unconfirmed: "You have to confirm your account before continuing."
+    mailer:
+      confirmation_instructions:
+        subject: "Confirmation instructions"
+      reset_password_instructions:
+        subject: "Reset password instructions"
+      unlock_instructions:
+        subject: "Unlock Instructions"
+    omniauth_callbacks:
+      failure: "Could not authenticate you from %{kind} because \"%{reason}\"."
+      success: "Successfully authenticated from %{kind} account."
+    passwords:
+      no_token: "You can't access this page without coming from a password reset email. If you do come from a password reset email, please make sure you used the full URL provided."
+      send_instructions: "You will receive an email with instructions on how to reset your password in a few minutes."
+      send_paranoid_instructions: "If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes."
+      updated: "Your password was changed successfully. You are now signed in."
+      updated_not_active: "Your password was changed successfully."
+    registrations:
+      sorry: Registration is not open yet
+      destroyed: "Bye! Your account was successfully cancelled. We hope to see you again soon."
+      signed_up: "Welcome! You have signed up successfully."
+      signed_up_but_inactive: "You have signed up successfully. However, we could not sign you in because your account is not yet activated."
+      signed_up_but_locked: "You have signed up successfully. However, we could not sign you in because your account is locked."
+      signed_up_but_unconfirmed: "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
+      update_needs_confirmation: "You updated your account successfully, but we need to verify your new email address. Please check your email and click on the confirm link to finalize confirming your new email address."
+      updated: "You updated your account successfully."
+      new:
+        welcome: Create your account...
+        teaser: and explore!
+        email: Email Address
+        password: Password
+        password_confirmation: Confirm Password
+        first_name: First name
+        last_name: Last name
+        by_clicking: By clicking
+        register: Register
+        sign_in: Sign In
+        you_agree: you agree to the
+        terms: Terms and Conditions
+        ending: set out by this site
+        agree: I Agree
+        terms_head: Terms and Conditions
+        title: Registration
+      edit:
+        title: Edit my registration
+    sessions:
+      signed_in: "Signed in successfully."
+      signed_out: "Signed out successfully."
+      new:
+        email: Email Address
+        password: Password
+        register: Register
+        welcome: Sign in to your account
+        sign_in: Login
+        remember: Remember Me
+        title: Sign In
+    unlocks:
+      send_instructions: "You will receive an email with instructions about how to unlock your account in a few minutes."
+      send_paranoid_instructions: "If your account exists, you will receive an email with instructions about how to unlock it in a few minutes."
+      unlocked: "Your account has been unlocked successfully. Please sign in to continue."
+  errors:
+    messages:
+      already_confirmed: "was already confirmed, please try signing in"
+      confirmation_period_expired: "needs to be confirmed within %{period}, please request a new one"
+      expired: "has expired, please request a new one"
+      not_found: "not found"
+      not_locked: "was not locked"
+      not_saved: "Errors on save:"
+    unathorized: Not enough rights
+    from_list: must be from list
+    date_before: must be valid date and not later the end date
+    end_date_days: must be valid date and before start date plus 30 days
+  breadcrumbs:
+    application:
+      root: "Index"
+    pages:
+      pages: "Pages"
+  helpers:
+    actions: "Actions"
+    links:
+      back: "Back"
+      cancel: "Cancel"
+      confirm: "Are you sure?"
+      destroy: "Delete"
+      new: "New"
+      edit: "Edit"
+    titles:
+      edit: "Edit %{model}"
+      save: "Save %{model}"
+      new: "New %{model}"
+      delete: "Delete %{model}"
+  common:
+    saved: Saved!
+    yesss: "Yes"
+    noooo: "No"
+    sign_out: Sign Out
+    sign_in: Login
+    sign_up: Register
+    profile: My profile
+    edit_user: Edit profile
+    settings: Settings
+    save: Save
+    today: Today
+    toggle_weeks: Weeks
+    clear: Clear
+    datepicker_close: Close
+    user_profile_layout:
+      password_placeholder: leave blank if you don't want to change it
+      current_password_placeholder: we need your current password to confirm your changes
+      trips: Travels
+      delete_photo_cofirm: Are you sure that you want to delete your profile photo?
+    are_you_sure: Are you sure?
+    participant_will_be_deleted: Participant will be deleted form this trip
+    yes_do_it: Yes, do it
+    no_do_not: No, cancel
+    cancel: Cancel
+    back: Go back
+    my_trips: My travels
+    update_successful: Successfully updated
+    delete_confirm: Are you sure you want to delete that?
+    flight: Flight
+    train: Train
+    bus: Bus
+    car: Taxi
+    personal_car: Car
+    boat: Boat
+    link_text: Text
+    authors: 'Authors:'
+    hamster: Yulia Marchenko
+    andrey: Andrey Marchenko
+    no_comments: No comments
+    0_draft: Idea
+    1_planned: Planned
+    2_finished: Past
+    photo_processing: Photo is being processed...
+    budget: Budget
+    transfers_hotel_budget: transfers and accomodations
+    activities_other_budget: activities
+    catering_budget: food
+    copy: Copy
+    invites: Invites
+    days:
+      zero: days
+      one: day
+      few: days
+      many: days
+      other: days
+    day_number: Day %{number}
+  dashboard:
+    index:
+      title: Travel planning
+      welcome: "Hamster Travel: your ultimate travel notebook"
+      welcome_second: We are in closed beta now. Stay tuned.
+      browse: Browse
+      add: Add new plan
+  layouts:
+    main:
+      pagetitle: "Hamster Travel | %{page}"
+    partials:
+      navbar:
+        apptitle: Hamster Travel
+        account: My Account
+        trips: Trips
+        my_trips: My trips
+        my_ideas: My ideas
+  messages:
+    index:
+      title: Invites
+      invites_you_to: invites to
+      to_my_trips: Back to my trips
+  modals:
+    confirm:
+      title: Attention
+    photo_preview:
+      title: Select image region for upload
+      cancel: Cancel
+      upload: Upload
+    days_sort_modal:
+      title: Sort days
+      please_wait: Please wait, your plans are being reordered...
+  date:
+    formats:
+      month: '%B&nbsp;%Y'
+  activerecord:
+    attributes:
+      travels/trip:
+        name: Name
+        short_description: Description
+        start_date: First day
+        end_date: Last day
+        author: Author
+        status_code: Trip status
+        private: Private plan (can only be seen by participants)
+        currency: Most used currency in this trip
+        dates_unknown: Exact dates are unknown yet
+        planned_days_count: Planned days count
+      user:
+        email: Email
+        first_name: First name
+        last_name: Last name
+        password: Password
+        password_confirmation: Password confirmation
+        home_town_text: Home town
+        locale: Language
+        current_password: Current password
+        currency: Currency
+  trips:
+    expenses:
+      breakfast: Breakfast
+      dinner: Dinner
+      main_course: Main course
+      lunch: Lunch
+      coffee: Coffee
+    index:
+      title: Travels
+      create: Add plan
+      with_report: With report
+    new:
+      title: New travel
+    show:
+      delete_confirm: Trip will be deleted!
+      title: Travel
+      plan: Transfers and hotels
+      plan_activities: Activities
+      catering: Food
+      day: Day
+      days: days
+      place: Cities
+      transfers: Transfers
+      hotel: Hotel
+      activities: Activities
+      comments: Comments
+      edit_plan: Edit plan
+      edit_day: Edit day
+      edit_trip: Edit
+      delete_trip: Delete
+      cancel: Go back without save
+      show_plan: Show
+      save_plan: Save
+      saving_plan: Saving...
+      city: City
+      transfer: Transfer
+      from: From
+      to: To
+      departure: Departure
+      arrival: Arrival
+      price: Price
+      price_hotel: Price for a night
+      more: More information...
+      less: Less information...
+      comment: Comment
+      carrier: Carrier
+      station_from: station
+      station_to: station
+      links: Bookmarks
+      add_link: Add bookmark
+      activity:
+        name: Where to go?
+      download_word: Download as Word
+      delete_photo_cofirm: Are you sure that you want to delete photo?
+      status_code: 'Trip status:'
+      name: Name
+      expense: Expense
+      expenses: Expenses
+      clone: Make a copy
+      report: Trip report
+      no_report: No report has been added yet.
+      budget_for: for
+      persons: pers.
+      watching_now: Watching now
+      no_catering_description: No cuisine description yet
+      no_city: No city
+      catering_description: Cuisine description
+      catering_description_placeholder: National cuisine, what to try and what to avoid
+      example_espenses: Prices
+      add_expense: Add price
+      for_day: Food expenses per day per person
+      catering_show_for_day: per day
+      catering_name: Section name
+      catering_name_placeholder: Region or city
+      catering_persons: How many people
+      catering_persons_show: persons
+      catering_days: How many days
+      catering_days_show: days
+      catering_delete: Delete section
+      catering_sum: Expenses
+      catering_add: Add section
+      catering_add_info: Add here information about planned food expenses and national cuisine.
+      catering_call_to_action: "Let's go"
+      overall: overall
+      add_friend: Invite friend
+      type_name: Friend's name
+      invite_sent: invite sent
+      reorder_days: Reorder
+      no_activities: No activities planned for the day yet. No need to hurry, you could just relax whole day... or add some
+        great places to visit!
+      add_city: Add city
+      add_expense: Add expense
+      add_activity: Add activity
+      move_activity: Move activity to another day
+      move_activity_action: Move
+      activity_must_see: Must see
+      activity_nice_to_visit: Nice to visit
+      activity_not_necessary: Not necessary
+      address: address
+      working_hours: working hours
+    edit:
+      title: Edit travel
+    form:
+      create_title: Create plan
+      edit_title: Edit plan
+      name_placeholder: Nice and catchy name for your travel
+      short_description_placeholder: Few words about your trip
+      start_date_placeholder: When will you go?
+      end_date_placeholder: When will you return?
+      save: Save
+      return: Return
+      confirm: 'Days number will become less! Last days data will be lost. Continue?'
+      private_help: Private plans are seen only by you (on the tab 'My travels')!
+      0_draft_help: 'just a simple draft of future plan'
+      1_planned_help: 'trip that will take place in the near future'
+      2_finished_help: 'past trip with report'
+  users:
+    edit:
+      title: My settings
+    show:
+      title: User profile
+    update_successful: User settings successfully updated
+    partials:
+      menu:
+        profile: Profile
+  widgets:
+    trips:
+      trip_box:
+        author: Author
+      grid:
+        no_trips: No trips was added! Login and add a new one.
+  views:
+    pagination:
+      first: "&laquo;"
+      last: "&raquo;"
+      previous: "&lsaquo;"
+      next: "&rsaquo;"
+      truncate: "..."

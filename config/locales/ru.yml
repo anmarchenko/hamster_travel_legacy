@@ -1,0 +1,342 @@
+ru:
+  devise:
+    confirmations:
+      confirmed: "Ваша учётная запись подтверждена. Теперь вы вошли в систему."
+      send_instructions: "В течение нескольких минут вы получите письмо с инструкциями по подтверждению вашей учётной записи."
+      send_paranoid_instructions: "Если ваш адрес email есть в нашей базе данных, то в течение нескольких минут вы получите письмо с инструкциями по подтверждению вашей учётной записи."
+    failure:
+      already_authenticated: "Вы уже вошли в систему."
+      inactive: "Ваша учётная запись ещё не активирована."
+      invalid: "Неверный адрес email или пароль."
+      invalid_token: "Неверный ключ аутентификации."
+      locked: "Ваша учётная запись заблокирована."
+      not_found_in_database: "Неверный пароль или email."
+      timeout: "Ваш сеанс закончился. Пожалуйста, войдите в систему снова."
+      unauthenticated: "Вам необходимо войти в систему или зарегистрироваться."
+      unconfirmed: "Вы должны подтвердить вашу учётную запись."
+    mailer:
+      confirmation_instructions:
+        subject: "Инструкции по подтверждению учётной записи"
+      reset_password_instructions:
+        subject: "Инструкции по восстановлению пароля"
+      unlock_instructions:
+        subject: "Инструкции по разблокировке учётной записи"
+    omniauth_callbacks:
+      failure: "Вы не можете войти в систему с учётной записью из %{kind}б так как \"%{reason}\"."
+      success: "Вход в систему выполнен с учётной записью из %{kind}."
+    passwords:
+      format: "Hеверный формат - должен содержать минимум 8 символов, включая одну строчную букву, заглавную букву и цифру."
+      no_token: "Эта страница доступна только при переходе с email для сброса пароля. Если вы перешли по ссылке из письма, пожалуйста, убедитесь, что вы использовали полный URL."
+      send_instructions: "В течение нескольких минут вы получите письмо с инструкциями по восстановлению вашего пароля."
+      send_paranoid_instructions: "Если ваш адрес email есть в нашей базе данных, то в течение нескольких минут вы получите письмо с инструкциями по восстановлению вашего пароля."
+      updated: "Ваш пароль изменён. Теперь вы вошли в систему."
+      updated_not_active: "Пароль успешно изменён."
+    registrations:
+      sorry: Регистрация пока не открыта
+      destroyed: "До свидания! Ваша учётная запись удалена. Надеемся снова увидеть вас."
+      signed_up: "Добро пожаловать! Вы успешно зарегистрировались."
+      signed_up_but_inactive: "Вы успешно зарегистрировались. Тем не менее, вы не можете войти, потому что ваша учетная запись не активирована."
+      signed_up_but_locked: "Вы успешно зарегистрировались. Тем не менее, вы не можете войти, потому что ваша учетная запись заблокирована."
+      signed_up_but_unconfirmed: "В течение нескольких минут вы получите письмо с инструкциями по подтверждению вашей учётной записи."
+      updated: "Ваша учётная запись изменена."
+      update_needs_confirmation: "Ваш аккаунт успешно обновлен, нонеобходимо подтвердить ваш новый адрес email. Пожалуйста, проверьте свою электронную почту и нажмите на ссылку \"Подтвердить\", чтобы завершить обновления email."
+      new:
+        welcome: Создайте аккаунт...
+        teaser: и путешествуйте!
+        email: Электронная почта
+        password: Пароль
+        password_confirmation: Снова Пароль
+        first_name: Имя
+        last_name: Фамилия
+        by_clicking: Нажимая
+        register: Создать
+        sign_in: Войти
+        you_agree: Вы соглашаетесь с
+        terms: Условиями использования
+        ending: ', установленными порталом'
+        agree: Согласен
+        terms_head: Условия использования
+        title: Регистрация
+      edit:
+        title: Редактировать профиль
+    sessions:
+      signed_in: "Вход в систему выполнен."
+      signed_out: "Выход из системы выполнен."
+      new:
+        email: Электронная почта
+        password: Пароль
+        register: Зарегистрируйтесь
+        welcome: Войдите в свой аккаунт
+        sign_in: Вход
+        remember: Запомнить меня
+        title: Вход
+    unlocks:
+      send_instructions: "В течение нескольких минут вы получите письмо с инструкциями по разблокировке вашей учётной записи."
+      send_paranoid_instructions: "Если ваша учётная запись существует, то в течение нескольких минут вы получите письмо с инструкциями по её разблокировке."
+      unlocked: "Ваша учётная запись разблокирована. Теперь вы вошли в систему."
+  errors:
+    unathorized: Недостаточно прав для совершения операции
+    from_list: необходимо выбрать из списка
+    date_before: должен быть правильной датой и не позже даты конца периода
+    end_date_days: должен быть правильной датой. Путешествие не может быть длиннее 30 дней :(
+    messages:
+      already_confirmed: "уже подтверждена. Пожалуйста, попробуйте войти в систему"
+      confirmation_period_expired: "должен быть подтвержден в течении %{period}, пожалуйста, запросите подтверждение аккаунта завтра"
+      expired: "устарела. Пожалуйста, запросите новую"
+      not_found: "не найдена"
+      not_locked: "не заблокирована"
+      not_saved: "При сохранении возникли следующие ошибки"
+  views:
+    pagination:
+      first: "&laquo;"
+      last: "&raquo;"
+      previous: "&lsaquo;"
+      next: "&rsaquo;"
+      truncate: "..."
+  common:
+    saved: Сохранено!
+    yesss: Да
+    noooo: Нет
+    sign_out: Выход
+    sign_in: Вход
+    sign_up: Регистрация
+    profile: Мой профиль
+    edit_user: Редактировать
+    settings: Настройки
+    save: Сохранить
+    today: Сегодня
+    toggle_weeks: №
+    clear: Очистить
+    datepicker_close: Ок
+    user_profile_layout:
+      password_placeholder: оставьте пустым, если не хотите менять пароль
+      current_password_placeholder: для подтверждения изменений необходимо ввести текущий пароль
+      trips: Путешествия
+      delete_photo_cofirm: Вы уверены, что хотите удалить фото профиля?
+    are_you_sure: Вы уверены?
+    participant_will_be_deleted: Участник будет удален из этого путешествия
+    yes_do_it: Да, сделать это
+    no_do_not: Нет, отменить
+    cancel: Отмена
+    back: Назад
+    my_trips: Мои путешествия
+    update_successful: Изменения сохранены
+    delete_confirm: Вы уверены? Удаление необратимо.
+    flight: Самолёт
+    train: Поезд
+    bus: Автобус
+    car: Такси
+    personal_car: Автомобиль
+    boat: Корабль
+    link_text: Текст
+    authors: 'Авторы:'
+    hamster: Юлия Марченко
+    andrey: Андрей Марченко
+    no_comments: Нет комментариев
+    0_draft: Идея
+    1_planned: Планируемое
+    2_finished: Состоявшееся
+    photo_processing: Фото обрабатывается...
+    budget: Бюджет
+    transfers_hotel_budget: трансферы и проживание
+    activities_other_budget: впечатления
+    catering_budget: на еду
+    copy: Копия
+    invites: Приглашения
+    days:
+      zero: дней
+      one: день
+      few: дня
+      many: дней
+      other: дней
+    day_number: День %{number}
+  dashboard:
+    index:
+      title: Планирование путешествий
+      welcome: "Hamster Travel: все твои путешествия в одном месте"
+      welcome_second: "Сейчас мы на стадии закрытого тестирования. Следите за новостями!"
+      browse: Просмотр
+      add: Добавить план
+  layouts:
+    main:
+      pagetitle: "Hamster Travel | %{page}"
+    partials:
+      navbar:
+        apptitle: Hamster Travel
+        account: Мой аккаунт
+        trips: Путешествия
+        my_trips: Мои путешествия
+        my_ideas: Мои идеи
+  messages:
+    index:
+      title: Приглашения
+      invites_you_to: приглашает в
+      to_my_trips: Назад к моим путешествиям
+  modals:
+    confirm:
+      title: Внимание
+    photo_preview:
+      title: Выберите область фото для загрузки
+      cancel: Отмена
+      upload: Загрузить
+    days_sort_modal:
+      title: Изменить порядок дней
+      please_wait: Подождите немного, ваши планы перемещаются...
+  date:
+    formats:
+      month: '%B&nbsp;%Y'
+  activerecord:
+    attributes:
+      travels/trip:
+        name: Название
+        short_description: Описание
+        start_date: Первый день
+        end_date: Последний день
+        author: Создатель
+        status_code: Статус
+        private: Скрытый план (виден только участникам)
+        currency: Самая используемая валюта в путешествии
+        dates_unknown: Даты пока неизвестны
+        planned_days_count: Планируемое количество дней
+      user:
+        email: Электронный адрес
+        first_name: Имя
+        last_name: Фамилия
+        password: Пароль
+        password_confirmation: Повтор пароля
+        home_town_text: Мой город
+        locale: Язык
+        current_password: Текущий пароль
+        currency: Валюта
+  trips:
+    expenses:
+      breakfast: Завтрак
+      dinner: Ужин
+      main_course: Главное блюдо
+      lunch: Обед
+      coffee: Кофе
+    index:
+      title: Путешествия
+      create: Добавить план
+      with_report: Есть отчёт
+    new:
+      title: Новое путешествие
+    show:
+      delete_confirm: Путешествие будет удалено!
+      title: Путешествие
+      plan: Трансферы и проживание
+      plan_activities: Впечатления
+      catering: Еда
+      day: День
+      days: дней
+      place: Города
+      transfers: Трансферы
+      hotel: Отель
+      activities: Впечатления
+      comments: Комментарий
+      edit_plan: Редактировать план
+      edit_day: Редактировать день
+      edit_trip: Редактировать
+      delete_trip: Удалить
+      show_plan: Просмотр
+      save_plan: Сохранить
+      cancel: Назад без сохранения
+      saving_plan: Сохраняем...
+      city: Город
+      transfer: Трансфер
+      from: Из...
+      to: В...
+      departure: Отправление
+      arrival: Прибытие
+      price: Стоимость
+      price_hotel: Стоимость за ночь
+      more: Больше информации...
+      less: Меньше информации...
+      comment: Комментарий
+      carrier: Перевозчик
+      station_from: Станция
+      station_to: Станция
+      links: Закладки
+      add_link: Добавить закладку
+      activity:
+        name: Куда пойдём?
+      download_word: Выгрузить в Word
+      delete_photo_cofirm: Вы уверены, что хотите удалить фото?
+      status_code: 'Статус путешествия:'
+      name: Название
+      expense: Расход
+      expenses: Расходы
+      clone: Сделать копию
+      report: Отчет о путешествии
+      no_report: У этого путешествия ещё нет отчёта.
+      budget_for: на
+      persons: чел.
+      watching_now: Просматривают сейчас
+      no_catering_description: Описания кухни пока нет
+      no_city: Выберите город...
+      catering_description: Описание кухни
+      catering_description_placeholder: Национальная кухня, что следует попробовать, а что нет
+      catering_delete: Удалить секцию
+      example_espenses: Цены
+      add_expense: Добавить цены
+      for_day: Затраты на еду в день с человека
+      catering_show_for_day: в день
+      catering_name: Название секции
+      catering_name_placeholder: Регион или город
+      catering_persons: Сколько человек
+      catering_persons_show: чел.
+      catering_days: Сколько дней
+      catering_days_show: дней
+      catering_sum: Сумма
+      catering_add: Добавить секцию
+      catering_add_info: Добавьте сюда планируемые расходы на еду и информацию о национальной кухне.
+      catering_call_to_action: Поехали
+      overall: всего
+      add_friend: Пригласить друга
+      type_name: Имя друга
+      invite_sent: приглашение отправлено
+      reorder_days: Переместить
+      no_activities: На этот день пока ничего не запланировано. Можно никуда не торопиться и просто отдыхать... или добавить
+       интересные места.
+      add_activities: Добавить впечатления
+      add_city: Добавить город
+      add_expense: Добавить расходы
+      add_activity: Добавить впечатление
+      move_activity: Переместить на другой день
+      move_activity_action: Переместить
+      activity_must_see: Must see
+      activity_nice_to_visit: Надо посетить
+      activity_not_necessary: Необязательно
+      address: адрес
+      working_hours: часы работы
+    edit:
+      title: Редактирование путешествия
+    form:
+      create_title: Новый план
+      edit_title: План
+      name_placeholder: Запоминающееся и яркое название
+      short_description_placeholder: Пара слов о путешествии в целом
+      start_date_placeholder: Когда поедем?
+      end_date_placeholder: Когда домой?
+      save: Сохранить
+      return: Назад
+      confirm: 'Количество дней стало меньше! Данные за последние дни потеряются. Продолжаем?'
+      0_draft_help: 'предварительный план, набросок путешествия'
+      1_planned_help: 'составленный план для будущего путешествия'
+      2_finished_help: 'прошлое путешествие, которым можно поделиться с друзьями'
+      private_help: Скрытые путешествия можешь видеть только ты (на вкладке 'Мои путешествия')!
+  users:
+    edit:
+      title: Мои настройки
+    show:
+      title: Пользователь
+    update_successful: Настройки успешно сохранены
+    partials:
+      menu:
+        profile: Профиль
+  widgets:
+    trips:
+      trip_box:
+        author: Автор
+      grid:
+        no_trips: Ещё нет ни одного путешествия! Можно добавить новое.
