@@ -22,7 +22,7 @@ gem 'haml'
 gem 'haml-rails'
 
 # authentication
-gem 'devise', '~> 3.4.0'
+gem 'devise', '~> 4.1.1'
 
 # CSS
 # Use SCSS for stylesheets
