@@ -36,4 +36,7 @@ Travel::Application.configure do
 
   # Comment this if you do not have memcached installed
   config.cache_store = :dalli_store
+
+  config.assets.compile = true
+  config.assets.precompile += %w( *.js main.css )
 end

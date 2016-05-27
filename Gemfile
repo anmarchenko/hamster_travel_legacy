@@ -26,11 +26,9 @@ gem 'devise', '~> 4.1.1'
 
 # CSS
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.0'
+gem 'sass-rails', '~> 5.0'
 # font awesome icons
 gem 'font-awesome-rails'
-
-gem 'compass-rails'
 
 # JS
 # Use CoffeeScript for .js.coffee assets and views
@@ -43,8 +41,8 @@ gem 'jquery-ui-rails', '~> 4.2.1'
 gem 'therubyracer', platforms: :ruby
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
-# AngularJS magic framework
-gem 'angularjs-rails', '1.4.7'
+# AngularJS
+gem 'angularjs-rails', '1.5.5'
 # File upload
 gem 'jquery-fileupload-rails', github: 'Springest/jquery-fileupload-rails'
 # Jcrop library for cropping images before upload
