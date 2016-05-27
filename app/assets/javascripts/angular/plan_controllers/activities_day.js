@@ -99,7 +99,7 @@ angular.module('travel-components').controller('ActivitiesDayController'
                 }
             };
 
-            $scope.onDragFinish = function (e, ui) {
+            $scope.onDragFinish = function () {
                 if (!$scope.edit) {
                     $scope.save(true);
                 }

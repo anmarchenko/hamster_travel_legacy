@@ -9,8 +9,6 @@ class Finders::Cities
     end
   end
 
-  private
-
   def self.empty_suggestions user, trip_id
     trip = user.trips.find(trip_id) rescue nil
     query = [user.try(:home_town), trip.try(:visited_cities)].flatten.compact.uniq

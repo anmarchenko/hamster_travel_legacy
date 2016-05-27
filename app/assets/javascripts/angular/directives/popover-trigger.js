@@ -7,7 +7,7 @@ angular.module('travel-components')
     .directive('travelPopoverToggle', ['$timeout', function($timeout) {
         return {
             scope: true,
-            link: function(scope, element, attrs) {
+            link: function(scope, element) {
                 scope.toggle = function() {
                     $timeout(function() {
                         element.triggerHandler(scope.$parent.popover_opened ? 'close' : 'open');

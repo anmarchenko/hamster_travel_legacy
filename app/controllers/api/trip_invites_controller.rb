@@ -21,7 +21,7 @@ class Api::TripInvitesController < ApplicationController
       head 404 and return if trip_invite.blank?
       trip_invite.destroy
     elsif params[:user_id].present?
-      user = @trip.users.where(id: params[:user_id]).first
+      user = @trip.users.find(params[:user_id])
       @trip.users.delete(user)
       @trip.save
     end
