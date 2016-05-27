@@ -89,7 +89,7 @@ gem 'resque-scheduler'
 # config
 gem 'config'
 
-# translations
+# translations for models
 gem 'globalize', '~> 5.0.0'
 
 # inline svg for styling
@@ -100,21 +100,12 @@ group :production do
   gem 'rack-cache', :require => 'rack/cache'
 end
 
-group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
-end
-
 group :development do
   # Use Capistrano for deployment
   gem 'capistrano', '~> 3.1.0'
   gem 'capistrano-rails',   '~> 1.1', require: false
   gem 'capistrano-bundler', '~> 1.1', require: false
   gem 'capistrano-rvm',   '~> 0.1', require: false
-
-  # show errors
-  gem 'better_errors'
-  gem 'binding_of_caller'
 end
 
 group :test do
