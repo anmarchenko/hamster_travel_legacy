@@ -4,16 +4,6 @@ module Concerns
   module Geographical
     extend ActiveSupport::Concern
 
-    def self.find_by_geonames_code(code)
-      Geo::City.by_geonames_code(code) ||
-        Geo::Adm5.by_geonames_code(code) ||
-        Geo::Adm4.by_geonames_code(code) ||
-        Geo::Adm3.by_geonames_code(code) ||
-        Geo::District.by_geonames_code(code) ||
-        Geo::Region.by_geonames_code(code) ||
-        Geo::Country.by_geonames_code(code)
-    end
-
     def translated_name(locale = I18n.locale)
       res = nil
       Globalize.with_locale(locale) do

@@ -31,6 +31,16 @@ namespace :geo do
     }
   end
 
+  def self.find_by_geonames_code code
+    Geo::City.by_geonames_code(code) ||
+        Geo::Adm5.by_geonames_code(code) ||
+        Geo::Adm4.by_geonames_code(code) ||
+        Geo::Adm3.by_geonames_code(code) ||
+        Geo::District.by_geonames_code(code) ||
+        Geo::Region.by_geonames_code(code) ||
+        Geo::Country.by_geonames_code(code)
+  end
+
   task :prepare, [] => :environment do
 
     outputFiles = {}
@@ -101,7 +111,7 @@ namespace :geo do
       f.each_line do |line|
         values = Geo::Country.split_geonames_string line
         next unless %w(en ru).include? values[2]
-        object = Concerns::Geographical.find_by_geonames_code(values[1])
+        object = find_by_geonames_code(values[1])
         if object.blank?
           puts "ERROR!! Object #{values[1]} not found"
           next
