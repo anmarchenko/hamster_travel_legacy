@@ -63,7 +63,7 @@ describe Api::CitiesController do
 
         context 'when passed trip_id' do
           let (:term) { '[$empty$]' }
-          let (:trip) { FactoryGirl.create(:trip, :with_filled_days) }
+          let (:trip) { FactoryGirl.create(:trip, :with_filled_days, users: [subject.current_user]) }
 
           it 'returns user\'s home city and all cities from trip' do
             get 'index', term: term, trip_id: trip.id, format: :json
