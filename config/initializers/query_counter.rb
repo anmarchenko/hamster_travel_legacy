@@ -27,7 +27,7 @@ ActiveSupport::Notifications.subscribe('sql.active_record', ActiveRecord::QueryC
 
 module ActiveRecord
   class Base
-    def self.count_queries(&block)
+    def self.count_queries(*)
       ActiveRecord::QueryCounter.query_count = 0
       ActiveRecord::QueryCounter.queries = []
       yield
