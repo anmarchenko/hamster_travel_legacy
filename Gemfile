@@ -102,7 +102,7 @@ end
 
 group :development do
   # Use Capistrano for deployment
-  gem 'capistrano', '~> 3.1.0'
+  gem 'capistrano', '~> 3.5.0'
   gem 'capistrano-rails',   '~> 1.1', require: false
   gem 'capistrano-bundler', '~> 1.1', require: false
   gem 'capistrano-rvm',   '~> 0.1', require: false
@@ -110,8 +110,8 @@ end
 
 group :test do
   # unit testing
-  gem 'rspec', '~> 3.1'
-  gem 'rspec-rails', '~> 3.1'
+  gem 'rspec', '~> 3.4'
+  gem 'rspec-rails', '~> 3.4'
   gem 'nyan-cat-formatter'
   gem 'database_cleaner'
 

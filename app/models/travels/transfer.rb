@@ -41,7 +41,7 @@ module Travels
     default_scope { includes(:city_from, :city_to) }
 
     before_save do |transfer|
-      transfer.set_date(transfer.day.date_when)
+      transfer.set_date(transfer.day.date_when) if transfer.day
     end
 
     module Types
