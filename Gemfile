@@ -5,7 +5,7 @@ gem 'russian'
 
 # DB
 gem 'pg'
-gem 'annotate', '~> 2.6.6'
+gem 'annotate'
 
 # pagination
 gem 'kaminari'
@@ -15,7 +15,7 @@ gem 'kaminari-i18n'
 gem 'date_validator'
 
 # dates
-gem 'bootstrap-datepicker-rails', '~> 1.3.1.1'
+gem 'bootstrap-datepicker-rails'
 
 # views
 gem 'haml'
