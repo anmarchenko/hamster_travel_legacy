@@ -5,6 +5,7 @@
 //= require jquery.ui.core
 //= require jquery.ui.widget
 //= require jquery.ui.mouse
+//= require jquery.ui.sortable
 //= require jquery.iframe-transport
 //= require jquery.fileupload
 //= require jquery.Jcrop
@@ -18,7 +19,7 @@
 //= require angular-cookies
 //= require angular-animate
 //= require angular-sanitize
-//= require sortable.min.js
+//= require sortable.js
 //= require bootstrap-slider.min
 //= require angular-slider
 //= require sweetalert2.min
