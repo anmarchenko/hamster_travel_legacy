@@ -2,6 +2,7 @@ class Api::DaysTransfersController < ApplicationController
   before_action :find_trip
   before_action :authenticate_user!, only: [:create]
   before_action :authorize!, only: [:create]
+  before_action :api_authorize_readonly!, only: [:index]
 
   def index
     render json: {

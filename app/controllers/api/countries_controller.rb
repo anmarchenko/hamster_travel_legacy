@@ -2,6 +2,7 @@ class Api::CountriesController < ApplicationController
   respond_to :json
 
   before_action :find_trip
+  before_action :api_authorize_readonly!, only: [:show]
 
   def show
     render json: {

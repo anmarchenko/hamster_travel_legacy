@@ -4,6 +4,7 @@ module Api
     before_action :find_trip
     before_action :authenticate_user!, only: [:update]
     before_action :authorize, only: [:update]
+    before_action :api_authorize_readonly!, only: [:show]
 
     respond_to :json
 

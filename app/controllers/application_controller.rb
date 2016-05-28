@@ -50,4 +50,10 @@ class ApplicationController < ActionController::Base
     super || valid_authenticity_token?(session, request.headers['X-XSRF-TOKEN'])
   end
 
+  def api_authorize_readonly!
+    return unless @trip.private
+    head 403 and return unless user_signed_in?
+    head 403 and return unless @trip.can_be_seen_by?(current_user)
+  end
+
 end

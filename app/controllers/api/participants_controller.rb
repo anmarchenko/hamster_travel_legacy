@@ -1,6 +1,7 @@
 class Api::ParticipantsController < ApplicationController
 
   before_action :find_trip
+  before_action :api_authorize_readonly!, only: [:index]
 
   def index
     render json: {

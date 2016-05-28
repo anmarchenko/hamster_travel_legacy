@@ -24,6 +24,30 @@ describe Api::DaysTransfersController do
         end
       end
 
+      context 'when trip is private' do
+        let(:private_trip) { FactoryGirl.create(:trip, :with_filled_days, private: true) }
+
+        it 'heads 403' do
+          get 'index', trip_id: private_trip.id.to_s, format: :json
+          expect(response).to have_http_status 403
+        end
+      end
+
+      context 'when trip is private and current_user is one of participants' do
+        let(:private_trip) { FactoryGirl.create(:trip, :with_filled_days, private: true, users: [subject.current_user]) }
+
+        it 'heads 403' do
+          get 'index', trip_id: private_trip.id.to_s, format: :json
+
+          expect(response).to have_http_status 200
+
+          json = JSON.parse(response.body)['days']
+          expect(json.count).to eq(8)
+          expect(json.first['date']).to eq(I18n.l(private_trip.start_date, format: '%d.%m.%Y %A'))
+          expect(json.first['transfers'].count).to eq(private_trip.days.first.transfers.count)
+          expect(json.first['activities']).to be_nil
+        end
+      end
     end
 
     context 'when no logged user' do
@@ -33,6 +57,15 @@ describe Api::DaysTransfersController do
         json = JSON.parse(response.body)['days']
         expect(json.count).to eq(8)
         expect(json.first['date']).to eq(I18n.l(trip.start_date, format: '%d.%m.%Y %A'))
+      end
+
+      context 'when trip is private' do
+        let(:private_trip) { FactoryGirl.create(:trip, :with_filled_days, private: true) }
+
+        it 'heads 403' do
+          get 'index', trip_id: private_trip.id.to_s, format: :json
+          expect(response).to have_http_status 403
+        end
       end
     end
   end

@@ -3,6 +3,7 @@ class Api::ActivitiesController < ApplicationController
   before_action :find_day
   before_action :authenticate_user!, only: [:create]
   before_action :authorize, only: [:create]
+  before_action :api_authorize_readonly!, only: [:index]
 
   def index
     render json: @day.as_json(normal_json: true).merge(

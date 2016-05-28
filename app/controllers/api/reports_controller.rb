@@ -4,6 +4,7 @@ class Api::ReportsController < ApplicationController
   before_action :find_trip
   before_action :authenticate_user!, only: [:update]
   before_action :authorize, only: [:update]
+  before_action :api_authorize_readonly!, only: [:show]
 
   def show
     render json: {

@@ -3,6 +3,7 @@ class Api::TransfersController < ApplicationController
   before_action :find_day
   before_action :authenticate_user!, only: [:create]
   before_action :authorize, only: [:create]
+  before_action :api_authorize_readonly!, only: [:index, :previous_place, :previous_hotel]
 
   def index
     render json: @day.as_json(normal_json: true).merge(
