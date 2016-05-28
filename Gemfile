@@ -46,10 +46,6 @@ gem 'angularjs-rails', '1.5.5'
 # Jcrop library for cropping images before upload
 gem 'jcrop-rails-v2'
 
-# other
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.2'
-
 # app server
 gem 'puma'
 

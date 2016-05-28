@@ -3,10 +3,10 @@ describe CurrencyHelper do
     it 'returns currencies list for select' do
       list = [["Euro (EUR)", "EUR", "€"], ["British Pound (GBP)", "GBP", "£"], ["Russian Ruble (RUB)", "RUB", "\u20BD"],
               ["United States Dollar (USD)", "USD", "$"], ["Australian Dollar (AUD)", "AUD", "$"],
-              ["Bulgarian Lev (BGN)", "BGN", "лв"], ["Brazilian Real (BRL)", "BRL", "R$"],
-              ["Canadian Dollar (CAD)", "CAD", "$"], ["Swiss Franc (CHF)", "CHF", "Fr"],
+              ["Bulgarian Lev (BGN)", "BGN", "лв."], ["Brazilian Real (BRL)", "BRL", "R$"],
+              ["Canadian Dollar (CAD)", "CAD", "$"], ["Swiss Franc (CHF)", "CHF", "CHF"],
               ["Chinese Renminbi Yuan (CNY)", "CNY", "¥"], ["Czech Koruna (CZK)", "CZK", "Kč"],
-              ["Danish Krone (DKK)", "DKK", "kr"], ["Hong Kong Dollar (HKD)", "HKD", "$"],
+              ["Danish Krone (DKK)", "DKK", "kr."], ["Hong Kong Dollar (HKD)", "HKD", "$"],
               ["Croatian Kuna (HRK)", "HRK", "kn"], ["Hungarian Forint (HUF)", "HUF", "Ft"],
               ["Indonesian Rupiah (IDR)", "IDR", "Rp"], ["Israeli New Sheqel (ILS)", "ILS", "₪"],
               ["Indian Rupee (INR)", "INR", "₹"], ["Japanese Yen (JPY)", "JPY", "¥"],
@@ -18,7 +18,9 @@ describe CurrencyHelper do
               ["Thai Baht (THB)", "THB", "฿"], ["Turkish Lira (TRY)", "TRY", "\u20BA"],
               ["South African Rand (ZAR)", "ZAR", "R"]]
 
-      expect(CurrencyHelper.currencies_select).to eq(list)
+      CurrencyHelper.currencies_select.each_with_index do |curr, index|
+        expect(curr).to eq(list[index])
+      end
     end
   end
 end

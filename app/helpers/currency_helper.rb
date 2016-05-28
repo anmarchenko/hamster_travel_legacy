@@ -5,7 +5,7 @@ module CurrencyHelper
   IMPORTANT_CURRENCIES = %w(RUB EUR USD GBP)
 
   def self.currency_list user_currency = nil, trip_currency = nil
-    ecb_currencies = EuCentralBank::CURRENCIES.clone
+    ecb_currencies = EuCentralBank::CURRENCIES.dup
     ecb_currencies << 'EUR'
 
     ecb_currencies.sort_by! do |curr|
