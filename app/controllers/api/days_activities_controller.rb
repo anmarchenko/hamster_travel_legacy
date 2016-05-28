@@ -21,6 +21,7 @@ class Api::DaysActivitiesController < ApplicationController
       Updaters::DayPlaces.new(day, day_params.delete(:places)).process
       Updaters::Day.new(day, day_params).process
     end
+    Calculators::Budget.new(@trip).invalidate_cache!
     render json: {status: 0}
   end
 

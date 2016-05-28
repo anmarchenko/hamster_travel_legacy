@@ -34,8 +34,7 @@ Travel::Application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
-  # Comment this if you do not have memcached installed
-  config.cache_store = :dalli_store
+  config.cache_store = :null_store
 
   config.assets.compile = true
   config.assets.precompile += %w( *.js main.css )

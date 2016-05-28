@@ -19,6 +19,7 @@ class Api::DaysTransfersController < ApplicationController
       Updaters::DayPlaces.new(day, day_params.delete(:places)).process
       Updaters::Hotel.new(day, day_params.delete(:hotel)).process
     end
+    Calculators::Budget.new(@trip).invalidate_cache!
     render json: {status: 0}
   end
 

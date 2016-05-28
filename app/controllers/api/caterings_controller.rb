@@ -16,6 +16,7 @@ module Api
 
     def update
       ::Updaters::Caterings.new(@trip, params_caterings[:caterings]).process
+      Calculators::Budget.new(@trip).invalidate_cache!
       render json: {
           res: true
       }
