@@ -16,15 +16,9 @@ describe Travels::Day do
 
     it 'has at least one place' do
       expect(day.places.count).to eq(1)
-      day.places = []
-      day.save validate: false
-      expect(day.places.count).to eq(1)
     end
 
     it 'has hotel' do
-      expect(day.hotel).not_to be_blank
-      day.hotel = nil
-      day.save validate: false
       expect(day.hotel).not_to be_blank
     end
   end

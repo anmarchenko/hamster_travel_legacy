@@ -1,4 +1,4 @@
-describe Updaters::DayPlaces do
+describe Updaters::DayExpenses do
   def first_day_of tr
     tr.reload.days.first
   end
@@ -76,7 +76,7 @@ describe Updaters::DayPlaces do
         params = []
         Updaters::DayExpenses.new(day, params).process
         updated_day = first_day_of(trip)
-        expect(updated_day.expenses.count).to eq 1 # default one
+        expect(updated_day.expenses.count).to eq 0
       end
     end
 

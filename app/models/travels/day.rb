@@ -26,9 +26,7 @@ module Travels
 
     default_scope ->{order(date_when: :asc, index: :asc)}
 
-    # TODO: performance issue
-    before_save :init
-
+    before_create :init
     def init
       self.places = [Travels::Place.new] if self.places.count == 0
       self.hotel = Travels::Hotel.new(amount_currency: trip.currency) if self.hotel.blank?
