@@ -14,7 +14,8 @@ Bundler.require(:default, Rails.env)
 module Travel
   class Application < Rails::Application
     Bundler.require(*Rails.groups)
-    ::Config::Integration::Rails::Railtie.preload
+
+    Config::Integrations::Rails::Railtie.preload
 
     I18n.enforce_available_locales = true
     I18n.default_locale = :en
