@@ -43,8 +43,6 @@ gem 'therubyracer', platforms: :ruby
 gem 'uglifier', '>= 1.3.0'
 # AngularJS
 gem 'angularjs-rails', '1.5.5'
-# File upload
-gem 'jquery-fileupload-rails', github: 'Springest/jquery-fileupload-rails'
 # Jcrop library for cropping images before upload
 gem 'jcrop-rails-v2'
 
