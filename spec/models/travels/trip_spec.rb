@@ -86,14 +86,14 @@ describe Travels::Trip do
     context 'when trip has start and end date' do
       let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
 
-      it 'creates trip days on save' do
+      it 'creates trip days on create' do
         expect(trip.days.count).to eq(8)
         expect(trip.days.first.date_when).to eq(trip.start_date)
         expect(trip.days.last.date_when).to eq(trip.end_date)
       end
 
       it 'recounts dates on update preserving other data and updates transfer dates' do
-        trip.update_attributes(start_date: 14.days.ago, end_date: 7.days.ago)
+        Updaters::Trip.new(trip).update(start_date: 14.days.ago, end_date: 7.days.ago)
         updated_trip = trip.reload
 
         expect(updated_trip.days.count).to eq(8)
@@ -108,7 +108,7 @@ describe Travels::Trip do
       end
 
       it 'creates new days when necessary' do
-        trip.update_attributes(start_date: 16.days.ago, end_date: 7.days.ago)
+        Updaters::Trip.new(trip).update(start_date: 16.days.ago, end_date: 7.days.ago)
         updated_trip = trip.reload
 
         expect(updated_trip.days.count).to eq(10)
@@ -118,7 +118,7 @@ describe Travels::Trip do
       end
 
       it 'deletes days when necessary' do
-        trip.update_attributes(start_date: 12.days.ago, end_date: 7.days.ago)
+        Updaters::Trip.new(trip).update(start_date: 12.days.ago, end_date: 7.days.ago)
         updated_trip = trip.reload
 
         expect(updated_trip.days.count).to eq(6)
@@ -128,7 +128,7 @@ describe Travels::Trip do
       end
 
       it 'converts to trip without dates without losing data' do
-        trip.update_attributes(planned_days_count: 5, dates_unknown: true)
+        Updaters::Trip.new(trip).update(planned_days_count: 5, dates_unknown: true)
         updated_trip = trip.reload
 
         expect(updated_trip.start_date).to be_nil
@@ -145,7 +145,7 @@ describe Travels::Trip do
     context 'when trip has only number of days' do
       let(:trip) { FactoryGirl.create(:trip, :no_dates, :with_filled_days) }
 
-      it 'creates trip days on save' do
+      it 'creates trip days on create' do
         expect(trip.days.count).to eq(3)
         expect(trip.days.first.date_when).to be_nil
         expect(trip.days.last.date_when).to be_nil
@@ -154,7 +154,7 @@ describe Travels::Trip do
       end
 
       it 'creates new days when necessary' do
-        trip.update_attributes(planned_days_count: 5)
+        Updaters::Trip.new(trip).update(planned_days_count: 5)
         updated_trip = trip.reload
 
         expect(updated_trip.days.count).to eq(5)
@@ -166,7 +166,7 @@ describe Travels::Trip do
       end
 
       it 'deletes days when necessary' do
-        trip.update_attributes(planned_days_count: 2)
+        Updaters::Trip.new(trip).update(planned_days_count: 2)
         updated_trip = trip.reload
 
         expect(updated_trip.days.count).to eq(2)
@@ -177,7 +177,7 @@ describe Travels::Trip do
       end
 
       it 'converts to trip with dates preserving data' do
-        trip.update_attributes(start_date: Date.today, end_date: Date.today + 4.days, dates_unknown: false)
+        Updaters::Trip.new(trip).update(start_date: Date.today, end_date: Date.today + 4.days, dates_unknown: false)
 
         updated_trip = trip.reload
 

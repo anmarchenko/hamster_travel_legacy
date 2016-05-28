@@ -1,5 +1,3 @@
-// Flatly
-// Bootswatch
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui/core
@@ -14,19 +12,24 @@
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.en-GB.js
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.ru.js
-//= require_tree ./common
+//= require bootstrap-slider.min
+
+//= require sweetalert2.min
+//= require toastr
+//= require moment-with-langs.min
+
+//= require_tree ./jquery
+
 //= require angular
 //= require angular-cookies
 //= require angular-animate
 //= require angular-sanitize
-//= require sortable.js
-//= require bootstrap-slider.min
 //= require angular-slider
-//= require sweetalert2.min
+//= require angular-locale_ru
 //= require ui-bootstrap-tpls
-//= require toastr
+//= require sortable.js
 //= require sticky.min.js
+
 //= require angular/app.js
 //= require_tree ./angular
-//= require angular-locale_ru
-//= require moment-with-langs.min
+

@@ -48,7 +48,7 @@ class TripsController < ApplicationController
   end
 
   def update
-    @trip.update_attributes(params_trip)
+    Updaters::Trip.new(@trip).update(params_trip)
     redirect_to trip_path(@trip), notice: t('common.update_successful') and return if @trip.errors.blank?
     render 'edit'
   end

@@ -69,7 +69,7 @@ angular.module('travel-components').controller('TransfersDayController'
             $scope.setEdit = function (val, object) {
                 if (val) {
                     $scope[object + "_edit"] = val;
-                    if ($scope['transfers_edit']) {
+                    if ($scope['transfer_edit']) {
                         $scope.setDefaults();
                     }
                 } else {

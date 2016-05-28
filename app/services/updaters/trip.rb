@@ -5,6 +5,11 @@ class Updaters::Trip
     self.trip = trip
   end
 
+  def update params_trip
+    trip.update_attributes(params_trip)
+    trip.update_plan! if trip.errors.blank?
+  end
+
   def update_budget_for budget_for
     trip.update_attributes(budget_for: budget_for)
   end

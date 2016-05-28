@@ -100,6 +100,7 @@ module Travels
     default_scope -> { where(:archived => false) }
 
     before_save :set_model_state
+    after_create :update_plan!
 
     def set_model_state
       if self.dates_unknown
@@ -110,9 +111,7 @@ module Travels
       end
     end
 
-    after_save :update_plan
-
-    def update_plan
+    def update_plan!
       self.days ||= []
 
       # ensure order
