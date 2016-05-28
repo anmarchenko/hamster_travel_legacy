@@ -14,9 +14,6 @@ gem 'kaminari-i18n'
 # validate dates
 gem 'date_validator'
 
-# dates
-gem 'bootstrap-datepicker-rails'
-
 # views
 gem 'haml'
 gem 'haml-rails'
@@ -24,27 +21,31 @@ gem 'haml-rails'
 # authentication
 gem 'devise', '~> 4.1.1'
 
+# asset pipeline
+# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+gem 'therubyracer', platforms: :ruby
+# Use Uglifier as compressor for JavaScript assets
+gem 'uglifier', '>= 1.3.0'
+
 # CSS
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # font awesome icons
 gem 'font-awesome-rails'
 
-# JS
+# JS (most of these gems must die)
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # jquery UI
-gem 'jquery-ui-rails', '~> 4.2.1'
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-gem 'therubyracer', platforms: :ruby
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+gem 'jquery-ui-rails', '~> 5.0'
 # AngularJS
 gem 'angularjs-rails', '1.5.5'
 # Jcrop library for cropping images before upload
 gem 'jcrop-rails-v2'
+# dates
+gem 'bootstrap-datepicker-rails'
 
 # app server
 gem 'puma'

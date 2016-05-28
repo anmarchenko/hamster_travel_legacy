@@ -2,10 +2,10 @@
 // Bootswatch
 //= require jquery
 //= require jquery_ujs
-//= require jquery.ui.core
-//= require jquery.ui.widget
-//= require jquery.ui.mouse
-//= require jquery.ui.sortable
+//= require jquery-ui/core
+//= require jquery-ui/widget
+//= require jquery-ui/mouse
+//= require jquery-ui/sortable
 //= require jquery.iframe-transport
 //= require jquery.fileupload
 //= require jquery.Jcrop
