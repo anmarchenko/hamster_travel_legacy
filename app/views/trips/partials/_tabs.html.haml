@@ -14,8 +14,9 @@
       = inline_svg 'plan/catering.svg', class: 'tab-image catering-img'
       %span.hidden-xs
         = t('trips.show.catering')
-  %li{class: ('active' if params[:tab] == ApplicationHelper::TAB_REPORT)}
-    = link_to trip_path(@trip, tab: ApplicationHelper::TAB_REPORT, anchor: 'plan_area') do
-      = inline_svg 'plan/report.svg', class: 'tab-image report-img'
-      %span.hidden-xs
-        = t('trips.show.report')
+  - if @user_can_edit || @trip.report?
+    %li{class: ('active' if params[:tab] == ApplicationHelper::TAB_REPORT)}
+      = link_to trip_path(@trip, tab: ApplicationHelper::TAB_REPORT, anchor: 'plan_area') do
+        = inline_svg 'plan/report.svg', class: 'tab-image report-img'
+        %span.hidden-xs
+          = t('trips.show.report')
