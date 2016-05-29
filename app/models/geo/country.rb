@@ -23,7 +23,6 @@
 #  currency_text              :string
 #  languages                  :text             default([]), is an Array
 #  continent                  :string
-#  mongo_id                   :string
 #
 
 module Geo

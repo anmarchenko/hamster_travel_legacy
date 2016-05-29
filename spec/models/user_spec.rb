@@ -17,7 +17,6 @@
 #  last_name              :string
 #  locale                 :string
 #  image_uid              :string
-#  mongo_id               :string
 #  created_at             :datetime
 #  updated_at             :datetime
 #  currency               :string

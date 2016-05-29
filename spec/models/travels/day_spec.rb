@@ -3,7 +3,6 @@
 # Table name: days
 #
 #  id        :integer          not null, primary key
-#  mongo_id  :string
 #  date_when :date
 #  comment   :text
 #  trip_id   :integer

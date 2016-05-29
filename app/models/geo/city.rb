@@ -16,7 +16,6 @@
 #  adm5_code                  :string
 #  timezone                   :string
 #  status                     :string
-#  mongo_id                   :string
 #
 
 module Geo

@@ -4,7 +4,6 @@
 #
 #  id              :integer          not null, primary key
 #  name            :string
-#  mongo_id        :string
 #  expendable_id   :integer
 #  expendable_type :string
 #  amount_cents    :integer          default(0), not null

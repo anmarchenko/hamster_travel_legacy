@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160513184800) do
+ActiveRecord::Schema.define(version: 20160529120109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(version: 20160513184800) do
     t.text    "comment"
     t.string  "link_description"
     t.text    "link_url"
-    t.string  "mongo_id"
     t.integer "day_id"
     t.integer "amount_cents",     default: 0,     null: false
     t.string  "amount_currency",  default: "RUB", null: false
@@ -58,7 +57,6 @@ ActiveRecord::Schema.define(version: 20160513184800) do
     t.string  "adm4_code"
     t.string  "adm5_code"
     t.string  "timezone"
-    t.string  "mongo_id"
   end
 
   add_index "adm3s", ["geonames_code"], name: "index_adm3s_on_geonames_code", using: :btree
@@ -88,7 +86,6 @@ ActiveRecord::Schema.define(version: 20160513184800) do
     t.string  "adm4_code"
     t.string  "adm5_code"
     t.string  "timezone"
-    t.string  "mongo_id"
   end
 
   add_index "adm4s", ["geonames_code"], name: "index_adm4s_on_geonames_code", using: :btree
@@ -118,7 +115,6 @@ ActiveRecord::Schema.define(version: 20160513184800) do
     t.string  "adm4_code"
     t.string  "adm5_code"
     t.string  "timezone"
-    t.string  "mongo_id"
   end
 
   add_index "adm5s", ["geonames_code"], name: "index_adm5s_on_geonames_code", using: :btree
@@ -151,7 +147,6 @@ ActiveRecord::Schema.define(version: 20160513184800) do
     t.string  "adm5_code"
     t.string  "timezone"
     t.string  "status"
-    t.string  "mongo_id"
   end
 
   add_index "cities", ["geonames_code"], name: "index_cities_on_geonames_code", using: :btree
@@ -189,7 +184,6 @@ ActiveRecord::Schema.define(version: 20160513184800) do
     t.string  "currency_text"
     t.text    "languages",                  default: [], array: true
     t.string  "continent"
-    t.string  "mongo_id"
   end
 
   add_index "countries", ["geonames_code"], name: "index_countries_on_geonames_code", using: :btree
@@ -207,7 +201,6 @@ ActiveRecord::Schema.define(version: 20160513184800) do
   add_index "country_translations", ["locale"], name: "index_country_translations_on_locale", using: :btree
 
   create_table "days", force: :cascade do |t|
-    t.string  "mongo_id"
     t.date    "date_when"
     t.text    "comment"
     t.integer "trip_id"
@@ -240,7 +233,6 @@ ActiveRecord::Schema.define(version: 20160513184800) do
     t.string  "adm4_code"
     t.string  "adm5_code"
     t.string  "timezone"
-    t.string  "mongo_id"
   end
 
   add_index "districts", ["geonames_code"], name: "index_districts_on_geonames_code", using: :btree
@@ -255,7 +247,6 @@ ActiveRecord::Schema.define(version: 20160513184800) do
 
   create_table "expenses", force: :cascade do |t|
     t.string  "name"
-    t.string  "mongo_id"
     t.integer "expendable_id"
     t.string  "expendable_type"
     t.integer "amount_cents",    default: 0,     null: false
@@ -267,7 +258,6 @@ ActiveRecord::Schema.define(version: 20160513184800) do
   create_table "external_links", force: :cascade do |t|
     t.string  "description"
     t.text    "url"
-    t.string  "mongo_id"
     t.integer "linkable_id"
     t.string  "linkable_type"
   end
@@ -277,7 +267,6 @@ ActiveRecord::Schema.define(version: 20160513184800) do
   create_table "hotels", force: :cascade do |t|
     t.string  "name"
     t.text    "comment"
-    t.string  "mongo_id"
     t.integer "day_id"
     t.integer "amount_cents",    default: 0,     null: false
     t.string  "amount_currency", default: "RUB", null: false
@@ -286,7 +275,6 @@ ActiveRecord::Schema.define(version: 20160513184800) do
   add_index "hotels", ["day_id"], name: "index_hotels_on_day_id", using: :btree
 
   create_table "places", force: :cascade do |t|
-    t.string  "mongo_id"
     t.integer "day_id"
     t.integer "city_id"
   end
@@ -318,7 +306,6 @@ ActiveRecord::Schema.define(version: 20160513184800) do
     t.string  "adm4_code"
     t.string  "adm5_code"
     t.string  "timezone"
-    t.string  "mongo_id"
   end
 
   add_index "regions", ["geonames_code"], name: "index_regions_on_geonames_code", using: :btree
@@ -327,7 +314,6 @@ ActiveRecord::Schema.define(version: 20160513184800) do
   create_table "transfers", force: :cascade do |t|
     t.integer  "order_index"
     t.string   "type"
-    t.string   "type_icon"
     t.string   "code"
     t.string   "company"
     t.string   "link"
@@ -336,7 +322,6 @@ ActiveRecord::Schema.define(version: 20160513184800) do
     t.datetime "start_time"
     t.datetime "end_time"
     t.text     "comment"
-    t.string   "mongo_id"
     t.integer  "day_id"
     t.integer  "amount_cents",    default: 0,     null: false
     t.string   "amount_currency", default: "RUB", null: false
@@ -371,7 +356,6 @@ ActiveRecord::Schema.define(version: 20160513184800) do
     t.string   "image_uid"
     t.string   "status_code",        default: "0_draft"
     t.integer  "author_user_id"
-    t.string   "mongo_id"
     t.datetime "updated_at"
     t.datetime "created_at"
     t.string   "currency"
@@ -396,7 +380,6 @@ ActiveRecord::Schema.define(version: 20160513184800) do
     t.string   "last_name"
     t.string   "locale"
     t.string   "image_uid"
-    t.string   "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "currency"

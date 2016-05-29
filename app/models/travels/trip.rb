@@ -14,7 +14,6 @@
 #  image_uid          :string
 #  status_code        :string           default("0_draft")
 #  author_user_id     :integer
-#  mongo_id           :string
 #  updated_at         :datetime
 #  created_at         :datetime
 #  currency           :string

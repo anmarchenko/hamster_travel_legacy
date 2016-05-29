@@ -5,7 +5,6 @@
 #  id              :integer          not null, primary key
 #  order_index     :integer
 #  type            :string
-#  type_icon       :string
 #  code            :string
 #  company         :string
 #  link            :string
@@ -14,7 +13,6 @@
 #  start_time      :datetime
 #  end_time        :datetime
 #  comment         :text
-#  mongo_id        :string
 #  day_id          :integer
 #  amount_cents    :integer          default(0), not null
 #  amount_currency :string           default("RUB"), not null

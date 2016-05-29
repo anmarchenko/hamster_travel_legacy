@@ -5,7 +5,6 @@
 #  id            :integer          not null, primary key
 #  description   :string
 #  url           :text
-#  mongo_id      :string
 #  linkable_id   :integer
 #  linkable_type :string
 #
