@@ -85,6 +85,8 @@ en:
     from_list: must be from list
     date_before: must be valid date and not later the end date
     end_date_days: must be valid date and before start date plus 30 days
+    not_found: Oops, seems we don't have it. Maybe the link is outdated, maybe there is a typo. But don't worry, we have lots of other things!
+    no_access: You are trying to access protected information! If you are not a hacker, then ask person who sent you this link to make this public.
   breadcrumbs:
     application:
       root: "Index"

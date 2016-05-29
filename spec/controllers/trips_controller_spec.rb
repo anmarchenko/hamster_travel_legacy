@@ -392,15 +392,14 @@ describe TripsController do
 
         it 'redirects to dashboard with flash' do
           get 'edit', id: trip.id
-          expect(response).to redirect_to '/'
-          expect(flash[:error]).to eq I18n.t('errors.unathorized')
+          expect(response).to redirect_to '/errors/no_access'
         end
       end
 
       context 'and when trip does not exist' do
         it 'heads code 404' do
           get 'edit', id: 'not-existing-id'
-          expect(response).to have_http_status 404
+          expect(response).to redirect_to '/errors/not_found'
         end
       end
     end
@@ -453,7 +452,7 @@ describe TripsController do
 
         it 'redirects to dashboard with flash' do
           put 'update', update_attrs
-          expect(response).to redirect_to '/'
+          expect(response).to redirect_to '/errors/no_access'
           expect(assigns(:trip).name).to eq trip.name
         end
       end
@@ -503,8 +502,7 @@ describe TripsController do
 
           it 'redirects to dashboard with flash' do
             get 'show', id: trip.id
-            expect(response).to redirect_to '/'
-            expect(flash[:error]).to eq I18n.t('errors.unathorized')
+            expect(response).to redirect_to '/errors/no_access'
           end
         end
 
@@ -523,7 +521,7 @@ describe TripsController do
       context 'and when trip does not exist' do
         it 'renders show template' do
           get 'show', id: 'non-existing-id'
-          expect(response).to have_http_status 404
+          expect(response).to redirect_to '/errors/not_found'
         end
       end
 
@@ -545,8 +543,7 @@ describe TripsController do
 
         it 'redirects to dashboard with flash' do
           get 'show', id: trip.id
-          expect(response).to redirect_to '/'
-          expect(flash[:error]).to eq I18n.t('errors.unathorized')
+          expect(response).to redirect_to '/errors/no_access'
         end
       end
     end
@@ -586,15 +583,14 @@ describe TripsController do
 
         it 'redirects to dashboard with flash' do
           delete 'destroy', id: trip.id
-          expect(response).to redirect_to '/'
-          expect(flash[:error]).to eq I18n.t('errors.unathorized')
+          expect(response).to redirect_to '/errors/no_access'
         end
       end
 
       context 'and when trip does not exist' do
         it 'heads 404' do
           delete 'destroy', id: 'non existing'
-          expect(response).to have_http_status 404
+          expect(response).to redirect_to '/errors/not_found'
         end
       end
     end

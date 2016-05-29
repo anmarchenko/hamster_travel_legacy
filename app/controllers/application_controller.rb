@@ -42,8 +42,11 @@ class ApplicationController < ActionController::Base
   end
 
   def no_access
-    flash[:error] = t('errors.unathorized')
-    redirect_to('/', locale: params[:locale])
+    redirect_to('/errors/no_access', locale: params[:locale])
+  end
+
+  def not_found
+    redirect_to('/errors/not_found', locale: params[:locale])
   end
 
   def verified_request?

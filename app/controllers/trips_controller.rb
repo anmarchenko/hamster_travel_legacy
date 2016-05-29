@@ -70,7 +70,7 @@ class TripsController < ApplicationController
 
   def find_trip
     @trip = Travels::Trip.includes(:users, :author_user, {days: [{hotel: :links}, :activities, :transfers, :places, :expenses]}).where(id: params[:id]).first
-    head 404 and return if @trip.blank?
+    not_found and return if @trip.blank?
   end
 
   def find_original_trip

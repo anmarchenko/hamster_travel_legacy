@@ -27,7 +27,7 @@ class UsersController < ApplicationController
 
   def find_user
     @user = User.where(id: params[:id]).first
-    head 404 and return if @user.blank?
+    not_found and return if @user.blank?
   end
 
   def authorize

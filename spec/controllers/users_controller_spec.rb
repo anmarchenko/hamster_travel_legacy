@@ -26,7 +26,7 @@ describe UsersController do
       context 'when there is no user' do
         it 'heads 404' do
           get 'show', id: 'no user'
-          expect(response).to have_http_status 404
+          expect(response).to redirect_to '/errors/not_found'
         end
       end
     end
@@ -65,15 +65,14 @@ describe UsersController do
         let(:new_user) {FactoryGirl.create(:user)}
         it 'redirects to dashboard with error' do
           get 'edit', id: new_user.id
-          expect(response).to redirect_to '/'
-          expect(flash[:error]).to eq I18n.t('errors.unathorized')
+          expect(response).to redirect_to '/errors/no_access'
         end
       end
 
       context 'and when there is no user' do
         it 'heads 404' do
           get 'edit', id: 'no user'
-          expect(response).to have_http_status 404
+          expect(response).to redirect_to '/errors/not_found'
         end
       end
     end
@@ -112,8 +111,7 @@ describe UsersController do
 
           it 'redirects to dashboard with error' do
             put 'update', update_attrs.merge(id: new_user.id)
-            expect(response).to redirect_to '/'
-            expect(flash[:error]).to eq I18n.t('errors.unathorized')
+            expect(response).to redirect_to '/errors/no_access'
           end
         end
 
@@ -122,7 +120,7 @@ describe UsersController do
       context 'and when there is no user' do
         it 'heads 404' do
           put 'update', update_attrs.merge(id: 'no_user_id')
-          expect(response).to have_http_status 404
+          expect(response).to redirect_to '/errors/not_found'
         end
       end
     end
