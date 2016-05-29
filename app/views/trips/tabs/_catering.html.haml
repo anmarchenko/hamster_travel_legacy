@@ -73,7 +73,7 @@
         .col-xs-12.col-sm-6
           .form-group
             = label_tag 'catering_name', t('trips.show.catering_name')
-            %a{href: 'javascript:void(0);', 'ng-click' => 'remove(caterings, $index)', class: 'delete-control big-control'}
+            %a.delete-control.big-control.pull-right{href: 'javascript:void(0);', 'ng-click' => 'remove(caterings, $index)'}
               %span.hidden-xs
                 = fa_icon 'times', text: t('trips.show.catering_delete')
               %span.hidden-lg.hidden-sm.hidden-md
