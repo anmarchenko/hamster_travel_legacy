@@ -88,6 +88,9 @@ gem 'globalize', '~> 5.0.0'
 # inline svg for styling
 gem 'inline_svg'
 
+# clone activerecord models
+gem 'deep_cloneable'
+
 # production caching
 group :production do
   gem 'rack-cache', :require => 'rack/cache'

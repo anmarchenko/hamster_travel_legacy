@@ -26,7 +26,6 @@ module Travels
 
   class Transfer < ActiveRecord::Base
     include Concerns::Ordered
-    include Concerns::Copyable
 
     self.inheritance_column = 'inherit_type'
 

@@ -16,7 +16,6 @@
 module Travels
   class Catering < ActiveRecord::Base
     include Concerns::Ordered
-    include Concerns::Copyable
 
     belongs_to :trip, class_name: 'Travels::Trip'
 

@@ -14,7 +14,6 @@
 module Travels
 
   class Expense < ActiveRecord::Base
-    include Concerns::Copyable
 
     belongs_to :expendable, polymorphic: true
 

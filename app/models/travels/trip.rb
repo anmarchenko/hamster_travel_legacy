@@ -25,8 +25,6 @@
 module Travels
   class Trip < ActiveRecord::Base
 
-    include Concerns::Copyable
-
     extend Dragonfly::Model
     extend Dragonfly::Model::Validations
 
@@ -210,16 +208,6 @@ module Travels
 
     def should_have_dates?
       !self.without_dates?
-    end
-
-    def copy trip
-      super
-      self.name += " (#{I18n.t('common.copy')})" unless self.name.blank?
-      self
-    end
-
-    def copied_fields
-      [:name, :start_date, :end_date, :currency]
     end
 
     def as_json(**args)

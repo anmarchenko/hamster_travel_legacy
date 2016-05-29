@@ -8,35 +8,28 @@ class Creators::Trip
   end
 
   def new_trip
-    new_trip = Travels::Trip.new
-    new_trip.copy(old_trip) unless old_trip.blank?
+    if old_trip.blank?
+      new_trip = Travels::Trip.new
+    else
+      new_trip = old_trip.deep_clone except: [:short_description, :private, :comment, :image_uid]
+      new_trip.name += " (#{I18n.t('common.copy')})" unless new_trip.name.blank?
+    end
     new_trip
   end
 
   def create_trip
-    new_trip = Travels::Trip.new(params)
+    if old_trip.blank?
+      new_trip = Travels::Trip.new(params)
+    else
+      new_trip = old_trip.deep_clone include: [{days: [
+        :places, :activities, {transfers: :links}, :hotel, :expenses, :links
+      ]}, :caterings], except: [:short_description, :private, :comment, :image_uid]
+      new_trip.assign_attributes(params)
+    end
     new_trip.author_user_id = user.id
     new_trip.users = [user]
     new_trip.save
-    copy_plan(old_trip, new_trip) unless old_trip.blank?
     new_trip
-  end
-
-  private
-
-  def copy_plan from, to
-    to.days.each_with_index do |day, index|
-      original_day = (from.days || [])[index]
-      next if original_day.blank?
-      date_when = day.date_when
-      day.copy(original_day, true)
-      day.date_when = date_when
-      day.save
-    end
-
-    from.caterings.each do |catering|
-      to.caterings.create(catering.attributes.except('id', 'trip_id'))
-    end
   end
 
 end

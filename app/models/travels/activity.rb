@@ -22,7 +22,6 @@ module Travels
   class Activity < ActiveRecord::Base
 
     include Concerns::Ordered
-    include Concerns::Copyable
 
     belongs_to :day, class_name: 'Travels::Day'
 

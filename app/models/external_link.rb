@@ -14,8 +14,6 @@ require 'uri'
 
 class ExternalLink < ActiveRecord::Base
 
-  include Concerns::Copyable
-
   belongs_to :linkable, polymorphic: true
 
   def description

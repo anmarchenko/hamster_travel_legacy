@@ -13,8 +13,6 @@
 module Travels
   class Day < ActiveRecord::Base
 
-    include Concerns::Copyable
-
     belongs_to :trip, class_name: 'Travels::Trip'
 
     has_many :places, class_name: 'Travels::Place'
@@ -28,9 +26,9 @@ module Travels
 
     before_create :init
     def init
-      self.places = [Travels::Place.new] if self.places.count == 0
+      self.places = [Travels::Place.new] if self.places.blank?
       self.hotel = Travels::Hotel.new(amount_currency: trip.currency) if self.hotel.blank?
-      self.expenses = [Travels::Expense.new(amount_currency: trip.currency)] if self.expenses.count == 0
+      self.expenses = [Travels::Expense.new(amount_currency: trip.currency)] if self.expenses.blank?
     end
 
     def date_when_s
@@ -70,10 +68,6 @@ module Travels
       end
 
       json
-    end
-
-    def copied_relations
-      ['places', 'transfers', 'hotel', 'activities', 'expenses']
     end
 
     def short_hash
