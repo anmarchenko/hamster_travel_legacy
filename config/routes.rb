@@ -1,13 +1,16 @@
 Travel::Application.routes.draw do
 
-  scope '(:locale)', locale: /ru|en/ do
-    devise_for :users, controllers: { registrations: 'registrations' }
+  match '/404', to: 'errors#not_found', via: :all
 
-    resources :errors, only: [] do
-      collection do
-        get :not_found, :no_access
-      end
+  resources :errors, only: [] do
+    collection do
+      get :not_found, :no_access
     end
+  end
+
+  scope '(:locale)', locale: /ru|en/ do
+
+    devise_for :users, controllers: { registrations: 'registrations' }
 
     resources :users, only: [:show, :edit, :update] do
       member do
