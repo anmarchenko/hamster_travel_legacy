@@ -7,7 +7,10 @@ class Updaters::Trip
 
   def update params_trip
     trip.update_attributes(params_trip)
-    trip.update_plan! if trip.errors.blank?
+    if trip.errors.blank?
+      trip.update_plan!
+      trip.update_caterings!
+    end
   end
 
   def update_budget_for budget_for

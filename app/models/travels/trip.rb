@@ -123,6 +123,13 @@ module Travels
       delete_last_days
     end
 
+    def update_caterings!
+      if caterings.present? && caterings.count == 1
+        catering = caterings.first
+        catering.update_attributes(days_count: self.days_count)
+      end
+    end
+
     def include_user(user)
       self.users.include?(user)
     end

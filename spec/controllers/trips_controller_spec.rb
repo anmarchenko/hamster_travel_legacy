@@ -435,6 +435,31 @@ describe TripsController do
             expect(response).to redirect_to trip_path(trip)
             expect(flash[:notice]).to eq I18n.t('common.update_successful')
           end
+
+          context 'when number of days changes' do
+            let(:update_attrs) { {travels_trip: attrs.merge('name' => 'New Updated Name',
+                                                            start_date: Date.today, end_date: Date.today + 1.day,
+                                                            status_code: Travels::Trip::StatusCodes::PLANNED,
+                                                            private: true, currency: 'EUR'), id: trip.id} }
+            context 'when there is one catering' do
+              let(:trip) {FactoryGirl.create(:trip, :with_filled_days, users: [subject.current_user])}
+
+              it 'updates catering days accordingly' do
+                trip.caterings = [FactoryGirl.build(:catering)]
+                trip.save
+
+                put 'update', update_attrs
+                trip_updated = assigns(:trip).reload
+                expect(trip_updated.name).to eq 'New Updated Name'
+                expect(trip_updated.status_code).to eq Travels::Trip::StatusCodes::PLANNED
+                expect(trip_updated.private).to eq true
+
+                expect(trip_updated.start_date).to eq(Date.today)
+                expect(trip_updated.end_date).to eq(Date.today + 1.day)
+                expect(trip_updated.caterings.first.days_count).to eq(2)
+              end
+            end
+          end
         end
 
         context 'and when params are not valid' do
