@@ -39,13 +39,35 @@
       %h4
         = @trip.name
   .row.trip-dates
-    .col-xs-12
+    .col-xs-10.col-md-12
       = trip_dates(@trip)
+    .col-xs-2.hidden-sm.hidden-lg.hidden-md
+      - if user_signed_in?
+        .dropdown.plan-menu
+          %button.dropdown-toggle{'data-toggle' => 'dropdown'}
+            = image_tag 'common/menu.svg'
+          %ul.dropdown-menu.dropdown-menu-right
+            - if @user_can_edit
+              %li
+                = link_to edit_trip_path(@trip), class: 'trip-link' do
+                  = t('trips.show.edit_trip')
+
+              - if @trip.author_user_id == current_user.id
+                %li
+                  = link_to trip_path(@trip), class: 'trip-link', method: :delete,
+                          'data-confirm'=> t('.delete_confirm')  do
+                    = t('trips.show.delete_trip')
+            %li
+              = link_to "#{new_trip_path}?copy_from=#{@trip.id}", target: '_blank', class: 'trip-link' do
+                = t('trips.show.clone')
+            %li
+              = link_to "#{trip_path(@trip)}.docx", target: '_blank', class: 'trip-link' do
+                = t('trips.show.download_word')
 
   - if user_signed_in?
-    - if @user_can_edit
-      .row.trip-links
-        .col-xs-12
+    .row.trip-links.hidden-xs
+      .col-xs-12
+        - if @user_can_edit
           = link_to edit_trip_path(@trip), class: 'trip-link' do
             = t('trips.show.edit_trip')
 
@@ -54,6 +76,11 @@
                     'data-confirm'=> t('.delete_confirm')  do
               = t('trips.show.delete_trip')
 
+        = link_to "#{new_trip_path}?copy_from=#{@trip.id}", target: '_blank', class: 'trip-link' do
+          = t('trips.show.clone')
+
+        = link_to "#{trip_path(@trip)}.docx", target: '_blank', class: 'trip-link' do
+          = t('trips.show.download_word')
 
   .row.trip-header
     .col-xs-4.col-md-3
@@ -61,7 +88,7 @@
         %img{id: 'trip_image', src: @trip.image_url_or_default, width: '100%', class: 'trip-image'}
 
         - if @user_can_edit
-          .fileupload-buttons
+          .fileupload-buttons.hidden-xs
             = form_for @trip, url: upload_photo_trip_path(@trip), method: :post, multipart: true, remote: true do |f|
               = f.hidden_field :remove_image, value: 'true'
               = link_to '', class: 'btn btn-sm ghost-button delete-image',
@@ -82,22 +109,6 @@
         = t('common.photo_processing')
 
     .col-xs-8.col-md-9
-      - if user_signed_in?
-        .row.buttons.hidden-xs
-          .col-xs-12
-
-            = link_to "#{new_trip_path}?copy_from=#{@trip.id}", target: '_blank', class: 'btn ghost-button btn-sm' do
-              %span{class: 'hidden-md hidden-lg'}
-                = fa_icon 'copy'
-              %span{class: 'hidden-sm hidden-xs'}
-                = fa_icon 'copy', text: t('trips.show.clone')
-
-            = link_to "#{trip_path(@trip)}.docx", target: '_blank', class: 'btn ghost-button btn-sm' do
-              %span{class: 'hidden-md hidden-lg'}
-                = fa_icon 'file-word-o'
-              %span{class: 'hidden-sm hidden-xs'}
-                = fa_icon 'file-word-o', text: t('trips.show.download_word')
-
       .row
         .col-xs-12
           = render'trips/partials/participants'

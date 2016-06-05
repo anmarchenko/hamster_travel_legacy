@@ -1077,3 +1077,12 @@
   padding: 15px;
   min-width: 220px;
 }
+
+.plan-menu {
+  .dropdown-toggle {
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}

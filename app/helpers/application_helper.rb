@@ -106,7 +106,7 @@ module ApplicationHelper
   end
 
   def days_count trip
-    "#{trip.days_count} #{I18n.t('common.days', count: trip.days_count)}"
+    "#{trip.days_count}&nbsp;#{I18n.t('common.days', count: trip.days_count)}".html_safe
   end
 
   def trip_dates trip
@@ -121,7 +121,7 @@ module ApplicationHelper
     else
       res = days_count(trip)
     end
-    res
+    res.html_safe
   end
 
 end
