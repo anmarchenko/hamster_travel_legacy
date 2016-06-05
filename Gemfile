@@ -41,7 +41,7 @@ gem 'jquery-rails'
 # jquery UI
 gem 'jquery-ui-rails', '~> 5.0'
 # AngularJS
-gem 'angularjs-rails', '1.5.5'
+gem 'angularjs-rails'
 # Jcrop library for cropping images before upload
 gem 'jcrop-rails-v2'
 # dates
