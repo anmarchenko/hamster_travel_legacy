@@ -44,7 +44,7 @@
     .col-xs-2.hidden-sm.hidden-lg.hidden-md
       - if user_signed_in?
         .dropdown.plan-menu
-          %button.dropdown-toggle{'data-toggle' => 'dropdown'}
+          .dropdown-toggle{'data-toggle' => 'dropdown'}
             = image_tag 'common/menu.svg'
           %ul.dropdown-menu.dropdown-menu-right
             - if @user_can_edit

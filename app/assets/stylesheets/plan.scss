@@ -226,11 +226,17 @@
           display: inline;
           margin-right: .5em;
         }
+
       }
 
       .table-black-bordered > thead > tr > th, .table-black-bordered > tbody > tr > th, .table-black-bordered > tfoot > tr > th, .table-black-bordered > thead > tr > td, .table-black-bordered > tbody > tr > td, .table-black-bordered > tfoot > tr > td {
         border: none;
       }
+
+      .transfer-place .transfer-show-container, .transfer-place-edit .transfer-show-container {
+        margin-bottom: 10px !important;
+      }
+
     }
 
     .actions-butons {
