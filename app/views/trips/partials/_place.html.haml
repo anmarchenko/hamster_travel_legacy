@@ -1,4 +1,8 @@
 %div{'ng-show' => '!edit && !place_edit'}
+  - if @user_can_edit
+    %a.inline-action.hidden-xs.pull-right{href: 'javascript:void(0);', 'ng-click' => "setEdit(true, 'place')",
+          'ng-hide' => 'edit_persons_count'}
+      = image_tag 'buttons/edit.svg'
   %p.flag-text.transfers-place-show{'ng-show' => 'place.city_text && place.flag_image', 'ng-repeat' => 'place in day.places track by place.id'}
     %span{'ng-bind-html' => 'place.flag_image'}
     {{place.city_text}}
@@ -6,7 +10,7 @@
     %i
       = t('trips.show.no_places')
   - if @user_can_edit
-    %a.inline-action{href: 'javascript:void(0);', 'ng-click' => "setEdit(true, 'place')",
+    %a.inline-action.hidden-md.hidden-lg.hidden-sm{href: 'javascript:void(0);', 'ng-click' => "setEdit(true, 'place')",
           'ng-hide' => 'edit_persons_count'}
       = image_tag 'buttons/edit.svg'
 

@@ -107,6 +107,7 @@ en:
       new: "New %{model}"
       delete: "Delete %{model}"
   common:
+    edit: Edit
     saved: Saved!
     yesss: "Yes"
     noooo: "No"

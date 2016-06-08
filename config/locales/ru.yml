@@ -96,6 +96,7 @@ ru:
       next: "&rsaquo;"
       truncate: "..."
   common:
+    edit: Редактировать
     saved: Сохранено!
     yesss: Да
     noooo: Нет
