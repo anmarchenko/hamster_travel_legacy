@@ -1,15 +1,16 @@
 .transfer-place{'ng-show' => '!edit && !transfer_edit', 'ng-model' => 'day.transfers'}
 
+  - if @user_can_edit
+    %a.inline-action.pull-right{href: 'javascript:void(0);', 'ng-click' => "setEdit(true, 'transfer')",
+          'ng-hide' => 'edit_persons_count'}
+      = image_tag 'buttons/edit.svg'
+
   %div.transfer-show-container{'ng-repeat' => 'transfer in day.transfers track by transfer.id'}
     = render 'trips/partials/show_transfer'
 
   %p{'ng-show' => 'day.transfers.length == 0'}
     %i
       = t('trips.show.no_transfers')
-
-  - if @user_can_edit
-    %a{'ng-click' => "setEdit(true, 'transfer')"}
-      = fa_icon 'pencil'
 
 %div{'ng-show' => 'edit || transfer_edit'}
 
