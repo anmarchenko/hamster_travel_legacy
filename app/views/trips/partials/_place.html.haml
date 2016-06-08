@@ -1,5 +1,5 @@
-%div{'ng-show' => '!edit && !place_edit', 'ng-repeat' => 'place in day.places track by place.id'}
-  %p.flag-text{'ng-show' => 'place.city_text && place.flag_image'}
+%div{'ng-show' => '!edit && !place_edit'}
+  %p.flag-text.transfers-place-show{'ng-show' => 'place.city_text && place.flag_image', 'ng-repeat' => 'place in day.places track by place.id'}
     %span{'ng-bind-html' => 'place.flag_image'}
     {{place.city_text}}
   - if @user_can_edit
