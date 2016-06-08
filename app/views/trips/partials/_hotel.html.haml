@@ -1,10 +1,14 @@
 %div{'ng-show' => '!edit && !hotel_edit'}
-  %p
-    {{day.hotel.name}}
+  %p{'ng-show' => 'day.hotel.name || day.hotel.amount_cents'}
+    %span.hotel-name
+      {{day.hotel.name}}
     %br
     %span{'ng-show' => '!!day.hotel.amount_cents'}
       {{day.hotel.amount_cents / 100.0 | number: 2}}
       {{day.hotel.amount_currency_text}}
+  %p{'ng-show' => '!day.hotel.name && !day.hotel.amount_cents'}
+    %i
+      = t('trips.show.no_hotel')
   %p{class: 'travel-text text-italic'} {{day.hotel.comment}}
   %span{'ng-show' => '!!day.hotel.links'}
     %p{'ng-repeat' => 'link in day.hotel.links track by link.id'}

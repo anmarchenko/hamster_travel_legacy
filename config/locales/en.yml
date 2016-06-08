@@ -321,6 +321,9 @@ en:
       activity_not_necessary: Not necessary
       address: address
       working_hours: working hours
+      no_hotel: No hotel info yet
+      no_transfers: There are no transfers on this day
+      no_places: No places info yet
     edit:
       title: Edit travel
     form:

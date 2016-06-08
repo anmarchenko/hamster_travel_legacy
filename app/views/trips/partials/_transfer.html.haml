@@ -3,6 +3,10 @@
   %div.transfer-show-container{'ng-repeat' => 'transfer in day.transfers track by transfer.id'}
     = render 'trips/partials/show_transfer'
 
+  %p{'ng-show' => 'day.transfers.length == 0'}
+    %i
+      = t('trips.show.no_transfers')
+
   - if @user_can_edit
     %a.edit-hover-button{'ng-show' => 'mouse_over_transfers', 'ng-click' => "setEdit(true, 'transfer')"}
       = fa_icon 'pencil'

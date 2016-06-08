@@ -2,14 +2,17 @@
   %p.flag-text.transfers-place-show{'ng-show' => 'place.city_text && place.flag_image', 'ng-repeat' => 'place in day.places track by place.id'}
     %span{'ng-bind-html' => 'place.flag_image'}
     {{place.city_text}}
+  %p{'ng-show' => 'day.places.length == 0 || !day.places[0].city_text'}
+    %i
+      = t('trips.show.no_places')
   - if @user_can_edit
-    %a.edit-hover-button{'ng-show' => 'mouse_over_place', 'ng-click' => "setEdit(true, 'place')"}
+    %a.edit-hover-button{'ng-click' => "setEdit(true, 'place')"}
       = fa_icon 'pencil'
 
 
 %div{'ng-show' => 'edit || place_edit'}
 
-  %div{'ng-repeat' => 'place in day.places track by place.id', class: 'day-place-container relative-position'}
+  %div.day-place-container{'ng-repeat' => 'place in day.places track by place.id', class: ''}
     %a{href: 'javascript:void(0);',  class: 'up-button',
        'ng-click' => 'fillAsPreviousPlace(place, $index)',
        'ng-show' => '($index > 0 || day_index > 0) && !place.city_code'}

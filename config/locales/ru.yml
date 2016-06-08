@@ -311,6 +311,9 @@ ru:
       activity_not_necessary: Необязательно
       address: адрес
       working_hours: часы работы
+      no_hotel: Пока нет проживания
+      no_transfers: В этот день нет трансферов
+      no_places: Города пока не добавлены
     edit:
       title: Редактирование путешествия
     form:
