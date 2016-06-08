@@ -8,7 +8,7 @@
       = t('trips.show.no_transfers')
 
   - if @user_can_edit
-    %a.edit-hover-button{'ng-show' => 'mouse_over_transfers', 'ng-click' => "setEdit(true, 'transfer')"}
+    %a{'ng-click' => "setEdit(true, 'transfer')"}
       = fa_icon 'pencil'
 
 %div{'ng-show' => 'edit || transfer_edit'}

@@ -152,49 +152,6 @@
       padding-left: 6px;
     }
 
-    .edit-actions {
-      a.pull-left {
-        margin-right: 10px;
-      }
-      a.pull-right {
-        margin-left: 10px;
-      }
-    }
-
-    .relative-position {
-      position: relative;
-    }
-
-    .day-place-container .up-button {
-      position: absolute;
-      right: 25px;
-      top: 5px
-    }
-
-    .day-place-container .delete-button {
-      position: absolute;
-      right: 5px;
-      top: 5px
-    }
-
-    .day-expense-container .delete-button {
-      position: absolute;
-      right: 20px;
-      top: 5px
-    }
-
-    .relative-position .expand-button {
-      position: absolute;
-      right: 40px;
-      top: 5px
-    }
-
-    .day-place-container {
-      input {
-        padding-right: 37px !important;
-      }
-    }
-
     .collapse-header {
       cursor: pointer;
       cursor: hand;
@@ -225,10 +182,14 @@
         .transfers-place-show {
           display: inline;
           margin-right: .5em;
-        }
+          }
 
         .hotel-name {
           font-size: 16px;
+        }
+
+        .transfers-places {
+          margin-bottom: 10px;
         }
 
       }
@@ -262,6 +223,38 @@
 
     .show-column-checkboxes {
       width: 70px;
+    }
+
+
+    .transfers-places {
+      .day-place-container {
+        a {
+          display: inline;
+          margin-left: .5em;
+        }
+        input {
+          display: inline;
+          width: 65%;
+          margin-bottom: 10px;
+        }
+        .delete-action {
+          img {
+            width: 15px;
+          }
+        }
+        .up-action {
+          img {
+            width: 15px;
+          }
+        }
+      }
+
+      .actions {
+        margin-top: 1em;
+        a + a {
+          margin-left: .5em;
+        }
+      }
     }
 
     .transfer-place, .transfer-place-edit {
@@ -810,12 +803,6 @@
           width: 30px;
         }
       }
-    }
-
-    .edit-hover-button {
-      position: absolute;
-      right: 8px;
-      top: 8px
     }
 
     .list-group-horizontal {

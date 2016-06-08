@@ -37,10 +37,13 @@
                 .activity-action-link{'ng-show' => 'edit && !whole_plan_edit'}
                   %a.link-with-icon.btn.btn-sm.btn-success{'ng-click' => 'save()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
                     = inline_svg 'buttons/check.svg'
-                    = t('common.save')
+                    %span.hidden-xs
+                      = t('common.save')
                 .activity-action-link{'ng-show' => 'edit && !whole_plan_edit'}
-                  %a.btn.btn-sm.ghost-button{'ng-click' => 'cancelEdit()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
-                    = t('common.back')
+                  %a.link-with-icon.btn.btn-sm.ghost-button{'ng-click' => 'cancelEdit()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
+                    = inline_svg 'buttons/back.svg'
+                    %span.hidden-xs
+                      = t('common.back')
 
           .row.activity-day-places
             =# Show places
@@ -236,10 +239,13 @@
             .activity-action-link.no-margin
               %a.link-with-icon.btn.btn-sm.btn-success{'ng-click' => 'save()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
                 = inline_svg 'buttons/check.svg'
-                = t('common.save')
+                %span.hidden-xs
+                  = t('common.save')
             .activity-action-link
-              %a.btn.btn-sm.ghost-button{'ng-click' => 'cancelEdit()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
-                = t('common.back')
+              %a.link-with-icon.btn.btn-sm.ghost-button{'ng-click' => 'cancelEdit()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
+                = inline_svg 'buttons/back.svg'
+                %span.hidden-xs
+                  = t('common.back')
 
           .activity-empty-state{'ng-show' => 'day.activities.length == 0 && !edit'}
             .activity-empty-state-header

@@ -14,7 +14,9 @@
       %i.fa.fa-spinner.fa-spin
       = t('trips.show.saving_plan')
 
-    %a.btn.ghost-button.btn-sm{href: 'javascript:void(0);', 'ng-click' => 'cancelEdits()',
+    %a.link-with-icon.btn.ghost-button.btn-sm{href: 'javascript:void(0);', 'ng-click' => 'cancelEdits()',
         'ng-show' => 'edit' }
-      = t('common.back')
+      = inline_svg 'buttons/back.svg'
+      %span.hidden-xs
+        = t('common.back')
 

@@ -70,14 +70,12 @@
             - if @user_can_edit && @trip.days_count > 1
               %a.reorder-link.hidden-xs{'ng-click' => "startSorting('#{@trip.id}')", href: 'javascript:void(0);'}
                 = t('trips.show.reorder_days')
-          %td{'ng-show' => 'show_place', 'ng-mouseleave' => 'mouse_over_place = false',
-                                         'ng-mouseenter' => 'mouse_over_place = true'}
+          %td.transfers-places{'ng-show' => 'show_place'}
             %span{'ng-cloak' => '', 'ng-show' => 'day_loaded'}
               = render 'trips/partials/place'
             %span{'ng-hide' => 'day_loaded'}
               .transfers-mockup-line
-          %td{'ng-show' => 'show_transfers', 'ng-mouseleave' => 'mouse_over_transfers = false',
-                                             'ng-mouseenter' => 'mouse_over_transfers = true'}
+          %td.transfers-transfers{'ng-show' => 'show_transfers'}
             %span{'ng-cloak' => '', 'ng-show' => 'day_loaded'}
               = render 'trips/partials/transfer'
             %span{'ng-hide' => 'day_loaded'}
@@ -89,8 +87,7 @@
                 .transfer-destination-mockup
                   .transfer-city-mockup
                   .transfer-station-mockup
-          %td{'ng-show' => 'show_hotel', 'ng-mouseleave' => 'mouse_over_hotel = false',
-                                         'ng-mouseenter' => 'mouse_over_hotel = true'}
+          %td.transfers-hotel{'ng-show' => 'show_hotel'}
             %span{'ng-cloak' => '', 'ng-show' => 'day_loaded'}
               = render 'trips/partials/hotel'
             %span{'ng-hide' => 'day_loaded'}

@@ -28,10 +28,13 @@
         %a.link-with-icon.inline-action.btn.btn-sm.btn-success{href: 'javascript:void(0);', 'ng-click' => 'saveBudget()',
         'ng-show' => 'edit_persons_count'}
           = inline_svg 'buttons/check.svg'
-          = t('common.save')
+          %span.hidden-xs
+            = t('common.save')
 
-        %a.inline-action.btn.btn-sm.ghost-button{href: 'javascript:void(0);', 'ng-click' => 'cancelBudgetEdit()',
+        %a.link-with-icon.inline-action.btn.btn-sm.ghost-button{href: 'javascript:void(0);', 'ng-click' => 'cancelBudgetEdit()',
         'ng-show' => 'edit_persons_count'}
-          = t('common.back')
+          = inline_svg 'buttons/back.svg'
+          %span.hidden-xs
+            = t('common.back')
     %span.budget{'ng-hide' => 'budget_loaded'}
       .budget-mockup

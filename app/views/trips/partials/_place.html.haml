@@ -2,35 +2,39 @@
   %p.flag-text.transfers-place-show{'ng-show' => 'place.city_text && place.flag_image', 'ng-repeat' => 'place in day.places track by place.id'}
     %span{'ng-bind-html' => 'place.flag_image'}
     {{place.city_text}}
-  %p{'ng-show' => 'day.places.length == 0 || !day.places[0].city_text'}
+  %p.transfers-place-show{'ng-show' => 'day.places.length == 0 || !day.places[0].city_text'}
     %i
       = t('trips.show.no_places')
   - if @user_can_edit
-    %a.edit-hover-button{'ng-click' => "setEdit(true, 'place')"}
-      = fa_icon 'pencil'
+    %a.inline-action{href: 'javascript:void(0);', 'ng-click' => "setEdit(true, 'place')",
+          'ng-hide' => 'edit_persons_count'}
+      = image_tag 'buttons/edit.svg'
 
 
 %div{'ng-show' => 'edit || place_edit'}
 
   %div.day-place-container{'ng-repeat' => 'place in day.places track by place.id', class: ''}
-    %a{href: 'javascript:void(0);',  class: 'up-button',
-       'ng-click' => 'fillAsPreviousPlace(place, $index)',
+    = render 'widgets/typeahead/cities', model_name: 'place.city', classes: 'input-sm form-control',
+      placeholder: t('trips.show.city'), show_loading: false, custom_bindings: "'place.flag_image' : 'flag_image'",
+      allow_empty_typeahead: true
+
+    %a.delete-action{href: 'javascript:void(0);', 'ng-click' => 'remove(day.places, $index)',
+                      'ng-show' => 'day.places.length > 1'}
+      = image_tag 'buttons/delete.svg'
+
+    %a.up-action{href: 'javascript:void(0);', 'ng-click' => 'fillAsPreviousPlace(place, $index)',
        'ng-show' => '($index > 0 || day_index > 0) && !place.city_code'}
-      = fa_icon 'arrow-up'
+      = image_tag 'buttons/up.svg'
 
-    %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.places, $index)', 'ng-show' => 'day.places.length > 1',
-        class: 'delete-button'}
-      = fa_icon 'times'
-    .form-group
-      = render 'widgets/typeahead/cities', model_name: 'place.city', classes: 'input-sm form-control',
-        placeholder: t('trips.show.city'), show_loading: false, custom_bindings: "'place.flag_image' : 'flag_image'",
-        allow_empty_typeahead: true
+  %a.link-with-icon{href: 'javascript:void(0);', 'ng-click' => 'add(day.places, {})'}
+    = inline_svg 'buttons/add_plain.svg'
+    = t('trips.show.add_city')
 
-  .form-group.edit-actions
-    %a.pull-left{href: 'javascript:void(0);', 'ng-click' => 'save()', 'ng-show' => 'place_edit'}
-      = fa_icon 'check'
-    %a.pull-left{href: 'javascript:void(0);', 'ng-click' => 'reload()', 'ng-show' => 'place_edit'}
-      = fa_icon 'undo'
+  .actions
+    %a.link-with-icon.btn.btn-sm.btn-success{'ng-click' => 'save()', href: 'javascript:void(0);',
+              'ng-show' => 'place_edit'}
+      = inline_svg 'buttons/check.svg'
+    %a.link-with-icon.btn.btn-sm.ghost-button{'ng-click' => 'reload()', href: 'javascript:void(0);',
+            'ng-show' => 'place_edit'}
+      = inline_svg 'buttons/back.svg'
 
-    %a{href: 'javascript:void(0);', class: 'pull-right', 'ng-click' => 'add(day.places)'}
-      = fa_icon 'plus'
