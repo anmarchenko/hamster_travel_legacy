@@ -203,7 +203,29 @@
 
     .table-black-bordered > thead > tr > th, .table-black-bordered > tbody > tr > th, .table-black-bordered > tfoot > tr > th, .table-black-bordered > thead > tr > td, .table-black-bordered > tbody > tr > td, .table-black-bordered > tfoot > tr > td {
       background-color: $white;
-      border: 1px solid $black !important;
+      border: 1px solid $black;
+    }
+
+    @media (max-width: 768px) {
+      .plan-table {
+        tr {
+          display: block;
+        }
+        td {
+          display: block;
+          padding: 0px;
+        }
+
+        .day-date {
+          margin-bottom: 0px;
+          font-size: 18px;
+          font-weight: 600;
+        }
+      }
+
+      .table-black-bordered > thead > tr > th, .table-black-bordered > tbody > tr > th, .table-black-bordered > tfoot > tr > th, .table-black-bordered > thead > tr > td, .table-black-bordered > tbody > tr > td, .table-black-bordered > tfoot > tr > td {
+        border: none;
+      }
     }
 
     .actions-butons {

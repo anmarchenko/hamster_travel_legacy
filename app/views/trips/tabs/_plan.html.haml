@@ -5,7 +5,7 @@
         = render 'trips/partials/tabs'
     = render 'trips/partials/watching_users'
     = render 'trips/partials/budget', options: {tab_budget: 'transfers_hotel_budget'}
-    .row
+    .row.hidden-xs
       .col-md-12
         %div{class: "list-group list-group-horizontal", 'ng-cloak' => ''}
           %a{class: "list-group-item",
@@ -36,12 +36,12 @@
               = fa_icon 'square-o'
             = fa_icon 'home'
 
-    .row
+    .row.hidden-xs
       .col-md-12
         = render 'trips/partials/buttons'
 
   %table.table.table-black-bordered.fixed-head.plan-table
-    %thead.plan-affix
+    %thead.plan-affix.hidden-xs
       %tr
         %th{class: 'col-md-1'}
           = t('trips.show.day')
@@ -68,7 +68,7 @@
             .day-date
               = day.date_when_s
             - if @user_can_edit && @trip.days_count > 1
-              %a.reorder-link{'ng-click' => "startSorting('#{@trip.id}')", href: 'javascript:void(0);'}
+              %a.reorder-link.hidden-xs{'ng-click' => "startSorting('#{@trip.id}')", href: 'javascript:void(0);'}
                 = t('trips.show.reorder_days')
           %td{'ng-show' => 'show_place', 'ng-mouseleave' => 'mouse_over_place = false',
                                          'ng-mouseenter' => 'mouse_over_place = true'}

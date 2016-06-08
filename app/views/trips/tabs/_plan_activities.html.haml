@@ -23,7 +23,7 @@
             .col-md-9.col-xs-12.activities-actions
               - if @user_can_edit
                 - if @trip.days.count > 1
-                  .activity-action-link{'ng-controller' => 'DaySorterController', 'ng-hide' => 'edit'}
+                  .activity-action-link.hidden-xs{'ng-controller' => 'DaySorterController', 'ng-hide' => 'edit'}
                     %a.link-with-icon.btn.btn-sm.ghost-button{'ng-click' => "startSorting('#{@trip.id}')", href: 'javascript:void(0);',
                     'ng-disabled' => 'reloading'}
                       = inline_svg 'buttons/reorder.svg'
