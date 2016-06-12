@@ -315,6 +315,7 @@ en:
       add_city: Add city
       add_expense: Add expense
       add_activity: Add activity
+      add_transfer: Add transfer
       move_activity: Move activity to another day
       move_activity_action: Move
       activity_must_see: Must see

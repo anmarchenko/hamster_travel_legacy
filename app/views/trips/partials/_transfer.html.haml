@@ -19,13 +19,14 @@
     %div.transfer-edit-container{'ng-repeat' => 'transfer in day.transfers track by transfer.id'}
       = render 'trips/partials/edit_transfer'
 
-  .form-group.edit-actions
-    %a.pull-left{href: 'javascript:void(0);', 'ng-click' => 'save()',
-          'ng-show' => 'transfer_edit'}
-      = fa_icon 'check'
-    %a.pull-left{href: 'javascript:void(0);', 'ng-click' => 'reload()', 'ng-show' => 'transfer_edit'}
-      = fa_icon 'undo'
-
-    %a.pull-right{href: 'javascript:void(0);',
+  %a.link-with-icon{href: 'javascript:void(0);',
     'ng-click' => "add(day.transfers, {\"links\" : [{}], #{default_currency_hash(@trip, current_user)}})"}
-      = fa_icon 'plus'
+    = inline_svg 'buttons/add_plain.svg'
+    = t('trips.show.add_transfer')
+
+  .actions{'ng-show' => 'transfer_edit'}
+    %a.link-with-icon.btn.btn-sm.btn-success{'ng-click' => 'save()', href: 'javascript:void(0);'}
+      = inline_svg 'buttons/check.svg'
+    %a.link-with-icon.btn.btn-sm.ghost-button{'ng-click' => 'reload()', href: 'javascript:void(0);'}
+      = inline_svg 'buttons/back.svg'
+

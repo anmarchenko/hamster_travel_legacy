@@ -57,8 +57,10 @@
   .form-group
     .col-md-12
       = label_tag t('trips.show.links')
-      %a{href: 'javascript:void(0);', class: 'pull-right', 'ng-click' => 'add(transfer.links)'}
-        = fa_icon 'plus', text: t('trips.show.add_link')
+      %a.link-with-icon.pull-right{href: 'javascript:void(0);', 'ng-click' => "add(transfer.links)"}
+        = inline_svg 'buttons/add_plain.svg'
+        = t('trips.show.add_link')
+
   %div{'ng-repeat' => 'link in transfer.links track by link.id'}
     = render 'widgets/link', ng_model_descr: 'link.description', ng_model_url: 'link.url', ng_array: 'transfer.links'
 

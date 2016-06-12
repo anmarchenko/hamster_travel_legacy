@@ -305,6 +305,7 @@ ru:
       add_city: Добавить город
       add_expense: Добавить расходы
       add_activity: Добавить впечатление
+      add_transfer: Добавить трансфер
       move_activity: Переместить на другой день
       move_activity_action: Переместить
       activity_must_see: Must see

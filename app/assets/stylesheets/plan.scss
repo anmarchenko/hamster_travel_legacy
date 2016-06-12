@@ -225,6 +225,12 @@
       width: 70px;
     }
 
+    .actions {
+      margin-top: 1em;
+      a + a {
+        margin-left: .5em;
+      }
+    }
 
     .transfers-places {
       .day-place-container {
@@ -246,13 +252,6 @@
           img {
             width: 15px;
           }
-        }
-      }
-
-      .actions {
-        margin-top: 1em;
-        a + a {
-          margin-left: .5em;
         }
       }
     }
