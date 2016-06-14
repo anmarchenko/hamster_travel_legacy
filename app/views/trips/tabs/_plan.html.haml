@@ -13,28 +13,28 @@
                            'ng-class' => '{active: show_place}',
                            'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.place')}
             %span{'ng-show' => 'show_place'}
-              = fa_icon 'check-square-o'
+              = inline_svg 'input/checkbox-checked.svg'
             %span{'ng-show' => '!show_place'}
-              = fa_icon 'square-o'
-            = fa_icon 'map-marker'
+              = inline_svg 'input/checkbox-empty.svg'
+            = inline_svg 'columns/places.svg'
           %a{class: "list-group-item",
                            'ng-click' => 'changeVisibility("show_transfers")',
                            'ng-class' => '{active: show_transfers}',
                            'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.transfers')}
             %span{'ng-show' => 'show_transfers'}
-              = fa_icon 'check-square-o'
+              = inline_svg 'input/checkbox-checked.svg'
             %span{'ng-show' => '!show_transfers'}
-              = fa_icon 'square-o'
-            = fa_icon 'car'
+              = inline_svg 'input/checkbox-empty.svg'
+            = inline_svg 'columns/transfers.svg'
           %a{class: "list-group-item",
                            'ng-click' => 'changeVisibility("show_hotel")',
                            'ng-class' => '{active: show_hotel}',
                            'data-toggle' => "tooltip", 'data-placement' => "bottom", title: t('trips.show.hotel')}
             %span{'ng-show' => 'show_hotel'}
-              = fa_icon 'check-square-o'
+              = inline_svg 'input/checkbox-checked.svg'
             %span{'ng-show' => '!show_hotel'}
-              = fa_icon 'square-o'
-            = fa_icon 'home'
+              = inline_svg 'input/checkbox-empty.svg'
+            = inline_svg 'columns/hotel.svg'
 
     .row.hidden-xs
       .col-md-12

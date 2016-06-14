@@ -839,6 +839,14 @@
         margin-right: 0;
         padding: 5px 15px;
         cursor: pointer;
+        fill: $main-grey;
+
+        svg {
+          margin-top: 5px;
+          width: 16px;
+          height: 16px;
+          margin-right: 2px;
+        }
       }
       .list-group-item:first-child {
         border-top-right-radius: 0;
@@ -851,6 +859,7 @@
       .list-group-item.active {
         background-color: $main-grey;
         border-color: $border-grey;
+        fill: $white;
       }
     }
 
