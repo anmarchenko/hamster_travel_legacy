@@ -6,8 +6,6 @@ angular.module('travel-components').controller('TransfersPlanController'
             $scope.days = [];
             $scope.saving = false;
 
-            $scope.transfersCollapsed = true;
-
             $scope.init = function (trip_id) {
                 $scope.trip_id = trip_id;
 

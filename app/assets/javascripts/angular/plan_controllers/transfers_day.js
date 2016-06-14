@@ -32,6 +32,8 @@ angular.module('travel-components').controller('TransfersDayController'
                     if ($scope.day_id == day.id) {
                         $scope.day = day;
 
+                        $scope.collapseTransfers(day);
+
                         $timeout(function () {
                             $scope.day_loaded = true;
                         }, Math.random() * 1000
@@ -55,6 +57,8 @@ angular.module('travel-components').controller('TransfersDayController'
                     $scope.loadBudget();
                     $scope.loadCountries();
                     $scope.setEditAll(false);
+
+                    $scope.collapseTransfers(day);
 
                     // send this day to parent controller
                     $scope.$emit('day_transfers_reloaded', day)

@@ -5,11 +5,11 @@
   %a{href: 'javascript:void(0);', 'ng-click' => 'transfer.isCollapsed = !transfer.isCollapsed',
       class: 'pull-right'}
     %span{'ng-show' => 'transfer.isCollapsed'}
-      = fa_icon 'arrow-right'
+      = image_tag 'buttons/arrow_collapsed.svg'
     %span{'ng-show' => '!transfer.isCollapsed'}
-      = fa_icon 'arrow-down'
+      = image_tag 'buttons/arrow_uncollapsed.svg'
   %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.transfers, $index)', class: 'pull-right'}
-    = fa_icon 'times'
+    = image_tag 'buttons/delete.svg'
 
 .form-group
   .col-md-4
