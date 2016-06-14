@@ -7,6 +7,6 @@
   %uib-timepicker{'ng-model' => model, 'show-meridian' => 'false', 'show-spinners' => 'false',
     'datetimepicker-neutral-timezone' => true, 'mousewheel' => 'false'}
 
-  %span.clear-time
+  %span.clear-time.hidden-xs
     %a{'ng-click' => "#{model} = null"}
       = image_tag 'buttons/delete.svg'

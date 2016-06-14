@@ -182,7 +182,7 @@
         .transfers-place-show {
           display: inline;
           margin-right: .5em;
-          }
+        }
 
         .hotel-name {
           font-size: 16px;
@@ -201,9 +201,25 @@
       .transfer-place .transfer-show-container, .transfer-place-edit .transfer-show-container {
         margin-bottom: 10px !important;
       }
-
     }
-
+    @media(max-width: 768px) {
+      .uib-timepicker {
+        width: 100%;
+        display: inline-table !important;
+        tr {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+        }
+        td:not(.uib-separator) {
+          display: inline-block;
+          padding: 0px;
+        }
+        .uib-separator {
+          padding-top: 5px;
+        }
+      }
+    }
     .transfers-hotel {
       .add-link {
         margin-top: .75em;

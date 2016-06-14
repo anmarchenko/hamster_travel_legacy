@@ -28,9 +28,9 @@
 
 %div{'ng-show' => '!transfer.isCollapsed'}
   .form-group
-    .col-md-6
+    .col-xs-6
       = render 'widgets/datetimepicker', link_default_text: t('trips.show.departure'), model: 'transfer.start_time'
-    .col-md-6
+    .col-xs-6
       = render 'widgets/datetimepicker', link_default_text: t('trips.show.arrival'), model: 'transfer.end_time'
 
   .form-group
