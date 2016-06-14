@@ -20,15 +20,14 @@
                                               ng_model_description: 'link.description'
 
 %div.form-horizontal{'ng-show' => 'edit || hotel_edit'}
-  .form-group.day-place-container
-    .col-md-12
+  .form-group
+    .col-md-12.hotel-name-edit
       = text_field_tag 'hotel_name', '', 'ng-model' => 'day.hotel.name', class: 'input-sm form-control',
         placeholder: t('trips.show.name')
 
-    %a{href: 'javascript:void(0);',  class: 'up-button',
-      'ng-click' => 'fillAsPreviousHotel(day.hotel)',
-      'ng-show' => 'day_index > 0'}
-      = fa_icon 'arrow-up'
+      %a.up-button{href: 'javascript:void(0);', 'ng-click' => 'fillAsPreviousHotel(day.hotel)',
+          'ng-show' => 'day_index > 0'}
+        = image_tag 'buttons/up.svg'
 
   .form-group
     .col-md-12
@@ -38,7 +37,7 @@
       = text_area_tag 'hotel_comment', '', 'ng-model' => 'day.hotel.comment', class: 'form-control',
         placeholder: t('trips.show.comment'), rows: 3
 
-  .day-place-container{'ng-repeat' => 'link in day.hotel.links track by link.id'}
+  %div{'ng-repeat' => 'link in day.hotel.links track by link.id'}
     = render 'widgets/link', ng_model_descr: 'link.description', ng_model_url: 'link.url', ng_array: 'day.hotel.links'
 
   %a.link-with-icon.add-link{href: 'javascript:void(0);', 'ng-click' => "add(day.hotel.links)"}

@@ -19,7 +19,7 @@
   %script{type: 'text/ng-template', id: 'invitePopover.html'}
     .form-group.invite-users-popover
       = render 'widgets/typeahead/users', model_name: 'selected_user', classes: 'form-control',
-        placeholder: t('trips.show.type_name'), show_loading: false, custom_attrs: {'focus-on' => 'popover_opened'}
+        placeholder: t('trips.show.type_name'), custom_attrs: {'focus-on' => 'popover_opened'}
 
   %script{type: 'text/ng-template', id: 'daySortModal.html'}
     = render 'modals/days_sort_modal'

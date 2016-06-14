@@ -208,6 +208,20 @@
       .add-link {
         margin-top: .75em;
       }
+
+      .hotel-name-edit {
+        input {
+          width: 85%;
+          display: inline;
+        }
+        a {
+          display: inline;
+          margin-left: 5px;
+          img {
+            width: 16px;
+          }
+        }
+      }
     }
 
     .actions-butons {

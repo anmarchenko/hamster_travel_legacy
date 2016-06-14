@@ -31,7 +31,7 @@
 
 - options_code = { value: "{{#{code_field_name}}}" }
 
-%span{'ng-controller' => 'TypeaheadController', 'ng-class' => "#{show_loading ? '{\'input-group\': typeahead_loading}' : '' }"}
+%span{'ng-controller' => 'TypeaheadController'}
   - unless form.blank?
 
     = form.text_field text_field_name, options_text.merge('ng-init' => "#{text_field_name}='#{form.object.send(text_field_name)}';")
@@ -41,7 +41,3 @@
 
     = text_field_tag text_field_name, '', options_text
     = hidden_field_tag code_field_name, '', options_code
-  - if show_loading
-    %div{class: 'input-group-addon', 'ng-show' => 'typeahead_loading'}
-      = fa_icon 'refresh'
-

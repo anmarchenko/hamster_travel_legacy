@@ -19,7 +19,7 @@
 
   %div.day-place-container{'ng-repeat' => 'place in day.places track by place.id', class: ''}
     = render 'widgets/typeahead/cities', model_name: 'place.city', classes: 'input-sm form-control',
-      placeholder: t('trips.show.city'), show_loading: false, custom_bindings: "'place.flag_image' : 'flag_image'",
+      placeholder: t('trips.show.city'), custom_bindings: "'place.flag_image' : 'flag_image'",
       allow_empty_typeahead: true
 
     %a.delete-action{href: 'javascript:void(0);', 'ng-click' => 'remove(day.places, $index)',
