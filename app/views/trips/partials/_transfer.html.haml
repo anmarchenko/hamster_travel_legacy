@@ -1,8 +1,7 @@
 .transfer-place{'ng-show' => '!edit && !transfer_edit', 'ng-model' => 'day.transfers'}
 
   - if @user_can_edit
-    %a.inline-action.pull-right{href: 'javascript:void(0);', 'ng-click' => "setEdit(true, 'transfer')",
-          'ng-hide' => 'edit_persons_count'}
+    %a.inline-action.pull-right{href: 'javascript:void(0);', 'ng-click' => "setEdit(true, 'transfer')"}
       = image_tag 'buttons/edit.svg'
 
   %div.transfer-show-container{'ng-repeat' => 'transfer in day.transfers track by transfer.id'}

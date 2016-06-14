@@ -1,4 +1,8 @@
 %div{'ng-show' => '!edit && !hotel_edit'}
+  - if @user_can_edit
+    %a.inline-action.pull-right{href: 'javascript:void(0);', 'ng-click' => "setEdit(true, 'hotel')"}
+      = image_tag 'buttons/edit.svg'
+
   %p{'ng-show' => 'day.hotel.name || day.hotel.amount_cents'}
     %span.hotel-name
       {{day.hotel.name}}
@@ -14,9 +18,6 @@
     %p{'ng-repeat' => 'link in day.hotel.links track by link.id'}
       = render 'widgets/link_show', ng_model_url: 'link.url',
                                               ng_model_description: 'link.description'
-  - if @user_can_edit
-    %a{'ng-click' => "setEdit(true, 'hotel')"}
-      = fa_icon 'pencil'
 
 %div.form-horizontal{'ng-show' => 'edit || hotel_edit'}
   .form-group.day-place-container
@@ -38,17 +39,14 @@
         placeholder: t('trips.show.comment'), rows: 3
 
   .day-place-container{'ng-repeat' => 'link in day.hotel.links track by link.id'}
-    = render 'widgets/link', ng_model_descr: 'link.description', ng_model_url: 'link.url'
-    %a{href: 'javascript:void(0);', 'ng-click' => 'remove(day.hotel.links, $index)', 'ng-show' => 'day.hotel.links.length > 1',
-      class: 'delete-button'}
-      = fa_icon 'times'
-  .form-group.edit-actions
-    .col-md-12
-      %a.pull-left{href: 'javascript:void(0);', 'ng-click' => 'save()',
-            'ng-show' => 'hotel_edit'}
-        = fa_icon 'check'
-      %a.pull-left{href: 'javascript:void(0);', 'ng-click' => 'reload()', 'ng-show' => 'hotel_edit'}
-        = fa_icon 'undo'
+    = render 'widgets/link', ng_model_descr: 'link.description', ng_model_url: 'link.url', ng_array: 'day.hotel.links'
 
-      %a{href: 'javascript:void(0);', class: 'pull-right', 'ng-click' => 'add(day.hotel.links)'}
-        = fa_icon 'plus'
+  %a.link-with-icon.add-link{href: 'javascript:void(0);', 'ng-click' => "add(day.hotel.links)"}
+    = inline_svg 'buttons/add_plain.svg'
+    = t('trips.show.add_link')
+
+  .actions{'ng-show' => 'hotel_edit'}
+    %a.link-with-icon.btn.btn-sm.btn-success{'ng-click' => 'save()', href: 'javascript:void(0);'}
+      = inline_svg 'buttons/check.svg'
+    %a.link-with-icon.btn.btn-sm.ghost-button{'ng-click' => 'reload()', href: 'javascript:void(0);'}
+      = inline_svg 'buttons/back.svg'
