@@ -7,7 +7,7 @@
   %div.transfer-show-container{'ng-repeat' => 'transfer in day.transfers track by transfer.id'}
     = render 'trips/partials/show_transfer'
 
-  %p{'ng-show' => 'day.transfers.length == 0'}
+  %p.hidden-sm.hidden-md.hidden-lg{'ng-show' => 'day.transfers.length == 0'}
     %i
       = t('trips.show.no_transfers')
 

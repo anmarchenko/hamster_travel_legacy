@@ -1,4 +1,4 @@
-%div{'ng-show' => '!edit && !hotel_edit'}
+%span{'ng-show' => '!edit && !hotel_edit'}
   - if @user_can_edit
     %a.inline-action.pull-right{href: 'javascript:void(0);', 'ng-click' => "setEdit(true, 'hotel')"}
       = image_tag 'buttons/edit.svg'
@@ -10,10 +10,10 @@
     %span{'ng-show' => '!!day.hotel.amount_cents'}
       {{day.hotel.amount_cents / 100.0 | number: 2}}
       {{day.hotel.amount_currency_text}}
-  %p{'ng-show' => '!day.hotel.name && !day.hotel.amount_cents'}
+  %p.hidden-sm.hidden-md.hidden-lg{'ng-show' => '!day.hotel.name && !day.hotel.amount_cents'}
     %i
       = t('trips.show.no_hotel')
-  %p{class: 'travel-text text-italic'} {{day.hotel.comment}}
+  %p.travel-text.text-italic{'ng-show' => 'day.hotel.comment'} {{day.hotel.comment}}
   %span{'ng-show' => '!!day.hotel.links'}
     %p{'ng-repeat' => 'link in day.hotel.links track by link.id'}
       = render 'widgets/link_show', ng_model_url: 'link.url',

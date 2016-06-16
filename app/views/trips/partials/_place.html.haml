@@ -6,7 +6,7 @@
   %p.flag-text.transfers-place-show{'ng-show' => 'place.city_text && place.flag_image', 'ng-repeat' => 'place in day.places track by place.id'}
     %span{'ng-bind-html' => 'place.flag_image'}
     {{place.city_text}}
-  %p.transfers-place-show{'ng-show' => 'day.places.length == 0 || !day.places[0].city_text'}
+  %p.hidden-sm.hidden-md.hidden-lg.transfers-place-show{'ng-show' => 'day.places.length == 0 || !day.places[0].city_text'}
     %i
       = t('trips.show.no_places')
   - if @user_can_edit
