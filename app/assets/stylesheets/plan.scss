@@ -458,11 +458,13 @@
         }
 
         .activities-actions {
-          @media (min-width: 768px) {
-            text-align: right;
-          }
-          @media (max-width: 768px) {
-            margin-top: 10px;
+          display: inline;
+          margin-left: 1em;
+
+          .link-with-icon {
+            svg {
+              fill: $main-grey;
+            }
           }
         }
 
@@ -529,6 +531,7 @@
             margin-top: 10px;
           }
           .activity-day-add-info {
+            margin-bottom: 1em;
             .activity-day-expenses, .activity-day-bookmarks {
               .activity-day-expense, .activity-day-bookmark {
                 margin-top: 10px;

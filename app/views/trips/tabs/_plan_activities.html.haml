@@ -16,34 +16,27 @@
                 'ng-class' => '{shadowed: reloading}'}
         .activity-content{'ng-show' => 'day_loaded', 'ng-cloak' => ''}
           .row.activity-day-header
-            .col-md-3.col-xs-12
+            .col-xs-12
               .activity-day-date{'ng-click' => 'triggerShowMore()'}
                 = day.date_when_s
 
-            .col-md-9.col-xs-12.activities-actions
-              - if @user_can_edit
-                - if @trip.days.count > 1
-                  .activity-action-link.hidden-xs{'ng-controller' => 'DaySorterController', 'ng-hide' => 'edit'}
-                    %a.link-with-icon.btn.btn-sm.ghost-button{'ng-click' => "startSorting('#{@trip.id}')", href: 'javascript:void(0);',
-                    'ng-disabled' => 'reloading'}
-                      = inline_svg 'buttons/reorder.svg'
-                      %span.hidden-xs
-                        = t('trips.show.reorder_days')
-                .activity-action-link{'ng-hide' => 'edit'}
-                  %a.link-with-icon.btn.btn-sm.ghost-button{'ng-click' => "startEdit()",
-                  'ng-disabled' => 'reloading', href: 'javascript:void(0);'}
-                    = inline_svg 'buttons/edit.svg'
-                    = t('trips.show.edit_day')
-                .activity-action-link{'ng-show' => 'edit && !whole_plan_edit'}
-                  %a.link-with-icon.btn.btn-sm.btn-success{'ng-click' => 'save()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
-                    = inline_svg 'buttons/check.svg'
-                    %span.hidden-xs
-                      = t('common.save')
-                .activity-action-link{'ng-show' => 'edit && !whole_plan_edit'}
-                  %a.link-with-icon.btn.btn-sm.ghost-button{'ng-click' => 'cancelEdit()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
-                    = inline_svg 'buttons/back.svg'
-                    %span.hidden-xs
-                      = t('common.back')
+              .activities-actions
+                - if @user_can_edit
+                  - if @trip.days.count > 1
+                    .activity-action-link.hidden-xs{'ng-controller' => 'DaySorterController', 'ng-hide' => 'edit'}
+                      %a.link-with-icon{'ng-click' => "startSorting('#{@trip.id}')", href: 'javascript:void(0);',
+                      'ng-disabled' => 'reloading'}
+                        = inline_svg 'buttons/reorder.svg'
+                  .activity-action-link{'ng-hide' => 'edit'}
+                    %a.link-with-icon{'ng-click' => "startEdit()",
+                    'ng-disabled' => 'reloading', href: 'javascript:void(0);'}
+                      = inline_svg 'buttons/edit.svg'
+                  .activity-action-link{'ng-show' => 'edit && !whole_plan_edit'}
+                    %a.link-with-icon.btn.btn-sm.btn-success{'ng-click' => 'save()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
+                      = inline_svg 'buttons/check.svg'
+                  .activity-action-link{'ng-show' => 'edit && !whole_plan_edit'}
+                    %a.link-with-icon.btn.btn-sm.ghost-button{'ng-click' => 'cancelEdit()', href: 'javascript:void(0);', 'ng-disabled' => 'saving'}
+                      = inline_svg 'buttons/back.svg'
 
           .row.activity-day-places
             =# Show places
@@ -72,9 +65,18 @@
                     = inline_svg 'buttons/add_plain.svg'
                     = t('trips.show.add_city')
 
-
+          =# comment
           .row.activity-day-info
-            .col-md-3.col-xs-12.activity-day-add-info{'ng-show' => 'expensesPresent() || bookmarksPresent() || edit'}
+            .col-xs-12{'ng-show' => 'day.comment || edit'}
+              .activity-day-comment{'ng-hide' => 'edit'}
+                %p.travel-text{} {{day.comment}}
+              .activity-day-comment{'ng-show' => 'edit'}
+                = text_area_tag 'day_comment', '', 'ng-model' => 'day.comment', class: 'form-control',
+                  placeholder: t('trips.show.comment'), rows: 4
+
+          =# expenses and links
+          .row.activity-day-info
+            .col-md-6.col-xs-12.activity-day-add-info{'ng-show' => 'expensesPresent() || bookmarksPresent() || edit'}
               .activity-day-expenses
                 .activity-day-expense{'ng-repeat' => 'expense in day.expenses track by expense.id', 'ng-hide' => 'edit'}
                   %span{'ng-show' => '!!expense.amount_cents'}
@@ -107,12 +109,6 @@
                     = inline_svg 'buttons/add_plain.svg'
                     = t('trips.show.add_link')
 
-            .col-md-9.col-xs-12{'ng-show' => 'day.comment || edit'}
-              .activity-day-comment{'ng-hide' => 'edit'}
-                %p.travel-text{} {{day.comment}}
-              .activity-day-comment{'ng-show' => 'edit'}
-                = text_area_tag 'day_comment', '', 'ng-model' => 'day.comment', class: 'form-control',
-                  placeholder: t('trips.show.comment'), rows: 4
 
           .activity-day-activities-header{'ng-if' => 'edit', 'ng-click' => 'triggerShowMore()'}
             = t('trips.show.activities')
