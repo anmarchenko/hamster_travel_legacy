@@ -39,6 +39,7 @@
 
   .form-group
     .col-md-12
+      = label_tag t('trips.show.transfer_type')
       = select_tag 'transfer_type', options_for_select(transfer_type_options),
         {class: 'form-control input-sm', 'ng-model' => 'transfer.type'}
 

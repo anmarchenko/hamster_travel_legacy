@@ -325,6 +325,7 @@ en:
       no_hotel: No hotel info yet
       no_transfers: There are no transfers on this day
       no_places: No places info yet
+      transfer_type: Transfer type
     edit:
       title: Edit travel
     form:
