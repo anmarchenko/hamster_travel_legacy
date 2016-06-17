@@ -14,13 +14,13 @@
             = link_to new_trip_path, class: 'add-trip-header-btn hidden-xs' do
               = t('trips.index.create')
             = link_to new_trip_path, class: 'add-trip-header-btn-image hidden-sm hidden-md hidden-lg' do
-              = image_tag 'buttons/add.svg'
-        %li.hidden-xs
+              = inline_svg 'buttons/add.svg'
+        %li.hidden-xs.navbar-trips-link
           = link_to t('.trips'), trips_path
         - if user_signed_in?
-          %li.hidden-xs
+          %li.hidden-xs.navbar-trips-link
             = link_to t('.my_trips'), trips_path(my: true)
-          %li.hidden-xs
+          %li.hidden-xs.navbar-trips-link
             = link_to t('.my_ideas'), trips_path(my_draft: true)
 
         = render 'layouts/partials/locale_bar'
@@ -30,10 +30,10 @@
 %div{class: "navbar navbar-default navbar-second-mobile hidden-sm hidden-md hidden-lg #{'navbar-transparent' if transparent}"}
   %div{class: 'container'}
     %ul{class: 'nav navbar-nav'}
-      %li
+      %li.navbar-trips-link
         = link_to t('.trips'), trips_path
       - if user_signed_in?
-        %li
+        %li.navbar-trips-link
           = link_to t('.my_trips'), trips_path(my: true)
-        %li
+        %li.navbar-trips-link
           = link_to t('.my_ideas'), trips_path(my_draft: true)

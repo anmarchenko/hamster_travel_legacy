@@ -14,32 +14,37 @@
 header {
   z-index: 2;
 
-  .add-trip-header-btn {
-    border: 2px solid $ctaColor;
-    color: $ctaColor !important;
-    border-radius: 2px;
-    margin-top: 15.5px;
-    margin-bottom: 15.5px;
-    padding-top: 5px !important;
-    padding-bottom: 5px !important;
-    padding-left: 10px;
-    padding-right: 10px;
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
+  .navbar-nav {
+    li {
+      .add-trip-header-btn {
+        border: 2px solid $ctaColor;
+        color: $ctaColor;
+        border-radius: 2px;
+        margin-top: 15.5px;
+        margin-bottom: 15.5px;
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
+        padding-left: 10px;
+        padding-right: 10px;
+        text-align: center;
+        margin-left: 10px;
+        margin-right: 10px;
 
-    &:hover {
-      background-color: $background-grey !important;
+        &:hover {
+          background-color: $background-grey;
+        }
+      }
+
+      .add-trip-header-btn-image {
+        svg {
+          height: 24px;
+          width: 24px;
+          opacity: .8;
+        }
+      }
+
     }
   }
-
-  .add-trip-header-btn-image {
-    img {
-      max-height: 24px;
-      opacity: .8;
-    }
-  }
-
 }
 
 .menu-options-popover {
@@ -167,7 +172,9 @@ header {
 
 .notifications {
   .notification-image {
-    max-height: 25px;
+    height: 25px;
+    width: 25px;
+    fill: black;
   }
 
   .notification-menu {
@@ -200,7 +207,40 @@ header {
 }
 
 .navbar-transparent {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: transparent;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+
+  .navbar-brand {
+    color: white;
+    &:hover {
+      color: white;
+    }
+  }
+
+  .navbar-nav li.navbar-trips-link a {
+    color: white;
+    &:hover {
+      color: $ctaColor;
+    }
+  }
+  .navbar-nav li {
+    .notification-image {
+      fill: white;
+    }
+
+    .add-trip-header-btn {
+      color: white;
+      border-color: white;
+
+      &:hover {
+        background-color: inherit;
+        color: $ctaColor;
+        border-color: $ctaColor;
+      }
+    }
+  }
 }
 
 .welcome-area {
@@ -244,10 +284,6 @@ header {
     }
   }
 
-  .navbar-transparent {
-    background-color: rgba(255, 255, 255, 1);
-  }
-
   .navbar-first-mobile {
     box-shadow: none;
     -webkit-box-shadow: none;
@@ -259,6 +295,15 @@ header {
     z-index: 1;
   }
 
+  .navbar-transparent.navbar-first-mobile {
+    border-bottom: none;
+  }
+
+  .navbar-transparent {
+    .add-trip-header-btn-image {
+      fill: white;
+    }
+  }
 }
 
 .dropdown-toggle {
