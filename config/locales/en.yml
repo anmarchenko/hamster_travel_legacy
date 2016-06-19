@@ -65,7 +65,7 @@ en:
         email: Email Address
         password: Password
         register: Register
-        welcome: Sign in to your account
+        welcome: Welcome
         sign_in: Login
         remember: Remember Me
         title: Sign In

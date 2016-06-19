@@ -7,7 +7,6 @@
     %title= t('layouts.main.pagetitle', page: (yield(:title) if content_for?(:title))  )
     = csrf_meta_tags
 
-    = stylesheet_link_tag '//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/paper/bootstrap.min.css', media: 'all'
     = stylesheet_link_tag 'main', media: 'all'
 
     = favicon_link_tag '/favicon.ico'
@@ -24,7 +23,4 @@
       \==================================================
     / Placed at the end of the document so the pages load faster
     = javascript_include_tag 'main'
-    = javascript_include_tag 'https://code.angularjs.org/1.2.16/i18n/angular-locale_ru.js'
-    = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment-with-langs.min.js'
-    = javascript_include_tag 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'
     = yield(:page_javascript) if content_for?(:page_javascript)
