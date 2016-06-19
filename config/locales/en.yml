@@ -233,6 +233,8 @@ en:
       title: Travels
       create: Add plan
       with_report: With report
+    drafts:
+      title: My drafts
     new:
       title: New travel
     show:
@@ -356,7 +358,8 @@ en:
       trip_box:
         author: Author
       grid:
-        no_trips: No trips was added! Login and add a new one.
+        no_trips: No trips so far. Start planning by adding new trip.
+        no_draft: You have not created any drafts yet. Draft is a trip that you want to take somewhere in the future.
   views:
     pagination:
       first: "&laquo;"

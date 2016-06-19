@@ -19,9 +19,9 @@
           = link_to t('.trips'), trips_path
         - if user_signed_in?
           %li.hidden-xs.navbar-trips-link
-            = link_to t('.my_trips'), trips_path(my: true)
+            = link_to t('.my_trips'), my_trips_path
           %li.hidden-xs.navbar-trips-link
-            = link_to t('.my_ideas'), trips_path(my_draft: true)
+            = link_to t('.my_ideas'), drafts_trips_path
 
         = render 'layouts/partials/locale_bar'
         = render 'layouts/partials/notifications'
@@ -34,6 +34,6 @@
         %li.navbar-trips-link
           = link_to t('.trips'), trips_path
         %li.navbar-trips-link
-          = link_to t('.my_trips'), trips_path(my: true)
+          = link_to t('.my_trips'), my_trips_path
         %li.navbar-trips-link
-          = link_to t('.my_ideas'), trips_path(my_draft: true)
+          = link_to t('.my_ideas'), drafts_trips_path

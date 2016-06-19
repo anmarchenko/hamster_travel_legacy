@@ -21,6 +21,9 @@ Travel::Application.routes.draw do
       member do
         post :upload_photo
       end
+      collection do
+        get :my, :drafts
+      end
     end
     resources :messages, only: [:index, :destroy, :update]
 

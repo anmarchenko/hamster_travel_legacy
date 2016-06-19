@@ -4,7 +4,7 @@ class TripsController < ApplicationController
 
   TRANSFERS_GRID = [0.1, 0.1, 0.45, 0.35]
 
-  before_action :authenticate_user!, only: [:edit, :update, :new, :create, :destroy, :upload_photo]
+  before_action :authenticate_user!, only: [:edit, :update, :new, :create, :destroy, :upload_photo, :my, :drafts]
   before_action :find_trip, only: [:show, :edit, :update, :destroy, :upload_photo]
   before_action :find_original_trip, only: [:new, :create]
   before_action :authorize, only: [:edit, :update, :upload_photo]
@@ -12,7 +12,16 @@ class TripsController < ApplicationController
   before_action :authorize_show, only: [:show]
 
   def index
-    @trips = Finders::Trips.new(current_user, params[:page]).index(params[:my], params[:my_draft])
+    @trips = Finders::Trips.search(params[:page])
+  end
+
+  def my
+    @trips = Finders::Trips.for_user(current_user, params[:page])
+    render 'trips/index'
+  end
+
+  def drafts
+    @trips = Finders::Trips.drafts(current_user, params[:page])
   end
 
   def new

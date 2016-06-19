@@ -4,7 +4,6 @@ describe TripsController do
   let(:attrs_no_dates) { FactoryGirl.build(:trip, :no_dates).attributes }
 
   describe '#index' do
-
     after { expect(response).to render_template 'trips/index' }
 
     context 'when user is logged in' do
@@ -43,39 +42,6 @@ describe TripsController do
           expect(trips[i].private).to be false
         end
       end
-
-      it 'shows user\'s plans without drafts when parameter \'my\' is present' do
-        get 'index', my: true
-        trips = assigns(:trips)
-        expect(trips.to_a.count).to eq 6
-        trips.each_with_index do |trip, i|
-          expect(trip.include_user(subject.current_user)).to be true
-          expect(trip.status_code).not_to eq(Travels::Trip::StatusCodes::DRAFT)
-
-          next if trips[i+1].blank?
-          expect(
-              trips[i].start_date >= trips[i+1].start_date
-          ).to be true
-        end
-      end
-      it 'shows user\'s drafts when parameter \'my_draft\' is present' do
-        get 'index', my_draft: true
-        trips = assigns(:trips)
-        expect(trips.to_a.count).to eq 3
-        trips.each do |trip|
-          expect(trip.include_user(subject.current_user)).to be true
-          expect(trip.status_code).to eq(Travels::Trip::StatusCodes::DRAFT)
-        end
-      end
-
-      it 'shows trips without dates last' do
-        get 'index', my_draft: true
-        trips = assigns(:trips)
-        expect(trips.to_a.count).to eq 3
-        expect(trips.first.start_date).not_to be_nil
-        expect(trips.last.start_date).to be_nil
-      end
-
     end
 
     context 'when no logged user' do
@@ -87,11 +53,109 @@ describe TripsController do
       it 'shows trips index page' do
         get 'index'
       end
+    end
+  end
 
-      it 'shows same trips when parameter \'my\' is present' do
-        get 'index', my: true
+  describe '#my' do
+
+    context 'when user is logged in' do
+      after { expect(response).to render_template 'trips/index' }
+
+      login_user
+
+      before { Travels::Trip.destroy_all }
+
+      before { FactoryGirl.create_list(:trip, 2, user_ids: [subject.current_user.id]) }
+      before { FactoryGirl.create_list(:trip, 1, :no_dates, user_ids: [subject.current_user.id]) }
+
+      before { FactoryGirl.create_list(:trip, 1, user_ids: [subject.current_user.id],
+                                       status_code: Travels::Trip::StatusCodes::FINISHED) }
+      before { FactoryGirl.create_list(:trip, 4, user_ids: [subject.current_user.id],
+                                       status_code: Travels::Trip::StatusCodes::PLANNED) }
+
+      before { FactoryGirl.create_list(:trip, 12) }
+      before { FactoryGirl.create_list(:trip, 2, status_code: Travels::Trip::StatusCodes::FINISHED) }
+
+      before { FactoryGirl.create_list(:trip, 1, user_ids: [subject.current_user.id],
+                                       private: true, status_code: Travels::Trip::StatusCodes::FINISHED) }
+
+      it 'shows user\'s plans without drafts when parameter \'my\' is present' do
+        get 'my'
+        trips = assigns(:trips)
+        expect(trips.to_a.count).to eq 6
+        trips.each_with_index do |trip, i|
+          expect(trip.include_user(subject.current_user)).to be true
+          expect(trip.status_code).not_to eq(Travels::Trip::StatusCodes::DRAFT)
+
+          next if trips[i+1].blank?
+          expect(
+            trips[i].start_date >= trips[i+1].start_date
+          ).to be true
+        end
+      end
+    end
+
+    context 'when no logged user' do
+      before { Travels::Trip.destroy_all }
+      before { FactoryGirl.create_list(:trip, 12) }
+      before { FactoryGirl.create_list(:trip, 3, status_code: Travels::Trip::StatusCodes::PLANNED) }
+
+      it 'responds with not auhorized' do
+        get 'my'
+        expect(response).to redirect_to '/users/sign_in'
+      end
+    end
+  end
+
+  describe '#drafts' do
+    context 'when user is logged in' do
+      after { expect(response).to render_template 'trips/drafts' }
+      login_user
+
+      before { Travels::Trip.destroy_all }
+
+      before { FactoryGirl.create_list(:trip, 2, user_ids: [subject.current_user.id]) }
+      before { FactoryGirl.create_list(:trip, 1, :no_dates, user_ids: [subject.current_user.id]) }
+
+      before { FactoryGirl.create_list(:trip, 1, user_ids: [subject.current_user.id],
+                                       status_code: Travels::Trip::StatusCodes::FINISHED) }
+      before { FactoryGirl.create_list(:trip, 4, user_ids: [subject.current_user.id],
+                                       status_code: Travels::Trip::StatusCodes::PLANNED) }
+
+      before { FactoryGirl.create_list(:trip, 12) }
+      before { FactoryGirl.create_list(:trip, 2, status_code: Travels::Trip::StatusCodes::FINISHED) }
+
+      before { FactoryGirl.create_list(:trip, 1, user_ids: [subject.current_user.id],
+                                       private: true, status_code: Travels::Trip::StatusCodes::FINISHED) }
+
+      it 'shows user\'s drafts when parameter \'my_draft\' is present' do
+        get 'drafts'
+        trips = assigns(:trips)
+        expect(trips.to_a.count).to eq 3
+        trips.each do |trip|
+          expect(trip.include_user(subject.current_user)).to be true
+          expect(trip.status_code).to eq(Travels::Trip::StatusCodes::DRAFT)
+        end
       end
 
+      it 'shows trips without dates last' do
+        get 'drafts'
+        trips = assigns(:trips)
+        expect(trips.to_a.count).to eq 3
+        expect(trips.first.start_date).not_to be_nil
+        expect(trips.last.start_date).to be_nil
+      end
+    end
+
+    context 'when no logged user' do
+      before { Travels::Trip.destroy_all }
+      before { FactoryGirl.create_list(:trip, 12) }
+      before { FactoryGirl.create_list(:trip, 3, status_code: Travels::Trip::StatusCodes::PLANNED) }
+
+      it 'responds with not auhorized' do
+        get 'drafts'
+        expect(response).to redirect_to '/users/sign_in'
+      end
     end
   end
 

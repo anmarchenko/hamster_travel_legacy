@@ -1,6 +1,6 @@
 - content_for :title, t('.title')
 
 - if @trips.blank?
-  = render 'no_trips', text: t('widgets.trips.grid.no_trips')
+  = render 'no_trips', text: t('widgets.trips.grid.no_drafts')
 - else
   = render 'trips/partials/trip_list', trips: @trips
