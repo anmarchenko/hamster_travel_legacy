@@ -72,8 +72,12 @@ module Travels
     def short_hash
       transfer = self.transfers.first
       transfer_s = "#{transfer.city_from_text} - #{transfer.city_to_text}" if transfer
-      activity = self.activities.first
-      activity_s = "#{activity.name}" if activity
+      # first 3 activities
+      activity_s = ""
+      self.activities.first(3).each_with_index do |activity, index|
+        activity_s += "#{index + 1}. #{activity.name}"
+        activity_s += "<br/>"
+      end
       place = self.places.first
       place_s = place.city_text if place
       {

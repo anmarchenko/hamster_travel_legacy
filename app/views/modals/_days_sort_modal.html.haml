@@ -22,7 +22,7 @@
         .column.transfer
           {{day.transfer_s}}
         .column.activity
-          {{day.activity_s}}
+          %span{'ng-bind-html' => 'day.activity_s'}
   .row{'ng-show' => 'sortInProgress'}
     .col-md-12.days-sorting-progress
       .header
