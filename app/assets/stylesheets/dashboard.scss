@@ -223,7 +223,7 @@ header {
   .navbar-nav li.navbar-trips-link a {
     color: white;
     &:hover {
-      color: $ctaColor;
+      color: lightgrey;
     }
   }
   .navbar-nav li {
@@ -237,8 +237,8 @@ header {
 
       &:hover {
         background-color: inherit;
-        color: $ctaColor;
-        border-color: $ctaColor;
+        color: lightgrey;
+        border-color: lightgrey;
       }
     }
   }
