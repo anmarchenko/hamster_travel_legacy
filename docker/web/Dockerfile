@@ -12,7 +12,7 @@ RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
 CMD ["/sbin/my_init"]
 
 # install imagemagick
-RUN apt-get install -y imagemagick libxml2-dev
+RUN apt-get install -y imagemagick libpq-dev
 
 # Expose Nginx HTTP service
 EXPOSE 80
