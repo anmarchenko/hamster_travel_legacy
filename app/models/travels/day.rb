@@ -72,9 +72,11 @@ module Travels
     def short_hash
       transfer = self.transfers.first
       transfer_s = "#{transfer.city_from_text} - #{transfer.city_to_text}" if transfer
-      # first 3 activities
+      # first 3 activities by rating
       activity_s = ""
-      self.activities.first(3).each_with_index do |activity, index|
+      self.activities.unscoped.where(day_id: self.id)
+          .order({rating: :desc, order_index: :asc})
+          .first(3).each_with_index do |activity, index|
         activity_s += "#{index + 1}. #{activity.name}"
         activity_s += "<br/>"
       end

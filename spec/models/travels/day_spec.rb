@@ -103,6 +103,20 @@ describe Travels::Day do
     end
   end
 
+  describe '#short_hash' do
+    let(:day) { FactoryGirl.create(:trip, :with_filled_days).days.first }
+
+    it 'returns short representation of the day with 3 must see activities' do
+      short_hash = day.short_hash
+      expected_activities = day.activities.unscoped.where(day_id: day.id)
+                                .order({rating: :desc, order_index: :asc}).first(3)
+      actual_activities = short_hash[:activity_s].split('<br/>').first(3)
+      3.times do |index|
+        expect(actual_activities[index]).to eq("#{index + 1}. #{expected_activities[index].name}")
+      end
+    end
+  end
+
   describe '#as_json' do
     context 'when return json of a filled day' do
       let(:day) { FactoryGirl.create(:trip, :with_filled_days).days.first }

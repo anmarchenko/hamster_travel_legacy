@@ -40,7 +40,7 @@ FactoryGirl.define do
         trip.days.each_with_index do |day, index|
           day.comment = "Day #{index}"
           2.times { |index| day.transfers.create(build(:transfer, :with_destinations, order_index: index).attributes) }
-          5.times { |index| day.activities.create(build(:activity, :with_data, order_index: index).attributes) }
+          5.times { |index| day.activities.create(build(:activity, :with_data, order_index: index, rating: (index%3)+1).attributes) }
           day.places.create(build(:place, :with_data).attributes)
           day.hotel = Travels::Hotel.new(build(:hotel, :with_data).attributes)
           day.hotel.links = [FactoryGirl.build(:external_link)]
@@ -130,7 +130,7 @@ FactoryGirl.define do
 
   factory :activity, class: 'Travels::Activity' do
     trait :with_data do
-      name { 'Activity' }
+      sequence(:name) {|index| "Activity #{index}" }
       amount_cents { rand(10000) * 100 }
       amount_currency { 'RUB' }
       comment { 'Activity comment' }
