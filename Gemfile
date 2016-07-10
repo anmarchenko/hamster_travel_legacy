@@ -92,9 +92,10 @@ gem 'inline_svg'
 # clone activerecord models
 gem 'deep_cloneable'
 
-# production caching
+# production - caching and passenger
 group :production do
   gem 'rack-cache', :require => 'rack/cache'
+  gem "passenger", ">= 5.0.25", require: "phusion_passenger/rack_handler"
 end
 
 group :development do
