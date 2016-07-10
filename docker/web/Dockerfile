@@ -5,8 +5,14 @@ MAINTAINER Andrey Marchenko "anvmarchenko@gmail.com"
 ENV HOME /root
 ENV RAILS_ENV production
 
+# upgrade OS
+RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
+
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
+
+# install imagemagick
+RUN apt-get install -y imagemagick libxml2-dev
 
 # Expose Nginx HTTP service
 EXPOSE 80
