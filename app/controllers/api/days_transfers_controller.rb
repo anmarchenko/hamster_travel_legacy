@@ -7,7 +7,8 @@ class Api::DaysTransfersController < ApplicationController
   def index
     render json: {
         days: @trip.days.includes(:transfers, :hotel, :places)
-                  .as_json(normal_json: true, include: [:transfers, :hotel, :places])
+                  .as_json(user_currency: current_user.try(:currency),
+                           include: [:transfers, :hotel, :places])
     }
   end
 

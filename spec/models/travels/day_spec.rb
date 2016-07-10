@@ -120,10 +120,12 @@ describe Travels::Day do
   describe '#as_json' do
     context 'when return json of a filled day' do
       let(:day) { FactoryGirl.create(:trip, :with_filled_days).days.first }
-      let(:day_json) { day.as_json() }
+      let(:day_json) { day.as_json(include: [:expenses, :activities, :links, :places, :transfers, :hotel]) }
 
       let(:day_empty) { FactoryGirl.create(:trip).days.first }
-      let(:day_empty_json) { day_empty.as_json() }
+      let(:day_empty_json) { day_empty.as_json(include: [:expenses, :activities, :links, :places, :transfers, :hotel]) }
+
+      let(:day_json_with_currency) {day.as_json(user_currency: 'EUR', include: [:expenses, :activities, :links, :places, :transfers, :hotel])}
 
       it 'has string id field' do
         expect(day_json['id']).not_to be_blank
@@ -164,6 +166,10 @@ describe Travels::Day do
       it 'has expenses' do
         expect(day_json['expenses'].count).to eq(4)
         expect(day_json['expenses'].last).to eq(day.expenses.last.as_json())
+      end
+
+      it 'adds amounts in user currency' do
+        expect(day_json_with_currency['expenses'].first['in_user_currency'][:amount_cents]).not_to be_blank
       end
     end
   end

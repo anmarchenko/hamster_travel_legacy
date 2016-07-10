@@ -10,6 +10,8 @@
     %span{'ng-show' => '!!day.hotel.amount_cents'}
       {{day.hotel.amount_cents / 100.0 | number: 2}}
       {{day.hotel.amount_currency_text}}
+      %i{'ng-show' => '!!day.hotel.in_user_currency.amount_cents'}
+        ({{day.hotel.in_user_currency.amount_cents / 100.0 | number: 2}} {{day.hotel.in_user_currency.amount_currency_text}})
   %p.hidden-sm.hidden-md.hidden-lg{'ng-show' => '!day.hotel.name && !day.hotel.amount_cents'}
     %i
       = t('trips.show.no_hotel')

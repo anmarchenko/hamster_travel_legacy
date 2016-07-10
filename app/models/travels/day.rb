@@ -52,20 +52,11 @@ module Travels
       json = super(args)
       json['id'] = id.to_s
       json['date'] = date_when_s
-
-      unless args[:normal_json]
-        json['transfers'] = transfers.as_json(args)
-        json['activities'] = activities.as_json(args)
-        json['places'] = places.as_json(args)
-        json['hotel'] = hotel.as_json(args)
-        json['expenses'] = expenses.as_json(args)
-        if links.blank?
-          json['links'] = [ExternalLink.new].as_json(args)
-        else
-          json['links'] = links.as_json(args)
-        end
+      if args[:user_currency]
+        # process all amounts and add them in user's currency
+        service = Json::AmountUserCurrency.new(args[:user_currency])
+        ['transfers', 'activities', 'expenses', 'hotel'].each {|field| service.call(json[field])}
       end
-
       json
     end
 

@@ -6,12 +6,7 @@ class Api::ActivitiesController < ApplicationController
   before_action :api_authorize_readonly!, only: [:index]
 
   def index
-    render json: @day.as_json(normal_json: true).merge(
-        expenses: @day.expenses.as_json,
-        activities: @day.activities.as_json,
-        links: @day.links.as_json,
-        places: @day.places.as_json
-    )
+    render json: @day.as_json(user_currency: current_user.try(:currency), include: [:expenses, :activities, :links, :places])
   end
 
   def create

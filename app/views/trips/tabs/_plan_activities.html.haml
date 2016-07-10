@@ -83,6 +83,8 @@
                     {{expense.name}}
                     {{expense.amount_cents / 100.0 | number: 2}}
                     {{expense.amount_currency_text}}
+                    %i{'ng-show' => '!!expense.in_user_currency.amount_cents'}
+                      ({{expense.in_user_currency.amount_cents / 100.0 | number: 2}} {{expense.in_user_currency.amount_currency_text}})
 
                 .activity-day-expense-edit{'ng-repeat' => 'expense in day.expenses track by expense.id', 'ng-show' => 'edit'}
                   = text_field_tag 'expense_name', '', 'ng-model' => 'expense.name', class: 'form-control input-sm expense-name',
@@ -128,6 +130,8 @@
                         {{activity.name}}
                         {{activity.amount_cents / 100.0 | number: 2}}
                         {{activity.amount_currency_text}}
+                        %i{'ng-show' => '!!activity.in_user_currency.amount_cents'}
+                          ({{activity.in_user_currency.amount_cents / 100.0 | number: 2}} {{activity.in_user_currency.amount_currency_text}})
 
                       - if @trip.days.count > 1 && @user_can_edit
                         %a.move-activity.hidden-xs{href: 'javascript:void(0);',

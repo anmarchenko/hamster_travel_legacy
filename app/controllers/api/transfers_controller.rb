@@ -6,11 +6,7 @@ class Api::TransfersController < ApplicationController
   before_action :api_authorize_readonly!, only: [:index, :previous_place, :previous_hotel]
 
   def index
-    render json: @day.as_json(normal_json: true).merge(
-        transfers: @day.transfers.as_json,
-        hotel: @day.hotel.as_json,
-        places: @day.places.as_json
-    )
+    render json: @day.as_json(user_currency: current_user.try(:currency), include: [:transfers, :hotel, :places])
   end
 
   def create
