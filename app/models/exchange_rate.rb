@@ -9,7 +9,7 @@
 #  rates_date :date
 #
 
-class ExchangeRate < ActiveRecord::Base
+class ExchangeRate < ApplicationRecord
 
   def self.current
     order(rates_date: :desc, created_at: :desc).first

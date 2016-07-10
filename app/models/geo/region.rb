@@ -18,7 +18,7 @@
 #
 
 module Geo
-  class Region < ActiveRecord::Base
+  class Region < ApplicationRecord
 
     include Concerns::Geographical
 

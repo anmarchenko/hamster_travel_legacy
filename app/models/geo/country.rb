@@ -26,7 +26,7 @@
 #
 
 module Geo
-  class Country < ActiveRecord::Base
+  class Country < ApplicationRecord
 
     include Concerns::Geographical
 

@@ -4,7 +4,7 @@ describe Api::ParticipantsController do
     let(:trip) {FactoryGirl.create(:trip, :with_users, :with_invited)}
 
     it 'returns list of participants and invited users' do
-      get 'index', id: trip.id
+      get 'index', params: {id: trip.id}
       expect(response).to have_http_status 200
       json = JSON.parse(response.body)
 

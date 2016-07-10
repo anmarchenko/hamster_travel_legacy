@@ -11,7 +11,7 @@ describe Api::UserShowsController do
       context 'and when there is trip' do
         context 'and when input params are valid' do
           it 'sets user as watching a trip and returning an empty list of watching users' do
-            get 'show', id: trip.id.to_s, format: :json
+            get 'show', params: {id: trip.id.to_s}, format: :json
             expect(response).to have_http_status 200
             json = JSON.parse(response.body)
             expect(json).to eq(JSON.parse('[]'))
@@ -29,7 +29,7 @@ describe Api::UserShowsController do
 
               $redis.zadd(trip.id.to_s, Time.now.to_i, user.id)
 
-              get 'show', id: trip.id.to_s, format: :json
+              get 'show', params: {id: trip.id.to_s}, format: :json
 
               expect(response).to have_http_status 200
               json = JSON.parse(response.body)
@@ -38,7 +38,7 @@ describe Api::UserShowsController do
               # 10 seconds after...
               Timecop.travel(Time.now + 10.seconds)
 
-              get 'show', id: trip.id.to_s, format: :json
+              get 'show', params: {id: trip.id.to_s}, format: :json
 
               expect(response).to have_http_status 200
               json = JSON.parse(response.body)
@@ -49,7 +49,7 @@ describe Api::UserShowsController do
 
         context 'and when user is not included in trip' do
           it 'heads 403' do
-            get 'show', id: trip_without_user.id.to_s, format: :json
+            get 'show', params: {id: trip_without_user.id.to_s}, format: :json
             expect(response).to have_http_status 403
           end
         end
@@ -57,7 +57,7 @@ describe Api::UserShowsController do
 
       context 'and when there is no trip' do
         it 'heads 404' do
-          get 'show', id: 'no_trip', format: :json
+          get 'show', params: {id: 'no_trip'}, format: :json
           expect(response).to have_http_status 404
         end
       end
@@ -67,7 +67,7 @@ describe Api::UserShowsController do
     context 'when no logged user' do
       let(:trip) {FactoryGirl.create :trip}
       it 'redirects to sign in' do
-        get 'show', id: trip.id.to_s, format: :json
+        get 'show', params: {id: trip.id.to_s}, format: :json
         expect(response).to have_http_status 401
       end
     end

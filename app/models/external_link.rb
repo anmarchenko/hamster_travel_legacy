@@ -11,7 +11,7 @@
 
 require 'uri'
 
-class ExternalLink < ActiveRecord::Base
+class ExternalLink < ApplicationRecord
 
   belongs_to :linkable, polymorphic: true
 

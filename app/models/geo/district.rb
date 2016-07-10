@@ -18,7 +18,7 @@
 #
 
 module Geo
-  class District < ActiveRecord::Base
+  class District < ApplicationRecord
 
     include Concerns::Geographical
 

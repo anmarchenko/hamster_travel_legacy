@@ -30,6 +30,7 @@ FactoryGirl.define do
     sequence(:first_name) { |n| "FirstName-#{n}" }
     sequence(:last_name) { |n| "LastName-#{n}" }
     password '12345678'
+    locale 'en'
 
     trait :with_home_town do
       home_town_id { Geo::City.where(status: Geo::City::Statuses::CAPITAL).first.try(:id) }

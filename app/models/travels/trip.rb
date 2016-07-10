@@ -22,7 +22,7 @@
 #
 
 module Travels
-  class Trip < ActiveRecord::Base
+  class Trip < ApplicationRecord
 
     extend Dragonfly::Model
     extend Dragonfly::Model::Validations

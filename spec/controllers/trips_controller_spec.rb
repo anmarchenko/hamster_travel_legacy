@@ -1,7 +1,7 @@
 describe TripsController do
 
-  let(:attrs) { FactoryGirl.build(:trip).attributes }
-  let(:attrs_no_dates) { FactoryGirl.build(:trip, :no_dates).attributes }
+  let(:attrs) { FactoryGirl.build(:trip).attributes.with_indifferent_access }
+  let(:attrs_no_dates) { FactoryGirl.build(:trip, :no_dates).attributes.with_indifferent_access }
 
   describe '#index' do
     after { expect(response).to render_template 'trips/index' }
@@ -30,7 +30,7 @@ describe TripsController do
         trips = assigns(:trips)
         expect(trips.to_a.count).to eq 7
         # check sort
-        trips.each_index do |i|
+        trips.each_with_index do |_, i|
           next if trips[i+1].blank?
           expect(
               trips[i].status_code > trips[i+1].status_code ||
@@ -174,7 +174,7 @@ describe TripsController do
         let(:trip_private) { FactoryGirl.create(:trip, :with_filled_days, private: true) }
         context 'and when it is valid existing trip id' do
           it 'renders template with new trip copied from old trip' do
-            get 'new', copy_from: trip.id
+            get 'new', params: {copy_from: trip.id}
             new_trip = assigns(:trip)
             expect(new_trip.currency).to eq 'USD'
             expect(new_trip.name).to eq trip.name + " (#{I18n.t('common.copy')})"
@@ -192,7 +192,7 @@ describe TripsController do
 
         context 'and when trying to copy private trip' do
           it 'just creates new trip' do
-            get 'new', copy_from: trip_private.id
+            get 'new', params: {copy_from: trip_private.id}
             new_trip = assigns(:trip)
             expect(new_trip.name).to be_nil
             expect(new_trip.start_date).to be_nil
@@ -211,7 +211,7 @@ describe TripsController do
 
         context 'and when it is not valid' do
           it 'renders template with new trip' do
-            get 'new', copy_from: 'blahblah'
+            get 'new', params: {copy_from: 'blahblah'}
             new_trip = assigns(:trip)
             expect(new_trip.name).to be_nil
             expect(new_trip.start_date).to be_nil
@@ -228,7 +228,7 @@ describe TripsController do
 
         context 'and when it is empty' do
           it 'renders template with new trip' do
-            get 'new', copy_from: ''
+            get 'new', params: {copy_from: ''}
             new_trip = assigns(:trip)
             expect(new_trip.name).to be_nil
             expect(new_trip.start_date).to be_nil
@@ -261,7 +261,7 @@ describe TripsController do
         let(:params) { {travels_trip: attrs.merge(currency: 'INR')} }
 
         it 'creates new trip and redirects to show' do
-          post 'create', params
+          post 'create', params: params
           trip = assigns(:trip).reload
           expect(response).to redirect_to trip_path(trip)
           expect(trip).to be_persisted
@@ -280,7 +280,7 @@ describe TripsController do
           let(:params) { {travels_trip: attrs_no_dates} }
 
           it 'creates new trip and redirects to show' do
-            post 'create', params
+            post 'create', params: params
             trip = assigns(:trip).reload
             expect(trip).to be_persisted
             expect(response).to redirect_to trip_path(trip)
@@ -305,7 +305,7 @@ describe TripsController do
 
           context 'and when it is valid existing trip id' do
             it 'renders template with new trip copied from old trip' do
-              post 'create', params.merge(copy_from: original.id)
+              post 'create', params: params.merge(copy_from: original.id)
               trip = assigns(:trip)
               trip = trip.reload
 
@@ -332,7 +332,7 @@ describe TripsController do
 
           context 'and when trying to copy private trip' do
             it 'just creates new trip' do
-              post 'create', params.merge(copy_from: original_private.id)
+              post 'create', params: params.merge(copy_from: original_private.id)
               trip = assigns(:trip)
               trip = trip.reload
               expect(trip.days.first.comment).to be_nil
@@ -346,7 +346,7 @@ describe TripsController do
 
           context 'and when it is not valid' do
             it 'renders template with new trip' do
-              post 'create', params.merge(copy_from: 'fdsfdsfdfds')
+              post 'create', params: params.merge(copy_from: 'fdsfdsfdfds')
               trip = assigns(:trip)
               trip = trip.reload
               expect(trip.days.first.comment).to be_nil
@@ -363,7 +363,7 @@ describe TripsController do
               ps = params.merge(copy_from: original.id)
               ps[:travels_trip]['end_date'] += 1.day
 
-              post 'create', ps
+              post 'create', params: ps
               trip = assigns(:trip)
               trip = trip.reload
 
@@ -385,7 +385,7 @@ describe TripsController do
               ps = params.merge(copy_from: original.id)
               ps[:travels_trip]['end_date'] -= 1.day
 
-              post 'create', ps
+              post 'create', params: ps
               trip = assigns(:trip)
               trip = trip.reload
 
@@ -406,7 +406,7 @@ describe TripsController do
         let(:params) { {travels_trip: attrs.merge(archived: true)} }
 
         it 'creates new trip and redirects to show' do
-          post 'create', params
+          post 'create', params: params
           trip = assigns(:trip)
           expect(trip).to be_persisted
           expect(trip.name).to eq params[:travels_trip]['name']
@@ -418,7 +418,7 @@ describe TripsController do
         let(:params) { {travels_trip: attrs.reject { |k, _| k == 'name' }} }
 
         it 'creates new trip and redirects to show' do
-          post 'create', params
+          post 'create', params: params
           trip = assigns(:trip)
           expect(response).to render_template 'trips/new'
           expect(trip).not_to be_persisted
@@ -432,7 +432,7 @@ describe TripsController do
       let(:params) { {travels_trip: attrs} }
 
       it 'redirects to sign in' do
-        post 'create', params
+        post 'create', params: params
         expect(response).to redirect_to '/users/sign_in'
       end
     end
@@ -446,7 +446,7 @@ describe TripsController do
         let(:trip) { FactoryGirl.create(:trip, users: [subject.current_user]) }
 
         it 'renders edit template' do
-          get 'edit', id: trip.id
+          get 'edit', params: {id: trip.id}
           expect(response).to render_template 'trips/edit'
         end
       end
@@ -455,14 +455,14 @@ describe TripsController do
         let(:trip) { FactoryGirl.create(:trip, author_user: subject.current_user) }
 
         it 'redirects to dashboard with flash' do
-          get 'edit', id: trip.id
+          get 'edit', params: {id: trip.id}
           expect(response).to redirect_to '/errors/no_access'
         end
       end
 
       context 'and when trip does not exist' do
         it 'heads code 404' do
-          get 'edit', id: 'not-existing-id'
+          get 'edit', params: {id: 'not-existing-id'}
           expect(response).to redirect_to '/errors/not_found'
         end
       end
@@ -472,7 +472,7 @@ describe TripsController do
       let(:trip) { FactoryGirl.create(:trip) }
 
       it 'redirects to sign in' do
-        get 'edit', id: trip.id
+        get 'edit', params: {id: trip.id}
         expect(response).to redirect_to '/users/sign_in'
       end
     end
@@ -490,7 +490,7 @@ describe TripsController do
 
         context 'and when params are valid' do
           it 'updates trip and redirects to show with notice' do
-            put 'update', update_attrs
+            put 'update', params: update_attrs
             trip_updated = assigns(:trip).reload
             expect(trip_updated.name).to eq 'New Updated Name'
             expect(trip_updated.status_code).to eq Travels::Trip::StatusCodes::PLANNED
@@ -512,7 +512,7 @@ describe TripsController do
                 trip.caterings = [FactoryGirl.build(:catering)]
                 trip.save
 
-                put 'update', update_attrs
+                put 'update', params: update_attrs
                 trip_updated = assigns(:trip).reload
                 expect(trip_updated.name).to eq 'New Updated Name'
                 expect(trip_updated.status_code).to eq Travels::Trip::StatusCodes::PLANNED
@@ -529,7 +529,7 @@ describe TripsController do
         context 'and when params are not valid' do
           let(:update_attrs_invalid) { {travels_trip: attrs.merge('name' => nil), id: trip.id} }
           it 'renders edit template' do
-            put 'update', update_attrs_invalid
+            put 'update', params: update_attrs_invalid
             expect(assigns(:trip).errors).not_to be_blank
             expect(response).to render_template 'trips/edit'
           end
@@ -540,7 +540,7 @@ describe TripsController do
         let(:trip) { FactoryGirl.create(:trip, author_user: subject.current_user) }
 
         it 'redirects to dashboard with flash' do
-          put 'update', update_attrs
+          put 'update', params: update_attrs
           expect(response).to redirect_to '/errors/no_access'
           expect(assigns(:trip).name).to eq trip.name
         end
@@ -552,7 +552,7 @@ describe TripsController do
       let(:trip) { FactoryGirl.create(:trip) }
 
       it 'redirects to sign in' do
-        put 'update', update_attrs
+        put 'update', params: update_attrs
         expect(response).to redirect_to '/users/sign_in'
       end
     end
@@ -568,7 +568,7 @@ describe TripsController do
           let(:trip) { FactoryGirl.create(:trip) }
 
           it 'renders show template' do
-            get 'show', id: trip.id
+            get 'show', params: {id: trip.id}
             expect(response).to render_template 'trips/show'
             trip = assigns(:trip)
             expect(trip.id).to eq trip.id
@@ -578,7 +578,7 @@ describe TripsController do
           let(:filled_trip) { FactoryGirl.create(:trip, :with_filled_days, :with_caterings) }
 
           it 'renders docx' do
-            get 'show', id: filled_trip.id, format: :docx
+            get 'show', params: {id: filled_trip.id, format: :docx}
             expect(response).to have_http_status 200
             expect(response).to render_template 'trips/show'
             expect(assigns(:transfers_grid)).to eq TripsController::TRANSFERS_GRID
@@ -590,7 +590,7 @@ describe TripsController do
           let(:trip) { FactoryGirl.create(:trip, private: true) }
 
           it 'redirects to dashboard with flash' do
-            get 'show', id: trip.id
+            get 'show', params: {id: trip.id}
             expect(response).to redirect_to '/errors/no_access'
           end
         end
@@ -599,7 +599,7 @@ describe TripsController do
           let(:trip) { FactoryGirl.create(:trip, private: true, users: [subject.current_user]) }
 
           it 'renders show template' do
-            get 'show', id: trip.id
+            get 'show', params: {id: trip.id}
             expect(response).to have_http_status 200
             expect(response).to render_template 'trips/show'
           end
@@ -609,7 +609,7 @@ describe TripsController do
 
       context 'and when trip does not exist' do
         it 'renders show template' do
-          get 'show', id: 'non-existing-id'
+          get 'show', params: {id: 'non-existing-id'}
           expect(response).to redirect_to '/errors/not_found'
         end
       end
@@ -621,7 +621,7 @@ describe TripsController do
         let(:trip) { FactoryGirl.create(:trip) }
 
         it 'renders show template' do
-          get 'show', id: trip.id
+          get 'show', params: {id: trip.id}
           expect(response).to have_http_status 200
           expect(response).to render_template 'trips/show'
         end
@@ -631,7 +631,7 @@ describe TripsController do
         let(:trip) { FactoryGirl.create(:trip, private: true) }
 
         it 'redirects to dashboard with flash' do
-          get 'show', id: trip.id
+          get 'show', params: {id: trip.id}
           expect(response).to redirect_to '/errors/no_access'
         end
       end
@@ -646,7 +646,7 @@ describe TripsController do
         let(:trip) { FactoryGirl.create(:trip, author_user: subject.current_user) }
 
         it 'marks trip as archived' do
-          delete 'destroy', id: trip.id
+          delete 'destroy', params: {id: trip.id}
           expect(Travels::Trip.where(id: trip.id).first).to be_nil
           expect(Travels::Trip.unscoped.where(id: trip.id, archived: true).first).not_to be_blank
           expect(response).to redirect_to trips_path(my: true)
@@ -660,7 +660,7 @@ describe TripsController do
 
           expect(subject.current_user.incoming_invites.count).to eq(1)
 
-          delete 'destroy', id: trip.id
+          delete 'destroy', params: {id: trip.id}
           expect(Travels::Trip.where(id: trip.id).first).to be_nil
 
           expect(subject.current_user.incoming_invites.count).to eq(0)
@@ -671,14 +671,14 @@ describe TripsController do
         let(:trip) { FactoryGirl.create(:trip, users: [subject.current_user]) }
 
         it 'redirects to dashboard with flash' do
-          delete 'destroy', id: trip.id
+          delete 'destroy', params: {id: trip.id}
           expect(response).to redirect_to '/errors/no_access'
         end
       end
 
       context 'and when trip does not exist' do
         it 'heads 404' do
-          delete 'destroy', id: 'non existing'
+          delete 'destroy', params: {id: 'non existing'}
           expect(response).to redirect_to '/errors/not_found'
         end
       end
@@ -688,7 +688,7 @@ describe TripsController do
       let(:trip) { FactoryGirl.create(:trip) }
 
       it 'redirects to sign in' do
-        delete 'destroy', id: trip.id
+        delete 'destroy', params: {id: trip.id}
         expect(response).to redirect_to '/users/sign_in'
       end
     end
@@ -701,7 +701,7 @@ describe TripsController do
     let(:file) { fixture_file_upload("#{::Rails.root}/spec/fixtures/files/cat.jpg", 'image/jpeg') }
 
     it 'uploads trip photo' do
-      post 'upload_photo', id: trip.id, travels_trip: {image: file}, w: 10, h: 10, x: 10, y: 10, format: :js
+      post 'upload_photo', params: {id: trip.id, travels_trip: {image: file}, w: 10, h: 10, x: 10, y: 10, format: :js}
       expect(response).to be_success
       expect(assigns(:trip).image).not_to be_blank
     end

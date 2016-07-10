@@ -40,7 +40,7 @@ class Api::TripInvitesController < ApplicationController
   end
 
   def authorize_destroy
-    head 403 and return if @trip.author_user != current_user || params[:user_id] == @trip.author_user.id
+    head 403 and return if @trip.author_user != current_user || params[:user_id].to_s == @trip.author_user.id.to_s
   end
 
 end

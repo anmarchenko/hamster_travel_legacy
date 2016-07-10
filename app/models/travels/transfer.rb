@@ -22,7 +22,7 @@
 
 module Travels
 
-  class Transfer < ActiveRecord::Base
+  class Transfer < ApplicationRecord
     include Concerns::Ordered
 
     self.inheritance_column = 'inherit_type'

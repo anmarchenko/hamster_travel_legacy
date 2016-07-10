@@ -23,7 +23,7 @@ RSpec.configure do |config|
   config.raise_errors_for_deprecations!
   I18n.locale = :en
 
-  config.include Devise::TestHelpers, :type => :controller
+  config.include Devise::Test::ControllerHelpers, :type => :controller
   config.extend ControllerMacros, :type => :controller
 
   config.before(:suite) do

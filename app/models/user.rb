@@ -23,7 +23,7 @@
 #  home_town_id           :integer
 #
 
-class User < ActiveRecord::Base
+class User < ApplicationRecord
 
   extend Dragonfly::Model
   extend Dragonfly::Model::Validations

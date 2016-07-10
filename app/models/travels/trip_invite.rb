@@ -10,7 +10,7 @@
 
 module Travels
 
-  class TripInvite < ActiveRecord::Base
+  class TripInvite < ApplicationRecord
 
     belongs_to :inviting_user, class_name: 'User', inverse_of: :outgoing_invites
     belongs_to :invited_user, class_name: 'User', inverse_of: :incoming_invites

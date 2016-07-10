@@ -12,7 +12,7 @@ describe Api::TripInvitesController do
 
         context 'and when input params are valid' do
           it 'creates trip_invite and renders success' do
-            post 'create', id: trip.id, user_id: some_user.id, format: :json
+            post 'create', params: {id: trip.id, user_id: some_user.id}, format: :json
             expect(response).to have_http_status 200
 
             json = JSON.parse(response.body)
@@ -25,12 +25,12 @@ describe Api::TripInvitesController do
           end
 
           it 'does not create twice' do
-            post 'create', id: trip.id, user_id: some_user.id, format: :json
+            post 'create', params: {id: trip.id, user_id: some_user.id}, format: :json
             expect(response).to have_http_status 200
             json = JSON.parse(response.body)
             expect(json['success']).to eq(true)
 
-            post 'create', id: trip.id, user_id: some_user.id, format: :json
+            post 'create', params: {id: trip.id, user_id: some_user.id}, format: :json
             expect(response).to have_http_status 200
             json = JSON.parse(response.body)
             expect(json['success']).to eq(false)
@@ -43,7 +43,7 @@ describe Api::TripInvitesController do
           let(:trip_with_user) { FactoryGirl.create :trip, users: [subject.current_user, user_in_trip] }
 
           it 'does not create invite' do
-            post 'create', id: trip_with_user.id, user_id: user_in_trip.id, format: :json
+            post 'create', params: {id: trip_with_user.id, user_id: user_in_trip.id}, format: :json
             expect(response).to have_http_status 200
             json = JSON.parse(response.body)
             expect(json['success']).to eq(false)
@@ -54,7 +54,7 @@ describe Api::TripInvitesController do
         context 'and when trying to invite non existing user' do
 
           it 'does not create invite' do
-            post 'create', id: trip.id, user_id: 'lolol', format: :json
+            post 'create', params: {id: trip.id, user_id: 'lolol'}, format: :json
             expect(response).to have_http_status 200
             json = JSON.parse(response.body)
             expect(json['success']).to eq(false)
@@ -64,7 +64,7 @@ describe Api::TripInvitesController do
 
         context 'and when user is not included in trip' do
           it 'heads 403' do
-            post 'create', id: trip_without_user.id, user_id: some_user.id, format: :json
+            post 'create', params: {id: trip_without_user.id, user_id: some_user.id}, format: :json
             expect(response).to have_http_status 403
           end
         end
@@ -73,7 +73,7 @@ describe Api::TripInvitesController do
 
       context 'and when there is no trip' do
         it 'heads 404' do
-          post 'create', id: 'pff', user_id: some_user.id, format: :json
+          post 'create', params: {id: 'pff', user_id: some_user.id}, format: :json
           expect(response).to have_http_status 404
         end
       end
@@ -84,7 +84,7 @@ describe Api::TripInvitesController do
       let(:trip) { FactoryGirl.create :trip }
       let(:some_user) { FactoryGirl.create :user }
       it 'returns unathenticated' do
-        post 'create', id: trip.id, user_id: some_user.id, format: :json
+        post 'create', params: {id: trip.id, user_id: some_user.id}, format: :json
         expect(response).to have_http_status 401
       end
     end
@@ -103,7 +103,7 @@ describe Api::TripInvitesController do
 
       context 'when requested to delete participant' do
         it 'deletes participant from trip' do
-          delete 'destroy', id: trip.id, user_id: some_user.id, format: :json
+          delete 'destroy', params: {id: trip.id, user_id: some_user.id}, format: :json
           expect(response).to have_http_status(200)
           expect(trip.reload.include_user(subject.current_user)).to eq(true)
           expect(trip.reload.include_user(some_user)).to eq(false)
@@ -114,7 +114,7 @@ describe Api::TripInvitesController do
 
       context 'when requested to delete invited user' do
         it 'deletes participant from trip' do
-          delete 'destroy', id: trip.id, trip_invite_id: trip.invited_users.first.id, format: :json
+          delete 'destroy', params: {id: trip.id, trip_invite_id: trip.invited_users.first.id}, format: :json
           expect(response).to have_http_status(200)
           expect(trip.reload.include_user(subject.current_user)).to eq(true)
           expect(trip.reload.include_user(some_user)).to eq(true)
@@ -124,14 +124,14 @@ describe Api::TripInvitesController do
 
       context 'when user is not author' do
         it 'returns unauthorized error' do
-          delete 'destroy', id: another_trip.id, user_id: some_user.id, format: :json
+          delete 'destroy', params: {id: another_trip.id, user_id: some_user.id}, format: :json
           expect(response).to have_http_status(403)
         end
       end
 
       context 'when tries to delete author' do
         it 'returns unauthorized error' do
-          delete 'destroy', id: trip.id, user_id: subject.current_user.id, format: :json
+          delete 'destroy', params: {id: trip.id, user_id: subject.current_user.id}, format: :json
           expect(response).to have_http_status(403)
         end
       end
@@ -143,7 +143,7 @@ describe Api::TripInvitesController do
       let(:some_user) { FactoryGirl.create :user }
 
       it 'returns unathenticated' do
-        delete 'destroy', id: trip.id, user_id: some_user.id, format: :json
+        delete 'destroy', params: {id: trip.id, user_id: some_user.id}, format: :json
         expect(response).to have_http_status 401
       end
     end

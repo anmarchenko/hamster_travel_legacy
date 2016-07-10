@@ -6,7 +6,7 @@ describe Api::DaysSortingController do
     let(:trip) { FactoryGirl.create(:trip, users: [subject.current_user]) }
 
     it 'returns short information about days as json' do
-      get 'index', trip_id: trip.id, format: :json
+      get 'index', params: {trip_id: trip.id}, format: :json
 
       json_days = JSON.parse(response.body)
       expect(json_days.count).to eq(trip.days.count)
@@ -25,7 +25,7 @@ describe Api::DaysSortingController do
       ids[0] = ids[-1]
       ids[-1] = temp
 
-      post 'create', trip_id: trip.id, day_ids: ids, format: :json
+      post 'create', params: {trip_id: trip.id, day_ids: ids}, format: :json
 
       days_after = trip.reload.days
       expect(days_after.first.id).to eq(ids.first)

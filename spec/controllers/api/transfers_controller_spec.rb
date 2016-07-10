@@ -8,7 +8,7 @@ describe Api::TransfersController do
 
       context 'and when there is trip' do
         it 'returns trip days as JSON' do
-          get 'index', trip_id: trip.id.to_s, day_id: day.id, format: :json
+          get 'index', params: {trip_id: trip.id.to_s, day_id: day.id}, format: :json
           expect(response).to have_http_status 200
           json = JSON.parse(response.body)
           expect(json['date']).to eq(I18n.l(trip.start_date, format: '%d.%m.%Y %A'))
@@ -19,7 +19,7 @@ describe Api::TransfersController do
 
       context 'and when there is no trip' do
         it 'heads 404' do
-          get 'index', trip_id: 'no_trip', day_id: day.id, format: :json
+          get 'index', params: {trip_id: 'no_trip', day_id: day.id}, format: :json
           expect(response).to have_http_status 404
         end
       end
@@ -28,7 +28,7 @@ describe Api::TransfersController do
 
     context 'when no logged user' do
       it 'behaves the same' do
-        get 'index', trip_id: trip.id.to_s, day_id: day.id, format: :json
+        get 'index', params: {trip_id: trip.id.to_s, day_id: day.id}, format: :json
         expect(response).to have_http_status 200
         json = JSON.parse(response.body)
         expect(json['date']).to eq(I18n.l(trip.start_date, format: '%d.%m.%Y %A'))
@@ -78,7 +78,7 @@ describe Api::TransfersController do
           let(:day) { trip.days.first }
 
           it 'updates trip and heads 200' do
-            post 'create', day_params.merge(trip_id: trip.id, day_id: day.id), format: :json
+            post 'create', params: day_params.merge(trip_id: trip.id, day_id: day.id), format: :json
             expect(response).to have_http_status 200
 
             updated_day = trip.reload.days.first
@@ -100,7 +100,7 @@ describe Api::TransfersController do
           let(:day) { trip.days.first }
 
           it 'heads 403' do
-            post 'create', day_params.merge(trip_id: trip.id, day_id: day.id), format: :json
+            post 'create', params: day_params.merge(trip_id: trip.id, day_id: day.id), format: :json
             expect(response).to have_http_status 403
           end
         end
@@ -112,7 +112,7 @@ describe Api::TransfersController do
         let(:day) { trip.days.first }
 
         it 'heads 404' do
-          post 'create', day_params.merge(trip_id: 'no such trip', day_id: day.id), format: :json
+          post 'create', params: day_params.merge(trip_id: 'no such trip', day_id: day.id), format: :json
           expect(response).to have_http_status 404
         end
       end
@@ -134,8 +134,8 @@ describe Api::TransfersController do
         }
       }
       it 'redirects to sign in' do
-        post 'create', days_params.merge(trip_id: trip.id, day_id: day.id), format: :json
-        expect(response).to redirect_to '/users/sign_in'
+        post 'create', params: days_params.merge(trip_id: trip.id, day_id: day.id), format: :json
+        expect(response).to have_http_status 401
       end
     end
 
@@ -151,7 +151,7 @@ describe Api::TransfersController do
       let(:first_day) { trip.days.to_a[0] }
 
       it 'returns last place from previous day' do
-        get 'previous_place', trip_id: trip.id, day_id: day.id
+        get 'previous_place', params: {trip_id: trip.id, day_id: day.id}
 
         json = JSON.parse(response.body)
         expect(json['place']).not_to be_blank
@@ -160,7 +160,7 @@ describe Api::TransfersController do
       end
 
       it 'returns nil if asked for the first day' do
-        get 'previous_place', trip_id: trip.id, day_id: first_day.id
+        get 'previous_place', params: {trip_id: trip.id, day_id: first_day.id}
 
         json = JSON.parse(response.body)
         expect(json['place']).to be_blank
@@ -179,7 +179,7 @@ describe Api::TransfersController do
       let(:first_day) { trip.days.to_a[0] }
 
       it 'returns hotel from previous day' do
-        get 'previous_hotel', trip_id: trip.id, day_id: day.id
+        get 'previous_hotel', params: {trip_id: trip.id, day_id: day.id}
 
         json = JSON.parse(response.body)
         expect(json['hotel']).not_to be_blank
@@ -188,7 +188,7 @@ describe Api::TransfersController do
       end
 
       it 'returns nil if asked for the first day' do
-        get 'previous_hotel', trip_id: trip.id, day_id: first_day.id
+        get 'previous_hotel', params: {trip_id: trip.id, day_id: first_day.id}
 
         json = JSON.parse(response.body)
         expect(json['hotel']).to be_blank

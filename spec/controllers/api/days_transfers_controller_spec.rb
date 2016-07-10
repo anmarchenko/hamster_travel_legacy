@@ -7,7 +7,7 @@ describe Api::DaysTransfersController do
 
       context 'and when there is trip' do
         it 'returns trip days as JSON' do
-          get 'index', trip_id: trip.id.to_s, format: :json
+          get 'index', params: {trip_id: trip.id.to_s}, format: :json
           expect(response).to have_http_status 200
           json = JSON.parse(response.body)['days']
           expect(json.count).to eq(8)
@@ -19,7 +19,7 @@ describe Api::DaysTransfersController do
 
       context 'and when there is no trip' do
         it 'heads 404' do
-          get 'index', trip_id: 'no_trip', format: :json
+          get 'index', params: {trip_id: 'no_trip'}, format: :json
           expect(response).to have_http_status 404
         end
       end
@@ -28,7 +28,7 @@ describe Api::DaysTransfersController do
         let(:private_trip) { FactoryGirl.create(:trip, :with_filled_days, private: true) }
 
         it 'heads 403' do
-          get 'index', trip_id: private_trip.id.to_s, format: :json
+          get 'index', params: {trip_id: private_trip.id.to_s}, format: :json
           expect(response).to have_http_status 403
         end
       end
@@ -37,7 +37,7 @@ describe Api::DaysTransfersController do
         let(:private_trip) { FactoryGirl.create(:trip, :with_filled_days, private: true, users: [subject.current_user]) }
 
         it 'heads 403' do
-          get 'index', trip_id: private_trip.id.to_s, format: :json
+          get 'index', params: {trip_id: private_trip.id.to_s}, format: :json
 
           expect(response).to have_http_status 200
 
@@ -52,7 +52,7 @@ describe Api::DaysTransfersController do
 
     context 'when no logged user' do
       it 'behaves the same' do
-        get 'index', trip_id: trip.id.to_s, format: :json
+        get 'index', params: {trip_id: trip.id.to_s}, format: :json
         expect(response).to have_http_status 200
         json = JSON.parse(response.body)['days']
         expect(json.count).to eq(8)
@@ -63,7 +63,7 @@ describe Api::DaysTransfersController do
         let(:private_trip) { FactoryGirl.create(:trip, :with_filled_days, private: true) }
 
         it 'heads 403' do
-          get 'index', trip_id: private_trip.id.to_s, format: :json
+          get 'index', params: {trip_id: private_trip.id.to_s}, format: :json
           expect(response).to have_http_status 403
         end
       end
@@ -116,7 +116,7 @@ describe Api::DaysTransfersController do
           let(:trip) { FactoryGirl.create :trip, users: [subject.current_user] }
 
           it 'updates trip and heads 200' do
-            post 'create', days_params.merge(trip_id: trip.id), format: :json
+            post 'create', params: days_params.merge(trip_id: trip.id), format: :json
             expect(response).to have_http_status 200
 
             updated_day = trip.reload.days.first
@@ -137,7 +137,7 @@ describe Api::DaysTransfersController do
           let(:trip) { FactoryGirl.create :trip }
 
           it 'heads 403' do
-            post 'create', days_params.merge(trip_id: trip.id), format: :json
+            post 'create', params: days_params.merge(trip_id: trip.id), format: :json
             expect(response).to have_http_status 403
           end
         end
@@ -148,7 +148,7 @@ describe Api::DaysTransfersController do
         let(:trip) { FactoryGirl.create :trip }
 
         it 'heads 404' do
-          post 'create', days_params.merge(trip_id: 'no such trip'), format: :json
+          post 'create', params: days_params.merge(trip_id: 'no such trip'), format: :json
           expect(response).to have_http_status 404
         end
       end
@@ -176,8 +176,8 @@ describe Api::DaysTransfersController do
         }
       }
       it 'redirects to sign in' do
-        post 'create', days_params.merge(trip_id: trip.id), format: :json
-        expect(response).to redirect_to '/users/sign_in'
+        post 'create', params: days_params.merge(trip_id: trip.id), format: :json
+        expect(response).to have_http_status 401
       end
     end
 

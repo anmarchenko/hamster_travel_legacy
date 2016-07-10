@@ -12,7 +12,7 @@
 
 module Travels
 
-  class Expense < ActiveRecord::Base
+  class Expense < ApplicationRecord
 
     belongs_to :expendable, polymorphic: true
 

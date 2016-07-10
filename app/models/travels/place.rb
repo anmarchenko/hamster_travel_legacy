@@ -8,7 +8,7 @@
 #
 
 module Travels
-  class Place < ActiveRecord::Base
+  class Place < ApplicationRecord
 
     belongs_to :day, class_name: 'Travels::Day'
     belongs_to :city, class_name: 'Geo::City', required: false

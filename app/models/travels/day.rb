@@ -10,7 +10,7 @@
 #
 
 module Travels
-  class Day < ActiveRecord::Base
+  class Day < ApplicationRecord
 
     belongs_to :trip, class_name: 'Travels::Trip'
 

@@ -14,7 +14,7 @@
 #
 
 module Travels
-  class Catering < ActiveRecord::Base
+  class Catering < ApplicationRecord
     include Concerns::Ordered
 
     belongs_to :trip, class_name: 'Travels::Trip'

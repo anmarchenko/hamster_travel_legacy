@@ -7,7 +7,7 @@ describe Api::ReportsController do
 
       context 'and when there is trip' do
         it 'returns trip report (comment)' do
-          get 'show', id: trip.id.to_s, format: :json
+          get 'show', params: {id: trip.id.to_s}, format: :json
           expect(response).to have_http_status 200
 
           json = JSON.parse(response.body)
@@ -17,7 +17,7 @@ describe Api::ReportsController do
 
       context 'and when there is no trip' do
         it 'heads 404' do
-          get 'show', id: 'no_trip', format: :json
+          get 'show', params: {id: 'no_trip'}, format: :json
           expect(response).to have_http_status 404
         end
       end
@@ -25,7 +25,7 @@ describe Api::ReportsController do
 
     context 'when no logged user' do
       it 'returns trip report (comment)' do
-        get 'show', id: trip.id.to_s, format: :json
+        get 'show', params: {id: trip.id.to_s}, format: :json
         expect(response).to have_http_status 200
 
         json = JSON.parse(response.body)
@@ -43,7 +43,7 @@ describe Api::ReportsController do
         let(:trip) {FactoryGirl.create(:trip, :with_filled_days, users: [subject.current_user])}
 
         it 'updates budget_for field and returns ok status' do
-          put 'update', {id: trip.id, report: 'new_report'}, format: :json
+          put 'update', params: {id: trip.id, report: 'new_report'}, format: :json
           json = JSON.parse(response.body)
           expect(json['res']).to eq(true)
 
@@ -55,7 +55,7 @@ describe Api::ReportsController do
         let(:trip) {FactoryGirl.create(:trip, :with_filled_days)}
 
         it 'returns not authorized error and does not update budget_for field' do
-          put 'update', {id: trip.id, report: 'new_report'}, format: :json
+          put 'update', params: {id: trip.id, report: 'new_report'}, format: :json
 
           expect(response).to have_http_status 403
 
@@ -70,8 +70,8 @@ describe Api::ReportsController do
       let(:trip) {FactoryGirl.create(:trip, :with_filled_days)}
 
       it 'redirects to sign in' do
-        put 'update', {id: trip.id, report: 'new_report'}, format: :json
-        expect(response).to redirect_to '/users/sign_in'
+        put 'update', params: {id: trip.id, report: 'new_report'}, format: :json
+        expect(response).to have_http_status 401
       end
     end
   end

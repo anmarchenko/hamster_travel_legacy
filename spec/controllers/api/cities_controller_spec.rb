@@ -19,7 +19,7 @@ describe Api::CitiesController do
       after(:each) { Rails.cache.clear }
 
       it 'responds with empty array if term is shorter than 3 letters' do
-        get 'index', term: 'ci', format: :json
+        get 'index', params: {term: 'ci'}, format: :json
         expect(response).to have_http_status 200
         expect(JSON.parse(response.body)).to eq []
       end
@@ -32,20 +32,20 @@ describe Api::CitiesController do
 
       it 'responds with cities when something found by english name' do
         term = 'city'
-        get 'index', term: term, format: :json
+        get 'index', params: {term: term}, format: :json
         expect(response).to have_http_status 200
         check_cities response.body, term
       end
 
       it 'responds with cities when something found by russian name' do
         term = 'город'
-        get 'index', term: term, format: :json
+        get 'index', params: {term: term}, format: :json
         expect(response).to have_http_status 200
         check_cities response.body, term
       end
 
       it 'responds with empty array if nothing found' do
-        get 'index', term: 'capital', format: :json
+        get 'index', params: {term: 'capital'}, format: :json
         expect(response).to have_http_status 200
         expect(JSON.parse(response.body)).to eq []
       end
@@ -54,7 +54,7 @@ describe Api::CitiesController do
         let (:term) { '[$empty$]' }
 
         it 'returns user\'s home city' do
-          get 'index', term: term, format: :json
+          get 'index', params: {term: term}, format: :json
           expect(response).to have_http_status 200
           json = JSON.parse(response.body)
           expect(json.count).to eq(1)
@@ -66,7 +66,7 @@ describe Api::CitiesController do
           let (:trip) { FactoryGirl.create(:trip, :with_filled_days, users: [subject.current_user]) }
 
           it 'returns user\'s home city and all cities from trip' do
-            get 'index', term: term, trip_id: trip.id, format: :json
+            get 'index', params: {term: term, trip_id: trip.id}, format: :json
             expect(response).to have_http_status 200
             json = JSON.parse(response.body)
             expect(json.count).to eq(2)
@@ -81,7 +81,7 @@ describe Api::CitiesController do
     context 'when no logged user' do
       it 'behaves the same as for logged user' do
         term = 'city'
-        get 'index', term: term, format: :json
+        get 'index', params: {term: term}, format: :json
         expect(response).to have_http_status 200
         check_cities response.body, term
       end
@@ -89,7 +89,7 @@ describe Api::CitiesController do
       context 'when requested empty term' do
         it 'returns empty array' do
           term = '[$empty$]'
-          get 'index', term: term, format: :json
+          get 'index', params: {term: term}, format: :json
           expect(response).to have_http_status 200
           json = JSON.parse(response.body)
           expect(json.count).to eq(0)

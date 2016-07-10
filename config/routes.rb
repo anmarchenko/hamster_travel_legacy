@@ -1,4 +1,4 @@
-Travel::Application.routes.draw do
+Rails.application.routes.draw do
 
   match '/404', to: 'errors#not_found', via: :all
 

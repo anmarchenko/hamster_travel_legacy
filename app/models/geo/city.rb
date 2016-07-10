@@ -19,7 +19,7 @@
 #
 
 module Geo
-  class City < ActiveRecord::Base
+  class City < ApplicationRecord
 
     include Concerns::Geographical
 

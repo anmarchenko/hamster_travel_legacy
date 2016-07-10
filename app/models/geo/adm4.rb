@@ -18,7 +18,7 @@
 #
 
 module Geo
-  class Adm4 < ActiveRecord::Base
+  class Adm4 < ApplicationRecord
 
     include Concerns::Geographical
 

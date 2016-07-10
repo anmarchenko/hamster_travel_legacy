@@ -9,7 +9,7 @@ describe Api::ActivitiesController do
       context 'and when there is trip' do
         it 'returns trip days as JSON' do
 
-          get 'index', trip_id: trip.id.to_s, day_id: trip.days.first.id.to_s, format: :json
+          get 'index', params: {trip_id: trip.id.to_s, day_id: trip.days.first.id.to_s, format: :json}
           expect(response).to have_http_status 200
           day_json = JSON.parse(response.body)
 
@@ -24,7 +24,7 @@ describe Api::ActivitiesController do
 
       context 'and when there is no trip' do
         it 'heads 404' do
-          get 'index', trip_id: 'no_trip', day_id: 'whatever', format: :json
+          get 'index', params: {trip_id: 'no_trip', day_id: 'whatever', format: :json}
           expect(response).to have_http_status 404
         end
       end
@@ -33,7 +33,7 @@ describe Api::ActivitiesController do
 
     context 'when no logged user' do
       it 'behaves the same' do
-        get 'index', trip_id: trip.id.to_s, day_id: trip.days.first.id.to_s, format: :json
+        get 'index', params: {trip_id: trip.id.to_s, day_id: trip.days.first.id.to_s, format: :json}
         expect(response).to have_http_status 200
         day_json = JSON.parse(response.body)
 
@@ -83,7 +83,7 @@ describe Api::ActivitiesController do
 
         context 'and when input params are valid' do
           it 'updates trip and heads 200' do
-            post 'create', day_params.merge(trip_id: trip.id, day_id: day.id), format: :json
+            post 'create', params: day_params.merge(trip_id: trip.id, day_id: day.id, format: :json)
             expect(response).to have_http_status 200
             updated_day = trip.reload.days.first
             expect(updated_day.comment).to eq 'new_day_comment'
@@ -98,7 +98,7 @@ describe Api::ActivitiesController do
 
         context 'and when user is not included in trip' do
           it 'heads 403' do
-            post 'create', day_params.merge(trip_id: trip_without_user.id, day_id: trip_without_user.days.first.id), format: :json
+            post 'create', params: day_params.merge(trip_id: trip_without_user.id, day_id: trip_without_user.days.first.id, format: :json)
             expect(response).to have_http_status 403
           end
         end
@@ -107,7 +107,7 @@ describe Api::ActivitiesController do
 
       context 'and when there is no trip' do
         it 'heads 404' do
-          post 'create', day_params.merge(trip_id: 'no such trip', day_id: day.id), format: :json
+          post 'create', params: day_params.merge(trip_id: 'no such trip', day_id: day.id, format: :json)
           expect(response).to have_http_status 404
         end
       end
@@ -134,8 +134,8 @@ describe Api::ActivitiesController do
         }
       }
       it 'redirects to sign in' do
-        post 'create', day_params.merge(trip_id: trip.id, day_id: day.id), format: :json
-        expect(response).to redirect_to '/users/sign_in'
+        post 'create', params: day_params.merge(trip_id: trip.id, day_id: day.id, format: :json)
+        expect(response).to have_http_status 401
       end
     end
   end

@@ -11,7 +11,7 @@
 #
 
 module Travels
-  class Hotel < ActiveRecord::Base
+  class Hotel < ApplicationRecord
 
     belongs_to :day, class_name: 'Travels::Day'
     has_many :links, class_name: 'ExternalLink', as: :linkable

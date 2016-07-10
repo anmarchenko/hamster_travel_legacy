@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.6'
+gem 'rails', '5.0.0'
 gem 'russian'
 
 # DB
@@ -19,7 +19,7 @@ gem 'haml'
 gem 'haml-rails'
 
 # authentication
-gem 'devise', '~> 4.1.1'
+gem 'devise', '~> 4.2.0'
 
 # asset pipeline
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
@@ -83,7 +83,8 @@ gem 'resque-scheduler'
 gem 'config'
 
 # translations for models
-gem 'globalize', '~> 5.0.0'
+gem 'globalize', github: 'globalize/globalize'
+gem 'activemodel-serializers-xml'
 
 # inline svg for styling
 gem 'inline_svg'
@@ -106,6 +107,7 @@ end
 
 group :test do
   # unit testing
+  gem 'rails-controller-testing'
   gem 'rspec', '~> 3.4'
   gem 'rspec-rails', '~> 3.4'
   gem 'nyan-cat-formatter'
