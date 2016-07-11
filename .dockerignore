@@ -1,0 +1,5 @@
+.git
+.dockerignore
+/log/*
+/tmp/*
+config/settings.local.yml
