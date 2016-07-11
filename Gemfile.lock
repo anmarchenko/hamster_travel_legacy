@@ -59,8 +59,6 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     addressable (2.4.0)
-    airbrussh (1.0.2)
-      sshkit (>= 1.6.1, != 1.7.0)
     angularjs-rails (1.5.6)
     annotate (2.7.1)
       activerecord (>= 3.2, < 6.0)
@@ -70,22 +68,6 @@ GEM
     bootstrap-datepicker-rails (1.6.1.1)
       railties (>= 3.0)
     builder (3.2.2)
-    capistrano (3.5.0)
-      airbrussh (>= 1.0.0)
-      capistrano-harrow
-      i18n
-      rake (>= 10.0.0)
-      sshkit (>= 1.9.0)
-    capistrano-bundler (1.1.4)
-      capistrano (~> 3.1)
-      sshkit (~> 1.2)
-    capistrano-harrow (0.5.1)
-    capistrano-rails (1.1.7)
-      capistrano (~> 3.1)
-      capistrano-bundler (~> 1.1)
-    capistrano-rvm (0.1.2)
-      capistrano (~> 3.0)
-      sshkit (~> 1.2)
     capybara (2.7.1)
       addressable
       mime-types (>= 1.16)
@@ -228,9 +210,6 @@ GEM
       railties (>= 3.0)
     mono_logger (1.1.0)
     multi_json (1.12.1)
-    net-scp (1.2.1)
-      net-ssh (>= 2.6.5)
-    net-ssh (3.1.1)
     nio4r (1.2.1)
     nokogiri (1.6.8)
       mini_portile2 (~> 2.1.0)
@@ -238,6 +217,9 @@ GEM
     nyan-cat-formatter (0.11)
       rspec (>= 2.99, >= 2.14.2, < 4)
     orm_adapter (0.5.0)
+    passenger (5.0.29)
+      rack
+      rake (>= 0.8.1)
     pg (0.18.4)
     pkg-config (1.1.7)
     puma (3.4.0)
@@ -344,9 +326,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sshkit (1.11.0)
-      net-scp (>= 1.1.2)
-      net-ssh (>= 2.8.0)
     therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
       ref
@@ -378,10 +357,6 @@ DEPENDENCIES
   angularjs-rails
   annotate
   bootstrap-datepicker-rails
-  capistrano (~> 3.5.0)
-  capistrano-bundler (~> 1.1)
-  capistrano-rails (~> 1.1)
-  capistrano-rvm (~> 0.1)
   capybara
   codacy-coverage
   coffee-rails
@@ -415,6 +390,7 @@ DEPENDENCIES
   money
   money-rails
   nyan-cat-formatter
+  passenger (>= 5.0.25)
   pg
   puma
   rack-cache
