@@ -25,6 +25,6 @@ production:
   pool: 5
   username: igendou
   password:
-  host: 127.0.0.1
+  host: <%= ENV['POSTGRES_HOST'] %>
   port: 5432
 

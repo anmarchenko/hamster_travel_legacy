@@ -22,8 +22,10 @@ RUN rm -f /etc/service/nginx/down
 RUN rm /etc/nginx/sites-enabled/default
 
 # Add the nginx site and config
-ADD docker/web/nginx.conf /etc/nginx/sites-enabled/webapp.conf
-ADD docker/web/rails-env.conf /etc/nginx/main.d/rails-env.conf
+ADD config/nginx.conf /etc/nginx/sites-enabled/webapp.conf
+ADD config/rails-env.conf /etc/nginx/main.d/rails-env.conf
+
+RUN gem install bundler
 
 # Install bundle of gems
 WORKDIR /tmp
@@ -38,4 +40,4 @@ WORKDIR /home/app/webapp
 RUN rake assets:precompile
 
 # Clean up APT and bundler when done.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /home/app/webapp/log/* /home/app/webapp/tmp/* /home/app/webapp/.git
