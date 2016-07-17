@@ -22,7 +22,7 @@ RUN rm -f /etc/service/nginx/down
 RUN rm /etc/nginx/sites-enabled/default
 
 # Add the nginx site and config
-ADD config/nginx.conf /etc/nginx/sites-enabled/webapp.conf
+ADD config/webapp.conf /etc/nginx/sites-enabled/webapp.conf
 ADD config/rails-env.conf /etc/nginx/main.d/rails-env.conf
 
 RUN gem install bundler
@@ -31,7 +31,7 @@ RUN gem install bundler
 WORKDIR /tmp
 ADD Gemfile /tmp/
 ADD Gemfile.lock /tmp/
-RUN bundle install
+RUN RAILS_ENV=production bundle install
 
 # Add the Rails app
 ADD . /home/app/webapp

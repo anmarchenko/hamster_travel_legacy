@@ -1,6 +1,6 @@
 s3:
-  key: 123
-  secret: secret
+  key: <%= ENV['AWS_S3_KEY'] %>
+  secret: <%= ENV['AWS_S3_SECRET'] %>
 images:
   base_url: 'https://s3.eu-central-1.amazonaws.com/hamster-travel-images'
   flags_folder: 'flags'

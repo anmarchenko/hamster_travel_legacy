@@ -10,7 +10,7 @@
     = stylesheet_link_tag '//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css', media: 'all'
     = stylesheet_link_tag 'main', media: 'all'
 
-    = favicon_link_tag '/favicon.ico'
+    = favicon_link_tag image_path('favicon.ico')
     = yield(:page_stylesheet) if content_for?(:page_stylesheet)
 
   %body{class: @body_class}

@@ -9,7 +9,7 @@
 
     = stylesheet_link_tag 'main', media: 'all'
 
-    = favicon_link_tag '/favicon.ico'
+    = favicon_link_tag image_path('favicon.ico')
     = yield(:page_stylesheet) if content_for?(:page_stylesheet)
 
   %body

@@ -1,7 +1,7 @@
 # This is for regular resque tasks
 rails_env   = ENV['RAILS_ENV']  || "development"
 rails_root  = ENV['RAILS_ROOT'] || File.dirname(__FILE__) + '/../../'
-num_workers = rails_env == 'production' ? 2 : 2
+num_workers = 1
 
 num_workers.times do |num|
   God.watch do |w|
