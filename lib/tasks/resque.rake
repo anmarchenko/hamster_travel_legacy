@@ -19,5 +19,10 @@ namespace :resque do
     Resque.schedule = YAML.load_file('config/resque_scheduler.yml')
   end
 
-  task :scheduler_setup => :setup_schedule
+  task :scheduler => :setup_schedule
+
+  task :run_all do
+    system('bundle exec rake environment resque:scheduler 2>&1 > log/resque_scheduler.log &')
+    sh('bundle', 'exec', 'rake', 'environment', 'resque:work')
+  end
 end
