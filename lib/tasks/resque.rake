@@ -24,5 +24,6 @@ namespace :resque do
   task :run_all do
     system('bundle exec rake environment resque:scheduler 2>&1 > log/resque_scheduler.log &')
     sh('bundle', 'exec', 'rake', 'environment', 'resque:work')
+    sh('tail', '-f', '/dev/null')
   end
 end
