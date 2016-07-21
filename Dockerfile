@@ -6,13 +6,10 @@ ENV HOME /root
 ENV RAILS_ENV production
 
 # upgrade OS
-RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
+RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold" && apt-get install -y imagemagick libpq-dev
 
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
-
-# install imagemagick
-RUN apt-get install -y imagemagick libpq-dev
 
 # Expose Nginx HTTP service
 EXPOSE 80
@@ -37,7 +34,7 @@ RUN RAILS_ENV=production bundle install
 ADD . /home/app/webapp
 RUN chown -R app:app /home/app/webapp
 WORKDIR /home/app/webapp
-RUN rake assets:precompile
+RUN bundle exec rake assets:precompile
 
 # Clean up APT and bundler when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /home/app/webapp/log/* /home/app/webapp/tmp/* /home/app/webapp/.git
