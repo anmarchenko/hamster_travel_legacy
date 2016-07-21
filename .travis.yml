@@ -19,7 +19,8 @@ notifications:
   slack: hamstertravel:0cUdYv5PqtYYExONQ7d4SJg5
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
-    docker version
+    docker version;
+    docker build -t altmer/hamster-travel-web .;
     docker login --username "$DOCKER_USERNAME" --password "$DOCKER_PASSWORD";
     docker push altmer/hamster-travel-web;
     fi
