@@ -1,15 +1,22 @@
 language: ruby
-sudo: false
+sudo: required
 cache: bundler
 rvm:
   - 2.2.4
 services:
   - redis-server
   - memcached
+  - docker
 script:
   - bundle exec rspec
 before_script:
   - psql -c 'create database travel_planner_test;' -U postgres
   - RAILS_ENV=test bundle exec rake --trace db:migrate
+  - apt-get install docker
 notifications:
   slack: hamstertravel:0cUdYv5PqtYYExONQ7d4SJg5
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker login --username "$DOCKER_USERNAME" --password "$DOCKER_PASSWORD";
+    docker push altmer/hamster-travel;
+    fi
