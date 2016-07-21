@@ -11,7 +11,7 @@ script:
   - bundle exec rspec
 before_install:
   - sudo apt-get update
-  - sudo apt-get install docker-engine
+  - sudo apt-get install -y docker-engine
 before_script:
   - psql -c 'create database travel_planner_test;' -U postgres
   - RAILS_ENV=test bundle exec rake --trace db:migrate
@@ -20,5 +20,5 @@ notifications:
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker login --username "$DOCKER_USERNAME" --password "$DOCKER_PASSWORD";
-    docker push altmer/hamster-travel;
+    docker push altmer/hamster-travel-web;
     fi
