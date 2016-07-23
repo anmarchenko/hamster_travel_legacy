@@ -74,10 +74,6 @@ gem 'eu_central_bank'
 # geo
 gem 'countries'
 
-# background jobs
-gem 'resque'
-gem 'resque-scheduler'
-
 # config
 gem 'config'
 
