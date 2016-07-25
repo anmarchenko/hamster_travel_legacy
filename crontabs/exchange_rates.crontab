@@ -1,0 +1,1 @@
+* * * * * root bash -l -c 'cd /home/app/webapp && RAILS_ENV=production /usr/local/bin/rake exchange_rates:load > /var/log/rake.log 2>&1'

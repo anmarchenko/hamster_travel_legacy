@@ -1,7 +1,7 @@
-class LoadExchangeRates
-  @queue = :load_exchange_rates
+module LoadExchangeRates
+  module_function
 
-  def self.perform
+  def call
     current_rates = ExchangeRate.current
     return if current_rates && current_rates.rates_date == Time.zone.today
     bank = Money.default_bank
@@ -14,5 +14,4 @@ class LoadExchangeRates
       Calculators::Budget.new(trip).invalidate_cache!
     end
   end
-
 end
