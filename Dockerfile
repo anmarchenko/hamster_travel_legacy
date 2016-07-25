@@ -28,7 +28,7 @@ RUN gem install bundler
 WORKDIR /tmp
 ADD Gemfile /tmp/
 ADD Gemfile.lock /tmp/
-RUN RAILS_ENV=production bundle install
+RUN bundle install --jobs 5 --retry 3 --deployment --without development test
 
 # Add the Rails app
 ADD . /home/app/webapp
