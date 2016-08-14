@@ -4,3 +4,5 @@ s3:
 images:
   base_url: 'https://s3.eu-central-1.amazonaws.com/hamster-travel-images'
   flags_folder: 'flags'
+rollbar:
+  token: <%= ENV['ROLLBAR_ACCESS_TOKEN'] %>

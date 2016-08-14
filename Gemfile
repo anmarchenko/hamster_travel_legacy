@@ -87,6 +87,9 @@ gem 'inline_svg'
 # clone activerecord models
 gem 'deep_cloneable'
 
+# tracking exceptions
+gem 'rollbar'
+
 # production - caching and passenger
 group :production do
   gem 'rack-cache', :require => 'rack/cache'
