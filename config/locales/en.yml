@@ -173,7 +173,7 @@ en:
       add: Add new plan
   layouts:
     main:
-      pagetitle: "Hamster Travel | %{page}"
+      pagetitle: "%{page} | Hamster Travel"
     partials:
       navbar:
         apptitle: Hamster Travel

@@ -162,7 +162,7 @@ ru:
       add: Добавить план
   layouts:
     main:
-      pagetitle: "Hamster Travel | %{page}"
+      pagetitle: "%{page} | Hamster Travel"
     partials:
       navbar:
         apptitle: Hamster Travel
