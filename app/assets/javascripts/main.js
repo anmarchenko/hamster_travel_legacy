@@ -27,10 +27,9 @@
 //= require angular-slider
 //= require angular-locale_ru
 //= require angular-ui-bootstrap
-//= require angular-ui-router.min
-
-//= require sortable.js
-//= require sticky.min.js
+//= require angular-ui-router
+//= require angular-ui-sortable
+//= require angular-sticky
 
 //= require app/app.js
 //= require_tree ./app
