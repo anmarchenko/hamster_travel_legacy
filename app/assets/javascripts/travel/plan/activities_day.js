@@ -1,4 +1,4 @@
-angular.module('travel-components').controller('ActivitiesDayController'
+angular.module('travel').controller('ActivitiesDayController'
     , [
         '$scope', '$timeout', '$rootScope', '$http'
         , function ($scope, $timeout, $rootScope, $http) {

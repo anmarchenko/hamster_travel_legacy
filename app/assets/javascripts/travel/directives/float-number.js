@@ -1,4 +1,4 @@
-angular.module('travel-components').directive('floatNumber', [
+angular.module('travel').directive('floatNumber', [
     '$filter', function($filter) {
         var FLOAT_DOT_REGEXP, FLOAT_REGEXP;
         FLOAT_REGEXP = /^\-?\d+(\,\d+)?$/;

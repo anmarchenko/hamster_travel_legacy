@@ -1,4 +1,4 @@
-angular.module('travel-components').controller('TransfersDayController'
+angular.module('travel').controller('TransfersDayController'
     , [
         '$scope', '$http', '$timeout'
         , function ($scope, $http, $timeout) {

@@ -1,4 +1,4 @@
-angular.module('travel-components').directive('actionConfirmation', [
+angular.module('travel').directive('actionConfirmation', [
     '$filter', function($filter) {
         return {
             restrict: 'A',

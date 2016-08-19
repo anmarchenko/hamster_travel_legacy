@@ -1,4 +1,4 @@
-angular.module('travel-components').directive('onlydigits', function() {
+angular.module('travel').directive('onlydigits', function() {
     return {
         require: 'ngModel',
         link: function(scope, element, attr, ngModelCtrl) {

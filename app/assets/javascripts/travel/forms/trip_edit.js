@@ -1,4 +1,4 @@
-angular.module('travel-components').controller('TripEditController', [
+angular.module('travel').controller('TripEditController', [
     '$scope', function($scope) {
         $scope.initScope = function(attrs) {
             $scope.last_day_index = attrs['last_day_index'];

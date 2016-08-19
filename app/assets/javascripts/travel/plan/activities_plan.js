@@ -1,4 +1,4 @@
-angular.module('travel-components').controller('ActivitiesPlanController'
+angular.module('travel').controller('ActivitiesPlanController'
     , [
         '$scope', '$http', function ($scope, $http) {
 

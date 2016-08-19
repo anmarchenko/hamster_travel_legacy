@@ -1,4 +1,4 @@
-angular.module('travel-components').controller('ParticipantsController', [
+angular.module('travel').controller('ParticipantsController', [
     '$scope', '$window', '$http', function($scope, $window, $http) {
         $scope.participants_loaded = false;
         $scope.init = function(trip_id) {

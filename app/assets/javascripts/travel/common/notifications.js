@@ -1,4 +1,4 @@
-angular.module('travel-components').controller('NotificationsController', [
+angular.module('travel').controller('NotificationsController', [
     '$scope', '$http', function($scope, $http) {
         $scope.invites = [];
         $scope.loadInvites = function() {

@@ -1,4 +1,4 @@
-angular.module('travel-components').controller('TransfersPlanController'
+angular.module('travel').controller('TransfersPlanController'
     , [
         '$scope', '$http', '$cookies'
         , function ($scope, $http, $cookies) {

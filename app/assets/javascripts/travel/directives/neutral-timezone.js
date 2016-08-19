@@ -1,4 +1,4 @@
-angular.module('travel-components')
+angular.module('travel')
     .directive('datetimepickerNeutralTimezone', function() {
         return {
             restrict: 'A',

@@ -1,4 +1,4 @@
-angular.module('travel-components').controller('CountriesListController'
+angular.module('travel').controller('CountriesListController'
     , [
         '$scope', '$http'
         , function ($scope, $http) {

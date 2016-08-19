@@ -1,4 +1,4 @@
-angular.module('travel-components').controller('CateringsController'
+angular.module('travel').controller('CateringsController'
     , [
         '$scope', '$http'
         , function ($scope, $http) {

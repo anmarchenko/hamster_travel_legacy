@@ -1,6 +1,0 @@
-- content_for :title, t('.title')
-
-= render layout: 'common/user_profile_layout', locals: {page: :show} do
-  %h3
-    = t('.trips')
-  = render 'trips/partials/trip_list', trips: @trips

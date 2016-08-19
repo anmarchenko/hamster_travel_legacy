@@ -1,0 +1,49 @@
+<% content_for :title, t('.title') %>
+<%= render layout: 'common/user_profile_layout', locals: {page: :edit_devise} do %>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'form-horizontal' }) do |f| %>
+        <%= error_messages! resource %>
+        <fieldset class="col-md-12">
+          <div class="form-group">
+            <%= f.label :first_name, class: 'control-label col-md-4' %>
+            <div class="col-md-8">
+              <%= f.text_field :first_name, class: 'form-control' %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label :last_name, class: 'control-label col-md-4' %>
+            <div class="col-md-8">
+              <%= f.text_field :last_name, class: 'form-control' %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label :email, class: 'control-label col-md-4' %>
+            <div class="col-md-8">
+              <%= f.email_field :email, class: 'form-control' %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label :password, class: 'control-label col-md-4' %>
+            <div class="col-md-8">
+              <%= f.password_field :password, class: 'form-control', autocomplete: 'off', placeholder: t('.password_placeholder') %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label :password_confirmation, class: 'control-label col-md-4' %>
+            <div class="col-md-8">
+              <%= f.password_field :password_confirmation, class: 'form-control', autocomplete: 'off' %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label :current_password, class: 'control-label col-md-4' %>
+            <div class="col-md-8">
+              <%= f.password_field :current_password, class: 'form-control', autocomplete: 'off', placeholder: t('.current_password_placeholder') %>
+            </div>
+          </div>
+          <div class="form-group pull-right">
+            <div class="col-md-12">
+              <%= f.submit t('common.save'), class: 'btn btn-primary' %>
+            </div>
+          </div>
+        </fieldset>
+    <% end %>
+<% end %>

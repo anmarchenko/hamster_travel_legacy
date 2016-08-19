@@ -1,4 +1,4 @@
-angular.module('travel-components').controller('BudgetController'
+angular.module('travel').controller('BudgetController'
     , [
         '$scope', '$http'
         , function ($scope, $http) {

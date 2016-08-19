@@ -1,4 +1,4 @@
-angular.module('travel-components').directive('startdate', function() {
+angular.module('travel').directive('startdate', function() {
     return {
         require: 'ngModel',
         link: function(scope, element, attr, ngModelCtrl) {

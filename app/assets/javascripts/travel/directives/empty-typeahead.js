@@ -1,4 +1,4 @@
-angular.module('travel-components').directive('emptyTypeahead', function () {
+angular.module('travel').directive('emptyTypeahead', function () {
     secretEmptyKey = '[$empty$]'
     return {
         require: 'ngModel',

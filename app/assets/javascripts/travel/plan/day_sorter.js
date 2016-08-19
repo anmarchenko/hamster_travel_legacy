@@ -1,4 +1,4 @@
-angular.module('travel-components').controller('DaySorterController', [
+angular.module('travel').controller('DaySorterController', [
     '$scope', '$uibModal', '$http', function($scope, $uibModal, $http) {
         return $scope.startSorting = function(trip_id) {
             return $http.get("/api/trips/" + trip_id + "/days_sorting.json?locale=" + LOCALE).then(function(response) {

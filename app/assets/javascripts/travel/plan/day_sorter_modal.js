@@ -1,4 +1,4 @@
-angular.module('travel-components').controller('DaySorterModalController', [
+angular.module('travel').controller('DaySorterModalController', [
     '$scope', '$uibModalInstance', '$http', 'days', 'trip_id', function($scope, $uibModalInstance, $http, days, trip_id) {
         $scope.days = days;
         $scope.sortInProgress = false;

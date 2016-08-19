@@ -1,4 +1,4 @@
-angular.module('travel-components').controller('ActivityController'
+angular.module('travel').controller('ActivityController'
     , [
         '$scope'
         , function ($scope) {

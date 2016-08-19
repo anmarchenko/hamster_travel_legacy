@@ -1,4 +1,4 @@
-angular.module('travel-components').controller('EditingUsersController'
+angular.module('travel').controller('EditingUsersController'
     , [
         '$scope', '$http', '$interval', function ($scope, $http, $interval) {
             $scope.editing_users = [];

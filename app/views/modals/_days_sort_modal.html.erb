@@ -1,0 +1,63 @@
+<div class="modal-header">
+  <h4>
+    <%= t('.title') %>
+  </h4>
+</div>
+<div class="modal-body">
+  <p>
+    <%= t('.description') %>
+  </p>
+  <div class="row" ng-hide="sortInProgress">
+    <div class="col-md-12 days-sorting" ng-model="days" ui-sortable="{placeholder: 'days-sorting-placeholder'}">
+      <div class="day-sorted-row" ng-repeat="day in days track by day.id">
+        <div class="column move-buttons text-center">
+          <div class="up-button">
+            <a href="javascript:void(0);" ng-click="moveUp($index)" ng-hide="$index == 0">
+              <%= image_tag 'arrows/up.svg' %>
+            </a>
+          </div>
+          <div class="down-button">
+            <a href="javascript:void(0);" ng-click="moveDown($index)" ng-hide="$index == days.length - 1">
+              <%= image_tag 'arrows/down.svg' %>
+            </a>
+          </div>
+        </div>
+        <div class="column date-place">
+          <div class="date" ng-show="day.date">
+            {{day.date | date:'dd.MM.yyyy'}}
+          </div>
+          <div class="index" ng-hide="day.date">
+            <%= t('common.day_number', number: '{{day.index + 1}}') %>
+          </div>
+          <div class="place">
+            {{day.place_s}}
+          </div>
+        </div>
+        <div class="column transfer">
+          {{day.transfer_s}}
+        </div>
+        <div class="column activity">
+          <span ng-bind-html="day.activity_s"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" ng-show="sortInProgress">
+    <div class="col-md-12 days-sorting-progress">
+      <div class="header">
+        <%= t('.please_wait') %>
+      </div>
+      <div class="image">
+        <%= image_tag 'lists/numbered.svg' %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer days-sort-footer">
+  <button class="btn btn-primary btn-lg" ng-click="save()" ng-disabled="sortInProgress">
+    <%= t('common.save') %>
+  </button>
+  <button class="btn btn-default btn-lg" ng-click="closeModal()" ng-disabled="sortInProgress">
+    <%= t('common.cancel') %>
+  </button>
+</div>

@@ -1,4 +1,4 @@
-angular.module('travel-components').controller('ActivityMovePopupController'
+angular.module('travel').controller('ActivityMovePopupController'
     , [
         '$scope', '$rootScope'
         , function ($scope, $rootScope) {

@@ -1,4 +1,4 @@
-angular.module('travel-components').controller('TypeaheadController', [
+angular.module('travel').controller('TypeaheadController', [
     '$scope', '$timeout', '$http', '$window', function($scope, $timeout, $http, $window) {
         $scope.locale = LOCALE;
         $scope.getCities = function(term) {

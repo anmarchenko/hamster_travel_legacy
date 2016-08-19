@@ -195,6 +195,7 @@ en:
       upload: Upload
     days_sort_modal:
       title: Sort days
+      description: Interchange trip days. Transfers, hotels, activities, comments, expenses and bookmarks will be moved to new dates!
       please_wait: Please wait, your plans are being reordered...
   date:
     formats:

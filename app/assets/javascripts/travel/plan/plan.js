@@ -1,4 +1,4 @@
-angular.module('travel-components').controller('PlanController', [
+angular.module('travel').controller('PlanController', [
     '$scope', function ($scope) {
 
         $scope.loadBudget = function () {

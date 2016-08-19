@@ -1,4 +1,4 @@
-angular.module('travel-components').controller('ReportController'
+angular.module('travel').controller('ReportController'
     , [
         '$scope', '$http'
         , function ($scope, $http) {

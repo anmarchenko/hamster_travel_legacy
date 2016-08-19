@@ -1,4 +1,4 @@
-angular.module('travel-components')
+angular.module('travel')
 
     .config(['$uibTooltipProvider', function($uibTooltipProvider) {
         $uibTooltipProvider.setTriggers({'open': 'close'});
