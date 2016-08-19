@@ -1,0 +1,44 @@
+<% options ||= {} %>
+<div class="row" ng-controller="BudgetController" ng-init="initBudget('<%= @trip.id %>')">
+  <div class="col-xs-12">
+    <span class="budget" ng-show="budget_loaded">
+      <%= t('common.budget') %>
+      {{budget | number: 2}}
+      <%= currency_symbol.html_safe %>
+      <% if options[:tab_budget].present? %>
+        <%= "(#{t("common.#{options[:tab_budget]}")}" %>
+        {{<%= options[:tab_budget] %> | number: 2}}
+        <%= "#{currency_symbol.html_safe})" %>
+      <% end %>
+      <%= t('trips.show.budget_for') %>
+      <span ng-show="!edit_persons_count">
+        {{budget_for}}
+      </span>
+      <span ng-show="edit_persons_count">
+        <%= number_field_tag 'trip_budget_for', '', class: 'input-sm budget-persons-input', 'ng-model' => 'budget_for' %>
+      </span>
+      <%= t('trips.show.persons') %>
+      <%= "(#{@trip.days_count} #{t('common.days', count: @trip.days_count)})" %>
+      <% if @user_can_edit %>
+        <a class="inline-action" href="javascript:void(0);" ng-click="edit_persons_count = true" ng-hide="edit_persons_count">
+          <%= image_tag 'buttons/edit.svg' %>
+        </a>
+        <a class="link-with-icon inline-action btn btn-sm btn-success" href="javascript:void(0);" ng-click="saveBudget()" ng-show="edit_persons_count">
+          <%= inline_svg 'buttons/check.svg' %>
+          <span class="hidden-xs">
+            <%= t('common.save') %>
+          </span>
+        </a>
+        <a class="link-with-icon inline-action btn btn-sm ghost-button" href="javascript:void(0);" ng-click="cancelBudgetEdit()" ng-show="edit_persons_count">
+          <%= inline_svg 'buttons/back.svg' %>
+          <span class="hidden-xs">
+            <%= t('common.back') %>
+          </span>
+        </a>
+      <% end %>
+    </span>
+    <span class="budget" ng-hide="budget_loaded">
+      <div class="budget-mockup"></div>
+    </span>
+  </div>
+</div>

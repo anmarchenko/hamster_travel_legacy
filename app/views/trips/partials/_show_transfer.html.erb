@@ -1,0 +1,46 @@
+<div class="transfer-direction" ng-init="min_height_station = (!!transfer.station_from != !!transfer.station_to)">
+  <div class="transfer-city transfer-element">
+    <div class="city-name">
+      {{transfer.city_from_text}}
+    </div>
+    <div class="station-name" ng-class="{'min-height': min_height_station}">
+      {{transfer.station_from}}
+    </div>
+    <div class="time">
+      {{transfer.start_time | date:'HH:mm':'UTC'}}
+    </div>
+  </div>
+  <div class="transfer-icon transfer-element">
+    <img ng-src="{{transfer.type_icon}}"/>
+  </div>
+  <div class="transfer-city transfer-element">
+    <div class="city-name">
+      {{transfer.city_to_text}}
+    </div>
+    <div class="station-name" ng-class="{'min-height': min_height_station}">
+      {{transfer.station_to}}
+    </div>
+    <div class="time">
+      {{transfer.end_time | date:'HH:mm':'UTC'}}
+    </div>
+  </div>
+</div>
+<div class="transfer-price" ng-show="transfer.amount_cents != undefined">
+  <%= image_tag 'common/money.svg' %>
+  {{transfer.amount_cents / 100.0 | number: 2}}
+  {{transfer.amount_currency_text}}
+  <i ng-show="!!transfer.in_user_currency.amount_cents">
+    ({{transfer.in_user_currency.amount_cents / 100.0 | number: 2}} {{transfer.in_user_currency.amount_currency_text}})
+  </i>
+</div>
+<div class="transfer-company" ng-show="!!transfer.code || !!transfer.company">
+  <%= image_tag 'transfers/tickets.svg' %>
+  {{transfer.code}}
+  {{transfer.company}}
+</div>
+<div class="transfer-comment text text-italic" ng-show="!!transfer.comment">{{transfer.comment}}</div>
+<div class="transfer-comment" ng-show="!!transfer.links">
+  <div class="text-italic" ng-repeat="link in transfer.links track by link.id">
+    <%= render 'widgets/link_show', ng_model_url: 'link.url', ng_model_description: 'link.description' %>
+  </div>
+</div>

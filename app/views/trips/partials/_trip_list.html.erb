@@ -1,0 +1,65 @@
+<% without_pagination ||= false %>
+<ul class="trip-list">
+  <% trips.each do |trip| %>
+      <li>
+        <div class="trip-row">
+          <div class="image-cell hidden-xs hidden-sm">
+            <%= link_to trip_path(trip) do %>
+                <img class="img-responsive" src="<%= trip.image_url_or_default %>"/>
+            <% end %>
+          </div>
+          <div class="content-cell">
+          <span class="header">
+            <%= link_to trip_path(trip) do %>
+              <%= trip.name %>
+            <% end %>
+            <small>
+              <%= trip_start_date(trip) %>
+            </small>
+          </span>
+            <span class="budget">
+            <%= number_with_precision trip.budget_sum(current_user.try(:currency)), precision: 2, separator: ',' %>
+              <%= currency_symbol.html_safe %>
+              \/
+              <%= trip.days_count %>
+              <%= t('common.days', count: trip.days_count) %>
+              <%= t('trips.show.budget_for') %>
+              <%= trip.budget_for %>
+              <%= t('trips.show.persons') %>
+          </span>
+            <span class="author">
+            <%= link_to user_path(trip.author) do %>
+              <% if trip.author.image_url.present? %>
+                <img class="img-circle xs-profile-pic" src="<%= trip.author.image_url %>" tooltip-placement="bottom" uib-tooltip="<%= trip.author.full_name %>"/>
+              <% else %>
+                <div class="<%= trip.author.background_color %> img-circle xs-profile-pic initials" tooltip-placement="bottom" uib-tooltip="<%= trip.author.full_name %>">
+                  <%= trip.author.initials %>
+                </div>
+              <% end %>
+            <% end %>
+          </span>
+          </div>
+          <div class="tags-cell">
+            <div class="flags">
+              <% trip.visited_countries_codes[0..2].each do |country_code| %>
+                  <%= flag country_code, 24, true %>
+              <% end %>
+            </div>
+            <div class="tags">
+              <% if trip.comment.present? %>
+                  <div class="tag tag-icon" tooltip-append-to-body="true" tooltip-placement="bottom" uib-tooltip="<%= t('trips.index.with_report') %>">
+                    <%= image_tag 'plan/report.svg' %>
+                  </div>
+              <% end %>
+              <div class="tag status-tag <%= trip_status_class(trip.status_code) %>">
+                <%= trip.status_text %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+  <% end %>
+</ul>
+<% unless without_pagination %>
+    <%= paginate trips %>
+<% end %>

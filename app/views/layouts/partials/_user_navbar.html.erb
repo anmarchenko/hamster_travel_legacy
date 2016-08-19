@@ -1,0 +1,42 @@
+<% if user_signed_in? %>
+    <script id="profileMenu.html" type="text/ng-template">
+      <ul class="menu-options-popover">
+        <li class="major">
+          <%= link_to user_path(current_user) do %>
+              <%= t('common.profile') %>
+          <% end %>
+        </li>
+        <li class="major">
+          <%= link_to edit_user_path(current_user) do %>
+              <%= t('common.settings') %>
+          <% end %>
+        </li>
+        <li class="major">
+          <%= link_to edit_user_registration_path do %>
+              <%= t('common.edit_user') %>
+          <% end %>
+        </li>
+        <li class="divider"></li>
+        <li class="minor">
+          <%= link_to destroy_user_session_path, method: :delete do %>
+              <%= t('common.sign_out') %>
+          <% end %>
+        </li>
+      </ul>
+    </script>
+    <li class="dropdown">
+      <a class="user-menu-toggle" href="#" popover-placement="bottom-right" popover-trigger="'outsideClick'" uib-popover-template="'profileMenu.html'">
+        <% if current_user.image_url.present? %>
+            <img class="img-circle img-nav" id="profile_image" src="<%= current_user.image_url %>"/>
+        <% else %>
+            <div class="<%= current_user.background_color %> img-circle img-nav initials" id="profile_image">
+              <%= current_user.initials %>
+            </div>
+        <% end %>
+      </a>
+    </li>
+<% else %>
+    <li class="navbar-trips-link">
+      <%= link_to t('common.sign_in'), new_user_session_path %>
+    </li>
+<% end %>

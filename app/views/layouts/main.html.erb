@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html ng-app='travel'>
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>
+    <%= t('.pagetitle', page: (yield(:title) if content_for?(:title))) %>
+  </title>
+  <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag '//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css', media: 'all' %>
+  <%= stylesheet_link_tag 'main', media: 'all' %>
+  <%= favicon_link_tag image_path('favicon.ico') %>
+  <%= yield(:page_stylesheet) if content_for?(:page_stylesheet) %>
+</head>
+<body class="<%= @body_class %>">
+<%= render 'layouts/partials/navbar' %>
+<div class="container">
+  <%= render 'layouts/partials/flash_messages' %>
+  <%= yield %>
+</div>
+<%= yield(:additional_content) if content_for?(:additional_content) %>
+<footer>
+  <div class="container">
+    <div class="site-footer">
+      <div class="row">
+        <div class="col-md-2">
+          © 2014 - 2016, Hamster Travel
+        </div>
+        <div class="col-md-10">
+          <p>
+            <%= t('common.authors') %>
+          </p>
+          <p>
+            <a href="http://vk.com/id88528">
+              <%= t('common.hamster') %>
+            </a>
+          </p>
+          <p>
+            <a href="https://github.com/altmer">
+              <%= t('common.andrey') %>
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<%= render 'modals/photo_preview' %>
+<span class="i18n" id="confirmation_header">#{t('common.are_you_sure')}</span>
+<span class="i18n" id="confirmation_ok">
+      <%= t('common.yes_do_it') %>
+    </span>
+<span class="i18n" id="confirmation_cancel">
+      <%= t('common.no_do_not') %>
+    </span>
+<span class="i18n" id="notification_saved">
+      <%= t('common.saved') %>
+    </span>
+<!--
+  Javascripts
+  \==================================================
+-->
+<!-- Placed at the end of the document so the pages load faster
+-->
+<script type="text/javascript">
+  var LOCALE = '#{I18n.locale}';
+</script>
+<%= javascript_include_tag 'main' %>
+<%= yield(:page_javascript) if content_for?(:page_javascript) %>
+</body>
+</html>

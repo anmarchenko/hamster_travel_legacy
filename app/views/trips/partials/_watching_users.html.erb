@@ -1,0 +1,15 @@
+<% if @user_can_edit %>
+    <div class="row" ng-controller="EditingUsersController" ng-init="init('<%= @trip.id %>')" ng-show="editing_users.length > 0">
+      <div class="col-md-12">
+        <div class="alert alert-info watching-users">
+          <%= t('trips.show.watching_now') %>
+          <i ng-repeat="user in editing_users">
+            {{user}}
+            <span ng-hide="$index == editing_users.length - 1">
+              ,
+            </span>
+          </i>
+        </div>
+      </div>
+    </div>
+<% end %>

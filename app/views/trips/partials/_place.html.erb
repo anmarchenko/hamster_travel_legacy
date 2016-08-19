@@ -1,0 +1,44 @@
+<div ng-show="!edit && !place_edit">
+  <% if @user_can_edit %>
+      <a class="inline-action hidden-xs pull-right" href="javascript:void(0);" ng-click="setEdit(true, 'place')" ng-hide="edit_persons_count">
+        <%= image_tag 'buttons/edit.svg' %>
+      </a>
+  <% end %>
+  <p class="flag-text transfers-place-show" ng-repeat="place in day.places track by place.id" ng-show="place.city_text && place.flag_image">
+    <span ng-bind-html="place.flag_image"></span>
+    {{place.city_text}}
+  </p>
+  <p class="hidden-sm hidden-md hidden-lg transfers-place-show" ng-show="day.places.length == 0 || !day.places[0].city_text">
+    <i>
+      <%= t('trips.show.no_places') %>
+    </i>
+  </p>
+  <% if @user_can_edit %>
+      <a class="inline-action hidden-md hidden-lg hidden-sm" href="javascript:void(0);" ng-click="setEdit(true, 'place')" ng-hide="edit_persons_count">
+        <%= image_tag 'buttons/edit.svg' %>
+      </a>
+  <% end %>
+</div>
+<div ng-show="edit || place_edit">
+  <div class="day-place-container" ng-repeat="place in day.places track by place.id">
+    <%= render 'widgets/typeahead/cities', model_name: 'place.city', classes: 'input-sm form-control', placeholder: t('trips.show.city'), custom_bindings: "'place.flag_image' : 'flag_image'", allow_empty_typeahead: true %>
+    <a class="delete-action" href="javascript:void(0);" ng-click="remove(day.places, $index)" ng-show="day.places.length > 1">
+      <%= image_tag 'buttons/delete.svg' %>
+    </a>
+    <a class="up-action" href="javascript:void(0);" ng-click="fillAsPreviousPlace(place, $index)" ng-show="($index > 0 || day_index > 0) && !place.city_code">
+      <%= image_tag 'buttons/up.svg' %>
+    </a>
+  </div>
+  <a class="link-with-icon" href="javascript:void(0);" ng-click="add(day.places, {})">
+    <%= inline_svg 'buttons/add_plain.svg' %>
+    <%= t('trips.show.add_city') %>
+  </a>
+  <div class="actions">
+    <a class="link-with-icon btn btn-sm btn-success" href="javascript:void(0);" ng-click="save()" ng-show="place_edit">
+      <%= inline_svg 'buttons/check.svg' %>
+    </a>
+    <a class="link-with-icon btn btn-sm ghost-button" href="javascript:void(0);" ng-click="reload()" ng-show="place_edit">
+      <%= inline_svg 'buttons/back.svg' %>
+    </a>
+  </div>
+</div>

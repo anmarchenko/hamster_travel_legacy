@@ -1,0 +1,56 @@
+<% transparent ||= false %>
+<header class="navbar navbar-default navbar-first-mobile <%= 'navbar-transparent' if transparent %>">
+  <div class="container">
+    <nav>
+      <ul class="nav navbar-nav">
+        <%= link_to t('.apptitle'), root_path, {class: 'navbar-brand hidden-xs'} %>
+        <%= link_to root_path, {class: 'navbar-brand hidden-sm hidden-md hidden-lg'} do %>
+            <%= image_tag 'logo.svg' %>
+        <% end %>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <% if user_signed_in? %>
+            <li>
+              <%= link_to new_trip_path, class: 'add-trip-header-btn hidden-xs' do %>
+                  <%= t('trips.index.create') %>
+              <% end %>
+              <%= link_to new_trip_path, class: 'add-trip-header-btn-image hidden-sm hidden-md hidden-lg' do %>
+                  <%= inline_svg 'buttons/add.svg' %>
+              <% end %>
+            </li>
+        <% end %>
+        <li class="hidden-xs navbar-trips-link">
+          <%= link_to t('.trips'), trips_path %>
+        </li>
+        <% if user_signed_in? %>
+            <li class="hidden-xs navbar-trips-link">
+              <%= link_to t('.my_trips'), my_trips_path %>
+            </li>
+            <li class="hidden-xs navbar-trips-link">
+              <%= link_to t('.my_ideas'), drafts_trips_path %>
+            </li>
+        <% end %>
+        <%= render 'layouts/partials/locale_bar' %>
+        <%= render 'layouts/partials/notifications' %>
+        <%= render 'layouts/partials/user_navbar' %>
+      </ul>
+    </nav>
+  </div>
+</header>
+<% if user_signed_in? %>
+    <div class="navbar navbar-default navbar-second-mobile hidden-sm hidden-md hidden-lg <%= 'navbar-transparent' if transparent %>">
+      <div class="container">
+        <ul class="nav navbar-nav">
+          <li class="navbar-trips-link">
+            <%= link_to t('.trips'), trips_path %>
+          </li>
+          <li class="navbar-trips-link">
+            <%= link_to t('.my_trips'), my_trips_path %>
+          </li>
+          <li class="navbar-trips-link">
+            <%= link_to t('.my_ideas'), drafts_trips_path %>
+          </li>
+        </ul>
+      </div>
+    </div>
+<% end %>

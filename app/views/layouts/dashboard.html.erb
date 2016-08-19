@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app='travel'>
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>
+    <%= t('layouts.main.pagetitle', page: (yield(:title) if content_for?(:title))) %>
+  </title>
+  <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag 'main', media: 'all' %>
+  <%= favicon_link_tag image_path('favicon.ico') %>
+  <%= yield(:page_stylesheet) if content_for?(:page_stylesheet) %>
+</head>
+<body>
+<%= render 'layouts/partials/navbar', transparent: true %>
+<%= yield %>
+<!--
+  Javascripts
+  \==================================================
+-->
+<!-- Placed at the end of the document so the pages load faster
+-->
+<%= javascript_include_tag 'main' %>
+<%= yield(:page_javascript) if content_for?(:page_javascript) %>
+</body>
+</html>

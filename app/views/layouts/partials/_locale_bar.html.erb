@@ -1,0 +1,21 @@
+<script id="localeMenu.html" type="text/ng-template">
+  <ul class="menu-options-popover">
+    <li class="flag-text-menu">
+      <%= link_to locale: 'ru' do %>
+          <%= flag 'ru', 24 %>
+          Русский
+      <% end %>
+    </li>
+    <li class="flag-text-menu">
+      <%= link_to locale: 'en' do %>
+          <%= flag 'gb', 24 %>
+          English
+      <% end %>
+    </li>
+  </ul>
+</script>
+<li class="dropdown">
+  <a href="#" popover-placement="bottom" popover-trigger="'outsideClick'" uib-popover-template="'localeMenu.html'">
+    <%= flag I18n.locale == :ru ? 'ru' : 'gb' %>
+  </a>
+</li>

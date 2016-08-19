@@ -1,0 +1,35 @@
+<% if user_signed_in? %>
+    <li class="notifications" ng-controller="NotificationsController">
+      <script id="inviteNotificationPopover.html" type="text/ng-template">
+        <ul class="notifications-popover">
+          <li ng-repeat="invite in invites">
+            <a class="notification-column" href="/users/{{invite.inviting_user_id}}">
+              <img class="img-circle small-profile-pic image-url" ng-show="{{!!invite.inviting_user_photo_url}}" ng-src="{{invite.inviting_user_photo_url}}"/>
+              <div class="{{invite.inviting_user_color}} img-circle small-profile-pic image-url initials" ng-show="{{!invite.inviting_user_photo_url}}">
+                {{invite.inviting_user_initials}}
+              </div>
+            </a>
+            <div class="invite-text notification-column">
+              {{invite.inviting_user_name}}
+              <%= t('messages.index.invites_you_to') %>
+              <span class="invite-text-trip-name">
+              {{invite.trip_name}}
+            </span>
+            </div>
+            <a class="action delete-img notification-column" href="javascript:void(0);" ng-click="decline(invite.id)">
+              <%= image_tag 'buttons/delete.svg' %>
+            </a>
+            <a class="action approve-img notification-column" href="javascript:void(0);" ng-click="accept(invite.id)">
+              <%= image_tag 'common/check.svg' %>
+            </a>
+          </li>
+        </ul>
+      </script>
+      <a class="notification-menu" href="javascript:void(0)" ng-if="invites.length > 0" popover-placement="auto" popover-trigger="'outsideClick'" uib-popover-template="'inviteNotificationPopover.html'">
+        <%= inline_svg 'common/bell.svg', class: 'notification-image' %>
+        <div class="pending-number">
+          {{invites.length > 9 ? '*' : invites.length }}
+        </div>
+      </a>
+    </li>
+<% end %>

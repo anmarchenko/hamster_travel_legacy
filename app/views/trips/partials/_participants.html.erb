@@ -1,0 +1,19 @@
+<div class="participants" ng-controller="ParticipantsController" ng-init="init('<%= @trip.id %>')">
+  <span ng-show="participants_loaded">
+    <span class="participant-link" ng-repeat="participant in participants track by participant.id">
+      <%= render 'trips/partials/participant', invite: false %>
+    </span>
+    <span class="participant-link" ng-repeat="participant in invited track by participant.id">
+      <%= render 'trips/partials/participant', invite: true %>
+    </span>
+    <% if @user_can_edit %>
+      <a href="javascript:void(0)" popover-placement="bottom" popover-title="<%= t('trips.show.add_friend') %>" popover-trigger="'open'" uib-popover-template="'invitePopover.html'">
+        <img class="img-circle small-profile-pic add-participant" ng-hide="popover_opened" src="<%= image_path('material/plus.png') %>"/>
+        <img class="img-circle small-profile-pic add-participant" ng-show="popover_opened" src="<%= image_path('material/close.png') %>"/>
+      </a>
+    <% end %>
+  </span>
+  <span ng-hide="participants_loaded">
+    <div class="participant-mockup"></div>
+  </span>
+</div>
