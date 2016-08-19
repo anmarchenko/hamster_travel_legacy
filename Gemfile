@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~> 5.0.0'
+gem 'coffee-rails'
 gem 'russian'
 
 # DB
@@ -33,18 +34,16 @@ gem 'sass-rails', '~> 5.0'
 # font awesome icons
 gem 'font-awesome-rails'
 
-# JS (most of these gems must die)
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails'
+# JS
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # jquery UI
 gem 'jquery-ui-rails', '~> 5.0'
 # AngularJS
 gem 'angularjs-rails'
-# Jcrop library for cropping images before upload
+# Jcrop library for cropping images before upload (to delete, use ngImgCrop instead)
 gem 'jcrop-rails-v2'
-# dates
+# datepicker
 gem 'bootstrap-datepicker-rails'
 
 # app server
