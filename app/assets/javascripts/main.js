@@ -12,13 +12,13 @@
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.en-GB.js
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.ru.js
-//= require bootstrap-slider.min
+//= require bootstrap-slider
 
-//= require sweetalert2.min
+//= require sweetalert2
 //= require toastr
-//= require moment-with-langs.min
+//= require moment
 
-//= require_tree ./js
+//= require_tree ./utils
 
 //= require angular
 //= require angular-cookies
@@ -29,8 +29,8 @@
 //= require angular-ui-bootstrap
 //= require angular-ui-router
 //= require angular-ui-sortable
-//= require angular-sticky
+//= require ng-sticky
 
-//= require app/app.js
-//= require_tree ./app
+//= require travel/app.js
+//= require_tree ./travel
 

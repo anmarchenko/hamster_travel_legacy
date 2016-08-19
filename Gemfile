@@ -117,8 +117,6 @@ group :test do
   gem 'factory_girl_rails'
   # better data for fixtures
   gem 'faker'
-  # integration test
-  gem 'capybara'
 
   # tests coverage
   gem 'simplecov', :require => false

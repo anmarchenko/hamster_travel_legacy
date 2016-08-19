@@ -19,8 +19,11 @@ $ ->
       confirmButtonText: $('#confirmation_ok').text(),
       cancelButtonText: $('#confirmation_cancel').text(),
       type: 'warning',
-      showCancelButton: true,
-      closeOnConfirm: true
-    }, ->
+      showCancelButton: true
+    }).then( ->
+      console.log('confirmed')
       $.rails.confirmed(link)
+    ,
+      ->
+        # dismissed
     )

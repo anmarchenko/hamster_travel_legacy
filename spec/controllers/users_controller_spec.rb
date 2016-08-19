@@ -140,7 +140,7 @@ describe UsersController do
     let(:file) {fixture_file_upload("#{::Rails.root}/spec/fixtures/files/cat.jpg", 'image/jpeg')}
 
     it 'uploads trip photo' do
-      post 'upload_photo', params: {id: subject.current_user.id, user: {image: file}, w: 10, h: 10, x: 10, y: 10}, format: :js
+      post 'upload_photo', params: {id: subject.current_user.id, user: {image: file}, w: 10, h: 10, x: 10, y: 10}, format: :utils
       expect(response).to be_success
       expect(assigns(:user).image).not_to be_blank
     end

@@ -24,7 +24,7 @@
 
     %a{href: 'javascript:void(0)', 'ng-if' => 'invites.length > 0', class: 'notification-menu',
         'uib-popover-template' => "'inviteNotificationPopover.html'",
-        'popover-placement' => 'auto', 'popover-trigger' => 'outsideClick'}
+        'popover-placement' => 'auto', 'popover-trigger' => "'outsideClick'"}
       = inline_svg 'common/bell.svg', class: 'notification-image'
       .pending-number
         {{invites.length > 9 ? '*' : invites.length }}

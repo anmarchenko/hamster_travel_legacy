@@ -1,8 +1,16 @@
 .dropdown-menu {
   max-height: 350px;
+  max-width: 350px;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
-table .dropdown-menu a {
+.dropdown-menu a {
   text-decoration: none;
+  cursor: pointer;
+}
+
+.dropdown-menu li {
+  margin-top: .5em;
+  margin-bottom: .5em;
 }

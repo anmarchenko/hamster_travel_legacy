@@ -136,7 +136,7 @@
                       - if @trip.days.count > 1 && @user_can_edit
                         %a.move-activity.hidden-xs{href: 'javascript:void(0);',
                           'uib-popover-template' => "'moveActivity.html'",
-                          'popover-trigger' => 'outsideClick',
+                          'popover-trigger' => "'outsideClick'",
                           'popover-placement' => 'top',
                           'popover-title' => t('trips.show.move_activity')}
                           = image_tag 'buttons/reorder.svg'
@@ -176,7 +176,7 @@
                       - if @trip.days.count > 1
                         %a.move-activity.hidden-xs{href: 'javascript:void(0);',
                           'uib-popover-template' => "'moveActivity.html'",
-                          'popover-trigger' => 'outsideClick',
+                          'popover-trigger' => "'outsideClick'",
                           'popover-placement' => 'top',
                           'popover-title' => t('trips.show.move_activity')}
                           = image_tag 'buttons/reorder.svg'
