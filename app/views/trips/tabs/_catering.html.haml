@@ -5,7 +5,7 @@
         = render 'trips/partials/tabs'
     = render 'trips/partials/watching_users'
     = render 'trips/partials/budget', options: {tab_budget: 'catering_budget'}
-    .row
+    .row.sticky-row{'sticky' => 'true'}
       .col-md-12
         = render 'trips/partials/buttons'
 
@@ -16,8 +16,7 @@
       = t('trips.show.catering_add_info')
 
     %div.call-to-action
-      %a.btn.btn-primary{href: 'javascript:void(0);',
-      'ng-click' => "add(caterings, {persons_count: trip.budget_for, days_count: 1, #{default_currency_hash(@trip, current_user)}}) && setEdit(true)"}
+      %a.btn.btn-primary{href: 'javascript:void(0);', 'ng-click' => "add(caterings, {persons_count: trip.budget_for, days_count: 1, #{default_currency_hash(@trip, current_user)}}) && setEdit(true)"}
         = t('trips.show.catering_call_to_action')
 
   %div.catering-mockup{'ng-if' => '!caterings_loaded'}
