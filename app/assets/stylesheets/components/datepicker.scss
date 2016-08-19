@@ -1,0 +1,70 @@
+.datepicker {
+  &.dropdown-menu {
+    overflow-y: hidden;
+  }
+  table {
+    border-collapse: separate;
+    color: $main-grey;
+
+    tr td,
+    tr th {
+      width: 36px;
+      height: 36px;
+    }
+
+    thead {
+      th {
+        font-weight: normal;
+      }
+
+      th.prev,
+      th.next,
+      th.datepicker-switch {
+        border-bottom: 1px solid $border-grey;
+        border-radius: 0;
+      }
+
+      th.prev,
+      th.next {
+        cursor: pointer;
+        font-size: 0;
+
+        &:before {
+          content: '<';
+          font-size: 20px;
+        }
+      }
+
+      th.next:before {
+        content: '>';
+      }
+
+      th.datepicker-switch {
+        color: $ctaColor;
+        font-weight: 500;
+      }
+    }
+
+    tbody {
+      tr td {
+        color: $text-grey;
+      }
+
+      tr td:hover,
+      tr td span:hover {
+        border-radius: 18px;
+      }
+
+      tr td.active,
+      tr td span.active {
+        border-radius: 18px;
+        background-color: $ctaColor !important;
+        color: $text-grey;
+      }
+
+      tr td.disabled {
+        color: $main-grey;
+      }
+    }
+  }
+}

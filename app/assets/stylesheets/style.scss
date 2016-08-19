@@ -1,11 +1,12 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,300italic,300,600,600italic,700,700italic);
-@import "../../../vendor/assets/stylesheets/sweetalert2";
+@import "sweetalert2";
 @import "toastr";
 @import "components/colors";
 @import "components/screen-sizes";
 @import "components/inputs";
 @import "components/typography";
 @import "components/buttons";
+@import "components/datepicker";
 @import "components/footer";
 @import "components/fileupload";
 @import "components/images";
