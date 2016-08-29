@@ -11,7 +11,7 @@
 
   .row
     .col-md-12
-      %article.trip-report{'ng-show' => 'report_loaded', 'ng-cloak' => ''}
+      %article.trip-report{'ng-show' => 'report_loaded', 'ng-cloak' => 'true'}
         %div{'ng-show' => '!edit'}
           %p.travel-text{'ng-show' => 'report'} {{report}}
           .empty-report{'ng-hide' => 'report'}

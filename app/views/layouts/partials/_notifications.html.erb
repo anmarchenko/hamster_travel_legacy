@@ -1,5 +1,5 @@
 <% if user_signed_in? %>
-    <li class="notifications" ng-controller="NotificationsController">
+    <li class="notifications" ng-controller="NotificationsController" ng-cloak>
       <script id="inviteNotificationPopover.html" type="text/ng-template">
         <ul class="notifications-popover">
           <li ng-repeat="invite in invites">

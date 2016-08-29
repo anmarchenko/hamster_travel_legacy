@@ -1,4 +1,4 @@
-%div{'ng-controller' => 'ActivitiesPlanController'}
+%div{'ng-controller' => 'ActivitiesPlanController', 'ng-cloak' => 'true'}
   .work-area-header
     .row
       .col-md-12
@@ -14,7 +14,7 @@
       .activity{'ng-controller' => 'ActivitiesDayController',
                 'ng-init' => "load(#{@trip.id}, #{day.id}, {#{default_currency_hash(@trip, current_user)}, rating: 2})",
                 'ng-class' => '{shadowed: reloading}'}
-        .activity-content{'ng-show' => 'day_loaded', 'ng-cloak' => ''}
+        .activity-content{'ng-show' => 'day_loaded'}
           .row.activity-day-header
             .col-xs-12
               .activity-day-date{'ng-click' => 'triggerShowMore()'}

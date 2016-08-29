@@ -46,17 +46,19 @@
     </div>
   </div>
 </footer>
+
 <%= render 'modals/photo_preview' %>
-<span class="i18n" id="confirmation_header">#{t('common.are_you_sure')}</span>
+
+<span class="i18n" id="confirmation_header"><%= t('common.are_you_sure') %></span>
 <span class="i18n" id="confirmation_ok">
-      <%= t('common.yes_do_it') %>
-    </span>
+  <%= t('common.yes_do_it') %>
+</span>
 <span class="i18n" id="confirmation_cancel">
-      <%= t('common.no_do_not') %>
-    </span>
+  <%= t('common.no_do_not') %>
+</span>
 <span class="i18n" id="notification_saved">
-      <%= t('common.saved') %>
-    </span>
+  <%= t('common.saved') %>
+</span>
 <!--
   Javascripts
   \==================================================
@@ -64,7 +66,7 @@
 <!-- Placed at the end of the document so the pages load faster
 -->
 <script type="text/javascript">
-  var LOCALE = '#{I18n.locale}';
+  LOCALE = '<%= I18n.locale %>';
 </script>
 <%= javascript_include_tag 'main' %>
 <%= yield(:page_javascript) if content_for?(:page_javascript) %>

@@ -1,10 +1,19 @@
 <%= link_to '/users/{{participant.id}}' do %>
-    <img class="<%= 'invited-user' if invite %> img-circle small-profile-pic participant image-url" ng-show="{{!!participant.photo_url}}" ng-src="{{participant.photo_url}}" tooltip-placement="bottom" uib-tooltip="{{participant.name %> %>"/>
-    <div class="{{participant.color %> %> <%= 'invited-user' if invite %> small-profile-pic img-circle participant image-url initials" ng-show="{{!participant.photo_url}}" tooltip-placement="bottom" uib-tooltip="{{participant.name %> %> <%= ('(' + t('trips.show.invite_sent') + ')') if invite %>">
+    <img class="<%= 'invited-user' if invite %> img-circle small-profile-pic participant image-url"
+         ng-show="{{!!participant.photo_url}}"
+         ng-src="{{participant.photo_url}}"
+         tooltip-placement="bottom"
+         uib-tooltip="{{participant.name}}"/>
+    <div class="{{participant.color}} <%= 'invited-user' if invite %> small-profile-pic img-circle participant image-url initials"
+         ng-show="{{!participant.photo_url}}"
+         tooltip-placement="bottom"
+         uib-tooltip="{{participant.name}} <%= ('(' + t('trips.show.invite_sent') + ')') if invite %>">
       {{participant.initials}}
     </div>
     <% if current_user == @trip.author_user %>
-        <a action-confirmation="<%= invite ? 'deleteInvitedUser(participant.id)' : 'deleteUser(participant.id)' %>" class="delete-action" confirmation-text="<%= t('common.participant_will_be_deleted') %>" href="javascript:void(0);" ng-show="participant.id != <%= current_user.id %>">
+        <a action-confirmation="<%= invite ? 'deleteInvitedUser(participant.id)' : 'deleteUser(participant.id)' %>"
+           class="delete-action" confirmation-text="<%= t('common.participant_will_be_deleted') %>" href="javascript:void(0);"
+           ng-show="participant.id != <%= current_user.id %>">
           <%= image_tag 'buttons/delete.svg' %>
         </a>
     <% end %>

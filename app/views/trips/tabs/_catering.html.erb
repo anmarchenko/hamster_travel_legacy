@@ -1,4 +1,4 @@
-<div class="span" ng-controller="CateringsController" ng-init="init('<%= @trip.id %>')">
+<div class="span" ng-controller="CateringsController" ng-init="init('<%= @trip.id %>')" ng-cloak>
   <div class="work-area-header">
     <div class="row">
       <div class="col-md-12">
@@ -21,7 +21,7 @@
       <%= t('trips.show.catering_add_info') %>
     </div>
     <div class="call-to-action">
-      <a class="btn btn-primary" href="javascript:void(0);" ng-click="add(caterings, {persons_count: trip.budget_for, days_count: 1, <%= default_currency_hash(@trip, current_user) %> %>) && setEdit(true)">
+      <a class="btn btn-primary" href="javascript:void(0);" ng-click="add(caterings, {persons_count: trip.budget_for, days_count: 1, <%= default_currency_hash(@trip, current_user) %>}) && setEdit(true)">
         <%= t('trips.show.catering_call_to_action') %>
       </a>
     </div>
@@ -86,7 +86,7 @@
           </div>
         </div>
         <div class="col-xs-12 col-sm-8">
-          <p class="text">{{catering.description || '#{I18n.t('trips.show.no_catering_description')}'}}</p>
+          <p class="text">{{catering.description || '<%= I18n.t('trips.show.no_catering_description') %>'}}</p>
         </div>
       </div>
     </div>
@@ -136,7 +136,7 @@
   </div>
   <div class="row" ng-show="edit">
     <div class="col-md-12">
-      <a class="big-control" href="javascript:void(0);" ng-click="add(caterings, {persons_count: <%= @trip.budget_for %>, days_count: 1, <%= default_currency_hash(@trip, current_user) %> %>)">
+      <a class="big-control" href="javascript:void(0);" ng-click="add(caterings, {persons_count: <%= @trip.budget_for %>, days_count: 1, <%= default_currency_hash(@trip, current_user) %>})">
         <%= fa_icon 'plus', text: t('trips.show.catering_add') %>
       </a>
     </div>
