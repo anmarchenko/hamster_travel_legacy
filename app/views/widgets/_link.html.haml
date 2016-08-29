@@ -1,9 +1,0 @@
-- ng_model_url ||= ''
-- ng_array ||= ''
-
-.bookmark-edit
-  = text_field_tag 'link_url', '', 'ng-model' => ng_model_url, class: 'input-sm form-control', placeholder: 'http://'
-  - if ng_array.present?
-    %a{href: 'javascript:void(0);', 'ng-click' => "remove(#{ng_array}, $index)", 'ng-show' => "#{ng_array}.length > 1"}
-      = image_tag 'buttons/delete.svg'
-

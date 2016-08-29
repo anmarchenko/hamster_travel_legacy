@@ -1,0 +1,14 @@
+<div class="row empty-trips">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="header">
+      <%= text %>
+    </div>
+    <% if user_signed_in? %>
+      <div class="cta-button">
+        <a class="btn btn-primary btn-lg" href="<%= new_trip_path %>">
+          <%= t('dashboard.index.add') %>
+        </a>
+      </div>
+    <% end %>
+  </div>
+</div>

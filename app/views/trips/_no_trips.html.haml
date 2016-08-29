@@ -1,8 +1,0 @@
-.row.empty-trips
-  .col-md-6.col-md-offset-3
-    .header
-      = text
-    - if user_signed_in?
-      .cta-button
-        %a.btn.btn-primary.btn-lg{href: new_trip_path}
-          = t('dashboard.index.add')

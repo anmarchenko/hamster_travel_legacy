@@ -1,0 +1,30 @@
+<% classes ||= 'form-control' %>
+<% editable ||= false %>
+<% text_field_name = "#{model_name}_text" %>
+<% code_field_name = "#{model_name}_id" %>
+<% placeholder ||= '' %>
+<% template ||= nil %>
+<% min_length ||= 3 %>
+<% callback ||= "''" %>
+<% custom_attrs ||= {} %>
+<% custom_bindings ||= '' %>
+<% allow_empty_typeahead ||= false %>
+<% #   'typeahead-append-to-body' => true, ATTENTION: CAUSING MEMORY LEAK %>
+
+<% options_text = { 'ng-model' => text_field_name, 'ng-change' => "#{code_field_name}='';", 'uib-typeahead' => "item.name as item.text for item in #{function}($viewValue)", 'typeahead-on-select' => "onSelect($item, $model, $label, {'#{code_field_name}' : 'code'#{(', ' + custom_bindings) if custom_bindings}}, #{callback})", 'typeahead-editable' => editable, 'typeahead-loading' => 'typeahead_loading', 'typeahead-min-length' => min_length, 'typeahead-wait-ms' => 500, 'typeahead-template-url' => template, 'ng-trim' => false, 'ng-focus' => 'onFocus($event)', placeholder: placeholder, class: "#{classes}" }.merge(custom_attrs) %>
+
+<% if allow_empty_typeahead %>
+  <% options_text = options_text.merge('empty-typeahead' => true) %>
+<% end %>
+
+<% options_code = { value: "{{#{code_field_name}}}" } %>
+
+<span ng-controller="TypeaheadController">
+  <% unless form.blank? %>
+    <%= form.text_field text_field_name, options_text.merge('ng-init' => "#{text_field_name}='#{form.object.send(text_field_name)}';") %>
+    <%= form.hidden_field code_field_name, options_code.merge('ng-init' => "#{code_field_name}='#{form.object.send(code_field_name)}';") %>
+  <% else %>
+    <%= text_field_tag text_field_name, '', options_text %>
+    <%= hidden_field_tag code_field_name, '', options_code %>
+  <% end %>
+</span>

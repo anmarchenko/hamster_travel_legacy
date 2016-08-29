@@ -15,10 +15,6 @@ gem 'kaminari-i18n'
 # validate dates
 gem 'date_validator'
 
-# views
-gem 'haml'
-gem 'haml-rails'
-
 # authentication
 gem 'devise', '~> 4.2.0'
 

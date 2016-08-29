@@ -1,0 +1,14 @@
+<% link_default_text ||= nil %>
+<% model ||= nil %>
+<label>
+  <%= link_default_text %>
+</label>
+<div>
+  <span uib-timepicker="true" ng-model="<%= model %>" show-meridian="false" show-spinners="false" datetimepicker-neutral-timezone="true" mousewheel="false">
+  </span>
+  <span class="clear-time hidden-xs">
+    <a ng-click="<%= model %> = null">
+      <%= image_tag 'buttons/delete.svg' %>
+    </a>
+  </span>
+</div>

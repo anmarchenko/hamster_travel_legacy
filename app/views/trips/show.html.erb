@@ -1,0 +1,188 @@
+<% content_for :title, @trip.name %>
+<% @body_class = 'trip' %>
+<% content_for :page_javascript do %>
+    <script id="userTemplate.html" type="text/ng-template">
+      <a>
+        <img class="img-circle typeahead-profile-pic" ng-show="{{!!match.model.photo_url}}" ng-src="{{match.model.photo_url}}"/>
+        <div class="{{match.model.color}} img-circle typeahead-profile-pic initials" ng-show="{{!match.model.photo_url}}">
+          {{match.model.initials}}
+        </div>
+        <span>
+        {{match.label}}
+      </span>
+      </a>
+    </script>
+    <script id="citiesTemplate.html" type="text/ng-template">
+      <a class="flag-text">
+        <span ng-bind-html="match.model.flag_image"></span>
+        <span>
+        {{match.label}}
+      </span>
+      </a>
+    </script>
+    <script id="invitePopover.html" type="text/ng-template">
+      <div class="form-group invite-users-popover">
+        <%= render 'widgets/typeahead/users', model_name: 'selected_user', classes: 'form-control', placeholder: t('trips.show.type_name'), custom_attrs: {'focus-on' => 'popover_opened'} %>
+      </div>
+    </script>
+    <script id="daySortModal.html" type="text/ng-template">
+      <%= render 'modals/days_sort_modal' %>
+    </script>
+    <script id="moveActivity.html" type="text/ng-template">
+      <div class="days-info-popover" ng-controller="ActivityMovePopupController" ng-init="init(activity, day)">
+        <div class="form-group">
+          <%= select_tag 'day_select', options_from_collection_for_select(@trip.days, :id, :date_when_s), class: 'form-control', 'ng-model' => 'target_day_id' %>
+        </div>
+        <div class="form-group text-center">
+          <button class="btn btn-primary btn-sm" ng-click="moveActivity()">
+            <%= t('.reorder_days') %>
+          </button>
+        </div>
+      </div>
+    </script>
+<% end %>
+<div ng-controller="PlanController">
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>
+        <%= @trip.name %>
+      </h4>
+    </div>
+  </div>
+  <div class="row trip-dates">
+    <div class="col-xs-10 col-md-12">
+      <%= trip_dates(@trip) %>
+    </div>
+    <div class="col-xs-2 hidden-sm hidden-lg hidden-md">
+      <% if user_signed_in? %>
+          <div class="dropdown plan-menu">
+            <div class="dropdown-toggle" data-toggle="dropdown">
+              <%= image_tag 'common/menu.svg' %>
+            </div>
+            <ul class="dropdown-menu dropdown-menu-right">
+              <% if @user_can_edit %>
+                  <li>
+                    <%= link_to edit_trip_path(@trip), class: 'trip-link' do %>
+                        <%= t('trips.show.edit_trip') %>
+                    <% end %>
+                  </li>
+                  <% if @trip.author_user_id == current_user.id %>
+                      <li>
+                        <%= link_to trip_path(@trip), class: 'trip-link', method: :delete, 'data-confirm'=> t('.delete_confirm')  do %>
+                            <%= t('trips.show.delete_trip') %>
+                        <% end %>
+                      </li>
+                  <% end %>
+              <% end %>
+              <li>
+                <%= link_to "#{new_trip_path}?copy_from=#{@trip.id}", target: '_blank', class: 'trip-link' do %>
+                    <%= t('trips.show.clone') %>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to "#{trip_path(@trip)}.docx", target: '_blank', class: 'trip-link' do %>
+                    <%= t('trips.show.download_word') %>
+                <% end %>
+              </li>
+            </ul>
+          </div>
+      <% end %>
+    </div>
+  </div>
+  <% if user_signed_in? %>
+      <div class="row trip-links hidden-xs">
+        <div class="col-xs-12">
+          <% if @user_can_edit %>
+              <%= link_to edit_trip_path(@trip), class: 'trip-link' do %>
+                  <%= t('trips.show.edit_trip') %>
+              <% end %>
+              <% if @trip.author_user_id == current_user.id %>
+                  <%= link_to trip_path(@trip), class: 'trip-link', method: :delete, 'data-confirm'=> t('.delete_confirm')  do %>
+                      <%= t('trips.show.delete_trip') %>
+                  <% end %>
+              <% end %>
+          <% end %>
+          <%= link_to "#{new_trip_path}?copy_from=#{@trip.id}", target: '_blank', class: 'trip-link' do %>
+              <%= t('trips.show.clone') %>
+          <% end %>
+          <%= link_to "#{trip_path(@trip)}.docx", target: '_blank', class: 'trip-link' do %>
+              <%= t('trips.show.download_word') %>
+          <% end %>
+        </div>
+      </div>
+  <% end %>
+  <div class="row trip-header">
+    <div class="col-xs-4 col-md-3">
+      <div class="fileupload-form">
+        <img class="trip-image" id="trip_image" src="<%= @trip.image_url_or_default %>" width="100%"/>
+        <% if @user_can_edit %>
+            <div class="fileupload-buttons hidden-xs">
+              <%= form_for @trip, url: upload_photo_trip_path(@trip), method: :post, multipart: true, remote: true do |f| %>
+                  <%= f.hidden_field :remove_image, value: 'true' %>
+                  <%= link_to '', class: 'btn btn-sm ghost-button delete-image', 'data-confirm' => t('.delete_photo_cofirm') do %>
+                      <%= fa_icon 'times' %>
+                  <% end %>
+              <% end %>
+              <%= form_for @trip, url: upload_photo_trip_path(@trip), method: :post, multipart: true do |f| %>
+                  <%= f.file_field :image, class: 'fileupload' %>
+                  <%= link_to 'javascript:void(0)', class: 'btn btn-sm ghost-button upload-link' do %>
+                      <%= fa_icon 'upload' %>
+                  <% end %>
+              <% end %>
+            </div>
+        <% end %>
+      </div>
+      <div class="progress-wrapper">
+        <div class="progress">
+          <div class="progress-bar" role="progressbar"></div>
+        </div>
+      </div>
+      <div class="photo-processing">
+        <i class="fa fa-spinner fa-spin"></i>
+        <%= t('common.photo_processing') %>
+      </div>
+    </div>
+    <div class="col-xs-8 col-md-9">
+      <div class="row">
+        <div class="col-xs-12">
+          <%= render'trips/partials/participants' %>
+        </div>
+      </div>
+      <div class="row flags" ng-controller="CountriesListController" ng-init="initCountries('<%= @trip.id %>')">
+        <div class="col-xs-12" ng-show="countries_loaded">
+          <span ng-bind-html="country" ng-repeat="country in countries"></span>
+        </div>
+        <div class="col-xs-12" ng-hide="countries_loaded">
+          <div class="flag-mockup"></div>
+          <div class="flag-mockup"></div>
+        </div>
+      </div>
+      <div class="row tags">
+        <div class="col-xs-12">
+          <span class="tag focused status-tag <%= trip_status_class(@trip.status_code) %>">
+            <%= @trip.status_text %>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row trip-description">
+    <div class="col-xs-12">
+      <p class="travel-text"><%= @trip.short_description %></p>
+    </div>
+  </div>
+  <div class="work-area" id="plan_area">
+    <% if params[:tab].blank? || params[:tab] == ApplicationHelper::TAB_PLAN %>
+        <%= render 'trips/tabs/plan' %>
+    <% end %>
+    <% if params[:tab] == ApplicationHelper::TAB_PLAN_ACTIVITIES %>
+        <%= render 'trips/tabs/plan_activities' %>
+    <% end %>
+    <% if params[:tab] == ApplicationHelper::TAB_REPORT %>
+        <%= render 'trips/tabs/report' %>
+    <% end %>
+    <% if params[:tab] == ApplicationHelper::TAB_CATERING %>
+        <%= render 'trips/tabs/catering' %>
+    <% end %>
+  </div>
+</div>
