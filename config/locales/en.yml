@@ -329,6 +329,7 @@ en:
       no_transfers: There are no transfers on this day
       no_places: No places info yet
       transfer_type: Transfer type
+      read_more: Read more...
     edit:
       title: Edit travel
     form:

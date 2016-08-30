@@ -40,7 +40,10 @@
         </div>
       </div>
     </script>
+
+    <%= render 'components/trip/trip_description' %>
 <% end %>
+
 <div ng-controller="PlanController">
   <div class="row">
     <div class="col-xs-12">
@@ -164,11 +167,7 @@
           </span>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row trip-description">
-    <div class="col-xs-12">
-      <p class="travel-text"><%= @trip.short_description %></p>
+      <trip-description text='<%= @trip.short_description.inspect %>'></trip-description>
     </div>
   </div>
   <div class="work-area" id="plan_area">

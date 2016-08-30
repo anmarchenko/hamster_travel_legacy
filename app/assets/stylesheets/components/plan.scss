@@ -6,9 +6,12 @@
   }
 
   .work-area {
-    padding: 30px 40px;
+    padding: 10px 40px;
+    margin-top: 20px;
+
     @media (max-width: 1250px) {
-      margin: 0;
+      margin-left: 0;
+      margin-right: 0;
       padding-left: 15px;
       padding-right: 15px;
     }
@@ -899,10 +902,10 @@
   }
 
   .trip-description {
-    margin-bottom: 40px;
-    margin-top: 20px;
-
     max-width: 65em;
+    max-height: 9em;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   .tags {
