@@ -243,9 +243,10 @@
       }
     }
 
-    .actions-butons {
+    .action-buttons {
       margin-top: 5px;
       margin-bottom: 15px;
+      display: inline-block;
       a {
         &.saving {
           padding-top: 14px;

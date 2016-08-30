@@ -5,11 +5,14 @@
         <%= render 'trips/partials/tabs' %>
       </div>
     </div>
+
     <%= render 'trips/partials/watching_users' %>
     <%= render 'trips/partials/budget', options: {tab_budget: 'transfers_hotel_budget'} %>
+
     <div class="row hidden-xs">
       <div class="col-md-12">
-        <div class="list-group list-group-horizontal">
+        <%= render 'trips/partials/buttons' %>
+        <div class="list-group list-group-horizontal pull-right">
           <a class="list-group-item" data-placement="bottom" data-toggle="tooltip" ng-class="{active: show_place}" ng-click="changeVisibility('show_place')" title="<%= t('trips.show.place') %>">
             <span ng-show="show_place">
               <%= inline_svg 'input/checkbox-checked.svg' %>
@@ -38,11 +41,6 @@
             <%= inline_svg 'columns/hotel.svg' %>
           </a>
         </div>
-      </div>
-    </div>
-    <div class="row hidden-xs">
-      <div class="col-md-12">
-        <%= render 'trips/partials/buttons' %>
       </div>
     </div>
   </div>
