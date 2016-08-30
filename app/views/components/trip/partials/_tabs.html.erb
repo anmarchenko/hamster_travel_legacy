@@ -1,0 +1,36 @@
+<ul class="nav nav-tabs">
+  <li>
+    <a ui-sref="transfers" ui-sref-active="active" href="javascript:void(0);">
+      <%= inline_svg 'plan/transfers.svg', class: 'tab-image transfers-img' %>
+      <span class="hidden-xs">
+        <%= t('trips.show.plan') %>
+      </span>
+    </a>
+  </li>
+  <li>
+    <a ui-sref="activities" ui-sref-active="active" href="javascript:void(0);">
+      <%= inline_svg 'plan/activities.svg', class: 'tab-image activities-img' %>
+      <span class="hidden-xs">
+        <%= t('trips.show.plan_activities') %>
+      </span>
+    </a>
+  </li>
+  <li>
+    <a ui-sref="catering" ui-sref-active="active" href="javascript:void(0);">
+      <%= inline_svg 'plan/catering.svg', class: 'tab-image catering-img' %>
+      <span class="hidden-xs">
+        <%= t('trips.show.catering') %>
+      </span>
+    </a>
+  </li>
+  <% if @user_can_edit || @trip.report? %>
+      <li>
+        <a ui-sref="report" ui-sref-active="active" href="javascript:void(0);">
+          <%= inline_svg 'plan/report.svg', class: 'tab-image report-img' %>
+          <span class="hidden-xs">
+            <%= t('trips.show.report') %>
+          </span>
+        </a>
+      </li>
+  <% end %>
+</ul>

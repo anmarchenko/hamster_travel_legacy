@@ -5,7 +5,7 @@
       </a>
   <% end %>
   <div class="transfer-show-container" ng-repeat="transfer in day.transfers track by transfer.id">
-    <%= render 'trips/partials/show_transfer' %>
+    <%= render 'components/trip/partials/show_transfer' %>
   </div>
   <p class="hidden-sm hidden-md hidden-lg" ng-show="day.transfers.length == 0">
     <i>
@@ -16,7 +16,7 @@
 <div ng-show="edit || transfer_edit">
   <div class="form-horizontal transfer-place-edit" ng-model="day.transfers" ui-sortable="{connectWith: '.transfer-place-edit', placeholder: 'well'}">
     <div class="transfer-edit-container" ng-repeat="transfer in day.transfers track by transfer.id">
-      <%= render 'trips/partials/edit_transfer' %>
+      <%= render 'components/trip/partials/edit_transfer' %>
     </div>
   </div>
   <a class="link-with-icon" href="javascript:void(0);" ng-click='add(day.transfers, {links: [], <%= default_currency_hash(@trip, current_user) %> })'>

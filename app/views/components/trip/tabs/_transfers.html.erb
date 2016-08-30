@@ -1,0 +1,126 @@
+<script id="transfersTab.html" type="text/ng-template">
+  <div ng-controller="TransfersPlanController" ng-init="init('<%= @trip.id %>')" ng-cloak>
+    <div class="work-area-header">
+      <div class="row">
+        <div class="col-md-12">
+          <%= render 'components/trip/partials/tabs' %>
+        </div>
+      </div>
+
+      <%= render 'components/trip/partials/watching_users' %>
+      <%= render 'components/trip/partials/budget', options: {tab_budget: 'transfers_hotel_budget'} %>
+
+      <div class="row hidden-xs">
+        <div class="col-md-12">
+          <%= render 'components/trip/partials/buttons' %>
+          <div class="list-group list-group-horizontal pull-right">
+            <a class="list-group-item" data-placement="bottom" data-toggle="tooltip" ng-class="{active: show_place}" ng-click="changeVisibility('show_place')" title="<%= t('trips.show.place') %>">
+            <span ng-show="show_place">
+              <%= inline_svg 'input/checkbox-checked.svg' %>
+            </span>
+              <span ng-show="!show_place">
+              <%= inline_svg 'input/checkbox-empty.svg' %>
+            </span>
+              <%= inline_svg 'columns/places.svg' %>
+            </a>
+            <a class="list-group-item" data-placement="bottom" data-toggle="tooltip" ng-class="{active: show_transfers}" ng-click="changeVisibility('show_transfers')" title="<%= t('trips.show.transfers') %>">
+            <span ng-show="show_transfers">
+              <%= inline_svg 'input/checkbox-checked.svg' %>
+            </span>
+              <span ng-show="!show_transfers">
+              <%= inline_svg 'input/checkbox-empty.svg' %>
+            </span>
+              <%= inline_svg 'columns/transfers.svg' %>
+            </a>
+            <a class="list-group-item" data-placement="bottom" data-toggle="tooltip" ng-class="{active: show_hotel}" ng-click="changeVisibility('show_hotel')" title="<%= t('trips.show.hotel') %>">
+            <span ng-show="show_hotel">
+              <%= inline_svg 'input/checkbox-checked.svg' %>
+            </span>
+              <span ng-show="!show_hotel">
+              <%= inline_svg 'input/checkbox-empty.svg' %>
+            </span>
+              <%= inline_svg 'columns/hotel.svg' %>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <table class="table table-black-bordered fixed-head plan-table">
+      <thead class="plan-affix hidden-xs">
+      <tr>
+        <th class="col-md-1">
+          <%= t('trips.show.day') %>
+        </th>
+        <th class="col-md-2" ng-show="show_place">
+          <%= t('trips.show.place') %>
+        </th>
+        <th class="col-md-6" ng-show="show_transfers">
+          <%= t('trips.show.transfers') %>
+        </th>
+        <th class="col-md-3" ng-show="show_hotel">
+          <%= t('trips.show.hotel') %>
+          <% if @user_can_edit %>
+              <a class="pull-right" data-placement="bottom" data-toggle="tooltip" href="javascript:void(0);" ng-click="savePlan()" ng-show="!saving && edit" title="<%= t('trips.show.save_plan') %>">
+                <%= image_tag 'buttons/save.svg' %>
+              </a>
+              <a class="pull-right" ng-show="saving">
+                <%= t('trips.show.saving_plan') %>
+              </a>
+          <% end %>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @trip.days.each_with_index do |day, day_index| %>
+          <tr class="plan-row" ng-controller="TransfersDayController" ng-init="init('<%= @trip.id %>', '<%= day.id %>', <%= day_index %>, {links: [], <%= default_currency_hash(@trip, current_user) %>})">
+            <td ng-controller="DaySorterController">
+              <div class="day-date">
+                <%= day.date_when_s %>
+              </div>
+              <% if @user_can_edit && @trip.days_count > 1 %>
+                  <a class="reorder-link hidden-xs" href="javascript:void(0);" ng-click="startSorting('<%= @trip.id %>')">
+                    <%= t('trips.show.reorder_days') %>
+                  </a>
+              <% end %>
+            </td>
+            <td class="transfers-places" ng-show="show_place">
+            <span ng-show="day_loaded">
+              <%= render 'components/trip/partials/place' %>
+            </span>
+              <span ng-hide="day_loaded">
+              <div class="transfers-mockup-line"></div>
+            </span>
+            </td>
+            <td class="transfers-transfers" ng-show="show_transfers">
+            <span ng-show="day_loaded">
+              <%= render 'components/trip/partials/transfer' %>
+            </span>
+              <span ng-hide="day_loaded">
+              <div class="transfer-mockup">
+                <div class="transfer-destination-mockup">
+                  <div class="transfer-city-mockup"></div>
+                  <div class="transfer-station-mockup"></div>
+                </div>
+                <div class="transfer-icon-mockup"></div>
+                <div class="transfer-destination-mockup">
+                  <div class="transfer-city-mockup"></div>
+                  <div class="transfer-station-mockup"></div>
+                </div>
+              </div>
+            </span>
+            </td>
+            <td class="transfers-hotel" ng-show="show_hotel">
+            <span ng-show="day_loaded">
+              <%= render 'components/trip/partials/hotel' %>
+            </span>
+              <span ng-hide="day_loaded">
+              <div class="transfers-mockup-line"></div>
+              <div class="transfers-mockup-line"></div>
+            </span>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</script>

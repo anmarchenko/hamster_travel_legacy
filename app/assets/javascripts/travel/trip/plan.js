@@ -1,5 +1,9 @@
 angular.module('travel').controller('PlanController', [
-    '$scope', function ($scope) {
+    '$scope', '$location', function ($scope, $location) {
+
+        if(!$location.path()) {
+            $location.path('/transfers');
+        }
 
         $scope.loadBudget = function () {
             $scope.$broadcast('budget_updated');

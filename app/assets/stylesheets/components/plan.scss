@@ -129,6 +129,7 @@
         a {
           -webkit-box-shadow: inset 0 -2px 0 #ddd;
           box-shadow: inset 0 -2px 0 #ddd;
+          font-weight: 500;
         }
 
         a:hover {
@@ -137,15 +138,16 @@
             stroke: $ctaColor;
           }
         }
-      }
-      li.active a, li.active a:focus {
-        border: none;
-        -webkit-box-shadow: inset 0 -2px 0 $ctaColor;
-        box-shadow: inset 0 -2px 0 $ctaColor;
-        color: $ctaColor;
-        .tab-image {
-          fill: $ctaColor;
-          stroke: $ctaColor;
+
+        a.active, a.active:focus {
+          border: none;
+          -webkit-box-shadow: inset 0 -2px 0 $ctaColor;
+          box-shadow: inset 0 -2px 0 $ctaColor;
+          color: $ctaColor;
+          .tab-image {
+            fill: $ctaColor;
+            stroke: $ctaColor;
+          }
         }
       }
     }

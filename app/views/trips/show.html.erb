@@ -42,6 +42,10 @@
     </script>
 
     <%= render 'components/trip/trip_description' %>
+    <%= render 'components/trip/tabs/transfers' %>
+    <%= render 'components/trip/tabs/activities' %>
+    <%= render 'components/trip/tabs/report' %>
+    <%= render 'components/trip/tabs/catering' %>
 <% end %>
 
 <div ng-controller="PlanController">
@@ -171,17 +175,6 @@
     </div>
   </div>
   <div class="work-area" id="plan_area">
-    <% if params[:tab].blank? || params[:tab] == ApplicationHelper::TAB_PLAN %>
-        <%= render 'trips/tabs/plan' %>
-    <% end %>
-    <% if params[:tab] == ApplicationHelper::TAB_PLAN_ACTIVITIES %>
-        <%= render 'trips/tabs/plan_activities' %>
-    <% end %>
-    <% if params[:tab] == ApplicationHelper::TAB_REPORT %>
-        <%= render 'trips/tabs/report' %>
-    <% end %>
-    <% if params[:tab] == ApplicationHelper::TAB_CATERING %>
-        <%= render 'trips/tabs/catering' %>
-    <% end %>
+    <ui-view></ui-view>
   </div>
 </div>
