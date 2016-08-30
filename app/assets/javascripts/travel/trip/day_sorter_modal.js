@@ -9,7 +9,7 @@ angular.module('travel').controller('DaySorterModalController', [
             }
             temp = $scope.days[index];
             $scope.days[index] = $scope.days[index - 1];
-            return $scope.days[index - 1] = temp;
+            $scope.days[index - 1] = temp;
         };
         $scope.moveDown = function(index) {
             var temp;
@@ -18,10 +18,10 @@ angular.module('travel').controller('DaySorterModalController', [
             }
             temp = $scope.days[index];
             $scope.days[index] = $scope.days[index + 1];
-            return $scope.days[index + 1] = temp;
+            $scope.days[index + 1] = temp;
         };
         $scope.closeModal = function() {
-            return $uibModalInstance.close();
+            $uibModalInstance.close();
         };
         return $scope.save = function() {
             var ids;
@@ -31,8 +31,8 @@ angular.module('travel').controller('DaySorterModalController', [
             });
             return $http.post("/api/trips/" + trip_id + "/days_sorting", {
                 day_ids: ids
-            }).then(function(response) {
-                return window.location.reload();
+            }).then(function() {
+                window.location.reload();
             });
         };
     }
