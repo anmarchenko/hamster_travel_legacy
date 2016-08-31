@@ -64,6 +64,8 @@ GEM
       activerecord (>= 3.2, < 6.0)
       rake (>= 10.4, < 12.0)
     arel (7.1.1)
+    autoprefixer-rails (6.4.0.3)
+      execjs
     bcrypt (3.1.11)
     bootstrap-datepicker-rails (1.6.4.1)
       railties (>= 3.0)
@@ -313,6 +315,7 @@ DEPENDENCIES
   activemodel-serializers-xml
   angularjs-rails
   annotate
+  autoprefixer-rails
   bootstrap-datepicker-rails
   codacy-coverage
   coffee-rails
