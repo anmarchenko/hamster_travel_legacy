@@ -6,13 +6,14 @@ angular.module('travel').controller('EditingUsersController'
             $scope.init = function (trip_id) {
                 $scope.trip_id = trip_id;
 
-                var promise = $interval(function () {
-                    $http.get("/api/user_shows/" + $scope.trip_id).success(function (response) {
-                        $scope.editing_users = response;
-                    }).error(function () {
-                        $interval.cancel(promise);
-                    });
-                }, 10000);
+                // TODO: create websockets channel
+                // var promise = $interval(function () {
+                //     $http.get("/api/user_shows/" + $scope.trip_id).success(function (response) {
+                //         $scope.editing_users = response;
+                //     }).error(function () {
+                //         $interval.cancel(promise);
+                //     });
+                // }, 10000);
             }
 
         }
