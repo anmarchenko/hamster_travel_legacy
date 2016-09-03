@@ -170,6 +170,7 @@ ru:
         trips: Путешествия
         my_trips: Мои путешествия
         my_ideas: Мои идеи
+        search: Искать...
   messages:
     index:
       title: Приглашения

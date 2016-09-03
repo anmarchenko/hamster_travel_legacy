@@ -12,7 +12,7 @@ class TripsController < ApplicationController
   before_action :authorize_show, only: [:show]
 
   def index
-    @trips = Finders::Trips.search(params[:page])
+    @trips = Finders::Trips.all(params[:page])
   end
 
   def my

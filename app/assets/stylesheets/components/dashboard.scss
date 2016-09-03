@@ -221,6 +221,16 @@ header {
     }
   }
 
+  .navbar-search {
+    svg {
+      fill: white;
+    }
+    input {
+      background: transparent;
+      color: white;
+    }
+  }
+
   .navbar-nav li.navbar-trips-link a {
     color: white;
     &:hover {
@@ -347,4 +357,23 @@ header {
 
 .big-control {
   font-size: 16px;
+}
+
+.navbar-search {
+  svg {
+    opacity: .6;
+    cursor: pointer;
+    vertical-align: bottom;
+  }
+
+  input {
+    margin-left: 10px;
+    box-shadow: none;
+    color: $text-grey;
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
 }

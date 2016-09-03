@@ -1,0 +1,26 @@
+<script id="tripTypeahead.html" type="text/ng-template">
+  <a class="trip-typeahead">
+    <img ng-src="{{match.model.image_url}}" class="trip-image" />
+    <div>
+      {{match.model.name}} <br/>
+      <span class="flags">
+        <span ng-bind-html="country" ng-repeat="country in match.model.countries">
+        </span>
+      </span>
+    </div>
+  </a>
+</script>
+
+<script id="globalSearch.html" type="text/ng-template">
+  <%= inline_svg 'buttons/search.svg' %>
+  <input type="text"
+         id="global_search"
+         placeholder="<%= t('layouts.partials.navbar.search') %>"
+         uib-typeahead="item.name as item.text for item in getTrips($viewValue)"
+         ng-model="search_term"
+         typeahead-on-select="onSelect($item, $model)"
+         typeahead-min-length="1"
+         typeahead-wait-ms="500"
+         typeahead-template-url="tripTypeahead.html"
+  />
+</script>

@@ -1,4 +1,7 @@
 <% transparent ||= false %>
+<% content_for :page_javascript do %>
+    <%= render 'components/navbar/global_search' %>
+<% end %>
 <header class="navbar navbar-default navbar-first-mobile <%= 'navbar-transparent' if transparent %>">
   <div class="container">
     <nav>
@@ -7,6 +10,12 @@
         <%= link_to root_path, {class: 'navbar-brand hidden-sm hidden-md hidden-lg'} do %>
             <%= image_tag 'logo.svg' %>
         <% end %>
+
+        <li class="navbar-search">
+          <a focus-on-click="true">
+            <global-search></global-search>
+          </a>
+        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if user_signed_in? %>

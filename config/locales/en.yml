@@ -181,6 +181,7 @@ en:
         trips: Trips
         my_trips: My trips
         my_ideas: My ideas
+        search: Search...
   messages:
     index:
       title: Invites

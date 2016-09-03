@@ -226,6 +226,15 @@ module Travels
       attrs
     end
 
+    def json_typeahead
+      res = as_json
+      res['countries'] = visited_countries_codes.map {
+          |country_code| ApplicationController.helpers.flag(country_code, 16)
+      }
+      res['image_url'] = image_url_or_default
+      res
+    end
+
     def ensure_days_order days_to_order = nil
       (days_to_order || self.days).each_with_index do |day, index|
         if without_dates?

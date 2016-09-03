@@ -32,7 +32,7 @@ Rails.application.routes.draw do
       resources :users, only: [:index]
       resources :participants, only: [:index]
       resources :trip_invites, only: [:create, :destroy]
-      resources :trips, only: [] do
+      resources :trips, only: [:index] do
         resources :days_sorting, only: [:index, :create]
         resources :days, only: [] do
           resources :activities, only: [:index, :create]
