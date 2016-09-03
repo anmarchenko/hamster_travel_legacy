@@ -1,11 +1,6 @@
 <script id="reportTab.html" type="text/ng-template">
   <div class="span" ng-controller="ReportController" ng-init="init('<%= @trip.id %>')" ng-cloak="true">
     <div class="work-area-header">
-      <div class="row">
-        <div class="col-md-12">
-          <%= render 'components/trip/partials/tabs' %>
-        </div>
-      </div>
       <%= render 'components/trip/partials/watching_users' %>
       <%= render 'components/trip/partials/budget' %>
       <div class="row sticky-row" sticky="true">

@@ -20,6 +20,14 @@
 
     overflow: hidden;
 
+    .tab-area.ng-enter {
+      animation: fadeIn .7s;
+    }
+
+    .tabs-row {
+      margin-bottom: 20px;
+    }
+
     .work-area-header {
       .row {
         margin-bottom: 20px;

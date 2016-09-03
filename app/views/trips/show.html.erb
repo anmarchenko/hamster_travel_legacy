@@ -175,6 +175,12 @@
     </div>
   </div>
   <div class="work-area" id="plan_area">
-    <ui-view></ui-view>
+    <div class="row tabs-row">
+      <div class="col-md-12">
+        <%= render 'components/trip/partials/tabs' %>
+      </div>
+    </div>
+
+    <div ui-view class="tab-area"></div>
   </div>
 </div>

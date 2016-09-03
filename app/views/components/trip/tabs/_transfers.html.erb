@@ -1,12 +1,6 @@
 <script id="transfersTab.html" type="text/ng-template">
   <div ng-controller="TransfersPlanController" ng-init="init('<%= @trip.id %>')" ng-cloak>
     <div class="work-area-header">
-      <div class="row">
-        <div class="col-md-12">
-          <%= render 'components/trip/partials/tabs' %>
-        </div>
-      </div>
-
       <%= render 'components/trip/partials/watching_users' %>
       <%= render 'components/trip/partials/budget', options: {tab_budget: 'transfers_hotel_budget'} %>
 

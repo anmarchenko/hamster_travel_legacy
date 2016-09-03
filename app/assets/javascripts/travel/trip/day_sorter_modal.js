@@ -23,13 +23,13 @@ angular.module('travel').controller('DaySorterModalController', [
         $scope.closeModal = function() {
             $uibModalInstance.close();
         };
-        return $scope.save = function() {
+        $scope.save = function() {
             var ids;
             $scope.sortInProgress = true;
             ids = $scope.days.map(function(day) {
                 return day.id;
             });
-            return $http.post("/api/trips/" + trip_id + "/days_sorting", {
+            $http.post("/api/trips/" + trip_id + "/days_sorting", {
                 day_ids: ids
             }).then(function() {
                 window.location.reload();

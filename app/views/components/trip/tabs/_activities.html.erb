@@ -1,11 +1,6 @@
 <script id="activitiesTab.html" type="text/ng-template">
   <div ng-cloak="true" ng-controller="ActivitiesPlanController">
     <div class="work-area-header">
-      <div class="row">
-        <div class="col-md-12">
-          <%= render 'components/trip/partials/tabs' %>
-        </div>
-      </div>
       <%= render 'components/trip/partials/watching_users' %>
       <%= render 'components/trip/partials/budget', options: {tab_budget: 'activities_other_budget'} %>
       <div class="row hidden-xs sticky-row" sticky="true">
