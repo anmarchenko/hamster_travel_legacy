@@ -10,6 +10,7 @@ class Updaters::DayPlaces < Updaters::Entity
   def process
     process_nested(day.places, places || [])
     day.save
+    day.trip.regenerate_countries_search_index!
   end
 
 end

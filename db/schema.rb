@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160529120109) do
+ActiveRecord::Schema.define(version: 20160904210920) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,10 +27,9 @@ ActiveRecord::Schema.define(version: 20160529120109) do
     t.integer "rating",           default: 2
     t.string  "address"
     t.string  "working_hours"
+    t.index ["day_id"], name: "index_activities_on_day_id", using: :btree
+    t.index ["order_index"], name: "index_activities_on_order_index", using: :btree
   end
-
-  add_index "activities", ["day_id"], name: "index_activities_on_day_id", using: :btree
-  add_index "activities", ["order_index"], name: "index_activities_on_order_index", using: :btree
 
   create_table "adm3_translations", force: :cascade do |t|
     t.integer  "adm3_id",    null: false
@@ -39,10 +37,9 @@ ActiveRecord::Schema.define(version: 20160529120109) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "name"
+    t.index ["adm3_id"], name: "index_adm3_translations_on_adm3_id", using: :btree
+    t.index ["locale"], name: "index_adm3_translations_on_locale", using: :btree
   end
-
-  add_index "adm3_translations", ["adm3_id"], name: "index_adm3_translations_on_adm3_id", using: :btree
-  add_index "adm3_translations", ["locale"], name: "index_adm3_translations_on_locale", using: :btree
 
   create_table "adm3s", force: :cascade do |t|
     t.string  "geonames_code"
@@ -57,10 +54,9 @@ ActiveRecord::Schema.define(version: 20160529120109) do
     t.string  "adm4_code"
     t.string  "adm5_code"
     t.string  "timezone"
+    t.index ["geonames_code"], name: "index_adm3s_on_geonames_code", using: :btree
+    t.index ["population"], name: "index_adm3s_on_population", using: :btree
   end
-
-  add_index "adm3s", ["geonames_code"], name: "index_adm3s_on_geonames_code", using: :btree
-  add_index "adm3s", ["population"], name: "index_adm3s_on_population", using: :btree
 
   create_table "adm4_translations", force: :cascade do |t|
     t.integer  "adm4_id",    null: false
@@ -68,10 +64,9 @@ ActiveRecord::Schema.define(version: 20160529120109) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "name"
+    t.index ["adm4_id"], name: "index_adm4_translations_on_adm4_id", using: :btree
+    t.index ["locale"], name: "index_adm4_translations_on_locale", using: :btree
   end
-
-  add_index "adm4_translations", ["adm4_id"], name: "index_adm4_translations_on_adm4_id", using: :btree
-  add_index "adm4_translations", ["locale"], name: "index_adm4_translations_on_locale", using: :btree
 
   create_table "adm4s", force: :cascade do |t|
     t.string  "geonames_code"
@@ -86,10 +81,9 @@ ActiveRecord::Schema.define(version: 20160529120109) do
     t.string  "adm4_code"
     t.string  "adm5_code"
     t.string  "timezone"
+    t.index ["geonames_code"], name: "index_adm4s_on_geonames_code", using: :btree
+    t.index ["population"], name: "index_adm4s_on_population", using: :btree
   end
-
-  add_index "adm4s", ["geonames_code"], name: "index_adm4s_on_geonames_code", using: :btree
-  add_index "adm4s", ["population"], name: "index_adm4s_on_population", using: :btree
 
   create_table "adm5_translations", force: :cascade do |t|
     t.integer  "adm5_id",    null: false
@@ -97,10 +91,9 @@ ActiveRecord::Schema.define(version: 20160529120109) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "name"
+    t.index ["adm5_id"], name: "index_adm5_translations_on_adm5_id", using: :btree
+    t.index ["locale"], name: "index_adm5_translations_on_locale", using: :btree
   end
-
-  add_index "adm5_translations", ["adm5_id"], name: "index_adm5_translations_on_adm5_id", using: :btree
-  add_index "adm5_translations", ["locale"], name: "index_adm5_translations_on_locale", using: :btree
 
   create_table "adm5s", force: :cascade do |t|
     t.string  "geonames_code"
@@ -115,10 +108,9 @@ ActiveRecord::Schema.define(version: 20160529120109) do
     t.string  "adm4_code"
     t.string  "adm5_code"
     t.string  "timezone"
+    t.index ["geonames_code"], name: "index_adm5s_on_geonames_code", using: :btree
+    t.index ["population"], name: "index_adm5s_on_population", using: :btree
   end
-
-  add_index "adm5s", ["geonames_code"], name: "index_adm5s_on_geonames_code", using: :btree
-  add_index "adm5s", ["population"], name: "index_adm5s_on_population", using: :btree
 
   create_table "caterings", force: :cascade do |t|
     t.text    "description"
@@ -129,9 +121,8 @@ ActiveRecord::Schema.define(version: 20160529120109) do
     t.string  "amount_currency", default: "RUB", null: false
     t.integer "order_index"
     t.string  "name"
+    t.index ["trip_id"], name: "index_caterings_on_trip_id", using: :btree
   end
-
-  add_index "caterings", ["trip_id"], name: "index_caterings_on_trip_id", using: :btree
 
   create_table "cities", force: :cascade do |t|
     t.string  "geonames_code"
@@ -147,10 +138,9 @@ ActiveRecord::Schema.define(version: 20160529120109) do
     t.string  "adm5_code"
     t.string  "timezone"
     t.string  "status"
+    t.index ["geonames_code"], name: "index_cities_on_geonames_code", using: :btree
+    t.index ["population"], name: "index_cities_on_population", using: :btree
   end
-
-  add_index "cities", ["geonames_code"], name: "index_cities_on_geonames_code", using: :btree
-  add_index "cities", ["population"], name: "index_cities_on_population", using: :btree
 
   create_table "city_translations", force: :cascade do |t|
     t.integer  "city_id",    null: false
@@ -158,10 +148,9 @@ ActiveRecord::Schema.define(version: 20160529120109) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "name"
+    t.index ["city_id"], name: "index_city_translations_on_city_id", using: :btree
+    t.index ["locale"], name: "index_city_translations_on_locale", using: :btree
   end
-
-  add_index "city_translations", ["city_id"], name: "index_city_translations_on_city_id", using: :btree
-  add_index "city_translations", ["locale"], name: "index_city_translations_on_locale", using: :btree
 
   create_table "countries", force: :cascade do |t|
     t.string  "geonames_code"
@@ -184,10 +173,9 @@ ActiveRecord::Schema.define(version: 20160529120109) do
     t.string  "currency_text"
     t.text    "languages",                  default: [], array: true
     t.string  "continent"
+    t.index ["geonames_code"], name: "index_countries_on_geonames_code", using: :btree
+    t.index ["population"], name: "index_countries_on_population", using: :btree
   end
-
-  add_index "countries", ["geonames_code"], name: "index_countries_on_geonames_code", using: :btree
-  add_index "countries", ["population"], name: "index_countries_on_population", using: :btree
 
   create_table "country_translations", force: :cascade do |t|
     t.integer  "country_id", null: false
@@ -195,19 +183,17 @@ ActiveRecord::Schema.define(version: 20160529120109) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "name"
+    t.index ["country_id"], name: "index_country_translations_on_country_id", using: :btree
+    t.index ["locale"], name: "index_country_translations_on_locale", using: :btree
   end
-
-  add_index "country_translations", ["country_id"], name: "index_country_translations_on_country_id", using: :btree
-  add_index "country_translations", ["locale"], name: "index_country_translations_on_locale", using: :btree
 
   create_table "days", force: :cascade do |t|
     t.date    "date_when"
     t.text    "comment"
     t.integer "trip_id"
     t.integer "index"
+    t.index ["trip_id"], name: "index_days_on_trip_id", using: :btree
   end
-
-  add_index "days", ["trip_id"], name: "index_days_on_trip_id", using: :btree
 
   create_table "district_translations", force: :cascade do |t|
     t.integer  "district_id", null: false
@@ -215,10 +201,9 @@ ActiveRecord::Schema.define(version: 20160529120109) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.string   "name"
+    t.index ["district_id"], name: "index_district_translations_on_district_id", using: :btree
+    t.index ["locale"], name: "index_district_translations_on_locale", using: :btree
   end
-
-  add_index "district_translations", ["district_id"], name: "index_district_translations_on_district_id", using: :btree
-  add_index "district_translations", ["locale"], name: "index_district_translations_on_locale", using: :btree
 
   create_table "districts", force: :cascade do |t|
     t.string  "geonames_code"
@@ -233,10 +218,9 @@ ActiveRecord::Schema.define(version: 20160529120109) do
     t.string  "adm4_code"
     t.string  "adm5_code"
     t.string  "timezone"
+    t.index ["geonames_code"], name: "index_districts_on_geonames_code", using: :btree
+    t.index ["population"], name: "index_districts_on_population", using: :btree
   end
-
-  add_index "districts", ["geonames_code"], name: "index_districts_on_geonames_code", using: :btree
-  add_index "districts", ["population"], name: "index_districts_on_population", using: :btree
 
   create_table "exchange_rates", force: :cascade do |t|
     t.text     "eu_file"
@@ -251,18 +235,16 @@ ActiveRecord::Schema.define(version: 20160529120109) do
     t.string  "expendable_type"
     t.integer "amount_cents",    default: 0,     null: false
     t.string  "amount_currency", default: "RUB", null: false
+    t.index ["expendable_type", "expendable_id"], name: "index_expenses_on_expendable_type_and_expendable_id", using: :btree
   end
-
-  add_index "expenses", ["expendable_type", "expendable_id"], name: "index_expenses_on_expendable_type_and_expendable_id", using: :btree
 
   create_table "external_links", force: :cascade do |t|
     t.string  "description"
     t.text    "url"
     t.integer "linkable_id"
     t.string  "linkable_type"
+    t.index ["linkable_type", "linkable_id"], name: "index_external_links_on_linkable_type_and_linkable_id", using: :btree
   end
-
-  add_index "external_links", ["linkable_type", "linkable_id"], name: "index_external_links_on_linkable_type_and_linkable_id", using: :btree
 
   create_table "hotels", force: :cascade do |t|
     t.string  "name"
@@ -270,17 +252,15 @@ ActiveRecord::Schema.define(version: 20160529120109) do
     t.integer "day_id"
     t.integer "amount_cents",    default: 0,     null: false
     t.string  "amount_currency", default: "RUB", null: false
+    t.index ["day_id"], name: "index_hotels_on_day_id", using: :btree
   end
-
-  add_index "hotels", ["day_id"], name: "index_hotels_on_day_id", using: :btree
 
   create_table "places", force: :cascade do |t|
     t.integer "day_id"
     t.integer "city_id"
+    t.index ["city_id"], name: "index_places_on_city_id", using: :btree
+    t.index ["day_id"], name: "index_places_on_day_id", using: :btree
   end
-
-  add_index "places", ["city_id"], name: "index_places_on_city_id", using: :btree
-  add_index "places", ["day_id"], name: "index_places_on_day_id", using: :btree
 
   create_table "region_translations", force: :cascade do |t|
     t.integer  "region_id",  null: false
@@ -288,10 +268,9 @@ ActiveRecord::Schema.define(version: 20160529120109) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "name"
+    t.index ["locale"], name: "index_region_translations_on_locale", using: :btree
+    t.index ["region_id"], name: "index_region_translations_on_region_id", using: :btree
   end
-
-  add_index "region_translations", ["locale"], name: "index_region_translations_on_locale", using: :btree
-  add_index "region_translations", ["region_id"], name: "index_region_translations_on_region_id", using: :btree
 
   create_table "regions", force: :cascade do |t|
     t.string  "geonames_code"
@@ -306,10 +285,9 @@ ActiveRecord::Schema.define(version: 20160529120109) do
     t.string  "adm4_code"
     t.string  "adm5_code"
     t.string  "timezone"
+    t.index ["geonames_code"], name: "index_regions_on_geonames_code", using: :btree
+    t.index ["population"], name: "index_regions_on_population", using: :btree
   end
-
-  add_index "regions", ["geonames_code"], name: "index_regions_on_geonames_code", using: :btree
-  add_index "regions", ["population"], name: "index_regions_on_population", using: :btree
 
   create_table "transfers", force: :cascade do |t|
     t.integer  "order_index"
@@ -327,43 +305,41 @@ ActiveRecord::Schema.define(version: 20160529120109) do
     t.string   "amount_currency", default: "RUB", null: false
     t.integer  "city_to_id"
     t.integer  "city_from_id"
+    t.index ["city_from_id"], name: "index_transfers_on_city_from_id", using: :btree
+    t.index ["city_to_id"], name: "index_transfers_on_city_to_id", using: :btree
+    t.index ["day_id"], name: "index_transfers_on_day_id", using: :btree
+    t.index ["order_index"], name: "index_transfers_on_order_index", using: :btree
   end
-
-  add_index "transfers", ["city_from_id"], name: "index_transfers_on_city_from_id", using: :btree
-  add_index "transfers", ["city_to_id"], name: "index_transfers_on_city_to_id", using: :btree
-  add_index "transfers", ["day_id"], name: "index_transfers_on_day_id", using: :btree
-  add_index "transfers", ["order_index"], name: "index_transfers_on_order_index", using: :btree
 
   create_table "trip_invites", force: :cascade do |t|
     t.integer "inviting_user_id"
     t.integer "invited_user_id"
     t.integer "trip_id"
+    t.index ["invited_user_id"], name: "index_trip_invites_on_invited_user_id", using: :btree
+    t.index ["inviting_user_id"], name: "index_trip_invites_on_inviting_user_id", using: :btree
+    t.index ["trip_id"], name: "index_trip_invites_on_trip_id", using: :btree
   end
-
-  add_index "trip_invites", ["invited_user_id"], name: "index_trip_invites_on_invited_user_id", using: :btree
-  add_index "trip_invites", ["inviting_user_id"], name: "index_trip_invites_on_inviting_user_id", using: :btree
-  add_index "trip_invites", ["trip_id"], name: "index_trip_invites_on_trip_id", using: :btree
 
   create_table "trips", force: :cascade do |t|
     t.string   "name"
     t.text     "short_description"
     t.date     "start_date"
     t.date     "end_date"
-    t.boolean  "archived",           default: false
+    t.boolean  "archived",               default: false
     t.text     "comment"
-    t.integer  "budget_for",         default: 1
-    t.boolean  "private",            default: false
+    t.integer  "budget_for",             default: 1
+    t.boolean  "private",                default: false
     t.string   "image_uid"
-    t.string   "status_code",        default: "0_draft"
+    t.string   "status_code",            default: "0_draft"
     t.integer  "author_user_id"
     t.datetime "updated_at"
     t.datetime "created_at"
     t.string   "currency"
-    t.boolean  "dates_unknown",      default: false
+    t.boolean  "dates_unknown",          default: false
     t.integer  "planned_days_count"
+    t.string   "countries_search_index"
+    t.index ["author_user_id"], name: "index_trips_on_author_user_id", using: :btree
   end
-
-  add_index "trips", ["author_user_id"], name: "index_trips_on_author_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email"
@@ -384,17 +360,15 @@ ActiveRecord::Schema.define(version: 20160529120109) do
     t.datetime "updated_at"
     t.string   "currency"
     t.integer  "home_town_id"
+    t.index ["home_town_id"], name: "index_users_on_home_town_id", using: :btree
   end
-
-  add_index "users", ["home_town_id"], name: "index_users_on_home_town_id", using: :btree
 
   create_table "users_trips", id: false, force: :cascade do |t|
     t.integer "trip_id"
     t.integer "user_id"
+    t.index ["trip_id"], name: "index_users_trips_on_trip_id", using: :btree
+    t.index ["user_id"], name: "index_users_trips_on_user_id", using: :btree
   end
-
-  add_index "users_trips", ["trip_id"], name: "index_users_trips_on_trip_id", using: :btree
-  add_index "users_trips", ["user_id"], name: "index_users_trips_on_user_id", using: :btree
 
   add_foreign_key "places", "cities"
 end

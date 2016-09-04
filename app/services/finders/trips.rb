@@ -4,7 +4,7 @@ module Finders
 
     def search(term, user)
       query = Travels::Trip.all
-      query = query.where('name ILIKE ?', "%#{term}%") if term.present?
+      query = query.where('name ILIKE ? OR countries_search_index ILIKE ?', "%#{term}%", "%#{term}%") if term.present?
       query
     end
 
