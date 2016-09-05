@@ -61,7 +61,7 @@ describe Travels::Trip do
   end
 
   describe '.where' do
-    before(:context) { FactoryGirl.create_list(:trip, 12, author_user_id: 'user_test_travels_trip') }
+    before(:each) { FactoryGirl.create_list(:trip, 12, author_user_id: 'user_test_travels_trip') }
 
     context 'when there are several trips' do
 

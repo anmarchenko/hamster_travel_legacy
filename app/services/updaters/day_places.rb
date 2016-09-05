@@ -1,5 +1,4 @@
 class Updaters::DayPlaces < Updaters::Entity
-
   attr_accessor :day, :places
 
   def initialize day, places
@@ -12,5 +11,4 @@ class Updaters::DayPlaces < Updaters::Entity
     day.save
     day.trip.regenerate_countries_search_index!
   end
-
 end

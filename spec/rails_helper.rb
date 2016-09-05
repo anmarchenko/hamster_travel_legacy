@@ -26,7 +26,7 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, :type => :controller
   config.extend ControllerMacros, :type => :controller
 
-  config.before(:suite) do
+  config.before(:each) do
     DatabaseCleaner.strategy = :truncation
     begin
       DatabaseCleaner.start
