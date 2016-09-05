@@ -2,7 +2,7 @@ module Finders
   module Trips
     module_function
 
-    def search(term, user)
+    def search(term, user = nil)
       query = Travels::Trip.all
       query = restrict_query(query, user)
       query = query.where('name ILIKE ? OR countries_search_index ILIKE ?', "%#{term}%", "%#{term}%") if term.present?
