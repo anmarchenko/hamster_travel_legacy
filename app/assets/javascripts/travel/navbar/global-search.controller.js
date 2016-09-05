@@ -8,4 +8,9 @@ angular.module('travel').controller('GlobalSearchController', ['$scope', '$http'
     $scope.onSelect = function($item) {
         window.location = '/trips/' + $item.id;
     }
+
+    $scope.searchClicked = function () {
+        $scope.showMobileSearch = !$scope.showMobileSearch;
+        $scope.search_term = '';
+    }
 }]);

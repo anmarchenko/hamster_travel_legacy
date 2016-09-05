@@ -1,0 +1,367 @@
+header {
+  z-index: 2;
+
+  .navbar-nav {
+    position: relative;
+    li {
+      .add-trip-header-btn {
+        border: 2px solid $ctaColor;
+        color: $ctaColor;
+        border-radius: 2px;
+        margin-top: 15.5px;
+        margin-bottom: 15.5px;
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
+        padding-left: 10px;
+        padding-right: 10px;
+        text-align: center;
+        margin-left: 10px;
+        margin-right: 10px;
+
+        &:hover {
+          background-color: $background-grey;
+          color: $ctaColor;
+        }
+      }
+
+      .add-trip-header-btn-image {
+        svg {
+          height: 24px;
+          width: 24px;
+          opacity: .8;
+        }
+      }
+
+    }
+  }
+}
+
+.menu-options-popover {
+  padding: 10px 0;
+  list-style: none;
+  list-style-image: none;
+
+  li {
+    width: 100%;
+    text-align: left;
+    white-space: nowrap;
+    box-sizing: border-box;
+    display: block;
+    font-size: 16px;
+    font-weight: 300;
+
+    a {
+      padding: 7px 25px;
+      color: $text-grey;
+
+      &:hover {
+        text-decoration: none;
+        color: black;
+        opacity: 1 !important;
+      }
+    }
+
+    &.minor {
+      a {
+        opacity: .6;
+      }
+    }
+
+    &.divider {
+      border-top: solid 1px rgba(0, 0, 0, .05);
+      margin-top: 10px;
+      margin-bottom: 10px;
+      padding-bottom: 0;
+      padding-top: 0;
+    }
+  }
+
+}
+
+.notifications-popover {
+  padding: 10px 5px;
+  list-style: none;
+  list-style-image: none;
+
+  li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 320px;
+    margin-bottom: 20px;
+    @media(max-width: 768px) {
+      width: 240px;
+    }
+
+    .small-profile-pic {
+      width: 36px;
+      height: 36px;
+
+      @media(max-width: 768px) {
+        display: none;
+      }
+
+      &.initials {
+        font-size: 14px;
+        line-height: 14px;
+        padding-top: 11px;
+      }
+    }
+
+    .notification-column {
+      margin-left: 5px;
+      margin-right: 5px;
+      @media(max-width: 768px) {
+        margin-left: 2px;
+        margin-right: 2px;
+      }
+    }
+
+    .invite-text {
+      color: $text-grey;
+      font-size: 12px;
+
+      .invite-text-trip-name {
+        color: black;
+      }
+    }
+
+    .action {
+      border-radius: 50%;
+      border: 1px solid $border-grey;
+
+      img {
+        opacity: .8;
+      }
+
+      &:hover {
+        border-color: black;
+        img {
+          opacity: 1;
+        }
+      }
+    }
+
+    .delete-img {
+      padding: 3px 9px;
+      img {
+        width: 10px;
+      }
+    }
+
+    .approve-img {
+      padding: 3px 9px;
+      img {
+        width: 12px;
+      }
+    }
+  }
+
+}
+
+.notifications {
+  .notification-image {
+    height: 25px;
+    width: 25px;
+    fill: black;
+  }
+
+  .notification-menu {
+    position: relative;
+    opacity: .8;
+    padding-bottom: 10px;
+    &:hover {
+      opacity: 1;
+    }
+
+    .pending-number {
+      position: absolute;
+      right: 12px;
+      top: 13px;
+      border-radius: 50%;
+      background-color: $notificationRed;
+      color: white;
+      font-size: 10px;
+      line-height: 10px;
+      padding: 3px 5px;
+
+      @media(max-width: 768px) {
+        right: 7px;
+      }
+    }
+  }
+}
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+  background-color: inherit !important;
+}
+
+.navbar-transparent {
+  background-color: transparent;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+
+  .navbar-brand {
+    color: white;
+    &:hover {
+      color: white;
+    }
+  }
+
+  .navbar-search {
+    svg {
+      fill: white;
+    }
+    input {
+      background: transparent;
+      color: white;
+
+      @media (max-width: 768px) {
+        &.mobile-search {
+          background: $background-grey;
+          color: $main-grey;
+        }
+      }
+    }
+  }
+
+  .navbar-nav li.navbar-trips-link a {
+    color: white;
+    &:hover {
+      color: lightgrey;
+    }
+  }
+  .navbar-nav li {
+    .notification-image {
+      fill: white;
+    }
+
+    .add-trip-header-btn {
+      color: white;
+      border-color: white;
+
+      &:hover {
+        background-color: inherit;
+        color: lightgrey;
+        border-color: lightgrey;
+      }
+    }
+  }
+}
+
+
+@media (max-width: 768px) {
+  .navbar-first-mobile {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    margin-bottom: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, .05);
+  }
+
+  .navbar-second-mobile {
+    z-index: 1;
+  }
+
+  .navbar-transparent.navbar-first-mobile {
+    border-bottom: none;
+  }
+
+  .navbar-transparent {
+    .add-trip-header-btn-image {
+      fill: white;
+    }
+  }
+}
+
+.dropdown-toggle {
+  cursor: pointer;
+}
+
+.img-nav {
+  width: 40px;
+  height: 40px;
+  margin-right: 5px;
+
+  &.initials {
+    font-size: 18px;
+    line-height: 18px;
+    padding-top: 11px;
+  }
+}
+
+.user-menu-toggle {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+
+  position: relative;
+  overflow: auto;
+
+  .incoming-invites {
+    color: $white;
+    font-weight: bolder;
+    font-size: 12px;
+    position: absolute;
+    top: 3px;
+    left: 38px;
+
+    padding: 0px 8px;
+    border-radius: 50%;
+    background-color: $dark-grey;
+  }
+}
+
+.big-control {
+  font-size: 16px;
+}
+
+.navbar-search {
+  svg {
+    opacity: .6;
+    cursor: pointer;
+    vertical-align: bottom;
+  }
+
+  input {
+    margin-left: 10px;
+    box-shadow: none;
+    color: $text-grey;
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+
+    @media (max-width: 768px) {
+      display: none;
+      &.mobile-search {
+        display: block;
+        position: absolute;
+        top: 73px;
+        left: 0;
+        right: 0;
+        height: 63px;
+        width: calc(100% + 15px);
+        padding-left: 40px;
+        margin-left: -15px;
+      }
+    }
+  }
+}
+
+.nav {
+  li.navbar-search {
+    position: static;
+    a {
+      position: static;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    .navbar-nav {
+      position: static;
+    }
+  }
+}

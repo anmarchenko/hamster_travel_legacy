@@ -15,7 +15,7 @@
 @import "components/trip_list";
 @import "components/plan";
 @import "components/report";
-@import "components/dashboard";
+@import "components/navbar";
 @import "components/catering";
 @import "components/messages";
 @import "components/trip_form";
@@ -24,6 +24,7 @@
 @import "components/errors";
 @import "components/login";
 @import "components/modals";
+@import "components/dashboard";
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide {
   display: none !important;

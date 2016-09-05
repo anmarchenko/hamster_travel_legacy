@@ -1,6 +1,6 @@
 <script id="tripTypeahead.html" type="text/ng-template">
   <a class="trip-typeahead">
-    <img ng-src="{{match.model.image_url}}" class="trip-image" />
+    <img ng-src="{{match.model.image_url}}" class="trip-image"/>
     <div>
       {{match.model.name}} <br/>
       <span class="flags">
@@ -12,7 +12,9 @@
 </script>
 
 <script id="globalSearch.html" type="text/ng-template">
-  <%= inline_svg 'buttons/search.svg' %>
+  <span ng-click="searchClicked()">
+    <%= inline_svg 'buttons/search.svg' %>
+  </span>
   <input type="text"
          id="global_search"
          placeholder="<%= t('layouts.partials.navbar.search') %>"
@@ -22,5 +24,6 @@
          typeahead-min-length="1"
          typeahead-wait-ms="500"
          typeahead-template-url="tripTypeahead.html"
+         ng-class="{'mobile-search' : showMobileSearch}"
   />
 </script>
