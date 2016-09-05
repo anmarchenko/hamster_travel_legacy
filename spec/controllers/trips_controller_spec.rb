@@ -9,8 +9,6 @@ describe TripsController do
     context 'when user is logged in' do
       login_user
 
-      before { Travels::Trip.destroy_all }
-
       before { FactoryGirl.create_list(:trip, 2, user_ids: [subject.current_user.id]) }
       before { FactoryGirl.create_list(:trip, 1, :no_dates, user_ids: [subject.current_user.id]) }
 
