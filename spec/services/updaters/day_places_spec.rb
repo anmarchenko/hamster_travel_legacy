@@ -33,6 +33,9 @@ describe Updaters::DayPlaces do
         expect(updated_day.places.last.id).not_to eq day.places.first.id
         expect(updated_day.places.last.city_id).to eq Geo::City.all.last.id
         expect(updated_day.places.last.city_text).to eq Geo::City.all.last.translated_name
+
+        expect(updated_day.trip.countries_search_index.include?(Geo::City.all.first.country.translated_name(:en))).to be true
+        expect(updated_day.trip.countries_search_index.include?(Geo::City.all.last.country.translated_name(:en))).to be true
       end
 
       it 'updates second place' do
