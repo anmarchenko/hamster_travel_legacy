@@ -4,10 +4,7 @@
 //= require jquery-ui/widget
 //= require jquery-ui/mouse
 //= require jquery-ui/sortable
-//= require jquery.iframe-transport
-//= require jquery.fileupload
-//= require jquery.Jcrop
-//= require jquery.stickytableheaders
+//= require jquery.stickytableheaders.js
 //= require bootstrap.min
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.en-GB.js
@@ -30,6 +27,8 @@
 //= require angular-ui-router
 //= require angular-ui-sortable
 //= require ng-sticky
+//= require ng-file-upload
+//= require ng-img-crop
 
 //= require travel/app.js
 //= require_tree ./travel

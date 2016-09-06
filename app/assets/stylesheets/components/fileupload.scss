@@ -1,60 +1,13 @@
-.fileupload{
-  display: block;
-  visibility: hidden;
-  width: 0;
-  height: 0;
-}
-
 .progress-wrapper {
   margin-top: 10px;
   margin-bottom: 10px;
-  display: none;
-}
-
-.photo-processing {
-  display: none;
 }
 
 .image-preview {
   max-width: 100%;
 }
 
-.fileupload-buttons{
-  margin-top: 10px;
-  form {
-    display: inline-block;
-    max-width: 25px;
-
-    margin-right: 10px;
-  }
-
-  .btn {
-    padding: 5px 9px;
-  }
-}
-
-.fileupload-form {
+.fileupload-area {
   position: relative;
 }
 
-.upload-trip-image-button {
-  position: absolute;
-  right: 15px;
-  bottom: 10px;
-  color: white;
-  padding: 3px;
-  background-color: rgba(0, 0, 0, 0.498039);
-  z-index: 10;
-  border-radius: 3px;
-}
-
-.delete-trip-image-button {
-  position: absolute;
-  right: 15px;
-  top: 10px;
-  color: white;
-  padding: 3px;
-  background-color: rgba(0, 0, 0, 0.498039);
-  z-index: 10;
-  border-radius: 3px;
-}

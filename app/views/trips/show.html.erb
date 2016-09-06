@@ -41,6 +41,7 @@
       </div>
     </script>
 
+    <%= render 'components/trip/trip_image' %>
     <%= render 'components/trip/trip_description' %>
     <%= render 'components/trip/tabs/transfers' %>
     <%= render 'components/trip/tabs/activities' %>
@@ -120,34 +121,8 @@
   <% end %>
   <div class="row trip-header">
     <div class="col-xs-4 col-md-3">
-      <div class="fileupload-form">
-        <img class="trip-image" id="trip_image" src="<%= @trip.image_url_or_default %>" width="100%"/>
-        <% if @user_can_edit %>
-            <div class="fileupload-buttons hidden-xs">
-              <%= form_for @trip, url: upload_photo_trip_path(@trip), method: :post, multipart: true, remote: true do |f| %>
-                  <%= f.hidden_field :remove_image, value: 'true' %>
-                  <%= link_to '', class: 'btn btn-sm ghost-button delete-image', 'data-confirm' => t('.delete_photo_cofirm') do %>
-                      <%= fa_icon 'times' %>
-                  <% end %>
-              <% end %>
-              <%= form_for @trip, url: upload_photo_trip_path(@trip), method: :post, multipart: true do |f| %>
-                  <%= f.file_field :image, class: 'fileupload' %>
-                  <%= link_to 'javascript:void(0)', class: 'btn btn-sm ghost-button upload-link' do %>
-                      <%= fa_icon 'upload' %>
-                  <% end %>
-              <% end %>
-            </div>
-        <% end %>
-      </div>
-      <div class="progress-wrapper">
-        <div class="progress">
-          <div class="progress-bar" role="progressbar"></div>
-        </div>
-      </div>
-      <div class="photo-processing">
-        <i class="fa fa-spinner fa-spin"></i>
-        <%= t('common.photo_processing') %>
-      </div>
+      <trip-image trip-id="'<%= @trip.id %>'" image-url="'<%= @trip.image_url_or_default %>'" edit="<%= @user_can_edit %>">
+      </trip-image>
     </div>
     <div class="col-xs-8 col-md-9">
       <div class="row">

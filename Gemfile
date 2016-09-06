@@ -39,8 +39,6 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails', '~> 5.0'
 # AngularJS
 gem 'angularjs-rails'
-# Jcrop library for cropping images before upload (to delete, use ngImgCrop instead)
-gem 'jcrop-rails-v2'
 # datepicker
 gem 'bootstrap-datepicker-rails'
 
