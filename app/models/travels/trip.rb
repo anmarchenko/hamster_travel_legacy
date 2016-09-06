@@ -227,8 +227,11 @@ module Travels
       attrs
     end
 
-    def json_typeahead
-      res = as_json
+    def short_json
+      res = {}
+      ['id', 'name'].each do |field|
+        res[field] = self.send(field)
+      end
       res['countries'] = visited_countries_codes.map {
           |country_code| ApplicationController.helpers.flag(country_code, 16)
       }

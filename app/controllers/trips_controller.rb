@@ -12,16 +12,16 @@ class TripsController < ApplicationController
   before_action :authorize_show, only: [:show]
 
   def index
-    @trips = Finders::Trips.all(params[:page])
+    @trips = Finders::Trips.all(params[:page]).includes(:author_user, :cities)
   end
 
   def my
-    @trips = Finders::Trips.for_user(current_user, params[:page])
+    @trips = Finders::Trips.for_user(current_user, params[:page]).includes(:author_user, :cities)
     render 'trips/index'
   end
 
   def drafts
-    @trips = Finders::Trips.drafts(current_user, params[:page])
+    @trips = Finders::Trips.drafts(current_user, params[:page]).includes(:author_user, :cities)
   end
 
   def new
