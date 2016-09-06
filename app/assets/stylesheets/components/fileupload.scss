@@ -9,5 +9,9 @@
 
 .fileupload-area {
   position: relative;
+
+  &.clickable-area {
+    cursor: pointer;
+  }
 }
 
