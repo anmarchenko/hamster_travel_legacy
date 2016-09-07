@@ -1,4 +1,4 @@
-angular.module('travel').controller('TripImageController', ['$scope', 'Upload', '$uibModal', function ($scope, Upload, $uibModal) {
+angular.module('travel').controller('TripImageController', ['$scope', 'Upload', '$uibModal', '$http', function ($scope, Upload, $uibModal, $http) {
     $scope.imageUrl = $scope.$ctrl.imageUrl;
 
     const upload = function (image) {
@@ -22,6 +22,12 @@ angular.module('travel').controller('TripImageController', ['$scope', 'Upload', 
             if ($scope.progress == 100) {
                 $scope.processing = true;
             }
+        });
+    };
+
+    $scope.delete = function () {
+        $http.post('/api/trips/' + $scope.$ctrl.tripId + '/delete_image').then(function (response) {
+            $scope.imageUrl = response.data.image_url;
         });
     };
 

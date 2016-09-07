@@ -953,6 +953,18 @@
   .trip-header {
     margin-top: 23px;
 
+    trip-image {
+      .btn-delete-trip-image {
+        position: absolute;
+        top: 0px;
+        right: -5px;
+        svg {
+          width: 16px;
+          height: 14px;
+        }
+      }
+    }
+
     .trip-image {
       border: 1px solid $main-grey;
       border-radius: 4px;
