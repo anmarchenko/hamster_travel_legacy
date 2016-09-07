@@ -1,8 +1,8 @@
 module Api
   class TripsController < ApplicationController
-    before_action :authenticate_user!, only: [:upload_image]
-    before_action :find_trip, only: [:upload_image]
-    before_action :authorize, only: [:upload_image]
+    before_action :authenticate_user!, only: [:upload_image, :delete_image]
+    before_action :find_trip, only: [:upload_image, :delete_image]
+    before_action :authorize, only: [:upload_image, :delete_image]
 
     def index
       term = params[:term] || ''
@@ -13,6 +13,15 @@ module Api
     def upload_image
       @trip.image = params[:file]
       @trip.image.name = 'photo.png'
+      @trip.save
+      render json: {
+        status: 0,
+        image_url: @trip.image_url_or_default
+      }
+    end
+
+    def delete_image
+      @trip.image = nil
       @trip.save
       render json: {
         status: 0,

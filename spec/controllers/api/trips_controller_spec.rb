@@ -45,4 +45,23 @@ RSpec.describe Api::TripsController do
       expect(assigns(:trip).image).not_to be_blank
     end
   end
+
+  describe '#delete_image' do
+    login_user
+
+    let(:trip) { FactoryGirl.create(:trip, author_user: subject.current_user, users: [subject.current_user]) }
+    let(:file) { fixture_file_upload("#{::Rails.root}/spec/fixtures/files/cat.jpg", 'image/jpeg') }
+
+    before :each do
+      trip.image = file
+      trip.save
+    end
+
+    it 'deletes trip image' do
+      expect(trip.reload.image).not_to be_blank
+      post 'delete_image', params: { id: trip.id }
+      expect(response).to be_success
+      expect(Travels::Trip.find(trip.id).image).to be_blank
+    end
+  end
 end

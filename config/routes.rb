@@ -31,7 +31,7 @@ Rails.application.routes.draw do
       resources :trip_invites, only: [:create, :destroy]
       resources :trips, only: [:index] do
         member do
-          post :upload_image
+          post :upload_image, :delete_image
         end
 
         resources :days_sorting, only: [:index, :create]
