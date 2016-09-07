@@ -66,7 +66,7 @@
             </span>
             </p>
             <p class="catering-value">
-              <%= image_tag 'catering/calendar.svg' %>
+              <%= image_tag 'common/calendar.svg' %>
               <span class="catering-value-text">
               {{catering.days_count}}
                 <%= t('trips.show.catering_days_show') %>
@@ -91,13 +91,14 @@
           <div class="col-xs-12 col-sm-6">
             <div class="form-group">
               <%= label_tag 'catering_name', t('trips.show.catering_name') %>
-              <a class="delete-control big-control pull-right" href="javascript:void(0);" ng-click="remove(caterings, $index)">
-              <span class="hidden-xs">
-                <%= fa_icon 'times', text: t('trips.show.catering_delete') %>
-              </span>
+              <a class="delete-control big-control pull-right link-with-icon" href="javascript:void(0);" ng-click="remove(caterings, $index)">
+                <span class="hidden-xs">
+                  <%= inline_svg 'buttons/delete.svg' %>
+                  <%= t('trips.show.catering_delete') %>
+                </span>
                 <span class="hidden-lg hidden-sm hidden-md">
-                <%= fa_icon 'times' %>
-              </span>
+                  <%= inline_svg 'buttons/delete.svg' %>
+                </span>
               </a>
               <%= text_field_tag 'catering_name', '', 'ng-model' => 'catering.name', class: 'form-control', placeholder: t('trips.show.catering_name_placeholder') %>
             </div>
@@ -132,8 +133,10 @@
     </div>
     <div class="row" ng-show="edit">
       <div class="col-md-12">
-        <a class="big-control" href="javascript:void(0);" ng-click="add(caterings, {persons_count: <%= @trip.budget_for %>, days_count: 1, <%= default_currency_hash(@trip, current_user) %>})">
-          <%= fa_icon 'plus', text: t('trips.show.catering_add') %>
+        <a class="big-control link-with-icon" href="javascript:void(0);"
+           ng-click="add(caterings, {persons_count: <%= @trip.budget_for %>, days_count: 1, <%= default_currency_hash(@trip, current_user) %>})">
+          <%= inline_svg 'buttons/add_plain.svg' %>
+          <%= t('trips.show.catering_add') %>
         </a>
       </div>
     </div>

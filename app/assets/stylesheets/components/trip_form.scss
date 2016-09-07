@@ -20,12 +20,13 @@
     position: relative;
 
     &:before {
-      font: normal normal normal 24px/1 FontAwesome;
-      content: "\f073";
+      content: "";
+      background: image-url('common/calendar.svg');
       position: absolute;
       right: 10px;
       top: 40px;
-      color: $main-grey;
+      width: 24px;
+      height: 24px;
       opacity: .5;
     }
   }
@@ -41,14 +42,12 @@
       background-color: $light-grey;
     }
 
-    .fa {
-      font-size: 48px;
-      color: $main-grey;
-    }
-
     .status-image {
       text-align: center;
       margin-bottom: 10px;
+      img {
+        height: 70px;
+      }
     }
 
     .status-header {

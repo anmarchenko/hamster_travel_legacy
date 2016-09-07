@@ -27,8 +27,6 @@ gem 'uglifier', '>= 1.3.0'
 # CSS
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
-# font awesome icons
-gem 'font-awesome-rails'
 # vendor prefixes
 gem 'autoprefixer-rails'
 

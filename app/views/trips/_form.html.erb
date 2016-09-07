@@ -20,7 +20,7 @@
               <% Travels::Trip::StatusCodes::ALL.each do |type| %>
                   <div class="col-md-4 col-sm-4 col-xs-4 status" ng-class="{active: status == '<%= type %>'}" ng-click="status = '<%= type %>'">
                     <div class="status-image">
-                      <%= fa_icon Travels::Trip::StatusCodes::TYPE_TO_ICON[type] %>
+                      <%= image_tag "plan/#{Travels::Trip::StatusCodes::TYPE_TO_ICON[type]}" %>
                     </div>
                     <div class="status-header">
                       <%= I18n.t(Travels::Trip::StatusCodes::TYPE_TO_TEXT[type]) %>

@@ -42,9 +42,9 @@ module Travels
       }
 
       TYPE_TO_ICON = {
-          DRAFT => 'lightbulb-o',
-          PLANNED => 'map-o',
-          FINISHED => 'archive'
+          DRAFT => 'draft',
+          PLANNED => 'planned',
+          FINISHED => 'finished'
       }
     end
 

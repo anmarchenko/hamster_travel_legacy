@@ -90,10 +90,6 @@ module ApplicationHelper
     (l trip.start_date, format: :month).html_safe if trip.start_date.present?
   end
 
-  def trip_status_icon status_code
-    "<i class='status-icon #{trip_status_class(status_code)} fa fa-#{Travels::Trip::StatusCodes::TYPE_TO_ICON[status_code]}'></i>".html_safe
-  end
-
   def flag country_code, size = 16, with_tooltip = false
     return '' if country_code.blank?
     url = "#{Settings.images.base_url}/#{Settings.images.flags_folder}/#{size}/#{country_code.downcase}.png"

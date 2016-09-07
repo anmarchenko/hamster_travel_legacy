@@ -1,23 +1,7 @@
 <div class="row well">
   <div class="col-md-12">
     <div class="login-profile-panel panel">
-      <div class="fileupload-form" data-maxuploadsize="5000000">
-        <% if user_signed_in? && current_user == @user %>
-            <div class="settings-link-position user-profile-links">
-              <%= link_to user_path(@user), class: 'settings-link' do %>
-                  <%= t('common.profile') %>
-              <% end %>
-              <%= link_to edit_user_path(@user), class: 'settings-link' do %>
-                  <%= t('common.settings') %>
-              <% end %>
-              <%= link_to edit_user_registration_path, class: 'settings-link' do %>
-                  <%= t('common.edit_user') %>
-              <% end %>
-              <%= link_to destroy_user_session_path, method: :delete, class: 'settings-link' do %>
-                  <%= t('common.sign_out') %>
-              <% end %>
-            </div>
-        <% end %>
+      <div>
         <% if @user.image_url.present? %>
             <img class="login-profile-pic profile-pic img-circle pic" id="profile_image" src="<%= @user.image_url_or_default %>"/>
         <% else %>
