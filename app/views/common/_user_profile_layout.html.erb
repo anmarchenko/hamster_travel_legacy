@@ -3,18 +3,6 @@
     <div class="login-profile-panel panel">
       <div class="fileupload-form" data-maxuploadsize="5000000">
         <% if user_signed_in? && current_user == @user %>
-            <%= form_for @user, url: upload_photo_user_path(@user), method: :post, multipart: true, remote: true do |f| %>
-                <%= f.hidden_field :remove_image, value: 'true' %>
-                <%= link_to '', class: 'delete-user-image-button delete-image settings-link settings-link-position', 'data-confirm' => t('.delete_photo_cofirm') do %>
-                    <%= fa_icon 'times', text: '' %>
-                <% end %>
-            <% end %>
-            <%= form_for @user, url: upload_photo_user_path(@user), method: :post, multipart: true do |f| %>
-                <%= f.file_field :image, class: 'fileupload' %>
-                <%= link_to 'javascript:void(0)', class: 'upload-user-image-button upload-link settings-link settings-link-position' do %>
-                    <%= fa_icon 'upload' %>
-                <% end %>
-            <% end %>
             <div class="settings-link-position user-profile-links">
               <%= link_to user_path(@user), class: 'settings-link' do %>
                   <%= t('common.profile') %>
@@ -43,15 +31,6 @@
           <%= @user.full_name %>
         </small>
       </div>
-    </div>
-    <div class="progress-wrapper">
-      <div class="progress">
-        <div class="progress-bar" role="progressbar"></div>
-      </div>
-    </div>
-    <div class="photo-processing">
-      <i class="fa fa-spinner fa-spin"></i>
-      <%= t('common.photo_processing') %>
     </div>
     <%= yield %>
   </div>

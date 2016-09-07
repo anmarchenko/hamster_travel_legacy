@@ -18,9 +18,6 @@ Rails.application.routes.draw do
       end
     end
     resources :trips do
-      member do
-        post :upload_photo
-      end
       collection do
         get :my, :drafts
       end
@@ -33,6 +30,10 @@ Rails.application.routes.draw do
       resources :participants, only: [:index]
       resources :trip_invites, only: [:create, :destroy]
       resources :trips, only: [:index] do
+        member do
+          post :upload_image
+        end
+
         resources :days_sorting, only: [:index, :create]
         resources :days, only: [] do
           resources :activities, only: [:index, :create]

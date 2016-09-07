@@ -1,6 +1,4 @@
 class UsersController < ApplicationController
-  include Concerns::ImageUploading
-
   before_action :authenticate_user!, only: [:edit, :update, :upload_photo]
   before_action :find_user
   before_action :authorize, only: [:edit, :update, :upload_photo]
@@ -15,14 +13,6 @@ class UsersController < ApplicationController
   def update
     redirect_to edit_user_path(@user, {locale: @user.locale}), notice: t('users.update_successful', locale: @user.locale) and return if @user.update_attributes user_params
     render 'edit'
-  end
-
-  def upload_photo
-    save_image @user, user_params[:image], '100x100'
-
-    respond_to do |format|
-      format.js
-    end
   end
 
   def find_user

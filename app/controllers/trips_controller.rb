@@ -1,13 +1,10 @@
 class TripsController < ApplicationController
-
-  include Concerns::ImageUploading
-
   TRANSFERS_GRID = [0.1, 0.1, 0.45, 0.35]
 
-  before_action :authenticate_user!, only: [:edit, :update, :new, :create, :destroy, :upload_photo, :my, :drafts]
-  before_action :find_trip, only: [:show, :edit, :update, :destroy, :upload_photo]
+  before_action :authenticate_user!, only: [:edit, :update, :new, :create, :destroy, :my, :drafts]
+  before_action :find_trip, only: [:show, :edit, :update, :destroy]
   before_action :find_original_trip, only: [:new, :create]
-  before_action :authorize, only: [:edit, :update, :upload_photo]
+  before_action :authorize, only: [:edit, :update]
   before_action :authorize_destroy, only: [:destroy]
   before_action :authorize_show, only: [:show]
 
@@ -32,13 +29,6 @@ class TripsController < ApplicationController
     @trip = Creators::Trip.new(@original_trip, params_trip, current_user).create_trip
     redirect_to trip_path(@trip) and return if @trip.errors.blank?
     render 'new'
-  end
-
-  def upload_photo
-    save_image @trip, params_trip[:image], '300x300'
-    respond_to do |format|
-      format.js
-    end
   end
 
   def edit
