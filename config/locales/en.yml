@@ -58,6 +58,8 @@ en:
         title: Registration
       edit:
         title: Edit my registration
+        password_placeholder: leave blank if you don't want to change it
+        current_password_placeholder: we need your current password to confirm your changes
     sessions:
       signed_in: "Signed in successfully."
       signed_out: "Signed out successfully."
@@ -122,11 +124,6 @@ en:
     toggle_weeks: Weeks
     clear: Clear
     datepicker_close: Close
-    user_profile_layout:
-      password_placeholder: leave blank if you don't want to change it
-      current_password_placeholder: we need your current password to confirm your changes
-      trips: Travels
-      delete_photo_cofirm: Are you sure that you want to delete your profile photo?
     are_you_sure: Are you sure?
     participant_will_be_deleted: Participant will be deleted form this trip
     yes_do_it: Yes, do it
@@ -236,7 +233,7 @@ en:
       create: Add plan
       with_report: With report
     drafts:
-      title: My drafts
+      title: My ideas
     new:
       title: New travel
     show:

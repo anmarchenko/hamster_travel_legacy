@@ -1,4 +1,5 @@
 <% content_for :title, t('.title') %>
+
 <% content_for :page_javascript do %>
     <script id="citiesTemplate.html" type="text/ng-template">
       <a class="flag-text">
@@ -9,33 +10,24 @@
       </a>
     </script>
 <% end %>
-<%= render layout: 'common/user_profile_layout', locals: {page: :edit} do %>
-    <%= form_for @user, html: {class: 'form-horizontal'} do |f| %>
-        <fieldset class="col-md-8">
-          <%= error_messages! @user %>
-          <div class="form-group">
-            <%= f.label :home_town_text, class: 'control-label col-md-3' %>
-            <div class="col-md-9">
-              <%= render 'widgets/typeahead/cities', form: f, model_name: 'home_town' %>
-            </div>
-          </div>
-          <div class="form-group">
-            <%= f.label :locale, class: 'control-label col-md-3' %>
-            <div class="col-md-9">
-              <%= f.select :locale, options_for_select([%w(English en), %w(Русский ru)], @user.locale || params[:locale].to_s), {}, {class: 'form-control'} %>
-            </div>
-          </div>
-          <div class="form-group">
-            <%= f.label :currency, class: 'control-label col-md-3' %>
-            <div class="col-md-9">
-              <%= f.select :currency, options_for_select(CurrencyHelper.currencies_select_simple, @user.currency || CurrencyHelper::DEFAULT_CURRENCY), {}, {class: 'form-control'} %>
-            </div>
-          </div>
-          <div class="form-group pull-right">
-            <div class="col-md-12">
-              <%= f.submit t('common.save'), class: 'btn btn-primary' %>
-            </div>
-          </div>
-        </fieldset>
-    <% end %>
+
+<%= form_for @user do |f| %>
+    <fieldset class="col-md-8 col-md-offset-2 col-xs-12">
+      <%= error_messages! @user %>
+      <div class="form-group">
+        <%= f.label :home_town_text, class: 'control-label' %>
+        <%= render 'widgets/typeahead/cities', form: f, model_name: 'home_town' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :locale, class: 'control-label' %>
+        <%= f.select :locale, options_for_select([%w(English en), %w(Русский ru)], @user.locale || params[:locale].to_s), {}, {class: 'form-control'} %>
+      </div>
+      <div class="form-group">
+        <%= f.label :currency, class: 'control-label' %>
+        <%= f.select :currency, options_for_select(CurrencyHelper.currencies_select_simple, @user.currency || CurrencyHelper::DEFAULT_CURRENCY), {}, {class: 'form-control'} %>
+      </div>
+      <div class="form-group pull-right">
+        <%= f.submit t('common.save'), class: 'btn btn-primary' %>
+      </div>
+    </fieldset>
 <% end %>

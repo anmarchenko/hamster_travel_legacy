@@ -59,6 +59,8 @@ ru:
         title: Регистрация
       edit:
         title: Редактировать профиль
+        password_placeholder: оставьте пустым, если не хотите менять пароль
+        current_password_placeholder: для подтверждения изменений необходимо ввести текущий пароль
     sessions:
       signed_in: "Вход в систему выполнен."
       signed_out: "Выход из системы выполнен."
@@ -111,11 +113,7 @@ ru:
     toggle_weeks: №
     clear: Очистить
     datepicker_close: Ок
-    user_profile_layout:
-      password_placeholder: оставьте пустым, если не хотите менять пароль
-      current_password_placeholder: для подтверждения изменений необходимо ввести текущий пароль
-      trips: Путешествия
-      delete_photo_cofirm: Вы уверены, что хотите удалить фото профиля?
+    trips: Путешествия
     are_you_sure: Вы уверены?
     participant_will_be_deleted: Участник будет удален из этого путешествия
     yes_do_it: Да, сделать это
@@ -225,7 +223,7 @@ ru:
       create: Добавить план
       with_report: Есть отчёт
     drafts:
-      title: Мои черновики
+      title: Мои идеи
     new:
       title: Новое путешествие
     show:
