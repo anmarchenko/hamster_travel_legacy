@@ -161,7 +161,7 @@ en:
       many: days
       other: days
     day_number: Day %{number}
-  dashboard:
+  home_page:
     index:
       title: Travel planning
       welcome: "Hamster Travel: your ultimate travel notebook"

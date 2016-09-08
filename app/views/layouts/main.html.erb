@@ -8,46 +8,50 @@
     <%= t('.pagetitle', page: (yield(:title) if content_for?(:title))) %>
   </title>
   <%= csrf_meta_tags %>
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,400italic,300italic,300,600,600italic,700,700italic" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,400italic,300italic,300,600,600italic,700,700italic"/>
   <%= stylesheet_link_tag 'main', media: 'all' %>
   <%= favicon_link_tag image_path('favicon.ico') %>
   <%= yield(:page_stylesheet) if content_for?(:page_stylesheet) %>
 </head>
 <body class="<%= @body_class %>">
-<%= render 'layouts/partials/navbar' %>
+
+<%= render 'layouts/partials/navbar', transparent: @transparent_navbar %>
+
 <div class="container">
   <%= render 'layouts/partials/flash_messages' %>
   <%= yield %>
 </div>
+
 <%= yield(:additional_content) if content_for?(:additional_content) %>
-<footer>
-  <div class="container">
-    <div class="site-footer">
-      <div class="row">
-        <div class="col-md-2">
-          © 2014 - 2016, Hamster Travel
-        </div>
-        <div class="col-md-10">
-          <p>
-            <%= t('common.authors') %>
-          </p>
-          <p>
-            <a href="http://vk.com/id88528">
-              <%= t('common.hamster') %>
-            </a>
-          </p>
-          <p>
-            <a href="https://github.com/altmer">
-              <%= t('common.andrey') %>
-            </a>
-          </p>
+
+<% unless @hide_footer %>
+    <footer>
+      <div class="container">
+        <div class="site-footer">
+          <div class="row">
+            <div class="col-md-2">
+              © 2014 - 2016, Hamster Travel
+            </div>
+            <div class="col-md-10">
+              <p>
+                <%= t('common.authors') %>
+              </p>
+              <p>
+                <a href="http://vk.com/id88528">
+                  <%= t('common.hamster') %>
+                </a>
+              </p>
+              <p>
+                <a href="https://github.com/altmer">
+                  <%= t('common.andrey') %>
+                </a>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</footer>
-
-<%= render 'modals/photo_preview' %>
+    </footer>
+<% end %>
 
 <span class="i18n" id="confirmation_header"><%= t('common.are_you_sure') %></span>
 <span class="i18n" id="confirmation_ok">

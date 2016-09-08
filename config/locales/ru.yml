@@ -151,7 +151,7 @@ ru:
       many: дней
       other: дней
     day_number: День %{number}
-  dashboard:
+  home_page:
     index:
       title: Планирование путешествий
       welcome: "Hamster Travel: все твои путешествия в одном месте"

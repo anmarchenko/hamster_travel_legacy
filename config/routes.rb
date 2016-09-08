@@ -54,6 +54,6 @@ Rails.application.routes.draw do
     end
   end
 
-  root to: 'dashboard#index'
+  root to: 'home_page#index'
 
 end
