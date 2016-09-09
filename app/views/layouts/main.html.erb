@@ -17,12 +17,8 @@
 
 <%= render 'layouts/partials/navbar', transparent: @transparent_navbar %>
 
-<div class="container">
-  <%= render 'layouts/partials/flash_messages' %>
-  <%= yield %>
-</div>
-
-<%= yield(:additional_content) if content_for?(:additional_content) %>
+<%= render 'layouts/partials/flash_messages' %>
+<%= yield %>
 
 <% unless @hide_footer %>
     <footer>

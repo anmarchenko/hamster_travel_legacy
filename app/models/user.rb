@@ -76,6 +76,12 @@ class User < ApplicationRecord
     "userColor%s" % [(id % 4).to_s]
   end
 
+  def as_json(**args)
+    res = super(args)
+    res['image_url'] = self.image_url_or_default
+    res
+  end
+
   def self.find_by_term term
     return [] if term.blank?
 

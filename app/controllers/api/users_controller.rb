@@ -1,4 +1,6 @@
 class Api::UsersController < ApplicationController
+  before_action :find_user, only: [:show]
+
   def index
     term = params[:term] || ''
     render json: [] and return if term.blank? || term.length < 2
@@ -9,5 +11,15 @@ class Api::UsersController < ApplicationController
                                   photo_url: user.image_url, color: user.background_color, initials: user.initials} }
 
     render json: res
+  end
+
+  def show
+    render json: { user: @user }
+  end
+
+  private
+
+  def find_user
+    @user = User.find(params[:id])
   end
 end

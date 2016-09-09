@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 
   def show
     @trips = @user.trips.page(params[:page] || 1)
+    @transparent_navbar = true
   end
 
   def edit

@@ -1,6 +1,8 @@
 <% content_for :title, t('.title') %>
-<% if @trips.blank? %>
-  <%= render 'no_trips', text: t('widgets.trips.grid.no_trips') %>
-<% else %>
-  <%= render 'trips/partials/trip_list', trips: @trips %>
-<% end %>
+<div class="container">
+  <% if @trips.blank? %>
+      <%= render 'no_trips', text: t('widgets.trips.grid.no_trips') %>
+  <% else %>
+      <%= render 'trips/partials/trip_list', trips: @trips %>
+  <% end %>
+</div>
