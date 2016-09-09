@@ -347,8 +347,6 @@ en:
   users:
     edit:
       title: My settings
-    show:
-      title: User profile
     update_successful: User settings successfully updated
     partials:
       menu:

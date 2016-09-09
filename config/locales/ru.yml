@@ -338,8 +338,6 @@ ru:
   users:
     edit:
       title: Мои настройки
-    show:
-      title: Пользователь
     update_successful: Настройки успешно сохранены
     partials:
       menu:
