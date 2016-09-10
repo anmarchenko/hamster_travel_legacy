@@ -82,6 +82,8 @@ gem 'deep_cloneable'
 
 # tracking exceptions
 gem 'rollbar'
+# monitoring
+gem 'newrelic_rpm'
 
 # production - caching and passenger
 group :production do

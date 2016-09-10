@@ -6,3 +6,5 @@ images:
   flags_folder: 'flags'
 rollbar:
   token: <%= ENV['ROLLBAR_ACCESS_TOKEN'] %>
+new_relic:
+  license_key: <%= ENV['NEW_RELIC_LICENSE_KEY'] %>
