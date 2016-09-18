@@ -1,4 +1,4 @@
-angular.module('travel').controller('TripImageController', ['$scope', 'Upload', '$uibModal', '$http', function ($scope, Upload, $uibModal, $http) {
+angular.module('travel').controller('TripImageController', ['$scope', 'Upload', 'crop', '$http', function ($scope, Upload, crop, $http) {
     $scope.imageUrl = $scope.$ctrl.imageUrl;
 
     const upload = function (image) {
@@ -32,51 +32,8 @@ angular.module('travel').controller('TripImageController', ['$scope', 'Upload', 
     };
 
     $scope.crop = function ($files) {
-        if (!$files.length > 0) {
-            return;
-        }
-        const file = $files[0];
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-
-        reader.onload = function (evt) {
-            $uibModal.open({
-                animation: true,
-                templateUrl: 'tripImageCropModal.html',
-                controller: ['$scope', '$uibModalInstance', 'image', function ($scope, $uibModalInstance, image) {
-                    $scope.resultImage = '';
-                    $scope.image = image;
-
-                    $scope.close = function () {
-                        $uibModalInstance.close();
-                    };
-
-                    $scope.confirm = function () {
-                        upload(dataURItoBlob($scope.resultImage));
-                        $uibModalInstance.close();
-                    }
-                }],
-                resolve: {
-                    image: function() {
-                        return evt.target.result;
-                    }
-                },
-                size: 'lg',
-                backdrop: false
-            })
-        };
+        crop.start($files, {areaType: 'square', resultImageSize: '500', areaMinSize: '300'}, function (image) {
+            upload(image);
+        });
     };
-
-    function dataURItoBlob(dataURI) {
-        var datas = dataURI.split(',')
-        var byteString = atob(datas[1]);
-        var type = datas[0].split(';')[0].replace('data:', '');
-        var ab = new ArrayBuffer(byteString.length);
-        var ia = new Uint8Array(ab);
-        for (var i = 0; i < byteString.length; i++) {
-            ia[i] = byteString.charCodeAt(i);
-        }
-        return new Blob([ab], { type: type });
-    }
-
 }]);

@@ -26,23 +26,3 @@
     <%= t('common.photo_processing') %>
   </div>
 </script>
-
-<script id="tripImageCropModal.html" type="text/ng-template">
-  <div class="modal-header">
-    <button class="close" ng-click="close()" type="button">×</button>
-    <h4>
-      <%= t('modals.photo_preview.title') %>
-    </h4>
-  </div>
-  <div class="modal-body image-crop-area">
-    <img-crop image="image" result-image="resultImage" area-type="square" result-image-size="500" area-min-size="400"></img-crop>
-  </div>
-  <div class="modal-footer">
-    <span class="btn btn-default pull-left" ng-click="close()">
-      <%= t('modals.photo_preview.cancel') %>
-    </span>
-    <span class="btn btn-primary pull-right" id="upload_photo_button" ng-click="confirm()">
-      <%= t('modals.photo_preview.upload') %>
-    </span>
-  </div>
-</script>

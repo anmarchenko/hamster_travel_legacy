@@ -70,5 +70,6 @@
 </script>
 <%= javascript_include_tag 'main' %>
 <%= yield(:page_javascript) if content_for?(:page_javascript) %>
+<%= render 'components/modals/crop_modal' %>
 </body>
 </html>

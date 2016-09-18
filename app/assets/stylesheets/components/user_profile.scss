@@ -44,6 +44,10 @@
           line-height: 32px;
         }
       }
+
+      &.clickable-area {
+        cursor: pointer;
+      }
     }
 
     .user-text {

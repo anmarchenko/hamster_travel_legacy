@@ -1,7 +1,14 @@
 <script id="userInfo.html" type="text/ng-template">
   <div class="user-info" ng-if="loaded">
     <div class="user-basic-info">
-      <div class="user-photo">
+      <div class="user-photo"
+           ng-class="{ 'clickable-area' : $ctrl.edit }"
+           ngf-select="crop($files)"
+           ng-disabled="!$ctrl.edit"
+           ngf-accept="'image/*'"
+           ngf-pattern="'image/*'"
+           ngf-max-size="10MB"
+      >
         <img class="img-circle img-user-profile" id="profile_image" ng-src="{{user.image_url}}" ng-if="user.image_url"/>
         <div class="{{user.color}} initials img-user-profile img-circle"
              ng-if="!user.image_url">

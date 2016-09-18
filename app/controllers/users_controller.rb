@@ -4,8 +4,8 @@ class UsersController < ApplicationController
   before_action :authorize, only: [:edit, :update, :upload_photo]
 
   def show
-    @trips = @user.trips.page(params[:page] || 1)
     @transparent_navbar = true
+    @edit = current_user == @user
   end
 
   def edit
