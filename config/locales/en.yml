@@ -353,6 +353,9 @@ en:
       finished_trips_count: trips
       visited_cities_count: cities
       visited_countries_count: countries
+      planned_trips: Planned trips
+      finished_trips: Latest trips
+      no_trips: No trips added or planned yet...
   widgets:
     trips:
       trip_box:

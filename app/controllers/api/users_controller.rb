@@ -39,11 +39,11 @@ class Api::UsersController < ApplicationController
   end
 
   def planned_trips
-    render json: { trips: Finders::Trips.for_user_planned(@user, params[:page], current_user).map(&:short_json) }
+    render json: { trips: Finders::Trips.for_user_planned(@user, params[:page], current_user).map { |trip| trip.short_json(32) } }
   end
 
   def finished_trips
-    render json: { trips: Finders::Trips.for_user_finished(@user, params[:page], current_user).map(&:short_json) }
+    render json: { trips: Finders::Trips.for_user_finished(@user, params[:page], current_user).map { |trip| trip.short_json(32) } }
   end
 
   private

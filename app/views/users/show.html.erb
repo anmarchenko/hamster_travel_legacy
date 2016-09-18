@@ -2,6 +2,7 @@
 
 <% content_for :page_javascript do %>
     <%= render 'components/users/user_info' %>
+    <%= render 'components/users/user_trips' %>
 <% end %>
 
 <div class="user-profile-header-wrapper">
@@ -12,17 +13,7 @@
   </div>
 </div>
 
-<div class="container">
-  <h3>Планируемые путешествия</h3>
-  <p>Здесь будут будущие путешествия пользователя</p>
-  <p>Здесь будут будущие путешествия пользователя</p>
-  <p>Здесь будут будущие путешествия пользователя</p>
-  <p>Здесь будут будущие путешествия пользователя</p>
-  <p>Здесь будут будущие путешествия пользователя</p>
-  <h3>Прошлые путешествия</h3>
-  <p>Здесь будут будущие путешествия пользователя</p>
-  <p>Здесь будут будущие путешествия пользователя</p>
-  <p>Здесь будут будущие путешествия пользователя</p>
-  <p>Здесь будут будущие путешествия пользователя</p>
-  <p>Здесь будут будущие путешествия пользователя</p>
+<div class="container user-profile">
+  <user-trips user-id="'<%= @user.id %>'" path="'planned_trips'" header="'<%= t('users.show.planned_trips') %>'"></user-trips>
+  <user-trips user-id="'<%= @user.id %>'" path="'finished_trips'" header="'<%= t('users.show.finished_trips') %>'"></user-trips>
 </div>

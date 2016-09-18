@@ -227,13 +227,13 @@ module Travels
       attrs
     end
 
-    def short_json
+    def short_json(flag_size = 16)
       res = {}
-      ['id', 'name'].each do |field|
+      ['id', 'name', 'start_date'].each do |field|
         res[field] = self.send(field)
       end
       res['countries'] = visited_countries_codes.map {
-          |country_code| ApplicationController.helpers.flag(country_code, 16)
+          |country_code| ApplicationController.helpers.flag(country_code, flag_size)
       }
       res['image_url'] = image_url_or_default
       res

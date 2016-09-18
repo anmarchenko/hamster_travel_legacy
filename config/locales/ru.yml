@@ -344,6 +344,9 @@ ru:
       finished_trips_count: путешествий
       visited_cities_count: городов
       visited_countries_count: стран
+      planned_trips: Планируемые путешествия
+      finished_trips: Недавние путешествия
+      no_trips: Пока не добавлено или не запланировано ни одного путешествия...
   widgets:
     trips:
       trip_box:
