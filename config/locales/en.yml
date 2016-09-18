@@ -348,9 +348,10 @@ en:
     edit:
       title: My settings
     update_successful: User settings successfully updated
-    partials:
-      menu:
-        profile: Profile
+    show:
+      finished_trips_count: trips
+      visited_cities_count: cities
+      visited_countries_count: countries
   widgets:
     trips:
       trip_box:

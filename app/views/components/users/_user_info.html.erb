@@ -1,19 +1,47 @@
 <script id="userInfo.html" type="text/ng-template">
   <div class="user-info" ng-if="loaded">
-    <div class="user-photo">
-      <img class="img-circle img-user-profile" id="profile_image" ng-src="{{user.image_url}}" ng-if="user.image_url"/>
-      <div class="{{user.color}} initials img-user-profile img-circle"
-           ng-if="!user.image_url">
-        {{user.initials}}
+    <div class="user-basic-info">
+      <div class="user-photo">
+        <img class="img-circle img-user-profile" id="profile_image" ng-src="{{user.image_url}}" ng-if="user.image_url"/>
+        <div class="{{user.color}} initials img-user-profile img-circle"
+             ng-if="!user.image_url">
+          {{user.initials}}
+        </div>
+      </div>
+      <div class="user-text">
+        <div class="user-name">
+          {{user.full_name}}
+        </div>
+        <div class="user-city" ng-if="user.home_town_text">
+          <%= image_tag 'users/pin.svg' %>
+          {{user.home_town_text}}
+        </div>
       </div>
     </div>
-    <div class="user-text">
-      <div class="user-name">
-        {{user.full_name}}
+    <div class="user-statistics">
+      <div class="user-statistic">
+        <div class="statistic-number">
+          {{user.finished_trips_count}}
+        </div>
+        <div class="statistic-text">
+          <%= t('users.show.finished_trips_count') %>
+        </div>
       </div>
-      <div class="user-city" ng-if="user.home_town_text">
-        <%= image_tag 'users/pin.svg' %>
-        {{user.home_town_text}}
+      <div class="user-statistic">
+        <div class="statistic-number">
+          {{user.visited_countries_count}}
+        </div>
+        <div class="statistic-text">
+          <%= t('users.show.visited_countries_count') %>
+        </div>
+      </div>
+      <div class="user-statistic">
+        <div class="statistic-number">
+          {{user.visited_cities_count}}
+        </div>
+        <div class="statistic-text">
+          <%= t('users.show.visited_cities_count') %>
+        </div>
       </div>
     </div>
   </div>

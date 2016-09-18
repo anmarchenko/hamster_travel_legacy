@@ -33,6 +33,7 @@ class User < ApplicationRecord
 
   has_many :authored_trips, class_name: 'Travels::Trip', inverse_of: :author_user
   has_and_belongs_to_many :trips, class_name: 'Travels::Trip', inverse_of: :users, join_table: 'users_trips'
+  has_many :cities, class_name: 'Geo::City', through: :trips
 
   has_many :outgoing_invites, class_name: 'Travels::TripInvite', inverse_of: :inviting_user, foreign_key: :inviting_user_id
   has_many :incoming_invites, class_name: 'Travels::TripInvite', inverse_of: :invited_user, foreign_key: :invited_user_id
@@ -73,6 +74,28 @@ class User < ApplicationRecord
     "userColor%s" % [(id % 4).to_s]
   end
 
+  def finished_trip_count
+    self.trips.where(archived: false, status_code: Travels::Trip::StatusCodes::FINISHED).count
+  end
+
+  def visited_cities_ids
+    self.cities.where('trips.archived' => false, 'trips.status_code' => Travels::Trip::StatusCodes::FINISHED)
+      .select(:id).map(&:id).uniq
+  end
+
+  def visited_cities_count
+    visited_cities_ids.count
+  end
+
+  def visited_countries
+    country_codes = Geo::City.where(id: visited_cities_ids).map(&:country_code).uniq
+    Geo::Country.where(country_code: country_codes).with_translations
+  end
+
+  def visited_countries_count
+    Geo::City.where(id: visited_cities_ids).map(&:country_code).uniq.count
+  end
+
   def as_json(**args)
     res = super(args.merge(except: ['email']))
     res['image_url'] = self.image_url
@@ -80,6 +103,10 @@ class User < ApplicationRecord
     res['home_town_text'] = self.home_town_text
     res['color'] = self.background_color
     res['initials'] = self.initials
+    # statistics
+    res['finished_trips_count'] = finished_trip_count
+    res['visited_cities_count'] = visited_cities_count
+    res['visited_countries_count'] = visited_countries_count
     res
   end
 

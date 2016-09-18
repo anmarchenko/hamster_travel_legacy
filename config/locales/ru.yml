@@ -339,9 +339,10 @@ ru:
     edit:
       title: Мои настройки
     update_successful: Настройки успешно сохранены
-    partials:
-      menu:
-        profile: Профиль
+    show:
+      finished_trips_count: путешествий
+      visited_cities_count: городов
+      visited_countries_count: стран
   widgets:
     trips:
       trip_box:

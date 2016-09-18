@@ -3,6 +3,11 @@
   width: 100%;
   height: 500px;
 
+  @media (max-width: 768px) {
+    margin-top: -200px;
+    height: 470px;
+  }
+
   background: image-url('backgrounds/user_profile.jpg') no-repeat center center fixed;
 
   background-size: cover;
@@ -20,38 +25,53 @@
 }
 
 .user-info {
-  display: flex;
-  flex-flow: row;
-
   &.ng-enter {
     animation: fadeIn 1s;
   }
 
-  .user-photo{
-    .img-user-profile {
-      width: 100px;
-      height: 100px;
+  .user-basic-info {
+    display: flex;
+    flex-flow: row;
 
-      &.initials {
-        font-size: 32px;
-        padding-top: 34px;
-        line-height: 32px;
+    .user-photo{
+      .img-user-profile {
+        width: 100px;
+        height: 100px;
+
+        &.initials {
+          font-size: 32px;
+          padding-top: 34px;
+          line-height: 32px;
+        }
+      }
+    }
+
+    .user-text {
+      margin-left: 20px;
+      .user-name {
+        font-size: 2em;
+      }
+    }
+
+    .user-city {
+      img {
+        height: 1em;
+        vertical-align: baseline;
+        margin-right: 8px;
       }
     }
   }
 
-  .user-text {
-    margin-left: 20px;
-    .user-name {
-      font-size: 2em;
-    }
-  }
+  .user-statistics {
+    margin-top: 30px;
+    .user-statistic {
+      display: inline-block;
+      margin-right: 2em;
 
-  .user-city {
-    img {
-      height: 1em;
-      vertical-align: baseline;
-      margin-right: 8px;
+      .statistic-number {
+        font-size: 2em;
+        text-align: center;
+      }
     }
   }
 }
