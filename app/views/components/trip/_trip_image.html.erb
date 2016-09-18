@@ -10,10 +10,12 @@
     <img class="trip-image" id="trip_image" ng-src="{{imageUrl}}" width="100%"/>
   </div>
 
-  <a href="javascript:void(0);" class="btn-delete-trip-image hidden-xs" ng-if="$ctrl.edit"
+  <a href="javascript:void(0);"
+     class="btn-delete-trip-image hidden-xs"
+     ng-if="$ctrl.edit"
      action-confirmation="delete()"
      confirmation-text="<%= t('common.delete_photo_confirm') %>">
-    <%= inline_svg 'buttons/delete.svg' %>
+    <%= image_tag 'buttons/delete.svg' %>
   </a>
 
   <div class="progress-wrapper" ng-if="uploading">
