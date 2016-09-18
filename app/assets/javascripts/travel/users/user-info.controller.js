@@ -5,7 +5,7 @@ angular.module('travel').controller('UserInfoController', [ '$scope', '$http', '
         $scope.uploading = true;
 
         Upload.upload({
-            url: `/api/users/${$scope.$ctrl.userId}/upload_image`,
+            url: '/api/users/' + $scope.$ctrl.userId + '/upload_image',
             method: 'POST',
             file: image
         }).then(function (response) {
@@ -20,13 +20,13 @@ angular.module('travel').controller('UserInfoController', [ '$scope', '$http', '
     };
 
     $scope.load = function () {
-        $http.get(`/${LOCALE}/api/users/${$scope.$ctrl.userId}`).then(function (response) {
+        $http.get('/' + LOCALE + '/api/users/' + $scope.$ctrl.userId).then(function (response) {
             $scope.user = response.data.user;
             $scope.loaded = true;
         });
     };
     $scope.deletePhoto = function () {
-        $http.post(`/api/users/${$scope.$ctrl.userId}/delete_image`).then(function (response) {
+        $http.post('/api/users/' + $scope.$ctrl.userId + '/delete_image').then(function (response) {
             $scope.user.image_url = response.data.image_url;
         });
     };
