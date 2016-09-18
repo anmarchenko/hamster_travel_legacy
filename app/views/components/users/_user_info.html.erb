@@ -1,7 +1,11 @@
 <script id="userInfo.html" type="text/ng-template">
   <div class="user-info" ng-if="loaded">
     <div class="user-photo">
-      <img class="img-circle img-user-profile" id="profile_image" ng-src="{{user.image_url}}"/>
+      <img class="img-circle img-user-profile" id="profile_image" ng-src="{{user.image_url}}" ng-if="user.image_url"/>
+      <div class="{{user.color}} initials img-user-profile img-circle"
+           ng-if="!user.image_url">
+        {{user.initials}}
+      </div>
     </div>
     <div class="user-text">
       <div class="user-name">

@@ -41,9 +41,6 @@ class User < ApplicationRecord
 
   # photo
   dragonfly_accessor :image
-  def image_url_or_default
-    self.image.try(:remote_url) || 'https://s3.amazonaws.com/altmer-cdn/images/profile.jpeg'
-  end
   def image_url
     self.image.try(:remote_url)
   end
@@ -78,9 +75,11 @@ class User < ApplicationRecord
 
   def as_json(**args)
     res = super(args.merge(except: ['email']))
-    res['image_url'] = self.image_url_or_default
+    res['image_url'] = self.image_url
     res['full_name'] = self.full_name
     res['home_town_text'] = self.home_town_text
+    res['color'] = self.background_color
+    res['initials'] = self.initials
     res
   end
 

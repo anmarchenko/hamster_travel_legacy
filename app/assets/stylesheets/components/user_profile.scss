@@ -31,6 +31,12 @@
     .img-user-profile {
       width: 100px;
       height: 100px;
+
+      &.initials {
+        font-size: 32px;
+        padding-top: 34px;
+        line-height: 32px;
+      }
     }
   }
 
