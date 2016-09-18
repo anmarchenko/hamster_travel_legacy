@@ -7,18 +7,9 @@ describe UsersController do
     context 'when user is logged in' do
       login_user
 
-      context 'where there is user and his trips' do
-        before {FactoryGirl.create_list(:trip, 5, users: [subject.current_user])}
-
-        it 'renders show template with trips' do
+      context 'where there is user' do
+        it 'renders show template' do
           get 'show', params: {id: subject.current_user.id}
-          user = assigns(:user)
-          expect(user).to eq subject.current_user
-          trips = assigns(:trips)
-          expect(trips.count).to eq 5
-          trips.each do |trip|
-            expect(trip.include_user(user)).to be true
-          end
           expect(response).to render_template 'users/show'
         end
       end
@@ -33,18 +24,10 @@ describe UsersController do
 
     context 'when no logged user' do
       let(:user) {FactoryGirl.create(:user)}
-      context 'where there is user and his trips' do
-        before {FactoryGirl.create_list(:trip, 5, users: [user])}
-
-        it 'renders show template with trips' do
+      context 'where there is user' do
+        it 'renders show template' do
           get 'show', params: {id: user.id}
-          user_assigned = assigns(:user)
-          expect(user_assigned).to eq user
-          trips = assigns(:trips)
-          expect(trips.count).to eq 5
-          trips.each do |trip|
-            expect(trip.include_user(user)).to be true
-          end
+          expect(response).to render_template 'users/show'
         end
       end
     end

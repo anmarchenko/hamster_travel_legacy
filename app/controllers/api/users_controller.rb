@@ -1,5 +1,7 @@
 class Api::UsersController < ApplicationController
-  before_action :find_user, only: [:show]
+  before_action :authenticate_user!, only: [:upload_image, :delete_image]
+  before_action :find_user, only: [:show, :upload_image, :delete_image]
+  before_action :authorize, only: [:upload_image, :delete_image]
 
   def index
     term = params[:term] || ''
@@ -17,9 +19,32 @@ class Api::UsersController < ApplicationController
     render json: { user: @user }
   end
 
+  def upload_image
+    @user.image = params[:file]
+    @user.image.name = 'photo.png'
+    @user.save
+    render json: {
+      status: 0,
+      image_url: @user.image_url
+    }
+  end
+
+  def delete_image
+    @user.image = nil
+    @user.save
+    render json: {
+      status: 0,
+      image_url: @user.image_url
+    }
+  end
+
   private
 
   def find_user
     @user = User.find(params[:id])
+  end
+
+  def authorize
+    no_access and return unless @user == current_user
   end
 end

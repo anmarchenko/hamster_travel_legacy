@@ -2,7 +2,7 @@
   <div class="user-info" ng-if="loaded">
     <div class="user-basic-info">
       <div class="user-photo"
-           ng-class="{ 'clickable-area' : $ctrl.edit }"
+           ng-class="{ 'clickable-area' : $ctrl.edit, 'uploading' : uploading }"
            ngf-select="crop($files)"
            ng-disabled="!$ctrl.edit"
            ngf-accept="'image/*'"

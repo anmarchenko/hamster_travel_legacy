@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
   def show
     @transparent_navbar = true
-    @edit = current_user == @user
+    @edit = @user == current_user
   end
 
   def edit
