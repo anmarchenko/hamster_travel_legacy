@@ -7,6 +7,10 @@
       <div class="user-name">
         {{user.full_name}}
       </div>
+      <div class="user-city" ng-if="user.home_town_text">
+        <%= image_tag 'users/pin.svg' %>
+        {{user.home_town_text}}
+      </div>
     </div>
   </div>
 </script>

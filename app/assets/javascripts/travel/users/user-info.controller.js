@@ -2,7 +2,7 @@ angular.module('travel').controller('UserInfoController', [ '$scope', '$http', f
     $scope.loaded = false;
 
     $scope.load = function () {
-        $http.get(`/api/users/${$scope.$ctrl.userId}`).then(function (response) {
+        $http.get(`/${LOCALE}/api/users/${$scope.$ctrl.userId}`).then(function (response) {
             $scope.user = response.data.user;
 
             $scope.loaded = true;

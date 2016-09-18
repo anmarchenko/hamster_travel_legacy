@@ -77,9 +77,10 @@ class User < ApplicationRecord
   end
 
   def as_json(**args)
-    res = super(args)
+    res = super(args.merge(except: ['email']))
     res['image_url'] = self.image_url_or_default
     res['full_name'] = self.full_name
+    res['home_town_text'] = self.home_town_text
     res
   end
 
