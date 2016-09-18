@@ -29,6 +29,7 @@ Rails.application.routes.draw do
       resources :users, only: [:index, :show] do
         member do
           post :upload_image, :delete_image
+          get :planned_trips, :finished_trips
         end
       end
       resources :participants, only: [:index]

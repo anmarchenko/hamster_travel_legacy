@@ -1,6 +1,6 @@
 class Api::UsersController < ApplicationController
   before_action :authenticate_user!, only: [:upload_image, :delete_image]
-  before_action :find_user, only: [:show, :upload_image, :delete_image]
+  before_action :find_user, only: [:show, :upload_image, :delete_image, :planned_trips, :finished_trips]
   before_action :authorize, only: [:upload_image, :delete_image]
 
   def index
@@ -36,6 +36,14 @@ class Api::UsersController < ApplicationController
       status: 0,
       image_url: @user.image_url
     }
+  end
+
+  def planned_trips
+    render json: { trips: Finders::Trips.for_user_planned(@user, params[:page], current_user).map(&:short_json) }
+  end
+
+  def finished_trips
+    render json: { trips: Finders::Trips.for_user_finished(@user, params[:page], current_user).map(&:short_json) }
   end
 
   private

@@ -20,6 +20,20 @@ module Finders
           page(page || 1)
     end
 
+    def for_user_planned(user, page, current_user)
+      query = user.trips.where(status_code: Travels::Trip::StatusCodes::PLANNED).order(start_date: :asc).
+        page(page || 1)
+      query = query.where(private: false) unless user == current_user
+      query
+    end
+
+    def for_user_finished(user, page, current_user)
+      query = user.trips.where(status_code: Travels::Trip::StatusCodes::FINISHED).order(start_date: :desc).
+        page(page || 1)
+      query = query.where(private: false) unless user == current_user
+      query
+    end
+
     def drafts(user, page)
       user.trips.where(status_code: Travels::Trip::StatusCodes::DRAFT).
           order(dates_unknown: :asc, start_date: :desc, name: :asc).page(page || 1)
