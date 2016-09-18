@@ -79,6 +79,7 @@ class User < ApplicationRecord
   def as_json(**args)
     res = super(args)
     res['image_url'] = self.image_url_or_default
+    res['full_name'] = self.full_name
     res
   end
 

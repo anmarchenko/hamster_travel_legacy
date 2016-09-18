@@ -15,6 +15,29 @@
     height: 100%;
 
     color: white;
-    padding-top: 250px;
+    padding-top: 200px;
+  }
+}
+
+.user-info {
+  display: flex;
+  flex-flow: row;
+
+  &.ng-enter {
+    animation: fadeIn 1s;
+  }
+
+  .user-photo{
+    .img-user-profile {
+      width: 100px;
+      height: 100px;
+    }
+  }
+
+  .user-text {
+    margin-left: 20px;
+    .user-name {
+      font-size: 2em;
+    }
   }
 }
