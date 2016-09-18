@@ -123,6 +123,7 @@ ru:
     my_trips: Мои путешествия
     update_successful: Изменения сохранены
     delete_confirm: Вы уверены? Удаление необратимо.
+    delete_photo_confirm: Вы действительно хотите удалить фото?
     flight: Самолёт
     train: Поезд
     bus: Автобус

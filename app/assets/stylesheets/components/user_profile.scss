@@ -46,6 +46,22 @@
         }
       }
 
+      .delete-image {
+        position: absolute;
+        color: #ffffff;
+        border-radius: 50%;
+        font-weight: bolder;
+        top: 0px;
+        right: 0px;
+        padding: 0px 4px;
+        border: 1px solid #bdc3c7;
+        background-color: #f5f5f5;
+        img {
+          width: 10px;
+          opacity: .75;
+        }
+      }
+
       &.clickable-area {
         cursor: pointer;
       }

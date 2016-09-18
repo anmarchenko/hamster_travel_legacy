@@ -25,6 +25,11 @@ angular.module('travel').controller('UserInfoController', [ '$scope', '$http', '
             $scope.loaded = true;
         });
     };
+    $scope.deletePhoto = function () {
+        $http.post(`/api/users/${$scope.$ctrl.userId}/delete_image`).then(function (response) {
+            $scope.user.image_url = response.data.image_url;
+        });
+    };
 
     $scope.crop = function ($files) {
         crop.start($files, {areaType: 'circle', resultImageSize: '200', areaMinSize: '100'}, function (image) {
