@@ -22,14 +22,14 @@ module Finders
 
     def for_user_planned(user, page, current_user)
       query = user.trips.where(status_code: Travels::Trip::StatusCodes::PLANNED).order(start_date: :asc).
-        page(page || 1)
+        page(page || 1).per(9)
       query = query.where(private: false) unless user == current_user
       query
     end
 
     def for_user_finished(user, page, current_user)
       query = user.trips.where(status_code: Travels::Trip::StatusCodes::FINISHED).order(start_date: :desc).
-        page(page || 1)
+        page(page || 1).per(9)
       query = query.where(private: false) unless user == current_user
       query
     end
