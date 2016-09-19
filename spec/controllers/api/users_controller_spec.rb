@@ -93,4 +93,33 @@ describe Api::UsersController do
     end
   end
 
+  describe '#show' do
+    context 'when user is logged in' do
+      login_user
+
+    end
+
+    context 'when no logged user' do
+    end
+  end
+
+  describe '#finished_trips' do
+    context 'when user is logged in' do
+      login_user
+
+    end
+
+    context 'when no logged user' do
+    end
+  end
+
+  describe '#planned_trips' do
+    context 'when user is logged in' do
+      login_user
+
+    end
+
+    context 'when no logged user' do
+    end
+  end
 end

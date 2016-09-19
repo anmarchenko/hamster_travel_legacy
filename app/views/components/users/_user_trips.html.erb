@@ -3,7 +3,7 @@
     <h3>{{$ctrl.header}}</h3>
     <div class="user-trips" ng-if="trips.length > 0">
       <a href="/<%= I18n.locale %>/trips/{{trip.id}}" class="user-trip" ng-repeat="trip in trips track by trip.id"
-           style="background: url('{{trip.image_url}}');">
+           style="background-image: url('{{trip.image_url}}');">
         <div class="user-trip-content">
             <div class="user-trip-name">
               {{trip.name}}
