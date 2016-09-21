@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160904210920) do
+ActiveRecord::Schema.define(version: 20160921191101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -222,6 +222,14 @@ ActiveRecord::Schema.define(version: 20160904210920) do
     t.index ["population"], name: "index_districts_on_population", using: :btree
   end
 
+  create_table "documents", force: :cascade do |t|
+    t.string  "file_uid"
+    t.string  "mime_type"
+    t.integer "trip_id"
+    t.string  "name"
+    t.index ["trip_id"], name: "index_documents_on_trip_id", using: :btree
+  end
+
   create_table "exchange_rates", force: :cascade do |t|
     t.text     "eu_file"
     t.datetime "created_at", null: false
@@ -370,5 +378,6 @@ ActiveRecord::Schema.define(version: 20160904210920) do
     t.index ["user_id"], name: "index_users_trips_on_user_id", using: :btree
   end
 
+  add_foreign_key "documents", "trips"
   add_foreign_key "places", "cities"
 end
