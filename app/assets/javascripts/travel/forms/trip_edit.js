@@ -19,6 +19,8 @@ angular.module('travel').controller('TripEditController', [
             }
             if (new_days < $scope.last_day_index) {
                 if (!confirm($scope.message)) {
+                    $('input[type=submit]').attr('disabled', false);
+                    $event.stopPropagation();
                     return $event.preventDefault();
                 }
             }
