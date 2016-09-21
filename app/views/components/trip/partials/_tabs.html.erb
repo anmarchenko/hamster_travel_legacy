@@ -15,6 +15,16 @@
       </span>
     </a>
   </li>
+  <% if @user_can_edit %>
+      <li>
+        <a ui-sref="documents" ui-sref-active="active" href="javascript:void(0);">
+          <%= inline_svg 'plan/documents.svg', class: 'tab-image documents-img' %>
+          <span class="hidden-xs">
+        <%= t('trips.show.documents') %>
+      </span>
+        </a>
+      </li>
+  <% end %>
   <li>
     <a ui-sref="catering" ui-sref-active="active" href="javascript:void(0);">
       <%= inline_svg 'plan/catering.svg', class: 'tab-image catering-img' %>

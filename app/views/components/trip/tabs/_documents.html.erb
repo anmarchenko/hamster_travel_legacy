@@ -1,0 +1,9 @@
+<script id="documentsTab.html" type="text/ng-template">
+  <div class="span" ng-cloak="true">
+    <div class="work-area-header">
+      <%= render 'components/trip/partials/watching_users' %>
+      <%= render 'components/trip/partials/budget' %>
+    </div>
+  </div>
+  <documents trip-id="'<%= @trip.id %>'"></documents>
+</script>

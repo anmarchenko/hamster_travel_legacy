@@ -19,4 +19,9 @@ angular.module('travel').config(['$stateProvider', function($stateProvider) {
         url: '/report',
         templateUrl: 'reportTab.html'
     });
+    $stateProvider.state({
+        name: 'documents',
+        url: '/documents',
+        templateUrl: 'documentsTab.html'
+    });
 }]);

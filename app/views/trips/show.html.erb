@@ -47,6 +47,10 @@
     <%= render 'components/trip/tabs/activities' %>
     <%= render 'components/trip/tabs/report' %>
     <%= render 'components/trip/tabs/catering' %>
+    <% if @user_can_edit %>
+      <%= render 'components/trip/tabs/documents' %>
+      <%= render 'components/trip/documents' %>
+    <% end %>
 <% end %>
 
 <div class="container" ng-controller="PlanController">
