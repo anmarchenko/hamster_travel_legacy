@@ -10,8 +10,9 @@
 #
 
 describe Travels::Document do
+  let(:trip) {FactoryGirl.create(:trip, :with_filled_days)}
+
   describe '.create' do
-    let(:trip) {FactoryGirl.create(:trip, :with_filled_days)}
     let(:file) { File.open("#{::Rails.root}/spec/fixtures/files/cat.jpg") }
 
     it 'is possible to create new document for given trip' do
@@ -24,6 +25,20 @@ describe Travels::Document do
       expect(doc.name).to eq('My awesome cat')
       expect(doc.mime_type).to eq('image/jpeg')
       expect(doc.file.remote_url =~ /\/system\/dragonfly\/test\/[A-Za-z0-9]{2}\/[A-Za-z0-9]{2}\/[A-Za-z0-9]{2}\/[A-Za-z0-9]{10}\/[A-Za-z0-9]{32}\.jpg/).not_to be_blank
+    end
+  end
+
+  describe '#as_json' do
+    let(:document) { FactoryGirl.create(:document, trip: trip) }
+
+    it 'returns json representation of document' do
+      json = document.as_json
+      expect(json['id']).to eq(document.id)
+      expect(json['name']).to eq(document.name)
+      expect(json['mime_type']).to eq(document.mime_type)
+
+      expect(json['file_uid']).to eq(nil)
+      expect(json['trip_id']).to eq(nil)
     end
   end
 end

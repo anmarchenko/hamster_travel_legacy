@@ -50,6 +50,7 @@ Rails.application.routes.draw do
         end
         resources :days_activities, only: [:index, :create]
         resources :days_transfers, only: [:index, :create]
+        resources :documents
       end
       resources :caterings, only: [:show, :update]
       resources :user_shows, only: [:show]

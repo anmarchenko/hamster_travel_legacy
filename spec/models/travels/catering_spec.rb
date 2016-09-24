@@ -24,7 +24,5 @@ describe Travels::Catering do
       expect(catering.persisted?).to be_truthy
       expect(catering.trip_id).to eq(trip.id)
     end
-
   end
-
 end

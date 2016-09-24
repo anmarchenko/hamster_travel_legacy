@@ -35,5 +35,9 @@ module Travels
       digest = Digest::MD5.hexdigest(file_name)
       "#{digest[0, 2]}/#{digest[2, 2]}/#{digest[4, 2]}/#{digest[6, 10]}"
     end
+
+    def as_json(**_args)
+      super(except: [:file_uid, :trip_id])
+    end
   end
 end

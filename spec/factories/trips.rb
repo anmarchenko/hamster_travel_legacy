@@ -175,4 +175,12 @@ FactoryGirl.define do
     persons_count(2)
   end
 
+  factory :document, class: 'Travels::Document' do
+    name { 'My cat photo' }
+    mime_type { 'image/jpeg' }
+
+    before :create do |document|
+      document.store(File.open("#{::Rails.root}/spec/fixtures/files/cat.jpg"))
+    end
+  end
 end
