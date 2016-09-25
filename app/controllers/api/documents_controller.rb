@@ -9,6 +9,12 @@ module Api
     end
 
     def create
+      (params[:files] || {}).values.each do |file|
+        document = Travels::Document.new(name: file.original_filename, mime_type: file.content_type, trip: @trip)
+        document.store(file)
+        document.save
+      end
+      render json: { success: true }
     end
 
     def update
