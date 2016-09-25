@@ -2,8 +2,8 @@
     <div class="trip-document col-md-3 col-xs-12 col-sm-6">
       <div class="trip-document-icon">
         <a href="/api/trips/{{$ctrl.tripId}}/documents/{{$ctrl.document.id}}" target="_blank">
-          <%= image_tag 'filetypes/txt.png', 'ng-if' => '!$ctrl.document.icon_url' %>
-          <img ng-if="$ctrl.document.icon_url" ng-src="$ctrl.document.icon_url" />
+          <%= image_tag 'filetypes/txt.png', 'ng-if' => '!$ctrl.document.icon' %>
+          <span ng-if="$ctrl.document.icon" ng-bind-html="$ctrl.document.icon" />
         </a>
       </div>
       <div class="trip-document-info">

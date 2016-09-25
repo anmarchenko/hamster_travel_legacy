@@ -2,8 +2,6 @@ require 'rack/mime'
 
 module Api
   class DocumentsController  < ApplicationController
-    EXTENSIONS = Rack::Mime::MIME_TYPES.invert
-
     before_action :authenticate_user!
     before_action :find_trip
     before_action :find_document, only: [:update, :show, :destroy]
@@ -30,7 +28,7 @@ module Api
 
     def show
       file_stream = open(@document.file.remote_url)
-      send_data file_stream.read, filename: "#{@document.name}#{EXTENSIONS[@document.mime_type]}",
+      send_data file_stream.read, filename: "#{@document.name}#{@document.extension}",
                                   type: @document.mime_type,
                                   disposition: 'inline'
     end
