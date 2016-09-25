@@ -7,7 +7,7 @@ describe Api::DocumentsController do
       let!(:document) { FactoryGirl.create(:document, trip: trip) }
 
       it 'returns document jsons for trip' do
-        get 'index', params: {trip_id: trip.id}
+        get 'index', params: { trip_id: trip.id }
         json = JSON.parse(response.body)
         expect(json['documents'].count).to eq(1)
         doc = json['documents'].first
@@ -21,7 +21,7 @@ describe Api::DocumentsController do
       let!(:document) { FactoryGirl.create(:document, trip: trip) }
 
       it 'returns documents json for trip' do
-        get 'index', params: {trip_id: trip.id}
+        get 'index', params: { trip_id: trip.id }
         expect(response).to redirect_to('/errors/no_access')
       end
     end
@@ -96,6 +96,22 @@ describe Api::DocumentsController do
         get 'show', params: { trip_id: trip.id, id: document.id }
         expect(response.headers['Content-Type']).to eq('image/jpeg')
         expect(response.headers['Content-Disposition']).to eq("inline; filename=\"My cat photo.jpg\"")
+      end
+    end
+  end
+
+  describe '#destroy' do
+    login_user
+
+    context 'when logged user is included in trip' do
+      let(:trip) { FactoryGirl.create(:trip, users: [subject.current_user]) }
+      let!(:document) { FactoryGirl.create(:document, trip: trip) }
+
+      it 'destroys document' do
+        delete 'destroy', params: { trip_id: trip.id, id: document.id }
+        json = JSON.parse(response.body)
+        expect(json['success']).to eq(true)
+        expect(trip.reload.documents.count).to eq(0)
       end
     end
   end

@@ -36,6 +36,8 @@ module Api
     end
 
     def destroy
+      @document.destroy
+      render json: { success: @document.destroyed? }
     end
 
     private
