@@ -56,6 +56,9 @@
       .trip-document-info {
         width: calc(100% - 63px);
         .trip-document-name {
+          &.edited {
+            margin-top: -10px;
+          }
           a {
             display: block;
             width: inherit;
@@ -67,6 +70,9 @@
 
         .trip-document-actions {
           margin-top: 10px;
+          &.edited {
+            margin-top: 5px;
+          }
           img {
             height: 16px;
           }

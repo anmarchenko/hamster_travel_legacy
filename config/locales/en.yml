@@ -228,6 +228,7 @@ en:
       upload: Drop files here to upload or click to select from your computer
       delete_confirmation: Document will be deleted
       delete_success: Document is deleted
+      save_error: Document wasn't saved (name should not be empty)
     expenses:
       breakfast: Breakfast
       dinner: Dinner

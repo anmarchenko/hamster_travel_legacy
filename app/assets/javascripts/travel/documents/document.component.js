@@ -5,6 +5,8 @@ angular.module('travel').component('document', {
         document: '<',
         tripId: '<',
         deleteSuccessMessage: '<',
+        saveSuccessMessage: '<',
+        saveErrorMessage: '<',
         onChange: '&'
     }
 });
