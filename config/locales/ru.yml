@@ -213,6 +213,9 @@ ru:
         current_password: Текущий пароль
         currency: Валюта
   trips:
+    documents:
+      empty: Ни одного документа не загружено
+      upload: Перетащи сюда файлы или кликни, чтобы выбрать со своего компьютера
     expenses:
       breakfast: Завтрак
       dinner: Ужин

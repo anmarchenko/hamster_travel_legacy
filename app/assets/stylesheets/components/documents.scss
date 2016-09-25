@@ -1,0 +1,79 @@
+.work-area {
+  .trip-documents-upload-area {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 100%;
+    height: 300px;
+    border: 4px dashed $border-grey;
+    cursor: pointer;
+
+    &.dragged-over {
+      border-color: $ctaColor;
+    }
+
+    &.uploading {
+      opacity: .5;
+    }
+
+    .upload-text {
+      margin: 30px auto;
+      max-width: 400px;
+      font-size: 1.5em;
+      color: $text-grey;
+      text-align: center;
+    }
+
+    .upload-icon {
+      margin: 0 auto;
+      width: 80px;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+  .trip-documents {
+    .trip-documents-empty {
+      font-size: 1.5em;
+      color: $text-grey;
+    }
+  }
+  .trip-documents-mockup {
+    .trip-document-mockup {
+      padding: 10px;
+
+      .trip-document-mockup-icon {
+        display: inline-block;
+        width: 48px;
+        height: 48px;
+        margin-right: 5px;
+        background-color: $light-grey;
+        border-radius: 4px;
+      }
+      .trip-document-mockup-info {
+        display: inline-block;
+
+        .trip-document-mockup-name {
+          background-color: $light-grey;
+          border-radius: 4px;
+          width: 100px;
+          height: 14px;
+          vertical-align: top;
+        }
+
+        .trip-document-mockup-actions {
+          margin-top: 16px;
+
+          .trip-document-mockup-action {
+            background-color: $light-grey;
+            display: inline-block;
+            border-radius: 4px;
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+  }
+}

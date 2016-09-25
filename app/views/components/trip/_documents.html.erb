@@ -1,10 +1,74 @@
 <script id="documents.html" type="text/ng-template">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="trip-documents" ng-show="documents_loaded">
+  <div class="row trip-documents" ng-show="documents_loaded">
+    <div class="col-md-12 trip-documents-empty" ng-if="documents.length == 0">
+      <%= t('trips.documents.empty') %>
+    </div>
+    <document ng-if="documents.length > 0"
+              ng-repeat="document in documents track by document.id"
+              document="document"
+    >
+    </document>
+  </div>
+  <div class="row trip-documents-mockup" ng-hide="documents_loaded">
+    <div class="col-md-3 col-sm-6 col-xs-12 trip-document-mockup">
+      <div class="trip-document-mockup-icon"></div>
+      <div class="trip-document-mockup-info">
+        <div class="trip-document-mockup-name"></div>
+        <div class="trip-document-mockup-actions">
+          <div class="trip-document-mockup-action"></div>
+          <div class="trip-document-mockup-action"></div>
+        </div>
       </div>
-      <div class="trip-documents-mockup" ng-hide="documents_loaded">
-        MOCKUP
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-12 trip-document-mockup">
+      <div class="trip-document-mockup-icon"></div>
+      <div class="trip-document-mockup-info">
+        <div class="trip-document-mockup-name"></div>
+        <div class="trip-document-mockup-actions">
+          <div class="trip-document-mockup-action"></div>
+          <div class="trip-document-mockup-action"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-12 trip-document-mockup">
+      <div class="trip-document-mockup-icon"></div>
+      <div class="trip-document-mockup-info">
+        <div class="trip-document-mockup-name"></div>
+        <div class="trip-document-mockup-actions">
+          <div class="trip-document-mockup-action"></div>
+          <div class="trip-document-mockup-action"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-12 trip-document-mockup">
+      <div class="trip-document-mockup-icon"></div>
+      <div class="trip-document-mockup-info">
+        <div class="trip-document-mockup-name"></div>
+        <div class="trip-document-mockup-actions">
+          <div class="trip-document-mockup-action"></div>
+          <div class="trip-document-mockup-action"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="trip-documents-upload-area"
+           ng-class="{ uploading: uploading }"
+           ngf-select="upload($files)"
+           ngf-drop="upload($files)"
+           ngf-multiple="true"
+           ngf-max-size="10MB"
+           ngf-drag-over-class="'dragged-over'"
+           ngf-disabled="uploading"
+      >
+        <div class="upload-text">
+          <%= t('trips.documents.upload') %>
+        </div>
+        <div class="upload-icon">
+          <%= image_tag 'documents/upload.svg' %>
+        </div>
       </div>
     </div>
   </div>
