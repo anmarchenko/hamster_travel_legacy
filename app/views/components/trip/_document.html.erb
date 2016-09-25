@@ -1,5 +1,5 @@
 <script id="document.html" type="text/ng-template">
-    <div class="trip-document col-md-3 col-xs-12 col-sm-6">
+    <div class="trip-document">
       <div class="trip-document-icon">
         <a href="/api/trips/{{$ctrl.tripId}}/documents/{{$ctrl.document.id}}" target="_blank">
           <%= image_tag 'filetypes/txt.png', 'ng-if' => '!$ctrl.document.icon' %>
@@ -16,7 +16,10 @@
           <a href="javascript:void(0);" ng-click="startEdit()" class="trip-document-edit-action">
             <%= image_tag 'buttons/edit.svg' %>
           </a>
-          <a href="javascript:void(0);" ng-click="delete()" class="trip-document-delete-action">
+          <a href="javascript:void(0);" class="trip-document-delete-action"
+             action-confirmation="delete()"
+             confirmation-text="<%= t('trips.documents.delete_confirmation') %>"
+          >
             <%= image_tag 'buttons/trash.svg' %>
           </a>
         </div>

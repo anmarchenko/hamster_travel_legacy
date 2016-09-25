@@ -216,6 +216,8 @@ ru:
     documents:
       empty: Ни одного документа не загружено
       upload: Перетащи сюда файлы или кликни, чтобы выбрать со своего компьютера
+      delete_confirmation: Документ будет удален
+      delete_success: Документ удален
     expenses:
       breakfast: Завтрак
       dinner: Ужин

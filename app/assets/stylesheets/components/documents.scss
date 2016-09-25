@@ -38,37 +38,56 @@
       color: $text-grey;
     }
     document.ng-enter {
-      animation: fadeInDown 1s;
+      animation: fadeInDown 1.5s;
+    }
+    document.ng-leave {
+      animation: fadeOut 1s;
     }
 
     .trip-document {
       display: flex;
       flex-flow: row;
+      margin-top: 30px;
 
       .trip-document-icon {
         margin-right: 15px;
       }
 
-      .trip-document-actions {
-        margin-top: 10px;
-        img {
-          height: 16px;
+      .trip-document-info {
+        width: calc(100% - 63px);
+        .trip-document-name {
+          a {
+            display: block;
+            width: inherit;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+          }
         }
 
-        a {
-          opacity: .5;
-        }
-        a:hover {
-          opacity: 1;
-        }
-        a:hover, a:focus, a:visited, a:active {
-          text-decoration: none;
-        }
+        .trip-document-actions {
+          margin-top: 10px;
+          img {
+            height: 16px;
+          }
 
-        .trip-document-edit-action, .trip-document-save-action {
-          margin-right: 8px;
+          a {
+            opacity: .5;
+          }
+          a:hover {
+            opacity: 1;
+          }
+          a:hover, a:focus, a:visited, a:active {
+            text-decoration: none;
+            outline: none;
+          }
+
+          .trip-document-edit-action, .trip-document-save-action {
+            margin-right: 8px;
+          }
         }
       }
+
     }
   }
   .trip-documents-mockup {

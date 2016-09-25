@@ -226,6 +226,8 @@ en:
     documents:
       empty: No uploaded documents yet
       upload: Drop files here to upload or click to select from your computer
+      delete_confirmation: Document will be deleted
+      delete_success: Document is deleted
     expenses:
       breakfast: Breakfast
       dinner: Dinner

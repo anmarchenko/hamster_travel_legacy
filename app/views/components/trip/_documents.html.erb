@@ -3,10 +3,13 @@
     <div class="col-md-12 trip-documents-empty" ng-if="documents.length == 0">
       <%= t('trips.documents.empty') %>
     </div>
-    <document ng-if="documents.length > 0"
+    <document class="col-md-3 col-xs-12 col-sm-6"
+              ng-if="documents.length > 0"
               ng-repeat="document in documents track by document.id"
               document="document"
               trip-id="$ctrl.tripId"
+              on-change="loadDocuments()"
+              delete-success-message="'<%= t('trips.documents.delete_success') %>'"
     >
     </document>
   </div>

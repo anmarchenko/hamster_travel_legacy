@@ -3,6 +3,8 @@ angular.module('travel').component('document', {
     templateUrl: 'document.html',
     bindings: {
         document: '<',
-        tripId: '<'
+        tripId: '<',
+        deleteSuccessMessage: '<',
+        onChange: '&'
     }
 });
