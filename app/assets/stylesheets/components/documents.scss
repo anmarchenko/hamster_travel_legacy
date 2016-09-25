@@ -37,6 +37,39 @@
       font-size: 1.5em;
       color: $text-grey;
     }
+    document.ng-enter {
+      animation: fadeInDown 1s;
+    }
+
+    .trip-document {
+      display: flex;
+      flex-flow: row;
+
+      .trip-document-icon {
+        margin-right: 15px;
+      }
+
+      .trip-document-actions {
+        margin-top: 10px;
+        img {
+          height: 16px;
+        }
+
+        a {
+          opacity: .5;
+        }
+        a:hover {
+          opacity: 1;
+        }
+        a:hover, a:focus, a:visited, a:active {
+          text-decoration: none;
+        }
+
+        .trip-document-edit-action, .trip-document-save-action {
+          margin-right: 8px;
+        }
+      }
+    }
   }
   .trip-documents-mockup {
     .trip-document-mockup {

@@ -1,5 +1,37 @@
 <script id="document.html" type="text/ng-template">
-  <div class="trip-document">
-    {{$ctrl.document.name}}
-  </div>
+    <div class="trip-document col-md-3 col-xs-12 col-sm-6">
+      <div class="trip-document-icon">
+        <a href="/api/trips/{{$ctrl.tripId}}/documents/{{$ctrl.document.id}}" target="_blank">
+          <%= image_tag 'filetypes/txt.png', 'ng-if' => '!$ctrl.document.icon_url' %>
+          <img ng-if="$ctrl.document.icon_url" ng-src="$ctrl.document.icon_url" />
+        </a>
+      </div>
+      <div class="trip-document-info">
+        <div class="trip-document-name" ng-if="!edit">
+          <a href="/api/trips/{{$ctrl.tripId}}/documents/{{$ctrl.document.id}}" target="_blank">
+            {{$ctrl.document.name}}
+          </a>
+        </div>
+        <div class="trip-document-actions" ng-if="!edit">
+          <a href="javascript:void(0);" ng-click="startEdit()" class="trip-document-edit-action">
+            <%= image_tag 'buttons/edit.svg' %>
+          </a>
+          <a href="javascript:void(0);" ng-click="delete()" class="trip-document-delete-action">
+            <%= image_tag 'buttons/trash.svg' %>
+          </a>
+        </div>
+        <div class="trip-document-name" ng-if="edit">
+          <input type="text" />
+        </div>
+        <div class="trip-document-actions" ng-if="edit">
+          <a href="javascript:void(0);" ng-click="save()" class="trip-document-save-action">
+            <%= image_tag 'buttons/check.svg' %>
+          </a>
+          <a href="javascript:void(0);" ng-click="save()" class="trip-document-back-action">
+            <%= image_tag 'buttons/back.svg' %>
+          </a>
+        </div>
+
+      </div>
+    </div>
 </script>

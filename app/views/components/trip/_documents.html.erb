@@ -6,6 +6,7 @@
     <document ng-if="documents.length > 0"
               ng-repeat="document in documents track by document.id"
               document="document"
+              trip-id="$ctrl.tripId"
     >
     </document>
   </div>
