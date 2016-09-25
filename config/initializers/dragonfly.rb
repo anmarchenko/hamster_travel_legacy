@@ -9,9 +9,9 @@ Dragonfly.app.configure do
   url_format "/media/:job/:name"
 
   if Rails.env.test?
-    datastore :file,
+    datastore(:file,
       root_path: Rails.root.join('public/system/dragonfly', Rails.env),
-      server_root: Rails.root.join('public')
+      server_root: '')
   else
     datastore :s3,
       bucket_name: 'hamster-travel-uploads',
