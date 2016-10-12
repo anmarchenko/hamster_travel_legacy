@@ -4,16 +4,35 @@
     <%= render 'components/users/user_info' %>
     <%= render 'components/users/user_trips' %>
 <% end %>
-
-<div class="user-profile-header-wrapper">
-  <div class="user-profile-header">
-    <div class="container">
-      <user-info user-id="'<%= @user.id %>'" edit="<%= @edit %>"></user-info>
+<div ng-controller="UserProfileController">
+  <div class="user-profile-header-wrapper">
+    <div class="user-profile-header">
+      <div class="container">
+        <user-info user-id="'<%= @user.id %>'" edit="<%= @edit %>"></user-info>
+      </div>
+      <div class="user-profile-tabs">
+        <div class="container">
+          <ul class="nav nav-tabs">
+            <li>
+              <a ui-sref="trips" ui-sref-active="active" href="javascript:void(0);">
+                <%= inline_svg 'users/trips.svg', class: 'tab-image transfers-img' %>
+                <%= t('users.show.trips') %>
+              </a>
+            </li>
+            <li>
+              <a ui-sref="map" ui-sref-active="active" href="javascript:void(0);">
+                <%= inline_svg 'users/map.svg', class: 'tab-image map-img' %>
+                <%= t('users.show.map') %>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="container user-profile">
-  <user-trips user-id="'<%= @user.id %>'" path="'planned_trips'" header="'<%= t('users.show.planned_trips') %>'"></user-trips>
-  <user-trips user-id="'<%= @user.id %>'" path="'finished_trips'" header="'<%= t('users.show.finished_trips') %>'"></user-trips>
+  <div class="container user-profile">
+    <user-trips user-id="'<%= @user.id %>'" path="'planned_trips'" header="'<%= t('users.show.planned_trips') %>'"></user-trips>
+    <user-trips user-id="'<%= @user.id %>'" path="'finished_trips'" header="'<%= t('users.show.finished_trips') %>'"></user-trips>
+  </div>
 </div>

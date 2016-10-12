@@ -1,11 +1,11 @@
 .user-profile-header-wrapper {
+  position: relative;
   margin-top: -95px;
   width: 100%;
   height: 500px;
 
   @media (max-width: 768px) {
     margin-top: -200px;
-    height: 470px;
   }
 
   background: image-url('backgrounds/user_profile.jpg') no-repeat center center fixed;
@@ -21,6 +21,61 @@
 
     color: white;
     padding-top: 200px;
+
+    .user-profile-tabs {
+      width: 100%;
+      background: white;
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+      position: absolute;
+      bottom: 0px;
+
+      .nav-tabs {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        font-weight: 300;
+        display: flex;
+        padding: 0;
+        list-style: none;
+        flex-flow: row wrap;
+
+        li {
+          margin-right: 20px;
+          text-align: center;
+          .tab-image {
+            display: block;
+            margin: auto;
+            fill: $main-grey;
+            stroke: $main-grey;
+            width: 40px;
+            height: 40px;
+          }
+
+          a {
+            font-weight: 500;
+            color: $main-grey;
+          }
+
+          a:hover {
+            color: $ctaColor;
+            box-shadow: none;
+            .tab-image {
+              fill: $ctaColor;
+              stroke: $ctaColor;
+            }
+          }
+
+          a.active, a.active:focus {
+            border: none;
+            color: $ctaColor;
+            .tab-image {
+              fill: $ctaColor;
+              stroke: $ctaColor;
+            }
+          }
+        }
+      }
+    }
   }
 }
 
