@@ -243,6 +243,18 @@
                             <% end %>
                         <% end %>
                     <% end %>
+                    <% unless activity.address.blank? %>
+                        <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
+                            <%= docx_text(fontSize: fontSize) do %><%= t('trips.show.address').mb_chars.capitalize %>: <%= activity.address %>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                    <% unless activity.working_hours.blank? %>
+                        <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
+                            <%= docx_text(fontSize: fontSize) do %><%= t('trips.show.working_hours').mb_chars.capitalize %>: <%= activity.working_hours %>
+                            <% end %>
+                        <% end %>
+                    <% end %>
                     <% unless activity.comment.blank? %>
                         <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
                             <%= docx_text(fontSize: fontSize, italic: true) do %><%= activity.comment %>
