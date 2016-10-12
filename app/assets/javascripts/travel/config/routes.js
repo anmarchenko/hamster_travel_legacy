@@ -24,4 +24,14 @@ angular.module('travel').config(['$stateProvider', function($stateProvider) {
         url: '/documents',
         templateUrl: 'documentsTab.html'
     });
+    $stateProvider.state({
+        name: 'user_trips',
+        url: '/trips',
+        templateUrl: 'userTripsTab.html'
+    });
+    $stateProvider.state({
+        name: 'user_map',
+        url: '/map',
+        templateUrl: 'userMapTab.html'
+    });
 }]);
