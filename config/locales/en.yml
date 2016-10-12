@@ -365,6 +365,7 @@ en:
       no_trips: No trips added or planned yet...
       trips: Trips
       map: Map
+      user_map: Trips map
   widgets:
     trips:
       trip_box:
