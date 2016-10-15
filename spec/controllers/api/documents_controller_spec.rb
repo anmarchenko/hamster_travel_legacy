@@ -33,8 +33,12 @@ describe Api::DocumentsController do
     context 'when logged user is included in trip' do
       let(:trip) { FactoryGirl.create(:trip, users: [subject.current_user]) }
 
-      let(:files) { {'0' => fixture_file_upload("#{::Rails.root}/spec/fixtures/files/cat.jpg", 'image/jpeg'),
-                     '1' => fixture_file_upload("#{::Rails.root}/spec/fixtures/files/hamster.jpg", 'image/jpeg')} }
+      let(:files) do
+        {
+          '0' => fixture_file_upload("#{::Rails.root}/spec/fixtures/files/cat.jpg", 'image/jpeg'),
+          '1' => fixture_file_upload("#{::Rails.root}/spec/fixtures/files/hamster.jpg", 'image/jpeg')
+        }
+      end
 
       it 'creates as many documents as there are uploaded files' do
         post 'create', params: { files: files, trip_id: trip.id }
@@ -47,11 +51,11 @@ describe Api::DocumentsController do
 
         expect(docs.first.name).to eq('cat')
         expect(docs.first.mime_type).to eq('image/jpeg')
-        expect(docs.first.file.remote_url =~ /\/system\/dragonfly\/test\/[A-Za-z0-9]{2}\/[A-Za-z0-9]{2}\/[A-Za-z0-9]{2}\/[A-Za-z0-9]{10}\/[A-Za-z0-9]{32}\.jpg/).not_to be_blank
+        expect(docs.first.file.remote_url =~ %r/\/system\/dragonfly\/test\/[A-Za-z0-9]{2}\/[A-Za-z0-9]{2}\/[A-Za-z0-9]{2}\/[A-Za-z0-9]{10}\/[A-Za-z0-9]{32}\.jpg/).not_to be_blank
 
         expect(docs.last.name).to eq('hamster')
         expect(docs.last.mime_type).to eq('image/jpeg')
-        expect(docs.last.file.remote_url =~ /\/system\/dragonfly\/test\/[A-Za-z0-9]{2}\/[A-Za-z0-9]{2}\/[A-Za-z0-9]{2}\/[A-Za-z0-9]{10}\/[A-Za-z0-9]{32}\.jpg/).not_to be_blank
+        expect(docs.last.file.remote_url =~ %r/\/system\/dragonfly\/test\/[A-Za-z0-9]{2}\/[A-Za-z0-9]{2}\/[A-Za-z0-9]{2}\/[A-Za-z0-9]{10}\/[A-Za-z0-9]{32}\.jpg/).not_to be_blank
       end
     end
   end
@@ -95,7 +99,25 @@ describe Api::DocumentsController do
       it 'downloads file contents' do
         get 'show', params: { trip_id: trip.id, id: document.id }
         expect(response.headers['Content-Type']).to eq('image/jpeg')
-        expect(response.headers['Content-Disposition']).to eq("inline; filename=\"My cat photo.jpg\"")
+        expect(response.headers['Content-Disposition']).to eq('inline; filename="My cat photo.jpg"')
+      end
+    end
+
+    context 'when user is trying to access document from another trip' do
+      let(:my_trip) { FactoryGirl.create(:trip, users: [subject.current_user]) }
+      let!(:my_document) { FactoryGirl.create(:document, trip: my_trip) }
+
+      let(:not_my_trip) { FactoryGirl.create(:trip) }
+      let!(:not_my_document) { FactoryGirl.create(:document, trip: not_my_trip) }
+
+      it 'redirects to not_found if document is not from this trip' do
+        get 'show', params: { trip_id: my_trip.id, id: not_my_document.id }
+        expect(response).to redirect_to('/errors/not_found')
+      end
+
+      it 'redirects to no_access if user is not included in the trip' do
+        get 'show', params: { trip_id: not_my_trip.id, id: not_my_document.id }
+        expect(response).to redirect_to('/errors/no_access')
       end
     end
   end

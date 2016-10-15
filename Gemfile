@@ -92,7 +92,7 @@ group :production do
 end
 
 group :development do
-  # add here rubocop, etc
+  gem 'rubocop'
 end
 
 group :test do

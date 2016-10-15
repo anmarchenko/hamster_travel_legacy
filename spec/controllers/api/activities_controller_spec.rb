@@ -1,5 +1,4 @@
 describe Api::ActivitiesController do
-
   describe '#index' do
     let!(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
 
@@ -8,8 +7,7 @@ describe Api::ActivitiesController do
 
       context 'and when there is trip' do
         it 'returns trip days as JSON' do
-
-          get 'index', params: {trip_id: trip.id.to_s, day_id: trip.days.first.id.to_s, format: :json}
+          get 'index', params: { trip_id: trip.id.to_s, day_id: trip.days.first.id.to_s, format: :json }
           expect(response).to have_http_status 200
           day_json = JSON.parse(response.body)
 
@@ -33,7 +31,7 @@ describe Api::ActivitiesController do
 
     context 'when no logged user' do
       it 'behaves the same' do
-        get 'index', params: {trip_id: trip.id.to_s, day_id: trip.days.first.id.to_s, format: :json}
+        get 'index', params: { trip_id: trip.id.to_s, day_id: trip.days.first.id.to_s, format: :json }
         expect(response).to have_http_status 200
         day_json = JSON.parse(response.body)
 
