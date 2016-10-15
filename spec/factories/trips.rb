@@ -99,11 +99,11 @@ FactoryGirl.define do
 
       city_to_id { Geo::City.all.last.id }
 
-      amount_cents { rand(10000) * 100 }
+      amount_cents { rand(10_000) * 100 }
       amount_currency { 'RUB' }
 
-      start_time (Date.today.beginning_of_day)
-      end_time (Date.today.end_of_day)
+      start_time(Date.today.beginning_of_day)
+      end_time(Date.today.end_of_day)
     end
 
     trait :flight do
@@ -111,7 +111,7 @@ FactoryGirl.define do
 
       city_to_id { Geo::City.all.last.id }
 
-      amount_cents { rand(10000) * 100 }
+      amount_cents { rand(10_000) * 100 }
       amount_currency { 'RUB' }
 
       type { Travels::Transfer::Types::FLIGHT }
@@ -122,8 +122,8 @@ FactoryGirl.define do
       station_from { 'HAM' }
       station_to { 'FOO' }
 
-      start_time (Date.today.beginning_of_day)
-      end_time (Date.today.end_of_day)
+      start_time(Date.today.beginning_of_day)
+      end_time(Date.today.end_of_day)
 
       comment { 'very long comment' }
     end
@@ -131,8 +131,8 @@ FactoryGirl.define do
 
   factory :activity, class: 'Travels::Activity' do
     trait :with_data do
-      sequence(:name) {|index| "Activity #{index}" }
-      amount_cents { rand(10000) * 100 }
+      sequence(:name) { |index| "Activity #{index}" }
+      amount_cents { rand(10_000) * 100 }
       amount_currency { 'RUB' }
       comment { 'Activity comment' }
       link_description { 'Activity link description' }
@@ -149,7 +149,7 @@ FactoryGirl.define do
   factory :hotel, class: 'Travels::Hotel' do
     trait :with_data do
       name { 'Hotel' }
-      amount_cents { rand(10000) * 100 }
+      amount_cents { rand(10_000) * 100 }
       amount_currency { 'RUB' }
       comment { 'Comment' }
     end
@@ -158,7 +158,7 @@ FactoryGirl.define do
   factory :expense, class: 'Travels::Expense' do
     trait :with_data do
       sequence(:name) { |n| "Day expense #{n}" }
-      amount_cents { rand(10000) * 100 }
+      amount_cents { rand(10_000) * 100 }
       amount_currency { 'RUB' }
     end
   end
@@ -168,7 +168,7 @@ FactoryGirl.define do
 
     description { Faker::Lorem.paragraph }
 
-    amount_cents { rand(10000) * 100 }
+    amount_cents { rand(10_000) * 100 }
     amount_currency { 'RUB' }
 
     days_count(3)

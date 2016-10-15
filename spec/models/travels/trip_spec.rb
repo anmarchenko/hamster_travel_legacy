@@ -23,7 +23,6 @@
 #
 
 describe Travels::Trip do
-
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:start_date) }
   it { should validate_presence_of(:end_date) }
@@ -64,7 +63,6 @@ describe Travels::Trip do
     before(:each) { FactoryGirl.create_list(:trip, 12, author_user_id: 'user_test_travels_trip') }
 
     context 'when there are several trips' do
-
       it 'paginates per 10 items by default' do
         trips = Travels::Trip.all.page(1).to_a
         expect(trips.count).to eq(10)
@@ -78,119 +76,6 @@ describe Travels::Trip do
           trips = Travels::Trip.where(author_user_id: 'user_test_travels_trip').to_a
           expect(trips.count).to eq(12)
         end
-      end
-    end
-  end
-
-  describe '#update_plan' do
-    context 'when trip has start and end date' do
-      let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
-
-      it 'creates trip days on create' do
-        expect(trip.days.count).to eq(8)
-        expect(trip.days.first.date_when).to eq(trip.start_date)
-        expect(trip.days.last.date_when).to eq(trip.end_date)
-      end
-
-      it 'recounts dates on update preserving other data and updates transfer dates' do
-        Updaters::Trip.new(trip).update(start_date: 14.days.ago, end_date: 7.days.ago)
-        updated_trip = trip.reload
-
-        expect(updated_trip.days.count).to eq(8)
-        expect(updated_trip.days.first.date_when).to eq(14.days.ago.to_date)
-        expect(updated_trip.days.first.transfers.first.start_time.to_date).to eq(updated_trip.days.first.date_when)
-        expect(updated_trip.days.last.date_when).to eq(7.days.ago.to_date)
-        expect(updated_trip.days.last.transfers.first.start_time.to_date).to eq(updated_trip.days.last.date_when)
-
-        updated_trip.days.each_with_index do |day, index|
-          expect(day.comment).to eq("Day #{index}")
-        end
-      end
-
-      it 'creates new days when necessary' do
-        Updaters::Trip.new(trip).update(start_date: 16.days.ago, end_date: 7.days.ago)
-        updated_trip = trip.reload
-
-        expect(updated_trip.days.count).to eq(10)
-        expect(updated_trip.days.first.date_when).to eq(16.days.ago.to_date)
-        expect(updated_trip.days.last.date_when).to eq(7.days.ago.to_date)
-        expect(updated_trip.days.last.comment).to be_nil
-      end
-
-      it 'deletes days when necessary' do
-        Updaters::Trip.new(trip).update(start_date: 12.days.ago, end_date: 7.days.ago)
-        updated_trip = trip.reload
-
-        expect(updated_trip.days.count).to eq(6)
-        expect(updated_trip.days.first.date_when).to eq(12.days.ago.to_date)
-        expect(updated_trip.days.last.date_when).to eq(7.days.ago.to_date)
-        expect(updated_trip.days.last.comment).to eq("Day 5")
-      end
-
-      it 'converts to trip without dates without losing data' do
-        Updaters::Trip.new(trip).update(planned_days_count: 5, dates_unknown: true)
-        updated_trip = trip.reload
-
-        expect(updated_trip.start_date).to be_nil
-        expect(updated_trip.end_date).to be_nil
-
-        expect(updated_trip.days.count).to eq(5)
-        expect(updated_trip.days.first.date_when).to be_nil
-        expect(updated_trip.days.last.date_when).to be_nil
-        expect(updated_trip.days.last.comment).to eq("Day 4")
-        expect(updated_trip.days.first.comment).to eq("Day 0")
-      end
-    end
-
-    context 'when trip has only number of days' do
-      let(:trip) { FactoryGirl.create(:trip, :no_dates, :with_filled_days) }
-
-      it 'creates trip days on create' do
-        expect(trip.days.count).to eq(3)
-        expect(trip.days.first.date_when).to be_nil
-        expect(trip.days.last.date_when).to be_nil
-        expect(trip.days.first.index).to eq(0)
-        expect(trip.days.last.index).to eq(2)
-      end
-
-      it 'creates new days when necessary' do
-        Updaters::Trip.new(trip).update(planned_days_count: 5)
-        updated_trip = trip.reload
-
-        expect(updated_trip.days.count).to eq(5)
-        expect(updated_trip.days.first.index).to eq(0)
-        expect(updated_trip.days.last.index).to eq(4)
-
-        expect(updated_trip.days.first.comment).to eq("Day 0")
-        expect(updated_trip.days.last.comment).to eq(nil)
-      end
-
-      it 'deletes days when necessary' do
-        Updaters::Trip.new(trip).update(planned_days_count: 2)
-        updated_trip = trip.reload
-
-        expect(updated_trip.days.count).to eq(2)
-        expect(updated_trip.days.first.index).to eq(0)
-        expect(updated_trip.days.last.index).to eq(1)
-
-        expect(updated_trip.days.last.comment).to eq("Day 1")
-      end
-
-      it 'converts to trip with dates preserving data' do
-        Updaters::Trip.new(trip).update(start_date: Date.today, end_date: Date.today + 4.days, dates_unknown: false)
-
-        updated_trip = trip.reload
-
-        expect(updated_trip.planned_days_count).to be_nil
-
-        expect(updated_trip.days.count).to eq(5)
-        expect(updated_trip.days.first.index).to eq(0)
-        expect(updated_trip.days.last.index).to eq(4)
-        expect(updated_trip.days.first.date_when).to eq(Date.today)
-        expect(updated_trip.days.last.date_when).to eq(Date.today + 4.days)
-
-        expect(updated_trip.days.last.comment).to be_nil
-        expect(updated_trip.days.first.comment).to eq("Day 0")
       end
     end
   end
@@ -251,7 +136,8 @@ describe Travels::Trip do
         expect(trip.budget_sum).to eq([hotel_price, days_add_price, transfers_price, activities_price, caterings_price].reduce(&:+) / 100.0)
 
         budget_eur = trip.budget_sum('EUR')
-        should_be_eur = Money.new([hotel_price, days_add_price, transfers_price, activities_price, caterings_price].reduce(&:+), CurrencyHelper::DEFAULT_CURRENCY).exchange_to('EUR').to_f
+        should_be_eur = Money.new([hotel_price, days_add_price, transfers_price, activities_price, caterings_price].reduce(&:+),
+                                  CurrencyHelper::DEFAULT_CURRENCY).exchange_to('EUR').to_f
         expect((budget_eur - should_be_eur).abs).to be < 1.0
       end
     end
@@ -280,8 +166,10 @@ describe Travels::Trip do
       end
     end
     context 'for long trip name' do
-      let(:trip) { FactoryGirl.create(:trip,
-                                      name: 'very very very very very very very very very very very very very very very very very very very very long name') }
+      let(:trip) do
+        FactoryGirl.create(:trip,
+                           name: 'very very very very very very very very very very very very very very very very very very very very long name')
+      end
 
       it 'returns safe name' do
         expect(trip.name_for_file).to eq 'very_very_very_very_very_very_very_very_very_very_'
@@ -309,11 +197,9 @@ describe Travels::Trip do
       expect(trip_json['archived']).to eq(trip.archived)
       expect(trip_json['budget_for']).to eq(trip.budget_for)
     end
-
   end
 
   describe '#days_count' do
-
     context 'when new not saved trip' do
       let(:trip) { Travels::Trip.new }
 
@@ -374,5 +260,4 @@ describe Travels::Trip do
       expect(visited_countries_codes.first).to eq(trip.visited_cities.first.country_code)
     end
   end
-
 end
