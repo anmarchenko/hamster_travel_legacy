@@ -166,6 +166,15 @@
 }
 
 .user-profile {
+  .user-map-container {
+    &.ng-enter {
+      animation: fadeIn 1s;
+    }
+    .user-map-header {
+      margin-bottom: 20px;
+    }
+  }
+
   .user-trips-container {
     &.ng-enter {
       animation: fadeIn 1s;

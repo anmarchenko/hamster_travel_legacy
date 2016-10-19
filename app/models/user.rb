@@ -75,12 +75,12 @@ class User < ApplicationRecord
   end
 
   def finished_trip_count
-    self.trips.where(archived: false, status_code: Travels::Trip::StatusCodes::FINISHED).count
+    trips.where(archived: false, status_code: Travels::Trip::StatusCodes::FINISHED).count
   end
 
   def visited_cities_ids
-    self.cities.where('trips.archived' => false, 'trips.status_code' => Travels::Trip::StatusCodes::FINISHED)
-      .select(:id).map(&:id).uniq
+    cities.where('trips.archived' => false, 'trips.status_code' => Travels::Trip::StatusCodes::FINISHED)
+          .select(:id).map(&:id).uniq
   end
 
   def visited_cities_count
@@ -98,11 +98,11 @@ class User < ApplicationRecord
 
   def as_json(**args)
     res = super(args.merge(except: ['email']))
-    res['image_url'] = self.image_url
-    res['full_name'] = self.full_name
-    res['home_town_text'] = self.home_town_text
-    res['color'] = self.background_color
-    res['initials'] = self.initials
+    res['image_url'] = image_url
+    res['full_name'] = full_name
+    res['home_town_text'] = home_town_text
+    res['color'] = background_color
+    res['initials'] = initials
     # statistics
     res['finished_trips_count'] = finished_trip_count
     res['visited_cities_count'] = visited_cities_count

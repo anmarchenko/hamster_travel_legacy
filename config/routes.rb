@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   match '/404', to: 'errors#not_found', via: :all
 
   resources :errors, only: [] do
@@ -9,7 +8,6 @@ Rails.application.routes.draw do
   end
 
   scope '(:locale)', locale: /ru|en/ do
-
     devise_for :users, controllers: { registrations: 'registrations' }
 
     resources :users, only: [:show, :edit, :update] do
@@ -29,7 +27,7 @@ Rails.application.routes.draw do
       resources :users, only: [:index, :show] do
         member do
           post :upload_image, :delete_image
-          get :planned_trips, :finished_trips
+          get :planned_trips, :finished_trips, :visited_countries
         end
       end
       resources :participants, only: [:index]
@@ -61,5 +59,4 @@ Rails.application.routes.draw do
   end
 
   root to: 'home_page#index'
-
 end

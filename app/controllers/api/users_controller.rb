@@ -1,6 +1,7 @@
 class Api::UsersController < ApplicationController
   before_action :authenticate_user!, only: [:upload_image, :delete_image]
-  before_action :find_user, only: [:show, :upload_image, :delete_image, :planned_trips, :finished_trips]
+  before_action :find_user, only: [:show, :upload_image, :delete_image,
+                                   :planned_trips, :finished_trips, :visited_countries]
   before_action :authorize, only: [:upload_image, :delete_image]
 
   def index
@@ -8,9 +9,13 @@ class Api::UsersController < ApplicationController
     render json: [] and return if term.blank? || term.length < 2
 
     query = User.find_by_term(term).page(1)
-    query = query.where.not(:id => current_user.id) if current_user.present?
-    res = query.collect { |user| {name: user.full_name, text: user.full_name, code: user.id.to_s,
-                                  photo_url: user.image_url, color: user.background_color, initials: user.initials} }
+    query = query.where.not(id: current_user.id) if current_user.present?
+    res = query.collect do |user|
+      {
+        name: user.full_name, text: user.full_name, code: user.id.to_s,
+        photo_url: user.image_url, color: user.background_color, initials: user.initials
+      }
+    end
 
     render json: res
   end
@@ -48,6 +53,10 @@ class Api::UsersController < ApplicationController
     render json: { trips: Finders::Trips.for_user_finished(@user, params[:page], current_user)
                                         .includes(:cities)
                                         .map { |trip| trip.short_json(32) } }
+  end
+
+  def visited_countries
+    render json: { countries: @user.visited_countries.map(&:iso3_code) }
   end
 
   private
