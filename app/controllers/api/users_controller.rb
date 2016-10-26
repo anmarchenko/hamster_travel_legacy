@@ -56,7 +56,9 @@ class Api::UsersController < ApplicationController
   end
 
   def visited_countries
-    render json: { countries: @user.visited_countries.map(&:iso3_code) }
+    render json: {
+      countries: @user.visited_countries.map(&:visited_country_json).sort_by { |json| json[:name] }
+    }
   end
 
   private

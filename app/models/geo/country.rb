@@ -27,32 +27,31 @@
 
 module Geo
   class Country < ApplicationRecord
-
     include Concerns::Geographical
 
-    translates :name, :fallbacks_for_empty_translations => true
+    translates :name, fallbacks_for_empty_translations: true
 
     def load_additional_info(str)
       values = Geo::Country.split_geonames_string(str)
       update_attributes(
-          iso_code: values[0].strip,
-          iso3_code: values[1].strip,
-          iso_numeric_code: values[2].strip,
-          area: values[6].strip,
-          continent: values[8].strip,
-          currency_code: values[10].strip,
-          currency_text: values[11].strip,
-          languages: values[15].strip.split(/,/)
+        iso_code: values[0].strip,
+        iso3_code: values[1].strip,
+        iso_numeric_code: values[2].strip,
+        area: values[6].strip,
+        continent: values[8].strip,
+        currency_code: values[10].strip,
+        currency_text: values[11].strip,
+        languages: values[15].strip.split(/,/)
       )
     end
 
     def iso_info
-      ISO3166::Country.find_country_by_alpha2(self.iso_code)
+      ISO3166::Country.find_country_by_alpha2(iso_code)
     end
 
     def self.find_by_term(term)
       term = Regexp.escape(term)
-      self.all.with_translations.where("\"country_translations\".\"name\" ILIKE ?", "#{term}%").order(population: :desc)
+      all.with_translations.where("\"country_translations\".\"name\" ILIKE ?", "#{term}%").order(population: :desc)
     end
 
     def self.method_missing(m, *args, &block)
@@ -61,5 +60,12 @@ module Geo
       country ? country : super
     end
 
+    def visited_country_json
+      {
+        name: name(I18n.locale),
+        iso3_code: iso3_code,
+        flag_image: ApplicationController.helpers.flag(country_code, 24)
+      }
+    end
   end
 end

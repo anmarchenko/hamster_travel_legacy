@@ -24,7 +24,7 @@ describe Api::UsersController do
       FactoryGirl.create_list(:user, 8, first_name: 'Max', last_name: 'Mustermann')
       FactoryGirl.create_list(:user, 15)
     end
-    
+
     def check_users body, term
       users = User.find_by_term(term).page(1).to_a
       json = JSON.parse(body)
@@ -59,21 +59,21 @@ describe Api::UsersController do
 
       it 'responds with users when something found by first name' do
         term = 'ma'
-        get 'index', params: {term: term}, format: :json
+        get 'index', params: { term: term }, format: :json
         expect(response).to have_http_status 200
         check_users response.body, term
       end
 
       it 'responds with users when something found by last name' do
         term = 'pet'
-        get 'index', params: {term: term}, format: :json
+        get 'index', params: { term: term }, format: :json
         expect(response).to have_http_status 200
         check_users response.body, term
       end
 
       it 'responds with users when something found by last name and first name' do
         term = 'sven pet'
-        get 'index', params: {term: term}, format: :json
+        get 'index', params: { term: term }, format: :json
         expect(response).to have_http_status 200
         json = JSON.parse(response.body)
         expect(json.count).to eq 5
@@ -88,13 +88,13 @@ describe Api::UsersController do
 
       it 'finds several parts together' do
         term = 'sven mu'
-        get 'index', params: {term: term}, format: :json
+        get 'index', params: { term: term }, format: :json
         expect(response).to have_http_status 200
         expect(JSON.parse(response.body)).to eq []
       end
 
       it 'responds with empty array if nothing found' do
-        get 'index', params: {term: 'ivan ivanov'}, format: :json
+        get 'index', params: { term: 'ivan ivanov' }, format: :json
         expect(response).to have_http_status 200
         expect(JSON.parse(response.body)).to eq []
       end
@@ -103,7 +103,7 @@ describe Api::UsersController do
     context 'when no logged user' do
       it 'behaves the same as for logged user' do
         term = 'sve'
-        get 'index', params: {term: term}, format: :json
+        get 'index', params: { term: term }, format: :json
         expect(response).to have_http_status 200
         check_users response.body, term
       end
@@ -143,6 +143,21 @@ describe Api::UsersController do
         user_json = json['user']
         expect(user_json['email']).to be_blank
         expect(user_json['id'].to_s).to eq(user.id.to_s)
+      end
+    end
+  end
+
+  describe '#visited_countries' do
+    context 'when user is logged in' do
+      login_user
+
+      it 'returns list of countries that user visited' do
+        get 'visited_countries', params: { id: user.id }
+        expect(response).to have_http_status(200)
+
+        json = JSON.parse(response.body)
+        expect(json['countries']).not_to be_blank
+        expect(json['countries'].count).to eq(1)
       end
     end
   end

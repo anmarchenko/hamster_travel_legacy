@@ -366,6 +366,7 @@ en:
       trips: Trips
       map: Map
       user_map: Trips map
+      visited_countries: Visited countries
   widgets:
     trips:
       trip_box:

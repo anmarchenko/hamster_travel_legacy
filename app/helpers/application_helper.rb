@@ -90,7 +90,7 @@ module ApplicationHelper
     (l trip.start_date, format: :month).html_safe if trip.start_date.present?
   end
 
-  def flag country_code, size = 16, with_tooltip = false
+  def flag(country_code, size = 16, with_tooltip = false)
     return '' if country_code.blank?
     url = "#{Settings.images.base_url}/#{Settings.images.flags_folder}/#{size}/#{country_code.downcase}.png"
     tooltip_attrs = nil

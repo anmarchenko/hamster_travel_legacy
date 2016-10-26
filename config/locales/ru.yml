@@ -357,6 +357,7 @@ ru:
       trips: Путешествия
       map: Карта
       user_map: Карта путешествий
+      visited_countries: Посещённые страны
   widgets:
     trips:
       trip_box:

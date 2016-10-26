@@ -12,6 +12,13 @@ angular.module('travel').controller('UserMapController', ['$scope', '$http', '$t
 
         $http.get('/api/users/' + $scope.$ctrl.userId + '/visited_countries').then(function(response){
             $scope.loaded = true;
+            $scope.visited_countries = response.data.countries;
+
+            $scope.visited_countries_codes = $scope.visited_countries.map(function(country){
+                return country.iso3_code;
+            });
+
+
             $timeout(function(){
                 $scope.map = new mapboxgl.Map({
                     container: 'user_mapbox_container',
@@ -24,7 +31,8 @@ angular.module('travel').controller('UserMapController', ['$scope', '$http', '$t
                 $scope.map.addControl(new mapboxgl.Navigation());
                 $scope.map.on('load', function () {
                     $scope.map.setFilter(
-                        'visited countries', ['in', 'ADM0_A3_IS'].concat(response.data.countries)
+                        'visited countries',
+                        ['in', 'ADM0_A3_IS'].concat($scope.visited_countries_codes)
                     );
                 });
             }, 100)
