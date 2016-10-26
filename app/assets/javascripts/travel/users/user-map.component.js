@@ -18,8 +18,10 @@ angular.module('travel').controller('UserMapController', ['$scope', '$http', '$t
                     style: 'mapbox://styles/altmer/cijmn9d6y00lrbolxzss4sxp1',
                     minZoom: 2,
                     zoom: 2.0000001,
-                    center: [51.1657, 10.4515]
-                })
+                    center: [13.4515, 51.1657]
+                });
+
+                $scope.map.addControl(new mapboxgl.Navigation());
                 $scope.map.on('load', function () {
                     $scope.map.setFilter(
                         'visited countries', ['in', 'ADM0_A3_IS'].concat(response.data.countries)
