@@ -93,7 +93,6 @@ end
 
 group :development do
   gem 'rubocop'
-  gem 'rsense'
 end
 
 group :test do
