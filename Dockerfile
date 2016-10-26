@@ -19,25 +19,25 @@ RUN rm -f /etc/service/nginx/down
 RUN rm /etc/nginx/sites-enabled/default
 
 # Add the nginx site and config
-ADD config/webapp.conf /etc/nginx/sites-enabled/webapp.conf
-ADD config/rails-env.conf /etc/nginx/main.d/rails-env.conf
+COPY config/webapp.conf /etc/nginx/sites-enabled/webapp.conf
+COPY config/rails-env.conf /etc/nginx/main.d/rails-env.conf
 
 RUN gem install bundler
 
 # Install bundle of gems
 WORKDIR /tmp
-ADD Gemfile /tmp/
-ADD Gemfile.lock /tmp/
+COPY Gemfile /tmp/
+COPY Gemfile.lock /tmp/
 RUN bundle install
 
 # Add the Rails app
-ADD . /home/app/webapp
+COPY . /home/app/webapp
 RUN chown -R app:app /home/app/webapp
 WORKDIR /home/app/webapp
 RUN rake assets:precompile
 
 # Add cron file in the cron directory
-ADD ./crontabs/exchange_rates.crontab /etc/cron.d/exchange_rates
+COPY ./crontabs/exchange_rates.crontab /etc/cron.d/exchange_rates
 RUN chmod 0644 /etc/cron.d/exchange_rates
 RUN touch /var/log/cron.log
 
