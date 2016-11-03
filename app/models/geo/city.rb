@@ -20,21 +20,20 @@
 
 module Geo
   class City < ApplicationRecord
-
     include Concerns::Geographical
 
-    translates :name, :fallbacks_for_empty_translations => true
+    translates :name, fallbacks_for_empty_translations: true
 
     module Statuses
-      CAPITAL = 'capital'
-      REGION_CENTER = 'region_center'
-      DISTRICT_CENTER = 'district_center'
-      ADM3_CENTER = 'adm3_center'
-      ADM4_CENTER = 'adm4_center'
-      ADM5_CENTER = 'adm5_center'
+      CAPITAL = 'capital'.freeze
+      REGION_CENTER = 'region_center'.freeze
+      DISTRICT_CENTER = 'district_center'.freeze
+      ADM3_CENTER = 'adm3_center'.freeze
+      ADM4_CENTER = 'adm4_center'.freeze
+      ADM5_CENTER = 'adm5_center'.freeze
     end
 
-    def translated_text(args = {with_region: true, with_country: true, locale: I18n.locale})
+    def translated_text(args = { with_region: true, with_country: true, locale: I18n.locale })
       text = translated_name(args[:locale])
       if args[:with_region]
         reg = self.region.try(:translated_name, args[:locale])
@@ -95,5 +94,12 @@ module Geo
       self.all.with_translations.where("\"city_translations\".\"name\" ILIKE ?", "#{term}%").order(population: :desc)
     end
 
+    def visited_city_json
+      {
+        name: name(I18n.locale),
+        latitude: latitude,
+        longitude: longitude
+      }
+    end
   end
 end

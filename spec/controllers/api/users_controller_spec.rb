@@ -25,7 +25,7 @@ describe Api::UsersController do
       FactoryGirl.create_list(:user, 15)
     end
 
-    def check_users body, term
+    def check_users(body, term)
       users = User.find_by_term(term).page(1).to_a
       json = JSON.parse(body)
       expect(json.first).to eq({"name" => users.first.full_name, "code" => users.first.id.to_s,
@@ -147,17 +147,19 @@ describe Api::UsersController do
     end
   end
 
-  describe '#visited_countries' do
+  describe '#visited' do
     context 'when user is logged in' do
       login_user
 
-      it 'returns list of countries that user visited' do
-        get 'visited_countries', params: { id: user.id }
+      it 'returns list of countries and cities that user visited' do
+        get 'visited', params: { id: user.id }
         expect(response).to have_http_status(200)
 
         json = JSON.parse(response.body)
         expect(json['countries']).not_to be_blank
         expect(json['countries'].count).to eq(1)
+        expect(json['cities']).not_to be_blank
+        expect(json['cities'].count).to eq(1)
       end
     end
   end
@@ -189,7 +191,7 @@ describe Api::UsersController do
   describe '#planned_trips' do
     context 'when user is logged in' do
       before do
-        @request.env["devise.mapping"] = Devise.mappings[:user]
+        @request.env['devise.mapping'] = Devise.mappings[:user]
         sign_in user
       end
 

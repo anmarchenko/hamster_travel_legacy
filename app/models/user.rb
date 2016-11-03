@@ -24,7 +24,6 @@
 #
 
 class User < ApplicationRecord
-
   extend Dragonfly::Model
   extend Dragonfly::Model::Validations
 
@@ -43,35 +42,35 @@ class User < ApplicationRecord
   # photo
   dragonfly_accessor :image
   def image_url
-    self.image.try(:remote_url)
+    image.try(:remote_url)
   end
 
   # User data
   validates_presence_of :last_name
   validates_presence_of :first_name
-  validates_uniqueness_of :email, :case_sensitive => false
+  validates_uniqueness_of :email, case_sensitive: false
 
-  validates_size_of :image, maximum: 10.megabytes, message: "should be no more than 10 MB", if: :image_changed?
+  validates_size_of :image, maximum: 10.megabytes, message: 'should be no more than 10 MB', if: :image_changed?
 
   validates_property :format, of: :image, in: [:jpeg, :jpg, :png, :bmp], case_sensitive: false,
-                     message: "should be either .jpeg, .jpg, .png, .bmp", if: :image_changed?
+                              message: 'should be either .jpeg, .jpg, .png, .bmp', if: :image_changed?
 
   default_scope { includes(:home_town) }
 
   def home_town_text
-    self.home_town.try(:translated_name, I18n.locale)
+    home_town.try(:translated_name, I18n.locale)
   end
 
   def full_name
-    '%s %s' % [first_name, last_name]
+    "#{first_name} #{last_name}"
   end
 
   def initials
-    '%s%s' % [first_name[0].upcase, last_name[0].upcase]
+    "#{first_name[0].upcase}#{last_name[0].upcase}"
   end
 
   def background_color
-    "userColor%s" % [(id % 4).to_s]
+    "userColor#{(id % 4)}"
   end
 
   def finished_trip_count
@@ -87,8 +86,12 @@ class User < ApplicationRecord
     visited_cities_ids.count
   end
 
+  def visited_cities
+    Geo::City.where(id: visited_cities_ids).with_translations
+  end
+
   def visited_countries
-    country_codes = Geo::City.where(id: visited_cities_ids).map(&:country_code).uniq
+    country_codes = visited_cities.map(&:country_code).uniq
     Geo::Country.where(country_code: country_codes).with_translations
   end
 
@@ -110,21 +113,20 @@ class User < ApplicationRecord
     res
   end
 
-  def self.find_by_term term
+  def self.find_by_term(term)
     return [] if term.blank?
 
     parts = term.split(/\s+/)
     return [] if parts.blank?
 
     if parts.count == 1
-      query = "first_name ILIKE ? OR last_name ILIKE ?"
+      query = 'first_name ILIKE ? OR last_name ILIKE ?'
       terms = ["#{parts.first}%", "#{parts.first}%"]
     else
-      query = "first_name ILIKE ? AND last_name ILIKE ?"
+      query = 'first_name ILIKE ? AND last_name ILIKE ?'
       terms = ["#{parts[0]}%", "#{parts[1]}%"]
     end
 
     where([query, terms].flatten).order(last_name: :asc)
   end
-
 end
