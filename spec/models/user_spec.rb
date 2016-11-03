@@ -24,14 +24,13 @@
 #
 
 describe User do
-
   it { should validate_presence_of(:last_name) }
   it { should validate_presence_of(:first_name) }
 
   it_should_behave_like 'a model with unique field', :user, :email, false
 
   describe '#full_name' do
-    let(:user) {FactoryGirl.create(:user)}
+    let(:user) { FactoryGirl.create(:user) }
 
     it 'has full name' do
       expect(user.full_name).to eq('%s %s' % [user.first_name, user.last_name])
@@ -40,7 +39,7 @@ describe User do
 
   describe '#home_town' do
     context 'valid simple user' do
-      let(:user) {FactoryGirl.create(:user)}
+      let(:user) { FactoryGirl.create(:user) }
 
       it 'does not have home town' do
         expect(user.home_town).to be_blank
@@ -48,7 +47,7 @@ describe User do
     end
 
     context 'user with home town' do
-      let(:user) {FactoryGirl.create(:user, :with_home_town)}
+      let(:user) { FactoryGirl.create(:user, :with_home_town) }
 
       it 'has home town from geo database' do
         town = user.home_town
@@ -61,12 +60,27 @@ describe User do
 
   describe '#trips' do
     context 'user with trips' do
-      let(:user) {FactoryGirl.create(:user, :with_trips)}
+      let(:user) { FactoryGirl.create(:user, :with_trips) }
 
       it 'can return list of trips in which participated' do
         expect(user.trips).not_to be_blank
         expect(user.trips.count).to eq(5)
       end
+    end
+  end
+
+  describe '#manual_cities' do
+    let(:user) { FactoryGirl.create(:user) }
+    let(:city) { Geo::City.all.first }
+
+    it 'can add and delete manual added cities' do
+      user.manual_cities << city
+      user.save
+      expect(user.reload.manual_cities.count).to eq(1)
+
+      user.manual_cities.delete(city)
+      user.save
+      expect(user.reload.manual_cities.count).to eq(0)
     end
   end
 
@@ -78,8 +92,8 @@ describe User do
       FactoryGirl.create_list(:user, 15)
     end
 
-    def check_order users
-      users.each_with_index do |user, index|
+    def check_order(users)
+      users.each_with_index do |_, index|
         next if users[index + 1].blank?
         expect(users[index + 1].last_name).to be >= users[index].last_name
       end
@@ -100,7 +114,6 @@ describe User do
       expect(users.count).to eq(5)
       check_order users
     end
-
   end
 
 

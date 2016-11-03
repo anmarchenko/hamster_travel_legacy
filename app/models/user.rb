@@ -32,7 +32,9 @@ class User < ApplicationRecord
 
   has_many :authored_trips, class_name: 'Travels::Trip', inverse_of: :author_user
   has_and_belongs_to_many :trips, class_name: 'Travels::Trip', inverse_of: :users, join_table: 'users_trips'
+
   has_many :cities, class_name: 'Geo::City', through: :trips
+  has_and_belongs_to_many :manual_cities, class_name: 'Geo::City', inverse_of: nil, join_table: 'cities_users'
 
   has_many :outgoing_invites, class_name: 'Travels::TripInvite', inverse_of: :inviting_user, foreign_key: :inviting_user_id
   has_many :incoming_invites, class_name: 'Travels::TripInvite', inverse_of: :invited_user, foreign_key: :invited_user_id

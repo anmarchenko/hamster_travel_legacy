@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160921191101) do
+ActiveRecord::Schema.define(version: 20161103210917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -140,6 +140,13 @@ ActiveRecord::Schema.define(version: 20160921191101) do
     t.string  "status"
     t.index ["geonames_code"], name: "index_cities_on_geonames_code", using: :btree
     t.index ["population"], name: "index_cities_on_population", using: :btree
+  end
+
+  create_table "cities_users", id: false, force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "city_id", null: false
+    t.index ["city_id", "user_id"], name: "index_cities_users_on_city_id_and_user_id", using: :btree
+    t.index ["user_id", "city_id"], name: "index_cities_users_on_user_id_and_city_id", using: :btree
   end
 
   create_table "city_translations", force: :cascade do |t|
