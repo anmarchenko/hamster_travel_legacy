@@ -367,6 +367,9 @@ en:
       map: Map
       user_map: Trips map
       visited_countries: Visited countries
+      add_manual_cities: Not all countries? Add here
+      manual_cities: Add visited places
+      manual_city_input: City...
   widgets:
     trips:
       trip_box:

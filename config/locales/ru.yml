@@ -358,6 +358,9 @@ ru:
       map: Карта
       user_map: Карта путешествий
       visited_countries: Посещённые страны
+      add_manual_cities: Не все страны? Добавить здесь
+      manual_cities: Добавить посещённые места
+      manual_city_input: Город...
   widgets:
     trips:
       trip_box:

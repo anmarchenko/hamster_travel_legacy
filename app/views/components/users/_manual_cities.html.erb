@@ -1,0 +1,31 @@
+<script id="userManualCities.html" type="text/ng-template">
+  <a href="javascript:void(0);" ng-click="showModal()">
+    <%= t('users.show.add_manual_cities') %>
+  </a>
+</script>
+
+<script id="userManualCitiesModal.html" type="text/ng-template">
+  <div class="modal-header row">
+    <div class="col-xs-10 header-text">
+      <%= t('users.show.manual_cities') %>
+    </div>
+    <div class="col-xs-2">
+      <a href="javascript:void(0);" ng-click="close()" class="pull-right">
+        <%= image_tag 'buttons/delete.svg' %>
+      </a>
+    </div>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="<%= t('users.show.manual_city_input') %>" focus-on="true" />
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default btn-lg" ng-click="close()">
+      <%= t('common.cancel') %>
+    </button>
+    <button class="btn btn-primary btn-lg" ng-click="save()">
+      <%= t('common.save') %>
+    </button>
+  </div>
+</script>
