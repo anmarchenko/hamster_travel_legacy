@@ -62,5 +62,5 @@ angular.module('travel').controller('UserMapController', ['$scope', '$http', '$t
                         });
                     });
                 }, 100)
-        })
+            });
 }]);

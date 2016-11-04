@@ -2,20 +2,27 @@ describe Api::UsersController do
   let(:user) { FactoryGirl.create(:user) }
 
   before { FactoryGirl.create_list(:trip, 2, user_ids: [user.id]) }
-  before { FactoryGirl.create_list(:trip, 3,
-                                   user_ids: [user.id],
-                                   status_code: Travels::Trip::StatusCodes::PLANNED ) }
-  before { FactoryGirl.create_list(:trip, 4,
-                                   user_ids: [user.id],
-                                   status_code: Travels::Trip::StatusCodes::PLANNED,
-                                   archived: true) }
-  before { FactoryGirl.create_list(:trip, 1,
-                                   user_ids: [user.id],
-                                   status_code: Travels::Trip::StatusCodes::PLANNED,
-                                   private: true) }
-  before { FactoryGirl.create_list(:trip, 13, :with_filled_days, user_ids: [user.id], status_code: Travels::Trip::StatusCodes::FINISHED) }
-  before { FactoryGirl.create_list(:trip, 3, :with_filled_days, user_ids: [user.id], status_code: Travels::Trip::StatusCodes::FINISHED,
-                                   archived: true) }
+  before do
+    FactoryGirl.create_list(:trip, 3, user_ids: [user.id],
+                                      status_code: Travels::Trip::StatusCodes::PLANNED)
+  end
+  before do
+    FactoryGirl.create_list(:trip, 4, user_ids: [user.id],
+                                      status_code: Travels::Trip::StatusCodes::PLANNED,
+                                      archived: true)
+  end
+  before do
+    FactoryGirl.create_list(:trip, 1, user_ids: [user.id],
+                                      status_code: Travels::Trip::StatusCodes::PLANNED,
+                                      private: true)
+  end
+  before do
+    FactoryGirl.create_list(:trip, 13, :with_filled_days, user_ids: [user.id], status_code: Travels::Trip::StatusCodes::FINISHED)
+  end
+  before do
+    FactoryGirl.create_list(:trip, 3, :with_filled_days, user_ids: [user.id], status_code: Travels::Trip::StatusCodes::FINISHED,
+                                                         archived: true)
+  end
 
   describe '#index' do
     before do
@@ -28,9 +35,9 @@ describe Api::UsersController do
     def check_users(body, term)
       users = User.find_by_term(term).page(1).to_a
       json = JSON.parse(body)
-      expect(json.first).to eq({"name" => users.first.full_name, "code" => users.first.id.to_s,
-                                "photo_url" => users.first.image_url, "text" => users.first.full_name,
-                                "initials" => users.first.initials, "color" => users.first.background_color})
+      expect(json.first).to eq('name' => users.first.full_name, 'code' => users.first.id.to_s,
+                               'photo_url' => users.first.image_url, 'text' => users.first.full_name,
+                               'initials' => users.first.initials, 'color' => users.first.background_color)
       expect(json.count).to eq users.count
     end
 
@@ -40,13 +47,13 @@ describe Api::UsersController do
       after(:each) { Rails.cache.clear }
 
       it 'responds with empty array if term is shorter than 2 letters' do
-        get 'index', params: {term: 'm'}, format: :json
+        get 'index', params: { term: 'm' }, format: :json
         expect(response).to have_http_status 200
         expect(JSON.parse(response.body)).to eq []
       end
 
       it 'does not find logged user' do
-        get 'index', params: {term: 'first'}, format: :json
+        get 'index', params: { term: 'first' }, format: :json
         expect(response).to have_http_status 200
         expect(JSON.parse(response.body).count).to eq 15
       end
@@ -81,7 +88,7 @@ describe Api::UsersController do
 
       it 'finds several parts together always' do
         term = 'sven m'
-        get 'index', params: {term: term}, format: :json
+        get 'index', params: { term: term }, format: :json
         expect(response).to have_http_status 200
         expect(JSON.parse(response.body)).to eq []
       end
@@ -131,6 +138,27 @@ describe Api::UsersController do
         expect(user_json['visited_cities_count']).to eq(1)
         expect(user_json['visited_countries_count']).to eq(1)
       end
+
+      context 'when user added manual cities' do
+        before do
+          user.manual_cities << Geo::City.all.order(id: :asc).first
+          user.manual_cities << Geo::City.all.order(id: :asc).last
+          user.save
+        end
+
+        it 'returns user information counting manual cities and removing duplicates' do
+          get 'show', params: { id: user.id }
+          expect(response).to have_http_status(200)
+
+          json = JSON.parse(response.body)
+          expect(json['user']).not_to be_blank
+          user_json = json['user']
+
+          expect(user_json['finished_trips_count']).to eq(13)
+          expect(user_json['visited_cities_count']).to eq(2)
+          expect(user_json['visited_countries_count']).to eq(2)
+        end
+      end
     end
 
     context 'when no logged user' do
@@ -160,6 +188,25 @@ describe Api::UsersController do
         expect(json['countries'].count).to eq(1)
         expect(json['cities']).not_to be_blank
         expect(json['cities'].count).to eq(1)
+      end
+
+      context 'when user added manual cities' do
+        before do
+          user.manual_cities << Geo::City.all.order(id: :asc).first
+          user.manual_cities << Geo::City.all.order(id: :asc).last
+          user.save
+        end
+
+        it 'returns list of countries and cities that user visited with manual cities and removing duplicates' do
+          get 'visited', params: { id: user.id }
+          expect(response).to have_http_status(200)
+
+          json = JSON.parse(response.body)
+          expect(json['countries']).not_to be_blank
+          expect(json['countries'].count).to eq(2)
+          expect(json['cities']).not_to be_blank
+          expect(json['cities'].count).to eq(2)
+        end
       end
     end
   end

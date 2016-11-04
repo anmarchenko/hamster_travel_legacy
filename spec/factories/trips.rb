@@ -23,7 +23,6 @@
 #
 
 FactoryGirl.define do
-
   factory :trip, class: 'Travels::Trip' do
     sequence(:name) { |n| "Trip number #{n}" }
     short_description { 'short_description' }
@@ -38,10 +37,10 @@ FactoryGirl.define do
 
     trait :with_filled_days do
       after :create do |trip|
-        trip.days.each_with_index do |day, index|
-          day.comment = "Day #{index}"
+        trip.days.each_with_index do |day, i|
+          day.comment = "Day #{i}"
           2.times { |index| day.transfers.create(build(:transfer, :with_destinations, order_index: index).attributes) }
-          5.times { |index| day.activities.create(build(:activity, :with_data, order_index: index, rating: (index%3)+1).attributes) }
+          5.times { |index| day.activities.create(build(:activity, :with_data, order_index: index, rating: (index % 3) + 1).attributes) }
           day.places.create(build(:place, :with_data).attributes)
           day.hotel = Travels::Hotel.new(build(:hotel, :with_data).attributes)
           day.hotel.links = [FactoryGirl.build(:external_link)]
@@ -142,7 +141,7 @@ FactoryGirl.define do
 
   factory :place, class: 'Travels::Place' do
     trait :with_data do
-      city_id { Geo::City.all.first.id }
+      city_id { Geo::City.all.order(id: :asc).first.id }
     end
   end
 

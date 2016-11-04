@@ -115,6 +115,4 @@ describe User do
       check_order users
     end
   end
-
-
 end

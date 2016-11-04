@@ -80,8 +80,9 @@ class User < ApplicationRecord
   end
 
   def visited_cities_ids
-    cities.where('trips.archived' => false, 'trips.status_code' => Travels::Trip::StatusCodes::FINISHED)
-          .select(:id).map(&:id).uniq
+    # both cities from trips and manually added cities
+    (cities.where('trips.archived' => false, 'trips.status_code' => Travels::Trip::StatusCodes::FINISHED)
+           .pluck(:id) + manual_cities.pluck(:id)).uniq
   end
 
   def visited_cities_count

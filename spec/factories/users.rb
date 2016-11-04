@@ -24,7 +24,6 @@
 #
 
 FactoryGirl.define do
-
   factory :user do
     sequence(:email) { |n| "person-#{n}@example.com" }
     sequence(:first_name) { |n| "FirstName-#{n}" }
@@ -43,5 +42,4 @@ FactoryGirl.define do
       end
     end
   end
-
 end
