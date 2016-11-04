@@ -1,7 +1,15 @@
 <% content_for :title, @user.full_name %>
 
 <% content_for :page_javascript do %>
-    <%= render 'components/users/user_info' %>
+<%= render 'components/users/user_info' %>
+    <script id="citiesTemplate.html" type="text/ng-template">
+      <a class="flag-text">
+        <span ng-bind-html="match.model.flag_image"></span>
+        <span>
+        {{match.label}}
+      </span>
+      </a>
+    </script>
     <%= render 'components/users/user_trips' %>
     <%= render 'components/users/user_map' %>
     <%= render 'components/users/manual_cities' %>

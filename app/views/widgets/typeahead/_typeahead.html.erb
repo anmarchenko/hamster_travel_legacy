@@ -9,6 +9,7 @@
 <% custom_attrs ||= {} %>
 <% custom_bindings ||= '' %>
 <% allow_empty_typeahead ||= false %>
+<% focus_on ||= '' %>
 <% #   'typeahead-append-to-body' => true, ATTENTION: CAUSING MEMORY LEAK %>
 
 <% options_text = { 'ng-model' => text_field_name, 'ng-change' => "#{code_field_name}='';",
@@ -19,6 +20,7 @@
                     'typeahead-template-url' => template,
                     'ng-trim' => false,
                     'ng-focus' => 'onFocus($event)',
+                    'focus-on' => focus_on,
                     placeholder: placeholder,
                     class: "#{classes}" }.merge(custom_attrs)
 %>

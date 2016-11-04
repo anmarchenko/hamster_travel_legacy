@@ -370,6 +370,7 @@ en:
       add_manual_cities: Not all countries? Add here
       manual_cities: Add visited places
       manual_city_input: City...
+      no_manual_cities: No cities yet
   widgets:
     trips:
       trip_box:

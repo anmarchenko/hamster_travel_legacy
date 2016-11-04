@@ -3,11 +3,13 @@
     <div class="user-map-container" ng-if="loaded">
       <div class="container user-map-header" ng-if="visited_countries.length > 0">
         <h3><%= t('users.show.visited_countries') %></h3>
-        <manual-cities user-id="$ctrl.userId"></manual-cities>
+        <% if @edit %>
+          <manual-cities user-id="$ctrl.userId"></manual-cities>
+        <% end %>  
       </div>
       <div class="container">
         <div class="row">
-          <div class="col-lg-2 col-md-3 col-xs-6 visited-country"
+          <div class="col-lg-2 col-md-3 col-xs-6 visited-place"
                ng-repeat="country in visited_countries track by country.iso3_code">
             <span ng-bind-html="country.flag_image"></span>
             {{country.name}}

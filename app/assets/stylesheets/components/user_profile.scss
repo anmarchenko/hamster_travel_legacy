@@ -164,6 +164,28 @@
     }
   }
 }
+.visited-place {
+  img {
+    margin-right: .5em;
+  }
+  font-size: 1.2em;
+  margin-bottom: 1em;
+
+  .remove-place {
+    img {
+      margin-right: 0;
+      margin-left: .3em;
+      height: .7em;
+      opacity: .6;
+    }
+
+    &:hover {
+      img {
+        opacity: 1;
+      }
+    }
+  }
+}
 
 .user-profile {
   .user-map-container {
@@ -183,14 +205,6 @@
       @media(min-width: 1600px) {
         height: 800px;
       }
-    }
-
-    .visited-country {
-      img {
-        margin-right: .5em;
-      }
-      font-size: 1.2em;
-      margin-bottom: 1em;
     }
   }
 
@@ -268,5 +282,12 @@
         }
       }
     }
+  }
+}
+
+.user-manual-cities-modal {
+  .no-manual-cities {
+    font-size: 1.3em;
+    color: $main-grey;
   }
 }

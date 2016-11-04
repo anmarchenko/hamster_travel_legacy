@@ -15,9 +15,32 @@
       </a>
     </div>
   </div>
-  <div class="modal-body">
+  <div class="modal-body user-manual-cities-modal">
     <div class="form-group">
-      <input type="text" class="form-control" placeholder="<%= t('users.show.manual_city_input') %>" focus-on="true" />
+      <%= render 'widgets/typeahead/cities',
+                  model_name: 'city',
+                  classes: 'form-control',
+                  placeholder: t('users.show.manual_city_input'),
+                  allow_empty_typeahead: false,
+                  focus_on: true,
+                  callback: 'citySelected'
+      %>
+    </div>
+
+    <div class="row" ng-if="cities.length > 0">
+      <div class="col-md-4 visited-place" ng-repeat="city in cities track by city.code">
+        <span ng-bind-html="city.flag_image"></span>
+        {{city.name}}
+        <a href="javascript:void(0);" ng-click="remove($index)" class="remove-place">
+          <%= image_tag "buttons/delete.svg" %>
+        </a>
+      </div>
+    </div>
+
+    <div class="row no-manual-cities" ng-if="cities.length == 0">
+      <div class="col-md-12">
+        <%= t('users.show.no_manual_cities') %>
+      </div>
     </div>
   </div>
   <div class="modal-footer">

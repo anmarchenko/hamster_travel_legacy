@@ -5,5 +5,7 @@
 <% callback ||= nil %>
 <% custom_bindings ||= nil %>
 <% allow_empty_typeahead ||= false %>
+<% focus_on ||= '' %>
+<% callback ||= "''" %>
 
-<%= render 'widgets/typeahead/typeahead', form: form, model_name: model_name, function: 'getCities', classes: classes, placeholder: placeholder, template: 'citiesTemplate.html', callback: callback, custom_bindings: custom_bindings, allow_empty_typeahead: allow_empty_typeahead %>
+<%= render 'widgets/typeahead/typeahead', form: form, model_name: model_name, function: 'getCities', classes: classes, placeholder: placeholder, template: 'citiesTemplate.html', callback: callback, custom_bindings: custom_bindings, allow_empty_typeahead: allow_empty_typeahead, focus_on: focus_on, callback: callback %>

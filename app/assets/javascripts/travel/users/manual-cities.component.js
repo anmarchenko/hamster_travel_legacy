@@ -15,12 +15,22 @@ angular.module('travel').controller('ManualCitiesController',
             templateUrl: 'userManualCitiesModal.html',
             controller: ['$scope', '$uibModalInstance', 'userId', function($scope, $uibModalInstance, userId) {
                 $scope.userId = userId;
+                $scope.cities = [];
                 $scope.close = function() {
                     $uibModalInstance.close();
                 };
                 $scope.save = function() {
                   $scope.close();
                 };
+                $scope.citySelected = function(item, _model, _label, scope) {
+                  scope.city_text = '';
+                  scope.city_id = '';
+                  console.log(item);
+                  $scope.cities.push(item);
+                };
+                $scope.remove = function(index) {
+                  $scope.cities.splice(index, 1);
+                }
             }],
             resolve: {
                 userId: function() {

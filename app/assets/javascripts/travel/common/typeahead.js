@@ -2,8 +2,11 @@ angular.module('travel').controller('TypeaheadController', [
     '$scope', '$timeout', '$http', '$window', function($scope, $timeout, $http, $window) {
         $scope.locale = LOCALE;
         $scope.getCities = function(term) {
-            var trip_id;
-            trip_id = (/trips\/([a-zA-Z0-9]+)/.exec($window.location)[1]);
+            var trip_id = null;
+            var trip_id_catch = /trips\/([a-zA-Z0-9]+)/.exec($window.location);
+            if (trip_id_catch) {
+                trip_id = trip_id_catch[1];
+            }
             return $http.get('/api/cities?trip_id=' + trip_id + '&locale=' + $scope.locale + '&term=' + term).then(function(response) {
                 return response.data;
             });

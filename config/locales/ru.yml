@@ -361,6 +361,7 @@ ru:
       add_manual_cities: Не все страны? Добавить здесь
       manual_cities: Добавить посещённые места
       manual_city_input: Город...
+      no_manual_cities: Ни одного города не добавлено
   widgets:
     trips:
       trip_box:
