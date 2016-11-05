@@ -1,4 +1,4 @@
-FROM phusion/passenger-ruby22:0.9.18
+FROM phusion/passenger-ruby23:latest
 MAINTAINER Andrey Marchenko "anvmarchenko@gmail.com"
 
 # Set correct environment variables.
