@@ -29,6 +29,7 @@ Rails.application.routes.draw do
           post :upload_image, :delete_image
           get :planned_trips, :finished_trips, :visited
         end
+        resources :manual_cities, only: [:index, :create]
       end
       resources :participants, only: [:index]
       resources :trip_invites, only: [:create, :destroy]

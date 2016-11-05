@@ -152,6 +152,8 @@ ru:
       many: дней
       other: дней
     day_number: День %{number}
+    generic_error_title: Упс...
+    generic_error_text: Что-то сломалось. Мы все починим, обещаем! Попробуйте позже еще раз.
   home_page:
     index:
       title: Планирование путешествий

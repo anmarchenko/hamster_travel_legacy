@@ -36,11 +36,11 @@ module Geo
     def translated_text(args = { with_region: true, with_country: true, locale: I18n.locale })
       text = translated_name(args[:locale])
       if args[:with_region]
-        reg = self.region.try(:translated_name, args[:locale])
+        reg = region.try(:translated_name, args[:locale])
         text += ", #{reg}" unless reg.blank? or reg == text
       end
       if args[:with_country]
-        c = self.country.try(:translated_name, args[:locale])
+        c = country.try(:translated_name, args[:locale])
         text += ", #{c}" unless c.blank?
       end
       text
@@ -75,31 +75,38 @@ module Geo
       values = Geo::City.split_geonames_string(str)
       feature_code = values[7].strip
       case feature_code
-        when 'PPLC'
-          self.status = Statuses::CAPITAL
-        when 'PPLA'
-          self.status = Statuses::REGION_CENTER
-        when 'PPLA2'
-          self.status = Statuses::DISTRICT_CENTER
-        when 'PPLA3'
-          self.status = Statuses::ADM3_CENTER
-        when 'PPLA4'
-          self.status = Statuses::ADM4_CENTER
+      when 'PPLC'
+        self.status = Statuses::CAPITAL
+      when 'PPLA'
+        self.status = Statuses::REGION_CENTER
+      when 'PPLA2'
+        self.status = Statuses::DISTRICT_CENTER
+      when 'PPLA3'
+        self.status = Statuses::ADM3_CENTER
+      when 'PPLA4'
+        self.status = Statuses::ADM4_CENTER
       end
       save
     end
 
     def self.find_by_term(term)
       term = Regexp.escape(term)
-      self.all.with_translations.where("\"city_translations\".\"name\" ILIKE ?", "#{term}%").order(population: :desc)
+      all.with_translations.where("\"city_translations\".\"name\" ILIKE ?", "#{term}%").order(population: :desc)
     end
 
-    def visited_city_json
+    def json_hash
       {
-        name: name(I18n.locale),
+        id: id,
+        name: translated_name(I18n.locale),
+        code: id,
+        flag_image: ApplicationController.helpers.flag(country_code),
         latitude: latitude,
         longitude: longitude
       }
+    end
+
+    def json_hash_with_regions
+      json_hash.merge(text: translated_text(with_region: true, with_country: true, locale: I18n.locale))
     end
   end
 end

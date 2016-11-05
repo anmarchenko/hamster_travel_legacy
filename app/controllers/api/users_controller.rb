@@ -59,7 +59,7 @@ module Api
     def visited
       render json: {
         countries: @user.visited_countries.map(&:visited_country_json).sort_by { |json| json[:name] },
-        cities: @user.visited_cities.map(&:visited_city_json)
+        cities: @user.visited_cities.map(&:json_hash)
       }
     end
 

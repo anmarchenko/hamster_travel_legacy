@@ -52,7 +52,6 @@ describe Api::TripInvitesController do
         end
 
         context 'and when trying to invite non existing user' do
-
           it 'does not create invite' do
             post 'create', params: {id: trip.id, user_id: 'lolol'}, format: :json
             expect(response).to have_http_status 200

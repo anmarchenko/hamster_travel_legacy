@@ -5,11 +5,11 @@
         <h3><%= t('users.show.visited_countries') %></h3>
         <% if @edit %>
           <manual-cities user-id="$ctrl.userId"></manual-cities>
-        <% end %>  
+        <% end %>
       </div>
       <div class="container">
         <div class="row">
-          <div class="col-lg-2 col-md-3 col-xs-6 visited-place"
+          <div class="col-lg-3 col-md-4 col-xs-6 visited-place"
                ng-repeat="country in visited_countries track by country.iso3_code">
             <span ng-bind-html="country.flag_image"></span>
             {{country.name}}

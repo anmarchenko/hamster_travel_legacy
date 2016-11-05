@@ -162,6 +162,8 @@ en:
       many: days
       other: days
     day_number: Day %{number}
+    generic_error_title: Ooops...
+    generic_error_text: Something is broken. We will fix it, promise! Please try again later.
   home_page:
     index:
       title: Travel planning
