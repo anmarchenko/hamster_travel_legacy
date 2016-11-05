@@ -9,6 +9,9 @@
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods.
+AllCops:
+  TargetRubyVersion: 2.3
+
 Lint/UnusedMethodArgument:
   Exclude:
     - 'app/models/travels/trip.rb'

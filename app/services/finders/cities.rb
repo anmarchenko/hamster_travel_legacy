@@ -12,7 +12,7 @@ module Finders
 
     def self.empty_suggestions(user, trip_id)
       trip = user.trips.where(id: trip_id).first
-      query = [user.try(:home_town), trip.try(:visited_cities)].flatten.compact.uniq
+      query = [user&.home_town, trip&.visited_cities].flatten.compact.uniq
       json_result(query)
     end
 
