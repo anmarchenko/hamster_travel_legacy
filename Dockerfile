@@ -36,10 +36,5 @@ RUN chown -R app:app /home/app/webapp
 WORKDIR /home/app/webapp
 RUN rake assets:precompile
 
-# Add cron file in the cron directory
-COPY ./crontabs/exchange_rates.crontab /etc/cron.d/exchange_rates
-RUN chmod 0644 /etc/cron.d/exchange_rates
-RUN touch /var/log/cron.log
-
 # Clean up APT and bundler when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /home/app/webapp/log/* /home/app/webapp/tmp/* /home/app/webapp/.git
