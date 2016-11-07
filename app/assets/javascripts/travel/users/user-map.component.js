@@ -26,7 +26,8 @@ angular.module('travel').controller('UserMapController', ['$scope', '$http', '$t
                         style: 'mapbox://styles/altmer/cijmn9d6y00lrbolxzss4sxp1',
                         minZoom: 2,
                         zoom: 2.0000001,
-                        center: [13.4515, 51.1657]
+                        center: [13.4515, 51.1657],
+                        dragRotate: false
                     });
 
                     $scope.map.addControl(new mapboxgl.Navigation());
