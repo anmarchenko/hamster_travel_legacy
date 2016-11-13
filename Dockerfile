@@ -4,6 +4,8 @@ MAINTAINER Andrey Marchenko "anvmarchenko@gmail.com"
 # Set correct environment variables.
 ENV HOME /root
 ENV RAILS_ENV production
+ENV PASSENGER_MAX_POOL_SIZE 4
+ENV PASSENGER_MIN_INSTANCES 2
 
 # upgrade OS
 RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold" && apt-get install -y imagemagick libpq-dev
