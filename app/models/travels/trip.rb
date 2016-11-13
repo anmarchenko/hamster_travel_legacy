@@ -209,7 +209,7 @@ module Travels
     end
 
     def without_dates?
-      dates_unknown && draft?
+      dates_unknown && (draft? || plan?)
     end
 
     def should_have_dates?

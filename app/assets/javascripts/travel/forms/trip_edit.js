@@ -26,7 +26,7 @@ angular.module('travel').controller('TripEditController', [
             }
         };
         $scope.showDatesUnknown = function() {
-            return $scope.status === '0_draft';
+            return $scope.status === '0_draft' || $scope.status === '1_planned';
         };
         $scope.hideDates = function() {
             return $scope.showDatesUnknown() && $scope.dates_unknown;

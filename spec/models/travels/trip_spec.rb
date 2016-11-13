@@ -45,6 +45,12 @@ describe Travels::Trip do
     expect(trip).to be_valid
   end
 
+  it 'allows trip without dates if dates_unknown is set and trip is a plan' do
+    trip = FactoryGirl.build(:trip, start_date: nil, end_date: nil, dates_unknown: true, planned_days_count: 1,
+                                    status_code: Travels::Trip::StatusCodes::PLANNED)
+    expect(trip).to be_valid
+  end
+
   it 'does not allow trip without dates it has no planned_days_count' do
     trip = FactoryGirl.build(:trip, start_date: nil, end_date: nil, dates_unknown: true, planned_days_count: nil)
     expect(trip).not_to be_valid
