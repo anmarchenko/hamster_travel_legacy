@@ -15,7 +15,7 @@ Rails.application.routes.draw do
         post :upload_photo
       end
     end
-    resources :trips do
+    resources :trips, except: [:destroy] do
       collection do
         get :my, :drafts
       end
@@ -33,7 +33,7 @@ Rails.application.routes.draw do
       end
       resources :participants, only: [:index]
       resources :trip_invites, only: [:create, :destroy]
-      resources :trips, only: [:index] do
+      resources :trips, only: [:index, :destroy] do
         member do
           post :upload_image, :delete_image
         end

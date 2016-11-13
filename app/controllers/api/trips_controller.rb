@@ -1,8 +1,9 @@
 module Api
   class TripsController < ApplicationController
-    before_action :authenticate_user!, only: [:upload_image, :delete_image]
-    before_action :find_trip, only: [:upload_image, :delete_image]
+    before_action :authenticate_user!, only: [:upload_image, :delete_image, :destroy]
+    before_action :find_trip, only: [:upload_image, :delete_image, :destroy]
     before_action :authorize, only: [:upload_image, :delete_image]
+    before_action :authorize_destroy, only: [:upload_image, :delete_image, :destroy]
 
     def index
       term = params[:term] || ''
@@ -28,6 +29,13 @@ module Api
       }
     end
 
+    def destroy
+      @trip.archived = true
+      @trip.save validate: false
+      Travels::TripInvite.where(trip_id: @trip.id).destroy_all
+      render json: { success: true }
+    end
+
     private
 
     def authorize
@@ -37,6 +45,10 @@ module Api
     def find_trip
       @trip = Travels::Trip.includes(:users, :author_user).where(id: params[:id]).first
       not_found and return if @trip.blank?
+    end
+
+    def authorize_destroy
+      no_access and return unless @trip.author_user_id == current_user.id
     end
   end
 end

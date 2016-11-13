@@ -43,6 +43,7 @@
 
     <%= render 'components/trip/trip_image' %>
     <%= render 'components/trip/trip_description' %>
+    <%= render 'components/trip/delete_link' %>
     <%= render 'components/trip/tabs/transfers' %>
     <%= render 'components/trip/tabs/activities' %>
     <%= render 'components/trip/tabs/report' %>
@@ -81,9 +82,7 @@
                   </li>
                   <% if @trip.author_user_id == current_user.id %>
                       <li>
-                        <%= link_to trip_path(@trip), class: 'trip-link', method: :delete, 'data-confirm'=> t('.delete_confirm')  do %>
-                            <%= t('trips.show.delete_trip') %>
-                        <% end %>
+                        <trip-delete-link trip-id="<%= @trip.id %>"></trip-delete-link>
                       </li>
                   <% end %>
               <% end %>
@@ -110,9 +109,7 @@
                   <%= t('trips.show.edit_trip') %>
               <% end %>
               <% if @trip.author_user_id == current_user.id %>
-                  <%= link_to trip_path(@trip), class: 'trip-link', method: :delete, 'data-confirm'=> t('.delete_confirm')  do %>
-                      <%= t('trips.show.delete_trip') %>
-                  <% end %>
+                  <trip-delete-link trip-id="<%= @trip.id %>"></trip-delete-link>
               <% end %>
           <% end %>
           <%= link_to "#{new_trip_path}?copy_from=#{@trip.id}", target: '_blank', class: 'trip-link' do %>

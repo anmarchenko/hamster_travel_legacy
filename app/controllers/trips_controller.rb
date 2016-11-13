@@ -1,8 +1,8 @@
 class TripsController < ApplicationController
-  TRANSFERS_GRID = [0.1, 0.1, 0.45, 0.35]
+  TRANSFERS_GRID = [0.1, 0.1, 0.45, 0.35].freeze
 
-  before_action :authenticate_user!, only: [:edit, :update, :new, :create, :destroy, :my, :drafts]
-  before_action :find_trip, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:edit, :update, :new, :create, :my, :drafts]
+  before_action :find_trip, only: [:show, :edit, :update]
   before_action :find_original_trip, only: [:new, :create]
   before_action :authorize, only: [:edit, :update]
   before_action :authorize_destroy, only: [:destroy]
@@ -48,27 +48,20 @@ class TripsController < ApplicationController
       format.docx do
         @transfers_grid = TRANSFERS_GRID
 
-        headers["Content-Disposition"] = "attachment; filename=\"#{@trip.name_for_file}.docx\""
+        headers['Content-Disposition'] = "attachment; filename=\"#{@trip.name_for_file}.docx\""
       end
     end
-  end
-
-  def destroy
-    @trip.archived = true
-    @trip.save validate: false
-    Travels::TripInvite.where(trip_id: @trip.id).destroy_all
-    redirect_to trips_path(my: true)
   end
 
   private
 
   def params_trip
     params.require(:travels_trip).permit(:name, :short_description, :start_date, :end_date, :image, :status_code,
-      :private, :currency, :planned_days_count, :dates_unknown)
+                                         :private, :currency, :planned_days_count, :dates_unknown)
   end
 
   def find_trip
-    @trip = Travels::Trip.includes(:users, :author_user, {days: [{hotel: :links}, :activities, :transfers, :places, :expenses]}).where(id: params[:id]).first
+    @trip = Travels::Trip.includes(:users, :author_user, days: [{ hotel: :links }, :activities, :transfers, :places, :expenses]).where(id: params[:id]).first
     not_found and return if @trip.blank?
   end
 
@@ -81,10 +74,6 @@ class TripsController < ApplicationController
 
   def authorize
     no_access and return unless @trip.include_user(current_user)
-  end
-
-  def authorize_destroy
-    no_access and return unless (@trip.author_user_id == current_user.id)
   end
 
   def authorize_show

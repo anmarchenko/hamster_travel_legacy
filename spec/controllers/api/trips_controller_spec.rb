@@ -64,4 +64,60 @@ RSpec.describe Api::TripsController do
       expect(Travels::Trip.find(trip.id).image).to be_blank
     end
   end
+
+  describe '#destroy' do
+    context 'when user is logged in' do
+      login_user
+
+      context 'and when user is author' do
+        let(:trip) { FactoryGirl.create(:trip, author_user: subject.current_user) }
+
+        it 'marks trip as archived' do
+          delete 'destroy', params: { id: trip.id }
+          expect(Travels::Trip.where(id: trip.id).first).to be_nil
+          expect(Travels::Trip.unscoped.where(id: trip.id, archived: true).first).not_to be_blank
+          expect(response).to have_http_status(:success)
+        end
+
+        it 'destroys all associated invites' do
+          # create invite
+          inviting_user = FactoryGirl.create(:user)
+          Travels::TripInvite.create(inviting_user_id: inviting_user.id, invited_user_id: subject.current_user.id,
+                                     trip_id: trip.id)
+
+          expect(subject.current_user.incoming_invites.count).to eq(1)
+
+          delete 'destroy', params: { id: trip.id }
+          expect(Travels::Trip.where(id: trip.id).first).to be_nil
+
+          expect(subject.current_user.incoming_invites.count).to eq(0)
+        end
+      end
+
+      context 'and when user is just a participant' do
+        let(:trip) { FactoryGirl.create(:trip, users: [subject.current_user]) }
+
+        it 'redirects to dashboard with flash' do
+          delete 'destroy', params: { id: trip.id }
+          expect(response).to redirect_to '/errors/no_access'
+        end
+      end
+
+      context 'and when trip does not exist' do
+        it 'heads 404' do
+          delete 'destroy', params: { id: 'non existing' }
+          expect(response).to redirect_to '/errors/not_found'
+        end
+      end
+    end
+
+    context 'when no logged user' do
+      let(:trip) { FactoryGirl.create(:trip) }
+
+      it 'redirects to sign in' do
+        delete 'destroy', params: { id: trip.id }
+        expect(response).to redirect_to '/users/sign_in'
+      end
+    end
+  end
 end
