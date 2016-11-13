@@ -27,6 +27,9 @@ angular.module('travel').controller('ManualCitiesController',
                 function($scope, $uibModalInstance, userId, cities, $http) {
                   $scope.userId = userId;
                   $scope.cities = cities;
+                  $scope.city_codes = $scope.cities.map(function(city){
+                    return city.code;
+                  });
                   $scope.close = function() {
                       $uibModalInstance.close();
                   };
@@ -48,11 +51,16 @@ angular.module('travel').controller('ManualCitiesController',
                       });
                     });
                   };
+
                   $scope.citySelected = function(item, _model, _label, scope) {
                     scope.city_text = '';
                     scope.city_id = '';
-                    $scope.cities.push(item);
+                    if ($scope.city_codes.indexOf(item.code) === -1) {
+                      $scope.cities.push(item);
+                      $scope.city_codes.push(item.code);
+                    }
                   };
+
                   $scope.remove = function(index) {
                     $scope.cities.splice(index, 1);
                   }
