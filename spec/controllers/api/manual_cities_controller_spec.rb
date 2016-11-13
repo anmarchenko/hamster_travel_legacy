@@ -16,6 +16,7 @@ describe Api::ManualCitiesController do
       context 'when there are manual cities' do
         let(:city1) { Geo::City.all.order(id: :asc).first }
         let(:city2) { Geo::City.all.order(id: :asc).last }
+        let(:city_ids) { [city1.id, city2.id].sort }
         before do
           subject.current_user.manual_cities << city1
           subject.current_user.manual_cities << city2
@@ -28,8 +29,7 @@ describe Api::ManualCitiesController do
           expect(response).to have_http_status 200
           json = JSON.parse(response.body)
           expect(json['manual_cities'].count).to eq(2)
-          expect(json['manual_cities'].first['id']).to eq(city1.id)
-          expect(json['manual_cities'].last['id']).to eq(city2.id)
+          expect([json['manual_cities'].first['id'], json['manual_cities'].last['id']].sort).to eq(city_ids)
         end
       end
     end
