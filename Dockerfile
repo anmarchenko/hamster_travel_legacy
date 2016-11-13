@@ -1,14 +1,11 @@
 FROM phusion/passenger-ruby23:latest
 MAINTAINER Andrey Marchenko "anvmarchenko@gmail.com"
+# upgrade OS
+RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold" && apt-get install -y imagemagick libpq-dev
 
 # Set correct environment variables.
 ENV HOME /root
 ENV RAILS_ENV production
-ENV PASSENGER_MAX_POOL_SIZE 4
-ENV PASSENGER_MIN_INSTANCES 2
-
-# upgrade OS
-RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold" && apt-get install -y imagemagick libpq-dev
 
 RUN gem install bundler
 
@@ -34,6 +31,7 @@ RUN rm /etc/nginx/sites-enabled/default
 # Add the nginx site and config
 COPY config/webapp.conf /etc/nginx/sites-enabled/webapp.conf
 COPY config/rails-env.conf /etc/nginx/main.d/rails-env.conf
+COPY config/nginx.conf /etc/nginx/conf.d/hamster-travel.conf
 
 # Clean up APT and bundler when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /home/app/webapp/log/* /home/app/webapp/tmp/* /home/app/webapp/.git
