@@ -82,7 +82,9 @@
                   </li>
                   <% if @trip.author_user_id == current_user.id %>
                       <li>
-                        <trip-delete-link trip-id="<%= @trip.id %>"></trip-delete-link>
+                        <a href="javascript:void(0);" class="trip-link">
+                          <trip-delete-link trip-id="<%= @trip.id %>"></trip-delete-link>
+                        </a>
                       </li>
                   <% end %>
               <% end %>
@@ -109,7 +111,9 @@
                   <%= t('trips.show.edit_trip') %>
               <% end %>
               <% if @trip.author_user_id == current_user.id %>
-                  <trip-delete-link trip-id="<%= @trip.id %>"></trip-delete-link>
+                  <a href="javascript:void(0);" class="trip-link">
+                    <trip-delete-link trip-id="<%= @trip.id %>"></trip-delete-link>
+                  </a>
               <% end %>
           <% end %>
           <%= link_to "#{new_trip_path}?copy_from=#{@trip.id}", target: '_blank', class: 'trip-link' do %>
