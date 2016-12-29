@@ -1,59 +1,40 @@
-<%= content_for :title, t('.title') %>
-<div class="container">
+<% content_for :title, t('.title') %>
 
+<div class="container">
   <div class="row">
-    <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), role: 'form') do |f| %>
-          <%= error_messages! resource %>
-          <h2><%= t('.welcome') %>
-            <small><%= t('.teaser') %></small>
-          </h2>
-          <hr class="colorgraph">
-          <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-6">
-              <div class="form-group">
-                <%= f.text_field :first_name, class: 'form-control input-lg', placeholder: t('.first_name') %>
-              </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6">
-              <div class="form-group">
-                <%= f.text_field :last_name, class: 'form-control input-lg', placeholder: t('.last_name') %>
-              </div>
-            </div>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <fieldset class="col-md-8 col-md-offset-2 col-xs-12">
+          <h5><%= t('.welcome') %></h5>
+          <hr/>
+          <div class="form-group">
+            <%= f.label :first_name, class: 'control-label' %>
+            <%= f.text_field :first_name, class: 'form-control' %>
+            <%= render 'common/error_message', object: f.object, field: :first_name %>
           </div>
           <div class="form-group">
-            <%= f.email_field :email, autofocus: true, class: 'form-control input-lg', placeholder: t('.email') %>
+            <%= f.label :last_name, class: 'control-label' %>
+            <%= f.text_field :last_name, class: 'form-control' %>
+            <%= render 'common/error_message', object: f.object, field: :last_name %>
           </div>
-          <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-6">
-              <div class="form-group">
-                <%= f.password_field :password, autocomplete: 'off', class: 'form-control input-lg', placeholder: t('.password') %>
-              </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6">
-              <div class="form-group">
-                <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control input-lg', placeholder: t('.password_confirmation') %>
-              </div>
-            </div>
+          <div class="form-group">
+            <%= f.label :email, class: 'control-label' %>
+            <%= f.email_field :email, class: 'form-control' %>
+            <%= render 'common/error_message', object: f.object, field: :email %>
           </div>
-          <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12">
-              <%= t('.by_clicking') %>
-              <strong class="label label-primary"><%= t('.register') %></strong>, <%= t('.you_agree') %>
-              <a href="#" data-toggle="modal" data-target="#t_and_c_m"><%= t('.terms') %></a><%= t('.ending') %>.
-            </div>
+          <div class="form-group">
+            <%= f.label :password, class: 'control-label' %>
+            <%= f.password_field :password, class: 'form-control', autocomplete: 'off' %>
+            <%= render 'common/error_message', object: f.object, field: :password %>
           </div>
-
-          <hr class="colorgraph">
-          <div class="row">
-            <div class="col-xs-12 col-md-6">
-              <%= f.submit t('.register'), class: 'btn btn-primary btn-block btn-lg' %>
-            </div>
-            <div class="col-xs-12 col-md-6">
-              <%= link_to t('.sign_in'), new_user_session_path, class: 'btn btn-success btn-block btn-lg' %>
-            </div>
+          <div class="form-group">
+            <%= f.label :password_confirmation, class: 'control-label' %>
+            <%= f.password_field :password_confirmation, class: 'form-control', autocomplete: 'off' %>
+            <%= render 'common/error_message', object: f.object, field: :password_confirmation %>
           </div>
-      <% end %>
-    </div>
+          <div class="form-group pull-right">
+            <%= f.submit t('common.save'), class: 'btn btn-primary' %>
+          </div>
+        </fieldset>
+    <% end %>
   </div>
 </div>

@@ -1,0 +1,34 @@
+<div class="container">
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= error_messages! resource %>
+      <fieldset class="col-md-8 col-md-offset-2 col-xs-12">
+        <div class="form-group">
+          <%= f.label :first_name, class: 'control-label' %>
+          <%= f.text_field :first_name, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :last_name, class: 'control-label' %>
+          <%= f.text_field :last_name, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :email, class: 'control-label' %>
+          <%= f.email_field :email, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :password, class: 'control-label' %>
+          <%= f.password_field :password, class: 'form-control', autocomplete: 'off', placeholder: t('.password_placeholder') %>
+        </div>
+        <div class="form-group">
+          <%= f.label :password_confirmation, class: 'control-label' %>
+          <%= f.password_field :password_confirmation, class: 'form-control', autocomplete: 'off' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :current_password, class: 'control-label' %>
+          <%= f.password_field :current_password, class: 'form-control', autocomplete: 'off', placeholder: t('.current_password_placeholder') %>
+        </div>
+        <div class="form-group pull-right">
+          <%= f.submit t('common.save'), class: 'btn btn-primary' %>
+        </div>
+      </fieldset>
+  <% end %>
+</div>

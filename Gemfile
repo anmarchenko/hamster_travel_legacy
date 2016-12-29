@@ -50,7 +50,7 @@ gem 'zip-zip' # will load compatibility for old rubyzip API.
 
 # redis for in-memory store
 gem 'hiredis'
-gem 'redis', :require => ["redis", "redis/connection/hiredis"]
+gem 'redis', require: ['redis', 'redis/connection/hiredis']
 
 # image uploading
 gem 'dragonfly'
@@ -87,8 +87,8 @@ gem 'newrelic_rpm'
 
 # production - caching and passenger
 group :production do
-  gem 'rack-cache', :require => 'rack/cache'
-  gem "passenger", ">= 5.0.25", require: "phusion_passenger/rack_handler"
+  gem 'rack-cache', require: 'rack/cache'
+  gem 'passenger', '>= 5.0.25', require: 'phusion_passenger/rack_handler'
 end
 
 group :development do
@@ -114,6 +114,5 @@ group :test do
   gem 'faker'
 
   # tests coverage
-  gem 'simplecov', :require => false
-  gem 'codacy-coverage', :require => false
+  gem 'simplecov', require: false
 end

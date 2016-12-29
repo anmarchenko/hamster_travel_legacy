@@ -1,10 +1,8 @@
 module CurrencyHelper
+  DEFAULT_CURRENCY = 'USD'.freeze
+  IMPORTANT_CURRENCIES = %w(RUB EUR USD GBP).freeze
 
-  DEFAULT_CURRENCY = 'RUB'
-
-  IMPORTANT_CURRENCIES = %w(RUB EUR USD GBP)
-
-  def self.currency_list user_currency = nil, trip_currency = nil
+  def self.currency_list(user_currency = nil, trip_currency = nil)
     ecb_currencies = EuCentralBank::CURRENCIES.dup
     ecb_currencies << 'EUR'
 
@@ -19,19 +17,18 @@ module CurrencyHelper
         [0, curr]
       end
     end
-    ecb_currencies.map{|curr| Money::Currency.find(curr) }
+    ecb_currencies.map { |curr| Money::Currency.find(curr) }
   end
 
-  def self.currencies_select user_currency = nil, trip_currency = nil
+  def self.currencies_select(user_currency = nil, trip_currency = nil)
     CurrencyHelper.currency_list(user_currency, trip_currency).map do |currency|
-      ["#{currency.name} (#{currency.iso_code})",currency.iso_code, currency.symbol]
+      ["#{currency.name} (#{currency.iso_code})", currency.iso_code, currency.symbol]
     end
   end
 
-  def self.currencies_select_simple user_currency = nil
+  def self.currencies_select_simple(user_currency = nil)
     CurrencyHelper.currency_list(user_currency).map do |currency|
-      ["#{currency.name} (#{currency.iso_code})",currency.iso_code]
+      ["#{currency.name} (#{currency.iso_code})", currency.iso_code]
     end
   end
-
 end

@@ -40,7 +40,7 @@ en:
       update_needs_confirmation: "You updated your account successfully, but we need to verify your new email address. Please check your email and click on the confirm link to finalize confirming your new email address."
       updated: "You updated your account successfully."
       new:
-        welcome: Create your account...
+        welcome: Welcome to Hamster Travel
         teaser: and explore!
         email: Email Address
         password: Password
@@ -57,7 +57,8 @@ en:
         terms_head: Terms and Conditions
         title: Registration
       edit:
-        title: Edit my registration
+        welcome: My profile
+        title: Edit profile
         password_placeholder: leave blank if you don't want to change it
         current_password_placeholder: we need your current password to confirm your changes
     sessions:

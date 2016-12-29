@@ -1,6 +1,3 @@
-require 'codacy-coverage'
-Codacy::Reporter.start
-
 require 'simplecov'
 SimpleCov.start
 
@@ -23,8 +20,8 @@ RSpec.configure do |config|
   config.raise_errors_for_deprecations!
   I18n.locale = :en
 
-  config.include Devise::Test::ControllerHelpers, :type => :controller
-  config.extend ControllerMacros, :type => :controller
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.extend ControllerMacros, type: :controller
 
   config.before(:each) do
     DatabaseCleaner.strategy = :truncation
@@ -40,5 +37,4 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
-
 end

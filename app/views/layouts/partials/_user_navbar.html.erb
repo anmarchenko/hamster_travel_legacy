@@ -37,6 +37,9 @@
     </li>
 <% else %>
     <li class="navbar-trips-link">
+      <%= link_to t('common.sign_up'), new_user_registration_path %>
+    </li>
+    <li class="navbar-trips-link">
       <%= link_to t('common.sign_in'), new_user_session_path %>
     </li>
 <% end %>

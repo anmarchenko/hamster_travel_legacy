@@ -1,6 +1,6 @@
 describe Api::BudgetsController do
   describe '#show' do
-    let(:trip) {FactoryGirl.create(:trip, :with_filled_days)}
+    let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
 
     context 'when user is logged in' do
       login_user
@@ -11,7 +11,7 @@ describe Api::BudgetsController do
         end
 
         it 'returns budget in JSON in user\'s currency' do
-          get 'show', params: {id: trip.id.to_s, format: :json}
+          get 'show', params: { id: trip.id.to_s, format: :json }
           expect(response).to have_http_status 200
 
           json = JSON.parse(response.body)
@@ -25,7 +25,7 @@ describe Api::BudgetsController do
 
       context 'and when there is no trip' do
         it 'heads 404' do
-          get 'show', params: {id: 'no_trip', format: :json}
+          get 'show', params: { id: 'no_trip', format: :json }
           expect(response).to have_http_status 404
         end
       end
@@ -33,13 +33,13 @@ describe Api::BudgetsController do
 
     context 'when no logged user' do
       it 'returns budget in JSON in default currency' do
-        get 'show', params: {id: trip.id.to_s, format: :json}
+        get 'show', params: { id: trip.id.to_s, format: :json }
         expect(response).to have_http_status 200
         json = JSON.parse(response.body)
-        expect(json['budget']['sum']).to eq(trip.budget_sum('RUB'))
-        expect(json['budget']['transfers_hotel_budget']).to eq(trip.transfers_hotel_budget('RUB'))
-        expect(json['budget']['activities_other_budget']).to eq(trip.activities_other_budget('RUB'))
-        expect(json['budget']['catering_budget']).to eq(trip.catering_budget('RUB'))
+        expect(json['budget']['sum']).to eq(trip.budget_sum(CurrencyHelper::DEFAULT_CURRENCY))
+        expect(json['budget']['transfers_hotel_budget']).to eq(trip.transfers_hotel_budget(CurrencyHelper::DEFAULT_CURRENCY))
+        expect(json['budget']['activities_other_budget']).to eq(trip.activities_other_budget(CurrencyHelper::DEFAULT_CURRENCY))
+        expect(json['budget']['catering_budget']).to eq(trip.catering_budget(CurrencyHelper::DEFAULT_CURRENCY))
         expect(json['budget']['budget_for']).to eq(trip.budget_for)
       end
     end

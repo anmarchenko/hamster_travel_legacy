@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    redirect_to edit_user_path(@user, {locale: @user.locale}), notice: t('users.update_successful', locale: @user.locale) and return if @user.update_attributes user_params
+    redirect_to edit_user_path(@user, locale: @user.locale), notice: t('users.update_successful', locale: @user.locale) and return if @user.update_attributes user_params
     render 'edit'
   end
 
@@ -28,5 +28,4 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:locale, :home_town_id, :image, :currency)
   end
-
 end

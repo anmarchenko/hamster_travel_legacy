@@ -20,8 +20,9 @@ config/initializers/secret_token.rb
 test
 *.swp
 .DS_Store
-config/settings.local.yml
 
 config/settings.local.yml
 config/settings/*.local.yml
 config/environments/*.local.yml
+
+coverage
