@@ -31,6 +31,11 @@ ru:
       send_paranoid_instructions: "Если ваш адрес email есть в нашей базе данных, то в течение нескольких минут вы получите письмо с инструкциями по восстановлению вашего пароля."
       updated: "Ваш пароль изменён. Теперь вы вошли в систему."
       updated_not_active: "Пароль успешно изменён."
+      new:
+        title: Восстановление пароля
+        welcome: Пожалуйста введите свой E-Mail
+        email: E-Mail
+        send: Восстановить
     registrations:
       sorry: Регистрация пока не открыта
       destroyed: "До свидания! Ваша учётная запись удалена. Надеемся снова увидеть вас."
@@ -106,6 +111,7 @@ ru:
     sign_out: Выход
     sign_in: Вход
     sign_up: Регистрация
+    forgot_password: Забыли пароль?
     profile: Мой профиль
     edit_user: Редактировать
     settings: Настройки
@@ -206,7 +212,7 @@ ru:
         dates_unknown: Даты пока неизвестны
         planned_days_count: Планируемое количество дней
       user:
-        email: Электронный адрес
+        email: E-Mail
         first_name: Имя
         last_name: Фамилия
         password: Пароль
