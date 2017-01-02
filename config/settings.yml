@@ -10,3 +10,4 @@ new_relic:
   license_key: <%= ENV['NEW_RELIC_LICENSE_KEY'] %>
 mapbox:
   token: <%= ENV['MAPBOX_TOKEN'] %>
+app_host: http://hamster.travel

@@ -19,6 +19,7 @@ en:
         subject: "Confirmation instructions"
       reset_password_instructions:
         subject: "Reset password instructions"
+        button_text: "Change password"
       unlock_instructions:
         subject: "Unlock Instructions"
     omniauth_callbacks:
