@@ -20,6 +20,8 @@ en:
       reset_password_instructions:
         subject: "Reset password instructions"
         button_text: "Change password"
+        hello: "Hello, %{name}!"
+        text: "There was a request to change your password. If it wasn't you, just ignore this message, your password will remain unchanged."
       unlock_instructions:
         subject: "Unlock Instructions"
     omniauth_callbacks:
@@ -36,6 +38,10 @@ en:
         welcome: Please enter your email
         email: Email
         send: Recover
+      edit:
+        title: Set new password
+        welcome: Enter your new password
+        save_password: Save password
     registrations:
       sorry: Registration is not open yet
       destroyed: "Bye! Your account was successfully cancelled. We hope to see you again soon."

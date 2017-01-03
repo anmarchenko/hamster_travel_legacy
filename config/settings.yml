@@ -1,3 +1,4 @@
+app_host: http://hamster.travel
 s3:
   key: <%= ENV['AWS_S3_KEY'] %>
   secret: <%= ENV['AWS_S3_SECRET'] %>
@@ -10,4 +11,10 @@ new_relic:
   license_key: <%= ENV['NEW_RELIC_LICENSE_KEY'] %>
 mapbox:
   token: <%= ENV['MAPBOX_TOKEN'] %>
-app_host: http://hamster.travel
+smtp:
+  address: <%= ENV['SMTP_ADDRESS'] %>
+  port: <%= ENV['SMTP_PORT'] %>
+  username: <%= ENV['SMTP_USERNAME'] %>
+  password: <%= ENV['SMTP_PASSWORD'] %>
+  authentication: <%= ENV['SMTP_AUTHENTICATION'] %>
+  enable_starttls_auto: <%= ENV['SMTP_ENABLE_STARTTLS_AUTO'] %>

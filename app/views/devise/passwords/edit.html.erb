@@ -1,0 +1,29 @@
+<%= content_for :title, t('.title') %>
+
+<div class="container">
+  <div class="row login-form">
+    <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: {method: :put}) do |f| %>
+          <%= f.hidden_field :reset_password_token %>
+
+          <fieldset>
+            <h5><%= t('.welcome') %></h5>
+            <hr/>
+            <div class="form-group">
+              <%= f.label :password, class: 'control-label' %>
+              <%= f.password_field :password, class: 'form-control', autocomplete: 'off' %>
+              <%= render 'common/error_message', object: f.object, field: :password %>
+            </div>
+            <div class="form-group">
+              <%= f.label :password_confirmation, class: 'control-label' %>
+              <%= f.password_field :password_confirmation, class: 'form-control', autocomplete: 'off' %>
+              <%= render 'common/error_message', object: f.object, field: :password_confirmation %>
+            </div>
+            <div class="form-group">
+              <%= f.submit t('.save_password'), class: 'btn btn-lg btn-success btn-block' %>
+            </div>
+          </fieldset>
+      <% end %>
+    </div>
+  </div>
+</div>
