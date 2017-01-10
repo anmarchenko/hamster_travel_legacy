@@ -1,12 +1,11 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~> 5.0.0'
-gem 'coffee-rails'
 gem 'russian'
 
 # DB
-gem 'pg'
 gem 'annotate'
+gem 'pg'
 
 # pagination
 gem 'kaminari'
@@ -19,6 +18,7 @@ gem 'date_validator'
 gem 'devise', '~> 4.2.0'
 
 # asset pipeline
+gem 'coffee-rails'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 # Use Uglifier as compressor for JavaScript assets
@@ -60,9 +60,9 @@ gem 'dragonfly-s3_data_store'
 gem 'dalli'
 
 # money
+gem 'eu_central_bank'
 gem 'money'
 gem 'money-rails'
-gem 'eu_central_bank'
 
 # geo
 gem 'countries'
@@ -71,8 +71,8 @@ gem 'countries'
 gem 'config'
 
 # translations for models
-gem 'globalize', github: 'globalize/globalize'
 gem 'activemodel-serializers-xml'
+gem 'globalize', github: 'globalize/globalize'
 
 # inline svg for styling
 gem 'inline_svg'
@@ -87,8 +87,8 @@ gem 'newrelic_rpm'
 
 # production - caching and passenger
 group :production do
-  gem 'rack-cache', require: 'rack/cache'
   gem 'passenger', '>= 5.0.25', require: 'phusion_passenger/rack_handler'
+  gem 'rack-cache', require: 'rack/cache'
 end
 
 group :development do
@@ -97,11 +97,11 @@ end
 
 group :test do
   # unit testing
+  gem 'database_cleaner'
+  gem 'nyan-cat-formatter'
   gem 'rails-controller-testing'
   gem 'rspec', '~> 3.4'
   gem 'rspec-rails', '~> 3.4'
-  gem 'nyan-cat-formatter'
-  gem 'database_cleaner'
 
   # matchers for tests
   gem 'shoulda-matchers'
