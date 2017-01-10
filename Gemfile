@@ -34,7 +34,7 @@ gem 'autoprefixer-rails'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # jquery UI
-gem 'jquery-ui-rails', '~> 5.0'
+gem 'jquery-ui-rails'
 # AngularJS
 gem 'angularjs-rails'
 # datepicker

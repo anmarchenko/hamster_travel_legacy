@@ -2,8 +2,8 @@
 //= require jquery_ujs
 //= require jquery-ui/core
 //= require jquery-ui/widget
-//= require jquery-ui/mouse
-//= require jquery-ui/sortable
+//= require jquery-ui/widgets/mouse
+//= require jquery-ui/widgets/sortable
 //= require jquery.stickytableheaders.js
 //= require bootstrap.min
 //= require bootstrap-datepicker/core
@@ -32,4 +32,3 @@
 
 //= require travel/app.js
 //= require_tree ./travel
-
