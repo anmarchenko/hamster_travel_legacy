@@ -1,52 +1,6 @@
 .user-profile-header {
-  .user-profile-tabs {
-    width: 100%;
-
-    .nav-tabs {
-      overflow: hidden;
-      width: 100%;
-      font-weight: 300;
-      display: flex;
-      padding: 0;
-      list-style: none;
-      flex-flow: row wrap;
-
-      li {
-        margin-right: 20px;
-        text-align: center;
-        .tab-image {
-          display: block;
-          margin: auto;
-          fill: $main-grey;
-          stroke: $main-grey;
-          width: 40px;
-          height: 40px;
-        }
-
-        a {
-          font-weight: 500;
-          color: $main-grey;
-        }
-
-        a:hover {
-          color: $ctaColor;
-          box-shadow: none;
-          .tab-image {
-            fill: $ctaColor;
-            stroke: $ctaColor;
-          }
-        }
-
-        a.active, a.active:focus {
-          border: none;
-          color: $ctaColor;
-          .tab-image {
-            fill: $ctaColor;
-            stroke: $ctaColor;
-          }
-        }
-      }
-    }
+  hr {
+    margin-bottom: 0;
   }
 }
 
@@ -142,6 +96,57 @@
     }
   }
 }
+
+.user-profile-tabs {
+  width: 100%;
+
+  .nav-tabs {
+    overflow: hidden;
+    width: 100%;
+    font-weight: 300;
+    display: flex;
+    padding: 0;
+    list-style: none;
+    flex-flow: row wrap;
+
+    li {
+      margin-right: 20px;
+      text-align: center;
+      .tab-image {
+        display: block;
+        margin: auto;
+        fill: $main-grey;
+        stroke: $main-grey;
+        width: 40px;
+        height: 40px;
+      }
+
+      a {
+        font-weight: 500;
+        color: $main-grey;
+      }
+
+      a:hover {
+        color: $ctaColor;
+        box-shadow: none;
+        .tab-image {
+          fill: $ctaColor;
+          stroke: $ctaColor;
+        }
+      }
+
+      a.active, a.active:focus {
+        border: none;
+        color: $ctaColor;
+        .tab-image {
+          fill: $ctaColor;
+          stroke: $ctaColor;
+        }
+      }
+    }
+  }
+}
+
 .visited-place {
   img {
     margin-right: .5em;
