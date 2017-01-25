@@ -2,7 +2,7 @@
 <% content_for :page_javascript do %>
     <%= render 'components/navbar/global_search' %>
 <% end %>
-<header class="navbar navbar-default navbar-first-mobile <%= 'navbar-transparent' if transparent %>">
+<header class="navbar navbar-default">
   <div class="container">
     <nav>
       <ul class="nav navbar-nav">
@@ -28,14 +28,14 @@
               <% end %>
             </li>
         <% end %>
-        <li class="hidden-xs navbar-trips-link">
+        <li class="<%= 'hidden-xs' if user_signed_in? %>">
           <%= link_to t('.trips'), trips_path %>
         </li>
         <% if user_signed_in? %>
-            <li class="hidden-xs navbar-trips-link">
+            <li class="hidden-xs">
               <%= link_to t('.my_trips'), my_trips_path %>
             </li>
-            <li class="hidden-xs navbar-trips-link">
+            <li class="hidden-xs">
               <%= link_to t('.my_ideas'), drafts_trips_path %>
             </li>
         <% end %>
@@ -46,20 +46,3 @@
     </nav>
   </div>
 </header>
-<% if user_signed_in? %>
-    <div class="navbar navbar-default navbar-second-mobile hidden-sm hidden-md hidden-lg">
-      <div class="container">
-        <ul class="nav navbar-nav">
-          <li class="navbar-trips-link">
-            <%= link_to t('.trips'), trips_path %>
-          </li>
-          <li class="navbar-trips-link">
-            <%= link_to t('.my_trips'), my_trips_path %>
-          </li>
-          <li class="navbar-trips-link">
-            <%= link_to t('.my_ideas'), drafts_trips_path %>
-          </li>
-        </ul>
-      </div>
-    </div>
-<% end %>

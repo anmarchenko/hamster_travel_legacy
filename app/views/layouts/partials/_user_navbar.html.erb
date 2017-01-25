@@ -6,6 +6,17 @@
               <%= t('common.profile') %>
           <% end %>
         </li>
+        <li class="divider"></li>
+        <li class="major">
+          <%= link_to t('layouts.partials.navbar.trips'), trips_path %>
+        </li>
+        <li class="major">
+          <%= link_to t('layouts.partials.navbar.my_trips'), my_trips_path %>
+        </li>
+        <li class="major">
+          <%= link_to t('layouts.partials.navbar.my_ideas'), drafts_trips_path %>
+        </li>
+        <li class="divider"></li>
         <li class="major">
           <%= link_to edit_user_path(current_user) do %>
               <%= t('common.settings') %>
@@ -36,10 +47,10 @@
       </a>
     </li>
 <% else %>
-    <li class="navbar-trips-link">
+    <li class="hidden-xs">
       <%= link_to t('common.sign_up'), new_user_registration_path %>
     </li>
-    <li class="navbar-trips-link">
+    <li>
       <%= link_to t('common.sign_in'), new_user_session_path %>
     </li>
 <% end %>

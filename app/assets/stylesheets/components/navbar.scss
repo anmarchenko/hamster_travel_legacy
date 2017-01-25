@@ -201,22 +201,6 @@
   }
 }
 
-@media (max-width: 768px) {
-  .navbar-second-mobile {
-    z-index: 1;
-  }
-
-  .navbar-transparent.navbar-first-mobile {
-    border-bottom: 0;
-  }
-
-  .navbar-transparent {
-    .add-trip-header-btn-image {
-      fill: #ffffff;
-    }
-  }
-}
-
 .dropdown-toggle {
   cursor: pointer;
 }

@@ -52,7 +52,7 @@ en:
       update_needs_confirmation: "You updated your account successfully, but we need to verify your new email address. Please check your email and click on the confirm link to finalize confirming your new email address."
       updated: "You updated your account successfully."
       new:
-        welcome: Welcome to Hamster Travel
+        welcome: Registration
         teaser: and explore!
         email: Email Address
         password: Password
@@ -82,6 +82,7 @@ en:
         register: Register
         welcome: Welcome
         sign_in: Login
+        sign_up: Registration
         remember: Remember Me
         title: Sign In
     unlocks:

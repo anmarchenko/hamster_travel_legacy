@@ -26,6 +26,10 @@
             <div class="form-group">
               <%= f.submit t('.sign_in'), class: 'btn btn-lg btn-success btn-block' %>
             </div>
+            <div class="form-group">
+              <%= link_to t('.sign_up'), new_user_registration_path,
+                    class: 'btn btn-lg btn-default btn-block' %>
+            </div>
           </fieldset>
       <% end %>
     </div>
