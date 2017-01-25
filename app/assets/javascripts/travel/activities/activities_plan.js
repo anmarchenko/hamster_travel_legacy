@@ -1,5 +1,4 @@
-angular.module('travel').controller('ActivitiesPlanController'
-    , [
+angular.module('travel').controller('ActivitiesPlanController', [
         '$scope', '$http', function ($scope, $http) {
 
             $scope.planDays = [];

@@ -1,7 +1,5 @@
-angular.module('travel').controller('TransfersPlanController'
-    , [
-        '$scope', '$http', '$cookies'
-        , function ($scope, $http, $cookies) {
+angular.module('travel').controller('TransfersPlanController', [
+        '$scope', '$http', '$cookies', function ($scope, $http, $cookies) {
 
             $scope.days = [];
             $scope.saving = false;
