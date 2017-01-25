@@ -20,7 +20,7 @@
       <ul class="nav navbar-nav navbar-right">
         <% if user_signed_in? %>
             <li>
-              <%= link_to new_trip_path, class: 'add-trip-header-btn hidden-xs' do %>
+              <%= link_to new_trip_path, class: 'add-trip-header-btn navbar-btn hidden-xs' do %>
                   <%= t('trips.index.create') %>
               <% end %>
               <%= link_to new_trip_path, class: 'add-trip-header-btn-image hidden-sm hidden-md hidden-lg' do %>

@@ -22,10 +22,9 @@
   }
 }
 
-.navbar-default .navbar-nav > li > .add-trip-header-btn {
-  border: 2px solid $ctaColor;
+.navbar-default .navbar-nav > li > .navbar-btn {
+  border: 2px solid;
   border-radius: 2px;
-  color: $ctaColor;
   margin-bottom: 15.5px;
   margin-left: 10px;
   margin-right: 10px;
@@ -35,10 +34,46 @@
   padding-right: 10px;
   padding-top: 5px;
   text-align: center;
+}
+
+.navbar-default .navbar-nav > li > .add-trip-header-btn {
+  border-color: $ctaColor;
+  color: $ctaColor;
 
   &:hover {
     background-color: $background-grey;
     color: $ctaColor;
+  }
+
+  &:hover {
+    background-color: $background-grey;
+  }
+}
+
+.navbar-default .navbar-nav > li > .signin-header-btn {
+  border-color: $border-grey;
+  color: $dark-grey;
+  padding-left: 15px;
+  padding-right: 15px;
+
+  &:hover {
+    background-color: $background-grey;
+  }
+}
+
+.navbar-default .navbar-nav > li > .signup-header-btn {
+  background-color: $success_green;
+  border-color: $success_green;
+  color: white;
+
+  &:hover {
+    background-color: darken($success_green, 5%);
+    color: white;
+  }
+
+  &:focus {
+    background-color: darken($success_green, 5%);
+    color: white;
   }
 }
 

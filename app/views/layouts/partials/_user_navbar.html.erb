@@ -55,10 +55,10 @@
       </a>
     </li>
 <% else %>
-    <li class="hidden-xs">
-      <%= link_to t('common.sign_up'), new_user_registration_path %>
-    </li>
     <li>
-      <%= link_to t('common.sign_in'), new_user_session_path %>
+      <%= link_to t('common.sign_in'), new_user_session_path, class: "navbar-btn signin-header-btn" %>
+    </li>
+    <li class="hidden-xs">
+      <%= link_to t('common.sign_up'), new_user_registration_path, class: "navbar-btn signup-header-btn" %>
     </li>
 <% end %>
