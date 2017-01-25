@@ -12,7 +12,7 @@
 </script>
 
 <script id="globalSearch.html" type="text/ng-template">
-  <span ng-click="searchClicked()">
+  <span ng-click="showSearch()" id="global_search_field">
     <%= inline_svg 'buttons/search.svg' %>
   </span>
   <input type="text"
@@ -25,5 +25,13 @@
          typeahead-wait-ms="500"
          typeahead-template-url="tripTypeahead.html"
          ng-class="{'mobile-search' : showMobileSearch}"
+         focus-on="showMobileSearch"
   />
+  <a href="#0"
+     class="search-cancel"
+     ng-class="{'search-cancel-shown' : showMobileSearch}"
+     ng-click="hideSearch()"
+  >
+    <%= image_tag 'buttons/delete.svg' %>
+  </a>
 </script>

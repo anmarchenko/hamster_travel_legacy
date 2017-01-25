@@ -235,10 +235,34 @@
     vertical-align: bottom;
   }
 
+  .search-cancel {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .search-cancel-shown {
+      display: block;
+      position: absolute !important;
+      top: 0;
+      padding-bottom: 19px;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-top: 19px;
+      right: 0;
+      z-index: 15;
+
+      img {
+        width: 25px;
+        height: 25px;
+      }
+    }
+  }
+
   input {
     box-shadow: none;
     color: $text-grey;
     margin-left: 10px;
+    z-index: 10;
 
     &:focus {
       box-shadow: none;
@@ -251,15 +275,22 @@
       &.mobile-search {
         display: block;
         height: 63px;
-        left: 0;
         margin-left: -15px;
         padding-left: 40px;
-        position: absolute;
-        right: 0;
-        top: 73px;
         width: calc(100% + 15px);
+
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
       }
+
     }
+  }
+
+  .dropdown-menu {
+    width: 100%;
+    left: 0 !important;
   }
 }
 

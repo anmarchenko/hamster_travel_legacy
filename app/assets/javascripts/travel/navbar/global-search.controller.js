@@ -9,8 +9,16 @@ angular.module('travel').controller('GlobalSearchController', ['$scope', '$http'
         window.location = '/trips/' + $item.id;
     }
 
-    $scope.searchClicked = function () {
-        $scope.showMobileSearch = !$scope.showMobileSearch;
+    $scope.showSearch = function () {
+        $scope.showMobileSearch = true;
         $scope.search_term = '';
+        var element = document.getElementById('global_search');
+        if (element) {
+            element.focus();
+        }
+    }
+
+    $scope.hideSearch = function () {
+        $scope.showMobileSearch = false;
     }
 }]);
