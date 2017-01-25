@@ -1,65 +1,48 @@
-.user-profile-header-wrapper {
-  position: relative;
-  width: 100%;
-  height: 500px;
+.user-profile-header {
+  .user-profile-tabs {
+    width: 100%;
 
-  .user-profile-header {
-    background-color: rgba(0, 0, 0, 0.4);
-    height: 100%;
-
-    color: white;
-    padding-top: 200px;
-
-    .user-profile-tabs {
+    .nav-tabs {
+      overflow: hidden;
       width: 100%;
-      background: white;
-      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
-      position: absolute;
-      bottom: 0px;
+      font-weight: 300;
+      display: flex;
+      padding: 0;
+      list-style: none;
+      flex-flow: row wrap;
 
-      .nav-tabs {
-        position: relative;
-        overflow: hidden;
-        width: 100%;
-        font-weight: 300;
-        display: flex;
-        padding: 0;
-        list-style: none;
-        flex-flow: row wrap;
+      li {
+        margin-right: 20px;
+        text-align: center;
+        .tab-image {
+          display: block;
+          margin: auto;
+          fill: $main-grey;
+          stroke: $main-grey;
+          width: 40px;
+          height: 40px;
+        }
 
-        li {
-          margin-right: 20px;
-          text-align: center;
+        a {
+          font-weight: 500;
+          color: $main-grey;
+        }
+
+        a:hover {
+          color: $ctaColor;
+          box-shadow: none;
           .tab-image {
-            display: block;
-            margin: auto;
-            fill: $main-grey;
-            stroke: $main-grey;
-            width: 40px;
-            height: 40px;
+            fill: $ctaColor;
+            stroke: $ctaColor;
           }
+        }
 
-          a {
-            font-weight: 500;
-            color: $main-grey;
-          }
-
-          a:hover {
-            color: $ctaColor;
-            box-shadow: none;
-            .tab-image {
-              fill: $ctaColor;
-              stroke: $ctaColor;
-            }
-          }
-
-          a.active, a.active:focus {
-            border: none;
-            color: $ctaColor;
-            .tab-image {
-              fill: $ctaColor;
-              stroke: $ctaColor;
-            }
+        a.active, a.active:focus {
+          border: none;
+          color: $ctaColor;
+          .tab-image {
+            fill: $ctaColor;
+            stroke: $ctaColor;
           }
         }
       }
@@ -131,21 +114,28 @@
     }
 
     .user-city {
+      font-size: 1.5em;
+      color: $text-grey;
       img {
         height: 1em;
         vertical-align: baseline;
-        margin-right: 8px;
+        margin-right: .4ch;
+        margin-bottom: -0.1em;
       }
     }
   }
 
   .user-statistics {
-    margin-top: 30px;
+    color: $text-grey;
+    font-size: 1.2em;
+    margin-top: 1em;
+    margin-bottom: 1em;
     .user-statistic {
       display: inline-block;
       margin-right: 2em;
 
       .statistic-number {
+        color: $dark-grey;
         font-size: 2em;
         text-align: center;
       }
@@ -173,6 +163,11 @@
       }
     }
   }
+}
+
+.user-profile-area {
+  background-color: $background-grey;
+  min-height: 100%;
 }
 
 .user-profile {

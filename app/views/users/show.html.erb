@@ -26,28 +26,27 @@
 <% end %>
 
 <div ng-controller="UserProfileController">
-  <div class="user-profile-header-wrapper">
-    <div class="user-profile-header">
+  <div class="user-profile-header">
+    <div class="container">
+      <user-info user-id="'<%= @user.id %>'" edit="<%= @edit %>"></user-info>
+      <hr/>
+    </div>
+    <div class="user-profile-tabs">
       <div class="container">
-        <user-info user-id="'<%= @user.id %>'" edit="<%= @edit %>"></user-info>
-      </div>
-      <div class="user-profile-tabs">
-        <div class="container">
-          <ul class="nav nav-tabs">
-            <li>
-              <a ui-sref="user_trips" ui-sref-active="active" href="javascript:void(0);">
-                <%= inline_svg 'users/trips.svg', class: 'tab-image transfers-img' %>
-                <%= t('users.show.trips') %>
-              </a>
-            </li>
-            <li>
-              <a ui-sref="user_map" ui-sref-active="active" href="javascript:void(0);">
-                <%= inline_svg 'users/map.svg', class: 'tab-image map-img' %>
-                <%= t('users.show.map') %>
-              </a>
-            </li>
-          </ul>
-        </div>
+        <ul class="nav nav-tabs">
+          <li>
+            <a ui-sref="user_trips" ui-sref-active="active" href="javascript:void(0);">
+              <%= inline_svg 'users/trips.svg', class: 'tab-image transfers-img' %>
+              <%= t('users.show.trips') %>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="user_map" ui-sref-active="active" href="javascript:void(0);">
+              <%= inline_svg 'users/map.svg', class: 'tab-image map-img' %>
+              <%= t('users.show.map') %>
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
