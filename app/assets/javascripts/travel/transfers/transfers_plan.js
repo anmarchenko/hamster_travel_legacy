@@ -6,6 +6,10 @@ angular.module('travel').controller('TransfersPlanController'
             $scope.days = [];
             $scope.saving = false;
 
+            var transfersUrl = function() {
+              return "/api/trips/" + $scope.trip_id + "/days_transfers?locale=" + LOCALE;
+            }
+
             $scope.init = function (trip_id) {
                 $scope.trip_id = trip_id;
 
@@ -15,7 +19,7 @@ angular.module('travel').controller('TransfersPlanController'
                     $scope.restoreVisibilityFromCookie(columns[i]);
                 }
 
-                $http.get("/api/trips/" + $scope.trip_id + "/days_transfers").then( function(response) {
+                $http.get(transfersUrl()).then( function(response) {
                     // TODO: ES6
                     for (var i = 0; i < response.data.days.length; i++) {
                         var day = response.data.days[i];
@@ -45,7 +49,7 @@ angular.module('travel').controller('TransfersPlanController'
             $scope.cancelEdits = function () {
                 $scope.cancelEditsPlan();
                 $scope.days = [];
-                $http.get("/api/trips/" + $scope.trip_id + "/days_transfers").then( function(response) {
+                $http.get(transfersUrl()).then( function(response) {
                     // TODO: ES6
                     for (var i = 0; i < response.data.days.length; i++) {
                         var day = response.data.days[i];

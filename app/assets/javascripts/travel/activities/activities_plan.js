@@ -5,9 +5,13 @@ angular.module('travel').controller('ActivitiesPlanController'
             $scope.planDays = [];
             $scope.saving = false;
 
+            var activitiesUrl = function() {
+              return "/api/trips/" + $scope.trip_id + "/days_activities?locale=" + LOCALE;
+            }
+
             $scope.initActivities = function (trip_id) {
                 $scope.trip_id = trip_id;
-                $http.get("/api/trips/" + $scope.trip_id + "/days_activities/").then( function(response) {
+                $http.get(activitiesUrl()).then( function(response) {
                     // TODO: ES6
                     for (var i = 0; i < response.data.days.length; i++) {
                         var day = response.data.days[i];
@@ -37,7 +41,7 @@ angular.module('travel').controller('ActivitiesPlanController'
                 $scope.cancelEditsPlan();
 
                 $scope.planDays = [];
-                $http.get("/api/trips/" + $scope.trip_id + "/days_activities/").then( function(response) {
+                $http.get(activitiesUrl()).then( function(response) {
                     // TODO: ES6
                     for (var i = 0; i < response.data.days.length; i++) {
                         var day = response.data.days[i];
