@@ -2,6 +2,12 @@
   box-shadow: none;
 }
 
+@media(max-width: 768px) {
+  .navbar-brand {
+    padding-left: 0;
+  }
+}
+
 .navbar-nav {
   position: relative;
   z-index: 2;

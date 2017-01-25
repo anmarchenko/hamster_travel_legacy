@@ -253,13 +253,15 @@ en:
       lunch: Lunch
       coffee: Coffee
     index:
-      title: Travels
+      title: Trips
       create: Add plan
       with_report: With report
     drafts:
       title: My ideas
     new:
       title: New travel
+    my:
+      title: My trips
     show:
       delete_confirm: Trip will be deleted!
       title: Travel

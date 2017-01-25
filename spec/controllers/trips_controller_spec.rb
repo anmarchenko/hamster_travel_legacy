@@ -20,22 +20,28 @@ describe TripsController do
       before { FactoryGirl.create_list(:trip, 12) }
       before { FactoryGirl.create_list(:trip, 2, status_code: Travels::Trip::StatusCodes::FINISHED) }
 
-      before { FactoryGirl.create_list(:trip, 1, user_ids: [subject.current_user.id],
-                                       private: true, status_code: Travels::Trip::StatusCodes::FINISHED) }
+      before do
+        FactoryGirl.create_list(
+          :trip, 1,
+          user_ids: [subject.current_user.id],
+          private: true,
+          status_code: Travels::Trip::StatusCodes::FINISHED
+        )
+      end
 
       it 'shows trips index page, all trips that are not draft' do
         get 'index'
         trips = assigns(:trips)
-        expect(trips.to_a.count).to eq 7
+        expect(trips.to_a.size).to eq 7
         # check sort
         trips.each_with_index do |_, i|
-          next if trips[i+1].blank?
+          next if trips[i + 1].blank?
           expect(
-              trips[i].status_code > trips[i+1].status_code ||
-                  (
-                  trips[i].status_code == trips[i+1].status_code &&
-                      trips[i].start_date >= trips[i+1].start_date
-                  )
+            trips[i].status_code > trips[i + 1].status_code ||
+            (
+              trips[i].status_code == trips[i + 1].status_code &&
+              trips[i].start_date >= trips[i + 1].start_date
+            )
           ).to be true
           expect(trips[i].private).to be false
         end
@@ -46,7 +52,7 @@ describe TripsController do
       before { Travels::Trip.destroy_all }
       before { FactoryGirl.create_list(:trip, 12) }
       before { FactoryGirl.create_list(:trip, 3, status_code: Travels::Trip::StatusCodes::PLANNED) }
-      after { expect(assigns(:trips).to_a.count).to eq 3 }
+      after { expect(assigns(:trips).to_a.size).to eq 3 }
 
       it 'shows trips index page' do
         get 'index'
@@ -55,9 +61,8 @@ describe TripsController do
   end
 
   describe '#my' do
-
     context 'when user is logged in' do
-      after { expect(response).to render_template 'trips/index' }
+      after { expect(response).to render_template 'trips/my' }
 
       login_user
 
@@ -80,14 +85,14 @@ describe TripsController do
       it 'shows user\'s plans without drafts when parameter \'my\' is present' do
         get 'my'
         trips = assigns(:trips)
-        expect(trips.to_a.count).to eq 6
+        expect(trips.to_a.size).to eq 6
         trips.each_with_index do |trip, i|
           expect(trip.include_user(subject.current_user)).to be true
           expect(trip.status_code).not_to eq(Travels::Trip::StatusCodes::DRAFT)
 
-          next if trips[i+1].blank?
+          next if trips[i + 1].blank?
           expect(
-            trips[i].start_date >= trips[i+1].start_date
+            trips[i].start_date >= trips[i + 1].start_date
           ).to be true
         end
       end
@@ -129,7 +134,7 @@ describe TripsController do
       it 'shows user\'s drafts when parameter \'my_draft\' is present' do
         get 'drafts'
         trips = assigns(:trips)
-        expect(trips.to_a.count).to eq 3
+        expect(trips.to_a.size).to eq 3
         trips.each do |trip|
           expect(trip.include_user(subject.current_user)).to be true
           expect(trip.status_code).to eq(Travels::Trip::StatusCodes::DRAFT)
@@ -139,7 +144,7 @@ describe TripsController do
       it 'shows trips without dates last' do
         get 'drafts'
         trips = assigns(:trips)
-        expect(trips.to_a.count).to eq 3
+        expect(trips.to_a.size).to eq 3
         expect(trips.first.start_date).not_to be_nil
         expect(trips.last.start_date).to be_nil
       end
@@ -172,7 +177,7 @@ describe TripsController do
         let(:trip_private) { FactoryGirl.create(:trip, :with_filled_days, private: true) }
         context 'and when it is valid existing trip id' do
           it 'renders template with new trip copied from old trip' do
-            get 'new', params: {copy_from: trip.id}
+            get 'new', params: { copy_from: trip.id }
             new_trip = assigns(:trip)
             expect(new_trip.currency).to eq 'USD'
             expect(new_trip.name).to eq trip.name + " (#{I18n.t('common.copy')})"
@@ -190,7 +195,7 @@ describe TripsController do
 
         context 'and when trying to copy private trip' do
           it 'just creates new trip' do
-            get 'new', params: {copy_from: trip_private.id}
+            get 'new', params: { copy_from: trip_private.id }
             new_trip = assigns(:trip)
             expect(new_trip.name).to be_nil
             expect(new_trip.start_date).to be_nil
@@ -209,7 +214,7 @@ describe TripsController do
 
         context 'and when it is not valid' do
           it 'renders template with new trip' do
-            get 'new', params: {copy_from: 'blahblah'}
+            get 'new', params: { copy_from: 'blahblah' }
             new_trip = assigns(:trip)
             expect(new_trip.name).to be_nil
             expect(new_trip.start_date).to be_nil
@@ -226,7 +231,7 @@ describe TripsController do
 
         context 'and when it is empty' do
           it 'renders template with new trip' do
-            get 'new', params: {copy_from: ''}
+            get 'new', params: { copy_from: '' }
             new_trip = assigns(:trip)
             expect(new_trip.name).to be_nil
             expect(new_trip.start_date).to be_nil
@@ -244,7 +249,7 @@ describe TripsController do
     end
 
     context 'when no logged user' do
-      it "respond with not authorized status" do
+      it 'respond with not authorized status' do
         get 'new'
         expect(response).to redirect_to '/users/sign_in'
       end

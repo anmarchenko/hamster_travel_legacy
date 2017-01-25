@@ -248,6 +248,8 @@ ru:
       with_report: Есть отчёт
     drafts:
       title: Мои идеи
+    my:
+      title: Мои путешествия
     new:
       title: Новое путешествие
     show:

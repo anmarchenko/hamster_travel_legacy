@@ -14,7 +14,6 @@ class TripsController < ApplicationController
 
   def my
     @trips = Finders::Trips.for_user(current_user, params[:page]).includes(:author_user, :cities)
-    render 'trips/index'
   end
 
   def drafts
