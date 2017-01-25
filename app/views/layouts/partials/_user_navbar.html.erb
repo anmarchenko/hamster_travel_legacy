@@ -6,17 +6,17 @@
               <%= t('common.profile') %>
           <% end %>
         </li>
-        <li class="divider"></li>
-        <li class="major">
+        <li class="divider hidden-md hidden-lg hidden-sm"></li>
+        <li class="major hidden-md hidden-lg hidden-sm">
           <%= link_to t('layouts.partials.navbar.trips'), trips_path %>
         </li>
-        <li class="major">
+        <li class="major hidden-md hidden-lg hidden-sm">
           <%= link_to t('layouts.partials.navbar.my_trips'), my_trips_path %>
         </li>
-        <li class="major">
+        <li class="major hidden-md hidden-lg hidden-sm">
           <%= link_to t('layouts.partials.navbar.my_ideas'), drafts_trips_path %>
         </li>
-        <li class="divider"></li>
+        <li class="divider hidden-md hidden-lg hidden-sm"></li>
         <li class="major">
           <%= link_to edit_user_path(current_user) do %>
               <%= t('common.settings') %>
@@ -35,8 +35,16 @@
         </li>
       </ul>
     </script>
+
     <li class="dropdown">
-      <a class="user-menu-toggle" href="#" popover-placement="bottom-right" popover-trigger="'outsideClick'" uib-popover-template="'profileMenu.html'">
+      <a class="user-menu-toggle"
+         href="#"
+         popover-placement="bottom-right"
+         popover-trigger="'outsideClick'"
+         popover-class="popover-full-width-mobile"
+         popover-append-to-body="true"
+         uib-popover-template="'profileMenu.html'"
+      >
         <% if current_user.image_url.present? %>
             <img class="img-circle img-nav" id="profile_image" src="<%= current_user.image_url %>"/>
         <% else %>

@@ -4,8 +4,11 @@
         <ul class="notifications-popover">
           <li ng-repeat="invite in invites">
             <a class="notification-column" href="/users/{{invite.inviting_user_id}}">
-              <img class="img-circle small-profile-pic image-url" ng-show="{{!!invite.inviting_user_photo_url}}" ng-src="{{invite.inviting_user_photo_url}}"/>
-              <div class="{{invite.inviting_user_color}} img-circle small-profile-pic image-url initials" ng-show="{{!invite.inviting_user_photo_url}}">
+              <img class="img-circle small-profile-pic image-url"
+                   ng-show="{{!!invite.inviting_user_photo_url}}"
+                   ng-src="{{invite.inviting_user_photo_url}}"/>
+              <div class="{{invite.inviting_user_color}} img-circle small-profile-pic image-url initials"
+                   ng-show="{{!invite.inviting_user_photo_url}}">
                 {{invite.inviting_user_initials}}
               </div>
             </a>
@@ -25,7 +28,15 @@
           </li>
         </ul>
       </script>
-      <a class="notification-menu" href="javascript:void(0)" ng-if="invites.length > 0" popover-placement="auto" popover-trigger="'outsideClick'" uib-popover-template="'inviteNotificationPopover.html'">
+      <a class="notification-menu"
+         href="javascript:void(0)"
+         ng-if="invites.length > 0"
+         popover-placement="bottom-right"
+         popover-trigger="'outsideClick'"
+         popover-class="popover-full-width-mobile"
+         popover-append-to-body="true"
+         uib-popover-template="'inviteNotificationPopover.html'"
+      >
         <%= inline_svg 'common/bell.svg', class: 'notification-image' %>
         <div class="pending-number">
           {{invites.length > 9 ? '*' : invites.length }}
