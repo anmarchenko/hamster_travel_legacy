@@ -1,9 +1,9 @@
 module Api
   class UsersController < ApplicationController
-    before_action :authenticate_user!, only: [:upload_image, :delete_image]
-    before_action :find_user, only: [:show, :upload_image, :delete_image,
+    before_action :authenticate_user!, only: [:upload_image, :delete_image, :update]
+    before_action :find_user, only: [:show, :update, :upload_image, :delete_image,
                                      :planned_trips, :finished_trips, :visited]
-    before_action :authorize, only: [:upload_image, :delete_image]
+    before_action :authorize, only: [:upload_image, :delete_image, :update]
 
     def index
       term = params[:term] || ''
@@ -23,6 +23,15 @@ module Api
 
     def show
       render json: { user: @user }
+    end
+
+    def update
+      success = @user.update_attributes(user_params)
+      if success
+        render json: { error: false }
+      else
+        render json: { error: true, errors: @user.errors }, status: 422
+      end
     end
 
     def upload_image
@@ -67,10 +76,17 @@ module Api
 
     def find_user
       @user = User.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      render json: { error: true }, status: 404
     end
 
     def authorize
-      no_access and return unless @user == current_user
+      return if @user == current_user
+      render json: { error: true }, status: 403
+    end
+
+    def user_params
+      params.require(:user).permit(:locale, :home_town_id, :currency, :first_name, :last_name)
     end
   end
 end

@@ -8,9 +8,9 @@ class UsersController < ApplicationController
     @edit = @user == current_user
   end
 
-  def edit
-  end
+  def edit; end
 
+  # TODO: to delete
   def update
     redirect_to edit_user_path(@user, locale: @user.locale), notice: t('users.update_successful', locale: @user.locale) and return if @user.update_attributes user_params
     render 'edit'

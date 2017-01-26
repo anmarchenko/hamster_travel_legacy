@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 
     namespace :api do
       resources :cities, only: [:index]
-      resources :users, only: [:index, :show] do
+      resources :users, only: [:index, :show, :update] do
         member do
           post :upload_image, :delete_image
           get :planned_trips, :finished_trips, :visited

@@ -30,7 +30,7 @@ RSpec.configure do |config|
       FactoryGirl.lint
     ensure
       DatabaseCleaner.clean
-      FactoryGirl.create_list(:country, 5)
+      FactoryGirl.create_list(:country, 2)
     end
   end
 
