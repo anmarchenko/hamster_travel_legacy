@@ -1,16 +1,20 @@
 <script id="localeMenu.html" type="text/ng-template">
-  <ul class="menu-options-popover">
+  <ul
+    class="menu-options-popover"
+    ng-controller="SaveLocaleController"
+    ng-init="setUserId('<%= current_user&.id %>')"
+  >
     <li class="flag-text-menu">
-      <%= link_to locale: 'ru' do %>
+      <a href="" ng-click="setLocale('ru')">
           <%= flag 'ru', 24 %>
           Русский
-      <% end %>
+      </a>
     </li>
     <li class="flag-text-menu">
-      <%= link_to locale: 'en' do %>
+      <a href="" ng-click="setLocale('en')">
           <%= flag 'gb', 24 %>
           English
-      <% end %>
+        </a>
     </li>
   </ul>
 </script>

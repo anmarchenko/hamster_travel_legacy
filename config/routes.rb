@@ -9,6 +9,9 @@ Rails.application.routes.draw do
 
   scope '(:locale)', locale: /ru|en/ do
     devise_for :users
+    resources :landing, only: [:index] do
+      get :welcome, on: :collection
+    end
 
     resources :users, only: [:show, :edit, :update] do
       member do
@@ -59,5 +62,5 @@ Rails.application.routes.draw do
     end
   end
 
-  root to: 'home_page#index'
+  root to: 'landing#welcome'
 end

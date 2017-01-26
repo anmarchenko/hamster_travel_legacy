@@ -169,7 +169,7 @@ ru:
     day_number: День %{number}
     generic_error_title: Упс...
     generic_error_text: Что-то сломалось. Мы все починим, обещаем! Попробуйте позже еще раз.
-  home_page:
+  landing:
     index:
       title: Планирование путешествий
       welcome: "Hamster Travel: все твои путешествия в одном месте"
