@@ -71,8 +71,7 @@ ru:
         title: Регистрация
       edit:
         welcome: Мой профиль
-        title: Редактировать профиль
-        password_placeholder: оставьте пустым, если не хотите менять пароль
+        title: Сменить пароль
         current_password_placeholder: для подтверждения изменений необходимо ввести текущий пароль
     sessions:
       signed_in: "Вход в систему выполнен."
@@ -121,7 +120,7 @@ ru:
     sign_up: Регистрация
     forgot_password: Забыли пароль?
     profile: Мой профиль
-    edit_user: Редактировать
+    edit_user: Сменить пароль
     settings: Настройки
     save: Сохранить
     today: Сегодня

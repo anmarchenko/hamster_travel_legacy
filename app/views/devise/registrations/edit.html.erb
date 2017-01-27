@@ -7,23 +7,8 @@
           <h5><%= t('.welcome') %></h5>
           <hr/>
           <div class="form-group">
-            <%= f.label :first_name, class: 'control-label' %>
-            <%= f.text_field :first_name, class: 'form-control' %>
-            <%= render 'common/error_message', object: f.object, field: :first_name %>
-          </div>
-          <div class="form-group">
-            <%= f.label :last_name, class: 'control-label' %>
-            <%= f.text_field :last_name, class: 'form-control' %>
-            <%= render 'common/error_message', object: f.object, field: :last_name %>
-          </div>
-          <div class="form-group">
-            <%= f.label :email, class: 'control-label' %>
-            <%= f.email_field :email, class: 'form-control' %>
-            <%= render 'common/error_message', object: f.object, field: :email %>
-          </div>
-          <div class="form-group">
             <%= f.label :password, class: 'control-label' %>
-            <%= f.password_field :password, class: 'form-control', autocomplete: 'off', placeholder: t('.password_placeholder') %>
+            <%= f.password_field :password, class: 'form-control', autocomplete: 'off' %>
             <%= render 'common/error_message', object: f.object, field: :password %>
           </div>
           <div class="form-group">

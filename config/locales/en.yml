@@ -70,8 +70,7 @@ en:
         title: Registration
       edit:
         welcome: My profile
-        title: Edit profile
-        password_placeholder: leave blank if you don't want to change it
+        title: Change password
         current_password_placeholder: we need your current password to confirm your changes
     sessions:
       signed_in: "Signed in successfully."
@@ -132,7 +131,7 @@ en:
     sign_up: Register
     forgot_password: Forgot password?
     profile: My profile
-    edit_user: Edit profile
+    edit_user: Change password
     settings: Settings
     save: Save
     today: Today
