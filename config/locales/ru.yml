@@ -367,6 +367,7 @@ ru:
       title: Мои настройки
     update_successful: Настройки успешно сохранены
     show:
+      delete_photo: Удалить фото
       finished_trips_count: Путешествий
       visited_cities_count: Городов
       visited_countries_count: Стран

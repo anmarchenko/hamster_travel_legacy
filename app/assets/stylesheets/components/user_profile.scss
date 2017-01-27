@@ -27,19 +27,7 @@
       }
 
       .delete-image {
-        position: absolute;
-        color: #ffffff;
-        border-radius: 50%;
-        font-weight: bolder;
-        top: 0px;
-        right: 0px;
-        padding: 0px 4px;
-        border: 1px solid #bdc3c7;
-        background-color: #f5f5f5;
-        img {
-          width: 10px;
-          opacity: .75;
-        }
+        margin-top: 1em;
       }
 
       &.clickable-area {
@@ -67,16 +55,36 @@
       }
     }
 
-    .user-city {
+    .user-form {
+      .form-inline {
+        margin-bottom: 15px;
+        .form-group {
+          vertical-align: top;
+          margin-right: 1ch;
+        }
+      }
+    }
+
+    .user-features {
       font-size: 1.5em;
       color: $text-grey;
+
       img {
         height: 1em;
         vertical-align: baseline;
         margin-right: .4ch;
         margin-bottom: -0.1em;
+
+        &.second-feature-image {
+          margin-left: 2ch;
+        }
       }
     }
+  }
+
+  .edit-controls {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
   }
 
   .user-statistics {

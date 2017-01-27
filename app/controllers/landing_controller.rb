@@ -1,6 +1,6 @@
+# frozen_string_literal: true
 class LandingController < ApplicationController
   def index
-    @transparent_navbar = true
     @hide_footer = true
   end
 

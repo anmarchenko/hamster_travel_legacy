@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Rails.application.routes.draw do
   match '/404', to: 'errors#not_found', via: :all
 
@@ -9,15 +10,11 @@ Rails.application.routes.draw do
 
   scope '(:locale)', locale: /ru|en/ do
     devise_for :users
+
     resources :landing, only: [:index] do
       get :welcome, on: :collection
     end
-
-    resources :users, only: [:show, :edit, :update] do
-      member do
-        post :upload_photo
-      end
-    end
+    resources :users, only: [:show]
     resources :trips, except: [:destroy] do
       collection do
         get :my, :drafts

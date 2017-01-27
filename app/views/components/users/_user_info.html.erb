@@ -2,37 +2,85 @@
   <div class="user-info" ng-if="loaded">
     <div class="user-basic-info">
       <div class="user-photo"
-           ng-class="{ 'clickable-area' : $ctrl.edit, 'uploading' : uploading }"
+           ng-class="{ 'clickable-area' : editing, 'uploading' : uploading }"
       >
-        <span
-        ngf-select="crop($files)"
-        ng-disabled="!$ctrl.edit"
-        ngf-accept="'image/*'"
-        ngf-pattern="'image/*'"
-        ngf-max-size="10MB"
+        <div
+            ngf-select="crop($files)"
+            ng-disabled="!editing"
+            ngf-accept="'image/*'"
+            ngf-pattern="'image/*'"
+            ngf-max-size="10MB"
         >
           <img class="img-circle img-user-profile" id="profile_image" ng-src="{{user.image_url}}" ng-if="user.image_url"/>
           <div class="{{user.color}} initials img-user-profile img-circle"
                ng-if="!user.image_url">
             {{user.initials}}
           </div>
-        </span>
-        <a class="delete-image"
-           href="javascript:void(0);"
-           action-confirmation="deletePhoto()"
-           confirmation-text="<%= t('common.delete_photo_confirm') %>"
-           ng-if="$ctrl.edit && user.image_url">
-          <%= image_tag 'buttons/delete.svg' %>
-        </a>
+        </div>
+        <div class="delete-image" ng-if="editing && user.image_url">
+          <a href="javascript:void(0);"
+             action-confirmation="deletePhoto()"
+             confirmation-text="<%= t('common.delete_photo_confirm') %>"
+           >
+            <%= t('users.show.delete_photo') %>
+          </a>
+        </div>
       </div>
-      <div class="user-text">
+      <div class="user-text" ng-if="!editing">
         <div class="user-name">
           {{user.full_name}}
         </div>
-        <div class="user-city" ng-if="user.home_town_text">
-          <%= image_tag 'users/pin.svg' %>
-          {{user.home_town_text}}
+        <div class="user-features">
+          <span ng-if="user.home_town_text">
+            <%= image_tag 'users/pin.svg' %>
+            {{user.home_town_text}}
+          </span>
+          <span ng-if="user.currency">
+            <%= image_tag 'common/money.svg', 'ng-class' => '{ "second-feature-image" : user.home_town_text }' %>
+            {{user.currency}}
+          </span>
         </div>
+      </div>
+      <div class="user-text user-form" ng-if="editing">
+        <div class="form-inline">
+          <div class="form-group">
+            <input name="user_first_name" class="form-control" ng-model="userForm.first_name" />
+            <span class="error-message" ng-repeat="errorText in userFormErrors.first_name">
+              <br/>
+              {{errorText}}
+            </span>
+          </div>
+          <div class="form-group">
+            <input name="user_last_name" class="form-control" ng-model="userForm.last_name" />
+            <span class="error-message" ng-repeat="errorText in userFormErrors.last_name">
+              <br/>
+              {{errorText}}
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= render 'widgets/typeahead/cities', model_name: 'userForm.home_town' %>
+        </div>
+        <div class="form-group">
+          <%= select_tag :currency, options_for_select(
+                CurrencyHelper.currencies_select_simple, @user.currency || CurrencyHelper::DEFAULT_CURRENCY
+              ), { class: 'form-control', 'ng-model' => 'userForm.currency' } %>
+        </div>
+      </div>
+    </div>
+    <div class="edit-controls" ng-if="$ctrl.edit">
+      <div class="form-group" ng-if="!editing">
+        <button type="button" class="btn btn-default" ng-click="edit()">
+          <%= t('common.edit') %>
+        </button>
+      </div>
+      <div class="form-group" ng-if="editing">
+        <button type="button" class="btn btn-success" ng-click="save()" ng-disabled="saving">
+          <%= t('common.save') %>
+        </button>
+        <button type="button" class="btn btn-default" ng-click="cancel()" ng-disabled="saving">
+          <%= t('common.cancel') %>
+        </button>
       </div>
     </div>
     <div class="user-statistics">

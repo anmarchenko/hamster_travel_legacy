@@ -376,6 +376,7 @@ en:
       title: My settings
     update_successful: User settings successfully updated
     show:
+      delete_photo: Delete photo
       finished_trips_count: Trips
       visited_cities_count: Cities
       visited_countries_count: Countries
