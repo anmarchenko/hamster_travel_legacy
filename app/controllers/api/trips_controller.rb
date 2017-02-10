@@ -3,7 +3,7 @@ module Api
     before_action :authenticate_user!, only: [:upload_image, :delete_image, :destroy]
     before_action :find_trip, only: [:upload_image, :delete_image, :destroy]
     before_action :authorize, only: [:upload_image, :delete_image]
-    before_action :authorize_destroy, only: [:upload_image, :delete_image, :destroy]
+    before_action :authorize_destroy, only: [:destroy]
 
     def index
       term = params[:term] || ''
@@ -38,17 +38,17 @@ module Api
 
     private
 
-    def authorize
-      no_access and return unless @trip.include_user(current_user)
-    end
-
     def find_trip
       @trip = Travels::Trip.includes(:users, :author_user).where(id: params[:id]).first
       not_found and return if @trip.blank?
     end
 
+    def authorize
+      render json: { error: 'forbidden' }, status: 403 and return unless @trip.include_user(current_user)
+    end
+
     def authorize_destroy
-      no_access and return unless @trip.author_user_id == current_user.id
+      render json: { error: 'forbidden' }, status: 403 and return unless @trip.author_user_id == current_user.id
     end
   end
 end

@@ -77,7 +77,8 @@ class Calculators::Budget
   end
 
   def cache_version
-    # 2026-12-29: Default currency changed to USD
-    '_2016_12_29'
+    # 2016-12-29: Default currency changed to USD
+    # 2017-02-10: Default currency changed to EUR
+    '_2017_02_10'
   end
 end

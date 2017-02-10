@@ -35,21 +35,41 @@ RSpec.describe Api::TripsController do
 
   describe '#upload_image' do
     login_user
-
-    let(:trip) { FactoryGirl.create(:trip, author_user: subject.current_user, users: [subject.current_user]) }
     let(:file) { fixture_file_upload("#{::Rails.root}/spec/fixtures/files/cat.jpg", 'image/jpeg') }
 
-    it 'uploads trip image' do
-      post 'upload_image', params: { id: trip.id, file: file }
-      expect(response).to be_success
-      expect(assigns(:trip).image).not_to be_blank
+    context 'when current user is the author' do
+      let(:trip) { FactoryGirl.create(:trip, author_user: subject.current_user, users: [subject.current_user]) }
+      it 'uploads trip image' do
+        post 'upload_image', params: { id: trip.id, file: file }
+        expect(response).to be_success
+        expect(assigns(:trip).image).not_to be_blank
+      end
+    end
+
+    context 'when current user is one of the participants' do
+      let(:author) { FactoryGirl.create(:user) }
+      let(:trip) { FactoryGirl.create(:trip, author_user: author, users: [subject.current_user, author]) }
+      it 'uploads trip image' do
+        post 'upload_image', params: { id: trip.id, file: file }
+        expect(response).to be_success
+        expect(assigns(:trip).image).not_to be_blank
+      end
+    end
+
+    context 'when current user is not included in trip' do
+      let(:author) { FactoryGirl.create(:user) }
+      let(:trip) { FactoryGirl.create(:trip, author_user: author, users: [author]) }
+      it 'returns forbidden code' do
+        post 'upload_image', params: { id: trip.id, file: file }
+        expect(response).to be_forbidden
+        expect(assigns(:trip).image).to be_blank
+      end
     end
   end
 
   describe '#delete_image' do
     login_user
 
-    let(:trip) { FactoryGirl.create(:trip, author_user: subject.current_user, users: [subject.current_user]) }
     let(:file) { fixture_file_upload("#{::Rails.root}/spec/fixtures/files/cat.jpg", 'image/jpeg') }
 
     before :each do
@@ -57,11 +77,36 @@ RSpec.describe Api::TripsController do
       trip.save
     end
 
-    it 'deletes trip image' do
-      expect(trip.reload.image).not_to be_blank
-      post 'delete_image', params: { id: trip.id }
-      expect(response).to be_success
-      expect(Travels::Trip.find(trip.id).image).to be_blank
+    context 'when current user is the author' do
+      let(:trip) { FactoryGirl.create(:trip, author_user: subject.current_user, users: [subject.current_user]) }
+      it 'deletes trip image' do
+        expect(trip.reload.image).not_to be_blank
+        post 'delete_image', params: { id: trip.id }
+        expect(response).to be_success
+        expect(Travels::Trip.find(trip.id).image).to be_blank
+      end
+    end
+
+    context 'when current user is included in the trip' do
+      let(:author) { FactoryGirl.create(:user) }
+      let(:trip) { FactoryGirl.create(:trip, author_user: author, users: [subject.current_user, author]) }
+      it 'deletes trip image' do
+        expect(trip.reload.image).not_to be_blank
+        post 'delete_image', params: { id: trip.id }
+        expect(response).to be_success
+        expect(Travels::Trip.find(trip.id).image).to be_blank
+      end
+    end
+
+    context 'when current user is not included in the trip' do
+      let(:author) { FactoryGirl.create(:user) }
+      let(:trip) { FactoryGirl.create(:trip, author_user: author, users: [author]) }
+      it 'deletes trip image' do
+        expect(trip.reload.image).not_to be_blank
+        post 'delete_image', params: { id: trip.id }
+        expect(response).to be_forbidden
+        expect(Travels::Trip.find(trip.id).image).not_to be_blank
+      end
     end
   end
 
@@ -97,14 +142,16 @@ RSpec.describe Api::TripsController do
       context 'and when user is just a participant' do
         let(:trip) { FactoryGirl.create(:trip, users: [subject.current_user]) }
 
-        it 'redirects to dashboard with flash' do
+        it 'returns json with forbidden code' do
           delete 'destroy', params: { id: trip.id }
-          expect(response).to redirect_to '/errors/no_access'
+          expect(response).to be_forbidden
+          json = JSON.parse(response.body)
+          expect(json['error']).to eq('forbidden')
         end
       end
 
       context 'and when trip does not exist' do
-        it 'heads 404' do
+        it 'redirects to not found page' do
           delete 'destroy', params: { id: 'non existing' }
           expect(response).to redirect_to '/errors/not_found'
         end

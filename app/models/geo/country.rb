@@ -64,7 +64,7 @@ module Geo
       {
         name: name(I18n.locale),
         iso3_code: iso3_code,
-        flag_image: ApplicationController.helpers.flag(country_code, 24)
+        flag_image: ApplicationController.helpers.flag(country_code, 32)
       }
     end
   end

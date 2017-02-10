@@ -181,8 +181,8 @@ en:
   landing:
     index:
       title: Travel planning
-      welcome: "Hamster Travel: your ultimate travel notebook"
-      welcome_second: We are in closed beta now. Stay tuned.
+      welcome: "Welcome to your personal travel notebook"
+      welcome_text: Hamster Travel is easy and feature-rich application for frequent travellers. Whether you plan long continent-wide trip or a weekend getaway, Hamster Travel is there to help you track your tasks and keep stress out of your trip.
       browse: Browse
       add: Add new plan
   layouts:
@@ -390,6 +390,7 @@ en:
       manual_cities: Add visited places
       manual_city_input: City...
       no_manual_cities: No cities yet
+      edit: Edit profile
   widgets:
     trips:
       trip_box:

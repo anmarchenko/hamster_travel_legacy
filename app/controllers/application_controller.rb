@@ -58,5 +58,4 @@ class ApplicationController < ActionController::Base
     head 403 and return unless user_signed_in?
     head 403 and return unless @trip.can_be_seen_by?(current_user)
   end
-
 end
