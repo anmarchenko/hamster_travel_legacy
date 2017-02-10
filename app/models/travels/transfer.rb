@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: transfers
@@ -21,7 +22,6 @@
 #
 
 module Travels
-
   class Transfer < ApplicationRecord
     include Concerns::Ordered
 
@@ -49,45 +49,49 @@ module Travels
       BUS = 'bus'
       BOAT = 'boat'
 
-      ALL = [FLIGHT, TRAIN, TAXI, BUS, BOAT, PERSONAL_CAR]
+      ALL = [FLIGHT, TRAIN, TAXI, BUS, BOAT, PERSONAL_CAR].freeze
       OPTIONS = ALL.map { |type| ["common.#{type}", type] }
       ICONS = {
-          FLIGHT => 'plane.svg',
-          TRAIN => 'train.svg',
-          TAXI => 'taxi.svg',
-          BUS => 'bus.svg',
-          BOAT => 'boat.svg',
-          PERSONAL_CAR => 'car.svg'
-      }
+        FLIGHT => 'plane.svg',
+        TRAIN => 'train.svg',
+        TAXI => 'taxi.svg',
+        BUS => 'bus.svg',
+        BOAT => 'boat.svg',
+        PERSONAL_CAR => 'car.svg'
+      }.freeze
     end
 
     def city_from_text
-      self.city_from.try(:translated_name, I18n.locale)
+      city_from.try(:translated_name, I18n.locale)
     end
 
     def city_to_text
-      self.city_to.try(:translated_name, I18n.locale)
+      city_to.try(:translated_name, I18n.locale)
     end
 
     def type_icon
       icon = ActionController::Base.helpers.image_path("transfers/#{Types::ICONS[type]}") unless type.blank?
-      icon = ActionController::Base.helpers.image_path("transfers/arrow.svg") if icon.blank?
+      icon = ActionController::Base.helpers.image_path('transfers/arrow.svg') if icon.blank?
       icon
     end
 
-    def set_date! new_date
-      self.set_date(new_date)
-      self.save
+    def set_date!(new_date)
+      set_date(new_date)
+      save
     end
 
-    def set_date new_date
+    def set_date(new_date)
       return if new_date.blank?
-      self.start_time = self.start_time.change(day: new_date.day,
-                                               year: new_date.year,
-                                               month: new_date.month) if self.start_time.present?
-      self.end_time = self.end_time.change(day: new_date.day,
-                                           year: new_date.year,
-                                           month: new_date.month) if self.end_time.present?
+      if start_time.present?
+        self.start_time = start_time.change(day: new_date.day,
+                                            year: new_date.year,
+                                            month: new_date.month)
+      end
+      if end_time.present?
+        self.end_time = end_time.change(day: new_date.day,
+                                        year: new_date.year,
+                                        month: new_date.month)
+      end
     end
 
     def serializable_hash(_args)
@@ -97,16 +101,14 @@ module Travels
       json['end_time'] = end_time.try(:strftime, '%Y-%m-%dT%H:%M+00:00')
       json['type_icon'] = type_icon
       json['amount_currency_text'] = amount.currency.symbol
-      json['city_from_text'] = self.city_from_text
-      json['city_to_text'] = self.city_to_text
-      if links.blank?
-        json['links'] = [{}]
-      else
-        json['links'] = links
-      end
+      json['city_from_text'] = city_from_text
+      json['city_to_text'] = city_to_text
+      json['links'] = if links.blank?
+                        [{}]
+                      else
+                        links
+                      end
       json
     end
-
   end
-
 end

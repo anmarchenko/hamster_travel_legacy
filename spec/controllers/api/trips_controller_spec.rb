@@ -1,21 +1,29 @@
+# frozen_string_literal: true
+require 'rails_helper'
 RSpec.describe Api::TripsController do
   describe '#index' do
     before { FactoryGirl.create_list(:trip, 12) }
     before { FactoryGirl.create_list(:trip, 2, status_code: Travels::Trip::StatusCodes::FINISHED) }
 
     context 'when user is logged in' do
-      login_user
+      before { login_user(user) }
 
       before { FactoryGirl.create_list(:trip, 2, user_ids: [subject.current_user.id]) }
       before { FactoryGirl.create_list(:trip, 1, :no_dates, user_ids: [subject.current_user.id]) }
 
-      before { FactoryGirl.create_list(:trip, 1, user_ids: [subject.current_user.id],
-                                       status_code: Travels::Trip::StatusCodes::FINISHED) }
-      before { FactoryGirl.create_list(:trip, 4, user_ids: [subject.current_user.id],
-                                       status_code: Travels::Trip::StatusCodes::PLANNED) }
+      before do
+        FactoryGirl.create_list(:trip, 1, user_ids: [subject.current_user.id],
+                                          status_code: Travels::Trip::StatusCodes::FINISHED)
+      end
+      before do
+        FactoryGirl.create_list(:trip, 4, user_ids: [subject.current_user.id],
+                                          status_code: Travels::Trip::StatusCodes::PLANNED)
+      end
 
-      before { FactoryGirl.create_list(:trip, 1, user_ids: [subject.current_user.id], name: 'tripppp',
-                                       private: true, status_code: Travels::Trip::StatusCodes::FINISHED) }
+      before do
+        FactoryGirl.create_list(:trip, 1, user_ids: [subject.current_user.id], name: 'tripppp',
+                                          private: true, status_code: Travels::Trip::StatusCodes::FINISHED)
+      end
 
       it 'searches visible by user trips' do
         get 'index', params: { term: 'trippp' }
@@ -34,7 +42,7 @@ RSpec.describe Api::TripsController do
   end
 
   describe '#upload_image' do
-    login_user
+    before { login_user(user) }
     let(:file) { fixture_file_upload("#{::Rails.root}/spec/fixtures/files/cat.jpg", 'image/jpeg') }
 
     context 'when current user is the author' do
@@ -68,7 +76,7 @@ RSpec.describe Api::TripsController do
   end
 
   describe '#delete_image' do
-    login_user
+    before { login_user(user) }
 
     let(:file) { fixture_file_upload("#{::Rails.root}/spec/fixtures/files/cat.jpg", 'image/jpeg') }
 
@@ -112,7 +120,7 @@ RSpec.describe Api::TripsController do
 
   describe '#destroy' do
     context 'when user is logged in' do
-      login_user
+      before { login_user(user) }
 
       context 'and when user is author' do
         let(:trip) { FactoryGirl.create(:trip, author_user: subject.current_user) }

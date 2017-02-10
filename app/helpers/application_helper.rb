@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module ApplicationHelper
   def currency_symbol(currency = nil)
     currency = (current_user.try(:currency) || CurrencyHelper::DEFAULT_CURRENCY) if currency.blank?

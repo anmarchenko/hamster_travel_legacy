@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::DaysTransfersController < ApplicationController
   before_action :find_trip
   before_action :authenticate_user!, only: [:create]
@@ -6,9 +7,9 @@ class Api::DaysTransfersController < ApplicationController
 
   def index
     render json: {
-        days: @trip.days.includes(:transfers, :hotel, :places)
-                  .as_json(user_currency: current_user.try(:currency),
-                           include: [:transfers, :hotel, :places])
+      days: @trip.days.includes(:transfers, :hotel, :places)
+        .as_json(user_currency: current_user.try(:currency),
+                 include: [:transfers, :hotel, :places])
     }
   end
 
@@ -21,7 +22,7 @@ class Api::DaysTransfersController < ApplicationController
       Updaters::Hotel.new(day, day_params.delete(:hotel)).process
     end
     Calculators::Budget.new(@trip).invalidate_cache!
-    render json: {status: 0}
+    render json: { status: 0 }
   end
 
   private
@@ -29,45 +30,43 @@ class Api::DaysTransfersController < ApplicationController
   def days_params
     params.permit(days:
                       [
-                          :id,
-                          {
-                              transfers: [
-                                  :id, :type, :code, :company, :station_from, :station_to, :start_time,
-                                  :end_time, :comment, :amount_cents, :amount_currency, :city_to_id, :city_from_id,
-                                  {
-                                      links: [
-                                          :id, :url, :description
-                                      ]
-                                  }
+                        :id,
+                        {
+                          transfers: [
+                            :id, :type, :code, :company, :station_from, :station_to, :start_time,
+                            :end_time, :comment, :amount_cents, :amount_currency, :city_to_id, :city_from_id,
+                            {
+                              links: [
+                                :id, :url, :description
                               ]
-                          },
-                          {
-                              hotel: [
-                                  :id, :name, :comment, :amount_cents, :amount_currency,
-                                  {
-                                      links: [
-                                          :id, :url, :description
-                                      ]
-                                  }
+                            }
+                          ]
+                        },
+                        {
+                          hotel: [
+                            :id, :name, :comment, :amount_cents, :amount_currency,
+                            {
+                              links: [
+                                :id, :url, :description
+                              ]
+                            }
 
-                              ]
-                          },
-                          {
-                              places: [
-                                  :id, :city_id
-                              ]
-                          }
-                      ]
-    )
+                          ]
+                        },
+                        {
+                          places: [
+                            :id, :city_id
+                          ]
+                        }
+                      ])
   end
 
   def find_trip
     @trip = Travels::Trip.where(id: params[:trip_id]).first
-    head 404 and return if @trip.blank?
+    head(404) && return if @trip.blank?
   end
 
   def authorize!
-    head 403 and return if !@trip.include_user(current_user)
+    head(403) && return unless @trip.include_user(current_user)
   end
-
 end

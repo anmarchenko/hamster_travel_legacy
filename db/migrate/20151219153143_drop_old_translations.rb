@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class DropOldTranslations < ActiveRecord::Migration
   def change
     remove_column(:adm3s, :name)

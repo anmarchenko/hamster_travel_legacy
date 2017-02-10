@@ -1,6 +1,8 @@
-describe Api::ManualCitiesController do
+# frozen_string_literal: true
+require 'rails_helper'
+RSpec.describe Api::ManualCitiesController do
   describe '#index' do
-    login_user
+    before { login_user(user) }
 
     context 'when user is trying to acess his own data' do
       context 'when no manual cities' do
@@ -50,7 +52,7 @@ describe Api::ManualCitiesController do
   end
 
   describe '#create' do
-    login_user
+    before { login_user(user) }
 
     let(:city1) { Geo::City.all.order(id: :asc).first }
     let(:city2) { Geo::City.all.order(id: :asc).last }

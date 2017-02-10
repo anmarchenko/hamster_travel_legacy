@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AddPriceToExpenses < ActiveRecord::Migration
   def change
     add_monetize :expenses, :amount

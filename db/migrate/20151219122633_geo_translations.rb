@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class GeoTranslations < ActiveRecord::Migration
   def up
     Geo::City.create_translation_table! name: :string

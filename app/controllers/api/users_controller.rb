@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Api
   class UsersController < ApplicationController
     before_action :authenticate_user!, only: [:upload_image, :delete_image, :update]
@@ -7,7 +8,7 @@ module Api
 
     def index
       term = params[:term] || ''
-      render json: [] and return if term.blank? || term.length < 2
+      render(json: []) && return if term.blank? || term.length < 2
 
       query = User.find_by_term(term).page(1)
       query = query.where.not(id: current_user.id) if current_user.present?

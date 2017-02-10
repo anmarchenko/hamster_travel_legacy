@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AddAmounts < ActiveRecord::Migration
   def change
     add_monetize :hotels, :amount
@@ -21,6 +22,5 @@ class AddAmounts < ActiveRecord::Migration
     remove_column :hotels, :price
     remove_column :transfers, :price
     remove_column :activities, :price
-
   end
 end

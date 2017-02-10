@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: expenses
@@ -11,15 +12,13 @@
 #
 
 module Travels
-
   class Expense < ApplicationRecord
-
     belongs_to :expendable, polymorphic: true
 
     monetize :amount_cents
 
     def is_empty?
-      return (amount_cents.blank? || amount_cents == 0) && name.blank?
+      (amount_cents.blank? || amount_cents == 0) && name.blank?
     end
 
     def serializable_hash(_args)
@@ -32,7 +31,5 @@ module Travels
       json['amount_currency_text'] = amount.currency.symbol
       json
     end
-
   end
-
 end

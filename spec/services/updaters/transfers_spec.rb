@@ -1,32 +1,33 @@
-describe Updaters::Transfers do
+# frozen_string_literal: true
+require 'rails_helper'
+RSpec.describe Updaters::Transfers do
   let(:trip) { FactoryGirl.create(:trip) }
   let(:day) { trip.days.first }
 
-  let(:params) {
+  let(:params) do
     [
-        {
-            city_from_id: Geo::City.all.to_a[0].id,
-            city_to_id: Geo::City.all.to_a[1].id,
-            links: [
-                {id: nil, url: 'https://google.com', description: 'desc1'},
-                {id: nil, url: 'https://rome2rio.com', description: 'desc2'}
-            ]
-        }.with_indifferent_access,
-        {
-            city_from_id: Geo::City.all.to_a[1].id,
-            city_to_id: Geo::City.all.to_a[1].id,
-        }.with_indifferent_access,
-        {
-            city_from_id: Geo::City.all.to_a[2].id,
-            city_to_id: Geo::City.all.to_a[2].id,
-        }.with_indifferent_access,
-        {
-            city_from_id: Geo::City.all.to_a[3].id,
-            city_to_id: Geo::City.all.to_a[3].id,
-        }.with_indifferent_access
+      {
+        city_from_id: Geo::City.all.to_a[0].id,
+        city_to_id: Geo::City.all.to_a[1].id,
+        links: [
+          { id: nil, url: 'https://google.com', description: 'desc1' },
+          { id: nil, url: 'https://rome2rio.com', description: 'desc2' }
+        ]
+      }.with_indifferent_access,
+      {
+        city_from_id: Geo::City.all.to_a[1].id,
+        city_to_id: Geo::City.all.to_a[1].id
+      }.with_indifferent_access,
+      {
+        city_from_id: Geo::City.all.to_a[2].id,
+        city_to_id: Geo::City.all.to_a[2].id
+      }.with_indifferent_access,
+      {
+        city_from_id: Geo::City.all.to_a[3].id,
+        city_to_id: Geo::City.all.to_a[3].id
+      }.with_indifferent_access
     ]
-
-  }
+  end
 
   it 'creates new transfers' do
     ::Updaters::Transfers.new(day, params).process
@@ -48,7 +49,7 @@ describe Updaters::Transfers do
     old_transfers.each_with_index do |tr, index|
       tr[:id] = day.transfers[index].id.to_s
     end
-    permutation = {0 => 3, 1 => 1, 2 => 0, 3 => 2}
+    permutation = { 0 => 3, 1 => 1, 2 => 0, 3 => 2 }
     new_params = [old_transfers[3], old_transfers[1], old_transfers[0], old_transfers[2]]
 
     ::Updaters::Transfers.new(day, new_params).process
@@ -60,7 +61,5 @@ describe Updaters::Transfers do
       expect(tr.order_index).to eq index
       expect(tr.id).to eq original_transfers[permutation[index]].id
     end
-
   end
-
 end

@@ -1,5 +1,7 @@
-describe Updaters::DayPlaces do
-  def first_day_of tr
+# frozen_string_literal: true
+require 'rails_helper'
+RSpec.describe Updaters::DayPlaces do
+  def first_day_of(tr)
     tr.reload.days.first
   end
 
@@ -8,18 +10,17 @@ describe Updaters::DayPlaces do
 
   describe '#process' do
     context 'when params have places' do
-      let(:params) {
+      let(:params) do
         [
-              {
-                  id: day.places.first.id.to_s,
-                  city_id: Geo::City.all.first.id
-              }.with_indifferent_access,
-              {
-                  city_id: Geo::City.all.last.id
-              }.with_indifferent_access
-          ]
-
-      }
+          {
+            id: day.places.first.id.to_s,
+            city_id: Geo::City.all.first.id
+          }.with_indifferent_access,
+          {
+            city_id: Geo::City.all.last.id
+          }.with_indifferent_access
+        ]
+      end
 
       it 'updates and creates new places' do
         Updaters::DayPlaces.new(day, params).process

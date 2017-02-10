@@ -1,9 +1,11 @@
-describe Api::BudgetsController do
+# frozen_string_literal: true
+require 'rails_helper'
+RSpec.describe Api::BudgetsController do
   describe '#show' do
     let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
 
     context 'when user is logged in' do
-      login_user
+      before { login_user(user) }
 
       context 'and when there is trip' do
         before do
@@ -46,15 +48,14 @@ describe Api::BudgetsController do
   end
 
   describe '#update' do
-
     context 'when user is logged in' do
-      login_user
+      before { login_user(user) }
 
       context 'and when user is a participant' do
-        let(:trip) {FactoryGirl.create(:trip, :with_filled_days, users: [subject.current_user])}
+        let(:trip) { FactoryGirl.create(:trip, :with_filled_days, users: [subject.current_user]) }
 
         it 'updates budget_for field and returns ok status' do
-          put 'update', params: {id: trip.id, budget_for: 42}, format: :json
+          put 'update', params: { id: trip.id, budget_for: 42 }, format: :json
           json = JSON.parse(response.body)
           expect(json['res']).to eq(true)
 
@@ -63,25 +64,23 @@ describe Api::BudgetsController do
       end
 
       context 'and when user is not a participant' do
-        let(:trip) {FactoryGirl.create(:trip, :with_filled_days)}
+        let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
 
         it 'returns not authorized error and does not update budget_for field' do
-          put 'update', params: {id: trip.id, budget_for: 42}, format: :json
+          put 'update', params: { id: trip.id, budget_for: 42 }, format: :json
 
           expect(response).to have_http_status 403
 
           expect(trip.reload.budget_for).to eq(1)
         end
       end
-
-
     end
 
     context 'when no logged user' do
-      let(:trip) {FactoryGirl.create(:trip, :with_filled_days)}
+      let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
 
       it 'redirects to sign in' do
-        put 'update', params: {id: trip.id, budget_for: 42}, format: :json
+        put 'update', params: { id: trip.id, budget_for: 42 }, format: :json
         expect(response).to have_http_status 401
       end
     end

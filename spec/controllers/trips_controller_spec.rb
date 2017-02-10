@@ -1,88 +1,43 @@
-describe TripsController do
+# frozen_string_literal: true
+require 'rails_helper'
+
+RSpec.describe TripsController do
+  let(:user) { FactoryGirl.create(:user) }
 
   let(:attrs) { FactoryGirl.build(:trip).attributes.with_indifferent_access }
-  let(:attrs_no_dates) { FactoryGirl.build(:trip, :no_dates).attributes.with_indifferent_access }
+  let(:attrs_no_dates) do
+    FactoryGirl.build(:trip, :no_dates).attributes.with_indifferent_access
+  end
 
-  describe '#index' do
-    after { expect(response).to render_template 'trips/index' }
-
+  fdescribe '#index' do
     context 'when user is logged in' do
-      login_user
-
-      before { FactoryGirl.create_list(:trip, 2, user_ids: [subject.current_user.id]) }
-      before { FactoryGirl.create_list(:trip, 1, :no_dates, user_ids: [subject.current_user.id]) }
-
-      before { FactoryGirl.create_list(:trip, 1, user_ids: [subject.current_user.id],
-                                       status_code: Travels::Trip::StatusCodes::FINISHED) }
-      before { FactoryGirl.create_list(:trip, 4, user_ids: [subject.current_user.id],
-                                       status_code: Travels::Trip::StatusCodes::PLANNED) }
-
-      before { FactoryGirl.create_list(:trip, 12) }
-      before { FactoryGirl.create_list(:trip, 2, status_code: Travels::Trip::StatusCodes::FINISHED) }
-
-      before do
-        FactoryGirl.create_list(
-          :trip, 1,
-          user_ids: [subject.current_user.id],
-          private: true,
-          status_code: Travels::Trip::StatusCodes::FINISHED
-        )
-      end
+      before { login_user(user) }
 
       it 'shows trips index page, all trips that are not draft' do
-        get 'index'
-        trips = assigns(:trips)
-        expect(trips.to_a.size).to eq 7
-        # check sort
-        trips.each_with_index do |_, i|
-          next if trips[i + 1].blank?
-          expect(
-            trips[i].status_code > trips[i + 1].status_code ||
-            (
-              trips[i].status_code == trips[i + 1].status_code &&
-              trips[i].start_date >= trips[i + 1].start_date
-            )
-          ).to be true
-          expect(trips[i].private).to be false
-        end
+        expect(Finders::Trips).to receive(:all).with("2").and_return(
+          Travels::Trip.all
+        )
+        get 'index', params: { page: 2 }
+        expect(response).to be_success
       end
     end
 
     context 'when no logged user' do
-      before { Travels::Trip.destroy_all }
-      before { FactoryGirl.create_list(:trip, 12) }
-      before { FactoryGirl.create_list(:trip, 3, status_code: Travels::Trip::StatusCodes::PLANNED) }
-      after { expect(assigns(:trips).to_a.size).to eq 3 }
-
-      it 'shows trips index page' do
+      it 'still shows trips index page' do
+        expect(Finders::Trips).to receive(:all).with(nil).and_return(
+          Travels::Trip.all
+        )
         get 'index'
+        expect(response).to be_success
       end
     end
   end
 
   describe '#my' do
     context 'when user is logged in' do
-      after { expect(response).to render_template 'trips/my' }
+      before { login_user(user) }
 
-      login_user
-
-      before { Travels::Trip.destroy_all }
-
-      before { FactoryGirl.create_list(:trip, 2, user_ids: [subject.current_user.id]) }
-      before { FactoryGirl.create_list(:trip, 1, :no_dates, user_ids: [subject.current_user.id]) }
-
-      before { FactoryGirl.create_list(:trip, 1, user_ids: [subject.current_user.id],
-                                       status_code: Travels::Trip::StatusCodes::FINISHED) }
-      before { FactoryGirl.create_list(:trip, 4, user_ids: [subject.current_user.id],
-                                       status_code: Travels::Trip::StatusCodes::PLANNED) }
-
-      before { FactoryGirl.create_list(:trip, 12) }
-      before { FactoryGirl.create_list(:trip, 2, status_code: Travels::Trip::StatusCodes::FINISHED) }
-
-      before { FactoryGirl.create_list(:trip, 1, user_ids: [subject.current_user.id],
-                                       private: true, status_code: Travels::Trip::StatusCodes::FINISHED) }
-
-      it 'shows user\'s plans without drafts when parameter \'my\' is present' do
+      it "shows user's plans without drafts when parameter 'my' is present" do
         get 'my'
         trips = assigns(:trips)
         expect(trips.to_a.size).to eq 6
@@ -99,10 +54,6 @@ describe TripsController do
     end
 
     context 'when no logged user' do
-      before { Travels::Trip.destroy_all }
-      before { FactoryGirl.create_list(:trip, 12) }
-      before { FactoryGirl.create_list(:trip, 3, status_code: Travels::Trip::StatusCodes::PLANNED) }
-
       it 'responds with not auhorized' do
         get 'my'
         expect(response).to redirect_to '/users/sign_in'
@@ -113,24 +64,7 @@ describe TripsController do
   describe '#drafts' do
     context 'when user is logged in' do
       after { expect(response).to render_template 'trips/drafts' }
-      login_user
-
-      before { Travels::Trip.destroy_all }
-
-      before { FactoryGirl.create_list(:trip, 2, user_ids: [subject.current_user.id]) }
-      before { FactoryGirl.create_list(:trip, 1, :no_dates, user_ids: [subject.current_user.id]) }
-
-      before { FactoryGirl.create_list(:trip, 1, user_ids: [subject.current_user.id],
-                                       status_code: Travels::Trip::StatusCodes::FINISHED) }
-      before { FactoryGirl.create_list(:trip, 4, user_ids: [subject.current_user.id],
-                                       status_code: Travels::Trip::StatusCodes::PLANNED) }
-
-      before { FactoryGirl.create_list(:trip, 12) }
-      before { FactoryGirl.create_list(:trip, 2, status_code: Travels::Trip::StatusCodes::FINISHED) }
-
-      before { FactoryGirl.create_list(:trip, 1, user_ids: [subject.current_user.id],
-                                       private: true, status_code: Travels::Trip::StatusCodes::FINISHED) }
-
+      before { login_user(user) }
       it 'shows user\'s drafts when parameter \'my_draft\' is present' do
         get 'drafts'
         trips = assigns(:trips)
@@ -151,10 +85,6 @@ describe TripsController do
     end
 
     context 'when no logged user' do
-      before { Travels::Trip.destroy_all }
-      before { FactoryGirl.create_list(:trip, 12) }
-      before { FactoryGirl.create_list(:trip, 3, status_code: Travels::Trip::StatusCodes::PLANNED) }
-
       it 'responds with not auhorized' do
         get 'drafts'
         expect(response).to redirect_to '/users/sign_in'
@@ -164,7 +94,7 @@ describe TripsController do
 
   describe '#new' do
     context 'when user is logged in' do
-      login_user
+      before { login_user(user) }
 
       it 'renders template with new trip' do
         get 'new'
@@ -258,10 +188,10 @@ describe TripsController do
 
   describe '#create' do
     context 'when user is logged in' do
-      login_user
+      before { login_user(user) }
 
       context 'and when trip is valid' do
-        let(:params) { {travels_trip: attrs.merge(currency: 'INR')} }
+        let(:params) { { travels_trip: attrs.merge(currency: 'INR') } }
 
         it 'creates new trip and redirects to show' do
           post 'create', params: params
@@ -279,8 +209,7 @@ describe TripsController do
         end
 
         context 'and when trip is without dates' do
-
-          let(:params) { {travels_trip: attrs_no_dates} }
+          let(:params) { { travels_trip: attrs_no_dates } }
 
           it 'creates new trip and redirects to show' do
             post 'create', params: params
@@ -298,11 +227,9 @@ describe TripsController do
             expect(trip.planned_days_count).to eq 3
             expect(trip.currency).to eq('RUB')
           end
-
         end
 
         context 'and when trip is copied from original' do
-
           let(:original) { FactoryGirl.create(:trip, :with_filled_days) }
           let(:original_private) { FactoryGirl.create(:trip, :with_filled_days, private: true) }
 
@@ -327,8 +254,8 @@ describe TripsController do
               expect(trip.days.last.date_when).to eq params[:travels_trip]['end_date']
 
               expect(trip.caterings.count).to eq(original.caterings.count)
-              new_names_caterings = trip.caterings.map{|c| c.name}.sort
-              old_names_caterings = original.caterings.map{|c| c.name}.sort
+              new_names_caterings = trip.caterings.map(&:name).sort
+              old_names_caterings = original.caterings.map(&:name).sort
               expect(new_names_caterings).to eq(old_names_caterings)
             end
           end
@@ -401,12 +328,11 @@ describe TripsController do
               expect(trip.days.last.date_when).to eq params[:travels_trip]['end_date']
             end
           end
-
         end
       end
 
       context 'and when trip is valid with forbidden attribute' do
-        let(:params) { {travels_trip: attrs.merge(archived: true)} }
+        let(:params) { { travels_trip: attrs.merge(archived: true) } }
 
         it 'creates new trip and redirects to show' do
           post 'create', params: params
@@ -418,7 +344,7 @@ describe TripsController do
       end
 
       context 'and when trip is not valid' do
-        let(:params) { {travels_trip: attrs.reject { |k, _| k == 'name' }} }
+        let(:params) { { travels_trip: attrs.reject { |k, _| k == 'name' } } }
 
         it 'creates new trip and redirects to show' do
           post 'create', params: params
@@ -428,11 +354,10 @@ describe TripsController do
           expect(trip.errors).not_to be_blank
         end
       end
-
     end
 
     context 'when no logged user' do
-      let(:params) { {travels_trip: attrs} }
+      let(:params) { { travels_trip: attrs } }
 
       it 'redirects to sign in' do
         post 'create', params: params
@@ -443,13 +368,13 @@ describe TripsController do
 
   describe '#edit' do
     context 'when user is logged in' do
-      login_user
+      before { login_user(user) }
 
       context 'and when user is included in this trip' do
         let(:trip) { FactoryGirl.create(:trip, users: [subject.current_user]) }
 
         it 'renders edit template' do
-          get 'edit', params: {id: trip.id}
+          get 'edit', params: { id: trip.id }
           expect(response).to render_template 'trips/edit'
         end
       end
@@ -458,14 +383,14 @@ describe TripsController do
         let(:trip) { FactoryGirl.create(:trip, author_user: subject.current_user) }
 
         it 'redirects to dashboard with flash' do
-          get 'edit', params: {id: trip.id}
+          get 'edit', params: { id: trip.id }
           expect(response).to redirect_to '/errors/no_access'
         end
       end
 
       context 'and when trip does not exist' do
         it 'heads code 404' do
-          get 'edit', params: {id: 'not-existing-id'}
+          get 'edit', params: { id: 'not-existing-id' }
           expect(response).to redirect_to '/errors/not_found'
         end
       end
@@ -475,18 +400,20 @@ describe TripsController do
       let(:trip) { FactoryGirl.create(:trip) }
 
       it 'redirects to sign in' do
-        get 'edit', params: {id: trip.id}
+        get 'edit', params: { id: trip.id }
         expect(response).to redirect_to '/users/sign_in'
       end
     end
   end
 
   describe '#update' do
-    let(:update_attrs) { {travels_trip: attrs.merge('name' => 'New Updated Name',
-                                                    status_code: Travels::Trip::StatusCodes::PLANNED,
-                                                    private: true, currency: 'EUR'), id: trip.id} }
+    let(:update_attrs) do
+      { travels_trip: attrs.merge('name' => 'New Updated Name',
+                                  status_code: Travels::Trip::StatusCodes::PLANNED,
+                                  private: true, currency: 'EUR'), id: trip.id }
+    end
     context 'when user is logged in' do
-      login_user
+      before { login_user(user) }
 
       context 'and when user is included in this trip' do
         let(:trip) { FactoryGirl.create(:trip, users: [subject.current_user]) }
@@ -504,12 +431,14 @@ describe TripsController do
           end
 
           context 'when number of days changes' do
-            let(:update_attrs) { {travels_trip: attrs.merge('name' => 'New Updated Name',
-                                                            start_date: Date.today, end_date: Date.today + 1.day,
-                                                            status_code: Travels::Trip::StatusCodes::PLANNED,
-                                                            private: true, currency: 'EUR'), id: trip.id} }
+            let(:update_attrs) do
+              { travels_trip: attrs.merge('name' => 'New Updated Name',
+                                          start_date: Date.today, end_date: Date.today + 1.day,
+                                          status_code: Travels::Trip::StatusCodes::PLANNED,
+                                          private: true, currency: 'EUR'), id: trip.id }
+            end
             context 'when there is one catering' do
-              let(:trip) {FactoryGirl.create(:trip, :with_filled_days, users: [subject.current_user])}
+              let(:trip) { FactoryGirl.create(:trip, :with_filled_days, users: [subject.current_user]) }
 
               it 'updates catering days accordingly' do
                 trip.caterings = [FactoryGirl.build(:catering)]
@@ -530,7 +459,7 @@ describe TripsController do
         end
 
         context 'and when params are not valid' do
-          let(:update_attrs_invalid) { {travels_trip: attrs.merge('name' => nil), id: trip.id} }
+          let(:update_attrs_invalid) { { travels_trip: attrs.merge('name' => nil), id: trip.id } }
           it 'renders edit template' do
             put 'update', params: update_attrs_invalid
             expect(assigns(:trip).errors).not_to be_blank
@@ -548,7 +477,6 @@ describe TripsController do
           expect(assigns(:trip).name).to eq trip.name
         end
       end
-
     end
 
     context 'when no logged user' do
@@ -563,15 +491,14 @@ describe TripsController do
 
   describe '#show' do
     context 'when user is logged in' do
-      login_user
+      before { login_user(user) }
 
       context 'and when trip exists' do
-
         context 'and when trip is not private' do
           let(:trip) { FactoryGirl.create(:trip) }
 
           it 'renders show template' do
-            get 'show', params: {id: trip.id}
+            get 'show', params: { id: trip.id }
             expect(response).to render_template 'trips/show'
             trip = assigns(:trip)
             expect(trip.id).to eq trip.id
@@ -581,19 +508,18 @@ describe TripsController do
           let(:filled_trip) { FactoryGirl.create(:trip, :with_filled_days, :with_caterings) }
 
           it 'renders docx' do
-            get 'show', params: {id: filled_trip.id, format: :docx}
+            get 'show', params: { id: filled_trip.id, format: :docx }
             expect(response).to have_http_status 200
             expect(response).to render_template 'trips/show'
             expect(assigns(:transfers_grid)).to eq TripsController::TRANSFERS_GRID
           end
-
         end
 
         context 'and when trip is private' do
           let(:trip) { FactoryGirl.create(:trip, private: true) }
 
           it 'redirects to dashboard with flash' do
-            get 'show', params: {id: trip.id}
+            get 'show', params: { id: trip.id }
             expect(response).to redirect_to '/errors/no_access'
           end
         end
@@ -602,21 +528,19 @@ describe TripsController do
           let(:trip) { FactoryGirl.create(:trip, private: true, users: [subject.current_user]) }
 
           it 'renders show template' do
-            get 'show', params: {id: trip.id}
+            get 'show', params: { id: trip.id }
             expect(response).to have_http_status 200
             expect(response).to render_template 'trips/show'
           end
         end
-
       end
 
       context 'and when trip does not exist' do
         it 'renders show template' do
-          get 'show', params: {id: 'non-existing-id'}
+          get 'show', params: { id: 'non-existing-id' }
           expect(response).to redirect_to '/errors/not_found'
         end
       end
-
     end
 
     context 'when no logged user' do
@@ -624,7 +548,7 @@ describe TripsController do
         let(:trip) { FactoryGirl.create(:trip) }
 
         it 'renders show template' do
-          get 'show', params: {id: trip.id}
+          get 'show', params: { id: trip.id }
           expect(response).to have_http_status 200
           expect(response).to render_template 'trips/show'
         end
@@ -634,11 +558,10 @@ describe TripsController do
         let(:trip) { FactoryGirl.create(:trip, private: true) }
 
         it 'redirects to dashboard with flash' do
-          get 'show', params: {id: trip.id}
+          get 'show', params: { id: trip.id }
           expect(response).to redirect_to '/errors/no_access'
         end
       end
     end
   end
-
 end

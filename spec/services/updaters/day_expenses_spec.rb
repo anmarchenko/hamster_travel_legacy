@@ -1,5 +1,7 @@
-describe Updaters::DayExpenses do
-  def first_day_of tr
+# frozen_string_literal: true
+require 'rails_helper'
+RSpec.describe Updaters::DayExpenses do
+  def first_day_of(tr)
     tr.reload.days.first
   end
 
@@ -8,20 +10,18 @@ describe Updaters::DayExpenses do
 
   describe '#process' do
     context 'when params have day expenses data' do
-
-      let(:params) {
+      let(:params) do
         [{
-             name: 'new_expense_name',
-             amount_cents: 45600,
-             amount_currency: 'RUB',
-         }.with_indifferent_access,
+          name: 'new_expense_name',
+          amount_cents: 45_600,
+          amount_currency: 'RUB'
+        }.with_indifferent_access,
          {
-             name: 'new_expense_name_2',
-             amount_cents: 9876500,
-             amount_currency: 'RUB',
-         }.with_indifferent_access
-        ]
-      }
+           name: 'new_expense_name_2',
+           amount_cents: 9_876_500,
+           amount_currency: 'RUB'
+         }.with_indifferent_access]
+      end
 
       it 'updates expenses attributes' do
         Updaters::DayExpenses.new(day, params).process
@@ -30,7 +30,7 @@ describe Updaters::DayExpenses do
         expect(expenses.first.name).to eq 'new_expense_name'
         expect(expenses.first.amount.to_f).to eq 456.0
         expect(expenses.last.name).to eq 'new_expense_name_2'
-        expect(expenses.last.amount.to_f).to eq 98765.0
+        expect(expenses.last.amount.to_f).to eq 98_765.0
       end
 
       it 'updates expense and removes' do
@@ -38,30 +38,30 @@ describe Updaters::DayExpenses do
         expenses = first_day_of(trip).expenses
 
         params = [
-            {
-                id: expenses.first.id.to_s,
-                name: 'updated_name',
-                amount_currency: 'EUR'
-            }.with_indifferent_access
+          {
+            id: expenses.first.id.to_s,
+            name: 'updated_name',
+            amount_currency: 'EUR'
+          }.with_indifferent_access
         ]
         Updaters::DayExpenses.new(day, params).process
 
         updated_expenses = first_day_of(trip).expenses
         expect(updated_expenses.count).to eq 1
         expect(updated_expenses.first.reload.name).to eq 'updated_name'
-        expect(updated_expenses.first.reload.amount).to eq(Money.new(45600, 'EUR'))
+        expect(updated_expenses.first.reload.amount).to eq(Money.new(45_600, 'EUR'))
       end
 
       it 'updates expense when amount is empty' do
         Updaters::DayExpenses.new(day, params).process
         expenses = first_day_of(trip).expenses
         params = [
-            {
-                id: expenses.first.id.to_s,
-                name: '',
-                amount_cents: '',
-                amount_currency: 'EUR'
-            }.with_indifferent_access
+          {
+            id: expenses.first.id.to_s,
+            name: '',
+            amount_cents: '',
+            amount_currency: 'EUR'
+          }.with_indifferent_access
         ]
         Updaters::DayExpenses.new(day, params).process
 
@@ -79,6 +79,5 @@ describe Updaters::DayExpenses do
         expect(updated_day.expenses.count).to eq 0
       end
     end
-
   end
 end

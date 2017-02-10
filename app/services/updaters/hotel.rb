@@ -1,7 +1,8 @@
+# frozen_string_literal: true
 class Updaters::Hotel < Updaters::Entity
   attr_accessor :day, :hotel
 
-  def initialize day, hotel
+  def initialize(day, hotel)
     self.day = day
     self.hotel = hotel || {}
   end
@@ -12,5 +13,4 @@ class Updaters::Hotel < Updaters::Entity
     day.hotel.update_attributes(hotel)
     day.save
   end
-
 end

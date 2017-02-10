@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 source 'https://rubygems.org'
 
 gem 'rails', '~> 5.0.0'
@@ -44,8 +45,8 @@ gem 'bootstrap-datepicker-rails'
 gem 'puma'
 
 # docx
-gem 'rubyzip'
 gem 'docx_rails', github: 'altmer/docx-rails'
+gem 'rubyzip'
 gem 'zip-zip' # will load compatibility for old rubyzip API.
 
 # redis for in-memory store
@@ -98,17 +99,13 @@ end
 group :test do
   # unit testing
   gem 'database_cleaner'
-  gem 'nyan-cat-formatter'
-  gem 'rails-controller-testing'
-  gem 'rspec', '~> 3.4'
-  gem 'rspec-rails', '~> 3.4'
+  gem 'rspec-rails'
 
   # matchers for tests
   gem 'shoulda-matchers'
   # time stubs and mocks
   gem 'timecop'
   # test data fixtures
-  gem 'factory_girl'
   gem 'factory_girl_rails'
   # better data for fixtures
   gem 'faker'

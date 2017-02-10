@@ -1,5 +1,7 @@
-describe Updaters::Day do
-  def first_day_of tr
+# frozen_string_literal: true
+require 'rails_helper'
+RSpec.describe Updaters::Day do
+  def first_day_of(tr)
     tr.reload.days.first
   end
 
@@ -8,11 +10,11 @@ describe Updaters::Day do
 
   describe '#process' do
     context 'when params have day attributes' do
-      let(:params) {
+      let(:params) do
         {
-            comment: 'new_day_comment'
+          comment: 'new_day_comment'
         }
-      }
+      end
 
       it 'updates day data' do
         Updaters::Day.new(day, params).process
@@ -30,6 +32,5 @@ describe Updaters::Day do
         expect(updated_day.comment).to be_blank
       end
     end
-
   end
 end

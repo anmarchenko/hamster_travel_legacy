@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: hotels
@@ -12,33 +13,31 @@
 
 module Travels
   class Hotel < ApplicationRecord
-
     belongs_to :day, class_name: 'Travels::Day'
     has_many :links, class_name: 'ExternalLink', as: :linkable
 
-    monetize :amount_cents, :allow_nil => true
+    monetize :amount_cents, allow_nil: true
 
     def serializable_hash(_args)
       json = super(except: [:_id])
       json['id'] = id.to_s
-      if links.blank?
-        json['links'] = [{}]
-      else
-        json['links'] = links
-      end
+      json['links'] = if links.blank?
+                        [{}]
+                      else
+                        links
+                      end
       json['amount_currency_text'] = amount.currency.symbol
       json
     end
 
     def is_empty?
       [:name, :comment].each do |field|
-        return false unless self.send(field).blank?
+        return false unless send(field).blank?
       end
       (links || []).each do |link|
         return false unless link.url.blank?
       end
-      return true
+      true
     end
-
   end
 end

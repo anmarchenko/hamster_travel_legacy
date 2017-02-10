@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: activities
@@ -16,24 +17,25 @@
 #  working_hours    :string
 #
 
-describe Travels::Activity do
+require 'rails_helper'
+RSpec.describe Travels::Activity do
   describe '.where' do
-    let(:day) {FactoryGirl.create(:trip, :with_filled_days).days.first}
+    let(:day) { FactoryGirl.create(:trip, :with_filled_days).days.first }
 
     it 'returns activities by order_index' do
       activs = day.activities.to_a
       activs.each_index do |i|
-        next if activs[i+1].blank?
-        expect(activs[i].order_index).to be < (activs[i+1].order_index)
+        next if activs[i + 1].blank?
+        expect(activs[i].order_index).to be < activs[i + 1].order_index
       end
     end
 
     context 'when order_index was changed' do
-      let!(:activity_first) {day.activities.first}
-      let!(:activity_second) {day.activities[1]}
+      let!(:activity_first) { day.activities.first }
+      let!(:activity_second) { day.activities[1] }
 
-      before {activity_first.update_attributes(order_index: 1)}
-      before {activity_second.update_attributes(order_index: 0)}
+      before { activity_first.update_attributes(order_index: 1) }
+      before { activity_second.update_attributes(order_index: 0) }
 
       it 'returns activities in new order' do
         activs = day.reload.activities.to_a
@@ -46,7 +48,7 @@ describe Travels::Activity do
   end
 
   describe '#link_description' do
-    let(:activity) {FactoryGirl.create(:trip, :with_filled_days).days.first.activities.first}
+    let(:activity) { FactoryGirl.create(:trip, :with_filled_days).days.first.activities.first }
 
     it 'returns host' do
       expect(activity.link_description).to eq 'Cool.site'
@@ -54,9 +56,8 @@ describe Travels::Activity do
   end
 
   describe '#as_json' do
-
-    let(:activity) {FactoryGirl.create(:trip, :with_filled_days).days.first.activities.first}
-    let(:activity_json) {activity.as_json}
+    let(:activity) { FactoryGirl.create(:trip, :with_filled_days).days.first.activities.first }
+    let(:activity_json) { activity.as_json }
 
     it 'has string id field' do
       expect(activity_json['id']).not_to be_blank
@@ -74,7 +75,5 @@ describe Travels::Activity do
       expect(activity_json['link_url']).to eq(activity.link_url)
       expect(activity_json['order_index']).to eq(activity.order_index)
     end
-
   end
-
 end

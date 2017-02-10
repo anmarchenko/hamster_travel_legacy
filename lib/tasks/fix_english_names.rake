@@ -1,15 +1,15 @@
 # -*- encoding: utf-8 -*-
+# frozen_string_literal: true
 namespace :geo do
-
-
   task :fix_english_names, [] => :environment do
-    GEO_OBJECTS = [#Geo::Country,
-                   #Geo::Region,
-                   #Geo::District,
-                   #Geo::Adm3,
-                   #Geo::Adm4,
-                   #Geo::Adm5,
-                   Geo::City]
+    GEO_OBJECTS = [ # Geo::Country,
+      # Geo::Region,
+      # Geo::District,
+      # Geo::Adm3,
+      # Geo::Adm4,
+      # Geo::Adm5,
+      Geo::City
+    ].freeze
 
     GEO_OBJECTS.each do |klass|
       p "Fixing #{klass}..."
@@ -31,5 +31,4 @@ namespace :geo do
       country.update_attributes(name: iso_country_info.translation, name_en: iso_country_info.translation)
     end
   end
-
 end

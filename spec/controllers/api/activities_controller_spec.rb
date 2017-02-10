@@ -1,9 +1,11 @@
-describe Api::ActivitiesController do
+# frozen_string_literal: true
+require 'rails_helper'
+RSpec.describe Api::ActivitiesController do
   describe '#index' do
     let!(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
 
     context 'when user is logged in' do
-      login_user
+      before { login_user(user) }
 
       context 'and when there is trip' do
         it 'returns trip days as JSON' do
@@ -22,11 +24,10 @@ describe Api::ActivitiesController do
 
       context 'and when there is no trip' do
         it 'heads 404' do
-          get 'index', params: {trip_id: 'no_trip', day_id: 'whatever', format: :json}
+          get 'index', params: { trip_id: 'no_trip', day_id: 'whatever', format: :json }
           expect(response).to have_http_status 404
         end
       end
-
     end
 
     context 'when no logged user' do
@@ -49,36 +50,35 @@ describe Api::ActivitiesController do
     let(:trip_without_user) { FactoryGirl.create :trip }
 
     context 'when user is logged in' do
-      login_user
+      before { login_user(user) }
 
       let(:trip) { FactoryGirl.create :trip, users: [subject.current_user] }
       let(:day) { trip.days.first }
-      let(:day_params) {
+      let(:day_params) do
         {
-            day:
-                {
-                    id: day.id.to_s,
-                    comment: 'new_day_comment',
-                    places: [
-                        {
-                            city_id: Geo::City.all.first.id,
-                            city_text: 'City',
-                            missing_attr: 'AAAAA'
-                        }
-                    ],
-                    activities: [
-                        {
-                            name: 'new_activity',
-                            address: '10553 Berlin Randomstr. 12',
-                            working_hours: '12 - 18'
-                        }
-                    ]
-                }
+          day:
+              {
+                id: day.id.to_s,
+                comment: 'new_day_comment',
+                places: [
+                  {
+                    city_id: Geo::City.all.first.id,
+                    city_text: 'City',
+                    missing_attr: 'AAAAA'
+                  }
+                ],
+                activities: [
+                  {
+                    name: 'new_activity',
+                    address: '10553 Berlin Randomstr. 12',
+                    working_hours: '12 - 18'
+                  }
+                ]
+              }
         }
-      }
+      end
 
       context 'and when there is trip' do
-
         context 'and when input params are valid' do
           it 'updates trip and heads 200' do
             post 'create', params: day_params.merge(trip_id: trip.id, day_id: day.id, format: :json)
@@ -100,7 +100,6 @@ describe Api::ActivitiesController do
             expect(response).to have_http_status 403
           end
         end
-
       end
 
       context 'and when there is no trip' do
@@ -109,33 +108,31 @@ describe Api::ActivitiesController do
           expect(response).to have_http_status 404
         end
       end
-
     end
 
     context 'when no logged user' do
       let(:trip) { FactoryGirl.create :trip }
       let(:day) { trip.days.first }
-      let(:day_params) {
+      let(:day_params) do
         {
-            day:
-                {
-                    id: day.id.to_s,
-                    comment: 'new_day_comment',
-                    places: [
-                        {
-                            city_id: 43432,
-                            city_text: 'City',
-                            missing_attr: 'AAAAA'
-                        }
-                    ]
-                }
+          day:
+              {
+                id: day.id.to_s,
+                comment: 'new_day_comment',
+                places: [
+                  {
+                    city_id: 43_432,
+                    city_text: 'City',
+                    missing_attr: 'AAAAA'
+                  }
+                ]
+              }
         }
-      }
+      end
       it 'redirects to sign in' do
         post 'create', params: day_params.merge(trip_id: trip.id, day_id: day.id, format: :json)
         expect(response).to have_http_status 401
       end
     end
   end
-
 end

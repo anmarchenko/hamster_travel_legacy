@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: places
@@ -7,13 +8,14 @@
 #  city_id :integer
 #
 
-describe Travels::Place do
-  let(:place) {FactoryGirl.create(:trip, :with_filled_days).days.first.places.last}
-  let(:place_empty) {FactoryGirl.create(:trip, :with_filled_days).days.first.places.first}
+require 'rails_helper'
+RSpec.describe Travels::Place do
+  let(:place) { FactoryGirl.create(:trip, :with_filled_days).days.first.places.last }
+  let(:place_empty) { FactoryGirl.create(:trip, :with_filled_days).days.first.places.first }
 
   describe '#city' do
     context 'when city is present' do
-      let(:city) {place.city}
+      let(:city) { place.city }
       it 'returns city from geo database' do
         expect(city).not_to be_blank
         expect(city.id).to eq place.city_id
@@ -21,7 +23,7 @@ describe Travels::Place do
       end
     end
     context 'when no city' do
-      let(:city) {place_empty.city}
+      let(:city) { place_empty.city }
       it 'returns nil' do
         expect(city).to be_nil
       end
@@ -42,7 +44,7 @@ describe Travels::Place do
   end
 
   describe '#as_json' do
-    let(:place_json) {place.as_json}
+    let(:place_json) { place.as_json }
 
     it 'has right attributes' do
       expect(place_json['id']).not_to be_blank
@@ -55,7 +57,7 @@ describe Travels::Place do
 
   describe '#country_code' do
     context 'when city is present' do
-      let(:city) {place.city}
+      let(:city) { place.city }
       it 'returns country code of city' do
         expect(place.country_code).not_to be_nil
         expect(place.country_code).to eq(city.country_code)
@@ -63,7 +65,7 @@ describe Travels::Place do
     end
 
     context 'when no city' do
-      let(:country_code) {place_empty.country_code}
+      let(:country_code) { place_empty.country_code }
       it 'returns nil' do
         expect(country_code).to be_nil
       end

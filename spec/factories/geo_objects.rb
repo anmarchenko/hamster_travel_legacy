@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 FactoryGirl.define do
   sequence(:geonames_code, &:to_s)
 
@@ -16,7 +17,6 @@ FactoryGirl.define do
 
       # dependent geo objects
       FactoryGirl.create_list(:region, 2, country_code: country.country_code)
-      FactoryGirl.create(:city, country_code: country.country_code, status: Geo::City::Statuses::CAPITAL)
     end
   end
 
@@ -32,28 +32,9 @@ FactoryGirl.define do
       region.translations.create(name: "Region #{region.geonames_code}", locale: :en)
       region.translations.create(name: "Oblast #{region.geonames_code}", locale: :ru)
 
-      # dependent geo objects
-      FactoryGirl.create_list(:district, 2, country_code: region.country_code, region_code: region.region_code)
-      FactoryGirl.create(:city, country_code: region.country_code, region_code: region.region_code,
-                                status: Geo::City::Statuses::REGION_CENTER)
-    end
-  end
-
-  factory :district, class: 'Geo::District' do
-    geonames_code
-
-    district_code { geonames_code }
-
-    population { 200_000 + Random.rand(10_000_000) }
-
-    after(:create) do |district|
-      # translations
-      district.translations.create(name: "District #{district.geonames_code}", locale: :en)
-      district.translations.create(name: "Rayon #{district.geonames_code}", locale: :ru)
-
-      # dependent geo objects
-      FactoryGirl.create(:city, country_code: district.country_code, region_code: district.region_code,
-                                district_code: district.district_code)
+      country = FactoryGirl.create(:country)
+      region.country_code = country.country_code
+      region.save
     end
   end
 
@@ -65,10 +46,18 @@ FactoryGirl.define do
     longitude { Random.rand * 1000 }
     latitude { Random.rand * 1000 }
 
+    status { Geo::City::Statuses::REGION_CENTER }
+
     after :create do |city|
       # translations
       city.translations.create(name: "City #{city.geonames_code}", locale: :en)
       city.translations.create(name: "Gorod #{city.geonames_code}", locale: :ru)
+
+      region = FactoryGirl.create(:region)
+
+      city.country_code = region.country_code
+      city.region_code = region.region_code
+      city.save
     end
   end
 end

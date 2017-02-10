@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: trips
@@ -28,22 +29,22 @@ module Travels
     extend Dragonfly::Model::Validations
 
     module StatusCodes
-      DRAFT = '0_draft'.freeze
-      PLANNED = '1_planned'.freeze
-      FINISHED = '2_finished'.freeze
+      DRAFT = '0_draft'
+      PLANNED = '1_planned'
+      FINISHED = '2_finished'
 
       ALL = [DRAFT, PLANNED, FINISHED].freeze
       OPTIONS = ALL.map { |type| ["common.#{type}", type] }
       TYPE_TO_TEXT = {
-        DRAFT => "common.#{DRAFT}".freeze,
-        PLANNED => "common.#{PLANNED}".freeze,
-        FINISHED => "common.#{FINISHED}".freeze
+        DRAFT => "common.#{DRAFT}",
+        PLANNED => "common.#{PLANNED}",
+        FINISHED => "common.#{FINISHED}"
       }.freeze
 
       TYPE_TO_ICON = {
-        DRAFT => 'draft'.freeze,
-        PLANNED => 'planned'.freeze,
-        FINISHED => 'finished'.freeze
+        DRAFT => 'draft',
+        PLANNED => 'planned',
+        FINISHED => 'finished'
       }.freeze
     end
 
@@ -216,7 +217,7 @@ module Travels
       !without_dates?
     end
 
-    def as_json(**args)
+    def as_json(**_args)
       attrs = {}
       %w(id comment start_date end_date name short_description
          archived private budget_for).each do |field|

@@ -1,5 +1,6 @@
+# frozen_string_literal: true
 module CurrencyHelper
-  DEFAULT_CURRENCY = 'EUR'.freeze
+  DEFAULT_CURRENCY = 'EUR'
   IMPORTANT_CURRENCIES = %w(RUB EUR USD GBP).freeze
 
   def self.currency_list(user_currency = nil, trip_currency = nil)

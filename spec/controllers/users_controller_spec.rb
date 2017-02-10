@@ -1,7 +1,9 @@
-describe UsersController do
+# frozen_string_literal: true
+require 'rails_helper'
+RSpec.describe UsersController do
   describe '#show' do
     context 'when user is logged in' do
-      login_user
+      before { login_user(user) }
 
       context 'where there is user' do
         it 'renders show template' do

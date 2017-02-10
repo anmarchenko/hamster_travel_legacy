@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: transfers
@@ -20,13 +21,14 @@
 #  city_from_id    :integer
 #
 
-describe Travels::Transfer do
-  let(:trip) {FactoryGirl.create(:trip, :with_transfers)}
-  let(:transfers) {trip.days.first.transfers.to_a}
+require 'rails_helper'
+RSpec.describe Travels::Transfer do
+  let(:trip) { FactoryGirl.create(:trip, :with_transfers) }
+  let(:transfers) { trip.days.first.transfers.to_a }
 
-  let(:transfer_empty) {transfers[0]}
-  let(:transfer) {transfers[1]}
-  let(:transfer_flight) {transfers[2]}
+  let(:transfer_empty) { transfers[0] }
+  let(:transfer) { transfers[1] }
+  let(:transfer_flight) { transfers[2] }
 
   describe '#type_icon' do
     context 'when empty transfer type' do
@@ -42,7 +44,7 @@ describe Travels::Transfer do
   end
 
   describe '#city_from' do
-    let(:city) {transfer.city_from}
+    let(:city) { transfer.city_from }
     it 'returns city from geo database' do
       expect(city).not_to be_blank
       expect(city.id).to eq transfer.city_from_id
@@ -51,7 +53,7 @@ describe Travels::Transfer do
   end
 
   describe '#city_to' do
-    let(:city) {transfer.city_to}
+    let(:city) { transfer.city_to }
     it 'returns city from geo database' do
       expect(city).not_to be_blank
       expect(city.id).to eq transfer.city_to_id
@@ -60,7 +62,7 @@ describe Travels::Transfer do
   end
 
   describe '#as_json' do
-    let(:transfer_json) {transfer_flight.as_json}
+    let(:transfer_json) { transfer_flight.as_json }
 
     it 'has right attributes' do
       expect(transfer_json['id']).not_to be_blank

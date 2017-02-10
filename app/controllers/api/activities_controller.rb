@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::ActivitiesController < ApplicationController
   before_action :find_trip
   before_action :find_day
@@ -17,41 +18,40 @@ class Api::ActivitiesController < ApplicationController
     ::Updaters::DayPlaces.new(@day, prms.delete(:places)).process
     ::Updaters::Day.new(@day, prms).process
     Calculators::Budget.new(@trip).invalidate_cache!
-    render json: {status: 0}
+    render json: { status: 0 }
   end
 
   private
 
   def day_params
     params.require(:day).permit(
-        :comment,
-        activities: [
-            :id, :name, :comment, :link_url, :amount_cents, :amount_currency, :rating, :address, :working_hours
-        ],
-        links: [
-            :id, :description, :url
-        ],
-        expenses: [
-            :id, :name, :amount_cents, :amount_currency
-        ],
-        places: [
-            :id, :city_id
-        ]
+      :comment,
+      activities: [
+        :id, :name, :comment, :link_url, :amount_cents, :amount_currency, :rating, :address, :working_hours
+      ],
+      links: [
+        :id, :description, :url
+      ],
+      expenses: [
+        :id, :name, :amount_cents, :amount_currency
+      ],
+      places: [
+        :id, :city_id
+      ]
     )
   end
 
   def authorize
-    head 403 and return if !@trip.include_user(current_user)
+    head(403) && return unless @trip.include_user(current_user)
   end
 
   def find_trip
     @trip = Travels::Trip.where(id: params[:trip_id]).first
-    head 404 and return if @trip.blank?
+    head(404) && return if @trip.blank?
   end
 
   def find_day
     @day = @trip.days.where(id: params[:day_id]).first
-    head 404 and return if @day.blank?
+    head(404) && return if @day.blank?
   end
-
 end

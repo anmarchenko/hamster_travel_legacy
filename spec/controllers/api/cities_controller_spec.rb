@@ -1,4 +1,6 @@
-describe Api::CitiesController do
+# frozen_string_literal: true
+require 'rails_helper'
+RSpec.describe Api::CitiesController do
   describe '#index' do
     def check_city(json_hash, city)
       expect(json_hash).to eq('name' => city.name, 'text' => city.translated_text,
@@ -14,7 +16,7 @@ describe Api::CitiesController do
     end
 
     context 'when user is logged in' do
-      login_user
+      before { login_user(user) }
       after(:each) { Rails.cache.clear }
 
       it 'responds with empty array if term is shorter than 3 letters' do
@@ -72,7 +74,6 @@ describe Api::CitiesController do
             check_city(json.first, subject.current_user.home_town)
             check_city(json.last, trip.visited_cities.first)
           end
-
         end
       end
     end

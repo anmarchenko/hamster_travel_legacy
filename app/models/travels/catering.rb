@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: caterings
@@ -31,6 +32,5 @@ module Travels
       end
       json
     end
-
   end
 end

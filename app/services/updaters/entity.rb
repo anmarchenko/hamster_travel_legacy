@@ -1,18 +1,21 @@
+# frozen_string_literal: true
 class Updaters::Entity
-
-  def delete_nested collection, params
+  def delete_nested(collection, params)
     to_delete = []
     collection.each do |item|
       to_delete << item.id if params.count { |v| v[:id].to_s == item.id.to_s } == 0
     end
-    collection.where(:id => to_delete).destroy_all
+    collection.where(id: to_delete).destroy_all
   end
 
   def process_nested(collection, params, nested_list = [])
     delete_nested collection, params
     params.each do |item_hash|
-
-      item_id = (item_hash.delete(:id).to_i % 2147483647) rescue nil
+      item_id = begin
+                  (item_hash.delete(:id).to_i % 2_147_483_647)
+                rescue
+                  nil
+                end
       item = collection.where(id: item_id).first unless item_id.nil?
 
       nested_hash = {}
@@ -39,8 +42,13 @@ class Updaters::Entity
     end
   end
 
-  def process_amount item_hash
-    (item_hash['amount_cents'] = item_hash['amount_cents'].to_i rescue nil) unless item_hash['amount_cents'].nil?
+  def process_amount(item_hash)
+    unless item_hash['amount_cents'].nil?
+      (item_hash['amount_cents'] = begin
+                                     item_hash['amount_cents'].to_i
+                                   rescue
+                                     nil
+                                   end)
+    end
   end
-
 end

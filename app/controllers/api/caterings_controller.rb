@@ -1,6 +1,6 @@
+# frozen_string_literal: true
 module Api
   class CateringsController < ApplicationController
-
     before_action :find_trip
     before_action :authenticate_user!, only: [:update]
     before_action :authorize, only: [:update]
@@ -18,7 +18,7 @@ module Api
       ::Updaters::Caterings.new(@trip, params_caterings[:caterings]).process
       Calculators::Budget.new(@trip).invalidate_cache!
       render json: {
-          res: true
+        res: true
       }
     end
 
@@ -26,17 +26,16 @@ module Api
 
     def params_caterings
       params.require(:trip).permit(caterings: [:id, :name, :description, :days_count, :persons_count,
-                                        :amount_cents, :amount_currency])
+                                               :amount_cents, :amount_currency])
     end
 
     def find_trip
       @trip = Travels::Trip.where(id: params[:id]).first
-      head 404 and return if @trip.blank?
+      head(404) && return if @trip.blank?
     end
 
     def authorize
-      head 403 and return if !@trip.include_user(current_user)
+      head(403) && return unless @trip.include_user(current_user)
     end
-
   end
 end

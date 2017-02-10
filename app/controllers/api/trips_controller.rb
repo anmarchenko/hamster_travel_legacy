@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Api
   class TripsController < ApplicationController
     before_action :authenticate_user!, only: [:upload_image, :delete_image, :destroy]
@@ -40,15 +41,15 @@ module Api
 
     def find_trip
       @trip = Travels::Trip.includes(:users, :author_user).where(id: params[:id]).first
-      not_found and return if @trip.blank?
+      not_found && return if @trip.blank?
     end
 
     def authorize
-      render json: { error: 'forbidden' }, status: 403 and return unless @trip.include_user(current_user)
+      render(json: { error: 'forbidden' }, status: 403) && return unless @trip.include_user(current_user)
     end
 
     def authorize_destroy
-      render json: { error: 'forbidden' }, status: 403 and return unless @trip.author_user_id == current_user.id
+      render(json: { error: 'forbidden' }, status: 403) && return unless @trip.author_user_id == current_user.id
     end
   end
 end

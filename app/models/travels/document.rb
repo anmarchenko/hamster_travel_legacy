@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: documents
@@ -21,7 +22,7 @@ module Travels
     dragonfly_accessor :file do
       storage_options do |attachment|
         {
-            path: "#{generate_path(attachment.name)}/#{attachment.name}"
+          path: "#{generate_path(attachment.name)}/#{attachment.name}"
         }
       end
     end
@@ -30,21 +31,21 @@ module Travels
 
     def store(file)
       self.file = file
-      self.file.name = "#{SecureRandom.uuid.gsub('-', '')}#{File.extname(self.file.name)}" if self.file.present?
+      self.file.name = "#{SecureRandom.uuid.delete('-')}#{File.extname(self.file.name)}" if self.file.present?
     end
 
-    def generate_path file_name
+    def generate_path(file_name)
       digest = Digest::MD5.hexdigest(file_name)
       "#{digest[0, 2]}/#{digest[2, 2]}/#{digest[4, 2]}/#{digest[6, 10]}"
     end
 
     def extension
-      EXTENSIONS[self.mime_type] || '.txt'
+      EXTENSIONS[mime_type] || '.txt'
     end
 
     def as_json(**_args)
       res = super(except: [:file_uid, :trip_id])
-      res['icon'] = ApplicationController.helpers.image_tag("filetypes/#{self.extension.gsub('.', '')}.png")
+      res['icon'] = ApplicationController.helpers.image_tag("filetypes/#{extension.delete('.')}.png")
       res
     end
   end

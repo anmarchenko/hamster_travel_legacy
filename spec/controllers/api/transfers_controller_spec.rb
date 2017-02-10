@@ -1,14 +1,16 @@
-describe Api::TransfersController do
+# frozen_string_literal: true
+require 'rails_helper'
+RSpec.describe Api::TransfersController do
   describe '#index' do
     let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
     let(:day) { trip.days.first }
 
     context 'when user is logged in' do
-      login_user
+      before { login_user(user) }
 
       context 'and when there is trip' do
         it 'returns trip days as JSON' do
-          get 'index', params: {trip_id: trip.id.to_s, day_id: day.id}, format: :json
+          get 'index', params: { trip_id: trip.id.to_s, day_id: day.id }, format: :json
           expect(response).to have_http_status 200
           json = JSON.parse(response.body)
           expect(json['date']).to eq(I18n.l(trip.start_date, format: '%d.%m.%Y %A'))
@@ -19,16 +21,15 @@ describe Api::TransfersController do
 
       context 'and when there is no trip' do
         it 'heads 404' do
-          get 'index', params: {trip_id: 'no_trip', day_id: day.id}, format: :json
+          get 'index', params: { trip_id: 'no_trip', day_id: day.id }, format: :json
           expect(response).to have_http_status 404
         end
       end
-
     end
 
     context 'when no logged user' do
       it 'behaves the same' do
-        get 'index', params: {trip_id: trip.id.to_s, day_id: day.id}, format: :json
+        get 'index', params: { trip_id: trip.id.to_s, day_id: day.id }, format: :json
         expect(response).to have_http_status 200
         json = JSON.parse(response.body)
         expect(json['date']).to eq(I18n.l(trip.start_date, format: '%d.%m.%Y %A'))
@@ -37,42 +38,40 @@ describe Api::TransfersController do
   end
 
   describe '#create' do
-
     context 'when user is logged in' do
-      login_user
+      before { login_user(user) }
 
-      let(:day_params) {
+      let(:day_params) do
         {
-            day: {
-                places: [
-                    {
-                        city_id: Geo::City.all.first.id,
-                        city_text: 'City',
-                        missing_attr: 'AAAAA'
-                    }
-                ],
-                transfers: [
-                    {
-                        city_from_id: Geo::City.all.to_a[0].id,
-                        city_to_id: Geo::City.all.to_a[1].id,
-                        links: [
-                            {id: nil, url: 'https://google.com', description: 'desc1'},
-                            {id: nil, url: 'https://rome2rio.com', description: 'desc2'}
-                        ]
-                    }
-                ],
-                hotel: {
-                    name: 'new_hotel',
-                    links: [
-                        {id: nil, url: 'https://google2.com', description: 'desc1'}
-                    ]
-                }
+          day: {
+            places: [
+              {
+                city_id: Geo::City.all.first.id,
+                city_text: 'City',
+                missing_attr: 'AAAAA'
+              }
+            ],
+            transfers: [
+              {
+                city_from_id: Geo::City.all.to_a[0].id,
+                city_to_id: Geo::City.all.to_a[1].id,
+                links: [
+                  { id: nil, url: 'https://google.com', description: 'desc1' },
+                  { id: nil, url: 'https://rome2rio.com', description: 'desc2' }
+                ]
+              }
+            ],
+            hotel: {
+              name: 'new_hotel',
+              links: [
+                { id: nil, url: 'https://google2.com', description: 'desc1' }
+              ]
             }
+          }
         }
-      }
+      end
 
       context 'and when there is trip' do
-
         context 'and when input params are valid' do
           let(:trip) { FactoryGirl.create :trip, users: [subject.current_user] }
           let(:day) { trip.days.first }
@@ -104,7 +103,6 @@ describe Api::TransfersController do
             expect(response).to have_http_status 403
           end
         end
-
       end
 
       context 'and when there is no trip' do
@@ -116,33 +114,30 @@ describe Api::TransfersController do
           expect(response).to have_http_status 404
         end
       end
-
     end
 
     context 'when no logged user' do
       let(:trip) { FactoryGirl.create :trip }
       let(:day) { trip.days.first }
-      let(:days_params) {
+      let(:days_params) do
         {
-            places: [
-                {
-                    city_id: Geo::City.all.first.id,
-                    city_text: 'City',
-                    missing_attr: 'AAAAA'
-                }
-            ]
+          places: [
+            {
+              city_id: Geo::City.all.first.id,
+              city_text: 'City',
+              missing_attr: 'AAAAA'
+            }
+          ]
         }
-      }
+      end
       it 'redirects to sign in' do
         post 'create', params: days_params.merge(trip_id: trip.id, day_id: day.id), format: :json
         expect(response).to have_http_status 401
       end
     end
-
   end
 
   describe '#previous_place' do
-
     context 'when trip is full' do
       let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
       let(:day) { trip.days.to_a[3] }
@@ -151,7 +146,7 @@ describe Api::TransfersController do
       let(:first_day) { trip.days.to_a[0] }
 
       it 'returns last place from previous day' do
-        get 'previous_place', params: {trip_id: trip.id, day_id: day.id}
+        get 'previous_place', params: { trip_id: trip.id, day_id: day.id }
 
         json = JSON.parse(response.body)
         expect(json['place']).not_to be_blank
@@ -160,17 +155,15 @@ describe Api::TransfersController do
       end
 
       it 'returns nil if asked for the first day' do
-        get 'previous_place', params: {trip_id: trip.id, day_id: first_day.id}
+        get 'previous_place', params: { trip_id: trip.id, day_id: first_day.id }
 
         json = JSON.parse(response.body)
         expect(json['place']).to be_blank
       end
     end
-
   end
 
   describe '#previous_hotel' do
-
     context 'when trip is full' do
       let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
       let(:day) { trip.days.to_a[3] }
@@ -179,7 +172,7 @@ describe Api::TransfersController do
       let(:first_day) { trip.days.to_a[0] }
 
       it 'returns hotel from previous day' do
-        get 'previous_hotel', params: {trip_id: trip.id, day_id: day.id}
+        get 'previous_hotel', params: { trip_id: trip.id, day_id: day.id }
 
         json = JSON.parse(response.body)
         expect(json['hotel']).not_to be_blank
@@ -188,14 +181,11 @@ describe Api::TransfersController do
       end
 
       it 'returns nil if asked for the first day' do
-        get 'previous_hotel', params: {trip_id: trip.id, day_id: first_day.id}
+        get 'previous_hotel', params: { trip_id: trip.id, day_id: first_day.id }
 
         json = JSON.parse(response.body)
         expect(json['hotel']).to be_blank
       end
     end
-
   end
-
-
 end

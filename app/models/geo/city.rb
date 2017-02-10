@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: cities
@@ -25,19 +26,19 @@ module Geo
     translates :name, fallbacks_for_empty_translations: true
 
     module Statuses
-      CAPITAL = 'capital'.freeze
-      REGION_CENTER = 'region_center'.freeze
-      DISTRICT_CENTER = 'district_center'.freeze
-      ADM3_CENTER = 'adm3_center'.freeze
-      ADM4_CENTER = 'adm4_center'.freeze
-      ADM5_CENTER = 'adm5_center'.freeze
+      CAPITAL = 'capital'
+      REGION_CENTER = 'region_center'
+      DISTRICT_CENTER = 'district_center'
+      ADM3_CENTER = 'adm3_center'
+      ADM4_CENTER = 'adm4_center'
+      ADM5_CENTER = 'adm5_center'
     end
 
     def translated_text(args = { with_region: true, with_country: true, locale: I18n.locale })
       text = translated_name(args[:locale])
       if args[:with_region]
         reg = region.try(:translated_name, args[:locale])
-        text += ", #{reg}" unless reg.blank? or reg == text
+        text += ", #{reg}" unless reg.blank? || (reg == text)
       end
       if args[:with_country]
         c = country.try(:translated_name, args[:locale])
@@ -91,7 +92,7 @@ module Geo
 
     def self.find_by_term(term)
       term = Regexp.escape(term)
-      all.with_translations.where("\"city_translations\".\"name\" ILIKE ?", "#{term}%").order(population: :desc)
+      all.with_translations.where('"city_translations"."name" ILIKE ?', "#{term}%").order(population: :desc)
     end
 
     def json_hash

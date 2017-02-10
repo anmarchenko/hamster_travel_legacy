@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AddRatingToActivities < ActiveRecord::Migration
   def change
     add_column :activities, :rating, :integer, default: 2

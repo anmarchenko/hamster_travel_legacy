@@ -1,4 +1,6 @@
-describe Updaters::Trip do
+# frozen_string_literal: true
+require 'rails_helper'
+RSpec.describe Updaters::Trip do
   describe '#update' do
     context 'when trip has start and end date' do
       let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }

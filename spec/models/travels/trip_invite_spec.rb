@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: trip_invites
@@ -8,7 +9,8 @@
 #  trip_id          :integer
 #
 
-describe Travels::TripInvite do
+require 'rails_helper'
+RSpec.describe Travels::TripInvite do
   let(:trip) { FactoryGirl.create(:trip) }
   let(:inviting_user) { FactoryGirl.create(:user) }
   let(:invited_user) { FactoryGirl.create(:user) }

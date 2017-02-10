@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AddNameToCaterings < ActiveRecord::Migration
   def change
     add_column :caterings, :name, :string

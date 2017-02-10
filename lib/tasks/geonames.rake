@@ -1,48 +1,47 @@
 # -*- encoding: utf-8 -*-
+# frozen_string_literal: true
 namespace :geo do
-
   desc 'geonames'
 
   PATH_TO_DATA = '/var/data'
 
-  DATA_FILES = %w(prepCountries prepRegions prepDistricts prepAdm3 prepAdm4 prepAdm5 prepCities)
+  DATA_FILES = %w(prepCountries prepRegions prepDistricts prepAdm3 prepAdm4 prepAdm5 prepCities).freeze
 
   FEATURE_CODE_TO_FILE = {
-      'ADM1' => 'prepRegions',
-      'ADM2' => 'prepDistricts',
-      'ADM3' => 'prepAdm3',
-      'ADM4' => 'prepAdm4',
-      'ADM5' => 'prepAdm5',
-      'PCL' => 'prepCountries',
-      'PCLD' => 'prepCountries',
-      'PCLF' => 'prepCountries',
-      'PCLI' => 'prepCountries',
-      'PCLS' => 'prepCountries'
-  }
+    'ADM1' => 'prepRegions',
+    'ADM2' => 'prepDistricts',
+    'ADM3' => 'prepAdm3',
+    'ADM4' => 'prepAdm4',
+    'ADM5' => 'prepAdm5',
+    'PCL' => 'prepCountries',
+    'PCLD' => 'prepCountries',
+    'PCLF' => 'prepCountries',
+    'PCLI' => 'prepCountries',
+    'PCLS' => 'prepCountries'
+  }.freeze
   def self.geo_models
     {
-        'prepCountries' => Geo::Country,
-        'prepRegions' => Geo::Region,
-        'prepDistricts' => Geo::District,
-        'prepAdm3' => Geo::Adm3,
-        'prepAdm4' => Geo::Adm4,
-        'prepAdm5' => Geo::Adm5,
-        'prepCities' => Geo::City
+      'prepCountries' => Geo::Country,
+      'prepRegions' => Geo::Region,
+      'prepDistricts' => Geo::District,
+      'prepAdm3' => Geo::Adm3,
+      'prepAdm4' => Geo::Adm4,
+      'prepAdm5' => Geo::Adm5,
+      'prepCities' => Geo::City
     }
   end
 
-  def self.find_by_geonames_code code
+  def self.find_by_geonames_code(code)
     Geo::City.by_geonames_code(code) ||
-        Geo::Adm5.by_geonames_code(code) ||
-        Geo::Adm4.by_geonames_code(code) ||
-        Geo::Adm3.by_geonames_code(code) ||
-        Geo::District.by_geonames_code(code) ||
-        Geo::Region.by_geonames_code(code) ||
-        Geo::Country.by_geonames_code(code)
+      Geo::Adm5.by_geonames_code(code) ||
+      Geo::Adm4.by_geonames_code(code) ||
+      Geo::Adm3.by_geonames_code(code) ||
+      Geo::District.by_geonames_code(code) ||
+      Geo::Region.by_geonames_code(code) ||
+      Geo::Country.by_geonames_code(code)
   end
 
   task :prepare, [] => :environment do
-
     outputFiles = {}
     DATA_FILES.each do |file_name|
       outputFiles[file_name] = File.open("#{PATH_TO_DATA}/#{file_name}", 'w+')
@@ -57,24 +56,24 @@ namespace :geo do
         feature_code = arr[7]
 
         case feature_class
-          when 'A'
-            file = FEATURE_CODE_TO_FILE[feature_code]
-            outputFiles[ file ].write(line) unless file.blank?
-          when 'P'
-            outputFiles['prepCities'].write(line)
+        when 'A'
+          file = FEATURE_CODE_TO_FILE[feature_code]
+          outputFiles[file].write(line) unless file.blank?
+        when 'P'
+          outputFiles['prepCities'].write(line)
         end
       end
     end
 
     p 'Close all files...'
 
-    outputFiles.each { |k, v| v.close() }
+    outputFiles.each { |_k, v| v.close }
 
     p 'Finished task.'
   end
 
   task :migrate, [] => :environment do
-    geo_models.each {|key, klass| klass.delete_all}
+    geo_models.each { |_key, klass| klass.delete_all }
 
     # migrate models
     geo_models.each do |file_name, klass|
@@ -121,7 +120,5 @@ namespace :geo do
         puts "Processed #{values[3]} for #{object}"
       end
     end
-
   end
-
 end

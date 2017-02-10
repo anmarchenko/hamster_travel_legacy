@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Api
   class ManualCitiesController < ApplicationController
     before_action :authenticate_user!
@@ -26,7 +27,7 @@ module Api
     end
 
     def authorize
-      head 403 and return unless @user == current_user
+      head(403) && return unless @user == current_user
     end
   end
 end

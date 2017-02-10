@@ -1,8 +1,7 @@
 # -*- encoding: utf-8 -*-
+# frozen_string_literal: true
 namespace :travel do
-
   task :fill_city_ids, [] => :environment do
-
     p "Filling #{Travels::Place}..."
     started = Time.now
     Travels::Place.find_each do |object|
@@ -31,5 +30,4 @@ namespace :travel do
     end
     p "Finished fixing #{User} in #{Time.now - started} seconds."
   end
-
 end

@@ -1,5 +1,6 @@
-shared_examples 'a model with unique field' do |model_factory, field, case_sensitive|
-  let (:object) { FactoryGirl.create(model_factory)}
+# frozen_string_literal: true
+RSpec.shared_examples 'a model with unique field' do |model_factory, field, case_sensitive|
+  let(:object) { FactoryGirl.create(model_factory) }
 
   it "validates that #{field} is unique for #{model_factory}" do
     object_repeat = FactoryGirl.build(model_factory, field => object.send(field))
@@ -12,7 +13,7 @@ shared_examples 'a model with unique field' do |model_factory, field, case_sensi
   end
 
   context "with repeat object having capitalized #{field}" do
-    let(:object_repeat) {FactoryGirl.build(model_factory, field => object.send(field).upcase)}
+    let(:object_repeat) { FactoryGirl.build(model_factory, field => object.send(field).upcase) }
     it "validates that #{field} is unique for #{model_factory} case #{!case_sensitive ? 'in' : ''}sensitive" do
       if case_sensitive
         expect(object_repeat).to be_valid

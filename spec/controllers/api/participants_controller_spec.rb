@@ -1,10 +1,11 @@
-describe Api::ParticipantsController do
-
+# frozen_string_literal: true
+require 'rails_helper'
+RSpec.describe Api::ParticipantsController do
   describe '#index' do
-    let(:trip) {FactoryGirl.create(:trip, :with_users, :with_invited)}
+    let(:trip) { FactoryGirl.create(:trip, :with_users, :with_invited) }
 
     it 'returns list of participants and invited users' do
-      get 'index', params: {id: trip.id}
+      get 'index', params: { id: trip.id }
       expect(response).to have_http_status 200
       json = JSON.parse(response.body)
 

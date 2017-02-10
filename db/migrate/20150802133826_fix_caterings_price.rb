@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class FixCateringsPrice < ActiveRecord::Migration
   def change
     rename_column :caterings, :price_cents, :amount_cents

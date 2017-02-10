@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CreateAdm3s < ActiveRecord::Migration
   def change
     create_table :adm3s do |t|

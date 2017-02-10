@@ -1,8 +1,8 @@
+# frozen_string_literal: true
 class Updaters::DayExpenses < Updaters::Entity
-
   attr_accessor :day, :expenses
 
-  def initialize day, expenses
+  def initialize(day, expenses)
     self.day = day
     self.expenses = expenses
   end
@@ -11,5 +11,4 @@ class Updaters::DayExpenses < Updaters::Entity
     process_nested(day.expenses, expenses || [])
     day.save
   end
-
 end

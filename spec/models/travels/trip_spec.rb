@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: trips
@@ -22,7 +23,8 @@
 #  countries_search_index :string
 #
 
-describe Travels::Trip do
+require 'rails_helper'
+RSpec.describe Travels::Trip do
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:start_date) }
   it { should validate_presence_of(:end_date) }
@@ -137,7 +139,7 @@ describe Travels::Trip do
         days_add_price = trip.days.inject(0) { |sum, day| sum += day.expenses.inject(0) { |i_s, ex| i_s += ((ex.amount_cents || 0)) } }
         transfers_price = trip.days.inject(0) { |s, day| s += day.transfers.inject(0) { |i_s, tr| i_s += ((tr.amount_cents || 0)) } }
         activities_price = trip.days.inject(0) { |s, day| s += day.activities.inject(0) { |i_s, ac| i_s += ((ac.amount_cents || 0)) } }
-        caterings_price = trip.caterings.inject(0) { |s, cat| s += ((cat.amount_cents || 0) ) * cat.days_count * cat.persons_count }
+        caterings_price = trip.caterings.inject(0) { |s, cat| s += ((cat.amount_cents || 0)) * cat.days_count * cat.persons_count }
 
         budget_eur = trip.budget_sum('EUR')
         should_be_eur = Money.new([hotel_price, days_add_price, transfers_price, activities_price, caterings_price].reduce(&:+),

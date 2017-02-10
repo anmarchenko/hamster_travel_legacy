@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::CountriesController < ApplicationController
   respond_to :json
 
@@ -6,9 +7,9 @@ class Api::CountriesController < ApplicationController
 
   def show
     render json: {
-        countries: @trip.visited_countries_codes.map {
-            |country_code| ApplicationController.helpers.flag(country_code, 32)
-        }
+      countries: @trip.visited_countries_codes.map do |country_code|
+        ApplicationController.helpers.flag(country_code, 32)
+      end
     }
   end
 
@@ -16,7 +17,6 @@ class Api::CountriesController < ApplicationController
 
   def find_trip
     @trip = Travels::Trip.where(id: params[:id]).first
-    head 404 and return if @trip.blank?
+    head(404) && return if @trip.blank?
   end
-
 end

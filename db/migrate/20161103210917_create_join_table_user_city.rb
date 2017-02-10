@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CreateJoinTableUserCity < ActiveRecord::Migration[5.0]
   def change
     create_join_table :users, :cities do |t|

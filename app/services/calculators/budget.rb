@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Calculators::Budget
   attr_accessor :trip, :currency
 
@@ -25,7 +26,7 @@ class Calculators::Budget
   end
 
   def invalidate_cache!
-    ['sum', 'transfers_hotel', 'activities_other', 'catering'].each do |method_name|
+    %w(sum transfers_hotel activities_other catering).each do |method_name|
       Rails.cache.delete(cache_key(method_name))
     end
   end

@@ -1,6 +1,7 @@
+# frozen_string_literal: true
 module Finders
   class Cities
-    EMPTY_TERM = '[$empty$]'.freeze
+    EMPTY_TERM = '[$empty$]'
 
     def self.search(term, user = nil, trip_id = nil)
       return empty_suggestions(user, trip_id) if term == EMPTY_TERM && user

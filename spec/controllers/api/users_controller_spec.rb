@@ -1,4 +1,6 @@
-describe Api::UsersController do
+# frozen_string_literal: true
+require 'rails_helper'
+RSpec.describe Api::UsersController do
   describe '#index' do
     before do
       User.destroy_all
@@ -17,7 +19,7 @@ describe Api::UsersController do
     end
 
     context 'when user is logged in' do
-      login_user
+      before { login_user(user) }
 
       after(:each) { Rails.cache.clear }
 
@@ -92,7 +94,6 @@ describe Api::UsersController do
     end
   end
 
-
   describe '#update' do
     let(:city) { FactoryGirl.create(:city) }
     let(:attrs) do
@@ -109,7 +110,7 @@ describe Api::UsersController do
     end
 
     context 'when user is logged in' do
-      login_user
+      before { login_user(user) }
 
       context 'and when there is existing user' do
         context 'and when updates itself' do
@@ -197,7 +198,7 @@ describe Api::UsersController do
     end
     describe '#visited' do
       context 'when user is logged in' do
-        login_user
+        before { login_user(user) }
 
         it 'returns list of countries and cities that user visited' do
           get 'visited', params: { id: user.id }
@@ -233,7 +234,7 @@ describe Api::UsersController do
 
     describe '#finished_trips' do
       context 'when user is logged in' do
-        login_user
+        before { login_user(user) }
 
         it "returns list of the user's finished trips paginated" do
           get 'finished_trips', params: { id: user.id }
@@ -284,7 +285,7 @@ describe Api::UsersController do
 
     describe '#show' do
       context 'when user is logged in' do
-        login_user
+        before { login_user(user) }
 
         it 'returns user with information about trips, countries and cities' do
           get 'show', params: { id: user.id }

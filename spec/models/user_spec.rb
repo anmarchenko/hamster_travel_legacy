@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: users
@@ -23,7 +24,8 @@
 #  home_town_id           :integer
 #
 
-describe User do
+require 'rails_helper'
+RSpec.describe User do
   it { should validate_presence_of(:last_name) }
   it { should validate_presence_of(:first_name) }
 

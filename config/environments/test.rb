@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -38,5 +39,5 @@ Rails.application.configure do
   config.cache_store = :null_store
 
   config.assets.compile = true
-  config.assets.precompile += %w( *.js main.css )
+  config.assets.precompile += %w(*.js main.css)
 end

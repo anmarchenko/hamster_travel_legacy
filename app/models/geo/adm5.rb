@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: adm5s
@@ -19,15 +20,13 @@
 
 module Geo
   class Adm5 < ApplicationRecord
-
     include Concerns::Geographical
 
-    translates :name, :fallbacks_for_empty_translations => true
+    translates :name, fallbacks_for_empty_translations: true
 
     def self.find_by_term(term)
       term = Regexp.escape(term)
-      self.all.with_translations.where("\"adm5_translations\".\"name\" ILIKE ?", "#{term}%").order(population: :desc)
+      all.with_translations.where('"adm5_translations"."name" ILIKE ?', "#{term}%").order(population: :desc)
     end
-
   end
 end

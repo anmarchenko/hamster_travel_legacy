@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: external_links
@@ -9,15 +10,14 @@
 #  linkable_type :string
 #
 
-describe ExternalLink do
-
+require 'rails_helper'
+RSpec.describe ExternalLink do
   describe '#as_json' do
-
     context 'when non empty object' do
-      let(:link) {FactoryGirl.create(:external_link)}
+      let(:link) { FactoryGirl.create(:external_link) }
 
       it 'has right attributes as json' do
-        json = link.as_json()
+        json = link.as_json
         expect(json).not_to be_blank
         expect(json.keys).to contain_exactly('id', 'description', 'url')
 
@@ -26,27 +26,25 @@ describe ExternalLink do
         expect(json['description']).to eq('Somesite.com')
       end
     end
-
   end
 
   describe '#description' do
-
     context 'when url is valid with www' do
-      let(:link){FactoryGirl.create :external_link, url: 'www.site.ru/jfhdsjfhj/hjfd?dsd=23'}
+      let(:link) { FactoryGirl.create :external_link, url: 'www.site.ru/jfhdsjfhj/hjfd?dsd=23' }
 
       it 'returns capitalized host name without www' do
         expect(link.description).to eq 'Site.ru'
       end
     end
     context 'when url is valid without www' do
-      let(:link){FactoryGirl.create :external_link, url: 'http://host.com/?'}
+      let(:link) { FactoryGirl.create :external_link, url: 'http://host.com/?' }
 
       it 'returns capitalized host name without www' do
         expect(link.description).to eq 'Host.com'
       end
     end
     context 'when url is valid with https' do
-      let(:link){FactoryGirl.create :external_link, url: 'https://host.com/?'}
+      let(:link) { FactoryGirl.create :external_link, url: 'https://host.com/?' }
 
       it 'returns capitalized host name' do
         expect(link.description).to eq 'Host.com'
@@ -54,19 +52,18 @@ describe ExternalLink do
       end
     end
     context 'when url is not valid' do
-      let(:link){FactoryGirl.create :external_link, url: 'not a url'}
+      let(:link) { FactoryGirl.create :external_link, url: 'not a url' }
 
       it 'returns empty string' do
         expect(link.description).to eq ''
       end
     end
     context 'when url is nil' do
-      let(:link){FactoryGirl.create :external_link, url: nil}
+      let(:link) { FactoryGirl.create :external_link, url: nil }
 
       it 'returns empty string' do
         expect(link.description).to eq ''
       end
     end
   end
-
 end

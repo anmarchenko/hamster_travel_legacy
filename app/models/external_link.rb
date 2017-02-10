@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: external_links
@@ -12,15 +13,18 @@
 require 'uri'
 
 class ExternalLink < ApplicationRecord
-
   belongs_to :linkable, polymorphic: true
 
   def description
-    return '' if self.url.blank?
-    if !self.url.start_with?('http://') && !self.url.start_with?('https://')
-      self.url = "http://#{self.url}"
+    return '' if url.blank?
+    if !url.start_with?('http://') && !url.start_with?('https://')
+      self.url = "http://#{url}"
     end
-    parsed_uri = URI.parse( self.url ) rescue nil
+    parsed_uri = begin
+                   URI.parse(url)
+                 rescue
+                   nil
+                 end
     (parsed_uri.try(:host) || '').gsub('www.', '').capitalize
   end
 
@@ -29,5 +33,4 @@ class ExternalLink < ApplicationRecord
     json['id'] = id.to_s
     json
   end
-
 end

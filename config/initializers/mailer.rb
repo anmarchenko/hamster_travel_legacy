@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 unless Rails.env.test?
   Rails.configuration.action_mailer.delivery_method = :smtp
   Rails.configuration.action_mailer.smtp_settings = {

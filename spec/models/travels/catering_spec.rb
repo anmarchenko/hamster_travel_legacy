@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: caterings
@@ -13,9 +14,10 @@
 #  name            :string
 #
 
-describe Travels::Catering do
+require 'rails_helper'
+RSpec.describe Travels::Catering do
   describe '.create' do
-    let(:trip) {FactoryGirl.create(:trip, :with_filled_days)}
+    let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
 
     it 'creates new catering model and back references to trip' do
       catering = trip.caterings.create(FactoryGirl.build(:catering).attributes)

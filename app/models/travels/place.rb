@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: places
@@ -9,34 +10,32 @@
 
 module Travels
   class Place < ApplicationRecord
-
     belongs_to :day, class_name: 'Travels::Day'
     belongs_to :city, class_name: 'Geo::City', required: false
 
     default_scope { includes(:city) }
 
     def city_text
-      self.city.try(:translated_name, I18n.locale)
+      city.try(:translated_name, I18n.locale)
     end
 
     def country_code
-      self.city.try(:country_code)
+      city.try(:country_code)
     end
 
     def is_empty?
       [:city_id, :city_text].each do |field|
-        return false unless self.send(field).blank?
+        return false unless send(field).blank?
       end
-      return true
+      true
     end
 
     def serializable_hash(_args)
       json = super(except: [:_id])
       json['id'] = id.to_s
-      json['city_text'] = self.city_text
-      json['flag_image'] = ApplicationController.helpers.flag(self.country_code)
+      json['city_text'] = city_text
+      json['flag_image'] = ApplicationController.helpers.flag(country_code)
       json
     end
-
   end
 end

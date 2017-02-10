@@ -1,5 +1,7 @@
-describe Updaters::Caterings do
-  def update_trip_caterings tr, prms
+# frozen_string_literal: true
+require 'rails_helper'
+RSpec.describe Updaters::Caterings do
+  def update_trip_caterings(tr, prms)
     ::Updaters::Caterings.new(tr, prms).process
   end
 
@@ -8,32 +10,31 @@ describe Updaters::Caterings do
     let(:trip) { FactoryGirl.create(:trip) }
 
     context 'when there are caterings params' do
-
-      let(:params) {
+      let(:params) do
         [
-            {
-                name: Faker::Address.city,
+          {
+            name: Faker::Address.city,
 
-                description: (Faker::Lorem.paragraph),
-                amount_cents: (rand(10000) * 100),
-                amount_currency: 'RUB',
+            description: Faker::Lorem.paragraph,
+            amount_cents: (rand(10_000) * 100),
+            amount_currency: 'RUB',
 
-                days_count: 3,
-                persons_count: 2
+            days_count: 3,
+            persons_count: 2
 
-            }.with_indifferent_access,
-            {
-                name: Faker::Address.city,
+          }.with_indifferent_access,
+          {
+            name: Faker::Address.city,
 
-                description: (Faker::Lorem.paragraph),
-                amount_cents: (rand(10000) * 100),
-                amount_currency: 'RUB',
+            description: Faker::Lorem.paragraph,
+            amount_cents: (rand(10_000) * 100),
+            amount_currency: 'RUB',
 
-                days_count: 3,
-                persons_count: 2
-            }.with_indifferent_access
+            days_count: 3,
+            persons_count: 2
+          }.with_indifferent_access
         ]
-      }
+      end
 
       it 'creates new caterings' do
         caterings = trip.reload.caterings
@@ -64,5 +65,4 @@ describe Updaters::Caterings do
       end
     end
   end
-
 end

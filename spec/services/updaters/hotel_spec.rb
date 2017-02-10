@@ -1,16 +1,18 @@
-describe Updaters::Hotel do
+# frozen_string_literal: true
+require 'rails_helper'
+RSpec.describe Updaters::Hotel do
   let(:trip) { FactoryGirl.create(:trip) }
   let(:day) { trip.days.first }
 
-  let(:params) {
+  let(:params) do
     {
-        name: 'new_name',
-        comment: 'new_comment',
-        amount_cents: 123,
-        amount_currency: 'EUR',
-        links: [{url: 'http://new.url', description: 'new_description'}]
+      name: 'new_name',
+      comment: 'new_comment',
+      amount_cents: 123,
+      amount_currency: 'EUR',
+      links: [{ url: 'http://new.url', description: 'new_description' }]
     }.with_indifferent_access
-  }
+  end
 
   it 'updates hotel attributes' do
     ::Updaters::Hotel.new(day, params).process
@@ -29,10 +31,10 @@ describe Updaters::Hotel do
 
     hotel = day.reload.hotel
     params[:links] = [
-        {
-            id: hotel.links.first.id.to_s,
-            url: 'http://updated.url'
-        }
+      {
+        id: hotel.links.first.id.to_s,
+        url: 'http://updated.url'
+      }
     ]
     ::Updaters::Hotel.new(day, params).process
 
@@ -68,6 +70,4 @@ describe Updaters::Hotel do
     updated_hotel = day.reload.hotel
     expect(updated_hotel.links.count).to eq 0
   end
-
 end
-

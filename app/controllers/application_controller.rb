@@ -1,5 +1,5 @@
+# frozen_string_literal: true
 class ApplicationController < ActionController::Base
-
   CACHE_RATES = "#{Rails.root}/lib/ecb_rates.xml"
 
   layout 'main'
@@ -31,8 +31,8 @@ class ApplicationController < ActionController::Base
     cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
   end
 
-  def default_url_options(_options={})
-    { :locale => I18n.locale }
+  def default_url_options(_options = {})
+    { locale: I18n.locale }
   end
 
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
 
   def api_authorize_readonly!
     return unless @trip.private
-    head 403 and return unless user_signed_in?
-    head 403 and return unless @trip.can_be_seen_by?(current_user)
+    head(403) && return unless user_signed_in?
+    head(403) && return unless @trip.can_be_seen_by?(current_user)
   end
 end

@@ -1,10 +1,9 @@
-describe MessagesController do
-
+# frozen_string_literal: true
+require 'rails_helper'
+RSpec.describe MessagesController do
   describe '#index' do
-
     context 'when user is logged in' do
-
-      login_user
+      before { login_user(user) }
 
       let(:trip) { FactoryGirl.create(:trip) }
       let(:some_user) { FactoryGirl.create(:user) }
@@ -21,7 +20,6 @@ describe MessagesController do
         expect(json['invites'].first['inviting_user_id']).to eq(some_user.id)
         expect(json['invites'].first['invited_user_id']).to eq(subject.current_user.id)
       end
-
     end
 
     context 'when no logged user' do
@@ -33,9 +31,8 @@ describe MessagesController do
   end
 
   describe '#destroy' do
-
     context 'when user is logged in' do
-      login_user
+      before { login_user(user) }
 
       let(:trip) { FactoryGirl.create(:trip) }
       let(:some_user) { FactoryGirl.create(:user) }
@@ -45,7 +42,7 @@ describe MessagesController do
       context 'and when there are trip_invite' do
         context 'and when user is invited' do
           it 'deletes trip_invite' do
-            delete 'destroy', params: {id: trip_invite.id}
+            delete 'destroy', params: { id: trip_invite.id }
             expect(response).to have_http_status(200)
 
             json = JSON.parse(response.body)
@@ -57,7 +54,7 @@ describe MessagesController do
 
         context 'and when user is not invited' do
           it 'respons with not authorized' do
-            delete 'destroy', params: {id: another_invite.id}
+            delete 'destroy', params: { id: another_invite.id }
             expect(response).to have_http_status(403)
             expect(Travels::TripInvite.where(id: another_invite.id).first).not_to be_nil
           end
@@ -66,7 +63,7 @@ describe MessagesController do
 
       context 'and when there are no invite' do
         it 'responds with not found' do
-          delete 'destroy', params: {id: '404 LOL'}
+          delete 'destroy', params: { id: '404 LOL' }
           expect(response).to have_http_status(404)
         end
       end
@@ -74,16 +71,15 @@ describe MessagesController do
 
     context 'when no logged user' do
       it 'redirects to sign in' do
-        delete 'destroy', params: {id: 1}
+        delete 'destroy', params: { id: 1 }
         expect(response).to redirect_to '/users/sign_in'
       end
     end
   end
 
   describe '#updates' do
-
     context 'when user is logged in' do
-      login_user
+      before { login_user(user) }
 
       let(:trip) { FactoryGirl.create(:trip) }
       let(:some_user) { FactoryGirl.create(:user) }
@@ -93,7 +89,7 @@ describe MessagesController do
       context 'and when there are trip_invite' do
         context 'and when user is invited' do
           it 'deletes trip_invite' do
-            put 'update', params: {id: trip_invite.id}
+            put 'update', params: { id: trip_invite.id }
             expect(response).to have_http_status(200)
 
             json = JSON.parse(response.body)
@@ -106,7 +102,7 @@ describe MessagesController do
 
         context 'and when user is not invited' do
           it 'respons with not authorized' do
-            put 'update', params: {id: another_invite.id}
+            put 'update', params: { id: another_invite.id }
             expect(response).to have_http_status(403)
             expect(Travels::TripInvite.where(id: another_invite.id).first).not_to be_nil
           end
@@ -115,7 +111,7 @@ describe MessagesController do
 
       context 'and when there are no invite' do
         it 'responds with not found' do
-          put 'update', params: {id: '404 LOL'}
+          put 'update', params: { id: '404 LOL' }
           expect(response).to have_http_status(404)
         end
       end
@@ -123,10 +119,9 @@ describe MessagesController do
 
     context 'when no logged user' do
       it 'redirects to sign in' do
-        put 'update', params: {id: 1}
+        put 'update', params: { id: 1 }
         expect(response).to redirect_to '/users/sign_in'
       end
     end
   end
-
 end

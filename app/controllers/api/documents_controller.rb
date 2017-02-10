@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rack/mime'
 
 module Api
@@ -42,16 +43,16 @@ module Api
 
     def find_trip
       @trip = Travels::Trip.includes(:users).where(id: params[:trip_id]).first
-      not_found and return if @trip.blank?
+      not_found && return if @trip.blank?
     end
 
     def authorize
-      no_access and return unless @trip.include_user(current_user)
+      no_access && return unless @trip.include_user(current_user)
     end
 
     def find_document
       @document = @trip.documents.where(id: params[:id]).first
-      not_found and return if @document.blank?
+      not_found && return if @document.blank?
     end
   end
 end

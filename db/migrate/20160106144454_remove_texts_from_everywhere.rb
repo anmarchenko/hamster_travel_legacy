@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class RemoveTextsFromEverywhere < ActiveRecord::Migration
   def change
     remove_column(:places, :city_text)

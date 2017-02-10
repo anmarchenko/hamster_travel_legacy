@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: countries
@@ -51,7 +52,7 @@ module Geo
 
     def self.find_by_term(term)
       term = Regexp.escape(term)
-      all.with_translations.where("\"country_translations\".\"name\" ILIKE ?", "#{term}%").order(population: :desc)
+      all.with_translations.where('"country_translations"."name" ILIKE ?', "#{term}%").order(population: :desc)
     end
 
     def self.method_missing(m, *args, &block)

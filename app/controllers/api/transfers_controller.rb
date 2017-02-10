@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::TransfersController < ApplicationController
   before_action :find_trip
   before_action :find_day
@@ -15,20 +16,20 @@ class Api::TransfersController < ApplicationController
     Updaters::DayPlaces.new(@day, prms.delete(:places)).process
     Updaters::Hotel.new(@day, prms.delete(:hotel)).process
     Calculators::Budget.new(@trip).invalidate_cache!
-    render json: {status: 0}
+    render json: { status: 0 }
   end
 
   def previous_place
     previous_day = @trip.days.where(index: @day.index - 1).first
     render json: {
-        place: previous_day.try(:places).try(:last)
+      place: previous_day.try(:places).try(:last)
     }
   end
 
   def previous_hotel
     previous_day = @trip.days.where(index: @day.index - 1).first
     render json: {
-        hotel: previous_day.try(:hotel)
+      hotel: previous_day.try(:hotel)
     }
   end
 
@@ -36,42 +37,41 @@ class Api::TransfersController < ApplicationController
 
   def day_params
     params.require(:day).permit(
-        transfers: [
-            :id, :type, :code, :company, :station_from, :station_to, :start_time,
-            :end_time, :comment, :amount_cents, :amount_currency, :city_to_id, :city_from_id,
-            {
-                links: [
-                    :id, :url, :description
-                ]
-            }
-        ],
-        hotel: [
-            :id, :name, :comment, :amount_cents, :amount_currency,
-            {
-                links: [
-                    :id, :url, :description
-                ]
-            }
+      transfers: [
+        :id, :type, :code, :company, :station_from, :station_to, :start_time,
+        :end_time, :comment, :amount_cents, :amount_currency, :city_to_id, :city_from_id,
+        {
+          links: [
+            :id, :url, :description
+          ]
+        }
+      ],
+      hotel: [
+        :id, :name, :comment, :amount_cents, :amount_currency,
+        {
+          links: [
+            :id, :url, :description
+          ]
+        }
 
-        ],
-        places: [
-            :id, :city_id
-        ]
+      ],
+      places: [
+        :id, :city_id
+      ]
     )
   end
 
   def authorize
-    head 403 and return if !@trip.include_user(current_user)
+    head(403) && return unless @trip.include_user(current_user)
   end
 
   def find_trip
     @trip = Travels::Trip.where(id: params[:trip_id]).first
-    head 404 and return if @trip.blank?
+    head(404) && return if @trip.blank?
   end
 
   def find_day
     @day = @trip.days.where(id: params[:day_id]).first
-    head 404 and return if @day.blank?
+    head(404) && return if @day.blank?
   end
-
 end

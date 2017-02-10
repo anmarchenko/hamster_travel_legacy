@@ -1,6 +1,8 @@
-describe Api::DocumentsController do
+# frozen_string_literal: true
+require 'rails_helper'
+RSpec.describe Api::DocumentsController do
   describe '#index' do
-    login_user
+    before { login_user(user) }
 
     context 'when logged user is included in trip' do
       let(:trip) { FactoryGirl.create(:trip, users: [subject.current_user]) }
@@ -28,7 +30,7 @@ describe Api::DocumentsController do
   end
 
   describe '#create' do
-    login_user
+    before { login_user(user) }
 
     context 'when logged user is included in trip' do
       let(:trip) { FactoryGirl.create(:trip, users: [subject.current_user]) }
@@ -61,7 +63,7 @@ describe Api::DocumentsController do
   end
 
   describe '#update' do
-    login_user
+    before { login_user(user) }
 
     context 'when logged user is included in trip' do
       let(:trip) { FactoryGirl.create(:trip, users: [subject.current_user]) }
@@ -90,7 +92,7 @@ describe Api::DocumentsController do
   end
 
   describe '#show' do
-    login_user
+    before { login_user(user) }
 
     context 'when logged user is included in trip' do
       let(:trip) { FactoryGirl.create(:trip, users: [subject.current_user]) }
@@ -123,7 +125,7 @@ describe Api::DocumentsController do
   end
 
   describe '#destroy' do
-    login_user
+    before { login_user(user) }
 
     context 'when logged user is included in trip' do
       let(:trip) { FactoryGirl.create(:trip, users: [subject.current_user]) }

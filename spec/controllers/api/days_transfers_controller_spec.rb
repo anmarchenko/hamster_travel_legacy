@@ -1,13 +1,15 @@
-describe Api::DaysTransfersController do
+# frozen_string_literal: true
+require 'rails_helper'
+RSpec.describe Api::DaysTransfersController do
   describe '#index' do
-    let(:trip) {FactoryGirl.create(:trip, :with_filled_days)}
+    let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
 
     context 'when user is logged in' do
-      login_user
+      before { login_user(user) }
 
       context 'and when there is trip' do
         it 'returns trip days as JSON' do
-          get 'index', params: {trip_id: trip.id.to_s}, format: :json
+          get 'index', params: { trip_id: trip.id.to_s }, format: :json
           expect(response).to have_http_status 200
           json = JSON.parse(response.body)['days']
           expect(json.count).to eq(8)
@@ -19,7 +21,7 @@ describe Api::DaysTransfersController do
 
       context 'and when there is no trip' do
         it 'heads 404' do
-          get 'index', params: {trip_id: 'no_trip'}, format: :json
+          get 'index', params: { trip_id: 'no_trip' }, format: :json
           expect(response).to have_http_status 404
         end
       end
@@ -28,7 +30,7 @@ describe Api::DaysTransfersController do
         let(:private_trip) { FactoryGirl.create(:trip, :with_filled_days, private: true) }
 
         it 'heads 403' do
-          get 'index', params: {trip_id: private_trip.id.to_s}, format: :json
+          get 'index', params: { trip_id: private_trip.id.to_s }, format: :json
           expect(response).to have_http_status 403
         end
       end
@@ -37,7 +39,7 @@ describe Api::DaysTransfersController do
         let(:private_trip) { FactoryGirl.create(:trip, :with_filled_days, private: true, users: [subject.current_user]) }
 
         it 'heads 403' do
-          get 'index', params: {trip_id: private_trip.id.to_s}, format: :json
+          get 'index', params: { trip_id: private_trip.id.to_s }, format: :json
 
           expect(response).to have_http_status 200
 
@@ -52,7 +54,7 @@ describe Api::DaysTransfersController do
 
     context 'when no logged user' do
       it 'behaves the same' do
-        get 'index', params: {trip_id: trip.id.to_s}, format: :json
+        get 'index', params: { trip_id: trip.id.to_s }, format: :json
         expect(response).to have_http_status 200
         json = JSON.parse(response.body)['days']
         expect(json.count).to eq(8)
@@ -63,7 +65,7 @@ describe Api::DaysTransfersController do
         let(:private_trip) { FactoryGirl.create(:trip, :with_filled_days, private: true) }
 
         it 'heads 403' do
-          get 'index', params: {trip_id: private_trip.id.to_s}, format: :json
+          get 'index', params: { trip_id: private_trip.id.to_s }, format: :json
           expect(response).to have_http_status 403
         end
       end
@@ -71,47 +73,45 @@ describe Api::DaysTransfersController do
   end
 
   describe '#create' do
-
     context 'when user is logged in' do
-      login_user
+      before { login_user(user) }
 
       let(:day) { trip.days.first }
-      let(:days_params) {
+      let(:days_params) do
         {
-            days:
-                [
+          days:
+              [
+                {
+                  id: day.id.to_s,
+                  places: [
                     {
-                        id: day.id.to_s,
-                        places: [
-                            {
-                                city_id: Geo::City.all.first.id,
-                                city_text: 'City',
-                                missing_attr: 'AAAAA'
-                            }
-                        ],
-                        transfers: [
-                            {
-                                city_from_id: Geo::City.all.to_a[0].id,
-                                city_to_id: Geo::City.all.to_a[1].id,
-                                links: [
-                                    {id: nil, url: 'https://google.com', description: 'desc1'},
-                                    {id: nil, url: 'https://rome2rio.com', description: 'desc2'}
-                                ]
-                            }
-                        ],
-                        hotel: {
-                          name: 'new_hotel',
-                          links: [
-                              {id: nil, url: 'https://google2.com', description: 'desc1'}
-                          ]
-                        }
+                      city_id: Geo::City.all.first.id,
+                      city_text: 'City',
+                      missing_attr: 'AAAAA'
                     }
-                ]
+                  ],
+                  transfers: [
+                    {
+                      city_from_id: Geo::City.all.to_a[0].id,
+                      city_to_id: Geo::City.all.to_a[1].id,
+                      links: [
+                        { id: nil, url: 'https://google.com', description: 'desc1' },
+                        { id: nil, url: 'https://rome2rio.com', description: 'desc2' }
+                      ]
+                    }
+                  ],
+                  hotel: {
+                    name: 'new_hotel',
+                    links: [
+                      { id: nil, url: 'https://google2.com', description: 'desc1' }
+                    ]
+                  }
+                }
+              ]
         }
-      }
+      end
 
       context 'and when there is trip' do
-
         context 'and when input params are valid' do
           let(:trip) { FactoryGirl.create :trip, users: [subject.current_user] }
 
@@ -141,7 +141,6 @@ describe Api::DaysTransfersController do
             expect(response).to have_http_status 403
           end
         end
-
       end
 
       context 'and when there is no trip' do
@@ -152,36 +151,32 @@ describe Api::DaysTransfersController do
           expect(response).to have_http_status 404
         end
       end
-
     end
 
     context 'when no logged user' do
       let(:trip) { FactoryGirl.create :trip }
       let(:day) { trip.days.first }
-      let(:days_params) {
+      let(:days_params) do
         {
-            days:
-                [
+          days:
+              [
+                {
+                  id: day.id.to_s,
+                  places: [
                     {
-                        id: day.id.to_s,
-                        places: [
-                            {
-                                city_id: Geo::City.all.first.id,
-                                city_text: 'City',
-                                missing_attr: 'AAAAA'
-                            }
-                        ]
+                      city_id: Geo::City.all.first.id,
+                      city_text: 'City',
+                      missing_attr: 'AAAAA'
                     }
-                ]
+                  ]
+                }
+              ]
         }
-      }
+      end
       it 'redirects to sign in' do
         post 'create', params: days_params.merge(trip_id: trip.id), format: :json
         expect(response).to have_http_status 401
       end
     end
-
   end
-
-
 end
