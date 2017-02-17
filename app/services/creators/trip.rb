@@ -1,35 +1,51 @@
 # frozen_string_literal: true
-class Creators::Trip
-  attr_accessor :old_trip, :params, :user
+module Creators
+  class Trip
+    attr_accessor :original
 
-  def initialize(old_trip, params, user = nil)
-    self.old_trip = old_trip
-    self.params = params
-    self.user = user
-  end
-
-  def new_trip
-    if old_trip.blank?
-      new_trip = Travels::Trip.new
-    else
-      new_trip = old_trip.deep_clone except: [:short_description, :private, :comment, :image_uid]
-      new_trip.name += " (#{I18n.t('common.copy')})" unless new_trip.name.blank?
+    def initialize(original)
+      self.original = original
     end
-    new_trip
-  end
 
-  def create_trip
-    if old_trip.blank?
-      new_trip = Travels::Trip.new(params)
-    else
-      new_trip = old_trip.deep_clone include: [{ days: [
-        :places, :activities, { transfers: :links }, :hotel, :expenses, :links
-      ] }, :caterings], except: [:short_description, :private, :comment, :image_uid]
-      new_trip.assign_attributes(params)
+    def new_trip
+      build_trip
     end
-    new_trip.author_user_id = user.id
-    new_trip.users = [user]
-    new_trip.save
-    new_trip
+
+    def create_trip(params, user)
+      trip = build_trip
+      trip.assign_attributes(
+        params.merge(author_user_id: user.id, users: [user])
+      )
+      trip.save
+      trip
+    end
+
+    private
+
+    def build_trip
+      if original.blank?
+        Travels::Trip.new
+      else
+        res = original.deep_clone(
+          include: copied_fields, except: excluded_fields
+        )
+        res.name = "#{res.name} (#{I18n.t('common.copy')})"
+        res
+      end
+    end
+
+    def copied_fields
+      [
+        {
+          days: [:places, :activities, { transfers: :links },
+                 :hotel, :expenses, :links]
+        },
+        :caterings
+      ]
+    end
+
+    def excluded_fields
+      [:short_description, :private, :comment, :image_uid]
+    end
   end
 end

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 require 'rails_helper'
 RSpec.describe UsersController do
+  let(:user) { FactoryGirl.create(:user) }
+
   describe '#show' do
     context 'when user is logged in' do
       before { login_user(user) }
@@ -8,7 +10,7 @@ RSpec.describe UsersController do
       context 'where there is user' do
         it 'renders show template' do
           get 'show', params: { id: subject.current_user.id }
-          expect(response).to render_template 'users/show'
+          expect(response).to be_success
         end
       end
 
@@ -25,7 +27,7 @@ RSpec.describe UsersController do
       context 'where there is user' do
         it 'renders show template' do
           get 'show', params: { id: user.id }
-          expect(response).to render_template 'users/show'
+          expect(response).to be_success
         end
       end
     end

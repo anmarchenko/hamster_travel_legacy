@@ -20,8 +20,13 @@
 #
 
 require 'rails_helper'
+
 RSpec.describe Geo::City do
   describe '#find_by_term' do
+    before do
+      FactoryGirl.create_list(:city, 3)
+    end
+
     def check_order_and_term(cities)
       cities.each_with_index do |_city, index|
         next if cities[index + 1].blank?
@@ -30,7 +35,7 @@ RSpec.describe Geo::City do
     end
 
     it 'finds by english name' do
-      term = 'city 1'
+      term = 'city'
       cities = Geo::City.find_by_term(term).to_a
       I18n.locale = :en
       cities.each { |city| expect(city.name =~ /#{term}/i).not_to be_blank }
@@ -38,7 +43,7 @@ RSpec.describe Geo::City do
     end
 
     it 'finds by russian name' do
-      term = 'город 1'
+      term = 'gorod'
       cities = Geo::City.find_by_term(term).to_a
       I18n.locale = :ru
       cities.each { |city| expect(city.name =~ /#{term}/i).not_to be_blank }
@@ -48,35 +53,56 @@ RSpec.describe Geo::City do
   end
 
   describe '#translated_text' do
-    let(:region) { Geo::Region.first }
-    let(:country) { region.country }
+    let(:city) do
+      FactoryGirl.create(:city)
+    end
 
     context 'when city has region and country' do
-      let(:city) { FactoryGirl.create :city, region_code: region.geonames_code, country_code: country.geonames_code }
+      let(:region) { city.region }
+      let(:country) { city.country }
 
       it 'returns city name with region and country' do
-        expect(city.translated_text).to eq "#{city.translated_name}, #{region.translated_name}, #{country.translated_name}"
+        expect(city.translated_text).to eq(
+          [city.translated_name, region.translated_name,
+           country.translated_name].join(', ')
+        )
         expect(city.translated_text(with_region: false,
                                     locale: I18n.locale,
-                                    with_country: true)).to eq "#{city.translated_name}, #{country.translated_name}"
+                                    with_country: true)).to eq(
+                                      [city.translated_name,
+                                       country.translated_name].join(', ')
+                                    )
         expect(city.translated_text(with_country: false,
                                     locale: I18n.locale,
-                                    with_region: true)).to eq "#{city.translated_name}, #{region.translated_name}"
+                                    with_region: true)).to eq(
+                                      [city.translated_name,
+                                       region.translated_name].join(', ')
+                                    )
       end
     end
 
-    context 'when city has country' do
-      let(:city) { FactoryGirl.create :city, country_code: country.geonames_code }
+    context 'when city has only country' do
+      before do
+        city.region_code = nil
+        city.save
+      end
+      let(:country) { city.country }
 
-      it 'returns city name with region' do
-        expect(city.translated_text).to eq "#{city.translated_name}, #{country.translated_name}"
+      it 'returns city name with country' do
+        expect(city.translated_text).to eq(
+          "#{city.translated_name}, #{country.translated_name}"
+        )
       end
     end
 
     context 'when city has no region and country' do
-      let(:city) { FactoryGirl.create :city }
+      before do
+        city.region_code = nil
+        city.country_code = nil
+        city.save
+      end
 
-      it 'returns city name with region' do
+      it 'returns city name' do
         expect(city.translated_text).to eq city.translated_name.to_s
       end
     end

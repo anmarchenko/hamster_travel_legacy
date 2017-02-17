@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 require 'rails_helper'
 RSpec.describe MessagesController do
+  let(:user) { FactoryGirl.create(:user) }
+
   describe '#index' do
     context 'when user is logged in' do
       before { login_user(user) }
@@ -9,7 +11,8 @@ RSpec.describe MessagesController do
       let(:some_user) { FactoryGirl.create(:user) }
 
       before do
-        Travels::TripInvite.create(trip: trip, inviting_user: some_user, invited_user: subject.current_user)
+        Travels::TripInvite.create(trip: trip, inviting_user: some_user,
+                                   invited_user: subject.current_user)
       end
 
       it 'shows trips index page, all trips that are not draft' do
@@ -18,7 +21,9 @@ RSpec.describe MessagesController do
         expect(json['invites'].count).to eq(1)
         expect(json['invites'].first['trip_id']).to eq(trip.id)
         expect(json['invites'].first['inviting_user_id']).to eq(some_user.id)
-        expect(json['invites'].first['invited_user_id']).to eq(subject.current_user.id)
+        expect(json['invites'].first['invited_user_id']).to eq(
+          subject.current_user.id
+        )
       end
     end
 
@@ -36,8 +41,14 @@ RSpec.describe MessagesController do
 
       let(:trip) { FactoryGirl.create(:trip) }
       let(:some_user) { FactoryGirl.create(:user) }
-      let(:trip_invite) { Travels::TripInvite.create(trip: trip, inviting_user: some_user, invited_user: subject.current_user) }
-      let(:another_invite) { Travels::TripInvite.create(trip: trip, inviting_user: some_user, invited_user: some_user) }
+      let(:trip_invite) do
+        Travels::TripInvite.create(trip: trip, inviting_user: some_user,
+                                   invited_user: subject.current_user)
+      end
+      let(:another_invite) do
+        Travels::TripInvite.create(trip: trip, inviting_user: some_user,
+                                   invited_user: some_user)
+      end
 
       context 'and when there are trip_invite' do
         context 'and when user is invited' do
@@ -48,7 +59,9 @@ RSpec.describe MessagesController do
             json = JSON.parse(response.body)
             expect(json['success']).to eq(true)
 
-            expect(Travels::TripInvite.where(id: trip_invite.id).first).to be_nil
+            expect(
+              Travels::TripInvite.where(id: trip_invite.id).first
+            ).to be_nil
           end
         end
 
@@ -56,7 +69,9 @@ RSpec.describe MessagesController do
           it 'respons with not authorized' do
             delete 'destroy', params: { id: another_invite.id }
             expect(response).to have_http_status(403)
-            expect(Travels::TripInvite.where(id: another_invite.id).first).not_to be_nil
+            expect(
+              Travels::TripInvite.where(id: another_invite.id).first
+            ).not_to be_nil
           end
         end
       end
@@ -83,8 +98,14 @@ RSpec.describe MessagesController do
 
       let(:trip) { FactoryGirl.create(:trip) }
       let(:some_user) { FactoryGirl.create(:user) }
-      let(:trip_invite) { Travels::TripInvite.create(trip: trip, inviting_user: some_user, invited_user: subject.current_user) }
-      let(:another_invite) { Travels::TripInvite.create(trip: trip, inviting_user: some_user, invited_user: some_user) }
+      let(:trip_invite) do
+        Travels::TripInvite.create(trip: trip, inviting_user: some_user,
+                                   invited_user: subject.current_user)
+      end
+      let(:another_invite) do
+        Travels::TripInvite.create(trip: trip, inviting_user: some_user,
+                                   invited_user: some_user)
+      end
 
       context 'and when there are trip_invite' do
         context 'and when user is invited' do
@@ -95,7 +116,9 @@ RSpec.describe MessagesController do
             json = JSON.parse(response.body)
             expect(json['success']).to eq(true)
 
-            expect(Travels::TripInvite.where(id: trip_invite.id).first).to be_nil
+            expect(
+              Travels::TripInvite.where(id: trip_invite.id).first
+            ).to be_nil
             expect(trip.reload.include_user(subject.current_user)).to eq(true)
           end
         end
@@ -104,7 +127,9 @@ RSpec.describe MessagesController do
           it 'respons with not authorized' do
             put 'update', params: { id: another_invite.id }
             expect(response).to have_http_status(403)
-            expect(Travels::TripInvite.where(id: another_invite.id).first).not_to be_nil
+            expect(
+              Travels::TripInvite.where(id: another_invite.id).first
+            ).not_to be_nil
           end
         end
       end

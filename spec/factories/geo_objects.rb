@@ -12,11 +12,12 @@ FactoryGirl.define do
 
     after(:create) do |country|
       # translations
-      country.translations.create(name: "Country #{country.geonames_code}", locale: :en)
-      country.translations.create(name: "Strana #{country.geonames_code}", locale: :ru)
-
-      # dependent geo objects
-      FactoryGirl.create_list(:region, 2, country_code: country.country_code)
+      country.translations.create(
+        name: "Country #{country.geonames_code}", locale: :en
+      )
+      country.translations.create(
+        name: "Strana #{country.geonames_code}", locale: :ru
+      )
     end
   end
 
@@ -29,8 +30,12 @@ FactoryGirl.define do
 
     after(:create) do |region|
       # translations
-      region.translations.create(name: "Region #{region.geonames_code}", locale: :en)
-      region.translations.create(name: "Oblast #{region.geonames_code}", locale: :ru)
+      region.translations.create(
+        name: "Region #{region.geonames_code}", locale: :en
+      )
+      region.translations.create(
+        name: "Oblast #{region.geonames_code}", locale: :ru
+      )
 
       country = FactoryGirl.create(:country)
       region.country_code = country.country_code

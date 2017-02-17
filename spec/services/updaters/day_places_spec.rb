@@ -9,15 +9,19 @@ RSpec.describe Updaters::DayPlaces do
   let(:day) { first_day_of trip }
 
   describe '#process' do
+    let(:city1) { FactoryGirl.create(:city) }
+    let(:city2) { FactoryGirl.create(:city) }
+    let(:city3) { FactoryGirl.create(:city) }
+
     context 'when params have places' do
       let(:params) do
         [
           {
             id: day.places.first.id.to_s,
-            city_id: Geo::City.all.first.id
+            city_id: city1.id
           }.with_indifferent_access,
           {
-            city_id: Geo::City.all.last.id
+            city_id: city2.id
           }.with_indifferent_access
         ]
       end
@@ -28,15 +32,20 @@ RSpec.describe Updaters::DayPlaces do
         expect(updated_day.places.count).to eq 2
 
         expect(updated_day.places.first.id).to eq day.places.first.id
-        expect(updated_day.places.first.city_id).to eq Geo::City.all.first.id
-        expect(updated_day.places.first.city_text).to eq Geo::City.all.first.translated_name
+        expect(updated_day.places.first.city_id).to eq city1.id
+        expect(updated_day.places.first.city_text).to eq city1.translated_name
 
         expect(updated_day.places.last.id).not_to eq day.places.first.id
-        expect(updated_day.places.last.city_id).to eq Geo::City.all.last.id
-        expect(updated_day.places.last.city_text).to eq Geo::City.all.last.translated_name
+        expect(updated_day.places.last.city_id).to eq city2.id
+        expect(updated_day.places.last.city_text).to eq city2.translated_name
 
-        expect(updated_day.trip.countries_search_index.include?(Geo::City.all.first.country.translated_name(:en))).to be true
-        expect(updated_day.trip.countries_search_index.include?(Geo::City.all.last.country.translated_name(:en))).to be true
+        search_index = updated_day.trip.countries_search_index
+        expect(search_index.include?(city1.country.translated_name(:en))).to(
+          be(true)
+        )
+        expect(search_index.include?(city2.country.translated_name(:en))).to(
+          be(true)
+        )
       end
 
       it 'updates second place' do
@@ -44,7 +53,7 @@ RSpec.describe Updaters::DayPlaces do
         original_day = first_day_of trip
         params.first[:id] = original_day.places.first.id.to_s
         params.last[:id] = original_day.places.last.id.to_s
-        params.last[:city_id] = Geo::City.all.to_a[1].id
+        params.last[:city_id] = city3.id
 
         Updaters::DayPlaces.new(day, params).process
 
@@ -52,12 +61,12 @@ RSpec.describe Updaters::DayPlaces do
         expect(updated_day.places.count).to eq 2
 
         expect(updated_day.places.first.id).to eq original_day.places.first.id
-        expect(updated_day.places.first.city_id).to eq Geo::City.all.to_a[0].id
-        expect(updated_day.places.first.city_text).to eq Geo::City.all.to_a[0].translated_name
+        expect(updated_day.places.first.city_id).to eq city1.id
+        expect(updated_day.places.first.city_text).to eq city1.translated_name
 
         expect(updated_day.places.last.id).to eq original_day.places.last.id
-        expect(updated_day.places.last.city_id).to eq Geo::City.all.to_a[1].id
-        expect(updated_day.places.last.city_text).to eq Geo::City.all.to_a[1].translated_name
+        expect(updated_day.places.last.city_id).to eq city3.id
+        expect(updated_day.places.last.city_text).to eq city3.translated_name
       end
 
       it 'deletes places' do

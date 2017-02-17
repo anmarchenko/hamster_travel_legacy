@@ -1,20 +1,29 @@
 # frozen_string_literal: true
 require 'rails_helper'
+
+def check_city(json_hash, city)
+  expect(json_hash).to eq(
+    'name' => city.name, 'text' => city.translated_text,
+    'code' => city.id,
+    'flag_image' => ApplicationController.helpers.flag(city.country_code),
+    'id' => city.id, 'longitude' => city.longitude, 'latitude' => city.latitude
+  )
+end
+
+def check_cities(body, term)
+  cities = Geo::City.find_by_term(term).page(1).to_a
+  json = JSON.parse(body)
+  check_city(json.first, cities.first)
+  expect(json.count).to eq cities.count
+end
+
 RSpec.describe Api::CitiesController do
+  let(:user) { FactoryGirl.create(:user, :with_home_town) }
+
   describe '#index' do
-    def check_city(json_hash, city)
-      expect(json_hash).to eq('name' => city.name, 'text' => city.translated_text,
-                              'code' => city.id, 'flag_image' => ApplicationController.helpers.flag(city.country_code),
-                              'id' => city.id, 'longitude' => city.longitude, 'latitude' => city.latitude)
+    before do
+      FactoryGirl.create_list(:city, 3)
     end
-
-    def check_cities(body, term)
-      cities = Geo::City.find_by_term(term).page(1).to_a
-      json = JSON.parse(body)
-      check_city(json.first, cities.first)
-      expect(json.count).to eq cities.count
-    end
-
     context 'when user is logged in' do
       before { login_user(user) }
       after(:each) { Rails.cache.clear }
@@ -39,7 +48,7 @@ RSpec.describe Api::CitiesController do
       end
 
       it 'responds with cities when something found by russian name' do
-        term = 'город'
+        term = 'gorod'
         get 'index', params: { term: term }, format: :json
         expect(response).to have_http_status 200
         check_cities response.body, term
@@ -64,7 +73,13 @@ RSpec.describe Api::CitiesController do
 
         context 'when passed trip_id' do
           let(:term) { '[$empty$]' }
-          let(:trip) { FactoryGirl.create(:trip, :with_filled_days, users: [subject.current_user]) }
+          let(:trip) do
+            FactoryGirl.create(
+              :trip,
+              :with_filled_days,
+              users: [subject.current_user]
+            )
+          end
 
           it 'returns user\'s home city and all cities from trip' do
             get 'index', params: { term: term, trip_id: trip.id }, format: :json

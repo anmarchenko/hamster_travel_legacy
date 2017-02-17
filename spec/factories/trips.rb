@@ -28,7 +28,7 @@ FactoryGirl.define do
     sequence(:name) { |n| "Trip number #{n}" }
     short_description { 'short_description' }
     comment { 'some long report about the trip' }
-    sequence(:start_date) { |n| Date.today - 7 + n }
+    sequence(:start_date) { |n| Date.today - 2 + n }
     sequence(:end_date) { |n| Date.today + n }
     currency { 'RUB' }
     status_code { Travels::Trip::StatusCodes::DRAFT }
@@ -38,18 +38,36 @@ FactoryGirl.define do
 
     trait :with_filled_days do
       after :create do |trip|
+        city_from = FactoryGirl.create(:city)
+        city_to = FactoryGirl.create(:city)
         trip.days.each_with_index do |day, i|
           day.comment = "Day #{i}"
-          2.times { |index| day.transfers.create(build(:transfer, :with_destinations, order_index: index).attributes) }
-          5.times { |index| day.activities.create(build(:activity, :with_data, order_index: index, rating: (index % 3) + 1).attributes) }
-          day.places.create(build(:place, :with_data).attributes)
+          2.times do |index|
+            day.transfers.create(
+              build(:transfer, :with_data,
+                    order_index: index, city_from_id: city_from.id,
+                    city_to_id: city_to.id).attributes
+            )
+          end
+          3.times do |index|
+            day.activities.create(
+              build(:activity, :with_data,
+                    order_index: index, rating: (index % 3) + 1).attributes
+            )
+          end
+          day.places.create(build(:place, city_id: city_to.id).attributes)
           day.hotel = Travels::Hotel.new(build(:hotel, :with_data).attributes)
           day.hotel.links = [FactoryGirl.build(:external_link)]
-          3.times { day.expenses.create(build(:expense, :with_data).attributes) }
+          day.expenses.destroy
+          2.times do
+            day.expenses.create(build(:expense, :with_data).attributes)
+          end
           day.save validate: false
         end
 
-        3.times { trip.caterings.create(build(:catering).attributes) }
+        2.times do
+          trip.caterings.create(build(:catering).attributes)
+        end
       end
     end
 
@@ -57,8 +75,12 @@ FactoryGirl.define do
       after :create do |trip|
         trip.days.each do |day|
           day.transfers.create(build(:transfer, order_index: 0).attributes)
-          day.transfers.create(build(:transfer, :with_destinations, order_index: 1).attributes)
-          day.transfers.create(build(:transfer, :flight, order_index: 2).attributes)
+          day.transfers.create(
+            build(:transfer, :with_data, order_index: 1).attributes
+          )
+          day.transfers.create(
+            build(:transfer, :flight, order_index: 2).attributes
+          )
         end
       end
     end
@@ -74,13 +96,17 @@ FactoryGirl.define do
     trait :with_invited do
       after :create do |trip|
         user = create(:user)
-        Travels::TripInvite.create(trip: trip, inviting_user: trip.author, invited_user: user)
+        Travels::TripInvite.create(
+          trip: trip, inviting_user: trip.author, invited_user: user
+        )
       end
     end
 
     trait :with_caterings do
       after :create do |trip|
-        3.times { |index| trip.caterings.create(build(:catering, order_index: index).attributes) }
+        3.times do |index|
+          trip.caterings.create(build(:catering, order_index: index).attributes)
+        end
         trip.save validate: false
       end
     end
@@ -94,10 +120,9 @@ FactoryGirl.define do
   end
 
   factory :transfer, class: 'Travels::Transfer' do
-    trait :with_destinations do
-      city_from_id { Geo::City.all.first.id }
-
-      city_to_id { Geo::City.all.last.id }
+    trait :with_data do
+      city_from_id { create(:city).id }
+      city_to_id { create(:city).id }
 
       amount_cents { rand(10_000) * 100 }
       amount_currency { 'RUB' }
@@ -107,9 +132,8 @@ FactoryGirl.define do
     end
 
     trait :flight do
-      city_from_id { Geo::City.all.first.id }
-
-      city_to_id { Geo::City.all.last.id }
+      city_from_id { create(:city).id }
+      city_to_id { create(:city).id }
 
       amount_cents { rand(10_000) * 100 }
       amount_currency { 'RUB' }
@@ -142,7 +166,7 @@ FactoryGirl.define do
 
   factory :place, class: 'Travels::Place' do
     trait :with_data do
-      city_id { Geo::City.all.order(id: :asc).first.id }
+      city_id { create(:city).id }
     end
   end
 

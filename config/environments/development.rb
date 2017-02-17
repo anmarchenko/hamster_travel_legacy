@@ -32,7 +32,7 @@ Rails.application.configure do
   config.assets.quiet = true
 
   # Comment this if you do not have memcached installed
-  config.cache_store = :dalli_store
+  config.cache_store = :dalli_store, ENV['MEMCACHED_URL']
 
   # config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 end

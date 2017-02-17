@@ -27,13 +27,12 @@ class TripsController < ApplicationController
   end
 
   def new
-    @trip = Creators::Trip.new(@original_trip, params).new_trip
+    @trip = Creators::Trip.new(@original_trip).new_trip
   end
 
   def create
-    @trip = Creators::Trip.new(
-      @original_trip, params_trip, current_user
-    ).create_trip
+    @trip = Creators::Trip.new(@original_trip)
+                          .create_trip(params_trip, current_user)
     redirect_to(trip_path(@trip)) && return if @trip.errors.blank?
     render 'new'
   end
@@ -42,7 +41,10 @@ class TripsController < ApplicationController
 
   def update
     Updaters::Trip.new(@trip).update(params_trip)
-    redirect_to(trip_path(@trip), notice: t('common.update_successful')) && return if @trip.errors.blank?
+    if @trip.errors.blank?
+      redirect_to(trip_path(@trip), notice: t('common.update_successful'))
+      return
+    end
     render 'edit'
   end
 
@@ -53,8 +55,8 @@ class TripsController < ApplicationController
       format.html
       format.docx do
         @transfers_grid = TRANSFERS_GRID
-
-        headers['Content-Disposition'] = "attachment; filename=\"#{@trip.name_for_file}.docx\""
+        docx_name = "#{@trip.name_for_file}.docx"
+        headers['Content-Disposition'] = "attachment; filename=\"#{docx_name}\""
       end
     end
   end
@@ -70,15 +72,17 @@ class TripsController < ApplicationController
   end
 
   def find_trip
-    @trip = Travels::Trip.includes(:users, :author_user, days: [{ hotel: :links }, :activities, :transfers, :places, :expenses]).where(id: params[:id]).first
+    @trip = Travels::Trip.includes(:users, :author_user, days:
+      [
+        { hotel: :links }, :activities, :transfers, :places, :expenses
+      ]).where(id: params[:id]).first
     not_found && return if @trip.blank?
   end
 
   def find_original_trip
-    unless params[:copy_from].blank?
-      @original_trip = Travels::Trip.where(id: params[:copy_from]).first
-      @original_trip = nil if !@original_trip.blank? && !@original_trip.can_be_seen_by?(current_user)
-    end
+    return if params[:copy_from].blank?
+    @original_trip = Travels::Trip.where(id: params[:copy_from]).first
+    @original_trip = nil unless @original_trip&.can_be_seen_by?(current_user)
   end
 
   def authorize

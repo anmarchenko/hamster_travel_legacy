@@ -3,9 +3,9 @@ development:
   encoding: unicode
   database: travel_planner_development
   pool: 5
-  username: igendou
+  username: postgres
   password:
-  host: 127.0.0.1
+  host: <%= ENV['POSTGRES_HOST'] || 'localhost' %>
   port: 5432
 
 test:
@@ -15,7 +15,7 @@ test:
   pool: 5
   username: postgres
   password:
-  host: 127.0.0.1
+  host: <%= ENV['POSTGRES_HOST'] || 'localhost' %>
   port: 5432
 
 production:
@@ -27,4 +27,3 @@ production:
   password:
   host: <%= ENV['POSTGRES_HOST'] %>
   port: 5432
-

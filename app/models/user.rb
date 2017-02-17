@@ -31,14 +31,22 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :authored_trips, class_name: 'Travels::Trip', inverse_of: :author_user
-  has_and_belongs_to_many :trips, class_name: 'Travels::Trip', inverse_of: :users, join_table: 'users_trips'
+  has_many :authored_trips, class_name: 'Travels::Trip',
+                            inverse_of: :author_user
+  has_and_belongs_to_many :trips, class_name: 'Travels::Trip',
+                                  inverse_of: :users, join_table: 'users_trips'
 
   has_many :cities, class_name: 'Geo::City', through: :trips
-  has_and_belongs_to_many :manual_cities, class_name: 'Geo::City', inverse_of: nil, join_table: 'cities_users'
+  has_and_belongs_to_many :manual_cities, class_name: 'Geo::City',
+                                          inverse_of: nil,
+                                          join_table: 'cities_users'
 
-  has_many :outgoing_invites, class_name: 'Travels::TripInvite', inverse_of: :inviting_user, foreign_key: :inviting_user_id
-  has_many :incoming_invites, class_name: 'Travels::TripInvite', inverse_of: :invited_user, foreign_key: :invited_user_id
+  has_many :outgoing_invites, class_name: 'Travels::TripInvite',
+                              inverse_of: :inviting_user,
+                              foreign_key: :inviting_user_id
+  has_many :incoming_invites, class_name: 'Travels::TripInvite',
+                              inverse_of: :invited_user,
+                              foreign_key: :invited_user_id
 
   belongs_to :home_town, class_name: 'Geo::City', required: false
 
@@ -53,10 +61,15 @@ class User < ApplicationRecord
   validates_presence_of :first_name
   validates_uniqueness_of :email, case_sensitive: false
 
-  validates_size_of :image, maximum: 10.megabytes, message: 'should be no more than 10 MB', if: :image_changed?
+  validates_size_of :image, maximum: 10.megabytes,
+                            message: 'should be no more than 10 MB',
+                            if: :image_changed?
 
-  validates_property :format, of: :image, in: [:jpeg, :jpg, :png, :bmp], case_sensitive: false,
-                              message: 'should be either .jpeg, .jpg, .png, .bmp', if: :image_changed?
+  validates_property :format,
+                     of: :image, in: [:jpeg, :jpg, :png, :bmp],
+                     case_sensitive: false,
+                     message: 'should be either .jpeg, .jpg, .png, .bmp',
+                     if: :image_changed?
 
   default_scope { includes(:home_town) }
 
@@ -77,12 +90,14 @@ class User < ApplicationRecord
   end
 
   def finished_trip_count
-    trips.where(archived: false, status_code: Travels::Trip::StatusCodes::FINISHED).count
+    trips.where(archived: false,
+                status_code: Travels::Trip::StatusCodes::FINISHED).count
   end
 
   def visited_cities_ids
     # both cities from trips and manually added cities
-    (cities.where('trips.archived' => false, 'trips.status_code' => Travels::Trip::StatusCodes::FINISHED)
+    (cities.where('trips.archived' => false,
+                  'trips.status_code' => Travels::Trip::StatusCodes::FINISHED)
            .pluck(:id) + manual_cities.pluck(:id)).uniq
   end
 

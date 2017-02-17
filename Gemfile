@@ -56,6 +56,7 @@ gem 'redis', require: ['redis', 'redis/connection/hiredis']
 # image uploading
 gem 'dragonfly'
 gem 'dragonfly-s3_data_store'
+gem 'xmlrpc' # required by fog
 
 # caching
 gem 'dalli'

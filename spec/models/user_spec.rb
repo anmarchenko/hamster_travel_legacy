@@ -35,7 +35,7 @@ RSpec.describe User do
     let(:user) { FactoryGirl.create(:user) }
 
     it 'has full name' do
-      expect(user.full_name).to eq('%s %s' % [user.first_name, user.last_name])
+      expect(user.full_name).to eq("#{user.first_name} #{user.last_name}")
     end
   end
 
@@ -73,7 +73,7 @@ RSpec.describe User do
 
   describe '#manual_cities' do
     let(:user) { FactoryGirl.create(:user) }
-    let(:city) { Geo::City.all.first }
+    let(:city) { FactoryGirl.create(:city) }
 
     it 'can add and delete manual added cities' do
       user.manual_cities << city
@@ -89,8 +89,18 @@ RSpec.describe User do
   describe '#find_by_term' do
     before do
       User.destroy_all
-      FactoryGirl.create_list(:user, 5, first_name: 'Sven', last_name: 'Petersson')
-      FactoryGirl.create_list(:user, 8, first_name: 'Max', last_name: 'Mustermann')
+      FactoryGirl.create_list(
+        :user,
+        5,
+        first_name: 'Sven',
+        last_name: 'Petersson'
+      )
+      FactoryGirl.create_list(
+        :user,
+        8,
+        first_name: 'Max',
+        last_name: 'Mustermann'
+      )
       FactoryGirl.create_list(:user, 15)
     end
 
@@ -112,7 +122,9 @@ RSpec.describe User do
     it 'finds by first_name' do
       term = 'sve'
       users = User.find_by_term(term).to_a
-      users.each { |user| expect(user.first_name =~ /#{term}/i).not_to be_blank }
+      users.each do |user|
+        expect(user.first_name =~ /#{term}/i).not_to be_blank
+      end
       expect(users.count).to eq(5)
       check_order users
     end

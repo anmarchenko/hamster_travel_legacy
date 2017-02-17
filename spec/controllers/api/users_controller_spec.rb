@@ -1,21 +1,33 @@
 # frozen_string_literal: true
 require 'rails_helper'
+
+def check_first_user(json, users)
+  user = users.first
+  expect(json.first).to eq('name' => user.full_name,
+                           'code' => user.id.to_s,
+                           'photo_url' => user.image_url,
+                           'text' => user.full_name,
+                           'initials' => user.initials,
+                           'color' => user.background_color)
+end
+
+def check_users(body, term)
+  users = User.find_by_term(term).page(1)
+  json = JSON.parse(body)
+  check_first_user(json, users)
+  expect(json.count).to eq users.count
+end
+
 RSpec.describe Api::UsersController do
+  let(:user) { FactoryGirl.create(:user) }
+
   describe '#index' do
     before do
-      User.destroy_all
-      FactoryGirl.create_list(:user, 5, first_name: 'Sven', last_name: 'Petersson')
-      FactoryGirl.create_list(:user, 8, first_name: 'Max', last_name: 'Mustermann')
-      FactoryGirl.create_list(:user, 15)
-    end
-
-    def check_users(body, term)
-      users = User.find_by_term(term).page(1).to_a
-      json = JSON.parse(body)
-      expect(json.first).to eq('name' => users.first.full_name, 'code' => users.first.id.to_s,
-                               'photo_url' => users.first.image_url, 'text' => users.first.full_name,
-                               'initials' => users.first.initials, 'color' => users.first.background_color)
-      expect(json.count).to eq users.count
+      FactoryGirl.create_list(:user, 2, first_name: 'Sven',
+                                        last_name: 'Petersson')
+      FactoryGirl.create_list(:user, 3, first_name: 'Max',
+                                        last_name: 'Mustermann')
+      FactoryGirl.create_list(:user, 4)
     end
 
     context 'when user is logged in' do
@@ -32,7 +44,7 @@ RSpec.describe Api::UsersController do
       it 'does not find logged user' do
         get 'index', params: { term: 'first' }, format: :json
         expect(response).to have_http_status 200
-        expect(JSON.parse(response.body).count).to eq 15
+        expect(JSON.parse(response.body).count).to eq 4
       end
 
       it 'responds with empty array if term is blank' do
@@ -55,12 +67,12 @@ RSpec.describe Api::UsersController do
         check_users response.body, term
       end
 
-      it 'responds with users when something found by last name and first name' do
+      it 'responds with users when something found by lastname and firstname' do
         term = 'sven pet'
         get 'index', params: { term: term }, format: :json
         expect(response).to have_http_status 200
         json = JSON.parse(response.body)
-        expect(json.count).to eq 5
+        expect(json.count).to eq 2
       end
 
       it 'finds several parts together always' do
@@ -171,173 +183,234 @@ RSpec.describe Api::UsersController do
       end
     end
   end
-  context 'user with trips' do
-    let(:user) { FactoryGirl.create(:user) }
 
-    before { FactoryGirl.create_list(:trip, 2, user_ids: [user.id]) }
+  describe '#visited' do
     before do
-      FactoryGirl.create_list(:trip, 3, user_ids: [user.id],
-                                        status_code: Travels::Trip::StatusCodes::PLANNED)
+      # draft
+      FactoryGirl.create(:trip, user_ids: [user.id])
+      # finished, another user
+      FactoryGirl.create(
+        :trip,
+        status_code: Travels::Trip::StatusCodes::FINISHED
+      )
+      FactoryGirl.create(
+        :trip,
+        :with_filled_days,
+        user_ids: [user.id],
+        status_code: Travels::Trip::StatusCodes::PLANNED
+      )
+      FactoryGirl.create_list(
+        :trip,
+        2,
+        :with_filled_days,
+        user_ids: [user.id],
+        status_code: Travels::Trip::StatusCodes::FINISHED
+      )
     end
-    before do
-      FactoryGirl.create_list(:trip, 4, user_ids: [user.id],
-                                        status_code: Travels::Trip::StatusCodes::PLANNED,
-                                        archived: true)
-    end
-    before do
-      FactoryGirl.create_list(:trip, 1, user_ids: [user.id],
-                                        status_code: Travels::Trip::StatusCodes::PLANNED,
-                                        private: true)
-    end
-    before do
-      FactoryGirl.create_list(:trip, 13, :with_filled_days, user_ids: [user.id], status_code: Travels::Trip::StatusCodes::FINISHED)
-    end
-    before do
-      FactoryGirl.create_list(:trip, 3, :with_filled_days, user_ids: [user.id], status_code: Travels::Trip::StatusCodes::FINISHED,
-                                                           archived: true)
-    end
-    describe '#visited' do
-      context 'when user is logged in' do
-        before { login_user(user) }
 
+    context 'when user is logged in' do
+      before { login_user(user) }
+
+      it 'returns list of countries and cities that user visited' do
+        get 'visited', params: { id: user.id }
+        expect(response).to have_http_status(200)
+
+        json = JSON.parse(response.body)
+        expect(json['countries']).not_to be_blank
+        expect(json['countries'].count).to eq(2)
+        expect(json['cities']).not_to be_blank
+        expect(json['cities'].count).to eq(2)
+      end
+
+      context 'when user added manual cities' do
         it 'returns list of countries and cities that user visited' do
+          user.manual_cities << user.visited_cities.first
+          user.manual_cities << FactoryGirl.create(:city)
+          user.save
+
           get 'visited', params: { id: user.id }
           expect(response).to have_http_status(200)
 
           json = JSON.parse(response.body)
           expect(json['countries']).not_to be_blank
-          expect(json['countries'].count).to eq(1)
+          expect(json['countries'].count).to eq(3)
           expect(json['cities']).not_to be_blank
-          expect(json['cities'].count).to eq(1)
-        end
-
-        context 'when user added manual cities' do
-          before do
-            user.manual_cities << Geo::City.all.order(id: :asc).first
-            user.manual_cities << Geo::City.all.order(id: :asc).last
-            user.save
-          end
-
-          it 'returns list of countries and cities that user visited with manual cities and removing duplicates' do
-            get 'visited', params: { id: user.id }
-            expect(response).to have_http_status(200)
-
-            json = JSON.parse(response.body)
-            expect(json['countries']).not_to be_blank
-            expect(json['countries'].count).to eq(2)
-            expect(json['cities']).not_to be_blank
-            expect(json['cities'].count).to eq(2)
-          end
+          expect(json['cities'].count).to eq(3)
         end
       end
     end
+  end
 
-    describe '#finished_trips' do
-      context 'when user is logged in' do
-        before { login_user(user) }
-
-        it "returns list of the user's finished trips paginated" do
-          get 'finished_trips', params: { id: user.id }
-          expect(response).to have_http_status(200)
-
-          json = JSON.parse(response.body)
-          expect(json['trips'].count).to eq(9)
-        end
+  describe '#finished_trips' do
+    context 'when user is logged in' do
+      before do
+        # finished, another user
+        FactoryGirl.create(
+          :trip,
+          status_code: Travels::Trip::StatusCodes::FINISHED
+        )
+        FactoryGirl.create(
+          :trip,
+          user_ids: [user.id],
+          status_code: Travels::Trip::StatusCodes::PLANNED
+        )
+        FactoryGirl.create_list(
+          :trip,
+          3,
+          user_ids: [user.id],
+          status_code: Travels::Trip::StatusCodes::FINISHED
+        )
       end
+      before { login_user(user) }
 
-      context 'when no logged user' do
-        it "returns list of the user's finished trips paginated" do
-          get 'finished_trips', params: { id: user.id }
-          expect(response).to have_http_status(200)
+      it "returns list of the user's finished trips" do
+        get 'finished_trips', params: { id: user.id }
+        expect(response).to have_http_status(200)
 
-          json = JSON.parse(response.body)
-          expect(json['trips'].count).to eq(9)
-        end
+        json = JSON.parse(response.body)
+        expect(json['trips'].count).to eq(3)
       end
     end
 
-    describe '#planned_trips' do
-      context 'when user is logged in' do
+    context 'when no logged user' do
+      before do
+        FactoryGirl.create_list(
+          :trip,
+          10,
+          user_ids: [user.id],
+          status_code: Travels::Trip::StatusCodes::FINISHED
+        )
+      end
+      it "returns list of the user's finished trips paginated" do
+        get 'finished_trips', params: { id: user.id }
+        expect(response).to have_http_status(200)
+
+        json = JSON.parse(response.body)
+        expect(json['trips'].count).to eq(9)
+      end
+    end
+  end
+
+  describe '#planned_trips' do
+    before do
+      FactoryGirl.create(
+        :trip,
+        user_ids: [user.id],
+        status_code: Travels::Trip::StatusCodes::FINISHED
+      )
+      FactoryGirl.create_list(
+        :trip,
+        2,
+        user_ids: [user.id],
+        status_code: Travels::Trip::StatusCodes::PLANNED
+      )
+      FactoryGirl.create(
+        :trip,
+        private: true,
+        user_ids: [user.id],
+        status_code: Travels::Trip::StatusCodes::PLANNED
+      )
+    end
+    context 'when user is logged in' do
+      before { login_user(user) }
+
+      it "returns list of the user's planned trips including private" do
+        get 'planned_trips', params: { id: user.id }
+        expect(response).to have_http_status(200)
+
+        json = JSON.parse(response.body)
+        expect(json['trips'].count).to eq(3)
+      end
+    end
+
+    context 'when no logged user' do
+      it "returns list of the user's planned trips excluding private" do
+        get 'planned_trips', params: { id: user.id }
+        expect(response).to have_http_status(200)
+
+        json = JSON.parse(response.body)
+        expect(json['trips'].count).to eq(2)
+      end
+    end
+  end
+
+  describe '#show' do
+    before do
+      # draft
+      FactoryGirl.create(:trip, user_ids: [user.id])
+      # finished, another user
+      FactoryGirl.create(
+        :trip,
+        status_code: Travels::Trip::StatusCodes::FINISHED
+      )
+      FactoryGirl.create(
+        :trip,
+        :with_filled_days,
+        user_ids: [user.id],
+        status_code: Travels::Trip::StatusCodes::PLANNED
+      )
+      FactoryGirl.create_list(
+        :trip,
+        2,
+        :with_filled_days,
+        user_ids: [user.id],
+        status_code: Travels::Trip::StatusCodes::FINISHED
+      )
+    end
+
+    context 'when user is logged in' do
+      before { login_user(user) }
+
+      it 'returns user with information about trips, countries and cities' do
+        get 'show', params: { id: user.id }
+        expect(response).to have_http_status(200)
+
+        json = JSON.parse(response.body)
+        expect(json['user']).not_to be_blank
+        user_json = json['user']
+        expect(user_json['email']).to be_blank
+        expect(user_json['id'].to_s).to eq(user.id.to_s)
+        expect(user_json['color']).to eq(user.background_color)
+        expect(user_json['initials']).to eq(user.initials)
+        expect(user_json['home_town_text']).to eq(user.home_town_text)
+
+        expect(user_json['finished_trips_count']).to eq(2)
+        expect(user_json['visited_cities_count']).to eq(2)
+        expect(user_json['visited_countries_count']).to eq(2)
+      end
+
+      context 'when user added manual cities' do
         before do
-          @request.env['devise.mapping'] = Devise.mappings[:user]
-          sign_in user
+          user.manual_cities << user.visited_cities.first
+          user.manual_cities << FactoryGirl.create(:city)
+          user.save
         end
 
-        it "returns list of the user's planned trips including private" do
-          get 'planned_trips', params: { id: user.id }
+        it 'returns user information counting manual cities' do
+          get 'show', params: { id: user.id }
           expect(response).to have_http_status(200)
 
           json = JSON.parse(response.body)
-          expect(json['trips'].count).to eq(4)
-        end
-      end
+          expect(json['user']).not_to be_blank
+          user_json = json['user']
 
-      context 'when no logged user' do
-        it "returns list of the user's planned trips excluding private" do
-          get 'planned_trips', params: { id: user.id }
-          expect(response).to have_http_status(200)
-
-          json = JSON.parse(response.body)
-          expect(json['trips'].count).to eq(3)
+          expect(user_json['finished_trips_count']).to eq(2)
+          expect(user_json['visited_cities_count']).to eq(3)
+          expect(user_json['visited_countries_count']).to eq(3)
         end
       end
     end
 
-    describe '#show' do
-      context 'when user is logged in' do
-        before { login_user(user) }
+    context 'when no logged user' do
+      it 'returns same information' do
+        get 'show', params: { id: user.id }
+        expect(response).to have_http_status(200)
 
-        it 'returns user with information about trips, countries and cities' do
-          get 'show', params: { id: user.id }
-          expect(response).to have_http_status(200)
-
-          json = JSON.parse(response.body)
-          expect(json['user']).not_to be_blank
-          user_json = json['user']
-          expect(user_json['email']).to be_blank
-          expect(user_json['id'].to_s).to eq(user.id.to_s)
-          expect(user_json['color']).to eq(user.background_color)
-          expect(user_json['initials']).to eq(user.initials)
-          expect(user_json['home_town_text']).to eq(user.home_town_text)
-
-          expect(user_json['finished_trips_count']).to eq(13)
-          expect(user_json['visited_cities_count']).to eq(1)
-          expect(user_json['visited_countries_count']).to eq(1)
-        end
-
-        context 'when user added manual cities' do
-          before do
-            user.manual_cities << Geo::City.all.order(id: :asc).first
-            user.manual_cities << Geo::City.all.order(id: :asc).last
-            user.save
-          end
-
-          it 'returns user information counting manual cities and removing duplicates' do
-            get 'show', params: { id: user.id }
-            expect(response).to have_http_status(200)
-
-            json = JSON.parse(response.body)
-            expect(json['user']).not_to be_blank
-            user_json = json['user']
-
-            expect(user_json['finished_trips_count']).to eq(13)
-            expect(user_json['visited_cities_count']).to eq(2)
-            expect(user_json['visited_countries_count']).to eq(2)
-          end
-        end
-      end
-
-      context 'when no logged user' do
-        it 'returns same information' do
-          get 'show', params: { id: user.id }
-          expect(response).to have_http_status(200)
-
-          json = JSON.parse(response.body)
-          expect(json['user']).not_to be_blank
-          user_json = json['user']
-          expect(user_json['email']).to be_blank
-          expect(user_json['id'].to_s).to eq(user.id.to_s)
-        end
+        json = JSON.parse(response.body)
+        expect(json['user']).not_to be_blank
+        user_json = json['user']
+        expect(user_json['email']).to be_blank
+        expect(user_json['id'].to_s).to eq(user.id.to_s)
       end
     end
   end

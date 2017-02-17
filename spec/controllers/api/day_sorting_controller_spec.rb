@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 require 'rails_helper'
 RSpec.describe Api::DaysSortingController do
+  let(:user) { FactoryGirl.create(:user) }
+
   describe '#index' do
     before { login_user(user) }
 
-    let(:trip) { FactoryGirl.create(:trip, users: [subject.current_user]) }
+    let(:trip) { FactoryGirl.create(:trip, users: [user]) }
 
     it 'returns short information about days as json' do
       get 'index', params: { trip_id: trip.id }, format: :json
@@ -18,7 +20,7 @@ RSpec.describe Api::DaysSortingController do
   describe '#create' do
     before { login_user(user) }
 
-    let!(:trip) { FactoryGirl.create(:trip, :with_filled_days, users: [subject.current_user]) }
+    let!(:trip) { FactoryGirl.create(:trip, :with_filled_days, users: [user]) }
 
     it 'reorders days' do
       ids = trip.days.map(&:id)

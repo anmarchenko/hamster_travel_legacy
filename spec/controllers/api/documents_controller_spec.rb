@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 require 'rails_helper'
+
 RSpec.describe Api::DocumentsController do
+  let(:user) { FactoryGirl.create(:user) }
   describe '#index' do
     before { login_user(user) }
 
@@ -37,8 +39,12 @@ RSpec.describe Api::DocumentsController do
 
       let(:files) do
         {
-          '0' => fixture_file_upload("#{::Rails.root}/spec/fixtures/files/cat.jpg", 'image/jpeg'),
-          '1' => fixture_file_upload("#{::Rails.root}/spec/fixtures/files/hamster.jpg", 'image/jpeg')
+          '0' => fixture_file_upload(
+            "#{::Rails.root}/spec/fixtures/files/cat.jpg", 'image/jpeg'
+          ),
+          '1' => fixture_file_upload(
+            "#{::Rails.root}/spec/fixtures/files/hamster.jpg", 'image/jpeg'
+          )
         }
       end
 
@@ -70,7 +76,11 @@ RSpec.describe Api::DocumentsController do
       let!(:document) { FactoryGirl.create(:document, trip: trip) }
 
       it 'updates document name' do
-        put 'update', params: { trip_id: trip.id, id: document.id, name: 'awesome picture' }
+        put 'update', params: {
+          trip_id: trip.id,
+          id: document.id,
+          name: 'awesome picture'
+        }
 
         json = JSON.parse(response.body)
         expect(json['success']).to eq(true)
@@ -101,7 +111,9 @@ RSpec.describe Api::DocumentsController do
       it 'downloads file contents' do
         get 'show', params: { trip_id: trip.id, id: document.id }
         expect(response.headers['Content-Type']).to eq('image/jpeg')
-        expect(response.headers['Content-Disposition']).to eq('inline; filename="My cat photo.jpg"')
+        expect(response.headers['Content-Disposition']).to eq(
+          'inline; filename="My cat photo.jpg"'
+        )
       end
     end
 
@@ -110,7 +122,9 @@ RSpec.describe Api::DocumentsController do
       let!(:my_document) { FactoryGirl.create(:document, trip: my_trip) }
 
       let(:not_my_trip) { FactoryGirl.create(:trip) }
-      let!(:not_my_document) { FactoryGirl.create(:document, trip: not_my_trip) }
+      let!(:not_my_document) do
+        FactoryGirl.create(:document, trip: not_my_trip)
+      end
 
       it 'redirects to not_found if document is not from this trip' do
         get 'show', params: { trip_id: my_trip.id, id: not_my_document.id }

@@ -48,7 +48,9 @@ RSpec.describe Travels::Day do
     end
 
     context 'when day has non empty expenses' do
-      before { day.expenses.create(FactoryGirl.build(:expense, :with_data).attributes) }
+      before do
+        day.expenses.create(FactoryGirl.build(:expense, :with_data).attributes)
+      end
 
       it 'is true' do
         expect(day).not_to be_is_empty
@@ -63,7 +65,11 @@ RSpec.describe Travels::Day do
     end
 
     context 'when day has non empty transfer' do
-      before { day.transfers.create(FactoryGirl.build(:transfer, :with_destinations).attributes) }
+      before do
+        day.transfers.create(
+          FactoryGirl.build(:transfer, :with_data).attributes
+        )
+      end
       it 'is false' do
         expect(day).not_to be_is_empty
       end
@@ -77,7 +83,11 @@ RSpec.describe Travels::Day do
     end
 
     context 'when day has non empty transfer' do
-      before { day.activities.create(FactoryGirl.build(:activity, :with_data).attributes) }
+      before do
+        day.activities.create(
+          FactoryGirl.build(:activity, :with_data).attributes
+        )
+      end
       it 'is false' do
         expect(day).not_to be_is_empty
       end
@@ -91,14 +101,20 @@ RSpec.describe Travels::Day do
     end
 
     context 'when day has non empty place' do
-      before { day.places.create(FactoryGirl.build(:place, :with_data).attributes) }
+      before do
+        day.places.create(FactoryGirl.build(:place, :with_data).attributes)
+      end
       it 'is false' do
         expect(day).not_to be_is_empty
       end
     end
 
     context 'when day has non empty hotel' do
-      before { day.hotel = Travels::Hotel.new(FactoryGirl.build(:hotel, :with_data).attributes) }
+      before do
+        day.hotel = Travels::Hotel.new(
+          FactoryGirl.build(:hotel, :with_data).attributes
+        )
+      end
       it 'is false' do
         expect(day).not_to be_is_empty
       end
@@ -114,7 +130,9 @@ RSpec.describe Travels::Day do
                                .order(rating: :desc, order_index: :asc).first(3)
       actual_activities = short_hash[:activity_s].split('<br/>').first(3)
       3.times do |index|
-        expect(actual_activities[index]).to eq("#{index + 1}. #{expected_activities[index].name}")
+        expect(actual_activities[index]).to eq(
+          "#{index + 1}. #{expected_activities[index].name}"
+        )
       end
     end
   end
@@ -122,12 +140,27 @@ RSpec.describe Travels::Day do
   describe '#as_json' do
     context 'when return json of a filled day' do
       let(:day) { FactoryGirl.create(:trip, :with_filled_days).days.first }
-      let(:day_json) { day.as_json(include: [:expenses, :activities, :links, :places, :transfers, :hotel]) }
+      let(:day_json) do
+        day.as_json(
+          include: [
+            :expenses, :activities, :links, :places, :transfers, :hotel
+          ]
+        )
+      end
 
       let(:day_empty) { FactoryGirl.create(:trip).days.first }
-      let(:day_empty_json) { day_empty.as_json(include: [:expenses, :activities, :links, :places, :transfers, :hotel]) }
+      let(:day_empty_json) do
+        day_empty.as_json(
+          include: [:expenses, :activities, :links, :places, :transfers, :hotel]
+        )
+      end
 
-      let(:day_json_with_currency) { day.as_json(user_currency: 'EUR', include: [:expenses, :activities, :links, :places, :transfers, :hotel]) }
+      let(:day_json_with_currency) do
+        day.as_json(
+          user_currency: 'EUR',
+          include: [:expenses, :activities, :links, :places, :transfers, :hotel]
+        )
+      end
 
       it 'has string id field' do
         expect(day_json['id']).not_to be_blank
@@ -135,7 +168,9 @@ RSpec.describe Travels::Day do
       end
 
       it 'has date in right format' do
-        expect(day_json['date']).to eq(I18n.l(day.date_when, format: '%d.%m.%Y %A'))
+        expect(day_json['date']).to eq(
+          I18n.l(day.date_when, format: '%d.%m.%Y %A')
+        )
       end
 
       it 'has 2 places' do
@@ -149,7 +184,7 @@ RSpec.describe Travels::Day do
       end
 
       it 'has 5 activities' do
-        expect(day_json['activities'].count).to eq(5)
+        expect(day_json['activities'].count).to eq(3)
         expect(day_json['activities'].last).to eq(day.activities.last.as_json)
       end
 
@@ -166,12 +201,15 @@ RSpec.describe Travels::Day do
       end
 
       it 'has expenses' do
-        expect(day_json['expenses'].count).to eq(4)
+        expect(day_json['expenses'].count).to eq(3)
         expect(day_json['expenses'].last).to eq(day.expenses.last.as_json)
       end
 
       it 'adds amounts in user currency' do
-        expect(day_json_with_currency['expenses'].first['in_user_currency'][:amount_cents]).not_to be_blank
+        expect(
+          day_json_with_currency['expenses']
+            .first['in_user_currency'][:amount_cents]
+        ).not_to be_blank
       end
     end
   end

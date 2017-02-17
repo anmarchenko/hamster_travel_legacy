@@ -6,7 +6,9 @@ SimpleCov.start
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
-abort('The Rails environment is running in production mode!') if Rails.env.production?
+if Rails.env.production?
+  abort('The Rails environment is running in production mode!')
+end
 require 'spec_helper'
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
@@ -70,13 +72,15 @@ RSpec.configure do |config|
     end
   end
 
-  DatabaseCleaner.strategy = :truncation
+  DatabaseCleaner.strategy = :transaction
 
   config.before(:suite) do
     Warden.test_mode!
   end
-
   config.before(:each) do
+    DatabaseCleaner.start
+  end
+  config.after(:each) do
     DatabaseCleaner.clean
   end
 end

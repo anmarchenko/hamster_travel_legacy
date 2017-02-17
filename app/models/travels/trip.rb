@@ -85,16 +85,30 @@ module Travels
     validates_presence_of :start_date, :end_date, if: :should_have_dates?
     validates_presence_of :planned_days_count, if: :without_dates?
 
-    validates_numericality_of :planned_days_count, greater_than: 0, less_than: 31, if: :without_dates?
+    validates_numericality_of :planned_days_count, greater_than: 0,
+                                                   less_than: 31,
+                                                   if: :without_dates?
 
-    validates :start_date, date: { before_or_equal_to: :end_date, message: I18n.t('errors.date_before') }, if: :should_have_dates?
-    validates :end_date, date: { before: proc { |record| record.start_date + 30.days },
-                                 message: I18n.t('errors.end_date_days', period: 30) }, if: :should_have_dates?
+    validates :start_date, date: {
+      before_or_equal_to: :end_date,
+      message: I18n.t('errors.date_before')
+    }, if: :should_have_dates?
 
-    validates_size_of :image, maximum: 10.megabytes, message: 'should be no more than 10 MB', if: :image_changed?
+    validates :end_date, date: {
+      before: proc { |record| record.start_date + 30.days },
+      message: I18n.t('errors.end_date_days', period: 30)
+    }, if: :should_have_dates?
 
-    validates_property :format, of: :image, in: [:jpeg, :jpg, :png, :bmp], case_sensitive: false,
-                                message: 'should be either .jpeg, .jpg, .png, .bmp', if: :image_changed?
+    validates_size_of :image, maximum: 10.megabytes,
+                              message: 'should be no more than 10 MB',
+                              if: :image_changed?
+
+    validates_property :format,
+                       of: :image,
+                       in: [:jpeg, :jpg, :png, :bmp],
+                       case_sensitive: false,
+                       message: 'should be either .jpeg, .jpg, .png, .bmp',
+                       if: :image_changed?
 
     default_scope -> { where(archived: false) }
 
@@ -161,7 +175,9 @@ module Travels
 
     def last_non_empty_day_index
       result = -1
-      (days || []).each_with_index { |day, index| result = index unless day.is_empty? }
+      (days || []).each_with_index do |day, index|
+        result = index unless day.is_empty?
+      end
       result
     end
 
@@ -272,11 +288,7 @@ module Travels
       date = nil
       if should_have_dates?
         date = self.days.last.try(:date_when)
-        date = if date.blank?
-                 start_date
-               else
-                 date + 1.day
-               end
+        date = date.blank? ? start_date : date + 1.day
       end
       self.days.create(date_when: date, index: index + 1)
     end

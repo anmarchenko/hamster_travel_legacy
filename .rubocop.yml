@@ -3,7 +3,9 @@
 # Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods.
 AllCops:
   TargetRubyVersion: 2.3
-
+  Exclude:
+  - db/**/*.rb
+  - lib/tasks/**/*.rake
 # Offense count: 4
 # Configuration parameters: CountComments.
 Metrics/BlockLength:

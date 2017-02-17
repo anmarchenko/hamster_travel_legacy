@@ -9,12 +9,12 @@ RSpec.describe TripsController do
     FactoryGirl.build(:trip, :no_dates).attributes.with_indifferent_access
   end
 
-  fdescribe '#index' do
+  describe '#index' do
     context 'when user is logged in' do
       before { login_user(user) }
 
       it 'shows trips index page, all trips that are not draft' do
-        expect(Finders::Trips).to receive(:all).with("2").and_return(
+        expect(Finders::Trips).to receive(:all).with('2').and_return(
           Travels::Trip.all
         )
         get 'index', params: { page: 2 }
@@ -37,19 +37,13 @@ RSpec.describe TripsController do
     context 'when user is logged in' do
       before { login_user(user) }
 
-      it "shows user's plans without drafts when parameter 'my' is present" do
-        get 'my'
-        trips = assigns(:trips)
-        expect(trips.to_a.size).to eq 6
-        trips.each_with_index do |trip, i|
-          expect(trip.include_user(subject.current_user)).to be true
-          expect(trip.status_code).not_to eq(Travels::Trip::StatusCodes::DRAFT)
-
-          next if trips[i + 1].blank?
-          expect(
-            trips[i].start_date >= trips[i + 1].start_date
-          ).to be true
-        end
+      it 'shows user plans' do
+        expect(Finders::Trips).to receive(:for_user).with(subject.current_user,
+                                                          '1').and_return(
+                                                            Travels::Trip.all
+                                                          )
+        get 'my', params: { page: 1 }
+        expect(response).to be_success
       end
     end
 
@@ -63,24 +57,14 @@ RSpec.describe TripsController do
 
   describe '#drafts' do
     context 'when user is logged in' do
-      after { expect(response).to render_template 'trips/drafts' }
       before { login_user(user) }
-      it 'shows user\'s drafts when parameter \'my_draft\' is present' do
-        get 'drafts'
-        trips = assigns(:trips)
-        expect(trips.to_a.size).to eq 3
-        trips.each do |trip|
-          expect(trip.include_user(subject.current_user)).to be true
-          expect(trip.status_code).to eq(Travels::Trip::StatusCodes::DRAFT)
-        end
-      end
 
-      it 'shows trips without dates last' do
-        get 'drafts'
-        trips = assigns(:trips)
-        expect(trips.to_a.size).to eq 3
-        expect(trips.first.start_date).not_to be_nil
-        expect(trips.last.start_date).to be_nil
+      it 'shows user drafts' do
+        expect(Finders::Trips).to receive(:drafts).with(
+          subject.current_user, '1'
+        ).and_return(Travels::Trip.all)
+        get 'drafts', params: { page: 1 }
+        expect(response).to be_success
       end
     end
 
@@ -93,86 +77,68 @@ RSpec.describe TripsController do
   end
 
   describe '#new' do
+    let(:creator) { double(Creators::Trip) }
     context 'when user is logged in' do
       before { login_user(user) }
 
-      it 'renders template with new trip' do
+      it 'renders form with new trip' do
+        expect(Creators::Trip).to receive(:new).with(nil).and_return(creator)
+        expect(creator).to receive(:new_trip).and_return(Travels::Trip.new)
         get 'new'
-        expect(assigns(:trip)).to be_a_new Travels::Trip
-        expect(response).to render_template 'trips/new'
+        expect(response).to be_success
       end
 
       context 'when parameter copy from present' do
-        let(:trip) { FactoryGirl.create(:trip, :with_filled_days, currency: 'USD') }
-        let(:trip_private) { FactoryGirl.create(:trip, :with_filled_days, private: true) }
         context 'and when it is valid existing trip id' do
-          it 'renders template with new trip copied from old trip' do
-            get 'new', params: { copy_from: trip.id }
-            new_trip = assigns(:trip)
-            expect(new_trip.currency).to eq 'USD'
-            expect(new_trip.name).to eq trip.name + " (#{I18n.t('common.copy')})"
-            expect(new_trip.start_date).to eq trip.start_date
-            expect(new_trip.end_date).to eq trip.end_date
-            expect(new_trip.short_description).to be_nil
+          let(:trip) do
+            FactoryGirl.create(
+              :trip,
+              currency: 'USD',
+              status_code: Travels::Trip::StatusCodes::PLANNED
+            )
+          end
 
-            expect(new_trip.comment).to be_nil
-            expect(new_trip.archived).to be false
-            expect(new_trip.private).to be false
-            expect(new_trip.image_uid).to be_nil
-            expect(new_trip.status_code).to eq Travels::Trip::StatusCodes::DRAFT
+          it 'renders template with new trip copied from old trip' do
+            expect(Creators::Trip).to receive(:new).with(
+              trip
+            ).and_return(creator)
+            expect(creator).to receive(:new_trip).and_return(Travels::Trip.new)
+            get 'new', params: { copy_from: trip.id }
+            expect(response).to be_success
           end
         end
 
         context 'and when trying to copy private trip' do
+          let(:trip_private) { FactoryGirl.create(:trip, private: true) }
           it 'just creates new trip' do
+            expect(Creators::Trip).to receive(:new).with(
+              nil
+            ).and_return(creator)
+            expect(creator).to receive(:new_trip).and_return(Travels::Trip.new)
             get 'new', params: { copy_from: trip_private.id }
-            new_trip = assigns(:trip)
-            expect(new_trip.name).to be_nil
-            expect(new_trip.start_date).to be_nil
-            expect(new_trip.end_date).to be_nil
-            expect(new_trip.short_description).to be_nil
-
-            expect(new_trip.comment).to be_nil
-            expect(new_trip.archived).to be false
-            expect(new_trip.private).to be false
-            expect(new_trip.image_uid).to be_nil
-            expect(new_trip.status_code).to eq Travels::Trip::StatusCodes::DRAFT
-
-            expect(assigns(:original_trip)).to be_nil
+            expect(response).to be_success
           end
         end
 
         context 'and when it is not valid' do
           it 'renders template with new trip' do
+            expect(Creators::Trip).to receive(:new).with(
+              nil
+            ).and_return(creator)
+            expect(creator).to receive(:new_trip).and_return(Travels::Trip.new)
             get 'new', params: { copy_from: 'blahblah' }
-            new_trip = assigns(:trip)
-            expect(new_trip.name).to be_nil
-            expect(new_trip.start_date).to be_nil
-            expect(new_trip.end_date).to be_nil
-            expect(new_trip.short_description).to be_nil
-
-            expect(new_trip.comment).to be_nil
-            expect(new_trip.archived).to be false
-            expect(new_trip.private).to be false
-            expect(new_trip.image_uid).to be_nil
-            expect(new_trip.status_code).to eq Travels::Trip::StatusCodes::DRAFT
+            expect(response).to be_success
           end
         end
 
         context 'and when it is empty' do
           it 'renders template with new trip' do
+            expect(Creators::Trip).to receive(:new).with(
+              nil
+            ).and_return(creator)
+            expect(creator).to receive(:new_trip).and_return(Travels::Trip.new)
             get 'new', params: { copy_from: '' }
-            new_trip = assigns(:trip)
-            expect(new_trip.name).to be_nil
-            expect(new_trip.start_date).to be_nil
-            expect(new_trip.end_date).to be_nil
-            expect(new_trip.short_description).to be_nil
-
-            expect(new_trip.comment).to be_nil
-            expect(new_trip.archived).to be false
-            expect(new_trip.private).to be false
-            expect(new_trip.image_uid).to be_nil
-            expect(new_trip.status_code).to eq Travels::Trip::StatusCodes::DRAFT
+            expect(response).to be_success
           end
         end
       end
@@ -195,13 +161,16 @@ RSpec.describe TripsController do
 
         it 'creates new trip and redirects to show' do
           post 'create', params: params
-          trip = assigns(:trip).reload
+          expect(Travels::Trip.count).to eq(1)
+          trip = Travels::Trip.first
           expect(response).to redirect_to trip_path(trip)
           expect(trip).to be_persisted
           expect(trip.author_user).to eq subject.current_user
           expect(trip.users).to eq [subject.current_user]
           expect(trip.name).to eq params[:travels_trip]['name']
-          expect(trip.short_description).to eq params[:travels_trip]['short_description']
+          expect(trip.short_description).to eq(
+            params[:travels_trip]['short_description']
+          )
           expect(trip.start_date).to eq params[:travels_trip]['start_date']
           expect(trip.end_date).to eq params[:travels_trip]['end_date']
           expect(trip.currency).to eq('INR')
@@ -213,14 +182,17 @@ RSpec.describe TripsController do
 
           it 'creates new trip and redirects to show' do
             post 'create', params: params
-            trip = assigns(:trip).reload
+            expect(Travels::Trip.count).to eq(1)
+            trip = Travels::Trip.first
             expect(trip).to be_persisted
             expect(response).to redirect_to trip_path(trip)
 
             expect(trip.author_user).to eq subject.current_user
             expect(trip.users).to eq [subject.current_user]
             expect(trip.name).to eq params[:travels_trip]['name']
-            expect(trip.short_description).to eq params[:travels_trip]['short_description']
+            expect(trip.short_description).to eq(
+              params[:travels_trip]['short_description']
+            )
             expect(trip.start_date).to eq nil
             expect(trip.end_date).to eq nil
             expect(trip.days_count).to eq 3
@@ -231,27 +203,43 @@ RSpec.describe TripsController do
 
         context 'and when trip is copied from original' do
           let(:original) { FactoryGirl.create(:trip, :with_filled_days) }
-          let(:original_private) { FactoryGirl.create(:trip, :with_filled_days, private: true) }
+          let(:original_private) do
+            FactoryGirl.create(:trip, :with_filled_days, private: true)
+          end
 
           context 'and when it is valid existing trip id' do
             it 'renders template with new trip copied from old trip' do
               post 'create', params: params.merge(copy_from: original.id)
-              trip = assigns(:trip)
-              trip = trip.reload
+              expect(Travels::Trip.count).to eq(2)
+              trip = Travels::Trip.all.order(created_at: :desc).first
 
               expect(trip.comment).to be_nil
               expect(trip.days.count).to eq(original.days.count)
 
               expect(trip.days.first.comment).to eq original.days.first.comment
-              expect(trip.days.first.date_when).to eq params[:travels_trip]['start_date']
-              expect(trip.days.first.transfers.count).to eq original.days.first.transfers.count
-              expect(trip.days.first.transfers.first.amount).to eq original.days.first.transfers.first.amount
+              expect(trip.days.first.date_when).to eq(
+                params[:travels_trip]['start_date']
+              )
+              expect(trip.days.first.transfers.count).to eq(
+                original.days.first.transfers.count
+              )
+              expect(trip.days.first.transfers.first.amount).to eq(
+                original.days.first.transfers.first.amount
+              )
 
-              expect(trip.days.first.places.count).to eq original.days.first.places.count
-              expect(trip.days.first.hotel.name).to eq original.days.first.hotel.name
+              expect(trip.days.first.places.count).to eq(
+                original.days.first.places.count
+              )
+              expect(trip.days.first.hotel.name).to eq(
+                original.days.first.hotel.name
+              )
 
-              expect(trip.days.last.comment).to eq original.days.last.comment
-              expect(trip.days.last.date_when).to eq params[:travels_trip]['end_date']
+              expect(trip.days.last.comment).to eq(
+                original.days.last.comment
+              )
+              expect(trip.days.last.date_when).to eq(
+                params[:travels_trip]['end_date']
+              )
 
               expect(trip.caterings.count).to eq(original.caterings.count)
               new_names_caterings = trip.caterings.map(&:name).sort
@@ -262,29 +250,39 @@ RSpec.describe TripsController do
 
           context 'and when trying to copy private trip' do
             it 'just creates new trip' do
-              post 'create', params: params.merge(copy_from: original_private.id)
-              trip = assigns(:trip)
-              trip = trip.reload
+              post 'create',
+                   params: params.merge(copy_from: original_private.id)
+
+              expect(Travels::Trip.count).to eq(2)
+              trip = Travels::Trip.all.order(created_at: :desc).first
               expect(trip.days.first.comment).to be_nil
-              expect(trip.days.first.date_when).to eq params[:travels_trip]['start_date']
+              expect(trip.days.first.date_when).to eq(
+                params[:travels_trip]['start_date']
+              )
               expect(trip.days.first.transfers.count).to eq 0
 
               expect(trip.days.last.comment).to be_nil
-              expect(trip.days.last.date_when).to eq params[:travels_trip]['end_date']
+              expect(trip.days.last.date_when).to eq(
+                params[:travels_trip]['end_date']
+              )
             end
           end
 
           context 'and when it is not valid' do
             it 'renders template with new trip' do
               post 'create', params: params.merge(copy_from: 'fdsfdsfdfds')
-              trip = assigns(:trip)
-              trip = trip.reload
+              expect(Travels::Trip.count).to eq(1)
+              trip = Travels::Trip.all.order(created_at: :desc).first
               expect(trip.days.first.comment).to be_nil
-              expect(trip.days.first.date_when).to eq params[:travels_trip]['start_date']
+              expect(trip.days.first.date_when).to eq(
+                params[:travels_trip]['start_date']
+              )
               expect(trip.days.first.transfers.count).to eq 0
 
               expect(trip.days.last.comment).to be_nil
-              expect(trip.days.last.date_when).to eq params[:travels_trip]['end_date']
+              expect(trip.days.last.date_when).to eq(
+                params[:travels_trip]['end_date']
+              )
             end
           end
 
@@ -294,19 +292,27 @@ RSpec.describe TripsController do
               ps[:travels_trip]['end_date'] += 1.day
 
               post 'create', params: ps
-              trip = assigns(:trip)
-              trip = trip.reload
+              expect(Travels::Trip.count).to eq(2)
+              trip = Travels::Trip.all.order(created_at: :desc).first
 
               expect(trip.start_date).to eq(ps[:travels_trip]['start_date'])
               expect(trip.end_date).to eq(ps[:travels_trip]['end_date'])
 
               expect(trip.days.first.comment).to eq original.days.first.comment
-              expect(trip.days.first.date_when).to eq params[:travels_trip]['start_date']
-              expect(trip.days.first.transfers.count).to eq original.days.first.transfers.count
-              expect(trip.days.first.transfers.first.amount).to eq original.days.first.transfers.first.amount
+              expect(trip.days.first.date_when).to eq(
+                params[:travels_trip]['start_date']
+              )
+              expect(trip.days.first.transfers.count).to eq(
+                original.days.first.transfers.count
+              )
+              expect(trip.days.first.transfers.first.amount).to eq(
+                original.days.first.transfers.first.amount
+              )
 
               expect(trip.days.last.comment).to be_nil
-              expect(trip.days.last.date_when).to eq params[:travels_trip]['end_date']
+              expect(trip.days.last.date_when).to eq(
+                params[:travels_trip]['end_date']
+              )
             end
           end
 
@@ -316,16 +322,24 @@ RSpec.describe TripsController do
               ps[:travels_trip]['end_date'] -= 1.day
 
               post 'create', params: ps
-              trip = assigns(:trip)
-              trip = trip.reload
+              expect(Travels::Trip.count).to eq(2)
+              trip = Travels::Trip.all.order(created_at: :desc).first
 
               expect(trip.days.first.comment).to eq original.days.first.comment
-              expect(trip.days.first.date_when).to eq params[:travels_trip]['start_date']
-              expect(trip.days.first.transfers.count).to eq original.days.first.transfers.count
-              expect(trip.days.first.transfers.first.amount).to eq original.days.first.transfers.first.amount
+              expect(trip.days.first.date_when).to eq(
+                params[:travels_trip]['start_date']
+              )
+              expect(trip.days.first.transfers.count).to eq(
+                original.days.first.transfers.count
+              )
+              expect(trip.days.first.transfers.first.amount).to eq(
+                original.days.first.transfers.first.amount
+              )
 
               expect(trip.days.last.comment).to eq original.days[-2].comment
-              expect(trip.days.last.date_when).to eq params[:travels_trip]['end_date']
+              expect(trip.days.last.date_when).to eq(
+                params[:travels_trip]['end_date']
+              )
             end
           end
         end
@@ -336,22 +350,22 @@ RSpec.describe TripsController do
 
         it 'creates new trip and redirects to show' do
           post 'create', params: params
-          trip = assigns(:trip)
+          expect(Travels::Trip.count).to eq(1)
+          trip = Travels::Trip.first
           expect(trip).to be_persisted
           expect(trip.name).to eq params[:travels_trip]['name']
           expect(trip.archived).to be false
+          expect(response).to redirect_to(trip_path(trip))
         end
       end
 
       context 'and when trip is not valid' do
         let(:params) { { travels_trip: attrs.reject { |k, _| k == 'name' } } }
 
-        it 'creates new trip and redirects to show' do
+        it 'renders new' do
           post 'create', params: params
-          trip = assigns(:trip)
-          expect(response).to render_template 'trips/new'
-          expect(trip).not_to be_persisted
-          expect(trip.errors).not_to be_blank
+          expect(Travels::Trip.count).to eq(0)
+          expect(response).to have_http_status(200)
         end
       end
     end
@@ -375,12 +389,14 @@ RSpec.describe TripsController do
 
         it 'renders edit template' do
           get 'edit', params: { id: trip.id }
-          expect(response).to render_template 'trips/edit'
+          expect(response).to be_success
         end
       end
 
       context 'and when user is not included in this trip' do
-        let(:trip) { FactoryGirl.create(:trip, author_user: subject.current_user) }
+        let(:trip) do
+          FactoryGirl.create(:trip, author_user: subject.current_user)
+        end
 
         it 'redirects to dashboard with flash' do
           get 'edit', params: { id: trip.id }
@@ -408,10 +424,16 @@ RSpec.describe TripsController do
 
   describe '#update' do
     let(:update_attrs) do
-      { travels_trip: attrs.merge('name' => 'New Updated Name',
-                                  status_code: Travels::Trip::StatusCodes::PLANNED,
-                                  private: true, currency: 'EUR'), id: trip.id }
+      {
+        travels_trip: attrs.merge(
+          name: 'New Updated Name',
+          status_code: Travels::Trip::StatusCodes::PLANNED,
+          private: true, currency: 'EUR'
+        ),
+        id: trip.id
+      }
     end
+
     context 'when user is logged in' do
       before { login_user(user) }
 
@@ -421,9 +443,11 @@ RSpec.describe TripsController do
         context 'and when params are valid' do
           it 'updates trip and redirects to show with notice' do
             put 'update', params: update_attrs
-            trip_updated = assigns(:trip).reload
+            trip_updated = Travels::Trip.find(trip.id)
             expect(trip_updated.name).to eq 'New Updated Name'
-            expect(trip_updated.status_code).to eq Travels::Trip::StatusCodes::PLANNED
+            expect(trip_updated.status_code).to eq(
+              Travels::Trip::StatusCodes::PLANNED
+            )
             expect(trip_updated.private).to eq true
             expect(trip_updated.currency).to eq('EUR')
             expect(response).to redirect_to trip_path(trip)
@@ -432,22 +456,34 @@ RSpec.describe TripsController do
 
           context 'when number of days changes' do
             let(:update_attrs) do
-              { travels_trip: attrs.merge('name' => 'New Updated Name',
-                                          start_date: Date.today, end_date: Date.today + 1.day,
-                                          status_code: Travels::Trip::StatusCodes::PLANNED,
-                                          private: true, currency: 'EUR'), id: trip.id }
+              {
+                travels_trip: attrs.merge(
+                  name: 'New Updated Name',
+                  start_date: Date.today, end_date: Date.today + 1.day,
+                  status_code: Travels::Trip::StatusCodes::PLANNED,
+                  private: true, currency: 'EUR'
+                ),
+                id: trip.id
+              }
             end
+
             context 'when there is one catering' do
-              let(:trip) { FactoryGirl.create(:trip, :with_filled_days, users: [subject.current_user]) }
+              let(:trip) do
+                FactoryGirl.create(
+                  :trip, :with_filled_days, users: [subject.current_user]
+                )
+              end
 
               it 'updates catering days accordingly' do
                 trip.caterings = [FactoryGirl.build(:catering)]
                 trip.save
 
                 put 'update', params: update_attrs
-                trip_updated = assigns(:trip).reload
+                trip_updated = Travels::Trip.find(trip.id)
                 expect(trip_updated.name).to eq 'New Updated Name'
-                expect(trip_updated.status_code).to eq Travels::Trip::StatusCodes::PLANNED
+                expect(trip_updated.status_code).to eq(
+                  Travels::Trip::StatusCodes::PLANNED
+                )
                 expect(trip_updated.private).to eq true
 
                 expect(trip_updated.start_date).to eq(Date.today)
@@ -459,22 +495,37 @@ RSpec.describe TripsController do
         end
 
         context 'and when params are not valid' do
-          let(:update_attrs_invalid) { { travels_trip: attrs.merge('name' => nil), id: trip.id } }
+          let(:update_attrs_invalid) do
+            {
+              travels_trip: attrs.merge('name' => nil),
+              id: trip.id
+            }
+          end
+
           it 'renders edit template' do
             put 'update', params: update_attrs_invalid
-            expect(assigns(:trip).errors).not_to be_blank
-            expect(response).to render_template 'trips/edit'
+            trip_updated = Travels::Trip.find(trip.id)
+            expect(trip_updated.name).to eq(trip.name)
+            expect(trip_updated.status_code).not_to eq(
+              Travels::Trip::StatusCodes::PLANNED
+            )
           end
         end
       end
 
       context 'and when user is not included in this trip' do
-        let(:trip) { FactoryGirl.create(:trip, author_user: subject.current_user) }
+        let(:trip) do
+          FactoryGirl.create(:trip, author_user: subject.current_user)
+        end
 
         it 'redirects to dashboard with flash' do
           put 'update', params: update_attrs
           expect(response).to redirect_to '/errors/no_access'
-          expect(assigns(:trip).name).to eq trip.name
+          trip_updated = Travels::Trip.find(trip.id)
+          expect(trip_updated.name).to eq(trip.name)
+          expect(trip_updated.status_code).not_to eq(
+            Travels::Trip::StatusCodes::PLANNED
+          )
         end
       end
     end
@@ -499,19 +550,16 @@ RSpec.describe TripsController do
 
           it 'renders show template' do
             get 'show', params: { id: trip.id }
-            expect(response).to render_template 'trips/show'
-            trip = assigns(:trip)
-            expect(trip.id).to eq trip.id
-            expect(trip.status_code).to eq Travels::Trip::StatusCodes::DRAFT
+            expect(response).to be_success
           end
 
-          let(:filled_trip) { FactoryGirl.create(:trip, :with_filled_days, :with_caterings) }
+          let(:filled_trip) do
+            FactoryGirl.create(:trip, :with_filled_days, :with_caterings)
+          end
 
           it 'renders docx' do
             get 'show', params: { id: filled_trip.id, format: :docx }
             expect(response).to have_http_status 200
-            expect(response).to render_template 'trips/show'
-            expect(assigns(:transfers_grid)).to eq TripsController::TRANSFERS_GRID
           end
         end
 
@@ -525,12 +573,14 @@ RSpec.describe TripsController do
         end
 
         context 'and when trip is private but current user is a participant' do
-          let(:trip) { FactoryGirl.create(:trip, private: true, users: [subject.current_user]) }
+          let(:trip) do
+            FactoryGirl.create(:trip, private: true,
+                                      users: [subject.current_user])
+          end
 
           it 'renders show template' do
             get 'show', params: { id: trip.id }
             expect(response).to have_http_status 200
-            expect(response).to render_template 'trips/show'
           end
         end
       end
@@ -550,7 +600,6 @@ RSpec.describe TripsController do
         it 'renders show template' do
           get 'show', params: { id: trip.id }
           expect(response).to have_http_status 200
-          expect(response).to render_template 'trips/show'
         end
       end
 

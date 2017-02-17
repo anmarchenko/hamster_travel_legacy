@@ -1,29 +1,26 @@
 # frozen_string_literal: true
 require 'rails_helper'
 RSpec.describe Api::TripsController do
+  let(:user) { FactoryGirl.create(:user) }
+
   describe '#index' do
-    before { FactoryGirl.create_list(:trip, 12) }
-    before { FactoryGirl.create_list(:trip, 2, status_code: Travels::Trip::StatusCodes::FINISHED) }
+    before do
+      FactoryGirl.create(
+        :trip,
+        users: [user],
+        name: 'tripppp',
+        private: true,
+        status_code: Travels::Trip::StatusCodes::FINISHED
+      )
+      FactoryGirl.create_list(
+        :trip,
+        2,
+        status_code: Travels::Trip::StatusCodes::FINISHED
+      )
+    end
 
     context 'when user is logged in' do
       before { login_user(user) }
-
-      before { FactoryGirl.create_list(:trip, 2, user_ids: [subject.current_user.id]) }
-      before { FactoryGirl.create_list(:trip, 1, :no_dates, user_ids: [subject.current_user.id]) }
-
-      before do
-        FactoryGirl.create_list(:trip, 1, user_ids: [subject.current_user.id],
-                                          status_code: Travels::Trip::StatusCodes::FINISHED)
-      end
-      before do
-        FactoryGirl.create_list(:trip, 4, user_ids: [subject.current_user.id],
-                                          status_code: Travels::Trip::StatusCodes::PLANNED)
-      end
-
-      before do
-        FactoryGirl.create_list(:trip, 1, user_ids: [subject.current_user.id], name: 'tripppp',
-                                          private: true, status_code: Travels::Trip::StatusCodes::FINISHED)
-      end
 
       it 'searches visible by user trips' do
         get 'index', params: { term: 'trippp' }
@@ -43,34 +40,52 @@ RSpec.describe Api::TripsController do
 
   describe '#upload_image' do
     before { login_user(user) }
-    let(:file) { fixture_file_upload("#{::Rails.root}/spec/fixtures/files/cat.jpg", 'image/jpeg') }
+    let(:file) do
+      fixture_file_upload(
+        "#{::Rails.root}/spec/fixtures/files/cat.jpg", 'image/jpeg'
+      )
+    end
 
     context 'when current user is the author' do
-      let(:trip) { FactoryGirl.create(:trip, author_user: subject.current_user, users: [subject.current_user]) }
+      let(:trip) do
+        FactoryGirl.create(
+          :trip,
+          author_user: user,
+          users: [user]
+        )
+      end
       it 'uploads trip image' do
         post 'upload_image', params: { id: trip.id, file: file }
         expect(response).to be_success
-        expect(assigns(:trip).image).not_to be_blank
+        expect(trip.reload.image_uid).not_to be_blank
       end
     end
 
     context 'when current user is one of the participants' do
       let(:author) { FactoryGirl.create(:user) }
-      let(:trip) { FactoryGirl.create(:trip, author_user: author, users: [subject.current_user, author]) }
+      let(:trip) do
+        FactoryGirl.create(
+          :trip,
+          author_user: author,
+          users: [subject.current_user, author]
+        )
+      end
       it 'uploads trip image' do
         post 'upload_image', params: { id: trip.id, file: file }
         expect(response).to be_success
-        expect(assigns(:trip).image).not_to be_blank
+        expect(trip.reload.image_uid).not_to be_blank
       end
     end
 
     context 'when current user is not included in trip' do
       let(:author) { FactoryGirl.create(:user) }
-      let(:trip) { FactoryGirl.create(:trip, author_user: author, users: [author]) }
+      let(:trip) do
+        FactoryGirl.create(:trip, author_user: author, users: [author])
+      end
       it 'returns forbidden code' do
         post 'upload_image', params: { id: trip.id, file: file }
         expect(response).to be_forbidden
-        expect(assigns(:trip).image).to be_blank
+        expect(trip.reload.image_uid).to be_blank
       end
     end
   end
@@ -78,7 +93,11 @@ RSpec.describe Api::TripsController do
   describe '#delete_image' do
     before { login_user(user) }
 
-    let(:file) { fixture_file_upload("#{::Rails.root}/spec/fixtures/files/cat.jpg", 'image/jpeg') }
+    let(:file) do
+      fixture_file_upload(
+        "#{::Rails.root}/spec/fixtures/files/cat.jpg", 'image/jpeg'
+      )
+    end
 
     before :each do
       trip.image = file
@@ -86,34 +105,49 @@ RSpec.describe Api::TripsController do
     end
 
     context 'when current user is the author' do
-      let(:trip) { FactoryGirl.create(:trip, author_user: subject.current_user, users: [subject.current_user]) }
+      let(:trip) do
+        FactoryGirl.create(
+          :trip,
+          author_user: subject.current_user,
+          users: [subject.current_user]
+        )
+      end
       it 'deletes trip image' do
         expect(trip.reload.image).not_to be_blank
         post 'delete_image', params: { id: trip.id }
         expect(response).to be_success
-        expect(Travels::Trip.find(trip.id).image).to be_blank
+        expect(Travels::Trip.find(trip.id).image_uid).to be_blank
       end
     end
 
     context 'when current user is included in the trip' do
       let(:author) { FactoryGirl.create(:user) }
-      let(:trip) { FactoryGirl.create(:trip, author_user: author, users: [subject.current_user, author]) }
+      let(:trip) do
+        FactoryGirl.create(
+          :trip,
+          author_user: author,
+          users: [subject.current_user, author]
+        )
+      end
+
       it 'deletes trip image' do
         expect(trip.reload.image).not_to be_blank
         post 'delete_image', params: { id: trip.id }
         expect(response).to be_success
-        expect(Travels::Trip.find(trip.id).image).to be_blank
+        expect(Travels::Trip.find(trip.id).image_uid).to be_blank
       end
     end
 
     context 'when current user is not included in the trip' do
       let(:author) { FactoryGirl.create(:user) }
-      let(:trip) { FactoryGirl.create(:trip, author_user: author, users: [author]) }
+      let(:trip) do
+        FactoryGirl.create(:trip, author_user: author, users: [author])
+      end
       it 'deletes trip image' do
         expect(trip.reload.image).not_to be_blank
         post 'delete_image', params: { id: trip.id }
         expect(response).to be_forbidden
-        expect(Travels::Trip.find(trip.id).image).not_to be_blank
+        expect(Travels::Trip.find(trip.id).image_uid).not_to be_blank
       end
     end
   end
@@ -123,20 +157,27 @@ RSpec.describe Api::TripsController do
       before { login_user(user) }
 
       context 'and when user is author' do
-        let(:trip) { FactoryGirl.create(:trip, author_user: subject.current_user) }
+        let(:trip) do
+          FactoryGirl.create(:trip, author_user: subject.current_user)
+        end
 
         it 'marks trip as archived' do
           delete 'destroy', params: { id: trip.id }
           expect(Travels::Trip.where(id: trip.id).first).to be_nil
-          expect(Travels::Trip.unscoped.where(id: trip.id, archived: true).first).not_to be_blank
+          expect(
+            Travels::Trip.unscoped.where(id: trip.id, archived: true).first
+          ).not_to be_blank
           expect(response).to have_http_status(:success)
         end
 
         it 'destroys all associated invites' do
           # create invite
           inviting_user = FactoryGirl.create(:user)
-          Travels::TripInvite.create(inviting_user_id: inviting_user.id, invited_user_id: subject.current_user.id,
-                                     trip_id: trip.id)
+          Travels::TripInvite.create(
+            inviting_user_id: inviting_user.id,
+            invited_user_id: subject.current_user.id,
+            trip_id: trip.id
+          )
 
           expect(subject.current_user.incoming_invites.count).to eq(1)
 

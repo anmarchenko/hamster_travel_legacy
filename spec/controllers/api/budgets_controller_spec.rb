@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 require 'rails_helper'
 RSpec.describe Api::BudgetsController do
+  let(:user) { FactoryGirl.create(:user) }
+
   describe '#show' do
     let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
 
@@ -18,9 +20,15 @@ RSpec.describe Api::BudgetsController do
 
           json = JSON.parse(response.body)
           expect(json['budget']['sum']).to eq(trip.budget_sum('EUR'))
-          expect(json['budget']['transfers_hotel_budget']).to eq(trip.transfers_hotel_budget('EUR'))
-          expect(json['budget']['activities_other_budget']).to eq(trip.activities_other_budget('EUR'))
-          expect(json['budget']['catering_budget']).to eq(trip.catering_budget('EUR'))
+          expect(json['budget']['transfers_hotel_budget']).to eq(
+            trip.transfers_hotel_budget('EUR')
+          )
+          expect(json['budget']['activities_other_budget']).to eq(
+            trip.activities_other_budget('EUR')
+          )
+          expect(json['budget']['catering_budget']).to eq(
+            trip.catering_budget('EUR')
+          )
           expect(json['budget']['budget_for']).to eq(trip.budget_for)
         end
       end
@@ -38,10 +46,18 @@ RSpec.describe Api::BudgetsController do
         get 'show', params: { id: trip.id.to_s, format: :json }
         expect(response).to have_http_status 200
         json = JSON.parse(response.body)
-        expect(json['budget']['sum']).to eq(trip.budget_sum(CurrencyHelper::DEFAULT_CURRENCY))
-        expect(json['budget']['transfers_hotel_budget']).to eq(trip.transfers_hotel_budget(CurrencyHelper::DEFAULT_CURRENCY))
-        expect(json['budget']['activities_other_budget']).to eq(trip.activities_other_budget(CurrencyHelper::DEFAULT_CURRENCY))
-        expect(json['budget']['catering_budget']).to eq(trip.catering_budget(CurrencyHelper::DEFAULT_CURRENCY))
+        expect(json['budget']['sum']).to eq(
+          trip.budget_sum(CurrencyHelper::DEFAULT_CURRENCY)
+        )
+        expect(json['budget']['transfers_hotel_budget']).to eq(
+          trip.transfers_hotel_budget(CurrencyHelper::DEFAULT_CURRENCY)
+        )
+        expect(json['budget']['activities_other_budget']).to eq(
+          trip.activities_other_budget(CurrencyHelper::DEFAULT_CURRENCY)
+        )
+        expect(json['budget']['catering_budget']).to eq(
+          trip.catering_budget(CurrencyHelper::DEFAULT_CURRENCY)
+        )
         expect(json['budget']['budget_for']).to eq(trip.budget_for)
       end
     end
@@ -52,7 +68,13 @@ RSpec.describe Api::BudgetsController do
       before { login_user(user) }
 
       context 'and when user is a participant' do
-        let(:trip) { FactoryGirl.create(:trip, :with_filled_days, users: [subject.current_user]) }
+        let(:trip) do
+          FactoryGirl.create(
+            :trip,
+            :with_filled_days,
+            users: [subject.current_user]
+          )
+        end
 
         it 'updates budget_for field and returns ok status' do
           put 'update', params: { id: trip.id, budget_for: 42 }, format: :json
@@ -66,7 +88,7 @@ RSpec.describe Api::BudgetsController do
       context 'and when user is not a participant' do
         let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
 
-        it 'returns not authorized error and does not update budget_for field' do
+        it 'returns not authorized error and does not update budget_for' do
           put 'update', params: { id: trip.id, budget_for: 42 }, format: :json
 
           expect(response).to have_http_status 403
