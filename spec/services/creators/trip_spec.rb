@@ -93,6 +93,12 @@ RSpec.describe Creators::Trip do
         expect(subject.days.first.hotel.name).to eq(
           original_trip.days.first.hotel.name
         )
+        expect(subject.days.first.hotel.links.count).to eq(
+          original_trip.days.first.hotel.links.count
+        )
+        expect(subject.days.first.hotel.links.first.url).to eq(
+          original_trip.days.first.hotel.links.first.url
+        )
 
         expect(subject.days.last.comment).to eq(
           original_trip.days.last.comment

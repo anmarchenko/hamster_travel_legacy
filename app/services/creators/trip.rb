@@ -37,8 +37,10 @@ module Creators
     def copied_fields
       [
         {
-          days: [:places, :activities, { transfers: :links },
-                 :hotel, :expenses, :links]
+          days: [:places, :activities,
+                 { transfers: :links },
+                 { hotel: :links },
+                 :expenses, :links]
         },
         :caterings
       ]
