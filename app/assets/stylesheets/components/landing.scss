@@ -1,7 +1,132 @@
 .landing {
   .hero-area {
+    padding-bottom: 8rem;
+
     .hero-header {
+      font-size: 48px;
+      margin-top: 8rem;
+
+      @media(max-width: 768px) {
+        font-size: 24px;
+        margin-top: 4rem;
+        text-align: center;
+      }
+    }
+
+    .hero-text {
+      color: $text-grey;
+      font-size: 18px;
+      margin-top: 3rem;
+
+      @media(max-width: 768px) {
+        font-size: 16px;
+        text-align: center;
+      }
+    }
+
+    .hero-actions {
+      margin-top: 3rem;
+
+      @media(max-width: 768px) {
+        text-align: center;
+      }
+
+      .btn {
+        margin-right: 1ch;
+      }
+    }
+
+    .hero-images {
+      position: relative;
+    }
+
+    .desktop-mock {
+      left: -20px;
+      position: absolute;
+      top: -80px;
+    }
+
+    .mobile-mock {
+      left: 240px;
+      position: absolute;
+      top: 30px;
+    }
+  }
+
+  .feature-row {
+    color: $text-grey;
+    padding-bottom: 8rem;
+    padding-top: 8rem;
+
+    .feature-header {
+      font-size: 32px;
+
+      @media(max-width: 768px) {
+        font-size: 22px;
+        text-align: center;
+      }
+    }
+
+    .feature-description {
+      font-size: 18px;
+      margin-top: 1rem;
+
+      @media(max-width: 768px) {
+        font-size: 16px;
+        text-align: center;
+      }
+    }
+
+    .feature-icon {
+      margin-bottom: 8px;
+      margin-right: .5ch;
+    }
+
+    .feature-image {
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    &.feature-row-grey {
+      background-color: $background-grey;
+    }
+  }
+
+  .final-row {
+    margin-bottom: 8rem;
+    margin-top: 8rem;
+
+    @media(max-width: 768px) {
+      margin-top: 2rem;
+    }
+
+    h3,
+    .final-action {
+      text-align: center;
+    }
+
+    .final-action {
       margin-top: 4rem;
+    }
+
+    @media(max-width: 768px) {
+      h3 {
+        font-size: 22px;
+        text-align: center;
+      }
+    }
+  }
+
+  @media(min-width: 768px) {
+    .feature-transfers-text {
+      padding-top: 4rem;
+    }
+
+    .feature-activities-text {
+      padding-top: 10rem;
+    }
+
+    .feature-profile-text {
+      padding-top: 8rem;
     }
   }
 }

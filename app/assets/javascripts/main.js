@@ -14,6 +14,7 @@
 //= require sweetalert2
 //= require toastr
 //= require moment
+//= require wow.min
 
 //= require_tree ./utils
 

@@ -20,34 +20,32 @@
 <%= render 'layouts/partials/flash_messages' %>
 <%= yield %>
 
-<% unless @hide_footer %>
-    <footer>
-      <div class="container">
-        <div class="site-footer">
-          <div class="row">
-            <div class="col-md-2">
-              © 2014 - 2016, Hamster Travel
-            </div>
-            <div class="col-md-10">
-              <p>
-                <%= t('common.authors') %>
-              </p>
-              <p>
-                <a href="http://vk.com/id88528">
-                  <%= t('common.hamster') %>
-                </a>
-              </p>
-              <p>
-                <a href="https://github.com/altmer">
-                  <%= t('common.andrey') %>
-                </a>
-              </p>
-            </div>
-          </div>
+<footer>
+  <div class="container">
+    <div class="site-footer">
+      <div class="row">
+        <div class="col-md-2">
+          © 2014 - 2016, Hamster Travel
+        </div>
+        <div class="col-md-10">
+          <p>
+            <%= t('common.authors') %>
+          </p>
+          <p>
+            <a href="http://vk.com/id88528">
+              <%= t('common.hamster') %>
+            </a>
+          </p>
+          <p>
+            <a href="https://github.com/altmer">
+              <%= t('common.andrey') %>
+            </a>
+          </p>
         </div>
       </div>
-    </footer>
-<% end %>
+    </div>
+  </div>
+</footer>
 
 <span class="i18n" id="confirmation_header"><%= t('common.are_you_sure') %></span>
 <span class="i18n" id="generic_error_title"><%= t('common.generic_error_title') %></span>

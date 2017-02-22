@@ -1,26 +1,140 @@
 <% content_for :title, t('.title') %>
-
+<% content_for :page_javascript do %>
+<script type="text/javascript">
+  new WOW().init();
+</script>
+<% end %>
 <div class="landing">
-  <div class="container hero-area">
-    <div class="row">
-      <div class="col-xs-12">
+  <div class="container">
+    <div class="row hero-area">
+      <div class="col-xs-12 col-md-6">
         <h3 class="hero-header">
           <%= t('.welcome') %>
         </h3>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12 col-sm-6">
         <p class="hero-text">
           <%= t('.welcome_text') %>
         </p>
         <div class="form-group hero-actions">
-          <a class="btn btn-primary btn-lg btn-browse" href="<%= trips_path %>">
-            <%= t('.browse') %>
-          </a>
+          <% if user_signed_in? %>
+            <a class="btn btn-primary btn-lg" href="<%= new_trip_path %>">
+              <%= t('.start_planning') %>
+            </a>
+          <% else %>
+            <a class="btn btn-success btn-lg" href="<%= new_user_registration_path %>">
+              <%= t('.register') %>
+            </a>
+            <a class="btn btn-default btn-lg" href="<%= new_user_session_path %>">
+              <%= t('.sign_in') %>
+            </a>
+          <% end %>
         </div>
       </div>
-      <div class="col-sm-6 hidden-xs">
+      <div class="col-md-6 hidden-xs hidden-sm hero-images">
+        <img width="500" height="500" src="<%= image_path('illustrations/macbook-mock.png') %>" class="desktop-mock" />
+        <img width="350" height="350" src="<%= image_path('illustrations/iphone-mock.png') %>" class="mobile-mock" />
+      </div>
+    </div>
+  </div>
+
+  <div class="feature-row feature-row-grey wow fadeIn" data-wow-duration="2s">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 hidden-xs hidden-sm">
+          <img width="500" height="165" src="<%= image_path('features/budget.png') %>" class="feature-image" />
+        </div>
+        <div class="feature-text col-xs-12 col-md-6">
+          <div class="feature-header">
+            <img width="36" height="36" src="<%= image_path('features/budget.svg') %>" class="feature-icon" />
+            <span>
+              <%= t('.features.budget.header') %>
+            </span>
+          </div>
+          <div class="feature-description">
+            <%= t('.features.budget.description') %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="feature-row wow fadeIn" data-wow-duration="2s">
+    <div class="container">
+      <div class="row">
+        <div class="feature-text feature-transfers-text col-xs-12 col-md-6">
+          <div class="feature-header">
+            <img width="36" height="36" src="<%= image_path('features/transfers.svg') %>" class="feature-icon" />
+            <span>
+              <%= t('.features.transfers.header') %>
+            </span>
+          </div>
+          <div class="feature-description">
+            <%= t('.features.transfers.description') %>
+          </div>
+        </div>
+        <div class="col-md-6 hidden-xs hidden-sm">
+          <img width="500" height="238" src="<%= image_path('features/transfers.png') %>" class="feature-image" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="feature-row feature-row-grey wow fadeIn" data-wow-duration="2s">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 hidden-xs hidden-sm">
+          <img width="500" height="509" src="<%= image_path('features/activities.png') %>" class="feature-image" />
+        </div>
+        <div class="feature-text feature-activities-text col-xs-12 col-md-6">
+          <div class="feature-header">
+            <img width="36" height="36" src="<%= image_path('features/activities.svg') %>" class="feature-icon" />
+            <span>
+              <%= t('.features.activities.header') %>
+            </span>
+          </div>
+          <div class="feature-description">
+            <%= t('.features.activities.description') %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="feature-row wow fadeIn" data-wow-duration="2s">
+    <div class="container">
+      <div class="row">
+        <div class="feature-text feature-profile-text col-xs-12 col-md-6">
+          <div class="feature-header">
+            <img width="36" height="36" src="<%= image_path('features/profile.svg') %>" class="feature-icon" />
+            <span>
+              <%= t('.features.profile.header') %>
+            </span>
+          </div>
+          <div class="feature-description">
+            <%= t('.features.profile.description') %>
+          </div>
+        </div>
+        <div class="col-md-6 hidden-xs hidden-sm">
+          <img width="500" height="348" src="<%= image_path('features/profile.png') %>" class="feature-image" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container wow fadeIn" data-wow-duration="2s">
+    <div class="row final-row">
+      <div class="col-xs-12">
+        <h3><%= t('.start_using') %></h3>
+        <div class="final-action">
+          <% if user_signed_in? %>
+            <a class="btn btn-primary btn-lg" href="<%= new_trip_path %>">
+              <%= t('.start_planning') %>
+            </a>
+          <% else %>
+            <a class="btn btn-success btn-lg" href="<%= new_user_registration_path %>">
+              <%= t('.register') %>
+            </a>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

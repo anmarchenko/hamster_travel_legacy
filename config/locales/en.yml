@@ -181,10 +181,25 @@ en:
   landing:
     index:
       title: Travel planning
-      welcome: "Welcome to your personal travel notebook"
+      welcome: Travel confident
       welcome_text: Hamster Travel is easy and feature-rich application for frequent travellers. Whether you plan long continent-wide trip or a weekend getaway, Hamster Travel is there to help you track your tasks and keep stress out of your trip.
-      browse: Browse
-      add: Add new plan
+      start_planning: Start planning
+      register: Create account
+      sign_in: Login
+      start_using: Start using Hamster Travel right now
+      features:
+        budget:
+          header: Be on top of your budget
+          description: Budget is recalculated automatically every time you enter prices for your travel plans. Multiple currencies are supported with exchange rates being pulled from ECB daily.
+        transfers:
+          header: Plan your transfers
+          description: Store important information about your flights, trains, buses or any other transfers. You get handy table view with all your transfer and accomodation arrangements.
+        activities:
+          header: Create daily plans
+          description: Need to track interesting sites to visit? No problem! Create as detailed plans as you want and mark places with priorities - you will never forget to visit that interesting museum again.
+        profile:
+          header: Track your travels
+          description: Do you want your personal travel map? You have it! Add trips and visited places - they will be shown on your own map. Track how far are you on your goal - travel all the world.
   layouts:
     main:
       pagetitle: "%{page} | Hamster Travel"
