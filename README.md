@@ -8,7 +8,7 @@ Hamster Travel
 
 Hamster Travel is opinionated travel planning application.
 
-![screen](http://amarchenko.de/img/posts/hamster-travel.png)
+<img src="http://amarchenko.de/img/posts/hamster-travel.png" alt="screen" style="width: 500px;"/>
 
 It is intended to be used by frequent travellers. The killer feature of this app
 is budget counting - so when user enters any prices, trip budget gets recalculated.
@@ -20,6 +20,7 @@ is budget counting - so when user enters any prices, trip budget gets recalculat
 * Angularjs 1.5.8
 * Postgresql 9.3
 * Redis 3.2
+* Docker 1.13
 
 ## Setup
 
