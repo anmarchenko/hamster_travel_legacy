@@ -8,7 +8,7 @@ Hamster Travel
 
 Hamster Travel is opinionated travel planning application.
 
-<img src="http://amarchenko.de/img/posts/hamster-travel.png" alt="screen" style="width: 500px;"/>
+<img src="http://amarchenko.de/img/posts/hamster-travel.png" alt="screen" width="500"/>
 
 It is intended to be used by frequent travellers. The killer feature of this app
 is budget counting - so when user enters any prices, trip budget gets recalculated.
