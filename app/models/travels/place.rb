@@ -23,7 +23,7 @@ module Travels
       city.try(:country_code)
     end
 
-    def is_empty?
+    def empty_content?
       [:city_id, :city_text].each do |field|
         return false unless send(field).blank?
       end

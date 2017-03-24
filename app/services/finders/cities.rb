@@ -5,7 +5,9 @@ module Finders
 
     def self.search(term, user = nil, trip_id = nil)
       return empty_suggestions(user, trip_id) if term == EMPTY_TERM && user
-      Rails.cache.fetch("cities_by_#{term}_#{I18n.locale}_2016_01_07", expires_in: 1.year.to_i) do
+      Rails.cache.fetch(
+        "cities_by_#{term}_#{I18n.locale}_2016_01_07", expires_in: 1.year.to_i
+      ) do
         query = Geo::City.find_by_term(term).page(1)
         json_result(query)
       end

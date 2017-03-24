@@ -26,8 +26,11 @@ module Travels
     before_create :init
     def init
       self.places = [Travels::Place.new] if places.blank?
-      self.hotel = Travels::Hotel.new(amount_currency: trip.currency) if hotel.blank?
-      self.expenses = [Travels::Expense.new(amount_currency: trip.currency)] if expenses.blank?
+      if hotel.blank?
+        self.hotel = Travels::Hotel.new(amount_currency: trip.currency)
+      end
+      return unless expenses.blank?
+      self.expenses = [Travels::Expense.new(amount_currency: trip.currency)]
     end
 
     def date_when_s
@@ -35,17 +38,27 @@ module Travels
       I18n.t('common.day_number', number: index + 1)
     end
 
-    def is_empty?
+    def empty_content?
       [:transfers, :activities, :comment].each do |field|
         return false unless send(field).blank?
       end
+      return false unless places_empty?
+      return false unless expenses_empty?
+      hotel.blank? || hotel.empty_content?
+    end
+
+    def places_empty?
       (places || []).each do |place|
-        return false unless place.is_empty?
+        return false unless place.empty_content?
       end
+      true
+    end
+
+    def expenses_empty?
       (expenses || []).each do |expense|
-        return false unless expense.is_empty?
+        return false unless expense.empty_content?
       end
-      hotel.blank? || hotel.is_empty?
+      true
     end
 
     def as_json(args = {})
@@ -55,32 +68,48 @@ module Travels
       if args[:user_currency]
         # process all amounts and add them in user's currency
         service = Json::AmountUserCurrency.new(args[:user_currency])
-        %w(transfers activities expenses hotel).each { |field| service.call(json[field]) }
+        %w(transfers activities expenses hotel).each do |field|
+          service.call(json[field])
+        end
       end
       json
     end
 
     def short_hash
-      transfer = transfers.first
-      transfer_s = "#{transfer.city_from_text} - #{transfer.city_to_text}" if transfer
-      # first 3 activities by rating
-      activity_s = ''
-      activities.unscoped.where(day_id: id)
-                .order(rating: :desc, order_index: :asc)
-                .first(3).each_with_index do |activity, index|
-        activity_s += "#{index + 1}. #{activity.name}"
-        activity_s += '<br/>'
-      end
-      place = places.first
-      place_s = place.city_text if place
       {
         id: id.to_s,
         date: date_when,
-        index: self.index,
-        transfer_s: transfer_s,
-        activity_s: activity_s,
-        place_s: place_s
+        index: index,
+        transfer_s: transfers_s,
+        activity_s: activities_s,
+        place_s: places_s
       }
+    end
+
+    def activities_s
+      res = ''
+      top_activities.each_with_index do |activity, index|
+        res += "#{index + 1}. #{activity.name}"
+        res += '<br/>'
+      end
+      res
+    end
+
+    def transfers_s
+      transfer = transfers.first
+      "#{transfer.city_from_text} - #{transfer.city_to_text}" if transfer
+    end
+
+    def places_s
+      place = places.first
+      place&.city_text
+    end
+
+    # first 3 activities by rating
+    def top_activities
+      activities.unscoped.where(day_id: id)
+                .order(rating: :desc, order_index: :asc)
+                .first(3)
     end
   end
 end

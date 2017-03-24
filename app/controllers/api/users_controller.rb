@@ -1,25 +1,17 @@
 # frozen_string_literal: true
 module Api
   class UsersController < ApplicationController
-    before_action :authenticate_user!, only: [:upload_image, :delete_image, :update]
-    before_action :find_user, only: [:show, :update, :upload_image, :delete_image,
-                                     :planned_trips, :finished_trips, :visited]
+    before_action :authenticate_user!, only: [
+      :upload_image, :delete_image, :update
+    ]
+    before_action :find_user, only: [
+      :show, :update, :upload_image, :delete_image,
+      :planned_trips, :finished_trips, :visited
+    ]
     before_action :authorize, only: [:upload_image, :delete_image, :update]
 
     def index
-      term = params[:term] || ''
-      render(json: []) && return if term.blank? || term.length < 2
-
-      query = User.find_by_term(term).page(1)
-      query = query.where.not(id: current_user.id) if current_user.present?
-      res = query.collect do |user|
-        {
-          name: user.full_name, text: user.full_name, code: user.id.to_s,
-          photo_url: user.image_url, color: user.background_color, initials: user.initials
-        }
-      end
-
-      render json: res
+      render json: Finders::Users.search(params[:term], current_user)
     end
 
     def show
@@ -55,20 +47,29 @@ module Api
     end
 
     def planned_trips
-      render json: { trips: Finders::Trips.for_user_planned(@user, params[:page], current_user)
-                                          .includes(:cities)
-                                          .map { |trip| trip.short_json(32) } }
+      res = Finders::Trips.for_user_planned(@user, params[:page], current_user)
+                          .includes(:cities)
+                          .map { |trip| trip.short_json(32) }
+      render json: {
+        trips: res
+      }
     end
 
     def finished_trips
-      render json: { trips: Finders::Trips.for_user_finished(@user, params[:page], current_user)
-                                          .includes(:cities)
-                                          .map { |trip| trip.short_json(32) } }
+      res = Finders::Trips.for_user_finished(@user, params[:page], current_user)
+                          .includes(:cities)
+                          .map { |trip| trip.short_json(32) }
+      render json: {
+        trips: res
+      }
     end
 
     def visited
+      countries = @user.visited_countries
+                       .map(&:visited_country_json)
+                       .sort_by { |json| json[:name] }
       render json: {
-        countries: @user.visited_countries.map(&:visited_country_json).sort_by { |json| json[:name] },
+        countries: countries,
         cities: @user.visited_cities.map(&:json_hash)
       }
     end
@@ -87,7 +88,9 @@ module Api
     end
 
     def user_params
-      params.require(:user).permit(:locale, :home_town_id, :currency, :first_name, :last_name)
+      params.require(:user).permit(
+        :locale, :home_town_id, :currency, :first_name, :last_name
+      )
     end
   end
 end

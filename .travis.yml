@@ -10,6 +10,8 @@ before_install:
   - gem update --system
   - gem update bundler
 script:
+  - bundle exec rubocop
+  - bundle exec bundle-audit check --update
   - bundle exec rspec
 before_script:
   - psql -c 'create database travel_planner_test;' -U postgres

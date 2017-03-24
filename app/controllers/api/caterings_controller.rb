@@ -10,7 +10,9 @@ module Api
 
     def show
       render json: {
-        caterings: @trip.caterings_data.as_json(user_currency: current_user.try(:currency))
+        caterings: @trip.caterings_data.as_json(
+          user_currency: current_user.try(:currency)
+        )
       }
     end
 
@@ -25,8 +27,11 @@ module Api
     private
 
     def params_caterings
-      params.require(:trip).permit(caterings: [:id, :name, :description, :days_count, :persons_count,
-                                               :amount_cents, :amount_currency])
+      params.require(:trip).permit(caterings:
+      [
+        :id, :name, :description, :days_count, :persons_count,
+        :amount_cents, :amount_currency
+      ])
     end
 
     def find_trip

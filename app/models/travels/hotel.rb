@@ -30,7 +30,7 @@ module Travels
       json
     end
 
-    def is_empty?
+    def empty_content?
       [:name, :comment].each do |field|
         return false unless send(field).blank?
       end

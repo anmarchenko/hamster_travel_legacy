@@ -50,12 +50,15 @@ module Travels
 
     paginates_per 10
 
-    has_and_belongs_to_many :users, class_name: 'User', inverse_of: :trips, join_table: 'users_trips'
+    has_and_belongs_to_many :users, class_name: 'User',
+                                    inverse_of: :trips,
+                                    join_table: 'users_trips'
     belongs_to :author_user, class_name: 'User', inverse_of: :authored_trips
 
     has_many :days, class_name: 'Travels::Day'
     has_many :caterings, class_name: 'Travels::Catering'
-    has_many :pending_invites, class_name: 'Travels::TripInvite', inverse_of: :trip
+    has_many :pending_invites, class_name: 'Travels::TripInvite',
+                               inverse_of: :trip
     has_many :documents, class_name: 'Travels::Document'
 
     has_many :invited_users, class_name: 'User', through: :pending_invites
@@ -73,7 +76,9 @@ module Travels
     dragonfly_accessor :image
 
     def image_url_or_default
-      image.try(:remote_url) || ActionController::Base.helpers.image_url('plan/camera.svg')
+      image.try(:remote_url) || ActionController::Base.helpers.image_url(
+        'plan/camera.svg'
+      )
     end
 
     def status_text
@@ -176,7 +181,7 @@ module Travels
     def last_non_empty_day_index
       result = -1
       (days || []).each_with_index do |day, index|
-        result = index unless day.is_empty?
+        result = index unless day.empty_content?
       end
       result
     end
@@ -262,7 +267,7 @@ module Travels
         else
           day.date_when = (start_date + index.days)
           # set dates of all transfers
-          day.transfers.each { |transfer| transfer.set_date!(day.date_when) }
+          day.transfers.each { |transfer| transfer.date!(day.date_when) }
         end
         day.index = index
         day.save

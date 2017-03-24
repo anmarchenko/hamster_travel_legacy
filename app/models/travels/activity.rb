@@ -33,7 +33,10 @@ module Travels
       ExternalLink.new(url: link_url).description
     end
 
-    PERMITTED = %w(name amount_cents amount_currency comment link_description link_url order_index id rating address working_hours).freeze
+    PERMITTED = %w(
+      name amount_cents amount_currency comment link_description
+      link_url order_index id rating address working_hours
+    ).freeze
 
     def serializable_hash(**args)
       attrs = super(args)

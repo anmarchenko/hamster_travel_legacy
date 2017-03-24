@@ -7,7 +7,12 @@ class MessagesController < ApplicationController
   before_action :authorize!, only: [:update, :destroy]
 
   def index
-    render json: { invites: current_user.incoming_invites.includes(:inviting_user, :trip).limit(10) }
+    res = current_user.incoming_invites
+                      .includes(:inviting_user, :trip)
+                      .limit(10)
+    render json: {
+      invites: res
+    }
   end
 
   def destroy
@@ -26,7 +31,9 @@ class MessagesController < ApplicationController
   private
 
   def find_trip_invite
-    @trip_invite = Travels::TripInvite.where(id: params[:id]).includes(:trip, :invited_user).first
+    @trip_invite = Travels::TripInvite.where(
+      id: params[:id]
+    ).includes(:trip, :invited_user).first
     head(404) && return if @trip_invite.blank?
   end
 

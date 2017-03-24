@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 module ApplicationHelper
   def currency_symbol(currency = nil)
-    currency = (current_user.try(:currency) || CurrencyHelper::DEFAULT_CURRENCY) if currency.blank?
+    currency ||= current_user&.currency
+    currency ||= CurrencyHelper::DEFAULT_CURRENCY
     currency = Money::Currency.find(currency)
     currency.try(:symbol)
   end
 
   def default_currency_hash(trip, user)
-    "amount_currency_text: '#{default_currency_text_for_trip(trip, user)}', amount_currency: '#{default_currency_for_trip(trip, user)}'"
+    "amount_currency_text: '#{default_currency_text_for_trip(trip, user)}'," \
+    " amount_currency: '#{default_currency_for_trip(trip, user)}'"
   end
 
   def default_currency_for_trip(trip, user)
@@ -27,7 +29,9 @@ module ApplicationHelper
   def error_messages!(object)
     return '' if object.errors.empty?
 
-    messages = object.errors.full_messages.map { |msg| content_tag(:li, msg) }.join
+    messages = object.errors.full_messages.map do |msg|
+      content_tag(:li, msg)
+    end.join
     sentence = I18n.t('errors.messages.not_saved')
 
     html = <<-HTML
@@ -43,14 +47,10 @@ module ApplicationHelper
 
   def datepicker_options(model_name, record = nil)
     res = {
-      'ng-model' => model_name,
-      'data-provide' => 'datepicker',
-      'data-placement' => 'bottom',
-      'data-date-format' => 'dd.mm.yyyy',
-      'data-date-week-start' => 1,
-      'data-date-autoclose' => true,
-      'data-date-language' => I18n.locale,
-      'data-date-start-view' => 'day',
+      'ng-model' => model_name, 'data-provide' => 'datepicker',
+      'data-placement' => 'bottom', 'data-date-format' => 'dd.mm.yyyy',
+      'data-date-week-start' => 1, 'data-date-autoclose' => true,
+      'data-date-language' => I18n.locale, 'data-date-start-view' => 'day',
       'autocomplete' => 'off'
     }
     unless record.blank? || record.send(model_name).blank?
@@ -89,13 +89,16 @@ module ApplicationHelper
 
   def flag(country_code, size = 16)
     return '' if country_code.blank?
-    url = "#{Settings.images.base_url}/#{Settings.images.flags_folder}/#{size}/#{country_code.downcase}.png"
+    url = "#{Settings.images.base_url}/#{Settings.images.flags_folder}" \
+          "/#{size}/#{country_code.downcase}.png"
     country = Geo::Country.send(country_code)
-    "<img src='#{url}' class='flag flag-#{size}' title='#{country.try(:name)}' />".html_safe
+    "<img src='#{url}' class='flag flag-#{size}'" \
+    " title='#{country.try(:name)}' />".html_safe
   end
 
   def days_count(trip)
-    "#{trip.days_count}&nbsp;#{I18n.t('common.days', count: trip.days_count)}".html_safe
+    "#{trip.days_count}&nbsp;" \
+    "#{I18n.t('common.days', count: trip.days_count)}".html_safe
   end
 
   def trip_dates(trip)

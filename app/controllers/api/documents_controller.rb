@@ -13,9 +13,17 @@ module Api
     end
 
     def create
-      (params[:files] || {}).values.each do |file|
-        name = File.basename(file.original_filename, File.extname(file.original_filename))
-        document = Travels::Document.new(name: name, mime_type: file.content_type, trip: @trip)
+      params[:files].values.each do |file|
+        name = File.basename(
+          file.original_filename,
+          File.extname(file.original_filename)
+        )
+        document = Travels::Document.new(
+          name: name,
+          mime_type:
+          file.content_type,
+          trip: @trip
+        )
         document.store(file)
         document.save
       end
@@ -29,9 +37,12 @@ module Api
 
     def show
       file_stream = open(@document.file.remote_url)
-      send_data file_stream.read, filename: "#{@document.name}#{@document.extension}",
-                                  type: @document.mime_type,
-                                  disposition: 'inline'
+      send_data(
+        file_stream.read,
+        filename: "#{@document.name}#{@document.extension}",
+        type: @document.mime_type,
+        disposition: 'inline'
+      )
     end
 
     def destroy

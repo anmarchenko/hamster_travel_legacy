@@ -34,7 +34,9 @@ module Geo
       ADM5_CENTER = 'adm5_center'
     end
 
-    def translated_text(args = { with_region: true, with_country: true, locale: I18n.locale })
+    def translated_text(
+        args = { with_region: true, with_country: true, locale: I18n.locale }
+    )
       text = translated_name(args[:locale])
       if args[:with_region]
         reg = region.try(:translated_name, args[:locale])
@@ -47,52 +49,35 @@ module Geo
       text
     end
 
-    def is_capital?
+    def capital?
       status == Statuses::CAPITAL
     end
 
-    def is_region_center?
+    def region_center?
       status == Statuses::REGION_CENTER
     end
 
-    def is_district_center?
+    def district_center?
       status == Statuses::DISTRICT_CENTER
     end
 
-    def is_adm3_center?
+    def adm3_center?
       status == Statuses::ADM3_CENTER
     end
 
-    def is_adm4_center?
+    def adm4_center?
       status == Statuses::ADM4_CENTER
     end
 
-    def is_adm5_center?
+    def adm5_center?
       status == Statuses::ADM5_CENTER
-    end
-
-    def update_from_geonames_string(str)
-      super(str)
-      values = Geo::City.split_geonames_string(str)
-      feature_code = values[7].strip
-      case feature_code
-      when 'PPLC'
-        self.status = Statuses::CAPITAL
-      when 'PPLA'
-        self.status = Statuses::REGION_CENTER
-      when 'PPLA2'
-        self.status = Statuses::DISTRICT_CENTER
-      when 'PPLA3'
-        self.status = Statuses::ADM3_CENTER
-      when 'PPLA4'
-        self.status = Statuses::ADM4_CENTER
-      end
-      save
     end
 
     def self.find_by_term(term)
       term = Regexp.escape(term)
-      all.with_translations.where('"city_translations"."name" ILIKE ?', "#{term}%").order(population: :desc)
+      all.with_translations.where(
+        '"city_translations"."name" ILIKE ?', "#{term}%"
+      ).order(population: :desc)
     end
 
     def json_hash
@@ -107,7 +92,13 @@ module Geo
     end
 
     def json_hash_with_regions
-      json_hash.merge(text: translated_text(with_region: true, with_country: true, locale: I18n.locale))
+      json_hash.merge(
+        text: translated_text(
+          with_region: true,
+          with_country: true,
+          locale: I18n.locale
+        )
+      )
     end
   end
 end

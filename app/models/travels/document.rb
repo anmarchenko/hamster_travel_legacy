@@ -31,7 +31,9 @@ module Travels
 
     def store(file)
       self.file = file
-      self.file.name = "#{SecureRandom.uuid.delete('-')}#{File.extname(self.file.name)}" if self.file.present?
+      return if self.file.blank?
+      self.file.name = "#{SecureRandom.uuid.delete('-')}" \
+                       "#{File.extname(self.file.name)}"
     end
 
     def generate_path(file_name)
@@ -45,7 +47,9 @@ module Travels
 
     def as_json(**_args)
       res = super(except: [:file_uid, :trip_id])
-      res['icon'] = ApplicationController.helpers.image_tag("filetypes/#{extension.delete('.')}.png")
+      res['icon'] = ApplicationController.helpers.image_tag(
+        "filetypes/#{extension.delete('.')}.png"
+      )
       res
     end
   end

@@ -23,7 +23,10 @@ module CurrencyHelper
 
   def self.currencies_select(user_currency = nil, trip_currency = nil)
     CurrencyHelper.currency_list(user_currency, trip_currency).map do |currency|
-      ["#{currency.name} (#{currency.iso_code})", currency.iso_code, currency.symbol]
+      [
+        "#{currency.name} (#{currency.iso_code})",
+        currency.iso_code, currency.symbol
+      ]
     end
   end
 

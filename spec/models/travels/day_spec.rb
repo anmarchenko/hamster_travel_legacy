@@ -24,18 +24,18 @@ RSpec.describe Travels::Day do
     end
   end
 
-  describe '#is_empty?' do
+  describe '#empty_content?' do
     let(:day) { FactoryGirl.create(:trip).days.first }
     context 'default day' do
       it 'is true' do
-        expect(day).to be_is_empty
+        expect(day).to be_empty_content
       end
     end
 
     context 'when commented day' do
       before { day.comment = 'some comment' }
       it 'is false' do
-        expect(day).not_to be_is_empty
+        expect(day).not_to be_empty_content
       end
     end
 
@@ -43,7 +43,7 @@ RSpec.describe Travels::Day do
       before { day.expenses.create(FactoryGirl.build(:expense).attributes) }
 
       it 'is true' do
-        expect(day).to be_is_empty
+        expect(day).to be_empty_content
       end
     end
 
@@ -53,14 +53,14 @@ RSpec.describe Travels::Day do
       end
 
       it 'is true' do
-        expect(day).not_to be_is_empty
+        expect(day).not_to be_empty_content
       end
     end
 
     context 'when day has empty transfer' do
       before { day.transfers.create(FactoryGirl.build(:transfer).attributes) }
       it 'is false' do
-        expect(day).not_to be_is_empty
+        expect(day).not_to be_empty_content
       end
     end
 
@@ -71,14 +71,14 @@ RSpec.describe Travels::Day do
         )
       end
       it 'is false' do
-        expect(day).not_to be_is_empty
+        expect(day).not_to be_empty_content
       end
     end
 
     context 'when day has empty activity' do
       before { day.activities.create(FactoryGirl.build(:activity).attributes) }
       it 'is false' do
-        expect(day).not_to be_is_empty
+        expect(day).not_to be_empty_content
       end
     end
 
@@ -89,14 +89,14 @@ RSpec.describe Travels::Day do
         )
       end
       it 'is false' do
-        expect(day).not_to be_is_empty
+        expect(day).not_to be_empty_content
       end
     end
 
     context 'when day has empty places' do
       before { day.places.create(FactoryGirl.build(:place).attributes) }
       it 'is true' do
-        expect(day).to be_is_empty
+        expect(day).to be_empty_content
       end
     end
 
@@ -105,7 +105,7 @@ RSpec.describe Travels::Day do
         day.places.create(FactoryGirl.build(:place, :with_data).attributes)
       end
       it 'is false' do
-        expect(day).not_to be_is_empty
+        expect(day).not_to be_empty_content
       end
     end
 
@@ -116,7 +116,7 @@ RSpec.describe Travels::Day do
         )
       end
       it 'is false' do
-        expect(day).not_to be_is_empty
+        expect(day).not_to be_empty_content
       end
     end
   end

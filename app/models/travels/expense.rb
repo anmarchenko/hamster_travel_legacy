@@ -17,8 +17,8 @@ module Travels
 
     monetize :amount_cents
 
-    def is_empty?
-      (amount_cents.blank? || amount_cents == 0) && name.blank?
+    def empty_content?
+      (amount_cents.blank? || amount_cents.zero?) && name.blank?
     end
 
     def serializable_hash(_args)

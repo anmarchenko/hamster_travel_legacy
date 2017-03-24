@@ -59,11 +59,22 @@ RSpec.describe Api::DocumentsController do
 
         expect(docs.first.name).to eq('cat')
         expect(docs.first.mime_type).to eq('image/jpeg')
-        expect(docs.first.file.remote_url =~ %r/\/system\/dragonfly\/test\/[A-Za-z0-9]{2}\/[A-Za-z0-9]{2}\/[A-Za-z0-9]{2}\/[A-Za-z0-9]{10}\/[A-Za-z0-9]{32}\.jpg/).not_to be_blank
+        expect(docs.first.file.remote_url =~ %r{\/system\/dragonfly\/test\/
+                                                [A-Za-z0-9]{2}\/[A-Za-z0-9]{2}\/
+                                                [A-Za-z0-9]{2}\/[A-Za-z0-9]{10}
+                                                \/
+                                                [A-Za-z0-9]{32}
+                                                \.jpg
+                                                }x).not_to be_blank
 
         expect(docs.last.name).to eq('hamster')
         expect(docs.last.mime_type).to eq('image/jpeg')
-        expect(docs.last.file.remote_url =~ %r/\/system\/dragonfly\/test\/[A-Za-z0-9]{2}\/[A-Za-z0-9]{2}\/[A-Za-z0-9]{2}\/[A-Za-z0-9]{10}\/[A-Za-z0-9]{32}\.jpg/).not_to be_blank
+        expect(docs.last.file.remote_url =~ %r{\/system\/dragonfly\/test\/
+                                               [A-Za-z0-9]{2}\/[A-Za-z0-9]{2}\/
+                                               [A-Za-z0-9]{2}\/[A-Za-z0-9]{10}
+                                               \/[A-Za-z0-9]{32}
+                                               \.jpg
+                                               }x).not_to be_blank
       end
     end
   end

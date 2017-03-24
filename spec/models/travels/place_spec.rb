@@ -10,8 +10,12 @@
 
 require 'rails_helper'
 RSpec.describe Travels::Place do
-  let(:place) { FactoryGirl.create(:trip, :with_filled_days).days.first.places.last }
-  let(:place_empty) { FactoryGirl.create(:trip, :with_filled_days).days.first.places.first }
+  let(:place) do
+    FactoryGirl.create(:trip, :with_filled_days).days.first.places.last
+  end
+  let(:place_empty) do
+    FactoryGirl.create(:trip, :with_filled_days).days.first.places.first
+  end
 
   describe '#city' do
     context 'when city is present' do
@@ -30,15 +34,15 @@ RSpec.describe Travels::Place do
     end
   end
 
-  describe '#is_empty?' do
+  describe '#empty?' do
     context 'when place with no data' do
       it 'returns true' do
-        expect(place_empty).to be_is_empty
+        expect(place_empty).to be_empty_content
       end
     end
     context 'when place has data' do
       it 'returns false' do
-        expect(place).not_to be_is_empty
+        expect(place).not_to be_empty_content
       end
     end
   end

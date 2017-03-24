@@ -24,7 +24,9 @@ module Concerns
     end
 
     def region
-      ::Geo::Region.where(region_code: region_code, country_code: country_code).first
+      ::Geo::Region.where(
+        region_code: region_code, country_code: country_code
+      ).first
     end
 
     def district
@@ -55,24 +57,6 @@ module Concerns
                         district_code: district_code,
                         region_code: region_code,
                         country_code: country_code).first
-    end
-
-    def update_from_geonames_string(str)
-      values = self.class.split_geonames_string(str)
-      update_attributes(
-        geonames_code: values[0].strip,
-        name: values[1].strip,
-        latitude: values[4].strip,
-        longitude: values[5].strip,
-        country_code: values[8].strip,
-        region_code: values[10].strip,
-        district_code: values[11].strip,
-        adm3_code: values[12].strip,
-        adm4_code: values[13].strip,
-        population: values[14].strip,
-        timezone: values[17].strip,
-        geonames_modification_date: values[18].strip
-      )
     end
 
     module ClassMethods

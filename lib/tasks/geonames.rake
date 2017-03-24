@@ -41,6 +41,43 @@ namespace :geo do
       Geo::Country.by_geonames_code(code)
   end
 
+  def update_from_geonames_string(object, str)
+    values = object.class.split_geonames_string(str)
+    object.update_attributes(
+      geonames_code: values[0].strip,
+      name: values[1].strip,
+      latitude: values[4].strip,
+      longitude: values[5].strip,
+      country_code: values[8].strip,
+      region_code: values[10].strip,
+      district_code: values[11].strip,
+      adm3_code: values[12].strip,
+      adm4_code: values[13].strip,
+      population: values[14].strip,
+      timezone: values[17].strip,
+      geonames_modification_date: values[18].strip
+    )
+  end
+
+  def city_update_from_geonames_string(object, str)
+    update_from_geonames_string(object, str)
+    values = Geo::City.split_geonames_string(str)
+    feature_code = values[7].strip
+    case feature_code
+    when 'PPLC'
+      object.status = Statuses::CAPITAL
+    when 'PPLA'
+      object.status = Statuses::REGION_CENTER
+    when 'PPLA2'
+      object.status = Statuses::DISTRICT_CENTER
+    when 'PPLA3'
+      object.status = Statuses::ADM3_CENTER
+    when 'PPLA4'
+      object.status = Statuses::ADM4_CENTER
+    end
+    object.save
+  end
+
   task :prepare, [] => :environment do
     outputFiles = {}
     DATA_FILES.each do |file_name|
@@ -84,7 +121,7 @@ namespace :geo do
           number += 1
 
           object = klass.create
-          object.update_from_geonames_string(line)
+          update_from_geonames_string(object, line)
 
           puts "Line #{number}" if number % 100 == 0
         end

@@ -50,23 +50,35 @@ module Geo
       ISO3166::Country.find_country_by_alpha2(iso_code)
     end
 
-    def self.find_by_term(term)
-      term = Regexp.escape(term)
-      all.with_translations.where('"country_translations"."name" ILIKE ?', "#{term}%").order(population: :desc)
-    end
-
-    def self.method_missing(m, *args, &block)
-      country_code = m.upcase
-      country = Geo::Country.where('iso_code = ? or iso3_code = ?', country_code, country_code).first
-      country ? country : super
-    end
-
     def visited_country_json
       {
         name: name(I18n.locale),
         iso3_code: iso3_code,
         flag_image: ApplicationController.helpers.flag(country_code, 32)
       }
+    end
+
+    def self.find_by_term(term)
+      term = Regexp.escape(term)
+      all.with_translations.where(
+        '"country_translations"."name" ILIKE ?', "#{term}%"
+      ).order(population: :desc)
+    end
+
+    def self.method_missing(m, *args, &block)
+      country_code = m.upcase
+      res = find_by_country_code(country_code)
+      res ? res : super
+    end
+
+    def self.respond_to_missing?(method_name, include_private = false)
+      super
+    end
+
+    def self.find_by_country_code(code)
+      Geo::Country.where(
+        'iso_code = ? or iso3_code = ?', code, code
+      ).first
     end
   end
 end

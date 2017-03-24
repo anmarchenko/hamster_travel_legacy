@@ -30,7 +30,11 @@ RSpec.describe ExternalLink do
 
   describe '#description' do
     context 'when url is valid with www' do
-      let(:link) { FactoryGirl.create :external_link, url: 'www.site.ru/jfhdsjfhj/hjfd?dsd=23' }
+      let(:link) do
+        FactoryGirl.create(
+          :external_link, url: 'www.site.ru/jfhdsjfhj/hjfd?dsd=23'
+        )
+      end
 
       it 'returns capitalized host name without www' do
         expect(link.description).to eq 'Site.ru'
@@ -44,7 +48,9 @@ RSpec.describe ExternalLink do
       end
     end
     context 'when url is valid with https' do
-      let(:link) { FactoryGirl.create :external_link, url: 'https://host.com/?' }
+      let(:link) do
+        FactoryGirl.create :external_link, url: 'https://host.com/?'
+      end
 
       it 'returns capitalized host name' do
         expect(link.description).to eq 'Host.com'

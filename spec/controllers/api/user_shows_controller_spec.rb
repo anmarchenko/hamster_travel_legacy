@@ -12,6 +12,10 @@ RSpec.describe Api::UserShowsController do
       let(:trip) { FactoryGirl.create :trip, users: [user] }
       let(:old_user_id) { user.id.to_s }
 
+      let(:redis) do
+        Redis.new(host: Settings.redis.host, port: 6379, driver: :hiredis)
+      end
+
       context 'and when there is trip' do
         context 'and when input params are valid' do
           it 'sets user as watching a trip and returning an empty list' do
@@ -20,8 +24,8 @@ RSpec.describe Api::UserShowsController do
             json = JSON.parse(response.body)
             expect(json).to eq(JSON.parse('[]'))
 
-            # check that redis have information about user
-            expect($redis.zrange(trip.id.to_s, 0, -1)).to eq(
+            # check that redis has information about user
+            expect(redis.zrange(trip.id.to_s, 0, -1)).to eq(
               [user.id.to_s]
             )
           end
@@ -32,7 +36,7 @@ RSpec.describe Api::UserShowsController do
               trip.users << user
               trip.save
 
-              $redis.zadd(trip.id.to_s, Time.now.to_i, another_user.id)
+              redis.zadd(trip.id.to_s, Time.now.to_i, another_user.id)
 
               get 'show', params: { id: trip.id.to_s }, format: :json
 

@@ -49,7 +49,9 @@ RSpec.describe Updaters::DayExpenses do
         updated_expenses = first_day_of(trip).expenses
         expect(updated_expenses.count).to eq 1
         expect(updated_expenses.first.reload.name).to eq 'updated_name'
-        expect(updated_expenses.first.reload.amount).to eq(Money.new(45_600, 'EUR'))
+        expect(updated_expenses.first.reload.amount).to eq(
+          Money.new(45_600, 'EUR')
+        )
       end
 
       it 'updates expense when amount is empty' do

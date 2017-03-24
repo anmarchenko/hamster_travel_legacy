@@ -45,7 +45,7 @@ gem 'bootstrap-datepicker-rails'
 gem 'puma'
 
 # docx
-gem 'docx_rails', github: 'altmer/docx-rails'
+gem 'docx_rails', git: 'https://github.com/altmer/docx-rails'
 gem 'rubyzip'
 gem 'zip-zip' # will load compatibility for old rubyzip API.
 
@@ -74,7 +74,7 @@ gem 'config'
 
 # translations for models
 gem 'activemodel-serializers-xml'
-gem 'globalize', github: 'globalize/globalize'
+gem 'globalize', git: 'https://github.com/globalize/globalize'
 
 # inline svg for styling
 gem 'inline_svg'
@@ -94,6 +94,8 @@ group :production do
 end
 
 group :development do
+  gem 'brakeman'
+  gem 'bundler-audit'
   gem 'rubocop'
 end
 

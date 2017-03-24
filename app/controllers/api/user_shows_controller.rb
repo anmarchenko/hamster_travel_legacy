@@ -6,12 +6,7 @@ module Api
     before_action :authorize
 
     def show
-      $redis.zadd(params[:id], Time.now.to_i, current_user.id)
-      $redis.zremrangebyscore(params[:id], '-inf', (Time.now - 10.seconds).to_i)
-      res = $redis.zrange(params[:id], 0, -1).map do |user_id|
-        User.find(user_id).try(:full_name) unless user_id == current_user.id.to_s
-      end.compact
-      render json: res
+      render json: Presence.new.present_users(params[:id], current_user.id)
     end
 
     def find_trip

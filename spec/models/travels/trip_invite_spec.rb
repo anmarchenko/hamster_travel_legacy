@@ -16,8 +16,11 @@ RSpec.describe Travels::TripInvite do
   let(:invited_user) { FactoryGirl.create(:user) }
 
   it 'connects users and trip' do
-    trip_invite = Travels::TripInvite.create(trip_id: trip.id, inviting_user_id: inviting_user.id,
-                                             invited_user_id: invited_user.id)
+    trip_invite = Travels::TripInvite.create(
+      trip_id: trip.id,
+      inviting_user_id: inviting_user.id,
+      invited_user_id: invited_user.id
+    )
 
     expect(trip_invite.persisted?).to eq(true)
     expect(trip.pending_invites.count).to eq(1)

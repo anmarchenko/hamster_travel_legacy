@@ -38,7 +38,7 @@ module Travels
     default_scope { includes(:city_from, :city_to) }
 
     before_save do |transfer|
-      transfer.set_date(transfer.day.date_when) if transfer.day
+      transfer.date = transfer.day.date_when if transfer.day
     end
 
     module Types
@@ -70,28 +70,31 @@ module Travels
     end
 
     def type_icon
-      icon = ActionController::Base.helpers.image_path("transfers/#{Types::ICONS[type]}") unless type.blank?
-      icon = ActionController::Base.helpers.image_path('transfers/arrow.svg') if icon.blank?
+      unless type.blank?
+        icon = ActionController::Base.helpers.image_path(
+          "transfers/#{Types::ICONS[type]}"
+        )
+      end
+      icon ||= ActionController::Base.helpers.image_path('transfers/arrow.svg')
       icon
     end
 
-    def set_date!(new_date)
-      set_date(new_date)
+    def date!(new_date)
+      self.date = new_date
       save
     end
 
-    def set_date(new_date)
+    def date=(new_date)
       return if new_date.blank?
       if start_time.present?
         self.start_time = start_time.change(day: new_date.day,
                                             year: new_date.year,
                                             month: new_date.month)
       end
-      if end_time.present?
-        self.end_time = end_time.change(day: new_date.day,
-                                        year: new_date.year,
-                                        month: new_date.month)
-      end
+      return if end_time.blank?
+      self.end_time = end_time.change(day: new_date.day,
+                                      year: new_date.year,
+                                      month: new_date.month)
     end
 
     def serializable_hash(_args)

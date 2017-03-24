@@ -18,7 +18,9 @@ RSpec.describe Travels::Document do
     let(:file) { File.open("#{::Rails.root}/spec/fixtures/files/cat.jpg") }
 
     it 'is possible to create new document for given trip' do
-      document = Travels::Document.new(name: 'My awesome cat', trip: trip, mime_type: 'image/jpeg')
+      document = Travels::Document.new(
+        name: 'My awesome cat', trip: trip, mime_type: 'image/jpeg'
+      )
       document.store(file)
       document.save
 
@@ -26,7 +28,12 @@ RSpec.describe Travels::Document do
       doc = trip.documents.first
       expect(doc.name).to eq('My awesome cat')
       expect(doc.mime_type).to eq('image/jpeg')
-      expect(doc.file.remote_url =~ %r/\/system\/dragonfly\/test\/[A-Za-z0-9]{2}\/[A-Za-z0-9]{2}\/[A-Za-z0-9]{2}\/[A-Za-z0-9]{10}\/[A-Za-z0-9]{32}\.jpg/).not_to be_blank
+      expect(doc.file.remote_url =~ %r{
+        \/system\/dragonfly\/test\/
+        [A-Za-z0-9]{2}\/[A-Za-z0-9]{2}\/
+        [A-Za-z0-9]{2}\/[A-Za-z0-9]{10}\/
+        [A-Za-z0-9]{32}\.jpg
+      }x).not_to be_blank
     end
   end
 

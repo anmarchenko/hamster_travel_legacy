@@ -26,7 +26,9 @@ module Geo
 
     def self.find_by_term(term)
       term = Regexp.escape(term)
-      all.with_translations.where('"adm3_translations"."name" ILIKE ?', "#{term}%").order(population: :desc)
+      all.with_translations.where(
+        '"adm3_translations"."name" ILIKE ?', "#{term}%"
+      ).order(population: :desc)
     end
   end
 end

@@ -48,7 +48,9 @@ RSpec.describe Travels::Activity do
   end
 
   describe '#link_description' do
-    let(:activity) { FactoryGirl.create(:trip, :with_filled_days).days.first.activities.first }
+    let(:activity) do
+      FactoryGirl.create(:trip, :with_filled_days).days.first.activities.first
+    end
 
     it 'returns host' do
       expect(activity.link_description).to eq 'Cool.site'
@@ -56,7 +58,9 @@ RSpec.describe Travels::Activity do
   end
 
   describe '#as_json' do
-    let(:activity) { FactoryGirl.create(:trip, :with_filled_days).days.first.activities.first }
+    let(:activity) do
+      FactoryGirl.create(:trip, :with_filled_days).days.first.activities.first
+    end
     let(:activity_json) { activity.as_json }
 
     it 'has string id field' do
@@ -69,7 +73,9 @@ RSpec.describe Travels::Activity do
       expect(activity_json['name']).to eq(activity.name)
       expect(activity_json['amount_cents']).to eq(activity.amount_cents)
       expect(activity_json['amount_currency']).to eq(activity.amount_currency)
-      expect(activity_json['amount_currency_text']).to eq(activity.amount.currency.symbol)
+      expect(activity_json['amount_currency_text']).to eq(
+        activity.amount.currency.symbol
+      )
       expect(activity_json['comment']).to eq(activity.comment)
       expect(activity_json['link_description']).to eq(activity.link_description)
       expect(activity_json['link_url']).to eq(activity.link_url)
