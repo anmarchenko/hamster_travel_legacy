@@ -20,7 +20,7 @@
                   </div>
                   <div class="activities-actions">
                     <% if @user_can_edit %>
-                        <% if @trip.days.count > 1 %>
+                        <% if @multiday %>
                             <div class="activity-action-link hidden-xs" ng-controller="DaySorterController" ng-hide="edit">
                               <a class="link-with-icon" href="javascript:void(0);" ng-click="startSorting('<%= @trip.id %>')" ng-disabled="reloading">
                                 <%= inline_svg 'buttons/reorder.svg' %>
@@ -152,7 +152,7 @@
                           ({{activity.in_user_currency.amount_cents / 100.0 | number: 2}} {{activity.in_user_currency.amount_currency_text}})
                         </i>
                       </span>
-                      <% if @trip.days.count > 1 && @user_can_edit %>
+                      <% if @multiday && @user_can_edit %>
                         <a class="move-activity hidden-xs" href="javascript:void(0);" popover-placement="top" popover-title="<%= t('trips.show.move_activity') %>" popover-trigger="'outsideClick'" uib-popover-template="'moveActivity.html'">
                           <%= image_tag 'buttons/reorder.svg' %>
                         </a>
@@ -202,7 +202,7 @@
                       <a class="delete-activity" href="javascript:void(0);" ng-click="remove(day.activities, $index)">
                         <%= image_tag 'buttons/delete.svg' %>
                       </a>
-                      <% if @trip.days.count > 1 %>
+                      <% if @multiday %>
                         <a class="move-activity hidden-xs" href="javascript:void(0);" popover-placement="top" popover-title="<%= t('trips.show.move_activity') %>" popover-trigger="'outsideClick'" uib-popover-template="'moveActivity.html'">
                           <%= image_tag 'buttons/reorder.svg' %>
                         </a>

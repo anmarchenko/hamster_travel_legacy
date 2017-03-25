@@ -8,9 +8,10 @@ module Api
 
     def index
       render json: {
-        days: @trip.days.includes(:transfers, :hotel, :places)
-          .as_json(user_currency: current_user.try(:currency),
-                   include: [:transfers, :hotel, :places])
+        days: @trip.days.includes(
+          { transfers: :links }, { hotel: :links }, :places
+        ).as_json(user_currency: current_user.try(:currency),
+                  include: [:transfers, :hotel, :places])
       }
     end
 

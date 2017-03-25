@@ -16,11 +16,15 @@ module Travels
     default_scope { includes(:city) }
 
     def city_text
-      city.try(:translated_name, I18n.locale)
+      city&.translated_name(I18n.locale)
     end
 
     def country_code
-      city.try(:country_code)
+      city&.country_code
+    end
+
+    def country
+      city&.country
     end
 
     def empty_content?

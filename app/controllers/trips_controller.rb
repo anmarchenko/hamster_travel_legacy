@@ -50,6 +50,7 @@ class TripsController < ApplicationController
 
   def show
     @user_can_edit = (user_signed_in? && @trip.include_user(current_user))
+    @multiday = @trip.days.count > 1
 
     respond_to do |format|
       format.html

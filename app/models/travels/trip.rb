@@ -73,6 +73,11 @@ module Travels
       visited_cities.map(&:country_code).uniq || []
     end
 
+    def visited_countries
+      Geo::Country.where(country_code: visited_countries_codes)
+                  .with_translations
+    end
+
     dragonfly_accessor :image
 
     def image_url_or_default
@@ -253,8 +258,8 @@ module Travels
       %w(id name start_date).each do |field|
         res[field] = send(field)
       end
-      res['countries'] = visited_countries_codes.map do |country_code|
-        ApplicationController.helpers.flag(country_code, flag_size)
+      res['countries'] = visited_countries.map do |country|
+        ApplicationController.helpers.flag_with_title(country, flag_size)
       end
       res['image_url'] = image_url_or_default
       res

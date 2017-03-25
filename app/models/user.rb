@@ -71,8 +71,6 @@ class User < ApplicationRecord
                      message: 'should be either .jpeg, .jpg, .png, .bmp',
                      if: :image_changed?
 
-  default_scope { includes(:home_town) }
-
   def home_town_text
     home_town.try(:translated_name, I18n.locale)
   end

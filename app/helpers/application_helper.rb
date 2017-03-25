@@ -17,13 +17,7 @@ module ApplicationHelper
   end
 
   def default_currency_text_for_trip(trip, user)
-    currency = default_currency_for_trip(trip, user)
-    currency = Money::Currency.find(currency)
-    currency.try(:symbol)
-  end
-
-  def exchange_money(from, to, amount)
-    Money.new(amount * 100, from).exchange_to(to)
+    Money::Currency.find(default_currency_for_trip(trip, user))&.symbol
   end
 
   def error_messages!(object)
@@ -87,13 +81,22 @@ module ApplicationHelper
     (l trip.start_date, format: :month).html_safe if trip.start_date.present?
   end
 
+  def flag_with_title(country, size = 16)
+    return '' if country.blank?
+    country_code = country.country_code
+    "<img src='#{flag_url(country_code, size)}' class='flag flag-#{size}'" \
+    " title='#{country&.name}' />".html_safe
+  end
+
   def flag(country_code, size = 16)
     return '' if country_code.blank?
-    url = "#{Settings.images.base_url}/#{Settings.images.flags_folder}" \
-          "/#{size}/#{country_code.downcase}.png"
-    country = Geo::Country.send(country_code)
-    "<img src='#{url}' class='flag flag-#{size}'" \
-    " title='#{country.try(:name)}' />".html_safe
+    "<img src='#{flag_url(country_code, size)}'" \
+    " class='flag flag-#{size}'/>".html_safe
+  end
+
+  def flag_url(country_code, size)
+    "#{Settings.images.base_url}/#{Settings.images.flags_folder}" \
+    "/#{size}/#{country_code.downcase}.png"
   end
 
   def days_count(trip)
