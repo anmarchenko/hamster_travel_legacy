@@ -14,11 +14,11 @@ is budget counting - so when user enters any prices, trip budget gets recalculat
 ## Current stack
 
 * Ruby 2.4
-* Rails 5.0.1
-* Angularjs 1.5.8
+* Rails 5.0.2
+* Angularjs 1.6.2
 * Postgresql 9.3
 * Redis 3.2
-* Docker 1.13
+* Docker
 
 ## Setup
 
