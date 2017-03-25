@@ -4,7 +4,9 @@ AllCops:
   - db/**/*.rb
   - lib/tasks/**/*.rake
   - config/initializers/*.rb
-  - vendor/**/*.*
+  - vendor/**/*
+  - tmp/**/*
+  - bin/**/*
 
 Metrics/BlockLength:
   Max: 25
