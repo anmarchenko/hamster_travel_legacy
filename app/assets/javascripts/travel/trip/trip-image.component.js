@@ -9,7 +9,9 @@ angular.module('travel').component('tripImage', {
 });
 
 angular.module('travel').controller('TripImageController', ['$scope', 'Upload', 'crop', '$http', function ($scope, Upload, crop, $http) {
-    $scope.imageUrl = $scope.$ctrl.imageUrl;
+    $scope.$ctrl.$onInit = function() {
+      $scope.imageUrl = $scope.$ctrl.imageUrl;
+    }
 
     const upload = function (image) {
         $scope.uploading = true;

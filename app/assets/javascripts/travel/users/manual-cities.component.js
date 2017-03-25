@@ -16,7 +16,7 @@ angular.module('travel').controller('ManualCitiesController',
           return;
         }
         $scope.processing = true;
-        $http.get('/' + LOCALE + '/api/users/' + $scope.$ctrl.userId + '/manual_cities').success(function(data) {
+        $http.get('/' + LOCALE + '/api/users/' + $scope.$ctrl.userId + '/manual_cities').then(function(response) {
           $scope.processing = false;
 
           $uibModal.open({
@@ -40,9 +40,9 @@ angular.module('travel').controller('ManualCitiesController',
                       manual_cities_ids: $scope.cities.map(function(city){
                         return city.id;
                       })
-                    }).success(function(data) {
+                    }).then(function() {
                       window.location.reload();
-                    }).error(function(data){
+                    }, function(data){
                       console.log(data);
                       swal({
                           title: $('#generic_error_title').text(),
@@ -71,18 +71,18 @@ angular.module('travel').controller('ManualCitiesController',
                     return $scope.$ctrl.userId;
                   },
                   cities: function() {
-                    return data.manual_cities;
+                    return response.data.manual_cities;
                   }
               }
           });
-        }).error(function(data){
-          console.log(data);
-          $scope.processing = false;
-          swal({
-              title: $('#generic_error_title').text(),
-              text: $('#generic_error_text').text(),
-              type: 'error'
-          });
+        }, function(data){
+             console.log(data);
+             $scope.processing = false;
+             swal({
+               title: $('#generic_error_title').text(),
+               text: $('#generic_error_text').text(),
+               type: 'error'
+             });
         });
     }
 }]);

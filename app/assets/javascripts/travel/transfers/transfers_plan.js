@@ -35,7 +35,7 @@ angular.module('travel').controller('TransfersPlanController', [
                 }
                 $scope.saving = true;
 
-                $http.post("/api/trips/" + $scope.trip_id + "/days_transfers/", {days: $scope.days}).success(function () {
+                $http.post("/api/trips/" + $scope.trip_id + "/days_transfers/", {days: $scope.days}).then(function () {
                     $scope.saving = false;
                     toastr["success"]($('#notification_saved').text());
 

@@ -11,8 +11,8 @@ angular.module('travel').controller('CountriesListController'
             }
 
             $scope.load = function () {
-                $http.get('/api/countries/' + $scope.trip_id).success(function(response){
-                    $scope.countries = response.countries;
+                $http.get('/api/countries/' + $scope.trip_id).then(function(response){
+                    $scope.countries = response.data.countries;
 
                     $scope.countries_loaded = true;
                 });

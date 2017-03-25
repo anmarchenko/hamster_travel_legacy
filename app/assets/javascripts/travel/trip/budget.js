@@ -12,8 +12,8 @@ angular.module('travel').controller('BudgetController'
             }
 
             $scope.load = function () {
-                $http.get('/api/budgets/' + $scope.trip_id).success(function(response){
-                    var budget = response.budget;
+                $http.get('/api/budgets/' + $scope.trip_id).then(function(response){
+                    var budget = response.data.budget;
                     $scope.budget = budget.sum;
                     $scope.transfers_hotel_budget = budget.transfers_hotel_budget;
                     $scope.activities_other_budget = budget.activities_other_budget;
@@ -26,7 +26,7 @@ angular.module('travel').controller('BudgetController'
 
             $scope.saveBudget = function () {
                 $scope.edit_persons_count = false;
-                $http.put('/api/budgets/' + $scope.trip_id, {budget_for: $scope.budget_for}).success(function () {
+                $http.put('/api/budgets/' + $scope.trip_id, {budget_for: $scope.budget_for}).then(function () {
                     toastr["success"]($('#notification_saved').text());
                 });
             };

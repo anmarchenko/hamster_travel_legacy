@@ -1,5 +1,9 @@
 angular.module('travel').controller('DocumentsController', ['$scope', '$http', 'Upload', function($scope, $http, Upload) {
-    $scope.documents_loaded = false;
+    $scope.$ctrl.$onInit = function() {
+      $scope.documents_loaded = false;
+      $scope.loadDocuments();
+    }
+
     $scope.loadDocuments = function () {
         $http.get('/api/trips/' + $scope.$ctrl.tripId + '/documents').then(function (response) {
             $scope.documents = response.data.documents;
@@ -32,6 +36,4 @@ angular.module('travel').controller('DocumentsController', ['$scope', '$http', '
         });
 
     };
-
-    $scope.loadDocuments();
 }]);

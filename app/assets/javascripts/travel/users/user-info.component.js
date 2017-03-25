@@ -13,6 +13,10 @@ function ($scope, $http, crop, Upload) {
     $scope.editing = false;
     $scope.saving = false;
 
+    $scope.$ctrl.$onInit = function() {
+      $scope.load();
+    }
+
     const upload = function (image) {
         $scope.uploading = true;
 
@@ -89,5 +93,4 @@ function ($scope, $http, crop, Upload) {
         $scope.editing = false;
     }
 
-    $scope.load();
 }]);

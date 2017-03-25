@@ -51,7 +51,8 @@ angular.module('travel').controller('TransfersDayController'
             };
 
             $scope.reload = function () {
-                $http.get($scope.apiUrl()).success(function (day) {
+                $http.get($scope.apiUrl()).then(function (response) {
+                    var day = response.data;
                     $scope.day = day;
 
                     $scope.loadBudget();
@@ -83,7 +84,7 @@ angular.module('travel').controller('TransfersDayController'
 
             $scope.save = function () {
                 $http.post($scope.apiUrl(),
-                    {day: $scope.day}).success(function () {
+                    {day: $scope.day}).then(function () {
 
                     $scope.reload();
                     toastr["success"]($('#notification_saved').text());
@@ -104,8 +105,8 @@ angular.module('travel').controller('TransfersDayController'
                     var prev_place = $scope.day.places[place_index - 1];
                     $scope.copyPlace(prev_place, place);
                 } else {
-                    $http.get($scope.apiUrl() + "/previous_place").success(function (data) {
-                        $scope.copyPlace(data.place, place);
+                    $http.get($scope.apiUrl() + "/previous_place").then(function (response) {
+                        $scope.copyPlace(response.data.place, place);
                     });
                 }
             };
@@ -125,8 +126,8 @@ angular.module('travel').controller('TransfersDayController'
             };
 
             $scope.fillAsPreviousHotel = function (hotel) {
-                $http.get($scope.apiUrl() + "/previous_hotel").success(function (data) {
-                    $scope.copyHotel(data.hotel, hotel);
+                $http.get($scope.apiUrl() + "/previous_hotel").then(function (response) {
+                    $scope.copyHotel(response.data.hotel, hotel);
                 });
             };
 

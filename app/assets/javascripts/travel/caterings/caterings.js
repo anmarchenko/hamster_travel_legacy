@@ -12,8 +12,8 @@ angular.module('travel').controller('CateringsController'
             };
 
             $scope.load = function () {
-                $http.get('/api/caterings/' + $scope.trip_id).success( function(response) {
-                    $scope.caterings = response.caterings;
+                $http.get('/api/caterings/' + $scope.trip_id).then( function(response) {
+                    $scope.caterings = response.data.caterings;
                     $scope.caterings_loaded = true;
                 })
             };
@@ -24,7 +24,7 @@ angular.module('travel').controller('CateringsController'
                 }
                 $scope.saving = true;
 
-                $http.put('/api/caterings/' + $scope.trip_id, {trip: {caterings: $scope.caterings}}).success(function () {
+                $http.put('/api/caterings/' + $scope.trip_id, {trip: {caterings: $scope.caterings}}).then(function () {
                     $scope.saving = false;
 
                     toastr["success"]($('#notification_saved').text());
