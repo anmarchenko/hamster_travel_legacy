@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Json
   class AmountUserCurrency
     attr_accessor :user_currency

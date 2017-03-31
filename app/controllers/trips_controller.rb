@@ -1,12 +1,13 @@
 # frozen_string_literal: true
+
 class TripsController < ApplicationController
   TRANSFERS_GRID = [0.1, 0.1, 0.45, 0.35].freeze
 
-  before_action :authenticate_user!, only: [:edit, :update, :new,
-                                            :create, :my, :drafts]
-  before_action :find_trip, only: [:show, :edit, :update]
-  before_action :find_original_trip, only: [:new, :create]
-  before_action :authorize, only: [:edit, :update]
+  before_action :authenticate_user!, only: %i(edit update new
+                                              create my drafts)
+  before_action :find_trip, only: %i(show edit update)
+  before_action :find_original_trip, only: %i(new create)
+  before_action :authorize, only: %i(edit update)
   before_action :authorize_destroy, only: [:destroy]
   before_action :authorize_show, only: [:show]
 

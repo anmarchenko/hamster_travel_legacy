@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 RSpec.describe Updaters::Transfers do
   let(:trip) { FactoryGirl.create(:trip) }

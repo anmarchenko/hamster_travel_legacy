@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Updaters
   class Trip
     attr_accessor :trip

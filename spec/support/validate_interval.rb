@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 RSpec.shared_examples(
   'a model with date interval'
 ) do |model_factory, start_date_field, end_date_field|

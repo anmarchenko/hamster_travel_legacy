@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 RSpec.shared_examples(
   'a model with unique field'
 ) do |model_factory, field, case_sensitive|

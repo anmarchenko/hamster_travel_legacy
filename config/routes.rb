@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Rails.application.routes.draw do
   match '/404', to: 'errors#not_found', via: :all
 
@@ -20,41 +21,41 @@ Rails.application.routes.draw do
         get :my, :drafts
       end
     end
-    resources :messages, only: [:index, :destroy, :update]
+    resources :messages, only: %i(index destroy update)
 
     namespace :api do
       resources :cities, only: [:index]
-      resources :users, only: [:index, :show, :update] do
+      resources :users, only: %i(index show update) do
         member do
           post :upload_image, :delete_image
           get :planned_trips, :finished_trips, :visited
         end
-        resources :manual_cities, only: [:index, :create]
+        resources :manual_cities, only: %i(index create)
       end
       resources :participants, only: [:index]
-      resources :trip_invites, only: [:create, :destroy]
-      resources :trips, only: [:index, :destroy] do
+      resources :trip_invites, only: %i(create destroy)
+      resources :trips, only: %i(index destroy) do
         member do
           post :upload_image, :delete_image
         end
 
-        resources :days_sorting, only: [:index, :create]
+        resources :days_sorting, only: %i(index create)
         resources :days, only: [] do
-          resources :activities, only: [:index, :create]
-          resources :transfers, only: [:index, :create] do
+          resources :activities, only: %i(index create)
+          resources :transfers, only: %i(index create) do
             collection do
               get :previous_place, :previous_hotel
             end
           end
         end
-        resources :days_activities, only: [:index, :create]
-        resources :days_transfers, only: [:index, :create]
+        resources :days_activities, only: %i(index create)
+        resources :days_transfers, only: %i(index create)
         resources :documents
       end
-      resources :caterings, only: [:show, :update]
+      resources :caterings, only: %i(show update)
       resources :user_shows, only: [:show]
-      resources :reports, only: [:show, :update]
-      resources :budgets, only: [:show, :update]
+      resources :reports, only: %i(show update)
+      resources :budgets, only: %i(show update)
       resources :countries, only: [:show]
     end
   end

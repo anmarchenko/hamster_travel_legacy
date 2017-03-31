@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Finders
   module Trips
     module_function

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trips
@@ -81,9 +82,8 @@ module Travels
     dragonfly_accessor :image
 
     def image_url_or_default
-      image.try(:remote_url) || ActionController::Base.helpers.image_url(
-        'plan/camera.svg'
-      )
+      image&.remote_url(host: Settings.media.cdn_host) ||
+        ActionController::Base.helpers.image_url('plan/camera.svg')
     end
 
     def status_text
@@ -115,12 +115,12 @@ module Travels
 
     validates_property :format,
                        of: :image,
-                       in: [:jpeg, :jpg, :png, :bmp],
+                       in: %i(jpeg jpg png bmp),
                        case_sensitive: false,
                        message: 'should be either .jpeg, .jpg, .png, .bmp',
                        if: :image_changed?
 
-    default_scope -> { where(archived: false) }
+    default_scope(-> { where(archived: false) })
 
     before_save :set_model_state
     after_create :update_plan!

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Api
   class ActivitiesController < ApplicationController
     before_action :find_trip
@@ -10,7 +11,7 @@ module Api
     def index
       render json: @day.as_json(
         user_currency: current_user.try(:currency),
-        include: [:expenses, :activities, :links, :places]
+        include: %i(expenses activities links places)
       )
     end
 
@@ -30,13 +31,13 @@ module Api
     def day_params
       params.require(:day).permit(
         :comment,
-        activities: [
-          :id, :name, :comment, :link_url, :amount_cents, :amount_currency,
-          :rating, :address, :working_hours
-        ],
-        links: [:id, :description, :url],
-        expenses: [:id, :name, :amount_cents, :amount_currency],
-        places: [:id, :city_id]
+        activities: %i(
+          id name comment link_url amount_cents amount_currency
+          rating address working_hours
+        ),
+        links: %i(id description url),
+        expenses: %i(id name amount_cents amount_currency),
+        places: %i(id city_id)
       )
     end
 

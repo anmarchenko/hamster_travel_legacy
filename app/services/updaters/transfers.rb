@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Updaters
   class Transfers < Updaters::Entity
     attr_accessor :day, :transfers

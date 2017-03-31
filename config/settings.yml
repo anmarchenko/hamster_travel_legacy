@@ -2,9 +2,8 @@ app_host: http://hamster.travel
 s3:
   key: <%= ENV['AWS_S3_KEY'] %>
   secret: <%= ENV['AWS_S3_SECRET'] %>
-images:
-  base_url: 'https://s3.eu-central-1.amazonaws.com/hamster-travel-images'
-  flags_folder: 'flags'
+media:
+  cdn_host: d2fetf4i8a4kn6.cloudfront.net
 rollbar:
   token: <%= ENV['ROLLBAR_ACCESS_TOKEN'] %>
 new_relic:

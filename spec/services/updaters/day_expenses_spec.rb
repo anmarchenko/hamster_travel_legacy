@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 RSpec.describe Updaters::DayExpenses do
   def first_day_of(tr)

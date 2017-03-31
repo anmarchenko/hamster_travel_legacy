@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 RSpec.describe Updaters::Hotel do
   let(:trip) { FactoryGirl.create(:trip) }

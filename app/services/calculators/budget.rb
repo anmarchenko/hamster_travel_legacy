@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Calculators
   class Budget
     attr_accessor :trip, :currency

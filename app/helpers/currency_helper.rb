@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module CurrencyHelper
   DEFAULT_CURRENCY = 'EUR'
   IMPORTANT_CURRENCIES = %w(RUB EUR USD GBP).freeze

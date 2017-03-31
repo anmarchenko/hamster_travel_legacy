@@ -1,18 +1,19 @@
 # frozen_string_literal: true
+
 module Api
   class TransfersController < ApplicationController
     before_action :find_trip
     before_action :find_day
     before_action :authenticate_user!, only: [:create]
     before_action :authorize, only: [:create]
-    before_action :api_authorize_readonly!, only: [
-      :index, :previous_place, :previous_hotel
-    ]
+    before_action :api_authorize_readonly!, only: %i(
+      index previous_place previous_hotel
+    )
 
     def index
       render json: @day.as_json(
         user_currency: current_user.try(:currency),
-        include: [:transfers, :hotel, :places]
+        include: %i(transfers hotel places)
       )
     end
 
@@ -46,15 +47,15 @@ module Api
         transfers: [
           :id, :type, :code, :company, :station_from, :station_to, :start_time,
           :end_time, :comment, :amount_cents, :amount_currency, :city_to_id,
-          :city_from_id, { links: [:id, :url, :description] }
+          :city_from_id, { links: %i(id url description) }
         ],
         hotel: [
           :id, :name, :comment, :amount_cents, :amount_currency,
-          { links: [:id, :url, :description] }
+          { links: %i(id url description) }
         ],
-        places: [
-          :id, :city_id
-        ]
+        places: %i(
+          id city_id
+        )
       )
     end
 

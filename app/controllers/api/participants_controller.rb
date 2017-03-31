@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Api
   class ParticipantsController < ApplicationController
     before_action :find_trip

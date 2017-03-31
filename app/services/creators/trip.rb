@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Creators
   class Trip
     attr_accessor :original
@@ -47,7 +48,7 @@ module Creators
     end
 
     def excluded_fields
-      [:short_description, :private, :comment, :image_uid]
+      %i(short_description private comment image_uid)
     end
   end
 end

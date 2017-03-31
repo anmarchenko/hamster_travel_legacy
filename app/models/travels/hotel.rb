@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: hotels
@@ -31,7 +32,7 @@ module Travels
     end
 
     def empty_content?
-      [:name, :comment].each do |field|
+      %i(name comment).each do |field|
         return false unless send(field).blank?
       end
       (links || []).each do |link|

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Api
   class DaysSortingController < ApplicationController
     before_action :find_trip

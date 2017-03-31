@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Updaters
   class Caterings < Updaters::Entity
     attr_accessor :trip, :caterings

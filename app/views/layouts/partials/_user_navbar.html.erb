@@ -41,7 +41,7 @@
          uib-popover-template="'profileMenu.html'"
       >
         <% if current_user.image_url.present? %>
-            <img class="img-circle img-nav" id="profile_image" src="<%= current_user.image_url %>"/>
+            <img class="img-circle img-nav" id="profile_image" src="<%= current_user.image_url %>" height="40" width="40"/>
         <% else %>
             <div class="<%= current_user.background_color %> img-circle img-nav initials" id="profile_image">
               <%= current_user.initials %>

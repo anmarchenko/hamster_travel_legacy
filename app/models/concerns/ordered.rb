@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'active_support/concern'
 
 module Concerns
@@ -6,7 +7,7 @@ module Concerns
     extend ActiveSupport::Concern
 
     included do
-      default_scope -> { order(order_index: :asc) }
+      default_scope(-> { order(order_index: :asc) })
     end
 
     def as_json(**args)

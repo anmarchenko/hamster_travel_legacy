@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 RSpec.describe Api::TransfersController do
   let(:user) { FactoryGirl.create(:user) }

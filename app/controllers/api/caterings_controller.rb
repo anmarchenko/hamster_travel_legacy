@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Api
   class CateringsController < ApplicationController
     before_action :find_trip
@@ -28,10 +29,10 @@ module Api
 
     def params_caterings
       params.require(:trip).permit(caterings:
-      [
-        :id, :name, :description, :days_count, :persons_count,
-        :amount_cents, :amount_currency
-      ])
+      %i(
+        id name description days_count persons_count
+        amount_cents amount_currency
+      ))
     end
 
     def find_trip

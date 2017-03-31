@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Updaters
   class Entity
     def delete_nested(collection, params)

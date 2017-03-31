@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Finders
   class Cities
     EMPTY_TERM = '[$empty$]'

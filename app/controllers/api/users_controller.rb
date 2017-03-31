@@ -1,14 +1,15 @@
 # frozen_string_literal: true
+
 module Api
   class UsersController < ApplicationController
-    before_action :authenticate_user!, only: [
-      :upload_image, :delete_image, :update
-    ]
-    before_action :find_user, only: [
-      :show, :update, :upload_image, :delete_image,
-      :planned_trips, :finished_trips, :visited
-    ]
-    before_action :authorize, only: [:upload_image, :delete_image, :update]
+    before_action :authenticate_user!, only: %i(
+      upload_image delete_image update
+    )
+    before_action :find_user, only: %i(
+      show update upload_image delete_image
+      planned_trips finished_trips visited
+    )
+    before_action :authorize, only: %i(upload_image delete_image update)
 
     def index
       render json: Finders::Users.search(params[:term], current_user)

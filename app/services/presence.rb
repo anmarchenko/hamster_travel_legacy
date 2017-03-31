@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Presence
   def initialize
     @client = Redis.new(host: Settings.redis.host, port: 6379, driver: :hiredis)

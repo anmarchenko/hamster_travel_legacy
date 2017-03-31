@@ -5,7 +5,7 @@
         <div class="trip-row">
           <div class="image-cell hidden-xs hidden-sm">
             <%= link_to trip_path(trip) do %>
-                <img class="img-responsive" src="<%= trip.image_url_or_default %>"/>
+                <img class="img-responsive" src="<%= trip.image_url_or_default %>" width="100" height="100"/>
             <% end %>
           </div>
           <div class="content-cell">
@@ -48,7 +48,7 @@
             <div class="tags">
               <% if trip.comment.present? %>
                   <div class="tag tag-icon" tooltip-append-to-body="true" tooltip-placement="bottom" uib-tooltip="<%= t('trips.index.with_report') %>">
-                    <%= image_tag 'plan/report.svg' %>
+                    <%= image_tag 'plan/report.svg', width: 15, height: 15 %>
                   </div>
               <% end %>
               <div class="tag status-tag <%= trip_status_class(trip.status_code) %>">

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -53,7 +54,7 @@ class User < ApplicationRecord
   # photo
   dragonfly_accessor :image
   def image_url
-    image.try(:remote_url)
+    image&.remote_url(host: Settings.media.cdn_host)
   end
 
   # User data
@@ -66,7 +67,7 @@ class User < ApplicationRecord
                             if: :image_changed?
 
   validates_property :format,
-                     of: :image, in: [:jpeg, :jpg, :png, :bmp],
+                     of: :image, in: %i(jpeg jpg png bmp),
                      case_sensitive: false,
                      message: 'should be either .jpeg, .jpg, .png, .bmp',
                      if: :image_changed?

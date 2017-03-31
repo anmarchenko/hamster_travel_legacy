@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 RSpec.describe Updaters::Caterings do
   def update_trip_caterings(tr, prms)

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Api
   class DaysActivitiesController < ApplicationController
     before_action :find_trip
@@ -11,7 +12,7 @@ module Api
         days: @trip.days.includes(
           :expenses, :activities, :links, places: { city: :translations }
         ).as_json(user_currency: current_user.try(:currency),
-                  include: [:expenses, :activities, :links, :places])
+                  include: %i(expenses activities links places))
       }
     end
 
@@ -38,22 +39,22 @@ module Api
                           :id,
                           :comment,
                           {
-                            activities: [
-                              :id, :name, :comment, :link_url, :amount_cents,
-                              :amount_currency, :rating, :address,
-                              :working_hours
-                            ]
+                            activities: %i(
+                              id name comment link_url amount_cents
+                              amount_currency rating address
+                              working_hours
+                            )
                           },
                           {
-                            links: [:id, :description, :url]
+                            links: %i(id description url)
                           },
                           {
-                            expenses: [
-                              :id, :name, :amount_cents, :amount_currency
-                            ]
+                            expenses: %i(
+                              id name amount_cents amount_currency
+                            )
                           },
                           {
-                            places: [:id, :city_id]
+                            places: %i(id city_id)
                           }
                         ])
     end

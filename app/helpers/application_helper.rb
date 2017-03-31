@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module ApplicationHelper
   def currency_symbol(currency = nil)
     currency ||= current_user&.currency
@@ -85,18 +86,19 @@ module ApplicationHelper
     return '' if country.blank?
     country_code = country.country_code
     "<img src='#{flag_url(country_code, size)}' class='flag flag-#{size}'" \
+    " width=#{size} height=#{size}" \
     " title='#{country&.name}' />".html_safe
   end
 
   def flag(country_code, size = 16)
     return '' if country_code.blank?
     "<img src='#{flag_url(country_code, size)}'" \
+    " width=#{size} height=#{size}" \
     " class='flag flag-#{size}'/>".html_safe
   end
 
   def flag_url(country_code, size)
-    "#{Settings.images.base_url}/#{Settings.images.flags_folder}" \
-    "/#{size}/#{country_code.downcase}.png"
+    image_url "flags/#{size}/#{country_code.downcase}.png"
   end
 
   def days_count(trip)

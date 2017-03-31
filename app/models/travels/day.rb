@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: days
@@ -21,7 +22,7 @@ module Travels
     has_many :expenses, class_name: 'Travels::Expense', as: :expendable
     has_many :links, class_name: 'ExternalLink', as: :linkable
 
-    default_scope -> { order(date_when: :asc, index: :asc) }
+    default_scope(-> { order(date_when: :asc, index: :asc) })
 
     before_create :init
     def init
@@ -39,7 +40,7 @@ module Travels
     end
 
     def empty_content?
-      [:transfers, :activities, :comment].each do |field|
+      %i(transfers activities comment).each do |field|
         return false unless send(field).blank?
       end
       return false unless places_empty?

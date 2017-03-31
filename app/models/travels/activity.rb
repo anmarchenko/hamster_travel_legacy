@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: activities
@@ -41,7 +42,7 @@ module Travels
     def serializable_hash(**args)
       attrs = super(args)
       attrs['id'] = id.to_s
-      attrs = attrs.reject { |k, _| !PERMITTED.include?(k) }
+      attrs = attrs.select { |k, _| PERMITTED.include?(k) }
       attrs['amount_currency_text'] = amount.currency.symbol
       attrs
     end

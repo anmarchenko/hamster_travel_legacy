@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Updaters
   class DayLinks < Updaters::Entity
     attr_accessor :day, :links
