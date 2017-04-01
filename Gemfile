@@ -18,6 +18,7 @@ gem 'date_validator'
 
 # authentication
 gem 'devise', '~> 4.2.0'
+gem 'omniauth-google-oauth2'
 
 # asset pipeline
 gem 'coffee-rails'

@@ -1,5 +1,6 @@
 en:
   devise:
+    google: Sign in with Google
     confirmations:
       confirmed: "Your account was successfully confirmed."
       send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
@@ -122,6 +123,7 @@ en:
       new: "New %{model}"
       delete: "Delete %{model}"
   common:
+    login_variant: or using email...
     edit: Edit
     saved: Saved!
     yesss: "Yes"

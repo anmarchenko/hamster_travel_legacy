@@ -1,5 +1,6 @@
 ru:
   devise:
+    google: Войти через Google
     confirmations:
       confirmed: "Ваша учётная запись подтверждена. Теперь вы вошли в систему."
       send_instructions: "В течение нескольких минут вы получите письмо с инструкциями по подтверждению вашей учётной записи."
@@ -111,6 +112,7 @@ ru:
       next: "&rsaquo;"
       truncate: "..."
   common:
+    login_variant: или со своим email
     edit: Редактировать
     saved: Сохранено!
     yesss: Да

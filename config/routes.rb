@@ -9,8 +9,14 @@ Rails.application.routes.draw do
     end
   end
 
+  devise_for :users,
+             only: :omniauth_callbacks,
+             controllers: {
+               omniauth_callbacks: 'users/omniauth_callbacks'
+             }
+
   scope '(:locale)', locale: /ru|en/ do
-    devise_for :users
+    devise_for :users, skip: :omniauth_callbacks
 
     resources :landing, only: [:index] do
       get :welcome, on: :collection

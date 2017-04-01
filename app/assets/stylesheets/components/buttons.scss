@@ -72,3 +72,16 @@ a {
     fill: white !important;
   }
 }
+
+.btn-google {
+  background-color: $google;
+  color: $white;
+}
+
+.btn-google:hover,
+.btn-google:focus,
+.btn-google:active,
+.btn-google.active,
+.btn-google:hover:active {
+  color: $light-grey;
+}

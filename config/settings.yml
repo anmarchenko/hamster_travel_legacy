@@ -19,3 +19,6 @@ smtp:
   password: <%= ENV['SMTP_PASSWORD'] %>
   authentication: <%= ENV['SMTP_AUTHENTICATION'] %>
   enable_starttls_auto: <%= ENV['SMTP_ENABLE_STARTTLS_AUTO'] %>
+google:
+  client_id: <%= ENV['GOOGLE_CLIENT_ID'] %>
+  client_secret: <%= ENV['GOOGLE_CLIENT_SECRET'] %>

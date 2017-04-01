@@ -61,9 +61,11 @@
           </div>
         </div>
         <div class="form-group">
+          <label><%= t('activerecord.attributes.user.home_town_text') %></label>
           <%= render 'widgets/typeahead/cities', model_name: 'userForm.home_town' %>
         </div>
         <div class="form-group">
+          <label><%= t('activerecord.attributes.user.currency') %></label>
           <%= select_tag :currency, options_for_select(
                 CurrencyHelper.currencies_select_simple, @user.currency || CurrencyHelper::DEFAULT_CURRENCY
               ), { class: 'form-control', 'ng-model' => 'userForm.currency' } %>
