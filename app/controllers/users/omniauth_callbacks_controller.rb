@@ -24,6 +24,7 @@ module Users
     private
 
     def update_user(auth)
+      return if @user.google_oauth_uid.present?
       @user.update_attributes(
         google_oauth_uid: auth['uid'],
         google_oauth_token: auth['credentials']['token'],

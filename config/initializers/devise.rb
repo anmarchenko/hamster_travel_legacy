@@ -230,7 +230,7 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   config.omniauth :google_oauth2, Settings.google.client_id, Settings.google.client_secret,
-    scope: "email, profile, photos"
+    scope: "email, profile, photos", access_type: 'offline'
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
