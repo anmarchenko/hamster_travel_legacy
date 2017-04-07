@@ -29,7 +29,7 @@ module Travels
     end
 
     def empty_content?
-      %i(city_id city_text).each do |field|
+      %i[city_id city_text].each do |field|
         return false unless send(field).blank?
       end
       true

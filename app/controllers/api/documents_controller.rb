@@ -6,7 +6,7 @@ module Api
   class DocumentsController < ApplicationController
     before_action :authenticate_user!
     before_action :find_trip
-    before_action :find_document, only: %i(update show destroy)
+    before_action :find_document, only: %i[update show destroy]
     before_action :authorize
 
     def index

@@ -40,7 +40,7 @@ module Travels
     end
 
     def empty_content?
-      %i(transfers activities comment).each do |field|
+      %i[transfers activities comment].each do |field|
         return false unless send(field).blank?
       end
       return false unless places_empty?
@@ -69,7 +69,7 @@ module Travels
       if args[:user_currency]
         # process all amounts and add them in user's currency
         service = Json::AmountUserCurrency.new(args[:user_currency])
-        %w(transfers activities expenses hotel).each do |field|
+        %w[transfers activities expenses hotel].each do |field|
           service.call(json[field])
         end
       end

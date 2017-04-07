@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 module LoadExchangeRates
-  module_function
-
-  def call
+  def self.call
     current_rates = ExchangeRate.current
     return if current_rates && current_rates.rates_date == Time.zone.today
     bank = Money.default_bank

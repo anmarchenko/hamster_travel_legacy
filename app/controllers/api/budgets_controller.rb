@@ -26,9 +26,8 @@ module Api
     end
 
     def update
-      res = ::Updaters::Trip.new(@trip).update_budget_for(params[:budget_for])
       render json: {
-        res: res
+        res: ::Trips.update_budget_for(@trip, params[:budget_for])
       }
     end
 

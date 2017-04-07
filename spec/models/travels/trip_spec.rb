@@ -122,7 +122,7 @@ RSpec.describe Travels::Trip do
     let(:user) { FactoryGirl.create(:user) }
 
     it 'includes some user' do
-      expect(trip.include_user(trip.author)).to be true
+      expect(trip.include_user(trip.author_user)).to be true
     end
 
     it 'does not include new user' do

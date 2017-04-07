@@ -115,24 +115,15 @@ module Travels
 
     validates_property :format,
                        of: :image,
-                       in: %i(jpeg jpg png bmp),
+                       in: %i[jpeg jpg png bmp],
                        case_sensitive: false,
                        message: 'should be either .jpeg, .jpg, .png, .bmp',
                        if: :image_changed?
 
     default_scope(-> { where(archived: false) })
 
-    before_save :set_model_state
+    before_save(-> { Trips.nullify_dates(self) })
     after_create :update_plan!
-
-    def set_model_state
-      if dates_unknown
-        self.start_date = nil
-        self.end_date = nil
-      else
-        self.planned_days_count = nil
-      end
-    end
 
     def update_plan!
       self.days ||= []
@@ -164,10 +155,6 @@ module Travels
       !private || include_user(user)
     end
 
-    def author
-      author_user
-    end
-
     def days_count
       return planned_days_count if without_dates?
       return nil if start_date.blank? || end_date.blank?
@@ -177,10 +164,6 @@ module Travels
     def period
       return 0 unless days_count
       days_count - 1
-    end
-
-    def name_for_file
-      name[0, 50].gsub(/[^0-9A-zА-Яа-яёЁ.\-]/, '_')
     end
 
     def last_non_empty_day_index
@@ -245,8 +228,8 @@ module Travels
 
     def as_json(**_args)
       attrs = {}
-      %w(id comment start_date end_date name short_description
-         archived private budget_for).each do |field|
+      %w[id comment start_date end_date name short_description
+         archived private budget_for].each do |field|
         attrs[field] = send(field)
       end
       attrs['id'] = attrs['id'].to_s
@@ -255,7 +238,7 @@ module Travels
 
     def short_json(flag_size = 16)
       res = {}
-      %w(id name start_date).each do |field|
+      %w[id name start_date].each do |field|
         res[field] = send(field)
       end
       res['countries'] = visited_countries.map do |country|
@@ -289,6 +272,10 @@ module Travels
         "#{country.translated_name(:en)} #{country.translated_name(:ru)}"
       end.join(' ')
       save(validate: false)
+    end
+
+    def name_for_file
+      name[0, 50].gsub(/[^0-9A-zА-Яа-яёЁ.\-]/, '_')
     end
 
     private

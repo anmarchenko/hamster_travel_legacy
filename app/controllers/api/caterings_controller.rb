@@ -29,10 +29,10 @@ module Api
 
     def params_caterings
       params.require(:trip).permit(caterings:
-      %i(
+      %i[
         id name description days_count persons_count
         amount_cents amount_currency
-      ))
+      ])
     end
 
     def find_trip

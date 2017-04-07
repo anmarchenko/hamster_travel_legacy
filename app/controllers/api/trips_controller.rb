@@ -2,11 +2,11 @@
 
 module Api
   class TripsController < ApplicationController
-    before_action :authenticate_user!, only: %i(
+    before_action :authenticate_user!, only: %i[
       upload_image delete_image destroy
-    )
-    before_action :find_trip, only: %i(upload_image delete_image destroy)
-    before_action :authorize, only: %i(upload_image delete_image)
+    ]
+    before_action :find_trip, only: %i[upload_image delete_image destroy]
+    before_action :authorize, only: %i[upload_image delete_image]
     before_action :authorize_destroy, only: [:destroy]
 
     def index

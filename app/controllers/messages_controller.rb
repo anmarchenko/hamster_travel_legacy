@@ -4,8 +4,8 @@ class MessagesController < ApplicationController
   respond_to :json
 
   before_action :authenticate_user!
-  before_action :find_trip_invite, only: %i(update destroy)
-  before_action :authorize!, only: %i(update destroy)
+  before_action :find_trip_invite, only: %i[update destroy]
+  before_action :authorize!, only: %i[update destroy]
 
   def index
     res = current_user.incoming_invites

@@ -29,7 +29,3 @@ Metrics/ClassLength:
   Max: 100
   Exclude:
   - app/models/travels/trip.rb
-
-Style/MixinGrouping:
-  Exclude:
-  - spec/rails_helper.rb

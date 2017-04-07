@@ -41,5 +41,5 @@ Rails.application.configure do
   config.cache_store = :null_store
 
   config.assets.compile = true
-  config.assets.precompile += %w(*.js main.css)
+  config.assets.precompile += %w[*.js main.css]
 end

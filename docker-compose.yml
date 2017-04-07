@@ -5,14 +5,12 @@ services:
     volumes:
       - /box
   database:
-    image: postgres:9.3
+    image: postgres:9.6
     ports:
       - '15432:5432'
     volumes:
       - ./db:/var/dump
       - /var/lib/postgresql/data
-  memcached:
-    image: memcached
   redis:
     image: redis
   web:
@@ -24,7 +22,6 @@ services:
     links:
       - database
       - redis
-      - memcached
     volumes:
       - .:/opt/hamster-travel
     volumes_from:
@@ -34,4 +31,3 @@ services:
     environment:
       REDIS_HOST: redis
       POSTGRES_HOST: database
-      MEMCACHED_URL: memcached:11211

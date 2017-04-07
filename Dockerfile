@@ -1,40 +1,24 @@
-FROM phusion/passenger-ruby24:latest
+FROM ruby:2.4.1
 MAINTAINER Andrey Marchenko "anvmarchenko@gmail.com"
-# upgrade OS
-RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold" && apt-get install -y imagemagick libpq-dev
 
-# Set correct environment variables.
-ENV HOME /root
 ENV RAILS_ENV production
 
-RUN gem install bundler
+RUN apt-get update && apt-get install -y nodejs
 
-# Install bundle of gems
-WORKDIR /tmp
-COPY Gemfile /tmp/
-COPY Gemfile.lock /tmp/
-RUN bundle install
+RUN mkdir -p /app
+WORKDIR /app
 
-# Add the Rails app
-COPY . /home/app/webapp
-RUN chown -R app:app /home/app/webapp
-WORKDIR /home/app/webapp
+COPY Gemfile Gemfile.lock ./
+RUN bundle install --jobs 5 --retry 3 --deployment --without development test
+RUN passenger-config install-standalone-runtime && passenger-config build-native-support
+
+COPY . /app
+
+RUN chown -R www-data /app
+USER www-data
+
 RUN rake assets:precompile
 
-# Expose Nginx HTTP service
-EXPOSE 80
-
-# Start Nginx
-RUN rm -f /etc/service/nginx/down
-RUN rm /etc/nginx/sites-enabled/default
-
-# Add the nginx site and config
-COPY config/webapp.conf /etc/nginx/sites-enabled/webapp.conf
-COPY config/rails-env.conf /etc/nginx/main.d/rails-env.conf
-COPY config/nginx.conf /etc/nginx/conf.d/hamster-travel.conf
-
-# Clean up APT and bundler when done.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /home/app/webapp/log/* /home/app/webapp/tmp/* /home/app/webapp/.git
-
-# Use baseimage-docker's init system.
-CMD ["/sbin/my_init"]
+EXPOSE 3000
+ENTRYPOINT ["bundle"]
+CMD ["exec", "passenger", "start", "--max-pool-size=2"]

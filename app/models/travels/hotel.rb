@@ -32,7 +32,7 @@ module Travels
     end
 
     def empty_content?
-      %i(name comment).each do |field|
+      %i[name comment].each do |field|
         return false unless send(field).blank?
       end
       (links || []).each do |link|

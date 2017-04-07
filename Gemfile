@@ -55,13 +55,14 @@ gem 'zip-zip' # will load compatibility for old rubyzip API.
 gem 'hiredis'
 gem 'redis', require: ['redis', 'redis/connection/hiredis']
 
+# caching redis
+gem 'redis-rack-cache'
+gem 'redis-rails'
+
 # image uploading
 gem 'dragonfly'
 gem 'dragonfly-s3_data_store'
 gem 'xmlrpc' # required by fog
-
-# caching
-gem 'dalli'
 
 # money
 gem 'eu_central_bank'
@@ -89,10 +90,9 @@ gem 'rollbar'
 # monitoring
 gem 'newrelic_rpm'
 
-# production - caching and passenger
+# production - passenger
 group :production do
   gem 'passenger', '>= 5.0.25', require: 'phusion_passenger/rack_handler'
-  gem 'rack-cache', require: 'rack/cache'
 end
 
 group :development do

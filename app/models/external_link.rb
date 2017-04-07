@@ -30,7 +30,7 @@ class ExternalLink < ApplicationRecord
   end
 
   def serializable_hash(_args)
-    json = super(except: %i(linkable_id linkable_type mongo_id))
+    json = super(except: %i[linkable_id linkable_type mongo_id])
     json['id'] = id.to_s
     json
   end

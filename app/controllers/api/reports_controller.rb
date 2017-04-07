@@ -16,9 +16,8 @@ module Api
     end
 
     def update
-      res = ::Updaters::Trip.new(@trip).update_report(params[:report])
       render json: {
-        res: res
+        res: ::Trips.update_report(@trip, params[:report])
       }
     end
 

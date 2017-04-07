@@ -2,7 +2,7 @@
 
 module CurrencyHelper
   DEFAULT_CURRENCY = 'EUR'
-  IMPORTANT_CURRENCIES = %w(RUB EUR USD GBP).freeze
+  IMPORTANT_CURRENCIES = %w[RUB EUR USD GBP].freeze
 
   def self.currency_list(user_currency = nil, trip_currency = nil)
     ecb_currencies = EuCentralBank::CURRENCIES.dup

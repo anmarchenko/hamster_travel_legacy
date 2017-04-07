@@ -73,7 +73,7 @@ class User < ApplicationRecord
                             if: :image_changed?
 
   validates_property :format,
-                     of: :image, in: %i(jpeg jpg png bmp),
+                     of: :image, in: %i[jpeg jpg png bmp],
                      case_sensitive: false,
                      message: 'should be either .jpeg, .jpg, .png, .bmp',
                      if: :image_changed?

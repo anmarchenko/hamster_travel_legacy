@@ -3,11 +3,10 @@
 class TripsController < ApplicationController
   TRANSFERS_GRID = [0.1, 0.1, 0.45, 0.35].freeze
 
-  before_action :authenticate_user!, only: %i(edit update new
-                                              create my drafts)
-  before_action :find_trip, only: %i(show edit update)
-  before_action :find_original_trip, only: %i(new create)
-  before_action :authorize, only: %i(edit update)
+  before_action :authenticate_user!, only: %i[edit update new
+                                              create my drafts]
+  before_action :find_trip, only: %i[show edit update]
+  before_action :authorize, only: %i[edit update]
   before_action :authorize_destroy, only: [:destroy]
   before_action :authorize_show, only: [:show]
 
@@ -28,12 +27,11 @@ class TripsController < ApplicationController
   end
 
   def new
-    @trip = Creators::Trip.new(@original_trip).new_trip
+    @trip = Trips.new_trip(current_user, params[:copy_from])
   end
 
   def create
-    @trip = Creators::Trip.new(@original_trip)
-                          .create_trip(params_trip, current_user)
+    @trip = Trips.create_trip(params_trip, current_user, params[:copy_from])
     redirect_to(trip_path(@trip)) && return if @trip.errors.blank?
     render 'new'
   end
@@ -41,7 +39,7 @@ class TripsController < ApplicationController
   def edit; end
 
   def update
-    Updaters::Trip.new(@trip).update(params_trip)
+    @trip = ::Trips.update(@trip, params_trip)
     if @trip.errors.blank?
       redirect_to(trip_path(@trip), notice: t('common.update_successful'))
       return
@@ -79,12 +77,6 @@ class TripsController < ApplicationController
         { hotel: :links }, :activities, :transfers, :places, :expenses
       ]).where(id: params[:id]).first
     not_found && return if @trip.blank?
-  end
-
-  def find_original_trip
-    return if params[:copy_from].blank?
-    @original_trip = Travels::Trip.where(id: params[:copy_from]).first
-    @original_trip = nil unless @original_trip&.can_be_seen_by?(current_user)
   end
 
   def authorize

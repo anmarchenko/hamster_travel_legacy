@@ -28,7 +28,7 @@ module Calculators
     end
 
     def invalidate_cache!
-      %w(sum transfers_hotel activities_other catering).each do |method_name|
+      %w[sum transfers_hotel activities_other catering].each do |method_name|
         Rails.cache.delete(cache_key(method_name))
       end
     end

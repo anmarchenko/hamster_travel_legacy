@@ -5,5 +5,5 @@ docker-compose run web bundle exec rake db:drop
 docker-compose run web bundle exec rake db:create
 docker-compose run web bundle exec rake db:schema:load
 tar -xzf db/db.tar.gz -C db/
-docker-compose exec database /bin/bash -c "psql -U postgres travel_planner_development < /var/dump/travel_planner_development.sql"
-rm db/travel_planner_development.sql
+docker-compose exec database /bin/bash -c "psql -U postgres travel_planner_development < /var/dump/db/travel_planner_development.sql"
+rm -rf db/db

@@ -78,13 +78,10 @@ RSpec.describe TripsController do
   end
 
   describe '#new' do
-    let(:creator) { double(Creators::Trip) }
     context 'when user is logged in' do
       before { login_user(user) }
 
       it 'renders form with new trip' do
-        expect(Creators::Trip).to receive(:new).with(nil).and_return(creator)
-        expect(creator).to receive(:new_trip).and_return(Travels::Trip.new)
         get 'new'
         expect(response).to be_success
       end
@@ -100,10 +97,6 @@ RSpec.describe TripsController do
           end
 
           it 'renders template with new trip copied from old trip' do
-            expect(Creators::Trip).to receive(:new).with(
-              trip
-            ).and_return(creator)
-            expect(creator).to receive(:new_trip).and_return(Travels::Trip.new)
             get 'new', params: { copy_from: trip.id }
             expect(response).to be_success
           end
@@ -112,10 +105,6 @@ RSpec.describe TripsController do
         context 'and when trying to copy private trip' do
           let(:trip_private) { FactoryGirl.create(:trip, private: true) }
           it 'just creates new trip' do
-            expect(Creators::Trip).to receive(:new).with(
-              nil
-            ).and_return(creator)
-            expect(creator).to receive(:new_trip).and_return(Travels::Trip.new)
             get 'new', params: { copy_from: trip_private.id }
             expect(response).to be_success
           end
@@ -123,23 +112,9 @@ RSpec.describe TripsController do
 
         context 'and when it is not valid' do
           it 'renders template with new trip' do
-            expect(Creators::Trip).to receive(:new).with(
-              nil
-            ).and_return(creator)
-            expect(creator).to receive(:new_trip).and_return(Travels::Trip.new)
-            get 'new', params: { copy_from: 'blahblah' }
-            expect(response).to be_success
-          end
-        end
-
-        context 'and when it is empty' do
-          it 'renders template with new trip' do
-            expect(Creators::Trip).to receive(:new).with(
-              nil
-            ).and_return(creator)
-            expect(creator).to receive(:new_trip).and_return(Travels::Trip.new)
-            get 'new', params: { copy_from: '' }
-            expect(response).to be_success
+            expect { get 'new', params: { copy_from: 'blahblah' } }.to(
+              raise_error(ActiveRecord::RecordNotFound)
+            )
           end
         end
       end
@@ -271,19 +246,10 @@ RSpec.describe TripsController do
 
           context 'and when it is not valid' do
             it 'renders template with new trip' do
-              post 'create', params: params.merge(copy_from: 'fdsfdsfdfds')
-              expect(Travels::Trip.count).to eq(1)
-              trip = Travels::Trip.all.order(created_at: :desc).first
-              expect(trip.days.first.comment).to be_nil
-              expect(trip.days.first.date_when).to eq(
-                params[:travels_trip]['start_date']
-              )
-              expect(trip.days.first.transfers.count).to eq 0
-
-              expect(trip.days.last.comment).to be_nil
-              expect(trip.days.last.date_when).to eq(
-                params[:travels_trip]['end_date']
-              )
+              expect do
+                post 'create', params: params.merge(copy_from: 'fdsfdsfdfds')
+              end.to raise_error(ActiveRecord::RecordNotFound)
+              expect(Travels::Trip.count).to eq(0)
             end
           end
 

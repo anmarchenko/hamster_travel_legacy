@@ -89,7 +89,7 @@ FactoryGirl.define do
     trait :with_users do
       after :create do |trip|
         trip.users = create_list(:user, 2)
-        trip.users << trip.author
+        trip.users << trip.author_user
         trip.save validate: false
       end
     end
@@ -98,7 +98,7 @@ FactoryGirl.define do
       after :create do |trip|
         user = create(:user)
         Travels::TripInvite.create(
-          trip: trip, inviting_user: trip.author, invited_user: user
+          trip: trip, inviting_user: trip.author_user, invited_user: user
         )
       end
     end

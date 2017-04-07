@@ -12,7 +12,7 @@ module Api
         days: @trip.days.includes(
           { transfers: :links }, { hotel: :links }, :places
         ).as_json(user_currency: current_user.try(:currency),
-                  include: %i(transfers hotel places))
+                  include: %i[transfers hotel places])
       }
     end
 
@@ -38,19 +38,19 @@ module Api
               :id, :type, :code, :company, :station_from, :station_to,
               :start_time, :end_time, :comment, :amount_cents, :amount_currency,
               :city_to_id, :city_from_id,
-              { links: %i(id url description) }
+              { links: %i[id url description] }
             ]
           },
           {
             hotel: [
               :id, :name, :comment, :amount_cents, :amount_currency,
-              { links: %i(id url description) }
+              { links: %i[id url description] }
             ]
           },
           {
-            places: %i(
+            places: %i[
               id city_id
-            )
+            ]
           }
         ]
       )

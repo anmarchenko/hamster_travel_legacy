@@ -47,7 +47,7 @@ module Travels
     end
 
     def as_json(**_args)
-      res = super(except: %i(file_uid trip_id))
+      res = super(except: %i[file_uid trip_id])
       res['icon'] = ApplicationController.helpers.image_tag(
         "filetypes/#{extension.delete('.')}.png"
       )

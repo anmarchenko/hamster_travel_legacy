@@ -143,23 +143,23 @@ RSpec.describe Travels::Day do
       let(:day) { FactoryGirl.create(:trip, :with_filled_days).days.first }
       let(:day_json) do
         day.as_json(
-          include: %i(
+          include: %i[
             expenses activities links places transfers hotel
-          )
+          ]
         )
       end
 
       let(:day_empty) { FactoryGirl.create(:trip).days.first }
       let(:day_empty_json) do
         day_empty.as_json(
-          include: %i(expenses activities links places transfers hotel)
+          include: %i[expenses activities links places transfers hotel]
         )
       end
 
       let(:day_json_with_currency) do
         day.as_json(
           user_currency: 'EUR',
-          include: %i(expenses activities links places transfers hotel)
+          include: %i[expenses activities links places transfers hotel]
         )
       end
 

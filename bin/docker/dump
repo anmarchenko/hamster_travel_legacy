@@ -1,0 +1,4 @@
+#!/bin/bash
+docker-compose exec database /bin/bash -c "pg_dump -U postgres -h 127.0.0.1 travel_planner_development > /var/dump/travel_planner_development.sql"
+tar -zcvf db/db.tar.gz db/travel_planner_development.sql
+rm db/travel_planner_development.sql

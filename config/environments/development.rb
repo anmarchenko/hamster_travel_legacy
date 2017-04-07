@@ -33,8 +33,8 @@ Rails.application.configure do
   config.assets.compile = true
   config.assets.quiet = true
 
-  # Comment this if you do not have memcached installed
-  config.cache_store = :dalli_store, ENV['MEMCACHED_URL']
+  config.cache_store = :redis_store,
+                       "redis://#{Settings.redis.host}:6379/0/cache"
 
   # config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 end
