@@ -28,11 +28,11 @@
               <%= t('trips.show.persons') %>
           </span>
             <span class="author">
-            <%= link_to user_path(trip.author) do %>
-              <% if trip.author.image_url.present? %>
-                <img class="img-circle xs-profile-pic" src="<%= trip.author.image_url %>" tooltip-placement="bottom" uib-tooltip="<%= trip.author.full_name %>"/>
+            <%= link_to user_path(trip.author_user) do %>
+              <% if trip.author_user.image_url.present? %>
+                <img class="img-circle xs-profile-pic" src="<%= trip.author_user.image_url %>" tooltip-placement="bottom" uib-tooltip="<%= trip.author_user.full_name %>"/>
               <% else %>
-                <div class="<%= trip.author.background_color %> img-circle xs-profile-pic initials" tooltip-placement="bottom" uib-tooltip="<%= trip.author.full_name %>">
+                <div class="<%= trip.author_user.background_color %> img-circle xs-profile-pic initials" tooltip-placement="bottom" uib-tooltip="<%= trip.author_user.full_name %>">
                   <%= trip.author.initials %>
                 </div>
               <% end %>

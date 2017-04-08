@@ -146,7 +146,7 @@ RSpec.describe Trips do
       let(:empty_trip) { FactoryGirl.create(:trip) }
       let(:trip) do
         trip = FactoryGirl.create(:trip)
-        trip.caterings = trip.create_caterings
+        trip.caterings = Trips::Caterings.defaults(trip)
         trip.save
         trip
       end

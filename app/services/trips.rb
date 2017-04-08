@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 module Trips
-  # CREATE ACTIONS
+  # READ ACTIONS
 
+  # CREATE ACTIONS
   def self.new_trip(user, original_id = nil)
     return Travels::Trip.new if original_id.nil?
     original = Travels::Trip.find(original_id)
@@ -26,12 +27,11 @@ module Trips
     trip.update_attributes(params_trip)
     return trip unless trip.errors.blank?
 
-    current_days_count = trip.days_count
-    dates_changed = current_days_count != previous_days_count
+    if trip.days_count != previous_days_count
+      Trips::Caterings.update_on_dates_change(trip)
+    end
 
-    # TODO: move out
-    trip.update_plan!
-    trip.update_caterings! if dates_changed
+    Trips::Days.update_on_dates_change(trip)
     trip
   end
 

@@ -11,7 +11,7 @@ module Api
 
     def show
       render json: {
-        caterings: @trip.caterings_data.as_json(
+        caterings: Trips::Caterings.list(@trip).as_json(
           user_currency: current_user.try(:currency)
         )
       }

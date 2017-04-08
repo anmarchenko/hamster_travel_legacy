@@ -123,28 +123,7 @@ module Travels
     default_scope(-> { where(archived: false) })
 
     before_save(-> { Trips.nullify_dates(self) })
-    after_create :update_plan!
-
-    def update_plan!
-      self.days ||= []
-
-      # ensure order
-      ensure_days_order
-
-      # push new days
-      (days_count - self.days.length).times do
-        push_new_day
-      end
-
-      # delete not needed days
-      delete_last_days
-    end
-
-    def update_caterings!
-      return unless caterings.present? && caterings.count == 1
-      catering = caterings.first
-      catering.update_attributes(days_count: days_count)
-    end
+    after_create(-> { Trips::Days.update_on_dates_change(self) })
 
     def include_user(user)
       users.include?(user)
@@ -190,22 +169,6 @@ module Travels
       Calculators::Budget.new(self, currency).catering
     end
 
-    def caterings_data
-      caterings.blank? ? create_caterings : caterings
-    end
-
-    def create_caterings
-      [
-        Travels::Catering.new(
-          id: Time.now.to_i,
-          persons_count: budget_for,
-          days_count: days_count,
-          amount_currency: currency,
-          name: "#{name} (#{I18n.t('trips.show.catering')})"
-        )
-      ]
-    end
-
     def draft?
       status_code == StatusCodes::DRAFT
     end
@@ -249,7 +212,7 @@ module Travels
     end
 
     def ensure_days_order(days_to_order = nil)
-      (days_to_order || self.days).each_with_index do |day, index|
+      (days_to_order || days).each_with_index do |day, index|
         if without_dates?
           day.date_when = nil
         else
@@ -276,22 +239,6 @@ module Travels
 
     def name_for_file
       name[0, 50].gsub(/[^0-9A-zА-Яа-яёЁ.\-]/, '_')
-    end
-
-    private
-
-    def push_new_day
-      index = days.last.try(:index) || -1
-      date = nil
-      if should_have_dates?
-        date = self.days.last.try(:date_when)
-        date = date.blank? ? start_date : date + 1.day
-      end
-      self.days.create(date_when: date, index: index + 1)
-    end
-
-    def delete_last_days
-      (self.days[days_count..-1] || []).each(&:destroy)
     end
   end
 end
