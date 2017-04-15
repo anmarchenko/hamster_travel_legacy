@@ -36,7 +36,8 @@ RSpec.describe Api::DaysSortingController do
       (0..2).each do |day_index|
         (day_index + 1).times do |activity_index|
           days[day_index].activities.create(
-            name: "Day #{day_index} Act #{activity_index}"
+            name: "Day #{day_index} Act #{activity_index}",
+            order_index: activity_index
           )
         end
 
