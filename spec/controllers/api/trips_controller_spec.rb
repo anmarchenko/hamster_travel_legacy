@@ -117,7 +117,7 @@ RSpec.describe Api::TripsController do
         expect(trip.reload.image).not_to be_blank
         post 'delete_image', params: { id: trip.id }
         expect(response).to be_success
-        expect(Travels::Trip.find(trip.id).image_uid).to be_blank
+        expect(Trips.by_id(trip.id).image_uid).to be_blank
       end
     end
 
@@ -135,7 +135,7 @@ RSpec.describe Api::TripsController do
         expect(trip.reload.image).not_to be_blank
         post 'delete_image', params: { id: trip.id }
         expect(response).to be_success
-        expect(Travels::Trip.find(trip.id).image_uid).to be_blank
+        expect(Trips.by_id(trip.id).image_uid).to be_blank
       end
     end
 
@@ -148,7 +148,7 @@ RSpec.describe Api::TripsController do
         expect(trip.reload.image).not_to be_blank
         post 'delete_image', params: { id: trip.id }
         expect(response).to be_forbidden
-        expect(Travels::Trip.find(trip.id).image_uid).not_to be_blank
+        expect(Trips.by_id(trip.id).image_uid).not_to be_blank
       end
     end
   end
@@ -164,9 +164,9 @@ RSpec.describe Api::TripsController do
 
         it 'marks trip as archived' do
           delete 'destroy', params: { id: trip.id }
-          expect(Travels::Trip.where(id: trip.id).first).to be_nil
+          expect(Travels::Trip.relevant.where(id: trip.id).first).to be_nil
           expect(
-            Travels::Trip.unscoped.where(id: trip.id, archived: true).first
+            Travels::Trip.where(id: trip.id, archived: true).first
           ).not_to be_blank
           expect(response).to have_http_status(:success)
         end
@@ -183,7 +183,7 @@ RSpec.describe Api::TripsController do
           expect(subject.current_user.incoming_invites.count).to eq(1)
 
           delete 'destroy', params: { id: trip.id }
-          expect(Travels::Trip.where(id: trip.id).first).to be_nil
+          expect(Travels::Trip.relevant.where(id: trip.id).first).to be_nil
 
           expect(subject.current_user.incoming_invites.count).to eq(0)
         end
@@ -201,9 +201,9 @@ RSpec.describe Api::TripsController do
       end
 
       context 'and when trip does not exist' do
-        it 'redirects to not found page' do
+        it 'heads 404' do
           delete 'destroy', params: { id: 'non existing' }
-          expect(response).to redirect_to '/errors/not_found'
+          expect(response).to have_http_status(404)
         end
       end
     end

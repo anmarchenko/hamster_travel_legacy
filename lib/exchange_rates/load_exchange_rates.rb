@@ -10,7 +10,7 @@ module LoadExchangeRates
     ExchangeRate.create(eu_file: eu_file, rates_date: bank.rates_updated_at)
 
     # invalidate caches for all trips
-    Travels::Trip.find_each do |trip|
+    Travels::Trip.relevant.find_each do |trip|
       Budgets.on_budget_change(trip)
     end
   end

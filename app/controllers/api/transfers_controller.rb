@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  class TransfersController < ApplicationController
+  class TransfersController < Api::BaseController
     before_action :find_trip
     before_action :find_day
     before_action :authenticate_user!, only: [:create]
@@ -62,8 +62,7 @@ module Api
     end
 
     def find_trip
-      @trip = Travels::Trip.where(id: params[:trip_id]).first
-      head(404) && return if @trip.blank?
+      @trip = ::Trips.by_id(params[:trip_id])
     end
 
     def find_day

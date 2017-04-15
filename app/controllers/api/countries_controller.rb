@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  class CountriesController < ApplicationController
+  class CountriesController < Api::BaseController
     respond_to :json
 
     before_action :find_trip
@@ -18,8 +18,7 @@ module Api
     private
 
     def find_trip
-      @trip = Travels::Trip.where(id: params[:id]).first
-      head(404) && return if @trip.blank?
+      @trip = ::Trips.by_id(params[:id])
     end
   end
 end

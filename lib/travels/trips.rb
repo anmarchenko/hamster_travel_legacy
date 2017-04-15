@@ -19,6 +19,17 @@ module Trips
   end
 
   # READ ACTIONS
+  def self.by_id(id)
+    Travels::Trip.relevant.find(id)
+  end
+
+  def self.search(term, current_user = nil)
+    return [] if term.blank?
+    Travels::Trip.relevant.visible_by(current_user)
+                 .by_term(term).order_newest
+                 .includes(:cities)
+  end
+
   def self.last_non_empty_day_index(trip)
     result = -1
     trip.days.each_with_index do |day, index|
@@ -34,7 +45,7 @@ module Trips
   # CREATE ACTIONS
   def self.new_trip(user, original_id = nil)
     return Travels::Trip.new if original_id.blank?
-    original = Travels::Trip.find(original_id)
+    original = by_id(original_id)
     return Travels::Trip.new unless original.can_be_seen_by?(user)
     Trips::Duplicator.duplicate(original)
   end

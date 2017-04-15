@@ -3,7 +3,7 @@
 require 'rack/mime'
 
 module Api
-  class DocumentsController < ApplicationController
+  class DocumentsController < Api::BaseController
     before_action :authenticate_user!
     before_action :find_trip
     before_action :find_document, only: %i[update show destroy]
@@ -41,8 +41,7 @@ module Api
     private
 
     def find_trip
-      @trip = Travels::Trip.includes(:users).where(id: params[:trip_id]).first
-      not_found && return if @trip.blank?
+      @trip = ::Trips.by_id(params[:trip_id])
     end
 
     def authorize

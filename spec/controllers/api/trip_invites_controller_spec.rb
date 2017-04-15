@@ -72,10 +72,9 @@ RSpec.describe Api::TripInvitesController do
 
         context 'and when trying to invite non existing user' do
           it 'does not create invite' do
-            expect do
-              post 'create', params: { id: trip.id, user_id: 'lolol' },
-                             format: :json
-            end.to raise_error(ActiveRecord::RecordNotFound)
+            post 'create', params: { id: trip.id, user_id: 'lolol' },
+                           format: :json
+            expect(response).to have_http_status 404
             expect(trip.reload.pending_invites.count).to eq(0)
           end
         end

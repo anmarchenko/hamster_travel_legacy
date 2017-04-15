@@ -111,10 +111,9 @@ RSpec.describe TripsController do
         end
 
         context 'and when it is not valid' do
-          it 'renders template with new trip' do
-            expect { get 'new', params: { copy_from: 'blahblah' } }.to(
-              raise_error(ActiveRecord::RecordNotFound)
-            )
+          it 'redirects to not found' do
+            get 'new', params: { copy_from: 'blahblah' }
+            expect(response).to redirect_to '/errors/not_found'
           end
         end
       end
@@ -246,9 +245,8 @@ RSpec.describe TripsController do
 
           context 'and when it is not valid' do
             it 'renders template with new trip' do
-              expect do
-                post 'create', params: params.merge(copy_from: 'fdsfdsfdfds')
-              end.to raise_error(ActiveRecord::RecordNotFound)
+              post 'create', params: params.merge(copy_from: 'fdsfdsfdfds')
+              expect(response).to redirect_to '/errors/not_found'
               expect(Travels::Trip.count).to eq(0)
             end
           end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  class DaysSortingController < ApplicationController
+  class DaysSortingController < Api::BaseController
     before_action :find_trip
     before_action :authenticate_user!
     before_action :authorize
@@ -24,8 +24,7 @@ module Api
     private
 
     def find_trip
-      @trip = Travels::Trip.where(id: params[:trip_id]).first
-      head(404) && return if @trip.blank?
+      @trip = ::Trips.by_id(params[:trip_id])
     end
 
     def authorize

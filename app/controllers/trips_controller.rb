@@ -72,11 +72,7 @@ class TripsController < ApplicationController
   end
 
   def find_trip
-    @trip = Travels::Trip.includes(:users, :author_user, days:
-      [
-        { hotel: :links }, :activities, :transfers, :places, :expenses
-      ]).where(id: params[:id]).first
-    not_found && return if @trip.blank?
+    @trip = ::Trips.by_id(params[:id])
   end
 
   def authorize

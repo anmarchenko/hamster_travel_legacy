@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  class ParticipantsController < ApplicationController
+  class ParticipantsController < Api::BaseController
     before_action :find_trip
     before_action :api_authorize_readonly!, only: [:index]
 
@@ -15,8 +15,7 @@ module Api
     private
 
     def find_trip
-      @trip = Travels::Trip.where(id: params[:id]).first
-      header(404) && return if @trip.blank?
+      @trip = ::Trips.by_id(params[:id])
     end
 
     def collect_users(users)

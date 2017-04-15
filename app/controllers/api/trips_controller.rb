@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  class TripsController < ApplicationController
+  class TripsController < Api::BaseController
     before_action :authenticate_user!, only: %i[
       upload_image delete_image destroy
     ]
@@ -10,9 +10,9 @@ module Api
     before_action :authorize_destroy, only: [:destroy]
 
     def index
-      term = params[:term] || ''
-      trips = Finders::Trips.search(term, current_user)
-      render json: Views::TripView.index_list_json(trips.includes(:cities))
+      render json: Views::TripView.index_list_json(
+        ::Trips.search(params[:term], current_user)
+      )
     end
 
     def upload_image
@@ -44,9 +44,7 @@ module Api
     private
 
     def find_trip
-      @trip = Travels::Trip.includes(:users, :author_user)
-                           .where(id: params[:id]).first
-      not_found && return if @trip.blank?
+      @trip = ::Trips.by_id(params[:id])
     end
 
     def authorize

@@ -61,7 +61,6 @@ module Travels
     has_many :expenses, class_name: 'Travels::Expense', through: :days
 
     dragonfly_accessor :image
-
     def image_url_or_default
       image&.remote_url(host: Settings.media.cdn_host) ||
         ActionController::Base.helpers.image_url('plan/camera.svg')
@@ -97,10 +96,22 @@ module Travels
                        message: 'should be either .jpeg, .jpg, .png, .bmp',
                        if: :image_changed?
 
-    default_scope(-> { where(archived: false) })
-
     before_save(-> { Trips.nullify_dates(self) })
     after_create(-> { Trips::Days.on_trip_update(self) })
+
+    scope :relevant, (-> { where(archived: false) })
+    scope :public_trips, (lambda {
+      where.not(status_code: ::Trips::StatusCodes::DRAFT).where(private: false)
+    })
+    scope :including_user, (->(user) { where(id: user&.trip_ids) })
+    scope :visible_by, (->(user) { public_trips.or(including_user(user)) })
+    scope :by_term, (lambda { |term|
+      where(
+        'name ILIKE ? OR countries_search_index ILIKE ?',
+        "%#{term}%", "%#{term}%"
+      )
+    })
+    scope :order_newest, (-> { order(start_date: :desc) })
 
     def include_user(user)
       users.include?(user)
@@ -122,20 +133,13 @@ module Travels
       days_count - 1
     end
 
-    def draft?
-      status_code == Trips::StatusCodes::DRAFT
-    end
-
-    def plan?
-      status_code == Trips::StatusCodes::PLANNED
-    end
-
     def report?
       status_code == Trips::StatusCodes::FINISHED
     end
 
     def without_dates?
-      dates_unknown && (draft? || plan?)
+      dates_unknown && (status_code == Trips::StatusCodes::DRAFT ||
+                        status_code == Trips::StatusCodes::PLANNED)
     end
 
     def should_have_dates?

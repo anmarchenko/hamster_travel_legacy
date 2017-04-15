@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  class UsersController < ApplicationController
+  class UsersController < Api::BaseController
     before_action :authenticate_user!, only: %i[
       upload_image delete_image update
     ]

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  class CitiesController < ApplicationController
+  class CitiesController < Api::BaseController
     def index
       term = params[:term] || ''
       render(json: []) && return if term.blank? || term.length < 3

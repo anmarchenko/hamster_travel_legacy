@@ -105,11 +105,11 @@ RSpec.describe Travels::Trip do
 
         it 'returns only not deleted trips by default' do
           expect(
-            Travels::Trip.unscoped
-                          .where(id: deleted_trip.id, archived: true)
-                          .first
+            Travels::Trip.where(id: deleted_trip.id, archived: true)
+                         .first
           ).not_to be_blank
-          trips = Travels::Trip.where(author_user_id: 'user_test_travels_trip')
+          trips = Travels::Trip.relevant
+                               .where(author_user_id: 'user_test_travels_trip')
                                .to_a
           expect(trips.count).to eq(12)
         end

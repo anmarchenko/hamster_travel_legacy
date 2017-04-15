@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  class ManualCitiesController < ApplicationController
+  class ManualCitiesController < Api::BaseController
     before_action :authenticate_user!
     before_action :find_user
     before_action :authorize
