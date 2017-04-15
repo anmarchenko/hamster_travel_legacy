@@ -55,8 +55,8 @@ class TripsController < ApplicationController
       format.html
       format.docx do
         @transfers_grid = TRANSFERS_GRID
-        docx_name = "#{@trip.name_for_file}.docx"
-        headers['Content-Disposition'] = "attachment; filename=\"#{docx_name}\""
+        headers['Content-Disposition'] =
+          "attachment; filename=\"#{Trips.docx_file_name(@trip)}\""
       end
     end
   end

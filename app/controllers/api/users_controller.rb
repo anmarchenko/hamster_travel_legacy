@@ -48,18 +48,22 @@ module Api
     end
 
     def planned_trips
-      res = Finders::Trips.for_user_planned(@user, params[:page], current_user)
-                          .includes(:cities)
-                          .map { |trip| trip.short_json(32) }
+      res = Views::TripView.index_list_json(
+        Finders::Trips.for_user_planned(@user, params[:page], current_user)
+                      .includes(:cities),
+        flag_size: 32
+      )
       render json: {
         trips: res
       }
     end
 
     def finished_trips
-      res = Finders::Trips.for_user_finished(@user, params[:page], current_user)
-                          .includes(:cities)
-                          .map { |trip| trip.short_json(32) }
+      res = Views::TripView.index_list_json(
+        Finders::Trips.for_user_finished(@user, params[:page], current_user)
+                      .includes(:cities),
+        flag_size: 32
+      )
       render json: {
         trips: res
       }

@@ -3,11 +3,6 @@
     <div class="work-area-header">
       <%= render 'components/trip/partials/watching_users' %>
       <%= render 'components/trip/partials/budget', options: {tab_budget: 'activities_other_budget'} %>
-      <div class="row hidden-xs sticky-row" sticky="true">
-        <div class="col-md-12">
-          <%= render 'components/trip/partials/buttons' %>
-        </div>
-      </div>
     </div>
     <div class="activities">
       <% @trip.days.each do |day| %>
@@ -22,7 +17,7 @@
                     <% if @user_can_edit %>
                         <% if @multiday %>
                             <div class="activity-action-link hidden-xs" ng-controller="DaySorterController" ng-hide="edit">
-                              <a class="link-with-icon" href="javascript:void(0);" ng-click="startSorting('<%= @trip.id %>')" ng-disabled="reloading">
+                              <a class="link-with-icon" href="javascript:void(0);" ng-click="startSorting('<%= @trip.id %>', ['activities', 'day_info'])" ng-disabled="reloading">
                                 <%= inline_svg 'buttons/reorder.svg' %>
                               </a>
                             </div>
@@ -32,12 +27,12 @@
                             <%= inline_svg 'buttons/edit.svg' %>
                           </a>
                         </div>
-                        <div class="activity-action-link" ng-show="edit && !whole_plan_edit">
+                        <div class="activity-action-link" ng-show="edit">
                           <a class="link-with-icon btn btn-sm btn-success" href="javascript:void(0);" ng-click="save()" ng-disabled="saving">
                             <%= inline_svg 'buttons/check.svg' %>
                           </a>
                         </div>
-                        <div class="activity-action-link" ng-show="edit && !whole_plan_edit">
+                        <div class="activity-action-link" ng-show="edit">
                           <a class="link-with-icon btn btn-sm ghost-button" href="javascript:void(0);" ng-click="cancelEdit()" ng-disabled="saving">
                             <%= inline_svg 'buttons/back.svg' %>
                           </a>
@@ -278,7 +273,7 @@
                   <%= t('trips.show.add_activity') %>
                 </a>
               </div>
-              <div class="activity-day-activities-footer" ng-show="edit && !whole_plan_edit">
+              <div class="activity-day-activities-footer" ng-show="edit">
                 <div class="activity-action-link no-margin">
                   <a class="link-with-icon btn btn-sm btn-success" href="javascript:void(0);" ng-click="save()" ng-disabled="saving">
                     <%= inline_svg 'buttons/check.svg' %>

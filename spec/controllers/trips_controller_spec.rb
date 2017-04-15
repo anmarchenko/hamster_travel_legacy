@@ -92,7 +92,7 @@ RSpec.describe TripsController do
             FactoryGirl.create(
               :trip,
               currency: 'USD',
-              status_code: Travels::Trip::StatusCodes::PLANNED
+              status_code: Trips::StatusCodes::PLANNED
             )
           end
 
@@ -394,7 +394,7 @@ RSpec.describe TripsController do
       {
         travels_trip: attrs.merge(
           name: 'New Updated Name',
-          status_code: Travels::Trip::StatusCodes::PLANNED,
+          status_code: Trips::StatusCodes::PLANNED,
           private: true, currency: 'EUR'
         ),
         id: trip.id
@@ -413,7 +413,7 @@ RSpec.describe TripsController do
             trip_updated = Travels::Trip.find(trip.id)
             expect(trip_updated.name).to eq 'New Updated Name'
             expect(trip_updated.status_code).to eq(
-              Travels::Trip::StatusCodes::PLANNED
+              Trips::StatusCodes::PLANNED
             )
             expect(trip_updated.private).to eq true
             expect(trip_updated.currency).to eq('EUR')
@@ -427,7 +427,7 @@ RSpec.describe TripsController do
                 travels_trip: attrs.merge(
                   name: 'New Updated Name',
                   start_date: Date.today, end_date: Date.today + 1.day,
-                  status_code: Travels::Trip::StatusCodes::PLANNED,
+                  status_code: Trips::StatusCodes::PLANNED,
                   private: true, currency: 'EUR'
                 ),
                 id: trip.id
@@ -449,7 +449,7 @@ RSpec.describe TripsController do
                 trip_updated = Travels::Trip.find(trip.id)
                 expect(trip_updated.name).to eq 'New Updated Name'
                 expect(trip_updated.status_code).to eq(
-                  Travels::Trip::StatusCodes::PLANNED
+                  Trips::StatusCodes::PLANNED
                 )
                 expect(trip_updated.private).to eq true
 
@@ -474,7 +474,7 @@ RSpec.describe TripsController do
             trip_updated = Travels::Trip.find(trip.id)
             expect(trip_updated.name).to eq(trip.name)
             expect(trip_updated.status_code).not_to eq(
-              Travels::Trip::StatusCodes::PLANNED
+              Trips::StatusCodes::PLANNED
             )
           end
         end
@@ -491,7 +491,7 @@ RSpec.describe TripsController do
           trip_updated = Travels::Trip.find(trip.id)
           expect(trip_updated.name).to eq(trip.name)
           expect(trip_updated.status_code).not_to eq(
-            Travels::Trip::StatusCodes::PLANNED
+            Trips::StatusCodes::PLANNED
           )
         end
       end

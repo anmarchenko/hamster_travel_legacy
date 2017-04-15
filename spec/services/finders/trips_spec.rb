@@ -9,16 +9,16 @@ RSpec.describe Finders::Trips do
         FactoryGirl.create_list(
           :trip,
           2,
-          status_code: Travels::Trip::StatusCodes::PLANNED
+          status_code: Trips::StatusCodes::PLANNED
         )
         FactoryGirl.create_list(
           :trip,
           3,
-          status_code: Travels::Trip::StatusCodes::FINISHED
+          status_code: Trips::StatusCodes::FINISHED
         )
         FactoryGirl.create(
           :trip,
-          status_code: Travels::Trip::StatusCodes::FINISHED,
+          status_code: Trips::StatusCodes::FINISHED,
           private: true
         )
       end
@@ -45,7 +45,7 @@ RSpec.describe Finders::Trips do
         FactoryGirl.create_list(
           :trip,
           11,
-          status_code: Travels::Trip::StatusCodes::FINISHED
+          status_code: Trips::StatusCodes::FINISHED
         )
       end
 
@@ -62,7 +62,7 @@ RSpec.describe Finders::Trips do
       FactoryGirl.create(
         :trip,
         user_ids: [user.id],
-        status_code: Travels::Trip::StatusCodes::FINISHED,
+        status_code: Trips::StatusCodes::FINISHED,
         private: true
       )
       FactoryGirl.create(
@@ -72,11 +72,11 @@ RSpec.describe Finders::Trips do
       FactoryGirl.create(
         :trip,
         user_ids: [user.id],
-        status_code: Travels::Trip::StatusCodes::PLANNED
+        status_code: Trips::StatusCodes::PLANNED
       )
       FactoryGirl.create(
         :trip,
-        status_code: Travels::Trip::StatusCodes::FINISHED
+        status_code: Trips::StatusCodes::FINISHED
       )
     end
 
@@ -95,7 +95,7 @@ RSpec.describe Finders::Trips do
       FactoryGirl.create(
         :trip,
         user_ids: [user.id],
-        status_code: Travels::Trip::StatusCodes::PLANNED
+        status_code: Trips::StatusCodes::PLANNED
       )
     end
 
@@ -104,7 +104,7 @@ RSpec.describe Finders::Trips do
       expect(trips.count).to eq 3
       trips.each do |trip|
         expect(trip.include_user(user)).to be true
-        expect(trip.status_code).to eq(Travels::Trip::StatusCodes::DRAFT)
+        expect(trip.status_code).to eq(Trips::StatusCodes::DRAFT)
       end
     end
 
@@ -125,7 +125,7 @@ RSpec.describe Finders::Trips do
       # public
       FactoryGirl.create(
         :trip,
-        status_code: Travels::Trip::StatusCodes::FINISHED
+        status_code: Trips::StatusCodes::FINISHED
       )
       # user trips
       # drafts
@@ -134,7 +134,7 @@ RSpec.describe Finders::Trips do
       FactoryGirl.create(
         :trip,
         user_ids: [user.id],
-        status_code: Travels::Trip::StatusCodes::FINISHED
+        status_code: Trips::StatusCodes::FINISHED
       )
       # private user trip
       FactoryGirl.create(
@@ -142,7 +142,7 @@ RSpec.describe Finders::Trips do
         user_ids: [user.id],
         name: 'tripppppppp',
         private: true,
-        status_code: Travels::Trip::StatusCodes::FINISHED
+        status_code: Trips::StatusCodes::FINISHED
       )
     end
 

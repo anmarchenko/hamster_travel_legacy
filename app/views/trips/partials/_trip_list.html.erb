@@ -18,7 +18,7 @@
             </small>
           </span>
             <span class="budget">
-            <%= number_with_precision trip.budget_sum(current_user.try(:currency)), precision: 2, separator: ',' %>
+            <%= number_with_precision ::Budgets.calculate_info(trip, current_user.try(:currency)).sum, precision: 2, separator: ',' %>
               <%= currency_symbol.html_safe %>
               /
               <%= trip.days_count %>
@@ -42,7 +42,7 @@
           <div class="tags-cell">
             <div class="flags">
               <% trip.visited_countries_codes[0..2].each do |country_code| %>
-                  <%= flag country_code, 24 %>
+                  <%= Views::FlagView.flag country_code, 24 %>
               <% end %>
             </div>
             <div class="tags">
@@ -52,7 +52,7 @@
                   </div>
               <% end %>
               <div class="tag status-tag <%= trip_status_class(trip.status_code) %>">
-                <%= trip.status_text %>
+                <%= Views::TripView.status_text(trip) %>
               </div>
             </div>
           </div>

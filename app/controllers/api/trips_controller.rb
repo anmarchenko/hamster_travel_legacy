@@ -12,7 +12,7 @@ module Api
     def index
       term = params[:term] || ''
       trips = Finders::Trips.search(term, current_user)
-      render json: trips.includes(:cities).map(&:short_json)
+      render json: Views::TripView.index_list_json(trips.includes(:cities))
     end
 
     def upload_image

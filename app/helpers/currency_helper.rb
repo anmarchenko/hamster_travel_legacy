@@ -3,23 +3,25 @@
 module CurrencyHelper
   DEFAULT_CURRENCY = 'EUR'
   IMPORTANT_CURRENCIES = %w[RUB EUR USD GBP].freeze
+  ECB_CURRENCIES = (EuCentralBank::CURRENCIES.dup + ['EUR']).freeze
 
   def self.currency_list(user_currency = nil, trip_currency = nil)
-    ecb_currencies = EuCentralBank::CURRENCIES.dup
-    ecb_currencies << 'EUR'
-
-    ecb_currencies.sort_by! do |curr|
-      if curr == user_currency
-        [-9, curr]
-      elsif curr == trip_currency
-        [-10, curr]
-      elsif IMPORTANT_CURRENCIES.include?(curr)
-        [-1, curr]
-      else
-        [0, curr]
-      end
+    res = ECB_CURRENCIES.sort_by do |curr|
+      currency_value(curr, user_currency, trip_currency)
     end
-    ecb_currencies.map { |curr| Money::Currency.find(curr) }
+    res.map { |curr| Money::Currency.find(curr) }
+  end
+
+  def self.currency_value(currency, user_currency = nil, trip_currency = nil)
+    if currency == user_currency
+      [-9, currency]
+    elsif currency == trip_currency
+      [-10, currency]
+    elsif IMPORTANT_CURRENCIES.include?(currency)
+      [-1, currency]
+    else
+      [0, currency]
+    end
   end
 
   def self.currencies_select(user_currency = nil, trip_currency = nil)

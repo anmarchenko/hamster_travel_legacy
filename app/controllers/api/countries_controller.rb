@@ -10,7 +10,7 @@ module Api
     def show
       render json: {
         countries: @trip.visited_countries_codes.map do |country_code|
-          ApplicationController.helpers.flag(country_code, 32)
+          Views::FlagView.flag(country_code, 32)
         end
       }
     end

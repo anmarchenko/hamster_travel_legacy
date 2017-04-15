@@ -9,20 +9,15 @@ module Api
     before_action :api_authorize_readonly!, only: [:index]
 
     def index
-      render json: @day.as_json(
-        user_currency: current_user.try(:currency),
-        include: %i[expenses activities links places]
+      render json: Views::DayView.show_json(
+        @day,
+        %i[expenses activities links places],
+        current_user
       )
     end
 
     def create
-      prms = day_params
-      ::Updaters::Activities.new(@day, prms.delete(:activities)).process
-      ::Updaters::DayExpenses.new(@day, prms.delete(:expenses)).process
-      ::Updaters::DayLinks.new(@day, prms.delete(:links)).process
-      ::Updaters::DayPlaces.new(@day, prms.delete(:places)).process
-      ::Updaters::Day.new(@day, prms).process
-      Calculators::Budget.new(@trip).invalidate_cache!
+      Trips::Days.update_day(@trip, @day, day_params)
       render json: { status: 0 }
     end
 

@@ -11,18 +11,15 @@ module Api
     ]
 
     def index
-      render json: @day.as_json(
-        user_currency: current_user.try(:currency),
-        include: %i[transfers hotel places]
+      render json: Views::DayView.show_json(
+        @day,
+        %i[transfers hotel places],
+        current_user
       )
     end
 
     def create
-      prms = day_params
-      Updaters::Transfers.new(@day, prms.delete(:transfers)).process
-      Updaters::DayPlaces.new(@day, prms.delete(:places)).process
-      Updaters::Hotel.new(@day, prms.delete(:hotel)).process
-      Calculators::Budget.new(@trip).invalidate_cache!
+      Trips::Days.update_day(@trip, @day, day_params)
       render json: { status: 0 }
     end
 
@@ -42,6 +39,7 @@ module Api
 
     private
 
+    # rubocop:disable MethodLength
     def day_params
       params.require(:day).permit(
         transfers: [

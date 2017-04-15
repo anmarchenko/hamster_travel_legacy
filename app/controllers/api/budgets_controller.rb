@@ -5,24 +5,15 @@ module Api
     respond_to :json
 
     before_action :find_trip
-    before_action :authenticate_user!, only: [:update]
-    before_action :authorize, only: [:update]
     before_action :api_authorize_readonly!, only: [:show]
 
+    before_action :authenticate_user!, only: [:update]
+    before_action :authorize, only: [:update]
+
     def show
-      render json: {
-        budget: {
-          sum: @trip.budget_sum(current_user.try(:currency)),
-          transfers_hotel_budget: @trip.transfers_hotel_budget(
-            current_user.try(:currency)
-          ),
-          activities_other_budget: @trip.activities_other_budget(
-            current_user.try(:currency)
-          ),
-          catering_budget: @trip.catering_budget(current_user.try(:currency)),
-          budget_for: @trip.budget_for
-        }
-      }
+      render json: ::Views::BudgetView.show_json(
+        Budgets.calculate_info(@trip, current_user&.currency)
+      )
     end
 
     def update

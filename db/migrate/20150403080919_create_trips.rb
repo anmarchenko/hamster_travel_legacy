@@ -18,7 +18,7 @@ class CreateTrips < ActiveRecord::Migration
 
       t.string :image_uid
 
-      t.string :status_code, default: Travels::Trip::StatusCodes::DRAFT
+      t.string :status_code, default: Trips::StatusCodes::DRAFT
 
       t.belongs_to :author_user, index: true
 

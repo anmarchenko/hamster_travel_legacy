@@ -11,12 +11,12 @@ RSpec.describe Api::TripsController do
         users: [user],
         name: 'tripppp',
         private: true,
-        status_code: Travels::Trip::StatusCodes::FINISHED
+        status_code: Trips::StatusCodes::FINISHED
       )
       FactoryGirl.create_list(
         :trip,
         2,
-        status_code: Travels::Trip::StatusCodes::FINISHED
+        status_code: Trips::StatusCodes::FINISHED
       )
     end
 

@@ -4,9 +4,40 @@
   </h4>
 </div>
 <div class="modal-body">
-  <p ng-hide="sortInProgress">
-    <%= t('.description') %>
-  </p>
+  <div class="row days-sorting-checkboxes" ng-hide="sortInProgress">
+    <div class="col-md-12">
+      <p>
+        <%= t('.what_to_reorder') %>
+      </p>
+      <form class="form-inline">
+        <div class="form-group">
+          <label>
+            <input type="checkbox" ng-model="fields['transfers']">
+            <%= t('.transfers') %>
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" ng-model="fields['activities']">
+            <%= t('.activities') %>
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" ng-model="fields['day_info']">
+            <%= t('.day_info') %>
+          </label>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row" ng-show="noFieldsSelected()">
+    <div class="col-md-12">
+      <p class="error-message">
+        <%= t('.error_fields') %>
+      </p>
+    </div>
+  </div>
   <div class="row" ng-hide="sortInProgress">
     <div class="col-md-12 days-sorting" ng-model="days" ui-sortable="{placeholder: 'days-sorting-placeholder'}">
       <div class="day-sorted-row" ng-repeat="day in days track by day.id">
@@ -33,11 +64,14 @@
             {{day.place_s}}
           </div>
         </div>
-        <div class="column transfer">
+        <div class="column transfer" ng-show="fields['transfers']">
           {{day.transfer_s}}
         </div>
-        <div class="column activity">
+        <div class="column activity" ng-show="fields['activities']">
           <span ng-bind-html="day.activity_s"></span>
+        </div>
+        <div class="column day-info" ng-show="fields['day_info']">
+          {{day.day_info_s}}
         </div>
       </div>
     </div>
@@ -48,13 +82,27 @@
         <%= t('.please_wait') %>
       </div>
       <div class="image">
-        <%= image_tag 'lists/numbered.svg' %>
+        <div class="sk-cube-grid">
+          <div class="sk-cube sk-cube1"></div>
+          <div class="sk-cube sk-cube2"></div>
+          <div class="sk-cube sk-cube3"></div>
+          <div class="sk-cube sk-cube4"></div>
+          <div class="sk-cube sk-cube5"></div>
+          <div class="sk-cube sk-cube6"></div>
+          <div class="sk-cube sk-cube7"></div>
+          <div class="sk-cube sk-cube8"></div>
+          <div class="sk-cube sk-cube9"></div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 <div class="modal-footer days-sort-footer">
-  <button class="btn btn-primary btn-lg" ng-click="save()" ng-disabled="sortInProgress">
+  <button
+    class="btn btn-primary btn-lg"
+    ng-click="save()"
+    ng-disabled="disabledSave()"
+  >
     <%= t('common.save') %>
   </button>
   <button class="btn btn-default btn-lg" ng-click="closeModal()" ng-disabled="sortInProgress">

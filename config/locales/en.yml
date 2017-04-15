@@ -226,9 +226,13 @@ en:
       cancel: Cancel
       upload: Upload
     days_sort_modal:
-      title: Sort days
-      description: Interchange trip days. Transfers, hotels, activities, comments, expenses and bookmarks will be moved to new dates!
+      title: Reorder days
       please_wait: Please wait, your plans are being reordered...
+      transfers: Transfers, hotels, cities
+      activities: Activities
+      day_info: Other info (bookmarks, expenses)
+      what_to_reorder: "Select what to move:"
+      error_fields: Please select something
   date:
     formats:
       month: '%B&nbsp;%Y'

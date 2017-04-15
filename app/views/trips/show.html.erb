@@ -148,7 +148,7 @@
       <div class="row tags">
         <div class="col-xs-12">
           <span class="tag focused status-tag <%= trip_status_class(@trip.status_code) %>">
-            <%= @trip.status_text %>
+            <%= Views::TripView.status_text(@trip) %>
           </span>
         </div>
       </div>

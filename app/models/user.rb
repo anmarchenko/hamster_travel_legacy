@@ -96,13 +96,13 @@ class User < ApplicationRecord
 
   def finished_trip_count
     trips.where(archived: false,
-                status_code: Travels::Trip::StatusCodes::FINISHED).count
+                status_code: Trips::StatusCodes::FINISHED).count
   end
 
   def visited_cities_ids
     # both cities from trips and manually added cities
     (cities.where('trips.archived' => false,
-                  'trips.status_code' => Travels::Trip::StatusCodes::FINISHED)
+                  'trips.status_code' => Trips::StatusCodes::FINISHED)
            .pluck(:id) + manual_cities.pluck(:id)).uniq
   end
 
@@ -138,9 +138,7 @@ class User < ApplicationRecord
   end
 
   def self.find_by_term(term)
-    return [] if term.blank?
-
-    parts = term.split(/\s+/)
+    parts = term&.split(/\s+/)
     return [] if parts.blank?
 
     if parts.count == 1

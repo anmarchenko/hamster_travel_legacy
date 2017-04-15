@@ -24,6 +24,7 @@
   }
 
   .move-buttons {
+    text-align: left;
     width: 10%;
     .up-button, .down-button {
       height: 20px;
@@ -38,8 +39,14 @@
     }
   }
 
-  .date-place, .transfer, .activity {
-    width: 30%;
+  .transfer,
+  .activity {
+    width: 25%;
+  }
+
+  .date-place,
+  .day-info {
+    width: 20%;
   }
 }
 
@@ -63,17 +70,21 @@
 
 .days-sorting-progress {
   .header {
-    font-size: 24px;
     color: $text-grey;
+    font-size: 1.5em;
     text-align: center;
   }
 
   .image {
     margin-top: 20px;
     text-align: center;
-    img {
-      width: 180px;
-      opacity: .2;
-    }
+  }
+}
+
+.days-sorting-checkboxes {
+  margin-bottom: 1em;
+
+  .form-group {
+    margin-right: 1ch;
   }
 }

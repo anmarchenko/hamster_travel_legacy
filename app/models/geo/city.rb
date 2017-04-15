@@ -38,16 +38,20 @@ module Geo
     def translated_text(
         args = { with_region: true, with_country: true, locale: I18n.locale }
     )
-      text = translated_name(args[:locale])
-      if args[:with_region]
-        reg = region.try(:translated_name, args[:locale])
-        text += ", #{reg}" unless reg.blank? || (reg == text)
-      end
-      if args[:with_country]
-        c = country.try(:translated_name, args[:locale])
-        text += ", #{c}" unless c.blank?
-      end
-      text
+      [
+        translated_name(args[:locale]),
+        (region_text(args[:locale]) if args[:with_region]),
+        (country_text(args[:locale]) if args[:with_country])
+      ].compact.join(', ')
+    end
+
+    def region_text(locale)
+      reg = region&.translated_name locale
+      reg if reg != translated_name(locale)
+    end
+
+    def country_text(locale)
+      country&.translated_name locale
     end
 
     def capital?
@@ -86,7 +90,7 @@ module Geo
         id: id,
         name: translated_name(I18n.locale),
         code: id,
-        flag_image: ApplicationController.helpers.flag(country_code),
+        flag_image: Views::FlagView.flag(country_code),
         latitude: latitude,
         longitude: longitude
       }

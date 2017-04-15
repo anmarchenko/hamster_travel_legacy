@@ -58,7 +58,7 @@ RSpec.describe Travels::Trip do
       :trip,
       start_date: nil, end_date: nil,
       dates_unknown: true, planned_days_count: 1,
-      status_code: Travels::Trip::StatusCodes::PLANNED
+      status_code: Trips::StatusCodes::PLANNED
     )
     expect(trip).to be_valid
   end
@@ -127,119 +127,6 @@ RSpec.describe Travels::Trip do
 
     it 'does not include new user' do
       expect(trip.include_user(user)).to be false
-    end
-  end
-
-  describe '#last_non_empty_day_index' do
-    let(:trip_empty) { FactoryGirl.create(:trip) }
-    let(:trip_full) { FactoryGirl.create(:trip, :with_filled_days) }
-
-    it 'returns -1 if all days are empty' do
-      expect(trip_empty.last_non_empty_day_index).to eq(-1)
-    end
-
-    it 'returns last day index if all days are non-empty' do
-      expect(trip_full.last_non_empty_day_index).to eq(2)
-    end
-
-    it 'returns last non-empty day index' do
-      trip_empty.days[0].comment = 'comment'
-      trip_empty.days[0].save
-      trip_empty.days[1].comment = 'comment'
-      trip_empty.days[1].save
-      expect(trip_empty.last_non_empty_day_index).to eq(1)
-    end
-  end
-
-  describe '#budget_sum' do
-    context 'when empty trip' do
-      let(:trip) { FactoryGirl.create(:trip) }
-
-      it 'returns zero' do
-        expect(trip.budget_sum).to eq(0)
-      end
-    end
-
-    context 'when filled trip' do
-      let(:trip) do
-        FactoryGirl.create(:trip, :with_filled_days, :with_caterings)
-      end
-
-      it 'returns right budget in right currency' do
-        hotel_price = trip.days.inject(0) do |sum, day|
-          sum + ((day.hotel.amount_cents || 0))
-        end
-        days_add_price = trip.days.inject(0) do |sum, day|
-          sum + day.expenses.inject(0) do |i_s, ex|
-            i_s + ((ex.amount_cents || 0))
-          end
-        end
-        transfers_price = trip.days.inject(0) do |s, day|
-          s + day.transfers.inject(0) do |i_s, tr|
-            i_s + ((tr.amount_cents || 0))
-          end
-        end
-        activities_price = trip.days.inject(0) do |s, day|
-          s + day.activities.inject(0) do |i_s, ac|
-            i_s + ((ac.amount_cents || 0))
-          end
-        end
-        caterings_price = trip.caterings.inject(0) do |s, cat|
-          s + ((cat.amount_cents || 0)) * cat.days_count * cat.persons_count
-        end
-
-        budget_eur = trip.budget_sum('EUR')
-        should_be_eur = Money.new(
-          [hotel_price, days_add_price,
-           transfers_price, activities_price,
-           caterings_price].reduce(&:+), 'RUB'
-        ).exchange_to('EUR').to_f
-        expect((budget_eur - should_be_eur).abs).to be < 1.0
-      end
-    end
-  end
-
-  describe '#name_for_file' do
-    context 'for normal trip' do
-      let(:trip) { FactoryGirl.create(:trip, name: 'simple') }
-
-      it 'returns name' do
-        expect(trip.name_for_file).to eq trip.name
-      end
-    end
-    context 'for trip name with slash and spaces' do
-      let(:trip) do
-        FactoryGirl.create(:trip, name: 'trip with spaces/slash_underscore')
-      end
-
-      it 'returns safe name' do
-        expect(trip.name_for_file).to eq 'trip_with_spaces_slash_underscore'
-      end
-    end
-    context 'for russian trip name' do
-      let(:trip) do
-        FactoryGirl.create(:trip, name: 'DUbai in may')
-      end
-
-      it 'returns safe name' do
-        expect(trip.name_for_file).to eq 'DUbai_in_may'
-      end
-    end
-    context 'for long trip name' do
-      let(:trip) do
-        FactoryGirl.create(
-          :trip,
-          name: 'very very very very very very very very ' \
-                'very very very very very very very very ' \
-                'very very very very long name'
-        )
-      end
-
-      it 'returns safe name' do
-        expect(trip.name_for_file).to eq(
-          'very_very_very_very_very_very_very_very_very_very_'
-        )
-      end
     end
   end
 

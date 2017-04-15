@@ -29,26 +29,6 @@ module Travels
     extend Dragonfly::Model
     extend Dragonfly::Model::Validations
 
-    module StatusCodes
-      DRAFT = '0_draft'
-      PLANNED = '1_planned'
-      FINISHED = '2_finished'
-
-      ALL = [DRAFT, PLANNED, FINISHED].freeze
-      OPTIONS = ALL.map { |type| ["common.#{type}", type] }
-      TYPE_TO_TEXT = {
-        DRAFT => "common.#{DRAFT}",
-        PLANNED => "common.#{PLANNED}",
-        FINISHED => "common.#{FINISHED}"
-      }.freeze
-
-      TYPE_TO_ICON = {
-        DRAFT => 'draft',
-        PLANNED => 'planned',
-        FINISHED => 'finished'
-      }.freeze
-    end
-
     paginates_per 10
 
     has_and_belongs_to_many :users, class_name: 'User',
@@ -70,24 +50,21 @@ module Travels
       cities.uniq
     end
 
+    # replace with countries relation
     def visited_countries_codes
       visited_cities.map(&:country_code).uniq || []
     end
 
-    def visited_countries
-      Geo::Country.where(country_code: visited_countries_codes)
-                  .with_translations
-    end
+    has_many :hotels, class_name: 'Travels::Hotel', through: :days
+    has_many :transfers, class_name: 'Travels::Transfer', through: :days
+    has_many :activities, class_name: 'Travels::Activity', through: :days
+    has_many :expenses, class_name: 'Travels::Expense', through: :days
 
     dragonfly_accessor :image
 
     def image_url_or_default
       image&.remote_url(host: Settings.media.cdn_host) ||
         ActionController::Base.helpers.image_url('plan/camera.svg')
-    end
-
-    def status_text
-      I18n.t(StatusCodes::TYPE_TO_TEXT[status_code])
     end
 
     validates_presence_of :name, :author_user_id
@@ -123,7 +100,7 @@ module Travels
     default_scope(-> { where(archived: false) })
 
     before_save(-> { Trips.nullify_dates(self) })
-    after_create(-> { Trips::Days.update_on_dates_change(self) })
+    after_create(-> { Trips::Days.on_trip_update(self) })
 
     def include_user(user)
       users.include?(user)
@@ -145,40 +122,16 @@ module Travels
       days_count - 1
     end
 
-    def last_non_empty_day_index
-      result = -1
-      (days || []).each_with_index do |day, index|
-        result = index unless day.empty_content?
-      end
-      result
-    end
-
-    def budget_sum(currency = CurrencyHelper::DEFAULT_CURRENCY)
-      Calculators::Budget.new(self, currency).sum
-    end
-
-    def transfers_hotel_budget(currency = CurrencyHelper::DEFAULT_CURRENCY)
-      Calculators::Budget.new(self, currency).transfers_hotel
-    end
-
-    def activities_other_budget(currency = CurrencyHelper::DEFAULT_CURRENCY)
-      Calculators::Budget.new(self, currency).activities_other
-    end
-
-    def catering_budget(currency = CurrencyHelper::DEFAULT_CURRENCY)
-      Calculators::Budget.new(self, currency).catering
-    end
-
     def draft?
-      status_code == StatusCodes::DRAFT
+      status_code == Trips::StatusCodes::DRAFT
     end
 
     def plan?
-      status_code == StatusCodes::PLANNED
+      status_code == Trips::StatusCodes::PLANNED
     end
 
     def report?
-      status_code == StatusCodes::FINISHED
+      status_code == Trips::StatusCodes::FINISHED
     end
 
     def without_dates?
@@ -189,56 +142,8 @@ module Travels
       !without_dates?
     end
 
-    def as_json(**_args)
-      attrs = {}
-      %w[id comment start_date end_date name short_description
-         archived private budget_for].each do |field|
-        attrs[field] = send(field)
-      end
-      attrs['id'] = attrs['id'].to_s
-      attrs
-    end
-
-    def short_json(flag_size = 16)
-      res = {}
-      %w[id name start_date].each do |field|
-        res[field] = send(field)
-      end
-      res['countries'] = visited_countries.map do |country|
-        ApplicationController.helpers.flag_with_title(country, flag_size)
-      end
-      res['image_url'] = image_url_or_default
-      res
-    end
-
-    def ensure_days_order(days_to_order = nil)
-      (days_to_order || days).each_with_index do |day, index|
-        if without_dates?
-          day.date_when = nil
-        else
-          day.date_when = (start_date + index.days)
-          # set dates of all transfers
-          day.transfers.each { |transfer| transfer.date!(day.date_when) }
-        end
-        day.index = index
-        day.save
-      end
-    end
-
-    def report
-      comment
-    end
-
-    def regenerate_countries_search_index!
-      self.countries_search_index = visited_cities.map do |city|
-        country = city.country
-        "#{country.translated_name(:en)} #{country.translated_name(:ru)}"
-      end.join(' ')
-      save(validate: false)
-    end
-
-    def name_for_file
-      name[0, 50].gsub(/[^0-9A-zА-Яа-яёЁ.\-]/, '_')
+    def as_json(**args)
+      super.merge('id' => id.to_s)
     end
   end
 end

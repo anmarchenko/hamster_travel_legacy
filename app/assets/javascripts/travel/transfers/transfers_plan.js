@@ -29,35 +29,6 @@ angular.module('travel').controller('TransfersPlanController', [
                 })
             };
 
-            $scope.savePlan = function () {
-                if ($scope.saving) {
-                    return;
-                }
-                $scope.saving = true;
-
-                $http.post("/api/trips/" + $scope.trip_id + "/days_transfers/", {days: $scope.days}).then(function () {
-                    $scope.saving = false;
-                    toastr["success"]($('#notification_saved').text());
-
-                    $scope.loadBudget();
-                    $scope.loadCountries();
-                })
-            };
-
-            $scope.cancelEdits = function () {
-                $scope.cancelEditsPlan();
-                $scope.days = [];
-                $http.get(transfersUrl()).then( function(response) {
-                    // TODO: ES6
-                    for (var i = 0; i < response.data.days.length; i++) {
-                        var day = response.data.days[i];
-                        $scope.days.push(day);
-                        $scope.collapseTransfers(day);
-                        $scope.$broadcast('day_transfers_updated', day);
-                    }
-                })
-            };
-
             $scope.$on('day_transfers_reloaded', function(event, day) {
                 for (var i = 0; i < $scope.days.length; i++) {
                     if($scope.days[i].id === day.id) {

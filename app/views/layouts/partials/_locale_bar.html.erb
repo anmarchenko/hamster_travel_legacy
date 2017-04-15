@@ -6,13 +6,13 @@
   >
     <li class="flag-text-menu">
       <a href="" ng-click="setLocale('ru')">
-          <%= flag 'ru', 24 %>
+          <%= Views::FlagView.flag 'ru', 24 %>
           Русский
       </a>
     </li>
     <li class="flag-text-menu">
       <a href="" ng-click="setLocale('en')">
-          <%= flag 'gb', 24 %>
+          <%= Views::FlagView.flag 'gb', 24 %>
           English
         </a>
     </li>
@@ -20,6 +20,6 @@
 </script>
 <li class="dropdown">
   <a href="#" popover-placement="bottom" popover-trigger="'outsideClick'" uib-popover-template="'localeMenu.html'">
-    <%= flag I18n.locale == :ru ? 'ru' : 'gb' %>
+    <%= Views::FlagView.flag I18n.locale == :ru ? 'ru' : 'gb' %>
   </a>
 </li>

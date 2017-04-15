@@ -17,13 +17,13 @@
           <%= f.hidden_field :status_code, class: 'control-label', value: '{{status}}' %>
           <div class="form-group">
             <div class="row trip-status">
-              <% Travels::Trip::StatusCodes::ALL.each do |type| %>
+              <% Trips::StatusCodes::ALL.each do |type| %>
                   <div class="col-md-4 col-sm-4 col-xs-4 status" ng-class="{active: status == '<%= type %>'}" ng-click="status = '<%= type %>'">
                     <div class="status-image">
-                      <%= image_tag "plan/#{Travels::Trip::StatusCodes::TYPE_TO_ICON[type]}.svg" %>
+                      <%= image_tag "plan/#{Trips::StatusCodes::TYPE_TO_ICON[type]}.svg" %>
                     </div>
                     <div class="status-header">
-                      <%= I18n.t(Travels::Trip::StatusCodes::TYPE_TO_TEXT[type]) %>
+                      <%= I18n.t(Trips::StatusCodes::TYPE_TO_TEXT[type]) %>
                     </div>
                     <div class="status-description hidden-xs">
                       <%= t(".#{type}_help") %>

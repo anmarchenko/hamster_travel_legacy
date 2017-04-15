@@ -20,15 +20,16 @@ RSpec.describe Api::BudgetsController do
           expect(response).to have_http_status 200
 
           json = JSON.parse(response.body)
-          expect(json['budget']['sum']).to eq(trip.budget_sum('EUR'))
+          budget = Budgets.calculate_info(trip, 'EUR')
+          expect(json['budget']['sum']).to eq(budget.sum)
           expect(json['budget']['transfers_hotel_budget']).to eq(
-            trip.transfers_hotel_budget('EUR')
+            budget.transfers_hotel
           )
           expect(json['budget']['activities_other_budget']).to eq(
-            trip.activities_other_budget('EUR')
+            budget.activities_other
           )
           expect(json['budget']['catering_budget']).to eq(
-            trip.catering_budget('EUR')
+            budget.catering
           )
           expect(json['budget']['budget_for']).to eq(trip.budget_for)
         end
@@ -47,17 +48,16 @@ RSpec.describe Api::BudgetsController do
         get 'show', params: { id: trip.id.to_s, format: :json }
         expect(response).to have_http_status 200
         json = JSON.parse(response.body)
-        expect(json['budget']['sum']).to eq(
-          trip.budget_sum(CurrencyHelper::DEFAULT_CURRENCY)
-        )
+        budget = Budgets.calculate_info(trip, CurrencyHelper::DEFAULT_CURRENCY)
+        expect(json['budget']['sum']).to eq(budget.sum)
         expect(json['budget']['transfers_hotel_budget']).to eq(
-          trip.transfers_hotel_budget(CurrencyHelper::DEFAULT_CURRENCY)
+          budget.transfers_hotel
         )
         expect(json['budget']['activities_other_budget']).to eq(
-          trip.activities_other_budget(CurrencyHelper::DEFAULT_CURRENCY)
+          budget.activities_other
         )
         expect(json['budget']['catering_budget']).to eq(
-          trip.catering_budget(CurrencyHelper::DEFAULT_CURRENCY)
+          budget.catering
         )
         expect(json['budget']['budget_for']).to eq(trip.budget_for)
       end

@@ -11,15 +11,12 @@ module Api
 
     def show
       render json: {
-        caterings: Trips::Caterings.list(@trip).as_json(
-          user_currency: current_user.try(:currency)
-        )
+        caterings: Views::CateringView.index_json(Trips::Caterings.list(@trip))
       }
     end
 
     def update
-      ::Updaters::Caterings.new(@trip, params_caterings[:caterings]).process
-      Calculators::Budget.new(@trip).invalidate_cache!
+      ::Trips::Caterings.save(@trip, params_caterings[:caterings])
       render json: {
         res: true
       }

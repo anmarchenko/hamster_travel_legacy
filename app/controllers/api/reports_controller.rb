@@ -11,7 +11,7 @@ module Api
 
     def show
       render json: {
-        report: @trip.report
+        report: @trip.comment
       }
     end
 

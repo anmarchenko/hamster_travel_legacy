@@ -6,7 +6,6 @@
 
       <div class="row hidden-xs">
         <div class="col-md-12">
-          <%= render 'components/trip/partials/buttons' %>
           <div class="list-group list-group-horizontal pull-right">
             <a class="list-group-item" data-placement="bottom" data-toggle="tooltip" ng-class="{active: show_place}" ng-click="changeVisibility('show_place')" title="<%= t('trips.show.place') %>">
             <span ng-show="show_place">
@@ -53,14 +52,6 @@
         </th>
         <th class="col-md-3" ng-show="show_hotel">
           <%= t('trips.show.hotel') %>
-          <% if @user_can_edit %>
-              <a class="pull-right" data-placement="bottom" data-toggle="tooltip" href="javascript:void(0);" ng-click="savePlan()" ng-show="!saving && edit" title="<%= t('trips.show.save_plan') %>">
-                <%= image_tag 'buttons/save.svg' %>
-              </a>
-              <a class="pull-right" ng-show="saving">
-                <%= t('trips.show.saving_plan') %>
-              </a>
-          <% end %>
         </th>
       </tr>
       </thead>
@@ -72,7 +63,7 @@
                 <%= day.date_when_s %>
               </div>
               <% if @user_can_edit && @trip.days_count > 1 %>
-                  <a class="reorder-link hidden-xs" href="javascript:void(0);" ng-click="startSorting('<%= @trip.id %>')">
+                  <a class="reorder-link hidden-xs" href="javascript:void(0);" ng-click="startSorting('<%= @trip.id %>', ['transfers'])">
                     <%= t('trips.show.reorder_days') %>
                   </a>
               <% end %>

@@ -36,12 +36,6 @@ module Travels
 
     monetize :amount_cents
 
-    default_scope { includes(:city_from, :city_to) }
-
-    before_save do |transfer|
-      transfer.date = transfer.day.date_when if transfer.day
-    end
-
     module Types
       FLIGHT = 'flight'
       TRAIN = 'train'
@@ -63,13 +57,14 @@ module Travels
     end
 
     def city_from_text
-      city_from.try(:translated_name, I18n.locale)
+      city_from&.translated_name I18n.locale
     end
 
     def city_to_text
-      city_to.try(:translated_name, I18n.locale)
+      city_to&.translated_name I18n.locale
     end
 
+    # TODO: warning: model should not call view directly
     def type_icon
       unless type.blank?
         icon = ActionController::Base.helpers.image_path(
@@ -80,39 +75,9 @@ module Travels
       icon
     end
 
-    def date!(new_date)
-      self.date = new_date
-      save
-    end
-
-    def date=(new_date)
-      return if new_date.blank?
-      if start_time.present?
-        self.start_time = start_time.change(day: new_date.day,
-                                            year: new_date.year,
-                                            month: new_date.month)
-      end
-      return if end_time.blank?
-      self.end_time = end_time.change(day: new_date.day,
-                                      year: new_date.year,
-                                      month: new_date.month)
-    end
-
-    def serializable_hash(_args)
-      json = super(except: [:_id])
-      json['id'] = id.to_s
-      json['start_time'] = start_time.try(:strftime, '%Y-%m-%dT%H:%M+00:00')
-      json['end_time'] = end_time.try(:strftime, '%Y-%m-%dT%H:%M+00:00')
-      json['type_icon'] = type_icon
-      json['amount_currency_text'] = amount.currency.symbol
-      json['city_from_text'] = city_from_text
-      json['city_to_text'] = city_to_text
-      json['links'] = if links.blank?
-                        [{}]
-                      else
-                        links
-                      end
-      json
+    # TODO: warning: model should not call view directly
+    def serializable_hash(**args)
+      Views::TransferView.show_json(self, super)
     end
   end
 end

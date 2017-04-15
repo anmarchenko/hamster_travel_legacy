@@ -9,16 +9,16 @@ module Api
     respond_to :json
 
     def index
-      respond_with @trip.days.map(&:short_hash)
+      respond_with Views::DayView.reordering_index(@trip.days)
     end
 
     def create
-      days = @trip.days.to_a
-      days_sorted = params[:day_ids].map do |day_id|
-        days.find { |day| day.id.to_s == day_id.to_s }
-      end
-      @trip.ensure_days_order days_sorted
-      render json: { result: :ok }
+      res = Trips::Days::Ordering.reorder(
+        @trip,
+        params[:day_ids],
+        params[:fields]
+      )
+      render json: { result: res.first }
     end
 
     private

@@ -6,7 +6,7 @@ def check_city(json_hash, city)
   expect(json_hash).to eq(
     'name' => city.name, 'text' => city.translated_text,
     'code' => city.id,
-    'flag_image' => ApplicationController.helpers.flag(city.country_code),
+    'flag_image' => Views::FlagView.flag(city.country_code),
     'id' => city.id, 'longitude' => city.longitude, 'latitude' => city.latitude
   )
 end

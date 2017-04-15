@@ -32,7 +32,7 @@ FactoryGirl.define do
     sequence(:start_date) { |n| Date.today - 2 + n }
     sequence(:end_date) { |n| Date.today + n }
     currency { 'RUB' }
-    status_code { Travels::Trip::StatusCodes::DRAFT }
+    status_code { Trips::StatusCodes::DRAFT }
     dates_unknown { false }
 
     association :author_user, factory: :user
@@ -59,7 +59,7 @@ FactoryGirl.define do
           day.places.create(build(:place, city_id: city_to.id).attributes)
           day.hotel = Travels::Hotel.new(build(:hotel, :with_data).attributes)
           day.hotel.links = [FactoryGirl.build(:external_link)]
-          day.expenses.destroy
+          day.expenses.destroy_all
           2.times do
             day.expenses.create(build(:expense, :with_data).attributes)
           end

@@ -34,9 +34,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'autoprefixer-rails'
 
 # JS
-# Use jquery as the JavaScript library
 gem 'jquery-rails'
-# jquery UI
 gem 'jquery-ui-rails'
 # AngularJS
 gem 'angularjs-rails'

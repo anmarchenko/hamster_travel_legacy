@@ -192,20 +192,20 @@ RSpec.describe Api::UsersController do
       # finished, another user
       FactoryGirl.create(
         :trip,
-        status_code: Travels::Trip::StatusCodes::FINISHED
+        status_code: Trips::StatusCodes::FINISHED
       )
       FactoryGirl.create(
         :trip,
         :with_filled_days,
         user_ids: [user.id],
-        status_code: Travels::Trip::StatusCodes::PLANNED
+        status_code: Trips::StatusCodes::PLANNED
       )
       FactoryGirl.create_list(
         :trip,
         2,
         :with_filled_days,
         user_ids: [user.id],
-        status_code: Travels::Trip::StatusCodes::FINISHED
+        status_code: Trips::StatusCodes::FINISHED
       )
     end
 
@@ -248,18 +248,18 @@ RSpec.describe Api::UsersController do
         # finished, another user
         FactoryGirl.create(
           :trip,
-          status_code: Travels::Trip::StatusCodes::FINISHED
+          status_code: Trips::StatusCodes::FINISHED
         )
         FactoryGirl.create(
           :trip,
           user_ids: [user.id],
-          status_code: Travels::Trip::StatusCodes::PLANNED
+          status_code: Trips::StatusCodes::PLANNED
         )
         FactoryGirl.create_list(
           :trip,
           3,
           user_ids: [user.id],
-          status_code: Travels::Trip::StatusCodes::FINISHED
+          status_code: Trips::StatusCodes::FINISHED
         )
       end
       before { login_user(user) }
@@ -279,7 +279,7 @@ RSpec.describe Api::UsersController do
           :trip,
           10,
           user_ids: [user.id],
-          status_code: Travels::Trip::StatusCodes::FINISHED
+          status_code: Trips::StatusCodes::FINISHED
         )
       end
       it "returns list of the user's finished trips paginated" do
@@ -297,19 +297,19 @@ RSpec.describe Api::UsersController do
       FactoryGirl.create(
         :trip,
         user_ids: [user.id],
-        status_code: Travels::Trip::StatusCodes::FINISHED
+        status_code: Trips::StatusCodes::FINISHED
       )
       FactoryGirl.create_list(
         :trip,
         2,
         user_ids: [user.id],
-        status_code: Travels::Trip::StatusCodes::PLANNED
+        status_code: Trips::StatusCodes::PLANNED
       )
       FactoryGirl.create(
         :trip,
         private: true,
         user_ids: [user.id],
-        status_code: Travels::Trip::StatusCodes::PLANNED
+        status_code: Trips::StatusCodes::PLANNED
       )
     end
     context 'when user is logged in' do
@@ -342,20 +342,20 @@ RSpec.describe Api::UsersController do
       # finished, another user
       FactoryGirl.create(
         :trip,
-        status_code: Travels::Trip::StatusCodes::FINISHED
+        status_code: Trips::StatusCodes::FINISHED
       )
       FactoryGirl.create(
         :trip,
         :with_filled_days,
         user_ids: [user.id],
-        status_code: Travels::Trip::StatusCodes::PLANNED
+        status_code: Trips::StatusCodes::PLANNED
       )
       FactoryGirl.create_list(
         :trip,
         2,
         :with_filled_days,
         user_ids: [user.id],
-        status_code: Travels::Trip::StatusCodes::FINISHED
+        status_code: Trips::StatusCodes::FINISHED
       )
     end
 

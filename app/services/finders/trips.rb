@@ -19,21 +19,21 @@ module Finders
 
     def all(page)
       Travels::Trip.where(private: false)
-                   .where.not(status_code: Travels::Trip::StatusCodes::DRAFT)
+                   .where.not(status_code: ::Trips::StatusCodes::DRAFT)
                    .order(status_code: :desc, start_date: :desc)
                    .page(page || 1)
     end
 
     def for_user(user, page)
       user.trips
-          .where.not(status_code: Travels::Trip::StatusCodes::DRAFT)
+          .where.not(status_code: ::Trips::StatusCodes::DRAFT)
           .order(start_date: :desc)
           .page(page || 1)
     end
 
     def for_user_planned(user, page, current_user)
       query = user.trips
-                  .where(status_code: Travels::Trip::StatusCodes::PLANNED)
+                  .where(status_code: ::Trips::StatusCodes::PLANNED)
                   .order(start_date: :asc)
                   .page(page || 1)
                   .per(9)
@@ -44,7 +44,7 @@ module Finders
     def for_user_finished(user, page, current_user)
       query = user
               .trips
-              .where(status_code: Travels::Trip::StatusCodes::FINISHED)
+              .where(status_code: ::Trips::StatusCodes::FINISHED)
               .order(start_date: :desc)
               .page(page || 1)
               .per(9)
@@ -54,7 +54,7 @@ module Finders
 
     def drafts(user, page)
       user.trips
-          .where(status_code: Travels::Trip::StatusCodes::DRAFT)
+          .where(status_code: ::Trips::StatusCodes::DRAFT)
           .order(dates_unknown: :asc, start_date: :desc, name: :asc)
           .page(page || 1)
     end
@@ -63,11 +63,11 @@ module Finders
 
     def restrict_search(query, user)
       if user.present?
-        query.where.not(status_code: Travels::Trip::StatusCodes::DRAFT)
+        query.where.not(status_code: ::Trips::StatusCodes::DRAFT)
              .where(private: false)
              .or(Travels::Trip.where(id: user.trip_ids))
       else
-        query.where.not(status_code: Travels::Trip::StatusCodes::DRAFT)
+        query.where.not(status_code: ::Trips::StatusCodes::DRAFT)
              .where(private: false)
       end
     end

@@ -37,7 +37,6 @@ angular.module('travel').controller('PlanController', [
 
         $scope.setEdit = function (val) {
             $scope.edit = val;
-            return $scope.$broadcast('whole_plan_edit', val);
         };
     }
 ]);

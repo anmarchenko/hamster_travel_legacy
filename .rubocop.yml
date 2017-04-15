@@ -18,14 +18,3 @@ Metrics/BlockLength:
 
 Style/Documentation:
   Enabled: false
-
-Metrics/AbcSize:
-  Max: 20
-
-Metrics/MethodLength:
-  Max: 25
-
-Metrics/ClassLength:
-  Max: 100
-  Exclude:
-  - app/models/travels/trip.rb

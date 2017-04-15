@@ -39,7 +39,7 @@ module Travels
       json = super(except: [:_id])
       json['id'] = id.to_s
       json['city_text'] = city_text
-      json['flag_image'] = ApplicationController.helpers.flag(country_code)
+      json['flag_image'] = Views::FlagView.flag(country_code)
       json
     end
   end

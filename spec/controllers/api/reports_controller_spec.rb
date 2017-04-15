@@ -16,7 +16,7 @@ RSpec.describe Api::ReportsController do
           expect(response).to have_http_status 200
 
           json = JSON.parse(response.body)
-          expect(json['report']).to eq(trip.report)
+          expect(json['report']).to eq(trip.comment)
         end
       end
 
@@ -60,7 +60,7 @@ RSpec.describe Api::ReportsController do
           json = JSON.parse(response.body)
           expect(json['res']).to eq(true)
 
-          expect(trip.reload.report).to eq('new_report')
+          expect(trip.reload.comment).to eq('new_report')
         end
       end
 
@@ -75,7 +75,7 @@ RSpec.describe Api::ReportsController do
 
           expect(response).to have_http_status 403
 
-          expect(trip.reload.report).not_to eq('new_report')
+          expect(trip.reload.comment).not_to eq('new_report')
         end
       end
     end

@@ -4,7 +4,7 @@ module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     def google_oauth2
       auth = request.env['omniauth.auth']
-      Accounts::Google.call(auth) do |result, user|
+      Omniauth::Google.call(auth) do |result, user|
         case result
         when :ok
           success_auth(user)

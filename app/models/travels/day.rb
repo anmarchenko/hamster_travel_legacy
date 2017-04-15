@@ -18,7 +18,9 @@ module Travels
     has_many :places, class_name: 'Travels::Place'
     has_many :transfers, class_name: 'Travels::Transfer'
     has_one :hotel, class_name: 'Travels::Hotel'
+
     has_many :activities, class_name: 'Travels::Activity'
+
     has_many :expenses, class_name: 'Travels::Expense', as: :expendable
     has_many :links, class_name: 'ExternalLink', as: :linkable
 
@@ -63,54 +65,7 @@ module Travels
     end
 
     def as_json(args = {})
-      json = super(args)
-      json['id'] = id.to_s
-      json['date'] = date_when_s
-      if args[:user_currency]
-        # process all amounts and add them in user's currency
-        service = Json::AmountUserCurrency.new(args[:user_currency])
-        %w[transfers activities expenses hotel].each do |field|
-          service.call(json[field])
-        end
-      end
-      json
-    end
-
-    def short_hash
-      {
-        id: id.to_s,
-        date: date_when,
-        index: index,
-        transfer_s: transfers_s,
-        activity_s: activities_s,
-        place_s: places_s
-      }
-    end
-
-    def activities_s
-      res = ''
-      top_activities.each_with_index do |activity, index|
-        res += "#{index + 1}. #{activity.name}"
-        res += '<br/>'
-      end
-      res
-    end
-
-    def transfers_s
-      transfer = transfers.first
-      "#{transfer.city_from_text} - #{transfer.city_to_text}" if transfer
-    end
-
-    def places_s
-      place = places.first
-      place&.city_text
-    end
-
-    # first 3 activities by rating
-    def top_activities
-      activities.unscoped.where(day_id: id)
-                .order(rating: :desc, order_index: :asc)
-                .first(3)
+      super.merge('date' => date_when_s, 'id' => id.to_s)
     end
   end
 end

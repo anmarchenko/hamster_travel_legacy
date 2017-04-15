@@ -23,15 +23,11 @@ module Travels
 
     monetize :amount_cents
 
-    def as_json(args)
-      json = super(except: [:_id])
-      json['id'] = id.to_s
-      json['amount_currency_text'] = amount.currency.symbol
-
-      if args[:user_currency]
-        Json::AmountUserCurrency.new(args[:user_currency]).call(json)
-      end
-      json
+    def as_json(*args)
+      super.merge(
+        'amount_currency_text' => amount.currency.symbol,
+        'id' => id.to_s
+      )
     end
   end
 end
