@@ -15,9 +15,7 @@ class TripsController < ApplicationController
   end
 
   def my
-    @trips = Finders::Trips.for_user(current_user, params[:page]).includes(
-      :author_user, :cities
-    )
+    @trips = ::Trips.list_user_trips(current_user, params[:page])
   end
 
   def drafts

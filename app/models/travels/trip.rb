@@ -100,9 +100,7 @@ module Travels
     after_create(-> { Trips::Days.on_trip_update(self) })
 
     scope :relevant, (-> { where(archived: false) })
-    scope :public_trips, (lambda {
-      where.not(status_code: ::Trips::StatusCodes::DRAFT).where(private: false)
-    })
+    scope :public_trips, (-> { status_not_draft.where(private: false) })
     scope :including_user, (->(user) { where(id: user&.trip_ids) })
     scope :visible_by, (->(user) { public_trips.or(including_user(user)) })
     scope :by_term, (lambda { |term|
@@ -110,6 +108,9 @@ module Travels
         'name ILIKE ? OR countries_search_index ILIKE ?',
         "%#{term}%", "%#{term}%"
       )
+    })
+    scope :status_not_draft, (lambda {
+      where.not(status_code: ::Trips::StatusCodes::DRAFT)
     })
     scope :order_newest, (-> { order(start_date: :desc) })
     scope :order_status, (-> { order(status_code: :desc) })

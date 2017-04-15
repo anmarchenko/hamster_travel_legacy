@@ -2,36 +2,6 @@
 
 require 'rails_helper'
 RSpec.describe Finders::Trips do
-  describe '.for_user' do
-    let(:user) { FactoryGirl.create(:user) }
-    before do
-      FactoryGirl.create(
-        :trip,
-        user_ids: [user.id],
-        status_code: Trips::StatusCodes::FINISHED,
-        private: true
-      )
-      FactoryGirl.create(
-        :trip,
-        user_ids: [user.id]
-      )
-      FactoryGirl.create(
-        :trip,
-        user_ids: [user.id],
-        status_code: Trips::StatusCodes::PLANNED
-      )
-      FactoryGirl.create(
-        :trip,
-        status_code: Trips::StatusCodes::FINISHED
-      )
-    end
-
-    it 'returns user trips without drafts ordered only by start_date' do
-      trips = Finders::Trips.for_user(user, 1)
-      expect(trips.count).to eq 2
-    end
-  end
-
   describe '.drafts' do
     let(:user) { FactoryGirl.create(:user) }
     before do

@@ -30,6 +30,14 @@ module Trips
                  .includes(:author_user, :cities)
   end
 
+  def self.list_user_trips(user, page)
+    user.trips.relevant
+        .status_not_draft
+        .order_newest
+        .page(page || 1)
+        .includes(:author_user, :cities)
+  end
+
   def self.search(term, current_user = nil)
     return [] if term.blank?
     Travels::Trip.relevant.visible_by(current_user)

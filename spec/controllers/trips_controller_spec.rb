@@ -39,7 +39,7 @@ RSpec.describe TripsController do
       before { login_user(user) }
 
       it 'shows user plans' do
-        expect(Finders::Trips).to receive(:for_user).with(subject.current_user,
+        expect(::Trips).to receive(:list_user_trips).with(subject.current_user,
                                                           '1').and_return(
                                                             Travels::Trip.all
                                                           )

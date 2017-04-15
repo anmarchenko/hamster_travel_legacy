@@ -4,13 +4,6 @@ module Finders
   module Trips
     module_function
 
-    def for_user(user, page)
-      user.trips.relevant
-          .where.not(status_code: ::Trips::StatusCodes::DRAFT)
-          .order(start_date: :desc)
-          .page(page || 1)
-    end
-
     def for_user_planned(user, page, current_user)
       query = user.trips.relevant
                   .where(status_code: ::Trips::StatusCodes::PLANNED)
