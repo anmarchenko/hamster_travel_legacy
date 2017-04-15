@@ -4,13 +4,6 @@ module Finders
   module Trips
     module_function
 
-    def all(page)
-      Travels::Trip.relevant.where(private: false)
-                   .where.not(status_code: ::Trips::StatusCodes::DRAFT)
-                   .order(status_code: :desc, start_date: :desc)
-                   .page(page || 1)
-    end
-
     def for_user(user, page)
       user.trips.relevant
           .where.not(status_code: ::Trips::StatusCodes::DRAFT)

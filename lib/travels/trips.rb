@@ -23,6 +23,13 @@ module Trips
     Travels::Trip.relevant.find(id)
   end
 
+  def self.list(page)
+    Travels::Trip.relevant.public_trips
+                 .order_status.order_newest
+                 .page(page || 1)
+                 .includes(:author_user, :cities)
+  end
+
   def self.search(term, current_user = nil)
     return [] if term.blank?
     Travels::Trip.relevant.visible_by(current_user)

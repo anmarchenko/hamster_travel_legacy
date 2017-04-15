@@ -15,8 +15,8 @@ RSpec.describe TripsController do
       before { login_user(user) }
 
       it 'shows trips index page, all trips that are not draft' do
-        expect(Finders::Trips).to receive(:all).with('2').and_return(
-          Travels::Trip.all
+        expect(::Trips).to receive(:list).with('2').and_return(
+          Travels::Trip.relevant
         )
         get 'index', params: { page: 2 }
         expect(response).to be_success
@@ -25,8 +25,8 @@ RSpec.describe TripsController do
 
     context 'when no logged user' do
       it 'still shows trips index page' do
-        expect(Finders::Trips).to receive(:all).with(nil).and_return(
-          Travels::Trip.all
+        expect(::Trips).to receive(:list).with(nil).and_return(
+          Travels::Trip.relevant
         )
         get 'index'
         expect(response).to be_success

@@ -3,6 +3,60 @@
 require 'rails_helper'
 
 RSpec.describe Trips do
+  describe '.all' do
+    context 'logic' do
+      before do
+        FactoryGirl.create(:trip) # draft
+        FactoryGirl.create_list(
+          :trip,
+          2,
+          status_code: Trips::StatusCodes::PLANNED
+        )
+        FactoryGirl.create_list(
+          :trip,
+          3,
+          status_code: Trips::StatusCodes::FINISHED
+        )
+        FactoryGirl.create(
+          :trip,
+          status_code: Trips::StatusCodes::FINISHED,
+          private: true
+        )
+      end
+      it 'returns all trips except private, first page by default' do
+        trips = Trips.list(nil).to_a
+        expect(trips.size).to eq 5
+        # check sort
+        trips.each_with_index do |_, i|
+          next if trips[i + 1].blank?
+          expect(
+            trips[i].status_code > trips[i + 1].status_code ||
+            (
+              trips[i].status_code == trips[i + 1].status_code &&
+              trips[i].start_date >= trips[i + 1].start_date
+            )
+          ).to be true
+          expect(trips[i].private).to be false
+        end
+      end
+    end
+
+    context 'pagination' do
+      before do
+        FactoryGirl.create_list(
+          :trip,
+          11,
+          status_code: Trips::StatusCodes::FINISHED
+        )
+      end
+
+      it 'paginates trips' do
+        trips = Trips.list(2)
+        expect(trips.to_a.size).to eq(1)
+      end
+    end
+  end
+
   describe '.search' do
     let(:user) { FactoryGirl.create(:user) }
 

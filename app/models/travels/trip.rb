@@ -112,6 +112,7 @@ module Travels
       )
     })
     scope :order_newest, (-> { order(start_date: :desc) })
+    scope :order_status, (-> { order(status_code: :desc) })
 
     def include_user(user)
       users.include?(user)
