@@ -90,4 +90,12 @@ module ApplicationHelper
       days_count(trip).html_safe
     end
   end
+
+  def flag(country_code, size = 16)
+    Views::FlagView.flag(country_code, size)
+  end
+
+  def status_text(trip)
+    Views::TripView.status_text(trip)
+  end
 end
