@@ -41,11 +41,11 @@ module Api
     end
 
     def find_trip
-      @trip = ::Trips.by_id(params[:trip_id])
+      @trip = Trips.by_id(params[:trip_id])
     end
 
     def find_day
-      @day = @trip.days.find(params[:day_id])
+      @day = Trips::Days.by_id(@trip, params[:day_id])
     end
   end
 end

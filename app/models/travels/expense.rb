@@ -21,16 +21,5 @@ module Travels
     def empty_content?
       (amount_cents.blank? || amount_cents.zero?) && name.blank?
     end
-
-    def serializable_hash(_args)
-      json = super(except: [:_id])
-      json['id'] = id.to_s
-
-      json['name'] = name
-
-      json['amount_currency'] = amount_currency
-      json['amount_currency_text'] = amount.currency.symbol
-      json
-    end
   end
 end

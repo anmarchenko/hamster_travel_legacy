@@ -23,17 +23,17 @@ angular.module('travel').controller('UserMapController', ['$scope', '$http', '$t
                   $timeout(function(){
                       $scope.map = new mapboxgl.Map({
                           container: 'user_mapbox_container',
-                          style: 'mapbox://styles/altmer/cijmn9d6y00lrbolxzss4sxp1',
+                          style: 'mapbox://styles/altmer/cj11tgfi0005s2so7k1yl6w81',
                           minZoom: 2,
                           zoom: 2.0000001,
                           center: [13.4515, 51.1657],
                           dragRotate: false
                       });
 
-                      $scope.map.addControl(new mapboxgl.Navigation());
+                      $scope.map.addControl(new mapboxgl.NavigationControl());
                       $scope.map.on('load', function () {
                           $scope.map.setFilter(
-                              'visited countries',
+                              'visited-countries',
                               ['in', 'ADM0_A3_IS'].concat($scope.visited_countries_codes)
                           );
                           $scope.map.addSource("cities", {
@@ -47,6 +47,9 @@ angular.module('travel').controller('UserMapController', ['$scope', '$http', '$t
                                               "geometry": {
                                                   "type": "Point",
                                                   "coordinates": [city.longitude, city.latitude]
+                                              },
+                                              "properties": {
+                                                  "description": city.flag_image + city.name
                                               }
                                           }
                                       })
@@ -58,8 +61,30 @@ angular.module('travel').controller('UserMapController', ['$scope', '$http', '$t
                               "type": "symbol",
                               "source": "cities",
                               "layout": {
-                                  "icon-image": "marker-15"
+                                  "icon-image": "marker-15",
+                                  "icon-allow-overlap": true
                               }
+                          });
+
+                          var popup = new mapboxgl.Popup({
+                              closeButton: false,
+                              closeOnClick: false
+                          });
+
+                          $scope.map.on('mousemove', 'cities', function(e) {
+                              // Change the cursor style as a UI indicator.
+                              $scope.map.getCanvas().style.cursor = 'pointer';
+
+                              // Populate the popup and set its coordinates
+                              // based on the feature found.
+                              popup.setLngLat(e.features[0].geometry.coordinates)
+                                  .setHTML(e.features[0].properties.description)
+                                  .addTo($scope.map);
+                          });
+
+                          $scope.map.on('mouseleave', 'cities', function() {
+                              $scope.map.getCanvas().style.cursor = '';
+                              popup.remove();
                           });
                       });
                   }, 100)

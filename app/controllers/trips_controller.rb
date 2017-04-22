@@ -11,17 +11,15 @@ class TripsController < ApplicationController
   before_action :authorize_show, only: [:show]
 
   def index
-    @trips = ::Trips.list(params[:page])
+    @trips = Trips.list(params[:page])
   end
 
   def my
-    @trips = ::Trips.list_user_trips(current_user, params[:page])
+    @trips = UserTrips.list_trips(current_user, params[:page])
   end
 
   def drafts
-    @trips = Finders::Trips.drafts(current_user, params[:page]).includes(
-      :author_user, :cities
-    )
+    @trips = UserTrips.list_drafts(current_user, params[:page])
   end
 
   def new
@@ -46,20 +44,25 @@ class TripsController < ApplicationController
   end
 
   def show
-    @user_can_edit = (user_signed_in? && @trip.include_user(current_user))
     @multiday = @trip.days.count > 1
+    @user_can_edit = (user_signed_in? && @trip.include_user(current_user))
+    @finished_trip = @trip.status_code == Trips::StatusCodes::FINISHED
+    @show_report_tab = @user_can_edit || @finished_trip
+    @days = Trips::Days.list(@trip)
 
     respond_to do |format|
       format.html
-      format.docx do
-        @transfers_grid = TRANSFERS_GRID
-        headers['Content-Disposition'] =
-          "attachment; filename=\"#{Trips.docx_file_name(@trip)}\""
-      end
+      format.docx { show_docx }
     end
   end
 
   private
+
+  def show_docx
+    @transfers_grid = TRANSFERS_GRID
+    headers['Content-Disposition'] =
+      "attachment; filename=\"#{Trips.docx_file_name(@trip)}\""
+  end
 
   def params_trip
     params.require(:travels_trip).permit(
@@ -80,6 +83,7 @@ class TripsController < ApplicationController
   def authorize_show
     return unless @trip.private
     no_access && return unless user_signed_in?
-    no_access && return unless @trip.can_be_seen_by?(current_user)
+    return if Authorization.can_be_seen?(@trip, current_user)
+    no_access && return
   end
 end

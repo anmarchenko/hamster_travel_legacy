@@ -5,13 +5,12 @@ module Api
     before_action :find_trip
     before_action :api_authorize_readonly!
 
-    FETCHED_FIELDS = %i[transfers hotel places].freeze
-
     def index
+      nested_fields = %i[transfers hotel places].freeze
       render json: {
         days: Views::DayView.index_json(
-          Trips::Days.list(@trip, FETCHED_FIELDS),
-          FETCHED_FIELDS,
+          Trips::Days.list(@trip, nested_fields),
+          nested_fields,
           current_user
         )
       }

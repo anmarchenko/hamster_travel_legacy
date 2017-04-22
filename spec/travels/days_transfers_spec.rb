@@ -3,7 +3,9 @@
 require 'rails_helper'
 RSpec.describe Trips::Days do
   let(:trip) { FactoryGirl.create(:trip) }
-  let(:day) { trip.days.first }
+  let(:days) { Trips::Days.list(trip) }
+  let(:day) { days.first }
+
   let(:cities_from) do
     FactoryGirl.create_list(:city, 4).to_a
   end
@@ -39,22 +41,23 @@ RSpec.describe Trips::Days do
   it 'creates new transfers' do
     Trips::Days.save_transfers(day, transfers: params)
 
-    updated_day = trip.days.first.reload
-    expect(updated_day.transfers.count).to eq 4
+    updated_day = day.reload
+    transfers = Trips::Transfers.list(updated_day)
+    expect(transfers.count).to eq 4
 
-    expect(updated_day.transfers.first.city_from_id).to eq cities_from[0].id
-    expect(updated_day.transfers.first.city_to_id).to eq cities_to[0].id
-    expect(updated_day.transfers.first.links.count).to eq(2)
+    expect(transfers.first.city_from_id).to eq cities_from[0].id
+    expect(transfers.first.city_to_id).to eq cities_to[0].id
+    expect(transfers.first.links.count).to eq(2)
   end
 
   it 'reorders transfers' do
     Trips::Days.save_transfers(day, transfers: params)
 
-    original_transfers = day.transfers.to_a
+    original_transfers = Trips::Transfers.list(day).to_a
 
     old_transfers = params
     old_transfers.each_with_index do |tr, index|
-      tr[:id] = day.transfers[index].id.to_s
+      tr[:id] = original_transfers[index].id.to_s
     end
     permutation = { 0 => 3, 1 => 1, 2 => 0, 3 => 2 }
     new_params = [
@@ -63,9 +66,10 @@ RSpec.describe Trips::Days do
 
     Trips::Days.save_transfers(day, transfers: new_params)
 
-    updated_day = trip.days.first.reload
-    expect(updated_day.transfers.count).to eq 4
-    updated_day.transfers.each_with_index do |tr, index|
+    updated_day = day.reload
+    transfers = Trips::Transfers.list(updated_day)
+    expect(transfers.count).to eq 4
+    transfers.each_with_index do |tr, index|
       expect(tr.city_from_id).to eq cities_from[permutation[index]].id
       expect(tr.order_index).to eq index
       expect(tr.id).to eq original_transfers[permutation[index]].id

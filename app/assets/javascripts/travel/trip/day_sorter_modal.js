@@ -4,14 +4,12 @@ angular.module('travel').controller('DaySorterModalController', [
         $scope.days = days;
         $scope.sortInProgress = false;
         $scope.fields = {};
-        console.log(fields);
         if (fields && fields.length > 0) {
             var field, index;
             for (index = 0; index < fields.length; index += 1) {
                 field = fields[index];
                 $scope.fields[field] = true;
             }
-            console.log($scope.fields)
         }
 
         $scope.moveUp = function(index) {

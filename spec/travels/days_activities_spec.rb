@@ -3,7 +3,7 @@
 require 'rails_helper'
 RSpec.describe Trips::Days do
   def first_day_of(tr)
-    tr.reload.days.first
+    Trips::Days.list(tr.reload).first
   end
 
   let(:trip) { FactoryGirl.create(:trip) }
@@ -32,9 +32,10 @@ RSpec.describe Trips::Days do
       it 'creates new activities skipping activity without name' do
         Trips::Days.save_activities(day, activities: params)
         updated_day = first_day_of trip
+        activities = Trips::Activities.list(updated_day)
 
-        expect(updated_day.activities.count).to eq 3
-        updated_day.activities.each_with_index do |act, index|
+        expect(activities.count).to eq 3
+        activities.each_with_index do |act, index|
           expect(act.name).to eq "name #{index + 1}"
           expect(act.order_index).to eq index
         end
@@ -43,21 +44,23 @@ RSpec.describe Trips::Days do
       it 'reorders activities' do
         Trips::Days.save_activities(day, activities: params)
         original_day = first_day_of trip
+        original_activities = Trips::Activities.list(original_day)
 
         old_activities = params
         old_activities.each_with_index do |act, index|
-          act[:id] = original_day.activities[index].id.to_s
+          act[:id] = original_activities[index].id.to_s
         end
         params = [old_activities[2], old_activities[0], old_activities[1]]
 
         Trips::Days.save_activities(day, activities: params)
 
         updated_day = first_day_of trip
-        expect(updated_day.activities.count).to eq 3
-        updated_day.activities.each_with_index do |act, index|
+        activities = Trips::Activities.list(updated_day)
+        expect(activities.count).to eq 3
+        activities.each_with_index do |act, index|
           expect(act.name).to eq "name #{((index + 2) % 3) + 1}"
           expect(act.order_index).to eq index
-          expect(act.id).to eq original_day.activities[(index + 2) % 3].id
+          expect(act.id).to eq original_activities[(index + 2) % 3].id
         end
       end
     end

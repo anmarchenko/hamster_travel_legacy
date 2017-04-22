@@ -68,7 +68,10 @@ RSpec.describe Trips do
         expect(subject.start_date).to eq params['start_date']
         expect(subject.end_date).to eq params['end_date']
         expect(subject.currency).to eq('INR')
-        expect(subject.days.first.hotel.amount_currency).to eq('INR')
+        days = Trips::Days.list(subject)
+        day = days.first
+        hotel = Trips::Hotels.by_day(day)
+        expect(hotel.amount_currency).to eq('INR')
       end
     end
 
@@ -77,41 +80,63 @@ RSpec.describe Trips do
         FactoryGirl.create(:trip, :with_filled_days, users: [user])
       end
       let(:original_trip_id) { original_trip.id }
+      let(:original_days) { Trips::Days.list(original_trip) }
+      let(:original_first_day) { original_days.first }
+      let(:original_last_day) { original_days.last }
+      let(:original_first_day_transfers) do
+        Trips::Transfers.list(original_first_day)
+      end
+      let(:original_first_day_first_transfer) do
+        original_first_day_transfers.first
+      end
+      let(:original_first_day_places) do
+        Trips::Places.list(original_first_day)
+      end
+      let(:original_first_day_hotel) do
+        Trips::Hotels.by_day(original_first_day)
+      end
 
       it 'creates new trip from params and data from original trip' do
         expect(subject.comment).to be_nil
         expect(subject.days.count).to eq(original_trip.days.count)
 
-        expect(subject.days.first.comment).to eq(
-          original_trip.days.first.comment
+        days = Trips::Days.list(subject)
+        day = days.first
+        transfers = Trips::Transfers.list(day)
+        places = Trips::Places.list(day)
+        hotel = Trips::Hotels.by_day(day)
+        last_day = days.last
+
+        expect(day.comment).to eq(
+          original_trip.days.ordered.first.comment
         )
-        expect(subject.days.first.date_when).to eq(
+        expect(subject.days.ordered.first.date_when).to eq(
           params['start_date']
         )
-        expect(subject.days.first.transfers.count).to eq(
-          original_trip.days.first.transfers.count
+        expect(transfers.count).to eq(
+          original_first_day_transfers.count
         )
-        expect(subject.days.first.transfers.first.amount).to eq(
-          original_trip.days.first.transfers.first.amount
-        )
-
-        expect(subject.days.first.places.count).to eq(
-          original_trip.days.first.places.count
-        )
-        expect(subject.days.first.hotel.name).to eq(
-          original_trip.days.first.hotel.name
-        )
-        expect(subject.days.first.hotel.links.count).to eq(
-          original_trip.days.first.hotel.links.count
-        )
-        expect(subject.days.first.hotel.links.first.url).to eq(
-          original_trip.days.first.hotel.links.first.url
+        expect(transfers.first.amount).to eq(
+          original_first_day_first_transfer.amount
         )
 
-        expect(subject.days.last.comment).to eq(
-          original_trip.days.last.comment
+        expect(places.count).to eq(
+          original_first_day_places.count
         )
-        expect(subject.days.last.date_when).to eq(
+        expect(hotel.name).to eq(
+          original_first_day_hotel.name
+        )
+        expect(Trips::Links.list_hotel(hotel).count).to eq(
+          Trips::Links.list_hotel(original_first_day_hotel).count
+        )
+        expect(Trips::Links.list_hotel(hotel).first.url).to eq(
+          Trips::Links.list_hotel(original_first_day_hotel).first.url
+        )
+
+        expect(last_day.comment).to eq(
+          original_last_day.comment
+        )
+        expect(last_day.date_when).to eq(
           params['end_date']
         )
 

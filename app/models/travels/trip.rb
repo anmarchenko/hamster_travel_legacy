@@ -100,7 +100,7 @@ module Travels
     after_create(-> { Trips::Days.on_trip_update(self) })
 
     scope :relevant, (-> { where(archived: false) })
-    scope :public_trips, (-> { status_not_draft.where(private: false) })
+    scope :public_trips, (-> { not_drafts.where(private: false) })
     scope :including_user, (->(user) { where(id: user&.trip_ids) })
     scope :visible_by, (->(user) { public_trips.or(including_user(user)) })
     scope :by_term, (lambda { |term|
@@ -109,34 +109,32 @@ module Travels
         "%#{term}%", "%#{term}%"
       )
     })
-    scope :status_not_draft, (lambda {
+    scope :not_drafts, (lambda {
       where.not(status_code: ::Trips::StatusCodes::DRAFT)
     })
+    scope :planned, (lambda {
+      where(status_code: ::Trips::StatusCodes::PLANNED)
+    })
+    scope :finished, (lambda {
+      where(status_code: ::Trips::StatusCodes::FINISHED)
+    })
+    scope :drafts, (lambda {
+      where(status_code: ::Trips::StatusCodes::DRAFT)
+    })
     scope :order_newest, (-> { order(start_date: :desc) })
+    scope :order_oldest, (-> { order(start_date: :asc) })
     scope :order_status, (-> { order(status_code: :desc) })
+    scope :order_with_dates, (-> { order(dates_unknown: :asc) })
+    scope :order_alpha, (-> { order(name: :asc) })
 
     def include_user(user)
       users.include?(user)
-    end
-
-    # private tasks can't be seen or cloned by user not participating in trip
-    def can_be_seen_by?(user)
-      !private || include_user(user)
     end
 
     def days_count
       return planned_days_count if without_dates?
       return nil if start_date.blank? || end_date.blank?
       (end_date - start_date + 1).to_i
-    end
-
-    def period
-      return 0 unless days_count
-      days_count - 1
-    end
-
-    def report?
-      status_code == Trips::StatusCodes::FINISHED
     end
 
     def without_dates?

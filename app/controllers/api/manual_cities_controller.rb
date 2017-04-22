@@ -8,7 +8,9 @@ module Api
 
     def index
       render json: {
-        manual_cities: @user.manual_cities.with_translations.map(&:json_hash)
+        manual_cities: Views::CityView.index_json(
+          @user.manual_cities.with_translations
+        )
       }
     end
 

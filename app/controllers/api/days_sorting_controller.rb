@@ -9,7 +9,11 @@ module Api
     respond_to :json
 
     def index
-      respond_with Views::DayView.reordering_index(@trip.days)
+      respond_with Views::DayView.reordering_index(
+        Trips::Days.list(
+          @trip, %i[activities transfers expenses places links]
+        )
+      )
     end
 
     def create

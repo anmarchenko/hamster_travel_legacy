@@ -207,6 +207,11 @@
       @media(min-width: 1600px) {
         height: 800px;
       }
+
+      // map popups
+      .mapboxgl-popup-content {
+        padding: 5px;
+      }
     }
   }
 

@@ -12,10 +12,10 @@
 require 'rails_helper'
 RSpec.describe Travels::Place do
   let(:place) do
-    FactoryGirl.create(:trip, :with_filled_days).days.first.places.last
+    FactoryGirl.create(:trip, :with_filled_days).days.ordered.first.places.last
   end
   let(:place_empty) do
-    FactoryGirl.create(:trip, :with_filled_days).days.first.places.first
+    FactoryGirl.create(:trip, :with_filled_days).days.ordered.first.places.first
   end
 
   describe '#city' do
@@ -45,18 +45,6 @@ RSpec.describe Travels::Place do
       it 'returns false' do
         expect(place).not_to be_empty_content
       end
-    end
-  end
-
-  describe '#as_json' do
-    let(:place_json) { place.as_json }
-
-    it 'has right attributes' do
-      expect(place_json['id']).not_to be_blank
-      expect(place_json['id']).to be_a String
-      expect(place_json['id']).to eq(place.id.to_s)
-      expect(place_json['city_id']).to eq(place.city_id)
-      expect(place_json['city_text']).to eq(place.city_text)
     end
   end
 

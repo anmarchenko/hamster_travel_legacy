@@ -282,12 +282,12 @@ RSpec.describe Api::UsersController do
           status_code: Trips::StatusCodes::FINISHED
         )
       end
-      it "returns list of the user's finished trips paginated" do
+      it "returns list of the last 3 user's finished trips" do
         get 'finished_trips', params: { id: user.id }
         expect(response).to have_http_status(200)
 
         json = JSON.parse(response.body)
-        expect(json['trips'].count).to eq(9)
+        expect(json['trips'].count).to eq(3)
       end
     end
   end

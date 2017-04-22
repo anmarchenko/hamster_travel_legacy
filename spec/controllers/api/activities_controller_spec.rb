@@ -6,6 +6,12 @@ RSpec.describe Api::ActivitiesController do
 
   describe '#index' do
     let!(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
+    let(:days) { Trips::Days.list(trip) }
+    let(:first_day) { days.first }
+    let(:first_day_activities) { Trips::Activities.list(first_day) }
+    let(:first_day_links) { Trips::Links.list_day(first_day) }
+    let(:first_day_expenses) { Trips::Expenses.list(first_day) }
+    let(:first_day_places) { Trips::Places.list(first_day) }
 
     context 'when user is logged in' do
       before { login_user(user) }
@@ -14,7 +20,7 @@ RSpec.describe Api::ActivitiesController do
         it 'returns trip days as JSON' do
           get 'index', params: {
             trip_id: trip.id.to_s,
-            day_id: trip.days.first.id.to_s
+            day_id: trip.days.ordered.first.id.to_s
           }, format: :json
           expect(response).to have_http_status 200
           day_json = JSON.parse(response.body)
@@ -23,16 +29,18 @@ RSpec.describe Api::ActivitiesController do
             I18n.l(trip.start_date, format: '%d.%m.%Y %A')
           )
           expect(day_json['activities'].count).to eq(
-            trip.days.first.activities.count
+            first_day_activities.count
           )
           expect(day_json['links'].count).to eq(
-            trip.days.first.links.count
+            first_day_links.count
           )
           expect(day_json['expenses'].count).to eq(
-            trip.days.first.expenses.count
+            first_day_expenses.count
           )
-          expect(day_json['comment']).to eq(trip.days.first.comment)
-          expect(day_json['places'].count).to eq(trip.days.first.places.count)
+          expect(day_json['comment']).to eq(first_day.comment)
+          expect(day_json['places'].count).to eq(
+            first_day_places.count
+          )
         end
       end
 
@@ -51,7 +59,7 @@ RSpec.describe Api::ActivitiesController do
       it 'behaves the same' do
         get 'index', params: {
           trip_id: trip.id.to_s,
-          day_id: trip.days.first.id.to_s
+          day_id: trip.days.ordered.first.id.to_s
         }, format: :json
         expect(response).to have_http_status 200
         day_json = JSON.parse(response.body)
@@ -60,19 +68,17 @@ RSpec.describe Api::ActivitiesController do
           I18n.l(trip.start_date, format: '%d.%m.%Y %A')
         )
         expect(day_json['activities'].count).to eq(
-          trip.days.first.activities.count
+          first_day_activities.count
         )
         expect(day_json['links'].count).to eq(
-          trip.days.first.links.count
+          first_day_links.count
         )
         expect(day_json['expenses'].count).to eq(
-          trip.days.first.expenses.count
+          first_day_expenses.count
         )
-        expect(day_json['comment']).to eq(
-          trip.days.first.comment
-        )
+        expect(day_json['comment']).to eq(first_day.comment)
         expect(day_json['places'].count).to eq(
-          trip.days.first.places.count
+          first_day_places.count
         )
       end
     end
@@ -85,7 +91,10 @@ RSpec.describe Api::ActivitiesController do
       before { login_user(user) }
       let(:city) { FactoryGirl.create(:city) }
       let(:trip) { FactoryGirl.create :trip, users: [subject.current_user] }
-      let(:day) { trip.days.first }
+
+      let(:days) { Trips::Days.list(trip) }
+      let(:day) { days.first }
+
       let(:day_params) do
         {
           day:
@@ -117,16 +126,18 @@ RSpec.describe Api::ActivitiesController do
               trip_id: trip.id, day_id: day.id
             ), format: :json
             expect(response).to have_http_status 200
-            updated_day = trip.reload.days.first
+            updated_day = day.reload
             expect(updated_day.comment).to eq 'new_day_comment'
-            expect(updated_day.places.count).to eq(1)
-            expect(updated_day.places.first.city_id).to eq(city.id)
-            expect(updated_day.activities.count).to eq(1)
-            expect(updated_day.activities.first.name).to eq('new_activity')
-            expect(updated_day.activities.first.address).to eq(
+            places = Trips::Places.list(updated_day)
+            expect(places.count).to eq(1)
+            expect(places.first.city_id).to eq(city.id)
+            activities = Trips::Activities.list(updated_day)
+            expect(activities.count).to eq(1)
+            expect(activities.first.name).to eq('new_activity')
+            expect(activities.first.address).to eq(
               '10553 Berlin Randomstr. 12'
             )
-            expect(updated_day.activities.first.working_hours).to eq('12 - 18')
+            expect(activities.first.working_hours).to eq('12 - 18')
           end
         end
 
@@ -134,7 +145,7 @@ RSpec.describe Api::ActivitiesController do
           it 'heads 403' do
             post 'create', params: day_params.merge(
               trip_id: trip_without_user.id,
-              day_id: trip_without_user.days.first.id
+              day_id: trip_without_user.days.ordered.first.id
             ), format: :json
             expect(response).to have_http_status 403
           end
@@ -154,7 +165,8 @@ RSpec.describe Api::ActivitiesController do
 
     context 'when no logged user' do
       let(:trip) { FactoryGirl.create :trip }
-      let(:day) { trip.days.first }
+      let(:days) { Trips::Days.list(trip) }
+      let(:day) { days.first }
       let(:day_params) do
         {
           day:

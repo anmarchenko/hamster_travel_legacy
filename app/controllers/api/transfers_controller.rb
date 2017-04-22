@@ -24,16 +24,22 @@ module Api
     end
 
     def previous_place
-      previous_day = @trip.days.where(index: @day.index - 1).first
+      previous_day = Trips::Days.previous_day(@trip, @day)
+      head(404) && return if previous_day.blank?
       render json: {
-        place: previous_day.try(:places).try(:last)
+        place: Views::PlaceView.show_json(
+          Trips::Places.last_place(previous_day)
+        )
       }
     end
 
     def previous_hotel
-      previous_day = @trip.days.where(index: @day.index - 1).first
+      previous_day = Trips::Days.previous_day(@trip, @day)
+      head(404) && return if previous_day.blank?
       render json: {
-        hotel: previous_day.try(:hotel)
+        hotel: Views::HotelView.show_json(
+          Trips::Hotels.by_day(previous_day)
+        )
       }
     end
 
@@ -62,12 +68,11 @@ module Api
     end
 
     def find_trip
-      @trip = ::Trips.by_id(params[:trip_id])
+      @trip = Trips.by_id(params[:trip_id])
     end
 
     def find_day
-      @day = @trip.days.where(id: params[:day_id]).first
-      head(404) && return if @day.blank?
+      @day = Trips::Days.by_id(@trip, params[:day_id])
     end
   end
 end

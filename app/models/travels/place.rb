@@ -14,8 +14,6 @@ module Travels
     belongs_to :day, class_name: 'Travels::Day'
     belongs_to :city, class_name: 'Geo::City', required: false
 
-    default_scope { includes(:city) }
-
     def city_text
       city&.translated_name(I18n.locale)
     end
@@ -33,14 +31,6 @@ module Travels
         return false unless send(field).blank?
       end
       true
-    end
-
-    def serializable_hash(_args)
-      json = super(except: [:_id])
-      json['id'] = id.to_s
-      json['city_text'] = city_text
-      json['flag_image'] = Views::FlagView.flag(country_code)
-      json
     end
   end
 end

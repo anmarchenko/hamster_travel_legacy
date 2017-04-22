@@ -14,7 +14,7 @@
 require 'rails_helper'
 RSpec.describe Travels::Day do
   describe '#init' do
-    let(:day) { FactoryGirl.create(:trip).days.first }
+    let(:day) { FactoryGirl.create(:trip).days.ordered.first }
 
     it 'has at least one place' do
       expect(day.places.count).to eq(1)
@@ -26,7 +26,7 @@ RSpec.describe Travels::Day do
   end
 
   describe '#empty_content?' do
-    let(:day) { FactoryGirl.create(:trip).days.first }
+    let(:day) { FactoryGirl.create(:trip).days.ordered.first }
     context 'default day' do
       it 'is true' do
         expect(day).to be_empty_content

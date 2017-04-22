@@ -47,8 +47,10 @@ module ApplicationHelper
   def trip_period(trip, original_trip)
     if original_trip.blank?
       Trips.last_non_empty_day_index(trip)
+    elsif original_trip.days_count
+      original_trip.days_count - 1
     else
-      original_trip.period
+      0
     end
   end
 

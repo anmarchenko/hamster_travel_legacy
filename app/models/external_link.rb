@@ -17,6 +17,7 @@ class ExternalLink < ApplicationRecord
   belongs_to :linkable, polymorphic: true
 
   def description
+    # refactor this
     return '' if url.blank?
     if !url.start_with?('http://') && !url.start_with?('https://')
       self.url = "http://#{url}"
@@ -27,11 +28,5 @@ class ExternalLink < ApplicationRecord
                    nil
                  end
     (parsed_uri.try(:host) || '').gsub('www.', '').capitalize
-  end
-
-  def serializable_hash(_args)
-    json = super(except: %i[linkable_id linkable_type mongo_id])
-    json['id'] = id.to_s
-    json
   end
 end

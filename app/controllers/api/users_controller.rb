@@ -12,7 +12,9 @@ module Api
     before_action :authorize, only: %i[upload_image delete_image update]
 
     def index
-      render json: Finders::Users.search(params[:term], current_user)
+      render json: Views::UserView.index_json(
+        Users.search(params[:term], current_user)
+      )
     end
 
     def show
@@ -48,34 +50,31 @@ module Api
     end
 
     def planned_trips
-      res = Views::TripView.index_list_json(
-        Finders::Trips.for_user_planned(@user, params[:page], current_user)
-                      .includes(:cities),
-        flag_size: 32
-      )
       render json: {
-        trips: res
+        trips: Views::TripView.index_list_json(
+          UserProfile.list_next_planned_trips(@user, current_user),
+          flag_size: 32
+        )
       }
     end
 
     def finished_trips
-      res = Views::TripView.index_list_json(
-        Finders::Trips.for_user_finished(@user, params[:page], current_user)
-                      .includes(:cities),
-        flag_size: 32
-      )
       render json: {
-        trips: res
+        trips: Views::TripView.index_list_json(
+          UserProfile.list_last_finished_trips(@user, current_user),
+          flag_size: 32
+        )
       }
     end
 
     def visited
+      # TODO: refactor this
       countries = @user.visited_countries
                        .map(&:visited_country_json)
                        .sort_by { |json| json[:name] }
       render json: {
         countries: countries,
-        cities: @user.visited_cities.map(&:json_hash)
+        cities: Views::CityView.index_json(@user.visited_cities)
       }
     end
 

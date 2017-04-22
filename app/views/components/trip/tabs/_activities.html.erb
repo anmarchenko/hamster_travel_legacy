@@ -5,7 +5,7 @@
       <%= render 'components/trip/partials/budget', options: {tab_budget: 'activities_other_budget'} %>
     </div>
     <div class="activities">
-      <% @trip.days.each do |day| %>
+      <% @days.each do |day| %>
           <div class="activity" ng-class="{shadowed: reloading}" ng-controller="ActivitiesDayController" ng-init="load(<%= @trip.id %>, <%= day.id %>, {<%= default_currency_hash(@trip, current_user) %>, rating: 2})">
             <div class="activity-content" ng-show="day_loaded">
               <div class="row activity-day-header">

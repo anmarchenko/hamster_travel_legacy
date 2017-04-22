@@ -57,36 +57,6 @@ RSpec.describe Trips do
     end
   end
 
-  describe '.list_user_trips' do
-    let(:user) { FactoryGirl.create(:user) }
-    before do
-      FactoryGirl.create(
-        :trip,
-        user_ids: [user.id],
-        status_code: Trips::StatusCodes::FINISHED,
-        private: true
-      )
-      FactoryGirl.create(
-        :trip,
-        user_ids: [user.id]
-      )
-      FactoryGirl.create(
-        :trip,
-        user_ids: [user.id],
-        status_code: Trips::StatusCodes::PLANNED
-      )
-      FactoryGirl.create(
-        :trip,
-        status_code: Trips::StatusCodes::FINISHED
-      )
-    end
-
-    it 'returns user trips without drafts ordered only by start_date' do
-      trips = ::Trips.list_user_trips(user, 1)
-      expect(trips.count).to eq 2
-    end
-  end
-
   describe '.search' do
     let(:user) { FactoryGirl.create(:user) }
 
@@ -150,10 +120,11 @@ RSpec.describe Trips do
     end
 
     it 'returns last non-empty day index' do
-      trip_empty.days[0].comment = 'comment'
-      trip_empty.days[0].save
-      trip_empty.days[1].comment = 'comment'
-      trip_empty.days[1].save
+      days = Trips::Days.list(trip_empty).to_a
+      days[0].comment = 'comment'
+      days[0].save
+      days[1].comment = 'comment'
+      days[1].save
       expect(Trips.last_non_empty_day_index(trip_empty)).to eq(1)
     end
   end

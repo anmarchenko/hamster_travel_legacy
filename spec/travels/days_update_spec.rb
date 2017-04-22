@@ -3,7 +3,7 @@
 require 'rails_helper'
 RSpec.describe Trips::Days do
   def first_day_of(tr)
-    tr.reload.days.first
+    tr.reload.days.ordered.first
   end
 
   let(:trip) { FactoryGirl.create(:trip) }

@@ -24,8 +24,9 @@ module Travels
     has_many :expenses, class_name: 'Travels::Expense', as: :expendable
     has_many :links, class_name: 'ExternalLink', as: :linkable
 
-    default_scope(-> { order(date_when: :asc, index: :asc) })
+    scope :ordered, (-> { order(date_when: :asc, index: :asc) })
 
+    # TODO: refactor this
     before_create :init
     def init
       self.places = [Travels::Place.new] if places.blank?

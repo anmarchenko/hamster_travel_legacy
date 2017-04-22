@@ -59,7 +59,7 @@
 
             <% end %>
 
-            <% @trip.days.each do |day| %>
+            <% @days.each do |day| %>
                 <%= docx_table_row do %>
 
                     <%= docx_table_cell do %>
@@ -70,8 +70,9 @@
                     <% end %>
 
                     <%= docx_table_cell do %>
-                        <% unless day.places.blank? %>
-                            <% day.places.each do |place| %>
+                        <% places = Trips::Places.list(day) %>
+                        <% unless places.blank? %>
+                            <% places.each do |place| %>
                                 <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 100) do %>
                                     <%= docx_text(fontSize: fontSize) do %><%= place.city_text %>
                                     <% end %>
@@ -86,8 +87,9 @@
                     <% end %>
 
                     <%= docx_table_cell do %>
-                        <% unless day.transfers.blank? %>
-                            <% day.transfers.each do |transfer| %>
+                        <% transfers = Trips::Transfers.list(day) %>
+                        <% unless transfers.blank? %>
+                            <% transfers.each do |transfer| %>
                                 <%= docx_paragraph(align: :left, fontSize: fontSize, spacingAfter: 50) do %>
                                     <%= docx_text(fontSize: fontSize) do %>
                                         <%= transfer.city_from_text %>
@@ -191,23 +193,25 @@
 
         <% end %>
 
-        <% @trip.days.each do |day| %>
+        <% @days.each do |day| %>
             <%= docx_paragraph(align: :left, fontSize: headerFontSize, spacingBefore: 250) do %>
                 <%= docx_text(fontSize: headerFontSize, bold: true) do %>
                     <%= day.date_when_s %>
                 <% end %>
             <% end %>
 
-            <% unless day.places.blank? %>
+            <% places = Trips::Places.list(day) %>
+            <% unless places.blank? %>
                 <%= docx_paragraph(align: :left, fontSize: biggerFontSize, spacingBefore: 100) do %>
                     <%= docx_text(fontSize: biggerFontSize) do %>
-                        <% day.places.each_with_index do |place, index| %><%= ", " if index > 0 %><%= place.city_text %><% end %>
+                        <% places.each_with_index do |place, index| %><%= ", " if index > 0 %><%= place.city_text %><% end %>
                     <% end %>
                 <% end %>
             <% end %>
 
-            <% if !day.expenses.blank? && day.expenses.first.try(:name).present? %>
-                <% day.expenses.each do |expense| %>
+            <% expenses = Trips::Expenses.list(day) %>
+            <% if !expenses.blank? && expenses.first.try(:name).present? %>
+                <% expenses.each do |expense| %>
                     <%= docx_paragraph(align: :left, fontSize: fontSize, spacingBefore: 200) do %>
                         <%= docx_text(fontSize: fontSize) do %>
                             <% if !expense.name.blank? || (!expense.amount.blank? && !expense.amount_cents == 0) %><%= expense.name %> <%= expense.amount.to_f %> <%= expense.amount_currency %>
@@ -225,7 +229,7 @@
             <% end %>
 
             <% if day.activities.present? %>
-                <% day.activities.each_with_index do |activity, index| %>
+                <% Trips::Activities.list(day).each_with_index do |activity, index| %>
                     <%= docx_paragraph(align: :left, fontSize: biggerFontSize, spacingAfter: 150,
                                        spacingBefore: 250) do %>
                         <% if day.activities.count > 1 %>

@@ -3,7 +3,7 @@
 require 'rails_helper'
 RSpec.describe Trips::Days do
   let(:trip) { FactoryGirl.create(:trip) }
-  let(:day) { trip.days.first }
+  let(:day) { trip.days.ordered.first }
 
   let(:params) do
     {

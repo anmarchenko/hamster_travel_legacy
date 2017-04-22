@@ -56,13 +56,13 @@
       </tr>
       </thead>
       <tbody>
-      <% @trip.days.each_with_index do |day, day_index| %>
+      <% @days.each_with_index do |day, day_index| %>
           <tr class="plan-row" ng-controller="TransfersDayController" ng-init="init('<%= @trip.id %>', '<%= day.id %>', <%= day_index %>, {links: [], <%= default_currency_hash(@trip, current_user) %>})">
             <td ng-controller="DaySorterController">
               <div class="day-date">
                 <%= day.date_when_s %>
               </div>
-              <% if @user_can_edit && @trip.days_count > 1 %>
+              <% if @user_can_edit && @multiday %>
                   <a class="reorder-link hidden-xs" href="javascript:void(0);" ng-click="startSorting('<%= @trip.id %>', ['transfers'])">
                     <%= t('trips.show.reorder_days') %>
                   </a>

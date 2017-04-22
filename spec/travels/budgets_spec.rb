@@ -18,20 +18,20 @@ RSpec.describe Budgets do
       end
 
       it 'returns right budget in right currency' do
-        hotel_price = trip.days.inject(0) do |sum, day|
+        hotel_price = trip.days.ordered.inject(0) do |sum, day|
           sum + ((day.hotel.amount_cents || 0))
         end
-        days_add_price = trip.days.inject(0) do |sum, day|
+        days_add_price = trip.days.ordered.inject(0) do |sum, day|
           sum + day.expenses.inject(0) do |i_s, ex|
             i_s + ((ex.amount_cents || 0))
           end
         end
-        transfers_price = trip.days.inject(0) do |s, day|
+        transfers_price = trip.days.ordered.inject(0) do |s, day|
           s + day.transfers.inject(0) do |i_s, tr|
             i_s + ((tr.amount_cents || 0))
           end
         end
-        activities_price = trip.days.inject(0) do |s, day|
+        activities_price = trip.days.ordered.inject(0) do |s, day|
           s + day.activities.inject(0) do |i_s, ac|
             i_s + ((ac.amount_cents || 0))
           end

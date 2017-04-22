@@ -6,6 +6,10 @@ RSpec.describe Api::DaysTransfersController do
 
   describe '#index' do
     let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
+    let(:days) { Trips::Days.list(trip) }
+
+    let(:first_day) { days.first }
+    let(:first_day_transfers) { Trips::Transfers.list(first_day) }
 
     context 'when user is logged in' do
       before { login_user(user) }
@@ -20,7 +24,7 @@ RSpec.describe Api::DaysTransfersController do
             I18n.l(trip.start_date, format: '%d.%m.%Y %A')
           )
           expect(json.first['transfers'].count).to eq(
-            trip.days.first.transfers.count
+            first_day_transfers.count
           )
           expect(json.first['activities']).to be_nil
         end
@@ -53,6 +57,10 @@ RSpec.describe Api::DaysTransfersController do
             users: [subject.current_user]
           )
         end
+        let(:days) { Trips::Days.list(private_trip) }
+
+        let(:first_day) { days.first }
+        let(:first_day_transfers) { Trips::Transfers.list(first_day) }
 
         it 'heads 403' do
           get 'index', params: { trip_id: private_trip.id.to_s }, format: :json
@@ -65,7 +73,7 @@ RSpec.describe Api::DaysTransfersController do
             I18n.l(private_trip.start_date, format: '%d.%m.%Y %A')
           )
           expect(json.first['transfers'].count).to eq(
-            private_trip.days.first.transfers.count
+            first_day_transfers.count
           )
           expect(json.first['activities']).to be_nil
         end

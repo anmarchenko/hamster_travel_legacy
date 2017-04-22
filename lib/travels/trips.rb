@@ -30,14 +30,6 @@ module Trips
                  .includes(:author_user, :cities)
   end
 
-  def self.list_user_trips(user, page)
-    user.trips.relevant
-        .status_not_draft
-        .order_newest
-        .page(page || 1)
-        .includes(:author_user, :cities)
-  end
-
   def self.search(term, current_user = nil)
     return [] if term.blank?
     Travels::Trip.relevant.visible_by(current_user)
@@ -47,7 +39,7 @@ module Trips
 
   def self.last_non_empty_day_index(trip)
     result = -1
-    trip.days.each_with_index do |day, index|
+    Trips::Days.list(trip).each_with_index do |day, index|
       result = index unless day.empty_content?
     end
     result
@@ -61,7 +53,7 @@ module Trips
   def self.new_trip(user, original_id = nil)
     return Travels::Trip.new if original_id.blank?
     original = by_id(original_id)
-    return Travels::Trip.new unless original.can_be_seen_by?(user)
+    return Travels::Trip.new unless Authorization.can_be_seen?(original, user)
     Trips::Duplicator.duplicate(original)
   end
 

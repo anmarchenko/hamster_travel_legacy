@@ -63,21 +63,5 @@ module Travels
     def city_to_text
       city_to&.translated_name I18n.locale
     end
-
-    # TODO: warning: model should not call view directly
-    def type_icon
-      unless type.blank?
-        icon = ActionController::Base.helpers.image_path(
-          "transfers/#{Types::ICONS[type]}"
-        )
-      end
-      icon ||= ActionController::Base.helpers.image_path('transfers/arrow.svg')
-      icon
-    end
-
-    # TODO: warning: model should not call view directly
-    def serializable_hash(**args)
-      Views::TransferView.show_json(self, super)
-    end
   end
 end

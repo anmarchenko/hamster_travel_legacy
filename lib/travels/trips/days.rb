@@ -14,16 +14,21 @@ module Trips
     }.freeze
 
     # READ ACTIONS
-    def self.list(trip, nested_associations = nil)
-      trip.days.includes(*nested_associations.map { |asc| DEPENDENCIES[asc] })
+    def self.by_id(trip, day_id)
+      trip.days.find(day_id)
     end
 
-    def self.top_activities(day, opts = { limit: 3 })
-      day.activities
-         .unscoped
-         .where(day_id: day.id)
-         .order(rating: :desc, order_index: :asc)
-         .first(opts[:limit])
+    def self.list(trip, nested_associations = nil)
+      days = trip.days.ordered
+      if nested_associations.present?
+        days.includes(*nested_associations.map { |asc| DEPENDENCIES[asc] })
+      else
+        days
+      end
+    end
+
+    def self.previous_day(trip, day)
+      trip.days.where(index: day.index - 1).first
     end
 
     # UPDATE ACTIONS

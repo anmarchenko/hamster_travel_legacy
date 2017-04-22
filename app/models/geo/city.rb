@@ -84,26 +84,5 @@ module Geo
         '"city_translations"."name" ILIKE ?', "#{term}%"
       ).order(population: :desc)
     end
-
-    def json_hash
-      {
-        id: id,
-        name: translated_name(I18n.locale),
-        code: id,
-        flag_image: Views::FlagView.flag(country_code),
-        latitude: latitude,
-        longitude: longitude
-      }
-    end
-
-    def json_hash_with_regions
-      json_hash.merge(
-        text: translated_text(
-          with_region: true,
-          with_country: true,
-          locale: I18n.locale
-        )
-      )
-    end
   end
 end

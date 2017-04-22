@@ -39,10 +39,10 @@ RSpec.describe TripsController do
       before { login_user(user) }
 
       it 'shows user plans' do
-        expect(::Trips).to receive(:list_user_trips).with(subject.current_user,
-                                                          '1').and_return(
-                                                            Travels::Trip.all
-                                                          )
+        expect(UserTrips).to receive(:list_trips).with(
+          subject.current_user,
+          '1'
+        ).and_return(Travels::Trip.all)
         get 'my', params: { page: 1 }
         expect(response).to be_success
       end
@@ -61,7 +61,7 @@ RSpec.describe TripsController do
       before { login_user(user) }
 
       it 'shows user drafts' do
-        expect(Finders::Trips).to receive(:drafts).with(
+        expect(UserTrips).to receive(:list_drafts).with(
           subject.current_user, '1'
         ).and_return(Travels::Trip.all)
         get 'drafts', params: { page: 1 }
@@ -149,7 +149,10 @@ RSpec.describe TripsController do
           expect(trip.start_date).to eq params[:travels_trip]['start_date']
           expect(trip.end_date).to eq params[:travels_trip]['end_date']
           expect(trip.currency).to eq('INR')
-          expect(trip.days.first.hotel.amount_currency).to eq('INR')
+          days = Trips::Days.list(trip)
+          first_day = days.first
+          hotel = Trips::Hotels.by_day(first_day)
+          expect(hotel.amount_currency).to eq('INR')
         end
 
         context 'and when trip is without dates' do
@@ -178,6 +181,22 @@ RSpec.describe TripsController do
 
         context 'and when trip is copied from original' do
           let(:original) { FactoryGirl.create(:trip, :with_filled_days) }
+          let(:original_days) { Trips::Days.list(original) }
+          let(:original_first_day) { original_days.first }
+          let(:original_first_day_transfers) do
+            Trips::Transfers.list(original_first_day)
+          end
+          let(:original_first_day_first_transfer) do
+            original_first_day_transfers.first
+          end
+          let(:original_first_day_places) do
+            Trips::Places.list(original_first_day)
+          end
+          let(:original_first_day_hotel) do
+            Trips::Hotels.by_day(original_first_day)
+          end
+          let(:original_last_day) { original_days.last }
+
           let(:original_private) do
             FactoryGirl.create(:trip, :with_filled_days, private: true)
           end
@@ -187,32 +206,40 @@ RSpec.describe TripsController do
               post 'create', params: params.merge(copy_from: original.id)
               expect(Travels::Trip.count).to eq(2)
               trip = Travels::Trip.all.order(created_at: :desc).first
+              days = Trips::Days.list(trip)
+              first_day = days.first
+              first_day_transfers = Trips::Transfers.list(first_day)
+              first_day_places = Trips::Places.list(first_day)
+              first_day_hotel = Trips::Hotels.by_day(first_day)
+              last_day = days.last
 
               expect(trip.comment).to be_nil
-              expect(trip.days.count).to eq(original.days.count)
+              expect(days.count).to eq(original_days.count)
 
-              expect(trip.days.first.comment).to eq original.days.first.comment
-              expect(trip.days.first.date_when).to eq(
+              expect(first_day.comment).to eq(
+                original_first_day.comment
+              )
+              expect(first_day.date_when).to eq(
                 params[:travels_trip]['start_date']
               )
-              expect(trip.days.first.transfers.count).to eq(
-                original.days.first.transfers.count
+              expect(first_day_transfers.count).to eq(
+                original_first_day_transfers.count
               )
-              expect(trip.days.first.transfers.first.amount).to eq(
-                original.days.first.transfers.first.amount
-              )
-
-              expect(trip.days.first.places.count).to eq(
-                original.days.first.places.count
-              )
-              expect(trip.days.first.hotel.name).to eq(
-                original.days.first.hotel.name
+              expect(first_day_transfers.first.amount).to eq(
+                original_first_day_transfers.first.amount
               )
 
-              expect(trip.days.last.comment).to eq(
-                original.days.last.comment
+              expect(first_day_places.count).to eq(
+                original_first_day_places.count
               )
-              expect(trip.days.last.date_when).to eq(
+              expect(first_day_hotel.name).to eq(
+                original_first_day_hotel.name
+              )
+
+              expect(last_day.comment).to eq(
+                original_last_day.comment
+              )
+              expect(last_day.date_when).to eq(
                 params[:travels_trip]['end_date']
               )
 
@@ -230,14 +257,18 @@ RSpec.describe TripsController do
 
               expect(Travels::Trip.count).to eq(2)
               trip = Travels::Trip.all.order(created_at: :desc).first
-              expect(trip.days.first.comment).to be_nil
-              expect(trip.days.first.date_when).to eq(
+              days = Trips::Days.list(trip)
+              first_day = days.first
+              last_day = days.last
+
+              expect(first_day.comment).to be_nil
+              expect(first_day.date_when).to eq(
                 params[:travels_trip]['start_date']
               )
-              expect(trip.days.first.transfers.count).to eq 0
+              expect(first_day.transfers.count).to eq 0
 
-              expect(trip.days.last.comment).to be_nil
-              expect(trip.days.last.date_when).to eq(
+              expect(last_day.comment).to be_nil
+              expect(last_day.date_when).to eq(
                 params[:travels_trip]['end_date']
               )
             end
@@ -259,23 +290,30 @@ RSpec.describe TripsController do
               post 'create', params: ps
               expect(Travels::Trip.count).to eq(2)
               trip = Travels::Trip.all.order(created_at: :desc).first
+              days = Trips::Days.list(trip)
+              first_day = days.first
+              first_day_transfers = Trips::Transfers.list(first_day)
+              first_day_first_transfer = first_day_transfers.first
+              last_day = days.last
 
               expect(trip.start_date).to eq(ps[:travels_trip]['start_date'])
               expect(trip.end_date).to eq(ps[:travels_trip]['end_date'])
 
-              expect(trip.days.first.comment).to eq original.days.first.comment
-              expect(trip.days.first.date_when).to eq(
+              expect(first_day.comment).to eq(
+                original_first_day.comment
+              )
+              expect(first_day.date_when).to eq(
                 params[:travels_trip]['start_date']
               )
-              expect(trip.days.first.transfers.count).to eq(
-                original.days.first.transfers.count
+              expect(first_day_transfers.count).to eq(
+                original_first_day_transfers.count
               )
-              expect(trip.days.first.transfers.first.amount).to eq(
-                original.days.first.transfers.first.amount
+              expect(first_day_first_transfer.amount).to eq(
+                original_first_day_first_transfer.amount
               )
 
-              expect(trip.days.last.comment).to be_nil
-              expect(trip.days.last.date_when).to eq(
+              expect(last_day.comment).to be_nil
+              expect(last_day.date_when).to eq(
                 params[:travels_trip]['end_date']
               )
             end
@@ -289,20 +327,29 @@ RSpec.describe TripsController do
               post 'create', params: ps
               expect(Travels::Trip.count).to eq(2)
               trip = Travels::Trip.all.order(created_at: :desc).first
+              days = Trips::Days.list(trip)
+              first_day = days.first
+              first_day_transfers = Trips::Transfers.list(first_day)
+              first_day_first_transfer = first_day_transfers.first
+              last_day = days.last
 
-              expect(trip.days.first.comment).to eq original.days.first.comment
-              expect(trip.days.first.date_when).to eq(
+              expect(first_day.comment).to eq(
+                original_first_day.comment
+              )
+              expect(first_day.date_when).to eq(
                 params[:travels_trip]['start_date']
               )
-              expect(trip.days.first.transfers.count).to eq(
-                original.days.first.transfers.count
+              expect(first_day_transfers.count).to eq(
+                original_first_day_transfers.count
               )
-              expect(trip.days.first.transfers.first.amount).to eq(
-                original.days.first.transfers.first.amount
+              expect(first_day_first_transfer.amount).to eq(
+                original_first_day_first_transfer.amount
               )
 
-              expect(trip.days.last.comment).to eq original.days[-2].comment
-              expect(trip.days.last.date_when).to eq(
+              expect(last_day.comment).to eq(
+                original_days[-2].comment
+              )
+              expect(last_day.date_when).to eq(
                 params[:travels_trip]['end_date']
               )
             end

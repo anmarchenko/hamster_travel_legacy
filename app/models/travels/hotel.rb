@@ -19,18 +19,6 @@ module Travels
 
     monetize :amount_cents, allow_nil: true
 
-    def serializable_hash(_args)
-      json = super(except: [:_id])
-      json['id'] = id.to_s
-      json['links'] = if links.blank?
-                        [{}]
-                      else
-                        links
-                      end
-      json['amount_currency_text'] = amount.currency.symbol
-      json
-    end
-
     def empty_content?
       %i[name comment].each do |field|
         return false unless send(field).blank?

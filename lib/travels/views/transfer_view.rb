@@ -2,21 +2,35 @@
 
 module Views
   module TransferView
-    def self.show_json(transfer, transfer_json = {})
-      transfer_json.merge(
+    def self.index_json(transfers)
+      transfers.map { |transfer| show_json(transfer) }
+    end
+
+    # rubocop:disable MethodLength
+    # rubocop:disable AbcSize
+    def self.show_json(transfer)
+      transfer.as_json.merge(
         'id' => transfer.id.to_s,
         'start_time' => transfer.start_time&.strftime('%Y-%m-%dT%H:%M+00:00'),
         'end_time' => transfer.end_time&.strftime('%Y-%m-%dT%H:%M+00:00'),
-        'type_icon' => transfer.type_icon,
+        'type_icon' => type_icon(transfer),
         'amount_currency_text' => transfer.amount.currency.symbol,
         'city_from_text' => transfer.city_from_text,
         'city_to_text' => transfer.city_to_text,
-        'links' => index_links_json(transfer)
+        'links' => Views::LinkView.index_json(
+          Trips::Links.list_transfer(transfer)
+        )
       )
     end
 
-    def self.index_links_json(transfer)
-      transfer.links.blank? ? [{}] : transfer.links
+    def self.type_icon(transfer)
+      unless transfer.type.blank?
+        icon = ActionController::Base.helpers.image_path(
+          "transfers/#{Travels::Transfer::Types::ICONS[transfer.type]}"
+        )
+      end
+      icon ||= ActionController::Base.helpers.image_path('transfers/arrow.svg')
+      icon
     end
   end
 end

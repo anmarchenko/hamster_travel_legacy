@@ -13,11 +13,11 @@ module Trips
 
       # INTERNAL ACTIONS
       def self.reordering_plan(trip, ordered_ids, fields)
-        current_ids = trip.days.pluck(:id)
+        current_ids = Trips::Days.list(trip).pluck(:id)
         ordered_ids.each_with_index.map do |source_id, index|
           {
             transferred_entities: transferred_entities(
-              trip.days.find(source_id),
+              Trips::Days.by_id(trip, source_id),
               fields
             ),
             target_id: current_ids[index]
@@ -48,22 +48,22 @@ module Trips
 
       def self.transferred_entities_for_transfers(source_day)
         {
-          transfers: source_day.transfers.pluck(:id),
-          hotel: source_day.hotel.id,
-          places: source_day.places.pluck(:id)
+          transfers: Trips::Transfers.list(source_day).pluck(:id),
+          hotel: Trips::Hotels.by_day(source_day).id,
+          places: Trips::Places.list(source_day).pluck(:id)
         }
       end
 
       def self.transferred_entities_for_activities(source_day)
         {
-          activities: source_day.activities.pluck(:id)
+          activities: Trips::Activities.list(source_day).pluck(:id)
         }
       end
 
       def self.transferred_entities_for_day_info(source_day)
         {
-          links: source_day.links.pluck(:id),
-          expenses: source_day.expenses.pluck(:id),
+          links: Trips::Links.list_day(source_day).pluck(:id),
+          expenses: Trips::Expenses.list(source_day).pluck(:id),
           comment: source_day.comment
         }
       end

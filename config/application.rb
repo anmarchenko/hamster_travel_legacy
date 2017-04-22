@@ -31,5 +31,6 @@ module Travel
     config.autoload_paths << Rails.root.join('lib', 'accounts')
     config.autoload_paths << Rails.root.join('lib', 'travels')
     config.autoload_paths << Rails.root.join('lib', 'exchange_rates')
+    config.autoload_paths << Rails.root.join('lib', 'geo')
   end
 end

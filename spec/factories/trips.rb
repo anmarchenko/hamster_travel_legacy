@@ -41,7 +41,7 @@ FactoryGirl.define do
       after :create do |trip|
         city_from = FactoryGirl.create(:city)
         city_to = FactoryGirl.create(:city)
-        trip.days.each_with_index do |day, i|
+        trip.days.ordered.each_with_index do |day, i|
           day.comment = "Day #{i}"
           2.times do |index|
             day.transfers.create(
@@ -74,7 +74,7 @@ FactoryGirl.define do
 
     trait :with_transfers do
       after :create do |trip|
-        trip.days.each do |day|
+        trip.days.ordered.each do |day|
           day.transfers.create(build(:transfer, order_index: 0).attributes)
           day.transfers.create(
             build(:transfer, :with_data, order_index: 1).attributes

@@ -33,7 +33,7 @@
       </span>
     </a>
   </li>
-  <% if @user_can_edit || @trip.report? %>
+  <% if @show_report_tab %>
       <li>
         <a ui-sref="report" ui-sref-active="active" href="javascript:void(0);">
           <%= inline_svg 'plan/report.svg', class: 'tab-image report-img' %>

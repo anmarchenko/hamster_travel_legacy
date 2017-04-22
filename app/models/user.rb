@@ -78,6 +78,8 @@ class User < ApplicationRecord
                      message: 'should be either .jpeg, .jpg, .png, .bmp',
                      if: :image_changed?
 
+  scope :excluding_user, (->(user) { where.not(id: user&.id) })
+
   def home_town_text
     home_town.try(:translated_name, I18n.locale)
   end
@@ -94,6 +96,7 @@ class User < ApplicationRecord
     "userColor#{(id % 4)}"
   end
 
+  # TODO: refactor all these methods out of here
   def finished_trip_count
     trips.where(archived: false,
                 status_code: Trips::StatusCodes::FINISHED).count

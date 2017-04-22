@@ -10,7 +10,11 @@ module Views
 
     def self.show_json(day, nested_objects = [], user = nil)
       Views::Decorators::AmountInUserCurrency.decorate(
-        day.as_json(include: nested_objects),
+        Views::Decorators::DaysNestedFields.decorate(
+          day.as_json,
+          day,
+          nested_objects
+        ),
         user&.currency,
         nested_objects
       )
@@ -36,8 +40,7 @@ module Views
 
     def self.reordering_info_activities(day)
       res = ''
-      Trips::Days.top_activities(day)
-                 .each_with_index do |activity, index|
+      Trips::Activities.top(day).each_with_index do |activity, index|
         res += "#{index + 1}. #{activity.name}"
         res += '<br/>'
       end
@@ -45,22 +48,22 @@ module Views
     end
 
     def self.reordering_info_transfers(day)
-      transfer = day.transfers.first
+      transfer = Trips::Transfers.list(day).first
       "#{transfer.city_from_text} - #{transfer.city_to_text}" if transfer
     end
 
     def self.reordering_info_places(day)
-      place = day.places.first
+      place = Trips::Places.list(day).first
       place&.city_text
     end
 
     def self.reordering_info_day(day)
-      expense = day.expenses.first
+      expense = Trips::Expenses.list(day).first
       if expense.present? && !expense.empty_content?
         return "#{expense.name} #{expense.amount.to_f}" \
                " #{expense.amount.currency.symbol}"
       end
-      link = day.links.first
+      link = Trips::Links.list_day(day).first
       link&.description
     end
   end

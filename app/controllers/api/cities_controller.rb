@@ -5,7 +5,11 @@ module Api
     def index
       term = params[:term] || ''
       render(json: []) && return if term.blank? || term.length < 3
-      render json: Finders::Cities.search(term, current_user, params[:trip_id])
+      render json: Views::CityView.index_json_with_regions(
+        Trips::Places.cities_typeahead(
+          term, current_user, params[:trip_id]
+        )
+      )
     end
   end
 end

@@ -11,7 +11,8 @@ module Api
     def api_authorize_readonly!
       return unless @trip.private
       head(403) && return unless user_signed_in?
-      head(403) && return unless @trip.can_be_seen_by?(current_user)
+      return if Authorization.can_be_seen?(@trip, current_user)
+      head(403) && return
     end
   end
 end

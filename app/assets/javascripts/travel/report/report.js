@@ -22,6 +22,10 @@ angular.module('travel').controller('ReportController'
                     return;
                 }
                 $scope.saving = true;
+                // do not send null to the backend
+                if (!$scope.report) {
+                    $scope.report = '';
+                }
 
                 $http.put('/api/reports/' + $scope.trip_id, {report: $scope.report}).then(function () {
                     $scope.saving = false;

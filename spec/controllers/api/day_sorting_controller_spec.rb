@@ -13,8 +13,8 @@ RSpec.describe Api::DaysSortingController do
       get 'index', params: { trip_id: trip.id }, format: :json
 
       json_days = JSON.parse(response.body)
-      expect(json_days.count).to eq(trip.days.count)
-      expect(json_days.first['index']).to eq(trip.days.first.index)
+      expect(json_days.count).to eq(trip.days.ordered.count)
+      expect(json_days.first['index']).to eq(trip.days.ordered.first.index)
     end
   end
 
@@ -29,40 +29,45 @@ RSpec.describe Api::DaysSortingController do
         users: [user]
       )
     end
+    let(:days) { Trips::Days.list(trip) }
 
     before do
-      days = trip.days.to_a
+      days_array = days.to_a
 
       (0..2).each do |day_index|
         (day_index + 1).times do |activity_index|
-          days[day_index].activities.create(
+          days_array[day_index].activities.create(
             name: "Day #{day_index} Act #{activity_index}",
             order_index: activity_index
           )
         end
 
-        days[day_index].transfers.create(
+        days_array[day_index].transfers.create(
           city_from: FactoryGirl.create(:city),
           city_to: FactoryGirl.create(:city),
           comment: "Day #{day_index} transfer"
         )
-        days[day_index].hotel = FactoryGirl.create(
+        days_array[day_index].hotel = FactoryGirl.create(
           :hotel, name: "Day #{day_index} hotel"
         )
-        days[day_index].places.first.update_attributes(
+        days_array[day_index].places.first.update_attributes(
           city: FactoryGirl.create(:city, population: day_index)
         )
 
-        days[day_index].update_attributes(comment: "Day #{day_index} comment")
-        days[day_index].expenses.first.update_attributes(
+        days_array[day_index].update_attributes(
+          comment: "Day #{day_index} comment"
+        )
+        days_array[day_index].expenses.first.update_attributes(
           amount_cents: day_index * 100,
           name: "Day #{day_index} expense"
         )
-        days[day_index].links.create(url: "http://example#{day_index}.com")
+        days_array[day_index].links.create(
+          url: "http://example#{day_index}.com"
+        )
       end
     end
 
-    let(:original_ids) { trip.days.pluck(:id) }
+    let(:original_ids) { trip.days.ordered.pluck(:id) }
 
     let(:order_ids) do
       [original_ids[2], original_ids[0], original_ids[1]]
@@ -76,20 +81,23 @@ RSpec.describe Api::DaysSortingController do
           fields: ['activities']
         }, format: :json
 
-        days_after = trip.reload.days.to_a
+        days_after = trip.reload.days.ordered.to_a
 
         expect(days_after[0].comment).to eq('Day 0 comment')
         expect(days_after[0].transfers.first.comment).to eq('Day 0 transfer')
 
         expect(days_after[0].id).to eq(original_ids[0])
-        expect(days_after[0].activities.count).to eq(3)
-        expect(days_after[0].activities.first.name).to eq('Day 2 Act 0')
+        activities = Trips::Activities.list(days_after[0])
+        expect(activities.count).to eq(3)
+        expect(activities.first.name).to eq('Day 2 Act 0')
         expect(days_after[1].id).to eq(original_ids[1])
-        expect(days_after[1].activities.count).to eq(1)
-        expect(days_after[1].activities.first.name).to eq('Day 0 Act 0')
+        activities = Trips::Activities.list(days_after[1])
+        expect(activities.count).to eq(1)
+        expect(activities.first.name).to eq('Day 0 Act 0')
         expect(days_after[2].id).to eq(original_ids[2])
-        expect(days_after[2].activities.count).to eq(2)
-        expect(days_after[2].activities.first.name).to eq('Day 1 Act 0')
+        activities = Trips::Activities.list(days_after[2])
+        expect(activities.count).to eq(2)
+        expect(activities.first.name).to eq('Day 1 Act 0')
       end
     end
 
@@ -101,12 +109,13 @@ RSpec.describe Api::DaysSortingController do
           fields: ['transfers']
         }, format: :json
 
-        days_after = trip.reload.days.to_a
+        days_after = trip.reload.days.ordered.to_a
         expect(days_after[0].id).to eq(original_ids[0])
         expect(days_after[1].id).to eq(original_ids[1])
         expect(days_after[2].id).to eq(original_ids[2])
 
-        expect(days_after[0].activities.first.name).to eq('Day 0 Act 0')
+        activities = Trips::Activities.list(days_after[0])
+        expect(activities.first.name).to eq('Day 0 Act 0')
         expect(days_after[0].comment).to eq('Day 0 comment')
 
         expect(days_after[0].transfers.first.comment).to eq('Day 2 transfer')
@@ -131,9 +140,10 @@ RSpec.describe Api::DaysSortingController do
           fields: ['day_info']
         }, format: :json
 
-        days_after = trip.reload.days.to_a
+        days_after = trip.reload.days.ordered.to_a
 
-        expect(days_after[0].activities.first.name).to eq('Day 0 Act 0')
+        activities = Trips::Activities.list(days_after[0])
+        expect(activities.first.name).to eq('Day 0 Act 0')
         expect(days_after[0].transfers.first.comment).to eq('Day 0 transfer')
 
         expect(days_after[0].comment).to eq('Day 2 comment')
@@ -156,13 +166,19 @@ RSpec.describe Api::DaysSortingController do
           fields: %w[day_info activities transfers]
         }, format: :json
 
-        days_after = trip.reload.days.to_a
+        days_after = trip.reload.days.ordered.to_a
         expect(days_after[0].comment).to eq('Day 2 comment')
         expect(days_after[1].comment).to eq('Day 0 comment')
         expect(days_after[2].comment).to eq('Day 1 comment')
-        expect(days_after[0].activities.first.name).to eq('Day 2 Act 0')
-        expect(days_after[1].activities.first.name).to eq('Day 0 Act 0')
-        expect(days_after[2].activities.first.name).to eq('Day 1 Act 0')
+        expect(Trips::Activities.list(days_after[0]).first.name).to eq(
+          'Day 2 Act 0'
+        )
+        expect(Trips::Activities.list(days_after[1]).first.name).to eq(
+          'Day 0 Act 0'
+        )
+        expect(Trips::Activities.list(days_after[2]).first.name).to eq(
+          'Day 1 Act 0'
+        )
         expect(days_after[0].transfers.first.comment).to eq('Day 2 transfer')
         expect(days_after[1].transfers.first.comment).to eq('Day 0 transfer')
         expect(days_after[2].transfers.first.comment).to eq('Day 1 transfer')

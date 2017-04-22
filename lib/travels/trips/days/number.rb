@@ -4,26 +4,27 @@ module Trips
   module Days
     module Number
       def self.normalize(trip)
+        days = Trips::Days.list(trip)
         # ensure order
-        update_dates(trip)
+        update_dates(trip, days)
         # delete not needed days
-        remove_days(trip)
+        remove_days(trip, days)
         # push new days
-        add_days(trip)
+        add_days(trip, days)
       end
 
-      def self.update_dates(trip)
-        trip.days.each_with_index do |day, index|
+      def self.update_dates(trip, days)
+        days.each_with_index do |day, index|
           day.date_when = correct_date(trip, index)
           day.index = index
           day.save
         end
       end
 
-      def self.add_days(trip)
-        previous_day = trip.days.last
-        (trip.days_count - trip.days.length).times do
-          previous_day = trip.days.create(next_day(previous_day, trip))
+      def self.add_days(trip, days)
+        previous_day = days.last
+        (trip.days_count - days.length).times do
+          previous_day = days.create(next_day(previous_day, trip))
         end
       end
 
@@ -42,8 +43,8 @@ module Trips
         (trip.start_date + index.days) unless trip.without_dates?
       end
 
-      def self.remove_days(trip)
-        (trip.days[trip.days_count..-1] || []).each(&:destroy)
+      def self.remove_days(trip, days)
+        (days[trip.days_count..-1] || []).each(&:destroy)
       end
     end
   end

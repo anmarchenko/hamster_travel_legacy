@@ -8,7 +8,9 @@ RSpec.describe Api::TransfersController do
 
   describe '#index' do
     let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
-    let(:day) { trip.days.first }
+    let(:days) { Trips::Days.list(trip) }
+    let(:day) { days.first }
+    let(:transfers) { Trips::Transfers.list(day) }
 
     context 'when user is logged in' do
       before { login_user(user) }
@@ -23,7 +25,9 @@ RSpec.describe Api::TransfersController do
           expect(json['date']).to eq(
             I18n.l(trip.start_date, format: '%d.%m.%Y %A')
           )
-          expect(json['transfers'].count).to eq(trip.days.first.transfers.count)
+          expect(json['transfers'].count).to eq(
+            transfers.count
+          )
           expect(json['activities']).to be_nil
         end
       end
@@ -89,7 +93,8 @@ RSpec.describe Api::TransfersController do
       context 'and when there is trip' do
         context 'and when input params are valid' do
           let(:trip) { FactoryGirl.create :trip, users: [subject.current_user] }
-          let(:day) { trip.days.first }
+          let(:days) { Trips::Days.list(trip) }
+          let(:day) { days.first }
 
           it 'updates trip and heads 200' do
             post 'create', params: day_params.merge(
@@ -97,19 +102,24 @@ RSpec.describe Api::TransfersController do
             ), format: :json
             expect(response).to have_http_status 200
 
-            updated_day = trip.reload.days.first
+            updated_day = day.reload
 
-            expect(updated_day.places.count).to eq(1)
-            expect(updated_day.places.first.city_id).to eq(city_to.id)
-            expect(updated_day.transfers.count).to eq(1)
-            expect(updated_day.transfers.first.city_from_id).to eq(city_from.id)
-            expect(updated_day.transfers.first.links.count).to eq(2)
-            expect(updated_day.transfers.first.links.first.url).to eq(
-              'https://google.com'
+            places = Trips::Places.list(updated_day)
+            expect(places.count).to eq(1)
+            expect(places.first.city_id).to eq(city_to.id)
+            transfers = Trips::Transfers.list(updated_day)
+            expect(transfers.count).to eq(1)
+            expect(transfers.first.city_from_id).to eq(city_from.id)
+            transfer_links = Trips::Links.list_transfer(transfers.first)
+            expect(transfer_links.count).to eq(2)
+            expect(transfer_links.map(&:url).sort).to eq(
+              ['https://google.com', 'https://rome2rio.com']
             )
-            expect(updated_day.hotel.name).to eq('new_hotel')
-            expect(updated_day.hotel.links.count).to eq(1)
-            expect(updated_day.hotel.links.first.url).to eq(
+            hotel = Trips::Hotels.by_day(updated_day)
+            expect(hotel.name).to eq('new_hotel')
+            hotel_links = Trips::Links.list_hotel(hotel)
+            expect(hotel_links.count).to eq(1)
+            expect(hotel_links.first.url).to eq(
               'https://google2.com'
             )
           end
@@ -117,7 +127,7 @@ RSpec.describe Api::TransfersController do
 
         context 'and when user is not included in trip' do
           let(:trip) { FactoryGirl.create :trip }
-          let(:day) { trip.days.first }
+          let(:day) { trip.days.ordered.first }
 
           it 'heads 403' do
             post 'create', params: day_params.merge(
@@ -130,7 +140,7 @@ RSpec.describe Api::TransfersController do
 
       context 'and when there is no trip' do
         let(:trip) { FactoryGirl.create :trip }
-        let(:day) { trip.days.first }
+        let(:day) { trip.days.ordered.first }
 
         it 'heads 404' do
           post 'create', params: day_params.merge(
@@ -143,7 +153,7 @@ RSpec.describe Api::TransfersController do
 
     context 'when no logged user' do
       let(:trip) { FactoryGirl.create :trip }
-      let(:day) { trip.days.first }
+      let(:day) { trip.days.ordered.first }
       let(:days_params) do
         {
           places: [
@@ -167,10 +177,11 @@ RSpec.describe Api::TransfersController do
   describe '#previous_place' do
     context 'when trip is full' do
       let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
-      let(:day) { trip.days.to_a[2] }
-      let(:prev_day) { trip.days.to_a[1] }
-      let(:prev_place) { prev_day.places.last }
-      let(:first_day) { trip.days.to_a[0] }
+      let(:days) { Trips::Days.list(trip) }
+      let(:day) { days.to_a[2] }
+      let(:prev_day) { days.to_a[1] }
+      let(:prev_place) { Trips::Places.list(prev_day).last }
+      let(:first_day) { days.first }
 
       it 'returns last place from previous day' do
         get 'previous_place', params: { trip_id: trip.id, day_id: day.id }
@@ -181,11 +192,9 @@ RSpec.describe Api::TransfersController do
         expect(json['place']['city_id']).to eq(prev_place.city_id)
       end
 
-      it 'returns nil if asked for the first day' do
+      it 'returns 404 if asked for the first day' do
         get 'previous_place', params: { trip_id: trip.id, day_id: first_day.id }
-
-        json = JSON.parse(response.body)
-        expect(json['place']).to be_blank
+        expect(response).to have_http_status(404)
       end
     end
   end
@@ -193,10 +202,11 @@ RSpec.describe Api::TransfersController do
   describe '#previous_hotel' do
     context 'when trip is full' do
       let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
-      let(:day) { trip.days.to_a[2] }
-      let(:prev_day) { trip.days.to_a[1] }
-      let(:prev_hotel) { prev_day.hotel }
-      let(:first_day) { trip.days.to_a[0] }
+      let(:days) { Trips::Days.list(trip) }
+      let(:day) { days.to_a[2] }
+      let(:prev_day) { days.to_a[1] }
+      let(:prev_hotel) { Trips::Hotels.by_day(prev_day) }
+      let(:first_day) { days.first }
 
       it 'returns hotel from previous day' do
         get 'previous_hotel', params: { trip_id: trip.id, day_id: day.id }
@@ -207,11 +217,10 @@ RSpec.describe Api::TransfersController do
         expect(json['hotel']['name']).to eq(prev_hotel.name)
       end
 
-      it 'returns nil if asked for the first day' do
+      it 'returns 404 if asked for the first day' do
         get 'previous_hotel', params: { trip_id: trip.id, day_id: first_day.id }
 
-        json = JSON.parse(response.body)
-        expect(json['hotel']).to be_blank
+        expect(response).to have_http_status(404)
       end
     end
   end

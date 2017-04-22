@@ -31,7 +31,7 @@
     <script id="moveActivity.html" type="text/ng-template">
       <div class="days-info-popover" ng-controller="ActivityMovePopupController" ng-init="init(activity, day)">
         <div class="form-group">
-          <%= select_tag 'day_select', options_from_collection_for_select(@trip.days, :id, :date_when_s), class: 'form-control', 'ng-model' => 'target_day_id' %>
+          <%= select_tag 'day_select', options_from_collection_for_select(@days, :id, :date_when_s), class: 'form-control', 'ng-model' => 'target_day_id' %>
         </div>
         <div class="form-group text-center">
           <button class="btn btn-primary btn-sm" ng-click="moveActivity()">

@@ -7,7 +7,7 @@ module Concerns
     extend ActiveSupport::Concern
 
     included do
-      default_scope(-> { order(order_index: :asc) })
+      scope :ordered, (-> { order(order_index: :asc) })
     end
 
     def as_json(**args)
