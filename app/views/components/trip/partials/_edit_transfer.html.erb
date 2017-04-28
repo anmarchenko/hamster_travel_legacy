@@ -40,7 +40,7 @@
   </div>
   <div class="form-group">
     <div class="col-md-12">
-      <%= render 'widgets/price', name: 'transfer_price', object_model: 'transfer', placeholder: t('trips.show.price') %>
+      <price-input target="transfer" name="transfer_price" placeholder="<%= t('trips.show.price') %>" />
     </div>
   </div>
   <div class="form-group">

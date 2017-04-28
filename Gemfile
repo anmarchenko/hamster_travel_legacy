@@ -97,6 +97,7 @@ group :development do
   gem 'brakeman'
   gem 'bundler-audit'
   gem 'rubocop'
+  gem 'rubycritic', require: false
 end
 
 group :test do

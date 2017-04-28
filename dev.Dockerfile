@@ -1,30 +1,10 @@
-FROM ruby:2.4-slim
-RUN apt-get update \
- && apt-get install -qq -y --no-install-recommends \
-    libgmp3-dev \
-    git-core \
-    bison \
-    build-essential \
-    curl \
-    wget \
-    zlib1g-dev \
-    libreadline-dev \
-    libcurl4-openssl-dev \
-    build-essential \
-    git \
-    tzdata \
-    libxml2-dev \
-    libxslt-dev \
-    ssh \
-    imagemagick \
-    chrpath \
-    libxft-dev \
-    libfreetype6 \
-    libfreetype6-dev \
-    libfontconfig1 \
-    libfontconfig1-dev \
-    libpq-dev \
- && rm -rf /var/lib/apt/lists/*
+FROM ruby:2.4.1
+MAINTAINER Andrey Marchenko "anvmarchenko@gmail.com"
+
+ENV LC_ALL C.UTF-8
+ENV LANG C.UTF-8
+ENV LANGUAGE C.UTF-8
+ENV LC_CTYPE C.UTF-8
 
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 RUN apt-get install -y nodejs

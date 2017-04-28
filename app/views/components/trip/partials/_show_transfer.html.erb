@@ -27,11 +27,7 @@
 </div>
 <div class="transfer-price" ng-show="transfer.amount_cents != undefined">
   <%= image_tag 'common/money.svg' %>
-  {{transfer.amount_cents / 100.0 | number: 2}}
-  {{transfer.amount_currency_text}}
-  <i ng-show="!!transfer.in_user_currency.amount_cents">
-    ({{transfer.in_user_currency.amount_cents / 100.0 | number: 2}} {{transfer.in_user_currency.amount_currency_text}})
-  </i>
+  <price target="transfer" />
 </div>
 <div class="transfer-company" ng-show="!!transfer.code || !!transfer.company">
   <%= image_tag 'transfers/tickets.svg' %>

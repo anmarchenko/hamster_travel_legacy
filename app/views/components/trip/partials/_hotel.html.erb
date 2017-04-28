@@ -9,13 +9,7 @@
       {{day.hotel.name}}
     </span>
     <br/>
-    <span ng-show="!!day.hotel.amount_cents">
-      {{day.hotel.amount_cents / 100.0 | number: 2}}
-      {{day.hotel.amount_currency_text}}
-      <i ng-show="!!day.hotel.in_user_currency.amount_cents">
-        ({{day.hotel.in_user_currency.amount_cents / 100.0 | number: 2}} {{day.hotel.in_user_currency.amount_currency_text}})
-      </i>
-    </span>
+    <price target="day.hotel" />
   </p>
   <p class="hidden-sm hidden-md hidden-lg" ng-show="!day.hotel.name && !day.hotel.amount_cents">
     <i>
@@ -40,7 +34,7 @@
   </div>
   <div class="form-group">
     <div class="col-md-12">
-      <%= render 'widgets/price', name: 'hotel_price', object_model: 'day.hotel', placeholder: t('trips.show.price_hotel') %>
+      <price-input target="day.hotel" name="hotel_price" placeholder="<%= t('trips.show.price_hotel') %>" />
     </div>
   </div>
   <div class="form-group">

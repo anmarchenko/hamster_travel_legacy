@@ -1,0 +1,27 @@
+
+<script id="priceInput.html" type="text/ng-template">
+  <div class="input-group input-group-sm">
+    <div class="input-group-addon">
+      <span aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" type="button">
+        {{$ctrl.target.amount_currency_text}}
+        <span class="caret"></span>
+      </span>
+      <ul class="dropdown-menu">
+        <% CurrencyHelper.currencies_select(current_user.try(:currency), @trip.currency).each do |currency_data| %>
+          <li>
+            <a href="javascript:void(0);" ng-click="selectCurrency($ctrl.target, '<%= currency_data[1] %>', '<%= currency_data[2] %>')">
+              <%= currency_data[0] %>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    <%= text_field_tag '{{$ctrl.name}}', '',
+                       'ng-model' => '$ctrl.target.amount_cents',
+                       class: "input-sm form-control",
+                       placeholder: '{{$ctrl.placeholder}}',
+                       'float-number' => 'true',
+                       max: '20000000'
+    %>
+  </div>
+</script>

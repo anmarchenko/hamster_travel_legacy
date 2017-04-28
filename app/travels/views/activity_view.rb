@@ -2,15 +2,16 @@
 
 module Views
   module ActivityView
-    def self.index_json(activities)
-      activities.map { |act| show_json(act) }
+    def self.index_json(activities, current_user = nil)
+      activities.map { |act| show_json(act, current_user) }
     end
 
-    def self.show_json(activity)
+    def self.show_json(activity, current_user = nil)
       activity.as_json(except: :day_id)
               .merge(
-                'id' => activity.id.to_s,
-                'amount_currency_text' => activity.amount.currency.symbol
+                'id' => activity.id.to_s
+              ).merge(
+                Views::AmountView.show_json(activity.amount, current_user)
               )
     end
   end

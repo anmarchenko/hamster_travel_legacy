@@ -50,12 +50,8 @@
             <p class="catering-value">
               <%= image_tag 'common/wallet.svg', class: 'catering-wallet' %>
               <span class="catering-value-text">
-              {{(catering.amount_cents / 100.0 | number: 2) || 0.0}}
-              {{catering.amount_currency_text}}
-              <i ng-show="!!catering.in_user_currency.amount_cents">
-                ({{catering.in_user_currency.amount_cents / 100.0 | number: 2}} {{catering.in_user_currency.amount_currency_text}})
-              </i>
-                <%= t('trips.show.catering_show_for_day') %>
+              <price target="catering" />
+              <%= t('trips.show.catering_show_for_day') %>
             </span>
             </p>
             <p class="catering-value">
@@ -104,7 +100,7 @@
             </div>
             <div class="form-group">
               <%= label_tag 'catering_price', t('trips.show.for_day') %>
-              <%= render 'widgets/price', name: 'catering_price', object_model: 'catering', placeholder: t('trips.show.for_day'), group_class: '', input_class: '' %>
+              <price-input target="catering" name="catering_price" placeholder="<%= t('trips.show.for_day') %>" />
             </div>
             <div class="form-group">
               <%= label_tag 'catering_persons', t('trips.show.catering_persons') %>

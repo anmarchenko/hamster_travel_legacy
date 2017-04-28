@@ -1,15 +1,32 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+
 RSpec.describe Trips::Days do
   def first_day_of(tr)
-    tr.reload.days.ordered.first
+    Trips::Days.list(tr.reload).first
   end
 
   let(:trip) { FactoryGirl.create(:trip) }
   let(:day) { first_day_of trip }
 
-  describe '#process' do
+  describe '#save_expenses' do
+    context 'when using currency without subunits' do
+      let(:params) do
+        [{
+          name: 'new_expense_name',
+          amount_cents: 100_000,
+          amount_currency: 'HUF'
+        }.with_indifferent_access]
+      end
+
+      it 'saves correct number of forints' do
+        Trips::Days.save_expenses(day, expenses: params)
+        expense = first_day_of(trip).expenses.first
+        expect(expense.amount.to_f).to eq(1000.0)
+      end
+    end
+
     context 'when params have day expenses data' do
       let(:params) do
         [{

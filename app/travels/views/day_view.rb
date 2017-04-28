@@ -9,14 +9,11 @@ module Views
     end
 
     def self.show_json(day, nested_objects = [], user = nil)
-      Views::Decorators::AmountInUserCurrency.decorate(
-        Views::Decorators::DaysNestedFields.decorate(
-          day.as_json,
-          day,
-          nested_objects
-        ),
-        user&.currency,
-        nested_objects
+      Views::Decorators::DaysNestedFields.decorate(
+        day.as_json,
+        day,
+        nested_objects,
+        user
       )
     end
 

@@ -1,0 +1,6 @@
+<script id="price.html" type="text/ng-template">
+    {{$ctrl.target.amount_s}}
+    <i ng-show="!!$ctrl.target.in_user_currency.amount_cents">
+      ({{$ctrl.target.in_user_currency.amount_s}})
+    </i>
+</script>

@@ -57,6 +57,7 @@ RSpec.describe Views::DayView do
 
   describe '#show_json' do
     let(:user) { FactoryGirl.create(:user, currency: 'EUR') }
+
     context 'when return json of a filled day' do
       let(:trip) { FactoryGirl.create(:trip, :with_filled_days) }
       let(:days) { Trips::Days.list(trip) }
@@ -149,8 +150,37 @@ RSpec.describe Views::DayView do
       it 'adds amounts in user currency' do
         expect(
           day_json_with_currency['expenses']
-            .first['in_user_currency'][:amount_cents]
+            .first['in_user_currency']['amount_cents']
         ).not_to be_blank
+      end
+    end
+
+    context 'currency without subunits' do
+      let(:trip) { FactoryGirl.create(:trip) }
+      let(:first_day) { Trips::Days.list(trip).first }
+      before do
+        first_day.expenses.first.update_attributes(
+          expendable_id: first_day.id,
+          name: 'Hungarian parliament',
+          amount_cents: 6500,
+          amount_currency: 'HUF'
+        )
+      end
+
+      subject do
+        Views::DayView.show_json(
+          first_day,
+          %i[expenses activities links places transfers hotel],
+          user
+        )
+      end
+
+      it 'renders correct denormalized amount for frontend' do
+        ex_json = subject['expenses'][0]
+        expect(ex_json['in_user_currency']['amount_s']).to eq('20.82 €')
+        expect(ex_json['in_user_currency']['amount_cents']).to eq(2082)
+        expect(ex_json['amount_cents']).to eq(650_000)
+        expect(ex_json['amount_s']).to eq('6500.00 Ft')
       end
     end
   end

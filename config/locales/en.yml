@@ -22,7 +22,7 @@ en:
         subject: "Reset password instructions"
         button_text: "Change password"
         hello: "Hello, %{name}!"
-        text: "There was a request to change your password. If it wasn't you, just ignore this message, your password will remain unchanged."
+        text: "We have received a request to change your password. If it wasn't you, just ignore this message, your password will remain unchanged."
       unlock_instructions:
         subject: "Unlock Instructions"
     omniauth_callbacks:

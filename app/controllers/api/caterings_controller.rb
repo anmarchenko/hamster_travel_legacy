@@ -11,7 +11,10 @@ module Api
 
     def show
       render json: {
-        caterings: Views::CateringView.index_json(Trips::Caterings.list(@trip))
+        caterings: Views::CateringView.index_json(
+          Trips::Caterings.list(@trip),
+          current_user
+        )
       }
     end
 

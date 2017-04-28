@@ -22,7 +22,12 @@ module Common
 
     def fix_amount(hash)
       if hash.key?('amount_cents')
-        hash.merge('amount_cents' => hash['amount_cents'].to_i)
+        hash.except('amount_cents', 'amount_currency').merge(
+          'amount' => Amounts.from_frontend(
+            hash['amount_cents'].to_i,
+            hash['amount_currency']
+          )
+        )
       else
         hash
       end
