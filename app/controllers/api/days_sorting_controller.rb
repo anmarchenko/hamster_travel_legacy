@@ -22,7 +22,7 @@ module Api
         params[:day_ids],
         params[:fields]
       )
-      render json: { result: res.first }
+      render json: { result: res }
     end
 
     private

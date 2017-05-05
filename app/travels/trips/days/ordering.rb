@@ -8,7 +8,7 @@ module Trips
         execute_plan(
           reordering_plan(trip, ordered_ids, fields)
         )
-        [:ok]
+        :ok
       end
 
       # INTERNAL ACTIONS
