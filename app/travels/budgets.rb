@@ -73,7 +73,7 @@ module Budgets
     trip.caterings.each do |catering|
       result += catering.amount.exchange_to(
         CurrencyHelper::DEFAULT_CURRENCY
-      ) * catering.days_count * catering.persons_count
+      ) * (catering.days_count || 0) * (catering.persons_count || 0)
     end
     result.cents
   end

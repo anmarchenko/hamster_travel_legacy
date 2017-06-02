@@ -30,6 +30,7 @@
 //= require ng-sticky
 //= require ng-file-upload
 //= require ng-img-crop
+//= require ng-rollbar
 
 //= require travel/app.js
 //= require_tree ./travel

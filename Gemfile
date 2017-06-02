@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-gem 'rails', '~> 5.0.0'
+gem 'rails', '~> 5.1.1'
 gem 'russian'
 
 # DB
@@ -17,7 +17,7 @@ gem 'kaminari-i18n'
 gem 'date_validator'
 
 # authentication
-gem 'devise', '~> 4.2.0'
+gem 'devise', '~> 4.3.0'
 gem 'omniauth-google-oauth2'
 
 # asset pipeline
@@ -87,6 +87,10 @@ gem 'deep_cloneable'
 gem 'rollbar'
 # monitoring
 gem 'newrelic_rpm'
+
+# logging
+gem 'lograge'
+gem 'remote_syslog_logger'
 
 # production - passenger
 group :production do

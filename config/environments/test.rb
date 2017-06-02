@@ -43,3 +43,11 @@ Rails.application.configure do
   config.assets.compile = true
   config.assets.precompile += %w[*.js main.css]
 end
+
+# see: https://grosser.it/2017/04/29/rails-5-1-do-not-compile-asset-in-test-vs
+# -asset-is-not-present-in-the-asset-pipeline/
+Sprockets::Rails::Helper.prepend(Module.new do
+  def resolve_asset_path(path, *)
+    super || path
+  end
+end)

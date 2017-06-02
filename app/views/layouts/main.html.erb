@@ -67,6 +67,7 @@
 -->
 <script type="text/javascript">
   LOCALE = '<%= I18n.locale %>';
+  ENVIRONMENT = '<%= Rails.env %>';
 </script>
 <%= javascript_include_tag 'main' %>
 <%= yield(:page_javascript) if content_for?(:page_javascript) %>

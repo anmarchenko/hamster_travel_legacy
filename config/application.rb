@@ -27,5 +27,7 @@ module Travel
     config.generators do |g|
       g.orm :active_record
     end
+
+    config.lograge.enabled = true
   end
 end

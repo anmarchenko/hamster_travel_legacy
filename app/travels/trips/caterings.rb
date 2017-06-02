@@ -17,7 +17,7 @@ module Trips
     def self.save(trip, caterings_params)
       save_nested(
         trip.caterings,
-        order_params(caterings_params)
+        zerofy_counts(order_params(caterings_params))
       )
       trip.save
       Budgets.on_budget_change(trip)
@@ -41,6 +41,15 @@ module Trips
           name: "#{trip.name} (#{I18n.t('trips.show.catering')})"
         )
       ]
+    end
+
+    def self.zerofy_counts(catering_params)
+      catering_params.map do |item_hash|
+        item_hash.merge(
+          days_count: item_hash['days_count'] || 0,
+          persons_count: item_hash['persons_count'] || 0
+        )
+      end
     end
   end
 end

@@ -82,4 +82,10 @@ Rails.application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  # Papertrail config
+  config.logger = RemoteSyslogLogger.new(
+    Settings.papertrail.host, Settings.papertrail.port,
+    program: "hamster-travel-#{Rails.env}"
+  )
 end

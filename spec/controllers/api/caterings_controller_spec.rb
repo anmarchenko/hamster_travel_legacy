@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+
 RSpec.describe Api::CateringsController do
   let(:user) { FactoryGirl.create(:user) }
 
@@ -61,7 +62,10 @@ RSpec.describe Api::CateringsController do
         {
           trip: {
             caterings: [
-              { id: Time.now.to_i, name: 'Paris', description: 'Desc' }
+              {
+                id: Time.now.to_i, name: 'Paris', description: 'Desc',
+                persons_count: 2, days_count: 3
+              }
             ]
           }
         }
@@ -94,6 +98,31 @@ RSpec.describe Api::CateringsController do
           put 'update', params: catering_params.merge(id: 'no such trip'),
                         format: :json
           expect(response).to have_http_status 404
+        end
+      end
+
+      context 'and when days/persons count are zero' do
+        let(:catering_params) do
+          {
+            trip: {
+              caterings: [
+                { id: Time.now.to_i, name: 'Paris', description: 'Desc' }
+              ]
+            }
+          }
+        end
+
+        it 'updates trip with catering with zeroed counts and heads 200' do
+          put 'update', params: catering_params.merge(id: trip.id),
+                        format: :json
+          expect(response).to have_http_status 200
+          caterings = trip.reload.caterings
+          expect(caterings.count).to eq(1)
+          updated_catering = caterings.first
+          expect(updated_catering.name).to eq 'Paris'
+          expect(updated_catering.description).to eq 'Desc'
+          expect(updated_catering.days_count).to be_zero
+          expect(updated_catering.persons_count).to be_zero
         end
       end
     end

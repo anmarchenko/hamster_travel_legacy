@@ -22,3 +22,6 @@ smtp:
 google:
   client_id: <%= ENV['GOOGLE_CLIENT_ID'] %>
   client_secret: <%= ENV['GOOGLE_CLIENT_SECRET'] %>
+papertrail:
+  host: <%= ENV['PAPERTRAIL_HOST'] %>
+  port: <%= ENV['PAPERTRAIL_PORT'] %>

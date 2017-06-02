@@ -23,6 +23,8 @@ module Travels
 
     monetize :amount_cents
 
+    validates :days_count, :persons_count, presence: true
+
     def as_json(*args)
       super.merge(
         'amount_currency_text' => amount.currency.symbol,
