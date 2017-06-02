@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class AddCurrencyToTrips < ActiveRecord::Migration
+class AddCurrencyToTrips < ActiveRecord::Migration[5.0]
   def change
     add_column :trips, :currency, :string
 

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class CreateTrips < ActiveRecord::Migration
+class CreateTrips < ActiveRecord::Migration[5.0]
   def change
     create_table :trips do |t|
       t.string :name

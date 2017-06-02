@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class GeoTranslations < ActiveRecord::Migration
+class GeoTranslations < ActiveRecord::Migration[5.0]
   def up
     Geo::City.create_translation_table! name: :string
     Geo::Adm3.create_translation_table! name: :string

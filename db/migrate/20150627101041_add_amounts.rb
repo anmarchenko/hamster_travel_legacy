@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class AddAmounts < ActiveRecord::Migration
+class AddAmounts < ActiveRecord::Migration[5.0]
   def change
     add_monetize :hotels, :amount
     add_monetize :transfers, :amount

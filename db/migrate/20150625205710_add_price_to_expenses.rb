@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class AddPriceToExpenses < ActiveRecord::Migration
+class AddPriceToExpenses < ActiveRecord::Migration[5.0]
   def change
     add_monetize :expenses, :amount
     Travels::Expense.reset_column_information

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class RemoveMongoIdFromTransfers < ActiveRecord::Migration
+class RemoveMongoIdFromTransfers < ActiveRecord::Migration[5.0]
   def change
     remove_column :transfers, :mongo_id
     remove_column :transfers, :type_icon

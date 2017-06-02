@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class CreateExternalLinks < ActiveRecord::Migration
+class CreateExternalLinks < ActiveRecord::Migration[5.0]
   def change
     create_table :external_links do |t|
       t.string :description

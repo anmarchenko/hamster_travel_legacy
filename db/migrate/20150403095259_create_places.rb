@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class CreatePlaces < ActiveRecord::Migration
+class CreatePlaces < ActiveRecord::Migration[5.0]
   def change
     create_table :places do |t|
       t.string :city_code

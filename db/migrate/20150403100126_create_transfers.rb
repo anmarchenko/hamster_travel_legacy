@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class CreateTransfers < ActiveRecord::Migration
+class CreateTransfers < ActiveRecord::Migration[5.0]
   def change
     create_table :transfers do |t|
       t.integer :order_index, index: true

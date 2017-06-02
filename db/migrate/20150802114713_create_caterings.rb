@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class CreateCaterings < ActiveRecord::Migration
+class CreateCaterings < ActiveRecord::Migration[5.0]
   def change
     create_table :caterings do |t|
       t.string :city_code

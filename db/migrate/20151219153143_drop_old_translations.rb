@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class DropOldTranslations < ActiveRecord::Migration
+class DropOldTranslations < ActiveRecord::Migration[5.0]
   def change
     remove_column(:adm3s, :name)
     remove_column(:adm3s, :name_ru)

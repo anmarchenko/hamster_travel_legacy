@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class AddNameToCaterings < ActiveRecord::Migration
+class AddNameToCaterings < ActiveRecord::Migration[5.0]
   def change
     add_column :caterings, :name, :string
     Travels::Catering.reset_column_information

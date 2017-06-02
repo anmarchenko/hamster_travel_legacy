@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class CreateRegions < ActiveRecord::Migration
+class CreateRegions < ActiveRecord::Migration[5.0]
   def change
     create_table :regions do |t|
       t.string :geonames_code, index: true

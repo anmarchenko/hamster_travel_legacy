@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class RemoveCodesFromEverywhere < ActiveRecord::Migration
+class RemoveCodesFromEverywhere < ActiveRecord::Migration[5.0]
   def change
     remove_column(:places, :city_code)
     remove_column(:transfers, :city_from_code)

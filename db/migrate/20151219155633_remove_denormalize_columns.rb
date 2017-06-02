@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class RemoveDenormalizeColumns < ActiveRecord::Migration
+class RemoveDenormalizeColumns < ActiveRecord::Migration[5.0]
   def change
     remove_column(:cities, :country_text)
     remove_column(:cities, :country_text_ru)

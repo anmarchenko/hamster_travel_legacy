@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class CreateCities < ActiveRecord::Migration
+class CreateCities < ActiveRecord::Migration[5.0]
   def change
     create_table :cities do |t|
       t.string :geonames_code, index: true
