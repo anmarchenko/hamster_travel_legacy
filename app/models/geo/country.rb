@@ -33,6 +33,12 @@ module Geo
 
     translates :name, fallbacks_for_empty_translations: true
 
+    has_many :regions, foreign_key: :country_code,
+                       primary_key: :country_code, class_name: 'Geo::Region'
+
+    has_many :cities, foreign_key: :country_code,
+                      primary_key: :country_code, class_name: 'Geo::City'
+
     def iso_info
       ISO3166::Country.find_country_by_alpha2(iso_code)
     end

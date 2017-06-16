@@ -25,6 +25,11 @@ module Geo
     include Concerns::Geographical
 
     translates :name, fallbacks_for_empty_translations: true
+    belongs_to :country, foreign_key: :country_code,
+                         primary_key: :country_code, class_name: 'Geo::Country'
+
+    belongs_to :region, foreign_key: :region_code,
+                        primary_key: :region_code, class_name: 'Geo::Region'
 
     module Statuses
       CAPITAL = 'capital'

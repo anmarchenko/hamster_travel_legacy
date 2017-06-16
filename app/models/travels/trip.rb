@@ -45,6 +45,7 @@ module Travels
     has_many :invited_users, class_name: 'User', through: :pending_invites
     has_many :places, class_name: 'Travels::Place', through: :days
     has_many :cities, class_name: 'Geo::City', through: :places
+    has_many :countries, class_name: 'Geo::Country', through: :cities
 
     def visited_cities
       cities.uniq
@@ -52,7 +53,7 @@ module Travels
 
     # replace with countries relation
     def visited_countries_codes
-      visited_cities.map(&:country_code).uniq || []
+      countries.uniq.map(&:country_code)
     end
 
     has_many :hotels, class_name: 'Travels::Hotel', through: :days
@@ -76,8 +77,7 @@ module Travels
                                                    if: :without_dates?
 
     validates :start_date, date: {
-      before_or_equal_to: :end_date,
-      message: I18n.t('errors.date_before')
+      before_or_equal_to: :end_date, message: I18n.t('errors.date_before')
     }, if: :should_have_dates?
 
     validates :end_date, date: {

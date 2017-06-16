@@ -2,6 +2,10 @@
 
 module Views
   module FlagView
+    def self.index_flags(countries, flag_size = 16)
+      countries.map { |country| flag(country.country_code, flag_size) }
+    end
+
     def self.index_flags_with_titles(countries, flag_size = 16)
       countries.map { |country| flag_with_title(country, flag_size) }
     end

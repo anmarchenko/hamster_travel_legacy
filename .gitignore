@@ -27,3 +27,5 @@ config/settings/*.local.yml
 config/environments/*.local.yml
 
 coverage
+/public/packs
+/node_modules

@@ -5,7 +5,7 @@ module UserTrips
     user.trips.relevant
         .not_drafts.order_newest
         .page(page || 1)
-        .includes(:author_user, :cities)
+        .includes(:author_user, :countries)
   end
 
   def self.list_drafts(user, page)
@@ -13,6 +13,6 @@ module UserTrips
         .drafts
         .order_with_dates.order_newest.order_alpha
         .page(page || 1)
-        .includes(:author_user, :cities)
+        .includes(:author_user, :countries)
   end
 end

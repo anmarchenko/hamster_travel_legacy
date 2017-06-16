@@ -27,6 +27,9 @@ gem 'therubyracer', platforms: :ruby
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
+# frontend
+gem 'webpacker', '~> 2.0'
+
 # CSS
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -35,11 +38,13 @@ gem 'autoprefixer-rails'
 
 # JS
 gem 'jquery-rails'
-gem 'jquery-ui-rails'
-# AngularJS
-gem 'angularjs-rails'
 # datepicker
 gem 'bootstrap-datepicker-rails'
+
+# TODO remove
+gem 'jquery-ui-rails'
+# TODO remove AngularJS
+gem 'angularjs-rails'
 
 # app server
 gem 'puma'

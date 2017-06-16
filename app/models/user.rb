@@ -44,6 +44,8 @@ class User < ApplicationRecord
                                   inverse_of: :users, join_table: 'users_trips'
 
   has_many :cities, class_name: 'Geo::City', through: :trips
+  has_many :countries, class_name: 'Geo::Country', through: :trips
+
   has_and_belongs_to_many :manual_cities, class_name: 'Geo::City',
                                           inverse_of: nil,
                                           join_table: 'cities_users'

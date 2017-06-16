@@ -27,14 +27,14 @@ module Trips
     Travels::Trip.relevant.public_trips
                  .order_status.order_newest
                  .page(page || 1)
-                 .includes(:author_user, :cities)
+                 .includes(:author_user, :countries)
   end
 
   def self.search(term, current_user = nil)
     return [] if term.blank?
     Travels::Trip.relevant.visible_by(current_user)
                  .by_term(term).order_newest
-                 .includes(:cities)
+                 .includes(:cities, :countries)
   end
 
   def self.last_non_empty_day_index(trip)

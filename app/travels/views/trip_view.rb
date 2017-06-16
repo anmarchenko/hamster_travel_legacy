@@ -16,7 +16,7 @@ module Views
         name: trip.name,
         start_date: trip.start_date,
         image_url: trip.image_url_or_default,
-        countries: Views::FlagView.index_flags_with_titles(
+        countries: Views::FlagView.index_flags(
           Trips::Countries.visited_countries(trip), opts[:flag_size]
         )
       }

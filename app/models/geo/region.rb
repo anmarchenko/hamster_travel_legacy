@@ -25,6 +25,12 @@ module Geo
 
     translates :name, fallbacks_for_empty_translations: true
 
+    belongs_to :country, foreign_key: :country_code,
+                         primary_key: :country_code, class_name: 'Geo::Country'
+
+    has_many :cities, foreign_key: :region_code,
+                      primary_key: :region_code, class_name: 'Geo::City'
+
     def self.find_by_term(term)
       term = Regexp.escape(term)
       all.with_translations.where(

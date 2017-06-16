@@ -18,7 +18,7 @@ services:
       context: .
       dockerfile: dev.Dockerfile
     image: hamster-travel
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    command: foreman start
     links:
       - database
       - redis
@@ -28,6 +28,7 @@ services:
       - box
     ports:
       - '13000:3000'
+      - '8080:8080'
     environment:
       REDIS_HOST: redis
       POSTGRES_HOST: database

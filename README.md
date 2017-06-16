@@ -14,10 +14,10 @@ is budget counting - so when user enters any prices, trip budget gets recalculat
 ## Current stack
 
 * Ruby 2.4
-* Rails 5.0.2
+* Rails 5.1.1
 * Angularjs 1.6.2
-* Postgresql 9.3
-* Redis 3.2
+* Postgresql 9.6
+* Redis
 * Docker
 
 ## Setup
@@ -38,23 +38,3 @@ After that application can be started/stopped using:
 ```
 
 See ./bin/docker folder for more convenient scripts.
-
-## TODO
-
-* [ ] Google auth
-* [ ] Integrate rubocop into build process
-* [ ] Introduce other code quality gems
-* [ ] Use SSL on server
-* [ ] Refactor more code to Angular components
-* [ ] Use papertrail
-* [ ] Use rollbar for js errors
-* [ ] Consider using hash ids
-* [ ] Support trips search by city name
-* [ ] Travelled kilometers metric for user profile
-* [ ] Allow to reorder documents
-* [ ] Load trip lists with ajax
-* [ ] For every day show start time
-* [ ] Email notifications about trip invites
-* [ ] Webpack, yarn
-* [ ] Map interface for activities planning
-* [ ] Export trip to PDF
