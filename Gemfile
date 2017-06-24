@@ -41,9 +41,9 @@ gem 'jquery-rails'
 # datepicker
 gem 'bootstrap-datepicker-rails'
 
-# TODO remove
+# TODO: remove
 gem 'jquery-ui-rails'
-# TODO remove AngularJS
+# TODO: remove AngularJS
 gem 'angularjs-rails'
 
 # app server
