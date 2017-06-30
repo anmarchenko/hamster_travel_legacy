@@ -60,7 +60,6 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.1)
       public_suffix (~> 2.0, >= 2.0.2)
-    angularjs-rails (1.6.2)
     annotate (2.7.2)
       activerecord (>= 3.2, < 6.0)
       rake (>= 10.4, < 13.0)
@@ -429,7 +428,6 @@ PLATFORMS
 
 DEPENDENCIES
   activemodel-serializers-xml
-  angularjs-rails
   annotate
   autoprefixer-rails
   bootstrap-datepicker-rails

@@ -74,9 +74,21 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
+angular-animate@1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/angular-animate/-/angular-animate-1.6.2.tgz#def2a8b9ede53b4b6e234c25f5c64e4b4385df15"
+
+angular-cookies@1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/angular-cookies/-/angular-cookies-1.6.2.tgz#ffb69f35f84d1efe71addac20a2905476b658884"
+
 angular-i18n@1.6.2:
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/angular-i18n/-/angular-i18n-1.6.2.tgz#18fdd43bec51d5d9f449e1c3132ee5e9c8468c19"
+
+angular-sanitize@1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/angular-sanitize/-/angular-sanitize-1.6.2.tgz#8a327c1acb2c14f50da5b5cad5ea452750a1a375"
 
 angular-ui-bootstrap@2.5.0:
   version "2.5.0"
@@ -806,6 +818,20 @@ boom@2.x.x:
   resolved "https://registry.yarnpkg.com/boom/-/boom-2.10.1.tgz#39c8918ceff5799f83f9492a848f625add0c766f"
   dependencies:
     hoek "2.x.x"
+
+bootstrap-datepicker@1.6.4.1:
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/bootstrap-datepicker/-/bootstrap-datepicker-1.6.4.tgz#889ebeced8eaa2ff15ec1f273e4b07531cc43da0"
+  dependencies:
+    jquery ">=1.7.1"
+
+bootstrap-slider@^9.8.0:
+  version "9.8.0"
+  resolved "https://registry.yarnpkg.com/bootstrap-slider/-/bootstrap-slider-9.8.0.tgz#b2ebde714a17553abeebf70249ac2d84c3072c13"
+
+bootstrap@3.3.4:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.3.4.tgz#02378b4a6b6ce7a55e3add1edae41ad79f74646a"
 
 brace-expansion@^1.1.7:
   version "1.1.8"
@@ -2254,7 +2280,7 @@ jquery-ui@^1.12.1:
   version "1.12.1"
   resolved "https://registry.yarnpkg.com/jquery-ui/-/jquery-ui-1.12.1.tgz#bcb4045c8dd0539c134bc1488cdd3e768a7a9e51"
 
-jquery@^3.2.1:
+jquery@>=1.7.1, jquery@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
 

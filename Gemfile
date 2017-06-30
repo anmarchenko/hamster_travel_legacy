@@ -40,11 +40,7 @@ gem 'autoprefixer-rails'
 gem 'jquery-rails'
 # datepicker
 gem 'bootstrap-datepicker-rails'
-
-# TODO: remove
 gem 'jquery-ui-rails'
-# TODO: remove AngularJS
-gem 'angularjs-rails'
 
 # app server
 gem 'puma'

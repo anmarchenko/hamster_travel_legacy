@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 angular.module('travel').controller('TripEditController', [
     '$scope', function($scope) {
         $scope.initScope = function(attrs) {

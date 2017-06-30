@@ -1,7 +1,10 @@
 {
   "dependencies": {
     "angular": "1.6.2",
+    "angular-animate": "1.6.2",
+    "angular-cookies": "1.6.2",
     "angular-i18n": "1.6.2",
+    "angular-sanitize": "1.6.2",
     "angular-ui-bootstrap": "2.5.0",
     "angular-ui-router": "0.4.2",
     "angular-ui-sortable": "0.17.0",
@@ -12,6 +15,9 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.5.2",
+    "bootstrap": "3.3.4",
+    "bootstrap-datepicker": "1.6.4.1",
+    "bootstrap-slider": "^9.8.0",
     "coffee-loader": "^0.7.3",
     "coffee-script": "^1.12.6",
     "compression-webpack-plugin": "^0.4.0",

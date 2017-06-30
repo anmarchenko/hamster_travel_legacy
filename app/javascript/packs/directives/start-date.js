@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 angular.module('travel').directive('startdate', function() {
     return {
         require: 'ngModel',
