@@ -1,8 +1,6 @@
 Hamster Travel
 ==============
 
-[![Build Status](https://travis-ci.org/altmer/hamster-travel.svg?branch=master)](https://travis-ci.org/altmer/hamster-travel)
-[![Dependency Status](https://gemnasium.com/badges/github.com/altmer/hamster-travel.svg)](https://gemnasium.com/github.com/altmer/hamster-travel)
 
 Hamster Travel is opinionated travel planning application.
 
