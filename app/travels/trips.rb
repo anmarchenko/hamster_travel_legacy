@@ -105,10 +105,21 @@ module Trips
 
   # INTERNAL ACTIONS
   def self.regenerate_search_index(trip)
-    trip.countries_search_index = trip.visited_cities.map do |city|
-      country = city.country
+    trip.countries_search_index = [
+      countries_index(trip), cities_index(trip)
+    ].join(' ')
+    trip.save(validate: false)
+  end
+
+  def self.countries_index(trip)
+    trip.countries.with_translations.uniq.map do |country|
       "#{country.translated_name(:en)} #{country.translated_name(:ru)}"
     end.join(' ')
-    trip.save(validate: false)
+  end
+
+  def self.cities_index(trip)
+    trip.cities.with_translations.uniq.map do |city|
+      "#{city.translated_name(:en)} #{city.translated_name(:ru)}"
+    end.join(' ')
   end
 end
