@@ -3,7 +3,15 @@ MAINTAINER Andrey Marchenko "anvmarchenko@gmail.com"
 
 ENV RAILS_ENV production
 
-RUN apt-get update && apt-get install -y nodejs
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get install -y nodejs
+
+# Add yarn repo
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+
+# Install yarn
+RUN apt-get update && apt-get install -y yarn
 
 RUN mkdir -p /app
 WORKDIR /app
@@ -14,10 +22,9 @@ RUN passenger-config install-standalone-runtime && passenger-config build-native
 
 COPY . /app
 
-RUN chown -R www-data /app
-USER www-data
-
+RUN yarn install
 RUN rake assets:precompile
+RUN rm -rf node_modules
 
 EXPOSE 3000
 ENTRYPOINT ["bundle"]
