@@ -36,6 +36,9 @@
 
     .budget {
       font-size: 18px;
+      @media (max-width: 768px) {
+        font-size: 13px;
+      }
       .budget-persons-input {
         margin-left: 5px;
         margin-right: 5px;
@@ -312,10 +315,6 @@
         padding: 5px;
         margin-bottom: 2em;
 
-        &:hover {
-          background-color: $light-grey;
-        }
-
         label {
           color: $main-grey;
         }
@@ -351,10 +350,6 @@
         display: flex;
         flex-direction: column;
 
-        &:hover {
-          background-color: $light-grey;
-        }
-
         .transfer-direction {
           display: flex;
           flex-direction: row;
@@ -368,21 +363,33 @@
             .city-name {
               font-size: 16px;
               text-align: center;
+              @media (max-width: 768px) {
+                font-size: 13px;
+              }
             }
             .station-name {
               font-size: 14px;
               color: $text-grey;
               text-align: center;
+              @media (max-width: 768px) {
+                font-size: 13px;
+              }
 
               &.min-height {
                 min-height: 25px;
+                @media (max-width: 768px) {
+                  min-height: 23;
+                }
               }
             }
             .time {
               font-size: 18px;
               margin-top: 5px;
-
               text-align: center;
+
+              @media (max-width: 768px) {
+                font-size: 13px;
+              }
             }
           }
 
@@ -394,6 +401,9 @@
 
             img {
               width: 30px;
+              @media (max-width: 768px) {
+                width: 24px;
+              }
             }
           }
         }

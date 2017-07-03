@@ -16,16 +16,16 @@
   </a>
 </p>
 <div class="form-group">
-  <div class="col-md-4">
+  <div class="col-xs-4">
     <%= render 'widgets/typeahead/cities', model_name: 'transfer.city_from', classes: 'input-sm form-control', placeholder: t('trips.show.from'), allow_empty_typeahead: true %>
   </div>
-  <div class="col-md-2">
+  <div class="col-xs-2">
     <%= text_field_tag 'transfer_station_from', '', 'ng-model' => 'transfer.station_from', class: 'input-sm form-control', placeholder: t('trips.show.station_from') %>
   </div>
-  <div class="col-md-4">
+  <div class="col-xs-4">
     <%= render 'widgets/typeahead/cities', model_name: 'transfer.city_to', classes: 'input-sm form-control', placeholder: t('trips.show.to'), allow_empty_typeahead: true %>
   </div>
-  <div class="col-md-2">
+  <div class="col-xs-2">
     <%= text_field_tag 'transfer_station_to', '', 'ng-model' => 'transfer.station_to', class: 'input-sm form-control', placeholder: t('trips.show.station_to') %>
   </div>
 </div>
@@ -44,16 +44,16 @@
     </div>
   </div>
   <div class="form-group">
-    <div class="col-md-12">
+    <div class="col-xs-12">
       <%= label_tag t('trips.show.transfer_type') %>
       <%= select_tag 'transfer_type', options_for_select(transfer_type_options), {class: 'form-control input-sm', 'ng-model' => 'transfer.type'} %>
     </div>
   </div>
   <div class="form-group">
-    <div class="col-md-4">
+    <div class="col-xs-4">
       <%= text_field_tag 'transfer_code', '', 'ng-model' => 'transfer.code', class: 'input-sm form-control', placeholder: '№' %>
     </div>
-    <div class="col-md-8">
+    <div class="col-xs-8">
       <%= text_field_tag 'transfer_company', '', 'ng-model' => 'transfer.company', class: 'input-sm form-control', placeholder: t('trips.show.carrier') %>
     </div>
   </div>
