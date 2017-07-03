@@ -5,6 +5,13 @@ class ApplicationController < ActionController::Base
 
   layout 'main'
 
+  before_action :store_current_location, unless: :devise_controller?
+  def store_current_location
+    return unless request.get?
+    return if request.url.include?('/api/')
+    store_location_for(:user, request.url)
+  end
+
   before_action :set_locale
   def set_locale
     I18n.locale = params[:locale] ||
@@ -63,6 +70,10 @@ class ApplicationController < ActionController::Base
 
   def verified_request?
     super || valid_authenticity_token?(session, request.headers['X-XSRF-TOKEN'])
+  end
+
+  def after_sign_in_path_for(resource)
+    stored_location_for(resource) || request.referer || root_path
   end
 
   rescue_from ActiveRecord::RecordNotFound do
