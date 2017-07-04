@@ -180,7 +180,7 @@
                 </div>
                 <div class="row" ng-if="edit">
                   <div class="col-md-4 col-xs-12 activity-edit">
-                    <div class="activity-edit-row activity-edit-header">
+                    <div class="activity-edit-row activity-edit-header" ng-class="{error: activity.error}">
                       <big class="activity-drag-handle">
                         <%= image_tag 'buttons/drag.svg', class: 'activity-drag-image hidden-xs hidden-sm' %>
                         {{$index+1}}.

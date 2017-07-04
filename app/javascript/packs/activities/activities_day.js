@@ -34,6 +34,18 @@ angular.module('travel').controller('ActivitiesDayController'
                 })
             };
 
+            $scope.validate = function() {
+              var valid = true;
+              for (var i = 0; i < $scope.day.activities.length; i += 1) {
+                var activity = $scope.day.activities[i];
+                if (!activity.name || activity.name === '') {
+                  activity.error = true;
+                  valid = false;
+                }
+              }
+              return valid;
+            }
+
             $scope.load = function (trip_id, day_id, new_activity_template) {
                 $scope.day_id = day_id;
                 $scope.trip_id = trip_id;
@@ -41,6 +53,10 @@ angular.module('travel').controller('ActivitiesDayController'
             };
 
             $scope.save = function (skip_notification) {
+                if (!$scope.validate()) {
+                  toastr["error"]($('#notification_validation_failed').text());
+                  return;
+                }
                 $scope.saving = true;
 
                 $http.post("/api/trips/" + $scope.trip_id + "/days/" + $scope.day.id + "/activities",

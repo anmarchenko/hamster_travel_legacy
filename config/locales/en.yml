@@ -181,6 +181,7 @@ en:
     generic_error_title: Ooops...
     generic_error_text: Something is broken. We will fix it, promise! Please try again later.
     wrong_image: Wrong file format. Should be valid image not bigger than 10 MB.
+    validation_failed: Validation failed. Please check the form for errors.
   landing:
     index:
       title: Travel planning
