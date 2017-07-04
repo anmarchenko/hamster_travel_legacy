@@ -60,6 +60,10 @@ function ($scope, $http, crop, Upload) {
     };
 
     $scope.crop = function ($files) {
+        if ($files.length == 0) {
+          toastr["error"]($('#notification_wrong_image').text());
+          return;
+        }
         crop.start($files, {areaType: 'circle', resultImageSize: '200', areaMinSize: '100'}, function (image) {
             upload(image);
         });

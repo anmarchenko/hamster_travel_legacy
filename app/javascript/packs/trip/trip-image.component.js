@@ -44,6 +44,10 @@ angular.module('travel').controller('TripImageController', ['$scope', 'Upload', 
     };
 
     $scope.crop = function ($files) {
+        if ($files.length == 0) {
+          toastr["error"]($('#notification_wrong_image').text());
+          return;
+        }
         crop.start($files, {areaType: 'square', resultImageSize: '500', areaMinSize: '300'}, function (image) {
             upload(image);
         });
