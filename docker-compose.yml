@@ -16,7 +16,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: dev.Dockerfile
+      dockerfile: Dockerfile.dev
     image: hamster-travel
     command: foreman start
     links:
