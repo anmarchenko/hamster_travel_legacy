@@ -1,6 +1,6 @@
 .git
 .dockerignore
-/log/*
-/tmp/*
+log/*
+tmp/*
 config/settings.local.yml
 node_modules

@@ -3,6 +3,7 @@
 module Documents
   # CREATE ACTIONS
   def self.create(trip, files)
+    # rubocop:disable Performance/HashEachMethods
     files.values.each do |file|
       name = File.basename(
         file.original_filename, File.extname(file.original_filename)

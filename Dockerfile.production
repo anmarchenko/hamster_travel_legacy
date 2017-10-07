@@ -1,4 +1,4 @@
-FROM ruby:2.4.1
+FROM ruby:2.4.2
 MAINTAINER Andrey Marchenko "anvmarchenko@gmail.com"
 
 ENV RAILS_ENV production

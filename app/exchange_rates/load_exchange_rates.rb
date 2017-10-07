@@ -3,7 +3,7 @@
 module LoadExchangeRates
   def self.call
     current_rates = ExchangeRate.current
-    return if current_rates && current_rates.rates_date == Time.zone.today
+    return if current_rates&.rates_date == Time.zone.today
     bank = Money.default_bank
     eu_file = bank.save_rates_to_s
     bank.update_rates_from_s eu_file

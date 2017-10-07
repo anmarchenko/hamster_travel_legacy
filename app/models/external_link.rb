@@ -24,7 +24,7 @@ class ExternalLink < ApplicationRecord
     end
     parsed_uri = begin
                    URI.parse(url)
-                 rescue
+                 rescue StandardError
                    nil
                  end
     (parsed_uri.try(:host) || '').gsub('www.', '').capitalize
