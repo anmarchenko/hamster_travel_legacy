@@ -4,3 +4,4 @@ log/*
 tmp/*
 config/settings.local.yml
 node_modules
+db/db.tar.gz
