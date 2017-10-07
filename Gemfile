@@ -64,7 +64,7 @@ gem 'dragonfly-s3_data_store'
 gem 'xmlrpc' # required by fog
 
 # money
-gem 'eu_central_bank'
+gem 'eu_central_bank', '~> 1.1.3'
 gem 'money'
 gem 'money-rails'
 
