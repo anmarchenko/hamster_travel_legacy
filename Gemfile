@@ -93,6 +93,9 @@ gem 'newrelic_rpm'
 gem 'lograge'
 gem 'remote_syslog_logger'
 
+# ddos protection
+gem 'rack-attack'
+
 # production - passenger
 group :production do
   gem 'passenger', '>= 5.0.25', require: 'phusion_passenger/rack_handler'

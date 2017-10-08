@@ -23,6 +23,7 @@ module Travel
       "<div class=\"has-error\">#{html_tag}</div>".html_safe
     }
     config.middleware.delete Rack::Lock
+    config.middleware.use Rack::Attack
 
     config.generators do |g|
       g.orm :active_record

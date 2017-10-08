@@ -295,6 +295,8 @@ GEM
     public_suffix (2.0.5)
     puma (3.10.0)
     rack (2.0.3)
+    rack-attack (5.0.1)
+      rack
     rack-cache (1.6.1)
       rack (>= 0.4)
     rack-test (0.7.0)
@@ -491,6 +493,7 @@ DEPENDENCIES
   passenger (>= 5.0.25)
   pg
   puma
+  rack-attack
   rails (~> 5.1.4)
   redis
   redis-rack-cache
