@@ -35,6 +35,9 @@ angular.module('travel').controller('ActivitiesDayController'
             };
 
             $scope.validate = function() {
+              if ($scope.day.activities.length <= 1) {
+                return true;
+              }
               var valid = true;
               for (var i = 0; i < $scope.day.activities.length; i += 1) {
                 var activity = $scope.day.activities[i];
