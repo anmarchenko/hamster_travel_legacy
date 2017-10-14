@@ -2725,9 +2725,9 @@ ng-file-upload@12.2.5:
   version "12.2.5"
   resolved "https://registry.yarnpkg.com/ng-file-upload/-/ng-file-upload-12.2.5.tgz#49a449ff5c53cd81a2253aeee49ed7f458fd32ca"
 
-ng-rollbar@^1.9.2:
-  version "1.9.2"
-  resolved "https://registry.yarnpkg.com/ng-rollbar/-/ng-rollbar-1.9.2.tgz#5146533f8bcf1f0955548c67ff1822b5d26595a8"
+ng-rollbar@^2.2:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/ng-rollbar/-/ng-rollbar-2.2.4.tgz#b86864fb7e64bdcb3625c436f27f0991ee3beb28"
 
 ngsticky@^1.7.12:
   version "1.7.12"
