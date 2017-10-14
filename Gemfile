@@ -53,9 +53,6 @@ gem 'zip-zip' # will load compatibility for old rubyzip API.
 # redis for in-memory store
 gem 'hiredis'
 gem 'redis', require: ['redis', 'redis/connection/hiredis']
-
-# caching redis
-gem 'redis-rack-cache'
 gem 'redis-rails'
 
 # image uploading
